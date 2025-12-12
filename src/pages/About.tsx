@@ -360,7 +360,7 @@ const About: React.FC = () => {
                         {slide.cta}
                       </Link>
                       <a
-                        href="https://wa.me/97797073824881"
+                        href="https://wa.me/9779707382481"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2"
