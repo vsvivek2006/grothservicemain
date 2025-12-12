@@ -32,7 +32,8 @@ const Contact = () => {
 
 I would like to discuss my project with you. Please provide more details.`;
 
-    const whatsappUrl = `https://wa.me/97797073824881?text=${encodeURIComponent(whatsappMessage)}`;
+    // ✅ FIXED: WhatsApp number corrected
+    const whatsappUrl = `https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -66,8 +67,10 @@ I would like to discuss my project with you. Please provide more details.`;
     {
       icon: <MessageCircle className="h-6 w-6" />,
       title: 'WhatsApp',
-      content: '+977 97073824881',
-      link: 'https://wa.me/97797073824881'
+      // ✅ FIXED: WhatsApp number corrected
+      content: '+977 9707382481',
+      // ✅ FIXED: WhatsApp link corrected
+      link: 'https://wa.me/9779707382481'
     },
     {
       icon: <Building className="h-6 w-6" />,
@@ -105,8 +108,9 @@ I would like to discuss my project with you. Please provide more details.`;
               Ready to grow your business with professional web development and digital marketing? Let's discuss your project.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              {/* ✅ FIXED: WhatsApp number corrected */}
               <a
-                href="https://wa.me/97797073824881"
+                href="https://wa.me/9779707382481"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center space-x-2"
@@ -279,8 +283,9 @@ I would like to discuss my project with you. Please provide more details.`;
               <div className="mb-6">
                 <h3 className="font-semibold text-gray-900 mb-3">Follow Our Work</h3>
                 <div className="flex space-x-3">
+                  {/* ✅ FIXED: WhatsApp number corrected */}
                   <a
-                    href="https://wa.me/97797073824881"
+                    href="https://wa.me/9779707382481"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-lg transition-colors"
@@ -408,8 +413,9 @@ I would like to discuss my project with you. Please provide more details.`;
             Let's discuss your requirements and build something amazing together. Contact us today for a free consultation.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {/* ✅ FIXED: WhatsApp number corrected */}
             <a
-              href="https://wa.me/97797073824881"
+              href="https://wa.me/9779707382481"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-100 text-purple-700 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
