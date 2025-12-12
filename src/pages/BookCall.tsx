@@ -92,7 +92,8 @@ Project Requirements: ${formData.message || 'No additional information'}
 I have booked a free consultation call. Please confirm the schedule.`;
 
     const encodedMessage = encodeURIComponent(confirmationMessage);
-    window.open(`https://wa.me/97797073824881?text=${encodedMessage}`, '_blank');
+    // ✅ FIXED: WhatsApp number corrected
+    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
   };
 
   const getNextWeekdays = () => {
@@ -511,13 +512,14 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <MessageCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-gray-600">WhatsApp Business</p>
+                    {/* ✅ FIXED: WhatsApp number corrected */}
                     <a 
-                      href="https://wa.me/97797073824881" 
+                      href="https://wa.me/9779707382481" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium text-gray-900 hover:text-green-600"
                     >
-                      +977 97073824881
+                      +977 9707382481
                     </a>
                   </div>
                 </div>
@@ -555,8 +557,9 @@ I have booked a free consultation call. Please confirm the schedule.`;
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 md:p-6 text-white">
               <h3 className="text-lg font-bold mb-2">Need Immediate Help?</h3>
               <p className="text-blue-100 text-sm mb-3">Chat with us on WhatsApp for quick queries</p>
+              {/* ✅ FIXED: WhatsApp number corrected */}
               <a
-                href="https://wa.me/97797073824881"
+                href="https://wa.me/9779707382481"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-white text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 text-center text-sm"
