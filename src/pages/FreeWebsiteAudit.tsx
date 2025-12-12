@@ -135,7 +135,8 @@ const FreeWebsiteAudit: React.FC = () => {
 
 Looking forward to the free audit report!`;
 
-    window.open(`https://wa.me/97797073824881?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+    // ✅ FIXED: WhatsApp number corrected
+    window.open(`https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
     setIsSubmitted(true);
   };
 
@@ -189,7 +190,8 @@ ${audit.features.map((feature: string) => `• ${feature}`).join('\n')}
 
 Thank you for your payment!`;
 
-        window.open(`https://wa.me/97797073824881?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+        // ✅ FIXED: WhatsApp number corrected
+        window.open(`https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
       },
       prefill: {
         name: 'Client',
@@ -282,7 +284,7 @@ Thank you for your payment!`;
       This is a sample report. Your actual report will be more detailed.
       
       Contact Growth Service for professional audit:
-      📱 WhatsApp: +977 97073824881
+      📱 WhatsApp: +977 9707382481
       📧 Email: info@growthservice.in
       🌐 Website: growthservice.in
     `;
@@ -440,8 +442,9 @@ Thank you for your payment!`;
             </div>
 
             <div className="space-y-3 max-w-sm mx-auto">
+              {/* ✅ FIXED: WhatsApp number corrected */}
               <a
-                href="https://wa.me/97797073824881"
+                href="https://wa.me/9779707382481"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
@@ -765,8 +768,9 @@ Thank you for your payment!`;
             Chat with our experts on WhatsApp for personalized recommendations
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* ✅ FIXED: WhatsApp number corrected */}
             <a
-              href="https://wa.me/97797073824881"
+              href="https://wa.me/9779707382481"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105 inline-flex items-center justify-center gap-2"
