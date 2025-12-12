@@ -6,7 +6,6 @@ type NavItem = { name: string; href: string };
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const [servicesOpen, setServicesOpen] = React.useState<boolean>(false);
   const [animatedText, setAnimatedText] = React.useState<string>("");
   const location = useLocation();
 
@@ -42,23 +41,12 @@ const Header: React.FC = () => {
   // Close mobile menu on route change
   React.useEffect(() => {
     setIsOpen(false);
-    setServicesOpen(false);
   }, [location.pathname]);
 
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!(event.target as Element).closest('.services-dropdown')) {
-        setServicesOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
+  // Fixed Contact Info (WhatsApp number corrected)
   const topNavItems = [
     { name: "India +91-93414-36937", href: "tel:+919341436937", icon: "📞" },
-    { name: "WhatsApp +977-97073824881", href: "https://wa.me/97797073824881", icon: "💬" },
+    { name: "WhatsApp +977-9707382481", href: "https://wa.me/9779707382481", icon: "💬" },
     { name: "Email", href: "mailto:info@growthservice.in", icon: "✉️" }
   ];
 
@@ -68,15 +56,6 @@ const Header: React.FC = () => {
     { name: "BLOG", href: "/blog" },
     { name: "RESOURCES", href: "/resources" },
     { name: "FREE WEBSITE AUDIT", href: "/free-audit", highlight: true }
-  ];
-
-  const servicesItems = [
-    { name: "Digital Marketing", href: "/digital-marketing" },
-    { name: "Design & Development", href: "/design-development" },
-    { name: "White Label", href: "/white-label" },
-    { name: "Packages", href: "/packages" },
-    { name: "Our Impact", href: "/impact" },
-    { name: "Contact Us", href: "/contact" }
   ];
 
   // Digital Marketing Submenu
@@ -105,15 +84,6 @@ const Header: React.FC = () => {
     { name: "White Label PPC", href: "/white-label-ppc" },
     { name: "White Label Social Media", href: "/white-label-smo" },
     { name: "White Label Web Development", href: "/white-label-web" }
-  ];
-
-  // Resources Submenu
-  const resourcesSubmenu = [
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "Our Portfolio", href: "/portfolio" },
-    { name: "Client Testimonials", href: "/testimonials" },
-    { name: "Digital Marketing Guides", href: "/resources" },
-    { name: "Help Center", href: "/help-center" }
   ];
 
   return (
@@ -157,7 +127,7 @@ const Header: React.FC = () => {
               </div>
             </div>
 
-            {/* Right - Festive Banner */}
+            {/* Right - Growth Banner */}
             <div className="hidden lg:flex items-center">
               <div className="bg-gradient-to-r from-red-500 to-orange-500 px-4 py-1 rounded-full text-xs font-bold animate-pulse">
                 🚀 DIGITAL GROWTH PARTNER 🚀
@@ -371,30 +341,108 @@ const Header: React.FC = () => {
             </div>
 
             {/* Services Mobile */}
-            <div className="space-y-1 pb-4 border-b border-gray-200">
+            <div className="space-y-1">
               <div className="px-3 py-2 text-xs uppercase tracking-wider text-gray-500 font-semibold">
                 Services
               </div>
-              {servicesItems.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.href}
-                  className={({ isActive }) =>
-                    `block px-3 py-4 rounded-lg text-base transition-all duration-300 ${
-                      isActive
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
-                        : "text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600"
-                    }`
-                  }
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </NavLink>
-              ))}
+              
+              {/* Digital Marketing Mobile */}
+              <div className="px-3 py-2">
+                <div className="font-bold text-gray-800 mb-2">Digital Marketing</div>
+                <div className="space-y-1 ml-3">
+                  {digitalMarketingSubmenu.map((item) => (
+                    <NavLink
+                      key={item.name}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        `block px-3 py-3 rounded-lg text-sm transition-all duration-300 ${
+                          isActive
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
+                            : "text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600"
+                        }`
+                      }
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+
+              {/* Design & Development Mobile */}
+              <div className="px-3 py-2">
+                <div className="font-bold text-gray-800 mb-2">Design & Development</div>
+                <div className="space-y-1 ml-3">
+                  {designDevelopmentSubmenu.map((item) => (
+                    <NavLink
+                      key={item.name}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        `block px-3 py-3 rounded-lg text-sm transition-all duration-300 ${
+                          isActive
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
+                            : "text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600"
+                        }`
+                      }
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+
+              {/* White Label Mobile */}
+              <div className="px-3 py-2">
+                <div className="font-bold text-gray-800 mb-2">White Label</div>
+                <div className="space-y-1 ml-3">
+                  {whiteLabelSubmenu.map((item) => (
+                    <NavLink
+                      key={item.name}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        `block px-3 py-3 rounded-lg text-sm transition-all duration-300 ${
+                          isActive
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
+                            : "text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600"
+                        }`
+                      }
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+
+              {/* Other Services */}
+              <NavLink
+                to="/packages"
+                className="block px-3 py-4 rounded-lg text-base font-bold text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600 transition-all duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                Packages
+              </NavLink>
+              
+              <NavLink
+                to="/impact"
+                className="block px-3 py-4 rounded-lg text-base font-bold text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600 transition-all duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                Our Impact
+              </NavLink>
+              
+              <NavLink
+                to="/contact"
+                className="block px-3 py-4 rounded-lg text-base font-bold text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600 transition-all duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact Us
+              </NavLink>
             </div>
 
             {/* Contact Info Mobile */}
-            <div className="space-y-2 pt-4">
+            <div className="space-y-2 pt-4 border-t border-gray-200">
               <div className="px-3 py-2 text-xs uppercase tracking-wider text-gray-500 font-semibold">
                 Contact Us
               </div>
