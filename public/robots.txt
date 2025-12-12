@@ -1,5 +1,5 @@
-# robots.txt for DiziGrow - SEO Friendly for All Search Engines
-# Last Updated: 2025-09-30
+# robots.txt for GrowthService.in - SEO Friendly for All Search Engines
+# Last Updated: 2025-12-12
 
 # ======================================
 # Global rule for all search engines
@@ -14,9 +14,9 @@ Disallow: /drafts/
 Allow: /
 
 # Sitemap location
-Sitemap: https://dizigrow.com/sitemap.xml
+Sitemap: https://growthservice.in/sitemap.xml
 
-# Crawl delay to prevent server overload
+# Prevent server overload
 Crawl-delay: 10
 
 # ======================================
