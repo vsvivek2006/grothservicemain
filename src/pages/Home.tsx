@@ -138,16 +138,20 @@ const Home = () => {
     }
   ];
 
-  // Our Clients
+  // Our Clients - Updated with your provided names
   const clients = [
+    { name: "Fragsook", industry: "E-commerce", logo: "🛒" },
+    { name: "Digimarcy", industry: "Digital Marketing", logo: "📱" },
+    { name: "pujahelp.in", industry: "Religious Services", logo: "🕉️" },
+    { name: "Radhikasadan Guest House", industry: "Hospitality", logo: "🏨" },
+    { name: "360Egaleweb", industry: "Web Development", logo: "🌐" },
+    { name: "Dizigrow", industry: "Digital Agency", logo: "🚀" },
+    { name: "ceclift", industry: "Construction", logo: "🏗️" },
     { name: "TechCorp Solutions", industry: "Technology", logo: "💻" },
     { name: "HealthPlus Clinic", industry: "Healthcare", logo: "🏥" },
     { name: "EduSmart Academy", industry: "Education", logo: "🎓" },
     { name: "Foodie's Delight", industry: "Restaurant", logo: "🍽️" },
-    { name: "StyleHub Fashion", industry: "Retail", logo: "👗" },
-    { name: "AutoCare Services", industry: "Automotive", logo: "🚗" },
-    { name: "GreenLife Organic", industry: "Wellness", logo: "🌿" },
-    { name: "BuildRight Constructions", industry: "Construction", logo: "🏗️" }
+    { name: "StyleHub Fashion", industry: "Retail", logo: "👗" }
   ];
 
   // Technology Stack
@@ -207,6 +211,11 @@ const Home = () => {
       icon: "🛠️"
     }
   ];
+
+  // Fixed WhatsApp Numbers
+  const whatsappNumber = "9779707382481";
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hello%20Growth%20Service,%20I%20want%20to%20discuss%20my%20project.`;
+  const phoneNumber = "+919341436937";
 
   // Auto slide change
   useEffect(() => {
@@ -270,7 +279,7 @@ const Home = () => {
                     {slide.cta}
                   </Link>
                   <a
-                    href="https://wa.me/97797073824881"
+                    href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg font-semibold text-base transition-all"
@@ -386,15 +395,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* === OUR CLIENTS === */}
+      {/* === OUR CLIENTS - Updated === */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-              Our <span className="text-purple-600">Clients</span>
+              Our <span className="text-purple-600">Trusted Clients</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Trusted by businesses across various industries
+              Successfully served businesses across various industries
             </p>
           </div>
 
@@ -517,7 +526,7 @@ const Home = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold text-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
@@ -527,7 +536,7 @@ const Home = () => {
             </a>
             
             <a
-              href="tel:+919341436937"
+              href={`tel:${phoneNumber}`}
               className="bg-white hover:bg-gray-100 text-gray-900 px-8 py-3 rounded-lg font-bold text-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
             >
               <span>📞</span>
@@ -557,7 +566,7 @@ const Home = () => {
 
       {/* === FLOATING WHATSAPP BUTTON === */}
       <a
-        href="https://wa.me/97797073824881"
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110"
