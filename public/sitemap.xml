@@ -3,7 +3,7 @@
 
   <!-- Home -->
   <url>
-    <loc>https://dizigrow.com/</loc>
+    <loc>https://growthservice.in/</loc>
     <lastmod>2025-09-28</lastmod>
     <priority>1.0</priority>
     <changefreq>daily</changefreq>
@@ -11,85 +11,210 @@
 
   <!-- About -->
   <url>
-    <loc>https://dizigrow.com/about</loc>
+    <loc>https://growthservice.in/about</loc>
     <lastmod>2025-09-28</lastmod>
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
   </url>
 
-  
-    <url>
-    <loc>https://dizigrow.com/growth-services</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.8</priority>
-    <changefreq>daily</changefreq>
-  </url>
-
-  <!-- Services -->
+  <!-- Team (Anchor removed → SEO clean URL) -->
   <url>
-    <loc>https://dizigrow.com/services</loc>
+    <loc>https://growthservice.in/about/team</loc>
     <lastmod>2025-09-28</lastmod>
-    <priority>0.8</priority>
-    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
   </url>
 
-<url>
-    <loc>https://dizigrow.com/offer</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.8</priority>
-    <changefreq>daily</changefreq>
-  </url>
-
-  <!-- Pricing -->
+  <!-- Book Call -->
   <url>
-    <loc>https://dizigrow.com/pricing</loc>
+    <loc>https://growthservice.in/book-call</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://growthservice.in/blog</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Resources -->
+  <url>
+    <loc>https://growthservice.in/resources</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Free Audit -->
+  <url>
+    <loc>https://growthservice.in/free-audit</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- SEO -->
+  <url>
+    <loc>https://growthservice.in/seo</loc>
     <lastmod>2025-09-28</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
 
-  <!-- Portfolio -->
+  <!-- Social Media -->
   <url>
-    <loc>https://dizigrow.com/portfolio</loc>
+    <loc>https://growthservice.in/social-media</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Paid Marketing -->
+  <url>
+    <loc>https://growthservice.in/paid-marketing</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Local SEO -->
+  <url>
+    <loc>https://growthservice.in/local-seo</loc>
     <lastmod>2025-09-28</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Content Marketing -->
+  <url>
+    <loc>https://growthservice.in/content-marketing</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Lead Generation -->
+  <url>
+    <loc>https://growthservice.in/lead-generation</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Branding -->
+  <url>
+    <loc>https://growthservice.in/branding</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Website Development -->
+  <url>
+    <loc>https://growthservice.in/website-development</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- UI/UX Design -->
+  <url>
+    <loc>https://growthservice.in/ui-ux-design</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- WordPress Development -->
+  <url>
+    <loc>https://growthservice.in/wordpress-development</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Ecommerce Development (duplicate removed) -->
+  <url>
+    <loc>https://growthservice.in/ecommerce-development</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- App Development -->
+  <url>
+    <loc>https://growthservice.in/app-development</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- White Label SEO -->
+  <url>
+    <loc>https://growthservice.in/white-label-seo</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- White Label PPC -->
+  <url>
+    <loc>https://growthservice.in/white-label-ppc</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- White Label SMO -->
+  <url>
+    <loc>https://growthservice.in/white-label-smo</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- White Label Web -->
+  <url>
+    <loc>https://growthservice.in/white-label-web</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Packages -->
+  <url>
+    <loc>https://growthservice.in/packages</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Impact -->
+  <url>
+    <loc>https://growthservice.in/impact</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Case Studies -->
+  <url>
+    <loc>https://growthservice.in/case-studies</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <!-- Contact -->
   <url>
-    <loc>https://dizigrow.com/contact</loc>
+    <loc>https://growthservice.in/contact</loc>
     <lastmod>2025-09-28</lastmod>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
-  </url>
-
-  <!-- Legal Pages -->
-  <url>
-    <loc>https://dizigrow.com/terms</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.7</priority>
-    <changefreq>yearly</changefreq>
-  </url>
-  <url>
-    <loc>https://dizigrow.com/privacy</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.7</priority>
-    <changefreq>yearly</changefreq>
-  </url>
-  <url>
-    <loc>https://dizigrow.com/onboarding-agreement</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.7</priority>
-    <changefreq>yearly</changefreq>
-  </url>
-
-  <!-- FAQ -->
-  <url>
-    <loc>https://dizigrow.com/faq</loc>
-    <lastmod>2025-09-28</lastmod>
-    <priority>0.6</priority>
-    <changefreq>weekly</changefreq>
   </url>
 
 </urlset>
