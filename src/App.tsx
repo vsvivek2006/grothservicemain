@@ -47,7 +47,6 @@ import CaseStudies from './pages/CaseStudies';
 import Testimonials from './pages/Testimonials';
 import HelpCenter from './pages/HelpCenter';
 
-import ZohoVerification from './pages/zohoverify/ZohoVerification';
 
 
 
@@ -119,7 +118,6 @@ function App() {
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/digital-marketing" element={<SEOService />} /> {/* Fallback or main page for Digital Marketing */}
 
-            <Route path="/zohoverify/verifyforzoho.html" element={<ZohoVerification />} />
 
             <Route path="/offer" element={<Offer />} />
 
