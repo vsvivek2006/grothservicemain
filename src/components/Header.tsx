@@ -146,18 +146,20 @@ const Header: React.FC = () => {
       {/* Main Navigation */}
       <nav className="max-w-7xl mx-auto px-4" aria-label="Main">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo - Only image size increased, background circle remains same */}
           <div className="flex items-center">
             <Link 
               to="/" 
               className="flex items-center space-x-2 hover:scale-105 transition-all duration-300 group"
               aria-label="Home"
             >
+              {/* Background circle - size unchanged (h-12 w-12) */}
               <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center overflow-hidden shadow-lg">
+                {/* Logo image - size increased from h-10 w-10 to larger size */}
                 <img 
                   src="/logo.png" 
                   alt="Growth Service Logo" 
-                  className="h-10 w-10 object-contain p-2"
+                  className="h-14 w-14 object-contain p-1" // Increased logo image size
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     const fallback = document.createElement('div');
