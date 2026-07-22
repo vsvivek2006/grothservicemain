@@ -1,6 +1,6 @@
-// src/pages/Offer.tsx
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import { 
   Check, 
   Star, 
@@ -27,94 +27,69 @@ import {
   ChevronDown,
   MapPin,
   Mail,
-  Zap
+  Zap,
+  Building,
+  TrendingUp,
+  BarChart,
+  Megaphone,
+  Laptop,
+  Smartphone,
+  Briefcase
 } from "lucide-react";
-
-// Razorpay types
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
 
 const Offer: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [isSuccessFormOpen, setIsSuccessFormOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
-  const [timeLeft, setTimeLeft] = useState(180); // 3 minutes timer
-  const [flashSaleTime, setFlashSaleTime] = useState(30); // 30 seconds flash sale
-  const [isSpecialPrice, setIsSpecialPrice] = useState(true);
-  const [isFlashSale, setIsFlashSale] = useState(true);
-  const [hasFlashSaleOccurred, setHasFlashSaleOccurred] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(604800); // 7 days in seconds
   const [offerExpired, setOfferExpired] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     service: "",
+    location: "",
     message: ""
   });
-  const [successFormData, setSuccessFormData] = useState({
-    name: "",
-    email: "",
-    utr: "",
-    service: "",
-    amount: ""
-  });
-  const [paymentService, setPaymentService] = useState("");
-  const [paymentAmount, setPaymentAmount] = useState(0);
-  const [originalAmount, setOriginalAmount] = useState(0);
-  const [isGoogleService, setIsGoogleService] = useState(false);
 
-  // ✅ FIXED: Environment variable use karo
-  const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID;
-  const WHATSAPP_NUMBER = "9341436937";
+  const WHATSAPP_NUMBER = "9779707382481"; // Nepal Head Office
+  const INDIA_PHONE = "919341436937";
 
-  // Initialize timers from localStorage
+  // Initialize timer from localStorage
   useEffect(() => {
-    const savedTime = localStorage.getItem('specialOfferTime');
-    const savedFlashSale = localStorage.getItem('flashSaleOccurred');
-    const savedOfferExpired = localStorage.getItem('offerExpired');
+    const savedTime = localStorage.getItem('growthServiceOfferTime');
+    const savedExpired = localStorage.getItem('growthServiceOfferExpired');
+    
+    if (savedExpired === 'true') {
+      setOfferExpired(true);
+      return;
+    }
     
     if (savedTime) {
       const remainingTime = parseInt(savedTime);
       setTimeLeft(remainingTime);
       if (remainingTime <= 0) {
         setOfferExpired(true);
-        setIsSpecialPrice(false);
+        localStorage.setItem('growthServiceOfferExpired', 'true');
       }
-    }
-    
-    if (savedFlashSale === 'true') {
-      setHasFlashSaleOccurred(true);
-      setIsFlashSale(false);
-    }
-
-    if (savedOfferExpired === 'true') {
-      setOfferExpired(true);
-      setIsSpecialPrice(false);
     }
   }, []);
 
-  // Main Timer Effect - 3 minutes
+  // Main Timer Effect
   useEffect(() => {
     if (timeLeft <= 0) {
       setOfferExpired(true);
-      setIsSpecialPrice(false);
-      localStorage.setItem('offerExpired', 'true');
+      localStorage.setItem('growthServiceOfferExpired', 'true');
       return;
     }
 
     const timerId = setInterval(() => {
       setTimeLeft(prev => {
         const newTime = prev - 1;
-        localStorage.setItem('specialOfferTime', newTime.toString());
+        localStorage.setItem('growthServiceOfferTime', newTime.toString());
         
         if (newTime <= 0) {
           setOfferExpired(true);
-          setIsSpecialPrice(false);
-          localStorage.setItem('offerExpired', 'true');
+          localStorage.setItem('growthServiceOfferExpired', 'true');
           return 0;
         }
         
@@ -125,155 +100,155 @@ const Offer: React.FC = () => {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
-  // Flash Sale Timer - 30 seconds with 20% discount
-  useEffect(() => {
-    if (flashSaleTime <= 0 || hasFlashSaleOccurred) {
-      setIsFlashSale(false);
-      setHasFlashSaleOccurred(true);
-      localStorage.setItem('flashSaleOccurred', 'true');
-      return;
-    }
-
-    const flashTimerId = setInterval(() => {
-      setFlashSaleTime(prev => {
-        if (prev <= 1) {
-          setIsFlashSale(false);
-          setHasFlashSaleOccurred(true);
-          localStorage.setItem('flashSaleOccurred', 'true');
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(flashTimerId);
-  }, [flashSaleTime, hasFlashSaleOccurred]);
-
   const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    
+    if (days > 0) {
+      return `${days}d ${hours}h ${minutes}m ${secs}s`;
+    }
+    return `${hours}h ${minutes}m ${secs}s`;
   };
 
-  // Updated Price Data with ₹1 Consultation
-  const priceData = {
-    smo: {
-      special: 4999,
-      regular: 7999,
-      save: "₹3,000",
-      name: "Social Media Optimization",
+  // Services Data with Office Locations
+  const services = [
+    {
+      id: "seo",
+      title: "SEO Services",
+      icon: <Search className="h-6 w-6" />,
+      price: "₹8,999",
+      originalPrice: "₹14,999",
+      discount: "40% OFF",
+      features: [
+        "Complete SEO Audit",
+        "On-Page & Off-Page SEO",
+        "50+ Keyword Research",
+        "Google Business Optimization",
+        "Monthly Ranking Reports",
+        "Technical SEO Fixes"
+      ],
+      locations: ["Jaipur", "Vrindavan", "Nepal"],
+      gradient: "from-purple-500 to-indigo-500"
+    },
+    {
+      id: "smm",
+      title: "Social Media Marketing",
+      icon: <Megaphone className="h-6 w-6" />,
+      price: "₹4,999",
+      originalPrice: "₹9,999",
+      discount: "50% OFF",
       features: [
         "3 Social Media Platforms",
         "15 Creative Posts/Month",
         "Content Strategy & Calendar",
-        "Hashtag Research & Optimization",
+        "Hashtag Research",
         "Engagement Management",
-        "Monthly Performance Analytics"
+        "Monthly Analytics"
       ],
-      icon: "📱",
-      gradient: "bg-gradient-to-r from-pink-500 to-rose-500"
+      locations: ["Jaipur", "Vrindavan", "Nepal"],
+      gradient: "from-pink-500 to-rose-500"
     },
-    seo: {
-      special: 8999,
-      regular: 14999,
-      save: "₹6,000",
-      name: "Search Engine Optimization",
-      features: [
-        "50+ Keyword Research",
-        "Complete On-Page SEO",
-        "Technical SEO Audit",
-        "Google Business Optimization",
-        "Monthly Ranking Reports",
-        "Content Optimization"
-      ],
-      icon: "🔍",
-      gradient: "bg-gradient-to-r from-purple-500 to-indigo-500"
-    },
-    web: {
-      special: 12000,
-      regular: 18000,
-      save: "₹6,000",
-      name: "Professional Website Development",
+    {
+      id: "web",
+      title: "Website Development",
+      icon: <Laptop className="h-6 w-6" />,
+      price: "₹12,000",
+      originalPrice: "₹25,000",
+      discount: "52% OFF",
       features: [
         "5 Page Responsive Website",
         "Mobile-First Design",
         "SEO Optimized Structure",
         "Contact/Lead Forms",
-        "1 Year Free Hosting*",
+        "1 Year Free Hosting",
         "3 Months Free Support"
       ],
-      icon: "💻",
-      gradient: "bg-gradient-to-r from-blue-500 to-cyan-500"
+      locations: ["Jaipur", "Vrindavan", "Nepal"],
+      gradient: "from-blue-500 to-cyan-500"
     },
-    ecommerce: {
-      special: 5999,
-      regular: 8999,
-      save: "₹3,000",
-      name: "E-commerce Management",
+    {
+      id: "ecommerce",
+      title: "E-commerce Solutions",
+      icon: <ShoppingCart className="h-6 w-6" />,
+      price: "₹5,999",
+      originalPrice: "₹12,999",
+      discount: "54% OFF",
       features: [
         "Platform Account Creation",
-        "AMAZON • FLIPKART • MEESHO",
+        "Amazon • Flipkart • Meesho",
         "Product Listing Support",
-        "Photo-shoot Available*",
         "Catalog Management",
-        "Sales Optimization"
+        "Sales Optimization",
+        "Inventory Management"
       ],
-      icon: "🛒",
-      gradient: "bg-gradient-to-r from-orange-500 to-red-500"
+      locations: ["Jaipur", "Vrindavan", "Nepal"],
+      gradient: "from-orange-500 to-red-500"
     },
-    social: {
-      special: 1999,
-      regular: 3999,
-      save: "₹2,000",
-      name: "Social Account Creation",
+    {
+      id: "gmb",
+      title: "Google Business Profile",
+      icon: <MapPin className="h-6 w-6" />,
+      price: "₹999",
+      originalPrice: "₹2,999",
+      discount: "67% OFF",
       features: [
-        "META Business Account",
-        "INSTAGRAM Professional",
-        "TWITTER (X) Business",
-        "Complete Profile Setup",
-        "Branding & Optimization",
-        "Verification Support"
-      ],
-      icon: "👥",
-      gradient: "bg-gradient-to-r from-green-500 to-emerald-500"
-    },
-    google: {
-      special: 999,
-      regular: 1999,
-      save: "₹1,000",
-      name: "Google Business Setup",
-      features: [
-        "GOOGLE BUSINESS PAGE",
+        "Google Business Setup",
         "Google Map Listing",
-        "BUSINESS WHATSAPP",
+        "Business WhatsApp Integration",
         "10 Free Product Listings",
-        "YOUTUBE CHANNEL Creation",
+        "YouTube Channel Creation",
         "Basic SEO Setup"
       ],
-      icon: "🌐",
-      gradient: "bg-gradient-to-r from-yellow-500 to-amber-500"
+      locations: ["Jaipur", "Vrindavan", "Nepal"],
+      gradient: "from-yellow-500 to-amber-500"
     },
-    consultation: {
-      special: 1,
-      regular: 999,
-      save: "₹998",
-      name: "Expert Consultation",
+    {
+      id: "consultation",
+      title: "Expert Consultation",
+      icon: <Briefcase className="h-6 w-6" />,
+      price: "₹1",
+      originalPrice: "₹999",
+      discount: "99% OFF",
       features: [
         "30-Minute Strategy Session",
-        "Digital Audit Report",
+        "Complete Digital Audit",
         "Custom Growth Plan",
         "Competitor Analysis",
         "ROI Optimization Tips",
         "Priority Support Access"
       ],
-      icon: "💬",
-      gradient: "bg-gradient-to-r from-purple-500 to-pink-500"
+      locations: ["Jaipur", "Vrindavan", "Nepal"],
+      gradient: "from-purple-500 to-pink-500"
     }
-  };
+  ];
 
-  const scrollToOffer = () => {
-    document.getElementById('offers')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Office Locations
+  const offices = [
+    {
+      name: "Jaipur Office",
+      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
+      phone: "+91 62073 00553",
+      flag: "🇮🇳",
+      city: "Jaipur"
+    },
+    {
+      name: "Vrindavan Office",
+      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121",
+      phone: "+91 93414 36937",
+      flag: "🇮🇳",
+      city: "Vrindavan"
+    },
+    {
+      name: "Nepal Office - Head Office",
+      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
+      phone: "+977 970-7382481",
+      flag: "🇳🇵",
+      city: "Nepal",
+      isHeadOffice: true
+    }
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -282,801 +257,360 @@ const Offer: React.FC = () => {
     });
   };
 
-  const handleSuccessFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setSuccessFormData({
-      ...successFormData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const whatsappMessage = `🎯 Expert Consultation Request - DiziGrow 🎯\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nService: ${formData.service}\nMessage: ${formData.message}`;
+    const selectedOffice = offices.find(o => o.city === formData.location) || offices[2];
+    
+    const whatsappMessage = `🎯 Growth Service Special Offer Request 🎯
+
+📋 Client Details:
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Location: ${formData.location} ${selectedOffice.flag}
+
+💼 Service Interested: ${formData.service}
+
+📝 Requirements:
+${formData.message || 'No additional information provided'}
+
+📍 Contact Office: ${selectedOffice.name}
+📞 Phone: ${selectedOffice.phone}
+
+I would like to avail the special offer. Please contact me.`;
     
     const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/91${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+    // Send to Nepal Head Office WhatsApp
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
     
     setIsFormOpen(false);
-    setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+    setFormData({ name: "", email: "", phone: "", service: "", location: "", message: "" });
   };
 
-  const handleSuccessSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const whatsappMessage = `✅ Payment Success - DiziGrow 🎯\n\nPayment Details:\nName: ${successFormData.name}\nEmail: ${successFormData.email}\nUTR Number: ${successFormData.utr}\nService: ${successFormData.service}\nAmount Paid: ₹${successFormData.amount}\n\nPlease verify my payment and start the service!`;
-    
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/91${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
-    
-    setIsSuccessFormOpen(false);
-    setSuccessFormData({ name: "", email: "", utr: "", service: "", amount: "" });
-    alert("Thank you! We'll verify your payment and start your service within 24 hours. 🎉");
-  };
-
-  const openQuickForm = (service: string) => {
-    setSelectedService(service);
-    setFormData(prev => ({ ...prev, service }));
+  const openQuickForm = (serviceTitle: string) => {
+    setSelectedService(serviceTitle);
+    setFormData(prev => ({ ...prev, service: serviceTitle }));
     setIsFormOpen(true);
   };
 
-  // Payment Functions
-  const openPaymentModal = (serviceKey: keyof typeof priceData) => {
-    const service = priceData[serviceKey];
-    const isConsultation = serviceKey === 'consultation';
-    const isGoogle = serviceKey === 'google';
-    
-    setIsGoogleService(isGoogle);
-    
-    if (offerExpired) {
-      // Normal prices after offer expires
-      setPaymentAmount(service.regular);
-      setOriginalAmount(service.regular);
-    } else if (isConsultation) {
-      setPaymentAmount(service.special); // ₹1 for Consultation
-      setOriginalAmount(service.regular);
-    } else if (isGoogle) {
-      setPaymentAmount(service.special); // ₹999 for Google service
-      setOriginalAmount(service.regular);
-    } else {
-      let originalPrice = isSpecialPrice ? service.special : service.regular;
-      let discountedPrice = Math.floor(originalPrice * 0.9); // 10% discount
-      
-      // Apply 20% discount for flash sale
-      if (isFlashSale) {
-        discountedPrice = Math.floor(originalPrice * 0.8); // 20% off
-      }
-      
-      setPaymentAmount(discountedPrice);
-      setOriginalAmount(originalPrice);
-    }
-    
-    setPaymentService(service.name);
-    setIsPaymentOpen(true);
-  };
-
-  const initiateRazorpayPayment = async () => {
-    try {
-      if (!window.Razorpay) {
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        script.async = true;
-        document.body.appendChild(script);
-        
-        await new Promise((resolve) => {
-          script.onload = resolve;
-        });
-      }
-
-      const options = {
-        key: RAZORPAY_KEY_ID,
-        amount: paymentAmount * 100,
-        currency: 'INR',
-        name: 'DiziGrow - Special Offer',
-        description: isGoogleService ? `Special - ${paymentService} for ₹999` : 
-                    paymentService.includes('Consultation') ? `Expert Consultation - ${paymentService} for ₹1` :
-                    `Advance Booking - ${paymentService}`,
-        image: '/logo.png',
-        handler: function (response: any) {
-          // Open success form after payment
-          setIsSuccessFormOpen(true);
-          setSuccessFormData(prev => ({
-            ...prev,
-            service: paymentService,
-            amount: paymentAmount.toString()
-          }));
-          setIsPaymentOpen(false);
-          
-          // Mark flash sale as used
-          if (isFlashSale) {
-            setHasFlashSaleOccurred(true);
-            localStorage.setItem('flashSaleOccurred', 'true');
-          }
-        },
-        prefill: {
-          name: formData.name || 'Customer',
-          email: formData.email || 'customer@example.com',
-          contact: formData.phone || ''
-        },
-        notes: {
-          service: paymentService,
-          type: isGoogleService ? 'Google Business ₹999' : 
-                paymentService.includes('Consultation') ? 'Expert Consultation ₹1' : 'Advance Booking'
-        },
-        theme: {
-          color: '#F59E0B'
-        }
-      };
-
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-      
-    } catch (error) {
-      console.error('Payment error:', error);
-      alert('Payment failed. Please try again or contact us on WhatsApp.');
-    }
-  };
-
-  const getServicePrice = (serviceKey: keyof typeof priceData) => {
-    if (offerExpired) {
-      return priceData[serviceKey].regular;
-    }
-    
-    if (serviceKey === 'consultation') return 1;
-    if (serviceKey === 'google') return 999;
-    
-    if (isFlashSale) {
-      return Math.floor(priceData[serviceKey].special * 0.8); // 20% off during flash sale
-    }
-    
-    return isSpecialPrice ? priceData[serviceKey].special : priceData[serviceKey].regular;
-  };
-
-  const getDiscountedPrice = (serviceKey: keyof typeof priceData) => {
-    if (offerExpired) {
-      return priceData[serviceKey].regular;
-    }
-    
-    if (serviceKey === 'consultation') return 1;
-    if (serviceKey === 'google') return 999;
-    
-    const originalPrice = getServicePrice(serviceKey);
-    return Math.floor(originalPrice * 0.9); // 10% advance discount
-  };
-
-  const servicesList = [
-    { key: 'smo' as const, label: 'SMO' },
-    { key: 'seo' as const, label: 'SEO' },
-    { key: 'web' as const, label: 'Web Dev' },
-    { key: 'ecommerce' as const, label: 'E-commerce' },
-    { key: 'social' as const, label: 'Social' },
-    { key: 'google' as const, label: 'Google Business' },
-    { key: 'consultation' as const, label: 'Consultation' }
-  ];
-
-  // Sparkles Component
-  const SparklesEffect = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(10)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-ping text-yellow-300"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 2}s`,
-          }}
-        >
-          ✨
-        </div>
-      ))}
-    </div>
-  );
-
-  // Reset everything (for testing)
-  const resetAll = () => {
-    localStorage.removeItem('specialOfferTime');
-    localStorage.removeItem('flashSaleOccurred');
-    localStorage.removeItem('offerExpired');
-    setTimeLeft(180);
-    setFlashSaleTime(30);
-    setIsSpecialPrice(true);
-    setIsFlashSale(true);
-    setHasFlashSaleOccurred(false);
-    setOfferExpired(false);
-    window.location.reload();
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-purple-50 to-pink-50" style={{ fontFamily: "'Haboro Serif', serif" }}>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-purple-50 to-pink-50">
       <Helmet>
-        <title>Special Offer - Expert Consultation at ₹1 + 20% OFF Flash Sale | DiziGrow</title>
-        <meta name="description" content="Special Offer: Get Expert Consultation for just ₹1 + 20% FLASH SALE on SMO, SEO, Web Development, E-commerce & more. Limited time!" />
-        <link href="https://fonts.googleapis.com/css2?family=Haboro+Serif:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <title>Special Offers - Digital Marketing Services in Jaipur, Vrindavan & Nepal | Growth Service</title>
+        <meta 
+          name="description" 
+          content="Avail special offers on SEO, Social Media Marketing, Website Development & more. Expert consultation at ₹1. Offices in Jaipur, Vrindavan & Nepal." 
+        />
+        <meta 
+          name="keywords" 
+          content="digital marketing offers Jaipur, SEO special offer Vrindavan, website development Nepal, social media marketing deals, growth service offers"
+        />
+        <link rel="canonical" href="https://growthservice.in/offers" />
+        
+        <meta property="og:title" content="Special Offers - Digital Marketing Services | Growth Service" />
+        <meta property="og:description" content="Avail special offers on SEO, Social Media Marketing, Website Development & more. Expert consultation at ₹1." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://growthservice.in/offers" />
       </Helmet>
 
-      {/* Developer Reset Button (Hidden in production) */}
-      {process.env.NODE_ENV === 'development' && (
-        <button 
-          onClick={resetAll}
-          className="fixed bottom-4 left-4 z-50 bg-red-500 text-white px-3 py-2 rounded-lg text-xs opacity-50 hover:opacity-100"
-        >
-          Reset All
-        </button>
-      )}
-
-      {/* Flash Sale Banner */}
-      {isFlashSale && !offerExpired && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 text-center animate-pulse">
-          <div className="flex items-center justify-center gap-3 text-sm md:text-base">
-            <Zap className="h-4 w-4 md:h-5 md:w-5 animate-bounce" />
-            <span className="font-bold">FLASH SALE: 20% OFF - Ends in {flashSaleTime}s!</span>
-            <Zap className="h-4 w-4 md:h-5 md:w-5 animate-bounce" />
-          </div>
-        </div>
-      )}
-
-      {/* Floating Timer */}
-      <div className="fixed top-4 right-4 z-40">
-        <div className={`bg-gradient-to-r ${offerExpired ? 'from-gray-500 to-gray-700' : isSpecialPrice ? 'from-green-500 to-emerald-500' : 'from-red-500 to-orange-500'} text-white px-4 py-2 rounded-full shadow-2xl animate-pulse border-2 border-yellow-300`}>
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 animate-spin" />
-            <div className="text-center">
-              <div className="text-xs font-semibold">
-                {offerExpired ? '❌ OFFER EXPIRED' : isSpecialPrice ? '⏰ ENDS IN' : '⏰ ENDED'}
-              </div>
-              <div className={`text-sm font-bold ${offerExpired && 'line-through'}`}>
-                {offerExpired ? '00:00' : formatTime(timeLeft)}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-600 text-white pt-16 pb-12 md:py-20 overflow-hidden">
-        <SparklesEffect />
+      <section className="relative bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white py-16 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        </div>
+        
         <div className="relative max-w-7xl mx-auto px-4 text-center">
-          {!offerExpired && (
-            <div className={`mb-4 md:mb-6 p-3 md:p-4 rounded-2xl ${isSpecialPrice ? 'bg-green-500/20 border border-green-300' : 'bg-red-500/20 border border-red-300'} backdrop-blur-sm`}>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-4">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 md:h-6 md:w-6 animate-pulse" />
-                  <span className="text-sm md:text-lg font-bold">{isSpecialPrice ? '⏰ SPECIAL OFFER ENDS IN:' : '❌ OFFER EXPIRED'}</span>
-                </div>
-                <div className={`text-xl md:text-2xl font-bold ${isSpecialPrice ? 'text-yellow-300' : 'text-red-300'} font-mono`}>
-                  {formatTime(timeLeft)}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {isFlashSale && !offerExpired && (
-            <div className="bg-purple-500 text-white px-4 py-2 rounded-full text-xs md:text-sm font-bold inline-block mb-4 md:mb-6 animate-pulse border-2 border-yellow-300">
-              ⚡ FLASH SALE: 20% OFF - {flashSaleTime}s LEFT!
-            </div>
-          )}
-
-          {!offerExpired && (
-            <div className="bg-yellow-400 text-purple-800 px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-bold inline-block mb-4 md:mb-6 animate-pulse border-2 border-purple-300">
-              🎯 Expert Consultation at ₹1 Only! 🎯
-            </div>
-          )}
-          
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
-            {offerExpired ? (
-              <>
-                Offer <span className="text-red-300">Expired</span><br />
-                <span className="text-yellow-300">Contact for Prices</span>
-              </>
-            ) : isSpecialPrice ? (
-              <>
-                Digital Growth<br />
-                <span className="text-yellow-300">Made Affordable</span>
-              </>
-            ) : (
-              <>
-                Offer <span className="text-red-300">Ended</span><br />
-                <span className="text-yellow-300">Check New Offers</span>
-              </>
-            )}
-          </h1>
-          
-          <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-purple-100 max-w-4xl mx-auto font-medium">
-            {offerExpired ? (
-              "Special offer period has ended. Contact us for current pricing!"
-            ) : isSpecialPrice ? (
-              isFlashSale ? 
-                "Expert Consultation at ₹1 + 20% FLASH SALE on All Services!" :
-                "Complete Digital Solution Package - Expert Consultation at ₹1 + 10% OFF!"
-            ) : (
-              "Special offer period has ended. Contact us for current pricing!"
-            )}
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-3 mb-6 md:mb-8 max-w-6xl mx-auto">
-            {servicesList.map((service, index) => (
-              <div key={service.key} className={`${priceData[service.key].gradient} text-white p-2 md:p-3 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg border-2 border-white/30 text-center`}>
-                <div className="text-lg md:text-xl mb-1">{priceData[service.key].icon}</div>
-                <div className="text-sm md:text-base font-bold mb-1">
-                  ₹{getServicePrice(service.key).toLocaleString()}
-                </div>
-                <div className="text-xs font-medium">{service.label}</div>
-                {!offerExpired && isSpecialPrice && !['consultation', 'google'].includes(service.key) && !isFlashSale && (
-                  <div className="text-[10px] bg-white/20 rounded px-1 mt-1">
-                    Advance: ₹{getDiscountedPrice(service.key).toLocaleString()}
-                  </div>
-                )}
-                {!offerExpired && isFlashSale && !['consultation', 'google'].includes(service.key) && (
-                  <div className="text-[10px] bg-purple-500/80 rounded px-1 mt-1 text-white">
-                    20% OFF!
-                  </div>
-                )}
-                {offerExpired && (
-                  <div className="text-[10px] bg-gray-500/80 rounded px-1 mt-1 text-white">
-                    Normal Price
-                  </div>
+          {/* Office Locations Badge */}
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {offices.map((office) => (
+              <div 
+                key={office.city}
+                className={`bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 text-sm ${
+                  office.isHeadOffice ? 'border-2 border-yellow-400' : ''
+                }`}
+              >
+                <span>{office.flag}</span>
+                <span>{office.city}</span>
+                {office.isHeadOffice && (
+                  <span className="bg-yellow-400 text-gray-900 text-[8px] px-1.5 py-0.5 rounded-full font-bold">HQ</span>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-            <button onClick={scrollToOffer} className="bg-yellow-400 hover:bg-yellow-500 text-purple-900 px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold transition-all hover:scale-105 hover:shadow-xl flex items-center gap-2 shadow-lg justify-center">
-              <Rocket className="h-4 w-4 md:h-5 md:w-5" />
-              {offerExpired ? 'View Services' : 'View All Services'}
+          {/* Timer */}
+          {!offerExpired && (
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-3 md:p-4 max-w-md mx-auto mb-6 border border-white/30">
+              <div className="flex items-center justify-center gap-3">
+                <Clock className="h-5 w-5 animate-pulse text-yellow-300" />
+                <span className="text-sm font-semibold">Special Offer Ends In:</span>
+                <span className="text-lg md:text-xl font-bold text-yellow-300 font-mono">
+                  {formatTime(timeLeft)}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+            Special <span className="text-yellow-300">Digital Growth</span> Offers
+          </h1>
+          
+          <p className="text-lg md:text-xl lg:text-2xl mb-6 text-purple-100 max-w-3xl mx-auto">
+            Expert Consultation at <span className="text-yellow-300 font-bold">₹1</span> + 
+            Up to <span className="text-yellow-300 font-bold">67% OFF</span> on Digital Services
+          </p>
+
+          <p className="text-sm md:text-base text-purple-200 mb-8 max-w-2xl mx-auto">
+            Services available at our offices in <strong className="text-white">Jaipur</strong>, 
+            <strong className="text-white"> Vrindavan</strong> & <strong className="text-yellow-300"> Nepal (Head Office)</strong>
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button 
+              onClick={() => setIsFormOpen(true)}
+              className="bg-yellow-400 hover:bg-yellow-500 text-purple-900 px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 shadow-lg flex items-center gap-2 justify-center"
+            >
+              <Gift className="h-5 w-5" />
+              Avail Special Offer
             </button>
-            <button onClick={() => setIsFormOpen(true)} className={`px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold transition-all hover:scale-105 hover:shadow-xl flex items-center gap-2 shadow-lg justify-center ${offerExpired ? 'bg-blue-500 hover:bg-blue-600 text-white' : isSpecialPrice ? 'bg-green-500 hover:bg-green-600 text-white border-2 border-green-300' : 'bg-gray-500 hover:bg-gray-600 text-white'}`}>
-              <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
-              {offerExpired ? '📞 Contact Now' : isSpecialPrice ? '💬 Get Offer' : '📞 Contact Now'}
-            </button>
+            <Link
+              to="/contact"
+              className="bg-white/20 hover:bg-white/30 text-white px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 backdrop-blur-sm border border-white/30 flex items-center gap-2 justify-center"
+            >
+              <MapPin className="h-5 w-5" />
+              Visit Our Offices
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Special Offer Banner */}
-      {!offerExpired && (
-        <section className="py-4 md:py-6 bg-gradient-to-r from-green-600 to-emerald-600 text-white relative overflow-hidden">
-          <SparklesEffect />
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
-              <div className="flex items-center gap-2 md:gap-3">
-                <Gift className="h-5 w-5 md:h-6 md:w-6 text-yellow-300 animate-pulse" />
-                <span className="text-lg md:text-xl font-bold">Expert Consultation at Just ₹1!</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm md:text-base">
-                <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-yellow-300" />
-                <span>{isFlashSale ? '+ 20% FLASH SALE on All Services!' : '+ 10% EXTRA OFF on All Services'}</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Services Section */}
-      <section id="offers" className="py-12 md:py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              {offerExpired ? (
-                <>Our <span className="text-blue-500">Services</span></>
-              ) : (
-                <>🎯 Special <span className="text-blue-500">Offer</span> Services 🎯</>
-              )}
+              Our <span className="text-purple-600">Special Offers</span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-600">
-              {offerExpired ? "Professional digital services for your business growth" : "Transform your business with our premium digital services"}
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              Choose from our premium digital services at unbeatable prices. 
+              Available across our <strong className="text-purple-600">3 office locations</strong>.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
-            {servicesList.map((service) => (
-              <div key={service.key} className={`bg-white border-2 ${offerExpired ? 'border-gray-300' : 'border-blue-200'} rounded-2xl p-4 md:p-6 relative overflow-hidden transform hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl`}>
-                {!offerExpired && service.key === 'consultation' && isSpecialPrice && (
-                  <div className="absolute -top-2 -right-2 bg-purple-500 text-white px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-bold rotate-12 shadow-lg z-10 animate-pulse">
-                    🎯 Special
-                  </div>
-                )}
-                
-                {!offerExpired && service.key === 'google' && isSpecialPrice && (
-                  <div className="absolute -top-2 -right-2 bg-yellow-500 text-white px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-bold rotate-12 shadow-lg z-10 animate-pulse">
-                    🔥 Hot Deal
-                  </div>
-                )}
-                
-                {!offerExpired && isFlashSale && !['consultation', 'google'].includes(service.key) && (
-                  <div className="absolute -top-2 -left-2 bg-purple-500 text-white px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-bold rotate-12 shadow-lg z-10 animate-pulse">
-                    ⚡ 20% OFF
-                  </div>
-                )}
-
-                {offerExpired && (
-                  <div className="absolute -top-2 -right-2 bg-gray-500 text-white px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-bold rotate-12 shadow-lg z-10">
-                    Standard
-                  </div>
-                )}
-                
-                <div className="text-center mb-4">
-                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
-                    ₹{getServicePrice(service.key).toLocaleString()}
-                  </div>
-                  <div className="text-base md:text-lg font-semibold text-gray-900">{priceData[service.key].name}</div>
-                  {!offerExpired && (
-                    <div className="text-gray-500 line-through text-sm md:text-base">₹{priceData[service.key].regular.toLocaleString()}</div>
-                  )}
-                  
-                  {!offerExpired && isSpecialPrice && !['consultation', 'google'].includes(service.key) && !isFlashSale && (
-                    <div className="mt-2 p-2 bg-green-500/10 rounded-lg">
-                      <div className="text-green-700 font-bold text-xs md:text-sm">Advance Booking:</div>
-                      <div className="text-green-600 font-bold text-lg md:text-xl">₹{getDiscountedPrice(service.key).toLocaleString()}</div>
-                      <div className="text-green-500 text-xs">Save 10% Extra!</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {services.map((service) => (
+              <div 
+                key={service.id} 
+                className="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-300 border-2 border-purple-100 hover:border-purple-300"
+              >
+                <div className={`bg-gradient-to-r ${service.gradient} p-4 text-white`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {service.icon}
+                      <h3 className="text-lg md:text-xl font-bold">{service.title}</h3>
                     </div>
-                  )}
-
-                  {!offerExpired && isFlashSale && !['consultation', 'google'].includes(service.key) && (
-                    <div className="mt-2 p-2 bg-purple-500/10 rounded-lg border border-purple-200">
-                      <div className="text-purple-700 font-bold text-xs md:text-sm">FLASH SALE:</div>
-                      <div className="text-purple-600 font-bold text-lg md:text-xl">₹{getServicePrice(service.key).toLocaleString()}</div>
-                      <div className="text-purple-500 text-xs">Save 20%!</div>
+                    <div className="bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold">
+                      {service.discount}
                     </div>
-                  )}
+                  </div>
                 </div>
-                
-                <ul className="space-y-2 mb-4 text-xs md:text-sm">
-                  {priceData[service.key].features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <Check className="h-3 w-3 md:h-4 md:w-4 text-green-500 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <div className="space-y-2">
-                  <button 
-                    onClick={() => openPaymentModal(service.key)} 
-                    className={`w-full py-2 md:py-3 rounded-xl font-bold transition-all hover:scale-105 text-center block text-sm md:text-base ${
-                      offerExpired 
-                        ? 'bg-blue-500 hover:bg-blue-600 text-white border-2 border-blue-300' 
-                        : service.key === 'consultation' 
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-purple-300' 
-                          : service.key === 'google'
-                            ? 'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white border-2 border-yellow-300'
-                            : isFlashSale
-                              ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-purple-300'
-                              : isSpecialPrice 
-                                ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-2 border-green-300' 
-                                : 'bg-gray-500 hover:bg-gray-600 text-white'
-                    }`}
+
+                <div className="p-6">
+                  <div className="text-center mb-4">
+                    <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                      {service.price}
+                    </div>
+                    <div className="text-gray-400 line-through text-sm">
+                      {service.originalPrice}
+                    </div>
+                    <div className="text-xs text-green-600 font-semibold mt-1">
+                      Save {service.discount}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2 mb-4">
+                    {service.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
+                        <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {service.locations.map((loc) => (
+                      <span key={loc} className="bg-purple-50 text-purple-700 text-[10px] px-2 py-0.5 rounded-full">
+                        {loc}
+                      </span>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => openQuickForm(service.title)}
+                    className={`w-full py-2.5 rounded-xl font-bold transition-all hover:scale-105 text-center text-sm md:text-base bg-gradient-to-r ${service.gradient} text-white shadow-lg hover:shadow-xl`}
                   >
-                    {offerExpired 
-                      ? '💳 Book Now' 
-                      : service.key === 'consultation' 
-                        ? '🎯 Get Consultation for ₹1!' 
-                        : service.key === 'google'
-                          ? '🔥 Get for ₹999 Now!'
-                          : isFlashSale
-                            ? '⚡ Grab 20% OFF Now!'
-                            : isSpecialPrice 
-                              ? '💳 Book Now - Save 10%' 
-                              : '📞 Contact for Price'
-                    }
-                  </button>
-                  <button 
-                    onClick={() => openQuickForm(priceData[service.key].name)} 
-                    className="w-full py-2 rounded-xl font-bold transition-all hover:scale-105 text-center block bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-xs md:text-sm border-2 border-blue-300"
-                  >
-                    💬 {offerExpired ? 'Get Quote' : 'Free Inquiry'}
+                    Avail Offer
                   </button>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Office Locations Section */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our <span className="text-purple-600">Office Locations</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Visit us at any of our 3 locations for personalized service
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {offices.map((office) => (
+              <div 
+                key={office.city}
+                className={`p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 ${
+                  office.isHeadOffice 
+                    ? 'bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-400' 
+                    : 'bg-gray-50 border border-gray-200'
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-3xl">{office.flag}</span>
+                  <div>
+                    <h3 className="font-bold text-gray-900">{office.name}</h3>
+                    {office.isHeadOffice && (
+                      <span className="bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
+                        ★ HEAD OFFICE
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">{office.address}</p>
+                <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-purple-600 font-semibold text-sm hover:underline">
+                  📞 {office.phone}
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-r from-purple-50 to-pink-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Why Choose <span className="text-purple-600">Growth Service</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We deliver exceptional digital solutions with a personal touch
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-center hover:shadow-xl transition-all hover:-translate-y-2">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-purple-600" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-800 mb-2">300+ Happy Clients</h3>
+              <p className="text-gray-600 text-sm">Trusted by businesses across India and Nepal</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-center hover:shadow-xl transition-all hover:-translate-y-2">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building className="h-8 w-8 text-blue-600" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-800 mb-2">3 Office Locations</h3>
+              <p className="text-gray-600 text-sm">Jaipur • Vrindavan • Nepal (Head Office)</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-lg text-center hover:shadow-xl transition-all hover:-translate-y-2">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Rocket className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-800 mb-2">24/7 Support</h3>
+              <p className="text-gray-600 text-sm">Round-the-clock assistance across all timezones</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-br from-blue-500 to-purple-500 text-white text-center">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-            {offerExpired ? 'Ready to Grow Your Business?' : 'Ready to Transform Your Business?'}
+      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-4xl font-bold mb-4">
+            Ready to Grow Your Business?
           </h2>
-          <p className="text-lg md:text-xl mb-6">
-            {offerExpired ? 'Contact us now for professional digital services!' : 'Contact us now and get your digital transformation started!'}
+          <p className="text-lg md:text-xl mb-6 text-purple-100">
+            Contact us today and avail our special offers. Expert consultation at just ₹1!
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-            <button 
-              onClick={() => window.open(`https://wa.me/91${WHATSAPP_NUMBER}`, '_blank')}
-              className="bg-green-500 hover:bg-green-600 text-white px-6 md:px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 justify-center"
-            >
-              <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
-              WhatsApp Now
-            </button>
-            <button 
-              onClick={() => window.open(`tel:+91${WHATSAPP_NUMBER}`, '_blank')}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-6 md:px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 justify-center"
-            >
-              <Phone className="h-4 w-4 md:h-5 md:w-5" />
-              Call: +91 {WHATSAPP_NUMBER}
-            </button>
-            <button 
+          
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
               onClick={() => setIsFormOpen(true)}
-              className="bg-purple-500 hover:bg-purple-600 text-white px-6 md:px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 justify-center"
+              className="bg-yellow-400 hover:bg-yellow-500 text-purple-900 px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 justify-center"
             >
-              <Mail className="h-4 w-4 md:h-5 md:w-5" />
-              Email Us
+              <Gift className="h-5 w-5" />
+              Avail Special Offer
             </button>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 justify-center"
+            >
+              <MessageCircle className="h-5 w-5" />
+              WhatsApp (Nepal HQ)
+            </a>
+            <a
+              href={`tel:${INDIA_PHONE}`}
+              className="bg-white/20 hover:bg-white/30 text-white px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 backdrop-blur-sm border border-white/30 flex items-center gap-2 justify-center"
+            >
+              <Phone className="h-5 w-5" />
+              Call India Office
+            </a>
+          </div>
+
+          <div className="mt-6 text-sm text-purple-200">
+            <span className="flex items-center justify-center gap-2">
+              <MapPin className="h-4 w-4" />
+              Jaipur • Vrindavan • Nepal (Head Office)
+            </span>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      {/* <footer className="bg-gray-900 text-white py-8 md:py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <div>
-              <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-blue-400">DiziGrow</h3>
-              <p className="text-gray-400 text-sm md:text-base">
-                Your trusted partner for digital growth and online success.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-base md:text-lg font-bold mb-3 md:mb-4">Contact Info</h4>
-              <div className="space-y-2 text-sm md:text-base text-gray-400">
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  <span>+91 {WHATSAPP_NUMBER}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  <span>info@dizigrow.com</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>India</span>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-base md:text-lg font-bold mb-3 md:mb-4">Connect With Us</h4>
-              <div className="flex gap-3">
-                <button 
-                  onClick={() => window.open(`https://wa.me/91${WHATSAPP_NUMBER}`, '_blank')}
-                  className="bg-green-500 hover:bg-green-600 p-2 rounded-lg transition-colors"
-                >
-                  <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
-                </button>
-                <button 
-                  onClick={() => window.open(`tel:+91${WHATSAPP_NUMBER}`, '_blank')}
-                  className="bg-blue-500 hover:bg-blue-600 p-2 rounded-lg transition-colors"
-                >
-                  <Phone className="h-4 w-4 md:h-5 md:w-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center">
-            <p className="text-gray-400 text-sm md:text-base">
-              © 2024 DiziGrow. All rights reserved. | {offerExpired ? 'Professional Services' : 'Special Offer'}
-            </p>
-          </div>
-        </div>
-      </footer> */}
-
-      {/* Payment Modal */}
-      {isPaymentOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-4 md:p-6 max-w-md w-full shadow-2xl border-2 border-purple-300">
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
-                  <CreditCard className="h-5 w-5 md:h-6 md:w-6 text-purple-500" />
-                  {offerExpired ? 'Book Service' : isGoogleService ? 'Special ₹999' : paymentService.includes('Consultation') ? 'Consultation ₹1' : isFlashSale ? 'Flash Sale 20% OFF' : 'Advance Booking'}
-                </h3>
-                <p className="text-purple-600 font-semibold text-xs md:text-sm mt-1">{paymentService}</p>
-              </div>
-              <button onClick={() => setIsPaymentOpen(false)} className="text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded-full">
-                <X className="h-5 w-5 md:h-6 md:w-6" />
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              <div className={`p-3 md:p-4 rounded-xl border-2 ${
-                offerExpired 
-                  ? 'bg-blue-50 border-blue-200' 
-                  : paymentService.includes('Consultation')
-                    ? 'bg-purple-50 border-purple-200' 
-                    : isGoogleService 
-                      ? 'bg-yellow-50 border-yellow-200' 
-                      : isFlashSale
-                        ? 'bg-purple-50 border-purple-200'
-                        : 'bg-green-50 border-green-200'
-              }`}>
-                <div className="text-center">
-                  <div className={`text-2xl md:text-3xl font-bold mb-2 ${
-                    offerExpired 
-                      ? 'text-blue-600' 
-                      : paymentService.includes('Consultation')
-                        ? 'text-purple-600' 
-                        : isGoogleService 
-                          ? 'text-yellow-600' 
-                          : isFlashSale 
-                            ? 'text-purple-600' 
-                            : 'text-green-600'
-                  }`}>
-                    ₹{paymentAmount.toLocaleString()}
-                  </div>
-                  <div className={`font-semibold text-sm md:text-base ${
-                    offerExpired 
-                      ? 'text-blue-700' 
-                      : paymentService.includes('Consultation')
-                        ? 'text-purple-700' 
-                        : isGoogleService 
-                          ? 'text-yellow-700' 
-                          : isFlashSale 
-                            ? 'text-purple-700' 
-                            : 'text-green-700'
-                  }`}>
-                    {offerExpired 
-                      ? 'Service Price' 
-                      : paymentService.includes('Consultation')
-                        ? 'Special Consultation Price!' 
-                        : isGoogleService 
-                          ? 'Special Price!' 
-                          : isFlashSale 
-                            ? 'Flash Sale 20% OFF!' 
-                            : 'After 10% Advance Discount'
-                    }
-                  </div>
-                  {!offerExpired && !paymentService.includes('Consultation') && !isGoogleService && (
-                    <div className="text-gray-500 text-xs md:text-sm line-through mt-1">
-                      Original: ₹{originalAmount.toLocaleString()}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <button 
-                onClick={initiateRazorpayPayment}
-                className={`w-full py-3 md:py-4 rounded-xl font-bold transition-all hover:scale-105 flex items-center justify-center gap-2 md:gap-3 text-base md:text-lg shadow-lg ${
-                  offerExpired 
-                    ? 'bg-blue-500 hover:bg-blue-600 text-white border-2 border-blue-300' 
-                    : paymentService.includes('Consultation')
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-purple-300' 
-                    : isGoogleService 
-                      ? 'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white border-2 border-yellow-300' 
-                      : isFlashSale
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-purple-300'
-                        : 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-2 border-green-300'
-                }`}
-              >
-                <CreditCard className="h-4 w-4 md:h-5 md:w-5" />
-                {offerExpired 
-                  ? `Pay ₹${paymentAmount.toLocaleString()}` 
-                  : `Pay ₹${paymentAmount.toLocaleString()} Now`
-                }
-              </button>
-
-              <button 
-                onClick={() => {setIsPaymentOpen(false); setIsFormOpen(true);}}
-                className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-2 md:py-3 rounded-xl font-bold transition-all hover:scale-105 text-center block border-2 border-blue-300 text-sm md:text-base"
-              >
-                💬 Contact First Instead
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Success Form Modal - Opens after payment */}
-      {isSuccessFormOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-4 md:p-6 max-w-md w-full shadow-2xl border-2 border-green-300">
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
-                  <Check className="h-5 w-5 md:h-6 md:w-6 text-green-500" />
-                  Payment Successful! 🎉
-                </h3>
-                <p className="text-green-600 font-semibold text-xs md:text-sm mt-1">Complete your details to start service</p>
-              </div>
-              <button onClick={() => setIsSuccessFormOpen(false)} className="text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded-full">
-                <X className="h-5 w-5 md:h-6 md:w-6" />
-              </button>
-            </div>
-            
-            <form onSubmit={handleSuccessSubmit} className="space-y-3 md:space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                <input 
-                  type="text" 
-                  name="name" 
-                  required 
-                  value={successFormData.name} 
-                  onChange={handleSuccessFormChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base" 
-                  placeholder="Enter your full name" 
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                <input 
-                  type="email" 
-                  name="email" 
-                  required 
-                  value={successFormData.email} 
-                  onChange={handleSuccessFormChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base" 
-                  placeholder="Enter your email" 
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">UTR Number *</label>
-                <input 
-                  type="text" 
-                  name="utr" 
-                  required 
-                  value={successFormData.utr} 
-                  onChange={handleSuccessFormChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base" 
-                  placeholder="Enter UTR number from payment" 
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Service *</label>
-                <input 
-                  type="text" 
-                  name="service" 
-                  required 
-                  value={successFormData.service} 
-                  onChange={handleSuccessFormChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base bg-gray-50" 
-                  readOnly
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Amount Paid *</label>
-                <input 
-                  type="text" 
-                  name="amount" 
-                  required 
-                  value={successFormData.amount} 
-                  onChange={handleSuccessFormChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base bg-gray-50" 
-                  readOnly
-                />
-              </div>
-              <button 
-                type="submit" 
-                className="w-full py-3 md:py-4 rounded-xl font-bold transition-all hover:scale-105 flex items-center justify-center gap-2 md:gap-3 text-base md:text-lg shadow-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-2 border-green-300"
-              >
-                <Send className="h-4 w-4 md:h-5 md:w-5" />
-                Submit & Start Service
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
       {/* Contact Form Modal */}
       {isFormOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-4 md:p-6 max-w-md w-full shadow-2xl border-2 border-purple-300">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border-2 border-purple-300 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">
-                  {offerExpired ? '📞 Contact Us' : '🎯 Special Offer Application'}
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
+                  <Gift className="h-5 w-5 text-purple-600" />
+                  Avail Special Offer
                 </h3>
-                {selectedService && <p className="text-purple-600 font-semibold text-xs md:text-sm mt-1">{selectedService}</p>}
+                {selectedService && (
+                  <p className="text-purple-600 font-semibold text-sm mt-1">{selectedService}</p>
+                )}
               </div>
-              <button onClick={() => setIsFormOpen(false)} className="text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded-full">
-                <X className="h-5 w-5 md:h-6 md:w-6" />
+              <button 
+                onClick={() => setIsFormOpen(false)} 
+                className="text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded-full"
+              >
+                <X className="h-6 w-6" />
               </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                 <input 
@@ -1085,10 +619,11 @@ const Offer: React.FC = () => {
                   required 
                   value={formData.name} 
                   onChange={handleInputChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm md:text-base" 
+                  className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Enter your full name" 
                 />
               </div>
+              
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
                 <input 
@@ -1097,39 +632,58 @@ const Offer: React.FC = () => {
                   required 
                   value={formData.email} 
                   onChange={handleInputChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm md:text-base" 
+                  className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Enter your email" 
                 />
               </div>
+              
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone / WhatsApp *</label>
                 <input 
                   type="tel" 
                   name="phone" 
                   required 
                   value={formData.phone} 
                   onChange={handleInputChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm md:text-base" 
-                  placeholder="Enter your WhatsApp number" 
+                  className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Enter your phone number" 
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Service Interested In *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Office Location</label>
                 <select 
-                  name="service" 
-                  required 
-                  value={formData.service} 
-                  onChange={handleInputChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm md:text-base"
+                  name="location" 
+                  value={formData.location} 
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
-                  <option value="">Select your service</option>
-                  {servicesList.map(service => (
-                    <option key={service.key} value={priceData[service.key].name}>
-                      {priceData[service.key].name} - ₹{getServicePrice(service.key).toLocaleString()}
+                  <option value="">Select your preferred office</option>
+                  {offices.map((office) => (
+                    <option key={office.city} value={office.city}>
+                      {office.flag} {office.name} {office.isHeadOffice ? '(Head Office)' : ''}
                     </option>
                   ))}
                 </select>
               </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Service Interested In</label>
+                <select 
+                  name="service" 
+                  value={formData.service} 
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">Select a service</option>
+                  {services.map((service) => (
+                    <option key={service.id} value={service.title}>
+                      {service.title} - {service.price}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Your Requirements</label>
                 <textarea 
@@ -1137,17 +691,22 @@ const Offer: React.FC = () => {
                   rows={3} 
                   value={formData.message} 
                   onChange={handleInputChange} 
-                  className="w-full px-3 md:px-4 py-2 md:py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm md:text-base" 
+                  className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Tell us about your requirements..." 
                 />
               </div>
+              
               <button 
                 type="submit" 
-                className="w-full py-3 md:py-4 rounded-xl font-bold transition-all hover:scale-105 flex items-center justify-center gap-2 md:gap-3 text-base md:text-lg shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-purple-300"
+                className="w-full py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-purple-300 shadow-lg"
               >
-                <Send className="h-4 w-4 md:h-5 md:w-5" />
-                {offerExpired ? 'Send Inquiry' : 'Send Special Offer Request'}
+                <Send className="h-5 w-5" />
+                Send Request via WhatsApp
               </button>
+              
+              <p className="text-xs text-gray-500 text-center">
+                Your request will be sent to our Nepal Head Office for quick response
+              </p>
             </form>
           </div>
         </div>

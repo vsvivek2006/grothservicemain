@@ -12,61 +12,201 @@ import {
   Linkedin,
   Youtube,
   Shield,
-  AlertTriangle
+  AlertTriangle,
+  Clock,
+  Award,
+  Globe,
+  ChevronRight,
+  Briefcase,
+  Users,
+  Target,
+  Zap
 } from "lucide-react";
+
+interface OfficeLocation {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  country: string;
+  flag: string;
+  isHeadOffice?: boolean;
+  timings?: string;
+  googleMaps?: string;
+  landmark?: string;
+}
+
+interface FooterLink {
+  name: string;
+  path: string;
+  emoji: string;
+}
+
+interface SocialLink {
+  icon: React.ElementType;
+  href: string;
+  label: string;
+  color: string;
+  handle: string;
+}
+
+interface TrustBadge {
+  text: string;
+  path: string;
+  icon: string;
+}
 
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
+  // Office Locations Data
+  const offices: OfficeLocation[] = [
+    {
+      id: "india-jaipur",
+      name: "India Office - Jaipur",
+      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
+      phone: "+91 62073 00553",
+      country: "India",
+      flag: "🇮🇳",
+      isHeadOffice: true,
+      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
+      googleMaps: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
+      landmark: "Near Jagatpura Flyover"
+    },
+    {
+      id: "india-vrindavan",
+      name: "India Office - Vrindavan",
+      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
+      phone: "+91 93414 36937",
+      country: "India",
+      flag: "🇮🇳",
+      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
+      googleMaps: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
+      landmark: "Radhika Sadan ki Bassinet me"
+    },
+    {
+      id: "nepal",
+      name: "Nepal Office",
+      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
+      phone: "+977 970-7382481",
+      country: "Nepal",
+      flag: "🇳🇵",
+      timings: "Sun-Fri: 10:00 AM - 6:00 PM",
+      googleMaps: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal",
+      landmark: "Near Bariyarpatti Main Road"
+    }
+  ];
+
+  // Navigation Links
+  const aboutLinks: FooterLink[] = [
+    { name: "About Growth Service", path: "/about", emoji: "🏢" },
+    { name: "Our Team", path: "/about#team", emoji: "👥" },
+    { name: "Careers", path: "/careers", emoji: "💼" },
+    { name: "Terms & Conditions", path: "/terms", emoji: "📜" },
+    { name: "Privacy Policy", path: "/privacy", emoji: "🔒" },
+    { name: "Refund Policy", path: "/refund", emoji: "💸" },
+    { name: "Client Success Stories", path: "/success-stories", emoji: "🏆" }
+  ];
+
+  const digitalSolutions: FooterLink[] = [
+    { name: "Digital Marketing", path: "/digital-marketing", emoji: "📈" },
+    { name: "Social Media Management", path: "/social-media", emoji: "📱" },
+    { name: "SEO Services", path: "/seo", emoji: "🔍" },
+    { name: "Meta Ads Management", path: "/paid-marketing", emoji: "🎯" },
+    { name: "Google Business Profile", path: "/local-seo", emoji: "📍" },
+    { name: "Website Development", path: "/web-development", emoji: "💻" },
+    { name: "Brand Strategy", path: "/branding", emoji: "🎨" },
+    { name: "E-commerce Solutions", path: "/ecommerce", emoji: "🛒" }
+  ];
+
+  const resources: FooterLink[] = [
+    { name: "Blog & Articles", path: "/blog", emoji: "✍️" },
+    { name: "Case Studies", path: "/case-studies", emoji: "📊" },
+    { name: "Free Digital Audit", path: "/free-audit", emoji: "🔍" },
+    { name: "Digital Marketing Guides", path: "/resources", emoji: "📖" },
+    { name: "Video Tutorials", path: "/resources#tutorials", emoji: "🎥" },
+    { name: "Webinars", path: "/webinars", emoji: "🎤" },
+    { name: "Help Center", path: "/help-center", emoji: "❓" },
+    { name: "FAQs", path: "/faq", emoji: "❔" }
+  ];
+
+  const socialLinks: SocialLink[] = [
+    { icon: Facebook, href: "https://facebook.com/growthservices", label: "Facebook", color: "hover:text-blue-500", handle: "@growthservices" },
+    { icon: Instagram, href: "https://instagram.com/growth_servces", label: "Instagram", color: "hover:text-pink-500", handle: "@growth_servces" },
+    { icon: Linkedin, href: "https://linkedin.com/company/growthservice", label: "LinkedIn", color: "hover:text-blue-400", handle: "growthservice" },
+    { icon: Youtube, href: "https://youtube.com/@growthservice", label: "YouTube", color: "hover:text-red-500", handle: "@growthservice" }
+  ];
+
+  const trustBadges: TrustBadge[] = [
+    { text: "🚀 Social Media Marketing", path: "/social-media" },
+    { text: "🎯 Meta Ads Management", path: "/paid-marketing" },
+    { text: "🔍 SEO Services", path: "/seo" },
+    { text: "💻 Website Development", path: "/web-development" },
+    { text: "📧 Email Marketing", path: "/email-marketing" },
+    { text: "🛒 E-commerce Solutions", path: "/ecommerce" },
+    { text: "📱 App Development", path: "/app-development" },
+    { text: "🎨 UI/UX Design", path: "/ui-ux" }
+  ];
+
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Rating Section with Enhanced Design */}
+    <footer className="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        {/* Rating Section */}
         <div className="text-center mb-12 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
-          <div className="relative bg-gradient-to-r from-purple-900/50 to-pink-900/50 backdrop-blur-sm border border-purple-700/50 rounded-2xl p-6">
-            <div className="flex justify-center items-center mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-7 w-7 text-yellow-400 fill-current mx-1 animate-pulse" />
-              ))}
-              <span className="ml-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-bold px-3 py-1 rounded-full text-sm">
+          <div className="relative bg-gradient-to-r from-purple-900/50 to-pink-900/50 backdrop-blur-sm border border-purple-700/50 rounded-2xl p-6 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300">
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-7 w-7 text-yellow-400 fill-current mx-0.5 animate-pulse" />
+                ))}
+              </div>
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm">
                 4.8/5
+              </span>
+              <span className="text-gray-300 text-sm flex items-center">
+                <Users className="h-4 w-4 mr-1" />
+                300+ Reviews
               </span>
             </div>
             <p className="text-xl font-bold bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent mb-2">
-              Trusted by 300+ Businesses
+              Trusted by 500+ Businesses Worldwide
             </p>
             <p className="text-gray-300 text-sm">
-              Rated 4.8/5 average from 300+ reviews on Google & Facebook
+              ⭐ Rated 4.8/5 average across Google, Facebook & Trustpilot
             </p>
+            <div className="flex justify-center gap-6 mt-3 text-xs text-gray-400">
+              <span className="flex items-center"><Award className="h-3 w-3 mr-1 text-yellow-400" /> Google Partner</span>
+              <span className="flex items-center"><Award className="h-3 w-3 mr-1 text-yellow-400" /> Meta Business Partner</span>
+              <span className="flex items-center"><Award className="h-3 w-3 mr-1 text-yellow-400" /> Trustpilot 4.7</span>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* ABOUT COMPANY */}
-          <div>
+          <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
               <Shield className="h-5 w-5 mr-2" />
-              ABOUT COMPANY
+              ABOUT
             </h3>
-            <ul className="space-y-2">
-              {[
-                { name: "About Growth Service", path: "/about", emoji: "🏢" },
-                { name: "Our Team", path: "/about#team", emoji: "👥" },
-                { name: "Careers", path: "/careers", emoji: "💼" },
-                { name: "Terms & Conditions", path: "/terms", emoji: "📜" },
-                { name: "Privacy Policy", path: "/privacy", emoji: "🔒" },
-                { name: "Refund Policy", path: "/refund", emoji: "💸" },
-                { name: "Client Success Stories", path: "/success-stories", emoji: "🏆" }
-              ].map((item) => (
+            <ul className="space-y-1">
+              {aboutLinks.map((item) => (
                 <li key={item.name}>
                   <Link 
                     to={item.path}
-                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-2 hover:translate-x-2 transform group"
+                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-1.5 hover:translate-x-2 transform group"
                   >
                     <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">{item.emoji}</span>
                     {item.name}
-                    <span className="ml-2 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    <ChevronRight className="h-3 w-3 inline ml-1 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                 </li>
               ))}
@@ -74,30 +214,21 @@ const Footer: React.FC = () => {
           </div>
 
           {/* DIGITAL SOLUTIONS */}
-          <div>
+          <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
               <span className="mr-2">🚀</span>
-              DIGITAL SOLUTIONS
+              SOLUTIONS
             </h3>
-            <ul className="space-y-2">
-              {[
-                { name: "Digital Marketing", path: "/digital-marketing", emoji: "📈" },
-                { name: "Social Media Management", path: "/social-media", emoji: "📱" },
-                { name: "SEO Services", path: "/seo", emoji: "🔍" },
-                { name: "Meta Ads Management", path: "/paid-marketing", emoji: "🎯" },
-                { name: "Google Business Profile", path: "/local-seo", emoji: "📍" },
-                { name: "Website Development", path: "/web-development", emoji: "💻" },
-                { name: "Brand Strategy", path: "/branding", emoji: "🎨" },
-                { name: "E-commerce Solutions", path: "/ecommerce", emoji: "🛒" }
-              ].map((item) => (
+            <ul className="space-y-1">
+              {digitalSolutions.map((item) => (
                 <li key={item.name}>
                   <Link 
                     to={item.path}
-                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-2 hover:translate-x-2 transform group"
+                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-1.5 hover:translate-x-2 transform group"
                   >
                     <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">{item.emoji}</span>
                     {item.name}
-                    <span className="ml-2 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    <ChevronRight className="h-3 w-3 inline ml-1 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                 </li>
               ))}
@@ -105,160 +236,165 @@ const Footer: React.FC = () => {
           </div>
 
           {/* RESOURCES */}
-          <div>
+          <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
               <span className="mr-2">📚</span>
               RESOURCES
             </h3>
-            <ul className="space-y-2">
-              {[
-                { name: "Blog & Articles", path: "/blog", emoji: "✍️" },
-                { name: "Case Studies", path: "/case-studies", emoji: "📊" },
-                { name: "Free Digital Audit", path: "/free-audit", emoji: "🔍" },
-                { name: "Digital Marketing Guides", path: "/resources", emoji: "📖" },
-                { name: "Video Tutorials", path: "/resources#tutorials", emoji: "🎥" },
-                { name: "Webinars", path: "/webinars", emoji: "🎤" },
-                { name: "Help Center", path: "/help-center", emoji: "❓" },
-                { name: "FAQs", path: "/faq", emoji: "❔" }
-              ].map((item) => (
+            <ul className="space-y-1">
+              {resources.map((item) => (
                 <li key={item.name}>
                   <Link 
                     to={item.path}
-                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-2 hover:translate-x-2 transform group"
+                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-1.5 hover:translate-x-2 transform group"
                   >
                     <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">{item.emoji}</span>
                     {item.name}
-                    <span className="ml-2 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    <ChevronRight className="h-3 w-3 inline ml-1 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* HEAD OFFICE - FIXED NUMBERS */}
-          <div>
+          {/* OFFICE LOCATIONS - Now showing all 3 */}
+          <div className="lg:col-span-2">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
               <Building className="h-5 w-5 mr-2" />
-              HEAD OFFICE
+              OUR OFFICES
             </h3>
             <div className="space-y-4">
-              <div className="flex items-start space-x-3 group hover:bg-purple-900/30 p-3 rounded-lg transition-all">
-                <MapPin className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                <div>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    <span className="font-semibold text-purple-300">Radhika Sadan, Pushpa Garden</span><br />
-                    Kailash Nagar, Vrindavan<br />
-                    Uttar Pradesh 281121<br />
-                    <span className="text-purple-300/80 text-xs mt-1 block italic">
-                      (Radhika Sadan ki Bassinet me)
-                    </span>
-                  </p>
+              {offices.map((office) => (
+                <div 
+                  key={office.id}
+                  className={`relative group hover:bg-purple-900/30 p-4 rounded-xl transition-all duration-300 border border-transparent hover:border-purple-700/50 ${
+                    office.isHeadOffice ? 'bg-gradient-to-r from-purple-900/20 to-pink-900/20' : ''
+                  }`}
+                >
+                  {office.isHeadOffice && (
+                    <div className="absolute -top-2 -right-2">
+                      <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
+                        ★ HEAD OFFICE
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
+                        office.isHeadOffice ? 'bg-purple-600' : 'bg-purple-800'
+                      }`}>
+                        {office.flag}
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-purple-300 text-sm flex items-center gap-2">
+                        {office.name}
+                        {office.isHeadOffice && (
+                          <Zap className="h-3 w-3 text-yellow-400 fill-yellow-400" />
+                        )}
+                      </p>
+                      <div className="mt-1 space-y-1">
+                        <p className="text-gray-300 text-xs leading-relaxed flex items-start gap-1">
+                          <MapPin className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />
+                          <span>{office.address}</span>
+                        </p>
+                        {office.landmark && (
+                          <p className="text-purple-400/70 text-[10px] italic ml-4">
+                            📍 {office.landmark}
+                          </p>
+                        )}
+                        <div className="flex flex-wrap items-center gap-3 mt-1">
+                          <Link 
+                            to={`tel:${office.phone.replace(/\s/g, '')}`}
+                            className="text-gray-300 hover:text-purple-300 text-xs flex items-center gap-1 transition-colors"
+                          >
+                            <Phone className="h-3 w-3 text-purple-400" />
+                            {office.phone}
+                          </Link>
+                          {office.googleMaps && (
+                            <a 
+                              href={office.googleMaps}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-purple-400 hover:text-purple-300 text-xs flex items-center gap-1 transition-colors"
+                            >
+                              <Globe className="h-3 w-3" />
+                              Get Directions
+                            </a>
+                          )}
+                        </div>
+                        {office.timings && (
+                          <div className="flex items-center gap-1 text-[10px] text-gray-400 mt-1">
+                            <Clock className="h-3 w-3 text-purple-400" />
+                            {office.timings}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex items-center space-x-3 group hover:bg-purple-900/30 p-3 rounded-lg transition-all">
-                <Phone className="h-5 w-5 text-purple-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <Link 
-                  to="tel:+919341436937"
-                  className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm font-medium group-hover:translate-x-1"
-                >
-                  📞 +91 93414 36937 (India)
-                </Link>
-              </div>
-              
-              <div className="flex items-center space-x-3 group hover:bg-purple-900/30 p-3 rounded-lg transition-all">
-                <MessageCircle className="h-5 w-5 text-purple-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <a 
-                  href="https://wa.me/9779707382481"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm font-medium group-hover:translate-x-1"
-                >
-                  💬 +977 9707382481 (WhatsApp)
-                </a>
-              </div>
-              
-              <div className="flex items-center space-x-3 group hover:bg-purple-900/30 p-3 rounded-lg transition-all">
-                <Mail className="h-5 w-5 text-purple-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <Link 
-                  to="mailto:info@growthservice.in"
-                  className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm font-medium group-hover:translate-x-1 truncate"
-                >
-                  📧 info@growthservice.in
-                </Link>
-              </div>
-
-              {/* Business Hours */}
-              <div className="mt-4 pt-4 border-t border-purple-800">
-                <p className="text-xs text-purple-300 font-semibold mb-1">Business Hours:</p>
-                <p className="text-gray-400 text-xs">
-                  Mon-Sat: 9:00 AM - 7:00 PM<br />
-                  Sunday: 10:00 AM - 5:00 PM
-                </p>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* QUICK CONTACT & SOCIAL */}
-          <div>
+          <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
               <span className="mr-2">⚡</span>
-              QUICK CONNECT
+              CONNECT
             </h3>
             <div className="space-y-4">
               <div>
                 <p className="text-gray-300 text-sm mb-4 leading-relaxed">
-                  Ready to <span className="text-purple-300 font-semibold">grow your business</span> with digital solutions? 
-                  Get in touch with us today for a <span className="text-yellow-300">FREE consultation!</span>
+                  Ready to <span className="text-purple-300 font-semibold">grow your business</span>? 
+                  Get a <span className="text-yellow-300">FREE consultation</span> today!
                 </p>
                 
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <Link 
                     to="/book-call"
-                    className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shadow-purple-500/30"
+                    className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shadow-purple-500/30 text-sm"
                   >
                     📞 Book Free Call
                   </Link>
                   
                   <Link 
                     to="/contact"
-                    className="block w-full border-2 border-purple-500 text-purple-300 hover:bg-purple-900/50 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105"
+                    className="block w-full border-2 border-purple-500 text-purple-300 hover:bg-purple-900/50 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 text-sm"
                   >
                     📝 Contact Form
                   </Link>
                   
                   <Link 
                     to="/free-audit"
-                    className="block w-full border-2 border-yellow-500 text-yellow-300 hover:bg-yellow-900/30 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105"
+                    className="block w-full border-2 border-yellow-500 text-yellow-300 hover:bg-yellow-900/30 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 text-sm"
                   >
                     🔍 Free Website Audit
                   </Link>
                 </div>
               </div>
               
-              {/* Social Media Links - Enhanced */}
-              <div className="pt-4">
+              {/* Social Media */}
+              <div className="pt-2">
                 <p className="text-purple-300 text-sm font-semibold mb-3 flex items-center">
                   <span className="mr-2">🌐</span>
-                  Follow Our Journey
+                  Follow Us
                 </p>
-                <div className="flex space-x-3">
-                  {[
-                    { icon: Facebook, href: "https://facebook.com/growthservices", label: "Facebook", color: "hover:text-blue-500" },
-                    { icon: Instagram, href: "https://instagram.com/growth_servces", label: "Instagram", color: "hover:text-pink-500" },
-                    { icon: Linkedin, href: "https://linkedin.com/company/growthservice", label: "LinkedIn", color: "hover:text-blue-400" },
-                    { icon: Youtube, href: "https://youtube.com/@growthservice", label: "YouTube", color: "hover:text-red-500" }
-                  ].map((social) => (
+                <div className="flex flex-wrap gap-2">
+                  {socialLinks.map((social) => (
                     <a 
                       key={social.label}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`bg-purple-900/50 p-3 rounded-full text-gray-300 ${social.color} transition-all duration-300 hover:scale-110 hover:shadow-lg`}
+                      className={`bg-purple-900/50 p-2.5 rounded-lg text-gray-300 ${social.color} transition-all duration-300 hover:scale-110 hover:shadow-lg group relative`}
                       title={social.label}
                       aria-label={social.label}
                     >
-                      <social.icon className="h-5 w-5" />
+                      <social.icon className="h-4 w-4" />
+                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-[8px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        {social.handle}
+                      </span>
                     </a>
                   ))}
                 </div>
@@ -267,13 +403,13 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Security Alert - Enhanced */}
-        <div className="mt-12 p-6 bg-gradient-to-r from-yellow-900/40 via-orange-900/30 to-red-900/40 border border-yellow-600/50 rounded-xl backdrop-blur-sm">
+        {/* Security Alert */}
+        <div className="mt-12 p-6 bg-gradient-to-r from-yellow-900/40 via-orange-900/30 to-red-900/40 border border-yellow-600/50 rounded-xl backdrop-blur-sm hover:shadow-xl hover:shadow-yellow-500/10 transition-all duration-300">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
               <AlertTriangle className="h-8 w-8 text-yellow-400 animate-pulse" />
             </div>
-            <div>
+            <div className="flex-1">
               <p className="text-yellow-200 text-sm font-bold mb-2 flex items-center">
                 ⚠️ IMPORTANT SECURITY ALERT
               </p>
@@ -289,21 +425,21 @@ const Footer: React.FC = () => {
               <div className="flex flex-wrap gap-3 items-center mt-3 pt-3 border-t border-yellow-700/50">
                 <Link 
                   to="/scam-alert" 
-                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1 rounded-full"
+                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50"
                 >
-                  🛡️ Scam Alert Page
+                  🛡️ Scam Alert
                 </Link>
                 <span className="text-yellow-700">•</span>
                 <Link 
                   to="/verify" 
-                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1 rounded-full"
+                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50"
                 >
                   ✅ Verify Authenticity
                 </Link>
                 <span className="text-yellow-700">•</span>
                 <Link 
                   to="/report-scam" 
-                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1 rounded-full"
+                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50"
                 >
                   🚨 Report Fraud
                 </Link>
@@ -317,9 +453,9 @@ const Footer: React.FC = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
             {/* Copyright */}
             <div className="text-center lg:text-left">
-              <div className="flex items-center justify-center lg:justify-start space-x-2 mb-2">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">GS</span>
+              <div className="flex items-center justify-center lg:justify-start space-x-3 mb-2">
+                <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                  <span className="text-white font-bold text-sm">GS</span>
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">
@@ -333,51 +469,36 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Quick Links */}
-            <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <Link to="/terms" className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1 hover:bg-purple-900/30 rounded-full">
-                Terms of Service
-              </Link>
-              <Link to="/privacy" className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1 hover:bg-purple-900/30 rounded-full">
-                Privacy Policy
-              </Link>
-              <Link to="/refund" className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1 hover:bg-purple-900/30 rounded-full">
-                Refund Policy
-              </Link>
-              <Link to="/sitemap" className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1 hover:bg-purple-900/30 rounded-full">
-                Sitemap
-              </Link>
-              <Link to="/accessibility" className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1 hover:bg-purple-900/30 rounded-full">
-                Accessibility
-              </Link>
+            <div className="flex flex-wrap justify-center gap-2 text-sm">
+              {['Terms', 'Privacy', 'Refund', 'Sitemap', 'Accessibility'].map((item) => (
+                <Link 
+                  key={item}
+                  to={`/${item.toLowerCase()}`}
+                  className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1.5 hover:bg-purple-900/30 rounded-full text-xs"
+                >
+                  {item}
+                </Link>
+              ))}
             </div>
 
             {/* Certifications */}
             <div className="text-center">
               <p className="text-gray-500 text-xs mb-2">Certified & Trusted</p>
               <div className="flex items-center justify-center space-x-2">
-                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2 py-1 rounded">🔐 SSL Secured</span>
-                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2 py-1 rounded">📈 Google Partner</span>
-                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2 py-1 rounded">⭐ Trustpilot</span>
+                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full">🔐 SSL Secured</span>
+                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full">📈 Google Partner</span>
+                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full">⭐ Trustpilot 4.7</span>
               </div>
             </div>
           </div>
 
-          {/* Trust Badges - Enhanced */}
-          <div className="flex flex-wrap justify-center items-center gap-3 mt-6 pt-6 border-t border-purple-800">
-            {[
-              { text: "🚀 Social Media Marketing", path: "/social-media" },
-              { text: "🎯 Meta Ads Management", path: "/paid-marketing" },
-              { text: "🔍 SEO Services", path: "/seo" },
-              { text: "💻 Website Development", path: "/web-development" },
-              { text: "📧 Email Marketing", path: "/email-marketing" },
-              { text: "🛒 E-commerce Solutions", path: "/ecommerce" },
-              { text: "📱 App Development", path: "/app-development" },
-              { text: "🎨 UI/UX Design", path: "/ui-ux" }
-            ].map((badge) => (
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center items-center gap-2 mt-6 pt-6 border-t border-purple-800">
+            {trustBadges.map((badge) => (
               <Link 
                 key={badge.text}
                 to={badge.path}
-                className="text-purple-300 text-xs bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-purple-700/50 px-3 py-2 rounded-full hover:from-purple-700 hover:to-pink-700 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                className="text-purple-300 text-[10px] bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-purple-700/50 px-3 py-1.5 rounded-full hover:from-purple-700 hover:to-pink-700 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg"
               >
                 {badge.text}
               </Link>
@@ -386,11 +507,11 @@ const Footer: React.FC = () => {
 
           {/* Final Note */}
           <div className="text-center mt-6 pt-4 border-t border-purple-800/50">
-            <p className="text-gray-500 text-xs">
+            <p className="text-gray-500 text-[10px]">
               Growth Service is a registered digital marketing agency. All trademarks, logos and brand names are the property of their respective owners.
             </p>
-            <p className="text-gray-600 text-xs mt-1">
-              Made with ❤️ for growing businesses • <Link to="/contact" className="text-purple-400 hover:text-purple-300">Partner with us</Link>
+            <p className="text-gray-600 text-[10px] mt-1">
+              Made with ❤️ for growing businesses • <Link to="/contact" className="text-purple-400 hover:text-purple-300 transition-colors">Partner with us</Link>
             </p>
           </div>
         </div>

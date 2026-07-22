@@ -1,44 +1,108 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Home, ArrowLeft, Search, Code, Globe, Smartphone, TrendingUp, MessageCircle, Phone, Mail, ChevronRight } from "lucide-react";
+import { 
+  Home, 
+  ArrowLeft, 
+  Search, 
+  Code, 
+  Globe, 
+  Smartphone, 
+  TrendingUp, 
+  MessageCircle, 
+  Phone, 
+  Mail, 
+  ChevronRight,
+  MapPin,
+  Building,
+  Users,
+  Rocket,
+  Shield,
+  Award,
+  Zap
+} from "lucide-react";
 import { Helmet } from "react-helmet";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
-  // Popular services
+  // Office Locations
+  const offices = [
+    {
+      city: "Jaipur",
+      flag: "🇮🇳",
+      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
+      phone: "+91 62073 00553"
+    },
+    {
+      city: "Vrindavan",
+      flag: "🇮🇳",
+      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121",
+      phone: "+91 93414 36937"
+    },
+    {
+      city: "Nepal",
+      flag: "🇳🇵",
+      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
+      phone: "+977 970-7382481",
+      isHeadOffice: true
+    }
+  ];
+
+  // Popular Services
   const popularServices = [
+    {
+      icon: <Search className="h-5 w-5" />,
+      title: "SEO Services",
+      description: "From ₹8,999/month • Complete SEO",
+      link: "/seo",
+      tag: "40% OFF"
+    },
     {
       icon: <Code className="h-5 w-5" />,
       title: "Website Development",
       description: "From ₹9,999 • 7-10 days",
-      link: "/design-development"
+      link: "/web-development",
+      tag: "52% OFF"
     },
     {
       icon: <Globe className="h-5 w-5" />,
-      title: "SEO Package",
-      description: "From ₹7,779/month • 4 reports",
-      link: "/digital-marketing"
+      title: "Social Media Marketing",
+      description: "From ₹4,999/month • 3 Platforms",
+      link: "/social-media",
+      tag: "50% OFF"
     },
     {
       icon: <Smartphone className="h-5 w-5" />,
-      title: "Social Media",
-      description: "From ₹4,449/month • Complete management",
-      link: "/digital-marketing"
+      title: "Google Business Profile",
+      description: "Only ₹999 • Full Setup",
+      link: "/local-seo",
+      tag: "Hot Deal"
     },
     {
       icon: <TrendingUp className="h-5 w-5" />,
-      title: "Meta Ads",
-      description: "From ₹9,999/month • Professional ads",
-      link: "/digital-marketing"
+      title: "Meta Ads Management",
+      description: "From ₹9,999/month • Professional Ads",
+      link: "/paid-marketing",
+      tag: "Expert Setup"
+    },
+    {
+      icon: <Users className="h-5 w-5" />,
+      title: "Consultation",
+      description: "Only ₹1 • 30-Minute Strategy",
+      link: "/book-call",
+      tag: "Special Offer"
     }
   ];
 
-  // Quick links
+  // Quick Links
   const quickLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Services", path: "/services" },
+    { name: "SEO Services", path: "/seo" },
+    { name: "Web Development", path: "/web-development" },
+    { name: "Social Media", path: "/social-media" },
+    { name: "Meta Ads", path: "/paid-marketing" },
     { name: "Blog", path: "/blog" },
     { name: "Contact", path: "/contact" },
     { name: "Book a Call", path: "/book-call" },
@@ -46,45 +110,95 @@ const NotFound: React.FC = () => {
     { name: "Portfolio", path: "/portfolio" }
   ];
 
-  // Project types
+  // Popular Projects with Pricing
   const projectTypes = [
+    {
+      type: "Business Website",
+      price: "₹9,999",
+      desc: "5 Page Responsive Website",
+      link: "/web-development"
+    },
+    {
+      type: "E-commerce Store",
+      price: "₹14,999",
+      desc: "Complete Online Store Setup",
+      link: "/ecommerce"
+    },
     {
       type: "Tour & Travel Website",
       price: "₹14,999",
-      link: "/contact"
+      desc: "Booking & Tour Management",
+      link: "/web-development"
     },
     {
       type: "Guest House Website",
       price: "₹12,999",
-      link: "/contact"
-    },
-    {
-      type: "Business Website",
-      price: "₹9,999",
-      link: "/contact"
+      desc: "Room Booking & Management",
+      link: "/web-development"
     },
     {
       type: "B2B Setup",
       price: "₹24,999",
-      link: "/contact"
+      desc: "Complete B2B Digital Solution",
+      link: "/web-development"
+    },
+    {
+      type: "SEO Package",
+      price: "₹7,779/month",
+      desc: "Monthly SEO Optimization",
+      link: "/seo"
     }
   ];
+
+  // Technology Stack
+  const techStack = [
+    "React.js", "TypeScript", "Node.js", 
+    "MongoDB", "Next.js", "Tailwind CSS",
+    "Express.js", "GraphQL", "PostgreSQL"
+  ];
+
+  // WhatsApp Number (Nepal Head Office)
+  const whatsappNumber = "9779707382481";
+  const indiaPhone = "919341436937";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>404 - Page Not Found | Growth Service</title>
+        <title>404 - Page Not Found | Growth Service - Digital Agency in Jaipur, Vrindavan & Nepal</title>
         <meta
           name="description"
-          content="Page not found. Explore Growth Service's professional web development & digital marketing services. Get website from ₹9,999, SEO from ₹7,779/month."
+          content="Page not found. Explore Growth Service's professional web development & digital marketing services. Offices in Jaipur, Vrindavan & Nepal. Get website from ₹9,999, SEO from ₹7,779/month."
+        />
+        <meta 
+          name="keywords" 
+          content="404 page, page not found, digital marketing Jaipur, web development Vrindavan, SEO Nepal, growth service, digital agency"
         />
         <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://growthservice.in/404" />
       </Helmet>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* 404 Header */}
         <div className="text-center mb-8 md:mb-12">
+          {/* Office Location Badges */}
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {offices.map((office) => (
+              <div 
+                key={office.city}
+                className={`bg-gray-100 px-3 py-1.5 rounded-full flex items-center gap-1.5 text-sm ${
+                  office.isHeadOffice ? 'border-2 border-yellow-400 bg-yellow-50' : ''
+                }`}
+              >
+                <span>{office.flag}</span>
+                <span className="font-medium">{office.city}</span>
+                {office.isHeadOffice && (
+                  <span className="bg-yellow-400 text-gray-900 text-[8px] px-1.5 py-0.5 rounded-full font-bold">HQ</span>
+                )}
+              </div>
+            ))}
+          </div>
+
           <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full mb-6">
             <span className="text-4xl md:text-5xl font-bold text-purple-600">404</span>
           </div>
@@ -92,12 +206,19 @@ const NotFound: React.FC = () => {
             Page Not Found
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            The page you're looking for doesn't exist or has been moved.
+            The page you're looking for doesn't exist or has been moved. 
+            But don't worry, we're here to help you find what you need.
           </p>
+          
+          <div className="flex flex-wrap justify-center gap-3 mt-4 text-sm text-gray-500">
+            <span className="flex items-center gap-1">📍 Jaipur</span>
+            <span className="flex items-center gap-1">📍 Vrindavan</span>
+            <span className="flex items-center gap-1">📍 Nepal (HQ)</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Quick Actions */}
+          {/* Left Column - Quick Actions & Services */}
           <div className="lg:col-span-2">
             {/* Quick Navigation */}
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-gray-200">
@@ -139,7 +260,8 @@ const NotFound: React.FC = () => {
 
             {/* Popular Services */}
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Zap className="h-5 w-5 text-purple-600" />
                 Popular Services You Might Need
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -153,12 +275,19 @@ const NotFound: React.FC = () => {
                       {service.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 group-hover:text-purple-700">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-gray-600">{service.description}</p>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-purple-700 text-sm">
+                          {service.title}
+                        </h3>
+                        {service.tag && (
+                          <span className="bg-yellow-100 text-yellow-800 text-[8px] px-1.5 py-0.5 rounded-full font-bold">
+                            {service.tag}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-600">{service.description}</p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-purple-600" />
+                    <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600" />
                   </Link>
                 ))}
               </div>
@@ -166,23 +295,25 @@ const NotFound: React.FC = () => {
 
             {/* Project Types */}
             <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
-                Popular Projects
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Award className="h-5 w-5 text-purple-600" />
+                Popular Projects & Pricing
               </h2>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {projectTypes.map((project, index) => (
                   <Link
                     key={index}
                     to={project.link}
-                    className="flex items-center justify-between p-4 bg-white rounded-xl hover:shadow-md transition-shadow group"
+                    className="flex items-center justify-between p-3 bg-white rounded-xl hover:shadow-md transition-shadow group"
                   >
                     <div>
-                      <h3 className="font-semibold text-gray-900 group-hover:text-purple-700">
+                      <h3 className="font-semibold text-gray-900 group-hover:text-purple-700 text-sm">
                         {project.type}
                       </h3>
+                      <p className="text-xs text-gray-500">{project.desc}</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-purple-600">{project.price}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-purple-600 text-sm">{project.price}</span>
                       <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600" />
                     </div>
                   </Link>
@@ -195,61 +326,89 @@ const NotFound: React.FC = () => {
           <div className="space-y-6">
             {/* Quick Links */}
             <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Links</h2>
-              <div className="space-y-2">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Shield className="h-5 w-5 text-purple-600" />
+                Quick Links
+              </h2>
+              <div className="space-y-1 max-h-[400px] overflow-y-auto">
                 {quickLinks.map((link, index) => (
                   <Link
                     key={index}
                     to={link.path}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 group"
+                    className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 group"
                   >
-                    <span className="text-gray-700 group-hover:text-purple-700">{link.name}</span>
-                    <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600" />
+                    <span className="text-sm text-gray-700 group-hover:text-purple-700">{link.name}</span>
+                    <ChevronRight className="h-3 w-3 text-gray-400 group-hover:text-purple-600" />
                   </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Office Locations */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Building className="h-5 w-5 text-purple-600" />
+                Our Offices
+              </h2>
+              <div className="space-y-3">
+                {offices.map((office) => (
+                  <div 
+                    key={office.city}
+                    className={`p-3 rounded-xl ${office.isHeadOffice ? 'bg-yellow-50 border border-yellow-200' : 'bg-gray-50'}`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{office.flag}</span>
+                      <span className="font-bold text-gray-900 text-sm">{office.city}</span>
+                      {office.isHeadOffice && (
+                        <span className="bg-yellow-400 text-gray-900 text-[8px] px-1.5 py-0.5 rounded-full font-bold">HQ</span>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">{office.address}</p>
+                    <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-xs text-purple-600 hover:underline">
+                      📞 {office.phone}
+                    </a>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Contact Info */}
             <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Need Immediate Help?</h2>
-              <div className="space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Rocket className="h-5 w-5 text-blue-600" />
+                Need Immediate Help?
+              </h2>
+              <div className="space-y-3">
                 <a
-                  href="https://wa.me/97797073824881"
+                  href={`https://wa.me/${whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors group"
                 >
-                  <div className="flex-shrink-0">
-                    <MessageCircle className="h-5 w-5" />
-                  </div>
+                  <MessageCircle className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
-                    <div className="font-semibold">WhatsApp Support</div>
-                    <div className="text-sm opacity-90">+977 97073824881</div>
+                    <div className="font-semibold text-sm">WhatsApp (Nepal HQ)</div>
+                    <div className="text-xs opacity-90">+977 {whatsappNumber}</div>
                   </div>
                 </a>
                 <a
-                  href="tel:+919341436937"
+                  href={`tel:${indiaPhone}`}
                   className="flex items-center gap-3 p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors group"
                 >
-                  <div className="flex-shrink-0">
-                    <Phone className="h-5 w-5" />
-                  </div>
+                  <Phone className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
-                    <div className="font-semibold">Phone Support</div>
-                    <div className="text-sm opacity-90">+91 93414 36937</div>
+                    <div className="font-semibold text-sm">India Office</div>
+                    <div className="text-xs opacity-90">+91 {indiaPhone}</div>
                   </div>
                 </a>
                 <a
                   href="mailto:info@growthservice.in"
                   className="flex items-center gap-3 p-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors group"
                 >
-                  <div className="flex-shrink-0">
-                    <Mail className="h-5 w-5" />
-                  </div>
+                  <Mail className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
-                    <div className="font-semibold">Email Support</div>
-                    <div className="text-sm opacity-90">info@growthservice.in</div>
+                    <div className="font-semibold text-sm">Email Support</div>
+                    <div className="text-xs opacity-90">info@growthservice.in</div>
                   </div>
                 </a>
               </div>
@@ -257,15 +416,15 @@ const NotFound: React.FC = () => {
 
             {/* Technology Stack */}
             <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Our Technology Stack</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Code className="h-5 w-5 text-purple-600" />
+                Our Technology Stack
+              </h2>
               <div className="flex flex-wrap gap-2">
-                {[
-                  "React.js", "TypeScript", "Node.js", 
-                  "MongoDB", "Next.js", "Tailwind CSS"
-                ].map((tech, index) => (
+                {techStack.map((tech, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-lg text-sm font-medium"
+                    className="px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-lg text-xs font-medium"
                   >
                     {tech}
                   </span>
@@ -276,59 +435,84 @@ const NotFound: React.FC = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-8 text-center">
-          <p className="text-gray-600 mb-4">
-            Can't find what you're looking for? We're here to help!
+        <div className="mt-8 md:mt-12 text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl p-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">
+            Can't Find What You're Looking For?
+          </h2>
+          <p className="text-lg text-purple-100 mb-6 max-w-2xl mx-auto">
+            Our team is ready to help you find the perfect digital solution for your business
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
             >
               <MessageCircle className="h-5 w-5" />
               Chat on WhatsApp
             </a>
             <Link
               to="/"
-              className="inline-flex items-center justify-center gap-2 border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white hover:text-purple-600 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
             >
               <Home className="h-5 w-5" />
               Explore Homepage
             </Link>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white hover:text-purple-600 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+            >
+              <MapPin className="h-5 w-5" />
+              Visit Our Offices
+            </Link>
+          </div>
+          <div className="mt-4 text-sm text-purple-200">
+            <span className="flex items-center justify-center gap-2">
+              📍 Jaipur • Vrindavan • Nepal (Head Office)
+            </span>
           </div>
         </div>
       </div>
 
       {/* Mobile Optimized Sticky Bottom Bar */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
-        <div className="grid grid-cols-3 gap-1 p-2">
+        <div className="grid grid-cols-4 gap-1 p-2">
           <button
             onClick={() => navigate(-1)}
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-gray-50"
           >
             <ArrowLeft className="h-5 w-5 text-gray-600 mb-1" />
-            <span className="text-xs font-medium text-gray-700">Back</span>
+            <span className="text-[10px] font-medium text-gray-700">Back</span>
           </button>
           <Link
             to="/"
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-purple-50"
           >
             <Home className="h-5 w-5 text-purple-600 mb-1" />
-            <span className="text-xs font-medium text-purple-700">Home</span>
+            <span className="text-[10px] font-medium text-purple-700">Home</span>
           </Link>
           <a
-            href="https://wa.me/97797073824881"
+            href={`https://wa.me/${whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-green-50"
           >
             <MessageCircle className="h-5 w-5 text-green-600 mb-1" />
-            <span className="text-xs font-medium text-green-700">WhatsApp</span>
+            <span className="text-[10px] font-medium text-green-700">WhatsApp</span>
           </a>
+          <Link
+            to="/contact"
+            className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-blue-50"
+          >
+            <Phone className="h-5 w-5 text-blue-600 mb-1" />
+            <span className="text-[10px] font-medium text-blue-700">Call</span>
+          </Link>
         </div>
       </div>
+
+      {/* Padding for mobile bottom bar */}
+      <div className="lg:hidden h-20"></div>
     </div>
   );
 };

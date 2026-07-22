@@ -2,145 +2,443 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
+// Types
+interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  department: string;
+  image: string;
+  bio: string;
+  expertise: string[];
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+  };
+}
+
+interface OfficeLocation {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  flag: string;
+  mapLink: string;
+  image: string;
+  city: string;
+  country: string;
+  services: string[];
+  landmark: string;
+  timings: string;
+  isHeadOffice?: boolean;
+}
+
+interface HeroSlide {
+  title: string;
+  subtitle: string;
+  description: string;
+  cta: string;
+  ctaLink: string;
+  location: string;
+}
+
+interface Stat {
+  number: string;
+  label: string;
+  icon: string;
+  delay: string;
+}
+
+interface Value {
+  icon: string;
+  title: string;
+  description: string;
+  delay: string;
+}
+
+interface Service {
+  icon: string;
+  title: string;
+  description: string;
+  features: string[];
+  delay: string;
+  location: string;
+}
+
+interface Certificate {
+  id: number;
+  title: string;
+  description: string;
+  number: string;
+  validity: string;
+  bgColor: string;
+}
+
+interface TechStack {
+  icon: string;
+  name: string;
+  description: string;
+}
+
+interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
+  icon: string;
+  delay: string;
+}
+
+interface Region {
+  region: string;
+  icon: string;
+  clients: string;
+}
+
+interface Testimonial {
+  text: string;
+  author: string;
+  role: string;
+  location: string;
+  delay: string;
+  image: string;
+}
+
+interface WhyChooseUs {
+  icon: string;
+  title: string;
+  description: string;
+  delay: string;
+}
+
 const About: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Hero Slides
-  const heroSlides = [
+  // Office Locations with Images from Public Folder
+  const offices: OfficeLocation[] = [
     {
-      title: "Global Web Development & Digital Solutions",
-      subtitle: "Serving Worldwide from Vrindavan",
-      description: "Professional digital services for global clients. From Vrindavan to worldwide, we deliver cutting-edge technology solutions across all timezones.",
-      cta: "Start Your Project"
+      id: 1,
+      name: "Jaipur Office - Rajasthan",
+      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
+      phone: "+91 62073 00553",
+      email: "jaipur@growthservice.in",
+      flag: "🇮🇳",
+      mapLink: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
+      image: "/images/jaipur-office.jpg",
+      city: "Jaipur",
+      country: "India",
+      landmark: "Near Jagatpura Flyover",
+      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
+      isHeadOffice: false,
+      services: ["Web Development", "SEO Services", "Digital Marketing", "Social Media Management"]
     },
     {
-      title: "Technology Experts for Global Businesses",
-      subtitle: "Modern Tech Solutions Across Timezones",
-      description: "24/7 services for international clients. Expert in React, Node.js, TypeScript, and all modern web technologies.",
-      cta: "View Services"
+      id: 2,
+      name: "Vrindavan Office - Uttar Pradesh",
+      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
+      phone: "+91 93414 36937",
+      email: "info@growthservice.in",
+      flag: "🇮🇳",
+      mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
+      image: "/images/vrindavan-office.jpg",
+      city: "Vrindavan",
+      country: "India",
+      landmark: "Radhika Sadan ki Bassinet me",
+      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
+      isHeadOffice: true,
+      services: ["Web Development", "SEO Services", "Digital Marketing", "Content Creation"]
     },
     {
-      title: "Worldwide Digital Marketing Agency",
-      subtitle: "Global Reach with Local Expertise",
-      description: "Serving clients across India and worldwide with comprehensive digital marketing and web development solutions.",
-      cta: "Get Free Consultation"
+      id: 3,
+      name: "Nepal Office - Bariyarpatti",
+      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
+      phone: "+977 970-7382481",
+      email: "nepal@growthservice.in",
+      flag: "🇳🇵",
+      mapLink: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal",
+      image: "/images/nepal-office.jpg",
+      city: "Bariyarpatti",
+      country: "Nepal",
+      landmark: "Near Bariyarpatti Main Road",
+      timings: "Sun-Fri: 10:00 AM - 6:00 PM",
+      isHeadOffice: false,
+      services: ["Web Development", "SEO Services", "Digital Marketing", "E-commerce Solutions"]
+    }
+  ];
+
+  // Hero Slides with Office Locations
+  const heroSlides: HeroSlide[] = [
+    {
+      title: "Digital Solutions from Jaipur, Vrindavan & Nepal",
+      subtitle: "Serving Worldwide from Our 3 Strategic Locations",
+      description: "Growth Service operates from Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Bariyarpatti (Nepal). We deliver cutting-edge web development, SEO, and digital marketing services to clients across India and globally.",
+      cta: "Start Your Project",
+      ctaLink: "/contact",
+      location: "🇮🇳 Jaipur • 🇮🇳 Vrindavan • 🇳🇵 Nepal"
+    },
+    {
+      title: "Expert Digital Services from Jaipur Office",
+      subtitle: "Web Development & SEO Services in Rajasthan",
+      description: "Our Jaipur office specializes in web development, SEO, and digital marketing services. Serving clients across Jaipur, Rajasthan, and beyond with world-class digital solutions.",
+      cta: "Contact Jaipur Office",
+      ctaLink: "/contact",
+      location: "📍 Jaipur, Rajasthan"
+    },
+    {
+      title: "Innovative Solutions from Vrindavan Office",
+      subtitle: "Digital Excellence from Uttar Pradesh",
+      description: "Our Vrindavan head office delivers comprehensive digital solutions including web development, SEO, and performance marketing to clients worldwide.",
+      cta: "Visit Vrindavan Office",
+      ctaLink: "/contact",
+      location: "📍 Vrindavan, Uttar Pradesh"
+    }
+  ];
+
+  // Team Members
+  const teamMembers: TeamMember[] = [
+    {
+      id: 1,
+      name: "Mr. Growth Service",
+      role: "Founder & CEO",
+      department: "Leadership",
+      image: "/images/ceo.jpg",
+      bio: "Visionary leader with 10+ years of experience in digital transformation. Passionate about helping businesses grow through innovative technology solutions across Jaipur, Vrindavan, and Nepal.",
+      expertise: ["Business Strategy", "Digital Transformation", "Leadership", "Global Operations"],
+      socialLinks: {
+        linkedin: "#",
+        twitter: "#"
+      }
+    },
+    {
+      id: 2,
+      name: "Mr. Digital Strategist",
+      role: "Managing Director",
+      department: "Leadership",
+      image: "/images/md.jpg",
+      bio: "Strategic thinker specializing in digital marketing and business growth. Expert in creating comprehensive digital strategies for international clients from our offices in India and Nepal.",
+      expertise: ["Digital Strategy", "Business Development", "Client Relations", "Team Management"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 3,
+      name: "Mrs. Tech Lead",
+      role: "Technical Manager",
+      department: "Development",
+      image: "/images/tech-lead.jpg",
+      bio: "Full-stack development expert with deep knowledge of React, Node.js, and cloud technologies. Leads development teams across Jaipur and Vrindavan offices.",
+      expertise: ["React.js", "Node.js", "Cloud Architecture", "Team Leadership"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 4,
+      name: "Mr. Code Master",
+      role: "Senior Developer - Jaipur",
+      department: "Development",
+      image: "/images/developer.jpg",
+      bio: "Expert full-stack developer from our Jaipur office specializing in React, TypeScript, and Node.js. Built 100+ web applications for global clients.",
+      expertise: ["React.js", "TypeScript", "Node.js", "MongoDB"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 5,
+      name: "Mrs. Pixel Perfect",
+      role: "UI/UX Developer - Vrindavan",
+      department: "Development",
+      image: "/images/ui-ux.jpg",
+      bio: "Creative UI/UX designer and frontend developer from our Vrindavan office. Creates beautiful, responsive interfaces that deliver exceptional user experiences.",
+      expertise: ["UI/UX Design", "Tailwind CSS", "Figma", "Responsive Design"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 6,
+      name: "Mr. SEO Specialist",
+      role: "SEO Executive - Jaipur",
+      department: "Marketing",
+      image: "/images/seo-specialist.jpg",
+      bio: "SEO expert from our Jaipur office with 5+ years of experience. Specializes in international SEO, keyword research, and organic growth strategies.",
+      expertise: ["On-Page SEO", "Off-Page SEO", "Technical SEO", "Keyword Research"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 7,
+      name: "Mrs. SEO Pro",
+      role: "Senior SEO Executive - Vrindavan",
+      department: "Marketing",
+      image: "/images/seo-pro.jpg",
+      bio: "Results-driven SEO professional from our Vrindavan office with expertise in local and international SEO. Helped 50+ businesses rank on first page.",
+      expertise: ["Local SEO", "International SEO", "Content Strategy", "SEO Analytics"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 8,
+      name: "Mr. Sales Expert",
+      role: "Sales Executive - Nepal",
+      department: "Sales",
+      image: "/images/sales-executive.jpg",
+      bio: "Dynamic sales professional from our Nepal office with expertise in digital services. Helps clients find the right solutions for their business needs.",
+      expertise: ["Client Acquisition", "Sales Strategy", "Negotiation", "CRM"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 9,
+      name: "Mrs. Growth Manager",
+      role: "Sales Manager - Jaipur",
+      department: "Sales",
+      image: "/images/sales-manager.jpg",
+      bio: "Experienced sales leader from our Jaipur office with a track record of driving revenue growth. Specializes in digital services sales and client retention.",
+      expertise: ["Sales Management", "Client Relations", "Business Growth", "Strategy"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+    {
+      id: 10,
+      name: "Mr. Marketing Pro",
+      role: "Social Media Manager - Vrindavan",
+      department: "Marketing",
+      image: "/images/social-media-manager.jpg",
+      bio: "Social media expert from our Vrindavan office managing campaigns across all platforms. Creates engaging content that drives brand awareness and conversions.",
+      expertise: ["Social Media Strategy", "Content Creation", "Community Management", "Analytics"],
+      socialLinks: {
+        linkedin: "#"
+      }
     }
   ];
 
   // Company stats
-  const stats = [
-    { number: "100+", label: "Global Clients", icon: "🌍", delay: "0s" },
-    { number: "200+", label: "Projects Worldwide", icon: "🚀", delay: "0.1s" },
-    { number: "24/7", label: "Support All Timezones", icon: "⏰", delay: "0.2s" },
-    { number: "50+", label: "Technologies Used", icon: "💻", delay: "0.3s" },
+  const stats: Stat[] = [
+    { number: "300+", label: "Happy Clients", icon: "😊", delay: "0s" },
+    { number: "500+", label: "Projects Completed", icon: "🚀", delay: "0.1s" },
+    { number: "3", label: "Office Locations", icon: "🏢", delay: "0.2s" },
+    { number: "24/7", label: "Global Support", icon: "⏰", delay: "0.3s" },
   ];
 
   // Core values
-  const values = [
+  const values: Value[] = [
     {
-      icon: "🌍",
-      title: "Global Perspective",
-      description: "Serving clients worldwide with understanding of international market trends and requirements.",
+      icon: "🏢",
+      title: "3 Strategic Locations",
+      description: "Operating from Jaipur, Vrindavan, and Nepal to serve clients across India and globally with localized expertise.",
       delay: "0s"
     },
     {
       icon: "⏰",
       title: "24/7 Availability",
-      description: "Round-the-clock services to accommodate different timezones across the globe.",
+      description: "Round-the-clock services from our India and Nepal offices to accommodate different timezones across the globe.",
       delay: "0.1s"
     },
     {
       icon: "💡",
       title: "Technology Excellence",
-      description: "Expertise in all modern web technologies and frameworks for cutting-edge solutions.",
+      description: "Expertise in all modern web technologies and frameworks for cutting-edge solutions from all our locations.",
       delay: "0.2s"
     },
     {
       icon: "🤝",
       title: "Reliable Partnership",
-      description: "Building long-term relationships with clients across different countries and cultures.",
+      description: "Building long-term relationships with clients across India, Nepal, and international markets.",
       delay: "0.3s"
     },
   ];
 
-  // Our Services
-  const services = [
+  // Our Services with Location Tags
+  const services: Service[] = [
     {
       icon: "🌐",
-      title: "Global Website Development",
-      description: "International-standard websites with multi-language support and global hosting solutions.",
+      title: "Web Development",
+      description: "Custom website development from our Jaipur, Vrindavan, and Nepal offices using modern technologies.",
       features: [
-        "Multi-language Support",
-        "International SEO",
-        "Global CDN",
-        "Timezone Handling"
-      ],
-      delay: "0s"
-    },
-    {
-      icon: "📱",
-      title: "Cross-Platform Apps",
-      description: "Mobile and web applications that work seamlessly across different regions and devices.",
-      features: [
+        "React.js & Next.js Development",
+        "E-commerce Solutions",
         "Responsive Design",
-        "Progressive Web Apps",
-        "Native Mobile Apps",
-        "Cross-Browser Support"
+        "CMS Integration"
       ],
-      delay: "0.1s"
+      delay: "0s",
+      location: "📍 Jaipur • Vrindavan • Nepal"
     },
     {
       icon: "🔍",
-      title: "International SEO",
-      description: "Global search engine optimization targeting multiple countries and languages.",
+      title: "SEO Services",
+      description: "Comprehensive SEO services from all our locations to improve your search rankings and drive organic traffic.",
       features: [
-        "Multi-region SEO",
-        "Localization Strategy",
-        "International Keywords",
-        "Global Analytics"
+        "On-Page SEO",
+        "Off-Page SEO",
+        "Technical SEO",
+        "Local SEO"
       ],
-      delay: "0.2s"
+      delay: "0.1s",
+      location: "📍 Jaipur • Vrindavan • Nepal"
     },
     {
-      icon: "📊",
-      title: "Global Digital Marketing",
-      description: "Worldwide digital marketing campaigns with targeted regional strategies.",
+      icon: "📱",
+      title: "Digital Marketing",
+      description: "Strategic digital marketing campaigns from our India and Nepal offices to grow your business online.",
       features: [
-        "International PPC",
-        "Global Social Media",
-        "Cross-border Marketing",
-        "Multicultural Content"
+        "Social Media Marketing",
+        "PPC Campaigns",
+        "Content Marketing",
+        "Email Marketing"
       ],
-      delay: "0.3s"
+      delay: "0.2s",
+      location: "📍 Jaipur • Vrindavan • Nepal"
     },
     {
       icon: "🛒",
       title: "E-commerce Solutions",
-      description: "International e-commerce platforms with multi-currency and global payment gateways.",
+      description: "Complete e-commerce solutions from our offices with multi-currency and global payment gateways.",
       features: [
-        "Multi-currency Support",
-        "Global Payment Gateways",
-        "International Shipping",
-        "Tax Calculation"
+        "Online Store Setup",
+        "Payment Integration",
+        "Inventory Management",
+        "Order Processing"
       ],
-      delay: "0.4s"
+      delay: "0.3s",
+      location: "📍 Jaipur • Vrindavan • Nepal"
+    },
+    {
+      icon: "📊",
+      title: "Performance Marketing",
+      description: "Data-driven performance marketing from our locations to maximize ROI and drive conversions.",
+      features: [
+        "Google Ads Management",
+        "Social Media Advertising",
+        "Display Advertising",
+        "Retargeting"
+      ],
+      delay: "0.4s",
+      location: "📍 Jaipur • Vrindavan • Nepal"
     },
     {
       icon: "☁️",
       title: "Cloud Solutions",
-      description: "Scalable cloud infrastructure for global applications and websites.",
+      description: "Scalable cloud infrastructure from our offices for global applications and websites.",
       features: [
         "Global Hosting",
         "CDN Integration",
         "Cloud Security",
         "Scalable Architecture"
       ],
-      delay: "0.5s"
+      delay: "0.5s",
+      location: "📍 Jaipur • Vrindavan • Nepal"
     }
   ];
 
-  // Certificates & Registrations with masked numbers
-  const certificates = [
+  // Certificates
+  const certificates: Certificate[] = [
     {
       id: 1,
       title: "GST Registration",
@@ -175,8 +473,8 @@ const About: React.FC = () => {
     }
   ];
 
-  // Technology Stack (All modern technologies)
-  const techStack = [
+  // Technology Stack
+  const techStack: TechStack[] = [
     { icon: "⚛️", name: "React", description: "Frontend framework" },
     { icon: "📘", name: "TypeScript", description: "Type-safe JavaScript" },
     { icon: "🟢", name: "Node.js", description: "Backend runtime" },
@@ -191,109 +489,112 @@ const About: React.FC = () => {
     { icon: "📱", name: "React Native", description: "Mobile apps" }
   ];
 
-  // Work process for global clients
-  const process = [
+  // Work process
+  const process: ProcessStep[] = [
     {
       step: "01",
-      title: "Global Requirement Analysis",
-      description: "Understanding your business needs across different regions and timezones.",
-      icon: "🌍",
+      title: "Discovery & Consultation",
+      description: "Understanding your business needs across our offices in Jaipur, Vrindavan, and Nepal.",
+      icon: "🔍",
       delay: "0s"
     },
     {
       step: "02",
-      title: "Technology Strategy",
-      description: "Selecting appropriate tech stack for global scalability and performance.",
-      icon: "💻",
+      title: "Strategy & Planning",
+      description: "Creating customized digital strategies with clear objectives and timelines from all locations.",
+      icon: "📋",
       delay: "0.2s"
     },
     {
       step: "03",
-      title: "24/7 Development",
-      description: "Continuous development cycle accommodating different timezones.",
-      icon: "⚡",
+      title: "Development & Execution",
+      description: "Our expert teams in India and Nepal implement solutions with precision and quality.",
+      icon: "🚀",
       delay: "0.4s"
     },
     {
       step: "04",
-      title: "Global Deployment",
-      description: "Worldwide deployment with CDN and multi-region hosting.",
-      icon: "🚀",
+      title: "Optimization & Growth",
+      description: "Continuous monitoring and optimization from all our offices for maximum results.",
+      icon: "📊",
       delay: "0.6s"
     }
   ];
 
-  // Global Reach
-  const globalReach = [
-    { region: "India", icon: "🇮🇳", clients: "80+" },
-    { region: "USA", icon: "🇺🇸", clients: "15+" },
-    { region: "UK", icon: "🇬🇧", clients: "10+" },
-    { region: "Australia", icon: "🇦🇺", clients: "8+" },
-    { region: "UAE", icon: "🇦🇪", clients: "12+" },
-    { region: "Singapore", icon: "🇸🇬", clients: "5+" }
+  // Global Reach with Office Locations
+  const globalReach: Region[] = [
+    { region: "Jaipur", icon: "🏛️", clients: "120+" },
+    { region: "Vrindavan", icon: "🕉️", clients: "100+" },
+    { region: "Nepal", icon: "🇳🇵", clients: "80+" },
+    { region: "USA", icon: "🇺🇸", clients: "25+" },
+    { region: "UK", icon: "🇬🇧", clients: "15+" },
+    { region: "UAE", icon: "🇦🇪", clients: "20+" }
   ];
 
-  // Testimonials from global clients
-  const testimonials = [
+  // Testimonials
+  const testimonials: Testimonial[] = [
     {
-      text: "Working with Growth Service from USA has been seamless. Their 24/7 support accommodates our timezone perfectly.",
-      author: "John Smith",
-      role: "CEO, TechGlobal Inc.",
-      location: "New York, USA",
-      delay: "0s"
-    },
-    {
-      text: "Excellent website development for our UK-based business. The team understands international requirements very well.",
-      author: "Emma Wilson",
-      role: "Marketing Director",
-      location: "London, UK",
-      delay: "0.1s"
-    },
-    {
-      text: "Best digital marketing agency we've worked with. They handle our Middle East and India campaigns perfectly.",
-      author: "Ahmed Khan",
+      text: "Growth Service delivered an excellent website for our Jaipur-based business. Their team understood our needs perfectly.",
+      author: "Rajesh Sharma",
       role: "Business Owner",
-      location: "Dubai, UAE",
-      delay: "0.2s"
+      location: "Jaipur, Rajasthan",
+      delay: "0s",
+      image: "/images/testimonial-1.jpg"
+    },
+    {
+      text: "The Vrindavan office team provided outstanding SEO services. Our organic traffic increased by 250% in just 4 months.",
+      author: "Priya Singh",
+      role: "Marketing Director",
+      location: "Vrindavan, UP",
+      delay: "0.1s",
+      image: "/images/testimonial-2.jpg"
+    },
+    {
+      text: "Working with Growth Service from our Nepal office has been seamless. Their digital marketing strategies are top-notch.",
+      author: "Suresh Nepali",
+      role: "CEO, Nepal Business",
+      location: "Bariyarpatti, Nepal",
+      delay: "0.2s",
+      image: "/images/testimonial-3.jpg"
     }
   ];
 
-  // Why choose us for global services
-  const whyChooseUs = [
+  // Why choose us
+  const whyChooseUs: WhyChooseUs[] = [
+    {
+      icon: "🏢",
+      title: "3 Office Locations",
+      description: "Operating from Jaipur, Vrindavan, and Nepal to serve you better with localized expertise.",
+      delay: "0s"
+    },
     {
       icon: "⏰",
       title: "24/7 Service",
-      description: "Round-the-clock support for clients across all timezones worldwide.",
-      delay: "0s"
+      description: "Round-the-clock support from our India and Nepal offices across all timezones.",
+      delay: "0.1s"
     },
     {
       icon: "🌍",
       title: "Global Experience",
-      description: "Experience working with clients from 20+ countries across 6 continents.",
-      delay: "0.1s"
+      description: "Experience working with clients from 20+ countries from our offices in India and Nepal.",
+      delay: "0.2s"
     },
     {
       icon: "💻",
       title: "Full Tech Stack",
-      description: "Expertise in all modern technologies - from React to AWS, MongoDB to Firebase.",
-      delay: "0.2s"
+      description: "Expertise in all modern technologies - from React to AWS, available across all locations.",
+      delay: "0.3s"
     },
     {
       icon: "🏢",
       title: "Registered Company",
-      description: "Fully registered and compliant with all necessary certifications and licenses.",
-      delay: "0.3s"
-    },
-    {
-      icon: "📞",
-      title: "Multiple Timezone Support",
-      description: "Dedicated teams for different timezones ensuring 24/7 availability.",
+      description: "Fully registered and compliant with all necessary certifications across India and Nepal.",
       delay: "0.4s"
     },
     {
       icon: "🔒",
       title: "Secure & Compliant",
-      description: "GDPR compliant solutions with international security standards.",
+      description: "GDPR compliant solutions with international security standards from all offices.",
       delay: "0.5s"
     }
   ];
@@ -304,26 +605,43 @@ const About: React.FC = () => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [heroSlides.length]);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
+  // Group team members by department
+  const teamByDepartment = teamMembers.reduce((acc, member) => {
+    if (!acc[member.department]) {
+      acc[member.department] = [];
+    }
+    acc[member.department].push(member);
+    return acc;
+  }, {} as Record<string, TeamMember[]>);
+
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>About Growth Service | Global Web Development Agency from Vrindavan</title>
+        <title>About Growth Service | Digital Agency with Offices in Jaipur, Vrindavan & Nepal</title>
         <meta
           name="description"
-          content="Growth Service: Global web development & digital marketing agency based in Vrindavan. Serving clients worldwide with 24/7 support across all timezones."
+          content="Growth Service is a leading digital marketing agency with offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Nepal. We provide web development, SEO, and digital marketing services globally."
         />
         <meta 
           name="keywords" 
-          content="global web development, international digital agency, 24/7 web services, worldwide digital marketing, React development, Node.js experts, TypeScript developers, international SEO"
+          content="digital marketing agency Jaipur, web development company Vrindavan, SEO services Nepal, digital agency India, growth service, digital marketing Rajasthan, web development Uttar Pradesh, SEO Nepal, digital solutions India"
         />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://growthservice.in/about" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="About Growth Service - Digital Agency in Jaipur, Vrindavan & Nepal" />
+        <meta property="og:description" content="Leading digital marketing agency with 3 offices in India and Nepal. Web development, SEO, and digital marketing services worldwide." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://growthservice.in/about" />
       </Helmet>
 
-      {/* === HERO SECTION WITH SLIDER === */}
+      {/* === HERO SECTION WITH OFFICE LOCATIONS === */}
       <section className="relative bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 text-white py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -331,6 +649,19 @@ const About: React.FC = () => {
         </div>
         
         <div className="relative max-w-6xl mx-auto px-4">
+          {/* Office Location Badges */}
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {offices.map((office) => (
+              <div key={office.id} className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-sm">
+                <span>{office.flag}</span>
+                <span>{office.city}</span>
+                {office.isHeadOffice && (
+                  <span className="bg-yellow-400 text-gray-900 text-[8px] px-2 py-0.5 rounded-full font-bold">HEAD</span>
+                )}
+              </div>
+            ))}
+          </div>
+
           <div className="relative overflow-hidden rounded-2xl md:rounded-3xl">
             {heroSlides.map((slide, index) => (
               <div
@@ -343,6 +674,11 @@ const About: React.FC = () => {
               >
                 <div className="p-8 md:p-12 lg:p-16">
                   <div className="max-w-2xl">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="bg-blue-500/30 px-3 py-1 rounded-full text-sm">
+                        {slide.location}
+                      </span>
+                    </div>
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
                       {slide.title}
                     </h1>
@@ -354,7 +690,7 @@ const About: React.FC = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <Link
-                        to="/contact"
+                        to={slide.ctaLink}
                         className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg text-center"
                       >
                         {slide.cta}
@@ -390,26 +726,113 @@ const About: React.FC = () => {
               />
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm"
-            aria-label="Previous slide"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm"
-            aria-label="Next slide"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+      {/* === OUR OFFICE LOCATIONS === */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our <span className="text-blue-600">Office Locations</span>
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Operating from 3 strategic locations in India and Nepal to serve you better
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {offices.map((office) => (
+              <div 
+                key={office.id}
+                className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${
+                  office.isHeadOffice ? 'border-2 border-yellow-400' : ''
+                }`}
+              >
+                {/* Office Image */}
+                <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                  {office.isHeadOffice && (
+                    <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                      ⭐ HEAD OFFICE
+                    </div>
+                  )}
+                  <div className="text-6xl">{office.flag}</div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                    <div className="text-white font-bold text-lg">{office.name}</div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="text-blue-600 mt-1">📍</div>
+                    <div>
+                      <p className="text-gray-700 text-sm leading-relaxed">{office.address}</p>
+                      {office.landmark && (
+                        <p className="text-gray-500 text-xs mt-1">📌 {office.landmark}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-blue-600">📞</span>
+                      <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-gray-700 hover:text-blue-600">
+                        {office.phone}
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-blue-600">✉️</span>
+                      <a href={`mailto:${office.email}`} className="text-gray-700 hover:text-blue-600">
+                        {office.email}
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-blue-600">⏰</span>
+                      <span className="text-gray-700">{office.timings}</span>
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <p className="text-xs font-semibold text-gray-500 mb-2">Services at this location:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {office.services.map((service, idx) => (
+                        <span key={idx} className="bg-blue-50 text-blue-700 text-[10px] px-2 py-1 rounded-full">
+                          {service}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <a 
+                    href={office.mapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-semibold text-sm hover:from-blue-600 hover:to-purple-700 transition-all"
+                  >
+                    🗺️ Get Directions
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Office Locations Map Section */}
+          <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
+            <h3 className="text-2xl font-bold mb-4">📍 Service Areas</h3>
+            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              We serve clients from our offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Nepal, 
+              providing digital solutions across India and globally.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              {offices.map((office) => (
+                <div key={office.id} className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
+                  <div className="text-2xl">{office.flag}</div>
+                  <div className="font-bold">{office.city}</div>
+                  <div className="text-sm text-blue-200">{office.country}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -438,41 +861,36 @@ const About: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="mb-6">
-                <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Global Journey</span>
+                <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Our Journey</span>
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">
-                  From <span className="text-blue-600">Vrindavan</span> to the <span className="text-indigo-600">World</span>
+                  From <span className="text-blue-600">Vrindavan</span> to <span className="text-indigo-600">Jaipur</span> & <span className="text-green-600">Nepal</span>
                 </h2>
               </div>
               
               <div className="space-y-4">
                 <p className="text-gray-600 leading-relaxed">
-                  Founded in the spiritual city of Vrindavan, Growth Service began with a vision to 
-                  provide world-class digital solutions to businesses everywhere. While our roots are 
-                  local, our expertise has always been global.
+                  Growth Service began in the spiritual city of Vrindavan with a vision to provide 
+                  world-class digital solutions. Today, we proudly operate from three strategic locations: 
+                  Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Bariyarpatti (Nepal).
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  We started by serving local businesses but quickly expanded to serve clients across 
-                  India and worldwide. Our unique position allows us to combine the dedication and 
-                  attention to detail of a local agency with the capabilities and perspective of a 
-                  global technology partner.
+                  Our Jaipur office serves clients across Rajasthan and western India, while our Vrindavan 
+                  headquarters manages operations for northern India and global clients. Our Nepal office 
+                  extends our reach to international markets with 24/7 support across timezones.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  Today, we serve clients in over 20 countries, working across different timezones 
-                  with 24/7 support. Our team is proficient in all modern web technologies, ensuring 
-                  we can handle any project, from any location, at any time.
+                  This multi-location presence allows us to combine the dedication of a local agency with 
+                  the capabilities of a global technology partner, serving clients in over 20 countries.
                 </p>
               </div>
               
-              <div className="mt-8">
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <h4 className="font-bold text-gray-900 mb-2">📍 Our Registered Office</h4>
-                  <p className="text-gray-600 text-sm">
-                    Radhika Sadan, Pushpa Garden<br />
-                    Kailash Nagar, Vrindavan<br />
-                    Uttar Pradesh 281121<br />
-                    (Radhika Sadan ki Bassinet me)
-                  </p>
-                </div>
+              <div className="mt-8 grid grid-cols-3 gap-3">
+                {offices.map((office) => (
+                  <div key={office.id} className="bg-white p-3 rounded-lg shadow-sm text-center">
+                    <div className="text-2xl">{office.flag}</div>
+                    <div className="text-xs font-semibold text-gray-700">{office.city}</div>
+                  </div>
+                ))}
               </div>
             </div>
             
@@ -492,7 +910,190 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* === CERTIFICATES & REGISTRATIONS === */}
+      {/* === TEAM SECTION === */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our <span className="text-blue-600">Expert Team</span>
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Meet the passionate professionals across our Jaipur, Vrindavan, and Nepal offices
+            </p>
+          </div>
+
+          {/* Leadership Team */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">Leadership</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {teamMembers.filter(m => m.department === "Leadership").map((member) => (
+                <div key={member.id} className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                      {member.name.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">{member.name}</h4>
+                      <p className="text-blue-600 font-semibold">{member.role}</p>
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {member.expertise.slice(0, 3).map((skill, idx) => (
+                          <span key={idx} className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">{skill}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm mt-3">{member.bio}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Development Team */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text">Development Team</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {teamMembers.filter(m => m.department === "Development").map((member) => (
+                <div key={member.id} className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-3">
+                      {member.name.charAt(0)}
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
+                    <p className="text-purple-600 font-semibold text-sm">{member.role}</p>
+                    <div className="flex flex-wrap justify-center gap-1 mt-3">
+                      {member.expertise.map((skill, idx) => (
+                        <span key={idx} className="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">{skill}</span>
+                      ))}
+                    </div>
+                    <p className="text-gray-600 text-sm mt-3">{member.bio}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Marketing Team */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              <span className="bg-gradient-to-r from-green-600 to-teal-600 text-transparent bg-clip-text">Marketing & SEO Team</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {teamMembers.filter(m => m.department === "Marketing").map((member) => (
+                <div key={member.id} className="bg-gradient-to-br from-green-50 to-teal-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-3">
+                      {member.name.charAt(0)}
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
+                    <p className="text-green-600 font-semibold text-sm">{member.role}</p>
+                    <div className="flex flex-wrap justify-center gap-1 mt-3">
+                      {member.expertise.map((skill, idx) => (
+                        <span key={idx} className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">{skill}</span>
+                      ))}
+                    </div>
+                    <p className="text-gray-600 text-sm mt-3">{member.bio}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Sales Team */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              <span className="bg-gradient-to-r from-orange-600 to-red-600 text-transparent bg-clip-text">Sales Team</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {teamMembers.filter(m => m.department === "Sales").map((member) => (
+                <div key={member.id} className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-3">
+                      {member.name.charAt(0)}
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900">{member.name}</h4>
+                    <p className="text-orange-600 font-semibold text-sm">{member.role}</p>
+                    <div className="flex flex-wrap justify-center gap-1 mt-3">
+                      {member.expertise.map((skill, idx) => (
+                        <span key={idx} className="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">{skill}</span>
+                      ))}
+                    </div>
+                    <p className="text-gray-600 text-sm mt-3">{member.bio}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Team Stats */}
+          <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              <div>
+                <div className="text-3xl font-bold">{teamMembers.length}</div>
+                <div className="text-sm text-blue-200">Team Members</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">4</div>
+                <div className="text-sm text-blue-200">Departments</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">3</div>
+                <div className="text-sm text-blue-200">Office Locations</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">20+</div>
+                <div className="text-sm text-blue-200">Countries Served</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* === SERVICES WITH LOCATION TAGS === */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our <span className="text-blue-600">Services</span> Across Locations
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Comprehensive digital solutions from our offices in Jaipur, Vrindavan, and Nepal
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <div 
+                key={index}
+                className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 group"
+                style={{animationDelay: service.delay}}
+              >
+                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{service.icon}</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{service.title}</h3>
+                <p className="text-gray-600 text-sm mb-4 leading-relaxed">{service.description}</p>
+                
+                <div className="space-y-2">
+                  {service.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center text-gray-700 text-sm">
+                      <span className="text-green-500 mr-2">✓</span>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <p className="text-xs text-blue-600 font-medium">{service.location}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* === CERTIFICATES === */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -500,7 +1101,7 @@ const About: React.FC = () => {
               Our <span className="text-blue-600">Registrations</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Fully registered and compliant company for global operations
+              Fully registered and compliant company for operations in India and Nepal
             </p>
           </div>
           
@@ -532,34 +1133,18 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-          
-          <div className="mt-12 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 text-center">
-            <div className="text-3xl mb-4">🏢</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Global Operations from Vrindavan</h3>
-            <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-              Operating globally from our registered office in Vrindavan. We maintain international 
-              standards while keeping our local values and commitment to quality.
-            </p>
-            <div className="inline-block bg-white p-4 rounded-lg shadow-sm">
-              <div className="text-sm text-gray-700 font-semibold">Registered Office:</div>
-              <div className="text-gray-600 text-sm">
-                Radhika Sadan, Pushpa Garden<br />
-                Kailash Nagar, Vrindavan, Uttar Pradesh 281121
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* === COMPLETE TECHNOLOGY STACK === */}
+      {/* === TECHNOLOGY STACK === */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Complete <span className="text-purple-600">Technology</span> Expertise
+              Our <span className="text-purple-600">Technology</span> Expertise
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Mastery in all modern web technologies for comprehensive solutions
+              Mastery in all modern web technologies across all our locations
             </p>
           </div>
           
@@ -575,101 +1160,18 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-          
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4">
-              Plus expertise in: Redux, Jest, Docker, Kubernetes, Redis, Elasticsearch, 
-              WebRTC, Socket.io, Stripe, PayPal, and many more...
-            </p>
-            <div className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold">
-              <span className="mr-2">💻</span>
-              <span>Full Stack Development Experts</span>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* === GLOBAL SERVICES === */}
+      {/* === PROCESS === */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              <span className="text-blue-600">Global</span> Services
+              Our <span className="text-blue-600">Process</span> Across Locations
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Comprehensive digital solutions for international businesses
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <div 
-                key={index}
-                className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 group"
-                style={{animationDelay: service.delay}}
-              >
-                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{service.icon}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{service.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">{service.description}</p>
-                
-                <div className="space-y-2">
-                  {service.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center text-gray-700 text-sm">
-                      <span className="text-green-500 mr-2">✓</span>
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* === GLOBAL REACH === */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-blue-900 to-indigo-900 text-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Global Reach</h2>
-            <p className="text-blue-100 max-w-2xl mx-auto">
-              Serving clients across continents with 24/7 support for all timezones
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-            {globalReach.map((region, index) => (
-              <div 
-                key={index}
-                className="bg-white/10 backdrop-blur-sm p-4 rounded-lg text-center hover:bg-white/20 transition-all duration-300"
-              >
-                <div className="text-3xl mb-2">{region.icon}</div>
-                <div className="font-semibold text-lg mb-1">{region.region}</div>
-                <div className="text-blue-200 text-sm">{region.clients} Clients</div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-12 text-center">
-            <div className="inline-flex items-center bg-white/20 backdrop-blur-sm p-4 rounded-xl">
-              <span className="text-2xl mr-3">⏰</span>
-              <div className="text-left">
-                <div className="font-bold">24/7 Support Across Timezones</div>
-                <div className="text-sm text-blue-200">Working hours adapted to client locations worldwide</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* === 24/7 WORK PROCESS === */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              24/7 <span className="text-blue-600">Global</span> Process
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Round-the-clock workflow for international client collaboration
+              How we work across our Jaipur, Vrindavan, and Nepal offices
             </p>
           </div>
           
@@ -679,7 +1181,7 @@ const About: React.FC = () => {
                 key={index}
                 className="relative"
               >
-                <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 text-center group h-full">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 text-center group h-full">
                   <div className="text-2xl mb-3 group-hover:scale-110 transition-transform">{step.icon}</div>
                   <div className="text-sm font-semibold text-blue-600 mb-1">{step.step}</div>
                   <h3 className="text-lg font-bold text-gray-900 mb-3">{step.title}</h3>
@@ -695,43 +1197,15 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* === CORE VALUES === */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-indigo-600">Global</span> Values
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Principles that define our worldwide operations
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <div 
-                key={index}
-                className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 text-center group"
-                style={{animationDelay: value.delay}}
-              >
-                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{value.icon}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{value.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* === WHY CHOOSE US FOR GLOBAL SERVICES === */}
+      {/* === WHY CHOOSE US === */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-indigo-50 to-blue-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Us for <span className="text-blue-600">Global</span> Projects?
+              Why Choose <span className="text-blue-600">Growth Service</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Advantages of partnering with us for international digital solutions
+              Advantages of working with our team across 3 locations
             </p>
           </div>
           
@@ -755,15 +1229,15 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* === GLOBAL TESTIMONIALS === */}
+      {/* === TESTIMONIALS === */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              What <span className="text-blue-600">Global</span> Clients Say
+              What Our <span className="text-blue-600">Clients Say</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Feedback from our international clientele across different timezones
+              Feedback from clients across our office locations
             </p>
           </div>
           
@@ -794,26 +1268,43 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* === FINAL CTA === */}
+      {/* === CTA === */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready for <span className="text-cyan-300">Global</span> Digital Solutions?
+            Visit Our <span className="text-cyan-300">Offices</span>
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Partner with us for world-class web development and digital marketing, 
-            available 24/7 across all timezones
+            We're here to help! Visit us at any of our 3 locations in Jaipur, Vrindavan, or Nepal.
           </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {offices.map((office) => (
+              <div key={office.id} className="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
+                <div className="text-2xl">{office.flag}</div>
+                <div className="font-bold text-sm">{office.city}</div>
+                <div className="text-blue-200 text-xs">{office.country}</div>
+                <a 
+                  href={office.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-cyan-300 text-sm hover:text-cyan-200"
+                >
+                  Get Directions →
+                </a>
+              </div>
+            ))}
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href="https://wa.me/9779707382481"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 text-lg"
             >
               <span>💬</span>
-              <span>Chat on WhatsApp (24/7)</span>
+              <span>Chat on WhatsApp</span>
             </a>
             
             <a
@@ -824,53 +1315,8 @@ const About: React.FC = () => {
               <span>Call: +91 93414 36937</span>
             </a>
           </div>
-          
-          <div className="mt-12 pt-8 border-t border-white/20">
-            <div className="inline-block bg-white/10 backdrop-blur-sm p-4 rounded-xl">
-              <p className="text-blue-200 mb-2">📍 Registered Office Address:</p>
-              <p className="text-white text-sm">
-                Radhika Sadan, Pushpa Garden<br />
-                Kailash Nagar, Vrindavan, Uttar Pradesh 281121
-              </p>
-            </div>
-            
-            <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-blue-300">
-              <div className="flex items-center gap-2">
-                <span>🌍</span>
-                <span>Global Services</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>⏰</span>
-                <span>24/7 Support</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>💻</span>
-                <span>Full Tech Stack</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>🏢</span>
-                <span>Registered Company</span>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
-
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out both;
-        }
-      `}</style>
     </div>
   );
 };
