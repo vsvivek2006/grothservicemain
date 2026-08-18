@@ -194,11 +194,14 @@ const About: React.FC = () => {
     }
   ];
 
-  // Team Members
+  // ============================================================
+  // UPDATED TEAM MEMBERS - Complete List
+  // ============================================================
   const teamMembers: TeamMember[] = [
+    // === LEADERSHIP TEAM ===
     {
       id: 1,
-      name: "Mr. Growth Service",
+      name: "Vikash Singh",
       role: "Founder & CEO",
       department: "Leadership",
       image: "/images/ceo.jpg",
@@ -211,108 +214,90 @@ const About: React.FC = () => {
     },
     {
       id: 2,
-      name: "Mr. Digital Strategist",
-      role: "Managing Director",
+      name: "Vivek Singh",
+      role: "Digital Marketing Expert",
       department: "Leadership",
-      image: "/images/md.jpg",
-      bio: "Strategic thinker specializing in digital marketing and business growth. Expert in creating comprehensive digital strategies for international clients from our offices in India and Nepal.",
-      expertise: ["Digital Strategy", "Business Development", "Client Relations", "Team Management"],
+      image: "/images/digital-marketing-expert.jpg",
+      bio: "Strategic digital marketing specialist with expertise in SEO, PPC, and content marketing. Leading digital campaigns across all three office locations.",
+      expertise: ["Digital Strategy", "SEO", "PPC", "Content Marketing"],
       socialLinks: {
         linkedin: "#"
       }
     },
     {
       id: 3,
-      name: "Mrs. Tech Lead",
-      role: "Technical Manager",
-      department: "Development",
-      image: "/images/tech-lead.jpg",
-      bio: "Full-stack development expert with deep knowledge of React, Node.js, and cloud technologies. Leads development teams across Jaipur and Vrindavan offices.",
-      expertise: ["React.js", "Node.js", "Cloud Architecture", "Team Leadership"],
+      name: "Nupur Mishara",
+      role: "Team Leader",
+      department: "Leadership",
+      image: "/images/team-leader.jpg",
+      bio: "Experienced team leader managing operations across Jaipur, Vrindavan, and Nepal offices. Ensuring seamless project delivery and client satisfaction.",
+      expertise: ["Team Management", "Project Coordination", "Client Relations", "Operations"],
       socialLinks: {
         linkedin: "#"
       }
     },
+
+    // === DEVELOPMENT TEAM ===
     {
       id: 4,
-      name: "Mr. Code Master",
-      role: "Senior Developer - Jaipur",
+      name: "Rahul Kumar",
+      role: "Team Lead - Developer",
       department: "Development",
-      image: "/images/developer.jpg",
-      bio: "Expert full-stack developer from our Jaipur office specializing in React, TypeScript, and Node.js. Built 100+ web applications for global clients.",
-      expertise: ["React.js", "TypeScript", "Node.js", "MongoDB"],
+      image: "/images/developer-lead.jpg",
+      bio: "Expert full-stack developer and team lead specializing in React, TypeScript, and Node.js. Leading development teams across all office locations to deliver high-performance web applications.",
+      expertise: ["React.js", "TypeScript", "Node.js", "Team Leadership", "MongoDB"],
       socialLinks: {
         linkedin: "#"
       }
     },
+
+    // === MARKETING & SEO TEAM ===
     {
       id: 5,
-      name: "Mrs. Pixel Perfect",
-      role: "UI/UX Developer - Vrindavan",
-      department: "Development",
-      image: "/images/ui-ux.jpg",
-      bio: "Creative UI/UX designer and frontend developer from our Vrindavan office. Creates beautiful, responsive interfaces that deliver exceptional user experiences.",
-      expertise: ["UI/UX Design", "Tailwind CSS", "Figma", "Responsive Design"],
-      socialLinks: {
-        linkedin: "#"
-      }
-    },
-    {
-      id: 6,
-      name: "Mr. SEO Specialist",
-      role: "SEO Executive - Jaipur",
+      name: "Nutan Mishra",
+      role: "SEO Executive",
       department: "Marketing",
-      image: "/images/seo-specialist.jpg",
-      bio: "SEO expert from our Jaipur office with 5+ years of experience. Specializes in international SEO, keyword research, and organic growth strategies.",
+      image: "/images/seo-executive.jpg",
+      bio: "Results-driven SEO professional with expertise in on-page and off-page optimization. Helping businesses rank higher on search engines and drive organic traffic.",
       expertise: ["On-Page SEO", "Off-Page SEO", "Technical SEO", "Keyword Research"],
       socialLinks: {
         linkedin: "#"
       }
     },
     {
-      id: 7,
-      name: "Mrs. SEO Pro",
-      role: "Senior SEO Executive - Vrindavan",
+      id: 6,
+      name: "Priyansh Sharma",
+      role: "Performance Marketer",
       department: "Marketing",
-      image: "/images/seo-pro.jpg",
-      bio: "Results-driven SEO professional from our Vrindavan office with expertise in local and international SEO. Helped 50+ businesses rank on first page.",
-      expertise: ["Local SEO", "International SEO", "Content Strategy", "SEO Analytics"],
+      image: "/images/performance-marketer.jpg",
+      bio: "Performance marketing expert specializing in Google Ads, social media advertising, and conversion optimization. Driving measurable ROI for clients across all locations.",
+      expertise: ["Google Ads", "Social Media Advertising", "PPC", "Conversion Optimization"],
       socialLinks: {
         linkedin: "#"
       }
     },
+    {
+      id: 7,
+      name: "Lalan Kumar",
+      role: "Junior SEO Executive",
+      department: "Marketing",
+      image: "/images/junior-seo.jpg",
+      bio: "Passionate SEO professional with expertise in keyword research, content optimization, and local SEO. Helping businesses grow their online presence and reach new audiences.",
+      expertise: ["Keyword Research", "Local SEO", "Content Optimization", "SEO Analytics"],
+      socialLinks: {
+        linkedin: "#"
+      }
+    },
+
+    // === OPERATIONS TEAM ===
     {
       id: 8,
-      name: "Mr. Sales Expert",
-      role: "Sales Executive - Nepal",
-      department: "Sales",
-      image: "/images/sales-executive.jpg",
-      bio: "Dynamic sales professional from our Nepal office with expertise in digital services. Helps clients find the right solutions for their business needs.",
-      expertise: ["Client Acquisition", "Sales Strategy", "Negotiation", "CRM"],
-      socialLinks: {
-        linkedin: "#"
-      }
-    },
-    {
-      id: 9,
-      name: "Mrs. Growth Manager",
-      role: "Sales Manager - Jaipur",
-      department: "Sales",
-      image: "/images/sales-manager.jpg",
-      bio: "Experienced sales leader from our Jaipur office with a track record of driving revenue growth. Specializes in digital services sales and client retention.",
-      expertise: ["Sales Management", "Client Relations", "Business Growth", "Strategy"],
-      socialLinks: {
-        linkedin: "#"
-      }
-    },
-    {
-      id: 10,
-      name: "Mr. Marketing Pro",
-      role: "Social Media Manager - Vrindavan",
-      department: "Marketing",
-      image: "/images/social-media-manager.jpg",
-      bio: "Social media expert from our Vrindavan office managing campaigns across all platforms. Creates engaging content that drives brand awareness and conversions.",
-      expertise: ["Social Media Strategy", "Content Creation", "Community Management", "Analytics"],
+      name: "Ashish Singh",
+      role: "Admin",
+      department: "Operations",
+      image: "/images/admin.jpg",
+      bio: "Dedicated administrative professional managing office operations across all locations. Ensuring smooth day-to-day functioning, client support, and operational excellence.",
+      expertise: ["Office Administration", "Client Support", "Operations", "Coordination"],
       socialLinks: {
         linkedin: "#"
       }
@@ -910,7 +895,9 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* === TEAM SECTION === */}
+      {/* ============================================================
+          UPDATED TEAM SECTION - Complete Team Display
+          ============================================================ */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -925,9 +912,9 @@ const About: React.FC = () => {
           {/* Leadership Team */}
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">Leadership</span>
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">Leadership Team</span>
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {teamMembers.filter(m => m.department === "Leadership").map((member) => (
                 <div key={member.id} className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <div className="flex items-center space-x-4">
@@ -936,7 +923,7 @@ const About: React.FC = () => {
                     </div>
                     <div>
                       <h4 className="text-xl font-bold text-gray-900">{member.name}</h4>
-                      <p className="text-blue-600 font-semibold">{member.role}</p>
+                      <p className="text-blue-600 font-semibold text-sm">{member.role}</p>
                       <div className="flex flex-wrap gap-1 mt-2">
                         {member.expertise.slice(0, 3).map((skill, idx) => (
                           <span key={idx} className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">{skill}</span>
@@ -955,7 +942,7 @@ const About: React.FC = () => {
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text">Development Team</span>
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {teamMembers.filter(m => m.department === "Development").map((member) => (
                 <div key={member.id} className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <div className="text-center">
@@ -976,12 +963,12 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Marketing Team */}
+          {/* Marketing & SEO Team */}
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
               <span className="bg-gradient-to-r from-green-600 to-teal-600 text-transparent bg-clip-text">Marketing & SEO Team</span>
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {teamMembers.filter(m => m.department === "Marketing").map((member) => (
                 <div key={member.id} className="bg-gradient-to-br from-green-50 to-teal-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <div className="text-center">
@@ -1002,13 +989,13 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Sales Team */}
+          {/* Operations Team */}
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-              <span className="bg-gradient-to-r from-orange-600 to-red-600 text-transparent bg-clip-text">Sales Team</span>
+              <span className="bg-gradient-to-r from-orange-600 to-red-600 text-transparent bg-clip-text">Operations Team</span>
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {teamMembers.filter(m => m.department === "Sales").map((member) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {teamMembers.filter(m => m.department === "Operations").map((member) => (
                 <div key={member.id} className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <div className="text-center">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-3">
