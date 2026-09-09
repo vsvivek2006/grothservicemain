@@ -149,6 +149,21 @@ function App() {
               <Route path="/offices/:officeSlug" element={<OfficeDetailPage />} />
               <Route path="/team" element={<TeamPage />} />
 
+              {/* Canonical Route Aliases & Direct Entry Points */}
+              <Route path="/careers" element={<TeamPage />} />
+              <Route path="/refund" element={<Privacy />} />
+              <Route path="/success-stories" element={<CaseStudies />} />
+              <Route path="/webinars" element={<Resources />} />
+              <Route path="/email-marketing" element={<DigitalMarketing />} />
+              <Route path="/ui-ux" element={<UIUXDesign />} />
+              <Route path="/consultation" element={<BookCall />} />
+              <Route path="/whitelabel" element={<WhiteLabel />} />
+              <Route path="/sitemap" element={<LocationsHub />} />
+              <Route path="/accessibility" element={<Terms />} />
+              <Route path="/scam-alert" element={<HelpCenter />} />
+              <Route path="/verify" element={<Contact />} />
+              <Route path="/report-scam" element={<Contact />} />
+
               {/* Scalable Locations Directory & City Hubs */}
               <Route path="/locations" element={<LocationsHub />} />
               <Route path="/locations/:citySlug" element={<CityHubPage />} />

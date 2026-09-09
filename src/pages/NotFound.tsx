@@ -43,8 +43,7 @@ const NotFound: React.FC = () => {
       city: "Nepal",
       flag: "🇳🇵",
       address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      isHeadOffice: true
+      phone: "+977 970-7382481"
     }
   ];
 
@@ -469,7 +468,7 @@ const NotFound: React.FC = () => {
           </div>
           <div className="mt-4 text-sm text-purple-200">
             <span className="flex items-center justify-center gap-2">
-              📍 Jaipur • Vrindavan • Nepal (Head Office)
+              📍 Jaipur • Vrindavan • Nepal
             </span>
           </div>
         </div>

@@ -4,18 +4,37 @@ import {
   Star, 
   MapPin, 
   Phone, 
-  Building,
+  Building2,
   Facebook,
   Instagram,
   Linkedin,
   Youtube,
   Shield,
+  ShieldCheck,
   AlertTriangle,
   Clock,
   Award,
   Globe,
   ChevronRight,
   Users,
+  TrendingUp,
+  Share2,
+  Search,
+  Target,
+  Layout,
+  Palette,
+  ShoppingCart,
+  BookOpen,
+  BarChart3,
+  HelpCircle,
+  Video,
+  Mic,
+  Briefcase,
+  FileText,
+  Lock,
+  DollarSign,
+  Trophy,
+  Rocket,
   Zap
 } from "lucide-react";
 
@@ -29,7 +48,6 @@ interface OfficeLocation {
   phone: string;
   country: string;
   flag: string;
-  isHeadOffice?: boolean;
   timings?: string;
   googleMaps?: string;
   landmark?: string;
@@ -38,7 +56,7 @@ interface OfficeLocation {
 interface FooterLink {
   name: string;
   path: string;
-  emoji: string;
+  icon: React.ElementType;
 }
 
 interface SocialLink {
@@ -52,29 +70,28 @@ interface SocialLink {
 interface TrustBadge {
   text: string;
   path: string;
-  icon?: string;
+  icon: React.ElementType;
 }
 
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
-  // Office Locations Data
+  // Office Locations Data - 3 factual offices
   const offices: OfficeLocation[] = [
     {
       id: "india-jaipur",
-      name: "India Office - Jaipur",
+      name: "Jaipur Office (Rajasthan)",
       address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
       phone: "+91 62073 00553",
       country: "India",
       flag: "🇮🇳",
-      isHeadOffice: true,
       timings: "Mon-Sat: 9:00 AM - 7:00 PM",
       googleMaps: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
       landmark: "Near Jagatpura Flyover"
     },
     {
       id: "india-vrindavan",
-      name: "India Office - Vrindavan",
+      name: "Vrindavan Office (Uttar Pradesh)",
       address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
       phone: "+91 93414 36937",
       country: "India",
@@ -85,7 +102,7 @@ const Footer: React.FC = () => {
     },
     {
       id: "nepal",
-      name: "Nepal Office",
+      name: "Nepal Office (Siraha)",
       address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
       phone: "+977 970-7382481",
       country: "Nepal",
@@ -97,37 +114,37 @@ const Footer: React.FC = () => {
   ];
 
   const aboutLinks: FooterLink[] = [
-    { name: "About Growth Service", path: "/about", emoji: "🏢" },
-    { name: "Our Team", path: "/team", emoji: "👥" },
-    { name: "Company Offices", path: "/offices", emoji: "📍" },
-    { name: "Locations Directory", path: "/locations", emoji: "🗺️" },
-    { name: "Careers", path: "/careers", emoji: "💼" },
-    { name: "Terms & Conditions", path: "/terms", emoji: "📜" },
-    { name: "Privacy Policy", path: "/privacy", emoji: "🔒" },
-    { name: "Refund Policy", path: "/refund", emoji: "💸" },
-    { name: "Client Success Stories", path: "/success-stories", emoji: "🏆" }
+    { name: "About Growth Service", path: "/about", icon: Building2 },
+    { name: "Our Team", path: "/team", icon: Users },
+    { name: "Company Offices", path: "/offices", icon: MapPin },
+    { name: "Locations Directory", path: "/locations", icon: Globe },
+    { name: "Careers", path: "/team", icon: Briefcase },
+    { name: "Terms & Conditions", path: "/terms", icon: FileText },
+    { name: "Privacy Policy", path: "/privacy", icon: Lock },
+    { name: "Refund Policy", path: "/refund", icon: DollarSign },
+    { name: "Client Success Stories", path: "/case-studies", icon: Trophy }
   ];
 
   const digitalSolutions: FooterLink[] = [
-    { name: "Digital Marketing", path: "/digital-marketing", emoji: "📈" },
-    { name: "Social Media Management", path: "/social-media", emoji: "📱" },
-    { name: "SEO Services", path: "/seo", emoji: "🔍" },
-    { name: "Meta Ads Management", path: "/paid-marketing", emoji: "🎯" },
-    { name: "Google Business Profile", path: "/local-seo", emoji: "📍" },
-    { name: "Website Development", path: "/web-development", emoji: "💻" },
-    { name: "Brand Strategy", path: "/branding", emoji: "🎨" },
-    { name: "E-commerce Solutions", path: "/ecommerce", emoji: "🛒" }
+    { name: "Digital Marketing", path: "/digital-marketing", icon: TrendingUp },
+    { name: "Social Media Management", path: "/social-media", icon: Share2 },
+    { name: "SEO Services", path: "/seo", icon: Search },
+    { name: "Meta Ads Management", path: "/paid-marketing", icon: Target },
+    { name: "Google Business Profile", path: "/local-seo", icon: MapPin },
+    { name: "Website Development", path: "/web-development", icon: Layout },
+    { name: "Brand Strategy", path: "/branding", icon: Palette },
+    { name: "E-commerce Solutions", path: "/ecommerce", icon: ShoppingCart }
   ];
 
   const resources: FooterLink[] = [
-    { name: "Blog & Articles", path: "/blog", emoji: "✍️" },
-    { name: "Case Studies", path: "/case-studies", emoji: "📊" },
-    { name: "Free Digital Audit", path: "/free-audit", emoji: "🔍" },
-    { name: "Digital Marketing Guides", path: "/resources", emoji: "📖" },
-    { name: "Video Tutorials", path: "/resources#tutorials", emoji: "🎥" },
-    { name: "Webinars", path: "/webinars", emoji: "🎤" },
-    { name: "Help Center", path: "/help-center", emoji: "❓" },
-    { name: "FAQs", path: "/faq", emoji: "❔" }
+    { name: "Blog & Articles", path: "/blog", icon: BookOpen },
+    { name: "Case Studies", path: "/case-studies", icon: BarChart3 },
+    { name: "Free Digital Audit", path: "/free-audit", icon: Search },
+    { name: "Digital Marketing Guides", path: "/resources", icon: BookOpen },
+    { name: "Video Tutorials", path: "/resources#tutorials", icon: Video },
+    { name: "Webinars", path: "/resources", icon: Mic },
+    { name: "Help Center", path: "/help-center", icon: HelpCircle },
+    { name: "FAQs", path: "/faq", icon: HelpCircle }
   ];
 
   const socialLinks: SocialLink[] = [
@@ -138,14 +155,14 @@ const Footer: React.FC = () => {
   ];
 
   const trustBadges: TrustBadge[] = [
-    { text: "🚀 Social Media Marketing", path: "/social-media" },
-    { text: "🎯 Meta Ads Management", path: "/paid-marketing" },
-    { text: "🔍 SEO Services", path: "/seo" },
-    { text: "💻 Website Development", path: "/web-development" },
-    { text: "📧 Email Marketing", path: "/email-marketing" },
-    { text: "🛒 E-commerce Solutions", path: "/ecommerce" },
-    { text: "📱 App Development", path: "/app-development" },
-    { text: "🎨 UI/UX Design", path: "/ui-ux" }
+    { text: "Social Media Marketing", path: "/social-media", icon: Share2 },
+    { text: "Meta Ads Management", path: "/paid-marketing", icon: Target },
+    { text: "SEO Services", path: "/seo", icon: Search },
+    { text: "Website Development", path: "/web-development", icon: Layout },
+    { text: "Email Marketing", path: "/digital-marketing", icon: TrendingUp },
+    { text: "E-commerce Solutions", path: "/ecommerce", icon: ShoppingCart },
+    { text: "App Development", path: "/app-development", icon: Layout },
+    { text: "UI/UX Design", path: "/ui-ux-design", icon: Palette }
   ];
 
   return (
@@ -153,8 +170,8 @@ const Footer: React.FC = () => {
       {/* Decorative background grid and ambient glow */}
       <DecorativeGrid variant="dots" dark />
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
@@ -165,7 +182,7 @@ const Footer: React.FC = () => {
             <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-7 w-7 text-yellow-400 fill-current mx-0.5 animate-pulse" />
+                  <Star key={i} className="h-7 w-7 text-yellow-400 fill-current mx-0.5" />
                 ))}
               </div>
               <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm">
@@ -195,74 +212,83 @@ const Footer: React.FC = () => {
           {/* ABOUT COMPANY */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
-              <Shield className="h-5 w-5 mr-2" />
+              <Shield className="h-5 w-5 mr-2 text-purple-400" />
               ABOUT
             </h3>
             <ul className="space-y-1">
-              {aboutLinks.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    to={item.path}
-                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-1.5 hover:translate-x-2 transform group"
-                  >
-                    <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">{item.emoji}</span>
-                    {item.name}
-                    <ChevronRight className="h-3 w-3 inline ml-1 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
+              {aboutLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.name}>
+                    <Link 
+                      to={item.path}
+                      className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm flex items-center py-1.5 hover:translate-x-1 transform group"
+                    >
+                      <Icon className="h-3.5 w-3.5 mr-2 text-purple-400/80 group-hover:text-purple-300 transition-colors flex-shrink-0" />
+                      <span>{item.name}</span>
+                      <ChevronRight className="h-3 w-3 inline ml-auto text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* DIGITAL SOLUTIONS */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
-              <span className="mr-2">🚀</span>
+              <Rocket className="h-4 w-4 mr-2 text-purple-400" />
               SOLUTIONS
             </h3>
             <ul className="space-y-1">
-              {digitalSolutions.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    to={item.path}
-                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-1.5 hover:translate-x-2 transform group"
-                  >
-                    <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">{item.emoji}</span>
-                    {item.name}
-                    <ChevronRight className="h-3 w-3 inline ml-1 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
+              {digitalSolutions.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.name}>
+                    <Link 
+                      to={item.path}
+                      className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm flex items-center py-1.5 hover:translate-x-1 transform group"
+                    >
+                      <Icon className="h-3.5 w-3.5 mr-2 text-purple-400/80 group-hover:text-purple-300 transition-colors flex-shrink-0" />
+                      <span>{item.name}</span>
+                      <ChevronRight className="h-3 w-3 inline ml-auto text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* RESOURCES */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
-              <span className="mr-2">📚</span>
+              <BookOpen className="h-4 w-4 mr-2 text-purple-400" />
               RESOURCES
             </h3>
             <ul className="space-y-1">
-              {resources.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    to={item.path}
-                    className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm block py-1.5 hover:translate-x-2 transform group"
-                  >
-                    <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">{item.emoji}</span>
-                    {item.name}
-                    <ChevronRight className="h-3 w-3 inline ml-1 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
+              {resources.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.name}>
+                    <Link 
+                      to={item.path}
+                      className="text-gray-300 hover:text-purple-300 transition-all duration-200 text-sm flex items-center py-1.5 hover:translate-x-1 transform group"
+                    >
+                      <Icon className="h-3.5 w-3.5 mr-2 text-purple-400/80 group-hover:text-purple-300 transition-colors flex-shrink-0" />
+                      <span>{item.name}</span>
+                      <ChevronRight className="h-3 w-3 inline ml-auto text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
-          {/* OFFICE LOCATIONS - Now showing all 3 */}
+          {/* OFFICE LOCATIONS - All 3 company offices */}
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-6 border-b border-purple-600 pb-2">
               <Link to="/offices" className="text-lg font-bold text-purple-300 hover:text-white transition-colors flex items-center">
-                <Building className="h-5 w-5 mr-2" />
+                <Building2 className="h-5 w-5 mr-2" />
                 OUR OFFICES
               </Link>
               <Link to="/locations" className="text-xs text-purple-300 hover:text-white transition-colors">
@@ -273,22 +299,11 @@ const Footer: React.FC = () => {
               {offices.map((office) => (
                 <div 
                   key={office.id}
-                  className={`relative group hover:bg-purple-900/30 p-4 rounded-xl transition-all duration-300 border border-transparent hover:border-purple-700/50 ${
-                    office.isHeadOffice ? 'bg-gradient-to-r from-purple-900/20 to-pink-900/20' : ''
-                  }`}
+                  className="relative group bg-purple-950/20 hover:bg-purple-900/30 p-4 rounded-xl transition-all duration-300 border border-purple-900/40 hover:border-purple-700/50"
                 >
-                  {office.isHeadOffice && (
-                    <div className="absolute -top-2 -right-2">
-                      <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
-                        ★ HEAD OFFICE
-                      </span>
-                    </div>
-                  )}
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
-                        office.isHeadOffice ? 'bg-purple-600' : 'bg-purple-800'
-                      }`}>
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg bg-purple-900/80 border border-purple-700/50">
                         {office.flag}
                       </div>
                     </div>
@@ -298,9 +313,6 @@ const Footer: React.FC = () => {
                         className="font-semibold text-purple-300 hover:text-white transition-colors text-sm flex items-center gap-2 group-hover:underline"
                       >
                         {office.name}
-                        {office.isHeadOffice && (
-                          <Zap className="h-3 w-3 text-yellow-400 fill-yellow-400" />
-                        )}
                       </Link>
                       <div className="mt-1 space-y-1">
                         <p className="text-gray-300 text-xs leading-relaxed flex items-start gap-1">
@@ -313,13 +325,13 @@ const Footer: React.FC = () => {
                           </p>
                         )}
                         <div className="flex flex-wrap items-center gap-3 mt-1">
-                          <Link 
-                            to={`tel:${office.phone.replace(/\s/g, '')}`}
+                          <a 
+                            href={`tel:${office.phone.replace(/\s/g, '')}`}
                             className="text-gray-300 hover:text-purple-300 text-xs flex items-center gap-1 transition-colors"
                           >
                             <Phone className="h-3 w-3 text-purple-400" />
                             {office.phone}
-                          </Link>
+                          </a>
                           {office.googleMaps && (
                             <a 
                               href={office.googleMaps}
@@ -346,10 +358,10 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* QUICK CONTACT & SOCIAL */}
+          {/* QUICK CONTACT & CONNECT */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
-              <span className="mr-2">⚡</span>
+              <Zap className="h-4 w-4 mr-2 text-purple-400" />
               CONNECT
             </h3>
             <div className="space-y-4">
@@ -362,23 +374,23 @@ const Footer: React.FC = () => {
                 <div className="space-y-2.5">
                   <Link 
                     to="/book-call"
-                    className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shadow-purple-500/30 text-sm"
+                    className="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg shadow-purple-500/30 text-sm flex items-center justify-center gap-2"
                   >
-                    📞 Book Free Call
+                    <Phone className="h-4 w-4" /> Book Free Call
                   </Link>
                   
                   <Link 
                     to="/contact"
-                    className="block w-full border-2 border-purple-500 text-purple-300 hover:bg-purple-900/50 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 text-sm"
+                    className="block w-full border-2 border-purple-500 text-purple-300 hover:bg-purple-900/50 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 text-sm flex items-center justify-center gap-2"
                   >
-                    📝 Contact Form
+                    <FileText className="h-4 w-4" /> Contact Form
                   </Link>
                   
                   <Link 
                     to="/free-audit"
-                    className="block w-full border-2 border-yellow-500 text-yellow-300 hover:bg-yellow-900/30 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 text-sm"
+                    className="block w-full border-2 border-yellow-500 text-yellow-300 hover:bg-yellow-900/30 hover:text-white text-center py-3 px-4 rounded-lg font-bold transition-all duration-200 hover:scale-105 text-sm flex items-center justify-center gap-2"
                   >
-                    🔍 Free Website Audit
+                    <Search className="h-4 w-4" /> Free Website Audit
                   </Link>
                 </div>
               </div>
@@ -386,7 +398,7 @@ const Footer: React.FC = () => {
               {/* Social Media */}
               <div className="pt-2">
                 <p className="text-purple-300 text-sm font-semibold mb-3 flex items-center">
-                  <span className="mr-2">🌐</span>
+                  <Globe className="h-4 w-4 mr-2 text-purple-400" />
                   Follow Us
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -401,7 +413,7 @@ const Footer: React.FC = () => {
                       aria-label={social.label}
                     >
                       <social.icon className="h-4 w-4" />
-                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-[8px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-[8px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
                         {social.handle}
                       </span>
                     </a>
@@ -416,11 +428,11 @@ const Footer: React.FC = () => {
         <div className="mt-12 p-6 bg-gradient-to-r from-yellow-900/40 via-orange-900/30 to-red-900/40 border border-yellow-600/50 rounded-xl backdrop-blur-sm hover:shadow-xl hover:shadow-yellow-500/10 transition-all duration-300">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <AlertTriangle className="h-8 w-8 text-yellow-400 animate-pulse" />
+              <AlertTriangle className="h-8 w-8 text-yellow-400" />
             </div>
             <div className="flex-1">
               <p className="text-yellow-200 text-sm font-bold mb-2 flex items-center">
-                ⚠️ IMPORTANT SECURITY ALERT
+                <Shield className="w-4 h-4 mr-1.5" /> IMPORTANT SECURITY ALERT
               </p>
               <p className="text-yellow-100 text-sm mb-3">
                 <span className="font-semibold">Growth Service does NOT offer:</span> Part-time jobs, channel subscription tasks, 
@@ -433,25 +445,25 @@ const Footer: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-3 items-center mt-3 pt-3 border-t border-yellow-700/50">
                 <Link 
-                  to="/scam-alert" 
-                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50"
+                  to="/help-center" 
+                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50 flex items-center gap-1.5"
                 >
-                  🛡️ Scam Alert
+                  <ShieldCheck className="w-3.5 h-3.5" /> Scam Alert Info
                 </Link>
                 <span className="text-yellow-700">•</span>
-                <Link 
-                  to="/verify" 
-                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50"
+                <a 
+                  href="mailto:info@growthservice.in?subject=Verify%20Authenticity" 
+                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50 flex items-center gap-1.5"
                 >
-                  ✅ Verify Authenticity
-                </Link>
+                  <ShieldCheck className="w-3.5 h-3.5" /> Verify Authenticity
+                </a>
                 <span className="text-yellow-700">•</span>
-                <Link 
-                  to="/report-scam" 
-                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50"
+                <a 
+                  href="mailto:info@growthservice.in?subject=Report%20Fraud" 
+                  className="text-yellow-300 hover:text-yellow-200 text-xs font-medium transition-colors duration-200 bg-yellow-900/30 px-3 py-1.5 rounded-full hover:bg-yellow-800/50 flex items-center gap-1.5"
                 >
-                  🚨 Report Fraud
-                </Link>
+                  <AlertTriangle className="w-3.5 h-3.5" /> Report Fraud
+                </a>
               </div>
             </div>
           </div>
@@ -494,24 +506,34 @@ const Footer: React.FC = () => {
             <div className="text-center">
               <p className="text-gray-500 text-xs mb-2">Certified & Trusted</p>
               <div className="flex items-center justify-center space-x-2">
-                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full">🔐 SSL Secured</span>
-                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full">📈 Google Partner</span>
-                <span className="text-[8px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full">⭐ Trustpilot 4.7</span>
+                <span className="text-[10px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-purple-400" /> SSL Secured
+                </span>
+                <span className="text-[10px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <Award className="w-3 h-3 text-purple-400" /> Google Partner
+                </span>
+                <span className="text-[10px] bg-purple-900/50 text-purple-300 px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" /> Trustpilot 4.7
+                </span>
               </div>
             </div>
           </div>
 
           {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center items-center gap-2 mt-6 pt-6 border-t border-purple-800">
-            {trustBadges.map((badge) => (
-              <Link 
-                key={badge.text}
-                to={badge.path}
-                className="text-purple-300 text-[10px] bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-purple-700/50 px-3 py-1.5 rounded-full hover:from-purple-700 hover:to-pink-700 hover:text-white transition-all duration-200 hover:scale-105 hover:shadow-lg"
-              >
-                {badge.text}
-              </Link>
-            ))}
+          <div className="flex flex-wrap justify-center items-center gap-2 mt-6 pt-6 border-t border-purple-800/80">
+            {trustBadges.map((badge) => {
+              const Icon = badge.icon;
+              return (
+                <Link 
+                  key={badge.text}
+                  to={badge.path}
+                  className="text-purple-300 text-[11px] bg-purple-900/30 border border-purple-700/50 px-3 py-1.5 rounded-full hover:bg-purple-800/50 hover:text-white transition-all duration-200 hover:scale-105 flex items-center gap-1.5"
+                >
+                  <Icon className="w-3 h-3 text-purple-400" />
+                  <span>{badge.text}</span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Final Note */}

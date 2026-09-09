@@ -60,13 +60,13 @@ export const physicalOffices: OfficeData[] = [
   {
     id: "vrindavan",
     slug: "vrindavan",
-    name: "Vrindavan Office (Head Office)",
+    name: "Vrindavan Office",
     city: "Vrindavan",
     state: "Uttar Pradesh",
     country: "India",
     flag: "🇮🇳",
-    isHeadOffice: true,
-    tagline: "Global Headquarters & Digital Solutions Center",
+    isHeadOffice: false,
+    tagline: "Digital Marketing, Web Development & SEO Solutions",
     address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
     phone: "+91 93414 36937",
     email: "info@growthservice.in",
@@ -84,7 +84,7 @@ export const physicalOffices: OfficeData[] = [
       "Vrindavan", "Mathura", "Agra", "Aligarh", "Lucknow", 
       "Kanpur", "Noida", "Delhi NCR"
     ],
-    description: "Our Vrindavan head office provides digital marketing, web development, SEO, and strategic consulting to businesses in India and internationally."
+    description: "Our Vrindavan office provides digital marketing, web development, SEO, and strategic consulting to businesses in India and internationally."
   },
   {
     id: "nepal",

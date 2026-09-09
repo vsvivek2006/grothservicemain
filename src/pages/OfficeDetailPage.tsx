@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
   Building2, MapPin, Phone, Clock, ExternalLink, 
@@ -15,18 +15,19 @@ import TeamCard from '../components/ui/TeamCard';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
+import NotFound from './NotFound';
 
 export const OfficeDetailPage: React.FC = () => {
   const { officeSlug } = useParams<{ officeSlug: string }>();
 
   if (!officeSlug) {
-    return <Navigate to="/offices" replace />;
+    return <NotFound />;
   }
 
   const office = getOfficeBySlug(officeSlug);
 
   if (!office) {
-    return <Navigate to="/offices" replace />;
+    return <NotFound />;
   }
 
   const coreTeam = teamMembers.slice(0, 3);
@@ -93,11 +94,9 @@ export const OfficeDetailPage: React.FC = () => {
                   <Building2 className="w-4 h-4 text-yellow-400" />
                   <span>{office.city}, {office.state} • {office.country}</span>
                 </div>
-                {office.isHeadOffice && (
-                  <Badge variant="gold" size="sm">
-                    Global Headquarters
-                  </Badge>
-                )}
+                <Badge variant="purple" size="sm">
+                  Company Office
+                </Badge>
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">

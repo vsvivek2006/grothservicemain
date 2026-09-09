@@ -758,7 +758,7 @@ const SEOService = () => {
               <p className="text-gray-500 text-sm">Custom Pricing</p>
             </Link>
 
-            <Link to="/email-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
+            <Link to="/digital-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
               <div className="text-3xl mb-3">📧</div>
               <h3 className="font-semibold text-gray-800">Email Marketing</h3>
               <p className="text-gray-500 text-sm">Custom Pricing</p>

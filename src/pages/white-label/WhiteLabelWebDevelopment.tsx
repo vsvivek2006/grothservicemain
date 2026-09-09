@@ -28,7 +28,7 @@ const WhiteLabelWebDevelopment = () => {
                 Book White Label Demo
               </Link>
               <Link
-                to="/whitelabel"
+                to="/white-label"
                 className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
               >
                 View All White Label Services

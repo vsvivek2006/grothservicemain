@@ -11,13 +11,8 @@ import {
   CheckCircle, 
   Building, 
   Target,
-  MapPin,
   Globe,
-  ChevronRight,
-  Award,
-  Shield,
-  Users,
-  Zap
+  ChevronRight
 } from 'lucide-react';
 
 // Types
@@ -71,13 +66,13 @@ const BookCall: React.FC = () => {
     },
     {
       id: 3,
-      name: "Nepal Office - Head Office",
+      name: "Nepal Office",
       address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
       phone: "+977 970-7382481",
       flag: "🇳🇵",
       city: "Bariyarpatti",
       country: "Nepal",
-      isHeadOffice: true
+      isHeadOffice: false
     }
   ];
 
@@ -325,16 +320,16 @@ I have booked a free consultation call. Please confirm the schedule.`;
         <title>Book Free Consultation | Digital Experts in Nepal, Jaipur & Vrindavan - Growth Service</title>
         <meta 
           name="description" 
-          content="Schedule a free 30-minute consultation with our digital experts at our Nepal Head Office, Jaipur Office, or Vrindavan Office. Discuss web development, SEO, and digital marketing." 
+          content="Schedule a free 30-minute consultation with our digital experts at our Nepal Office, Jaipur Office, or Vrindavan Office. Discuss web development, SEO, and digital marketing." 
         />
         <meta 
           name="keywords" 
-          content="free consultation, digital marketing consultation, web development consultation, SEO consultation, book call, growth service, Nepal consultation, Jaipur digital marketing, Vrindavan web development"
+          content="free consultation, digital marketing consultation, web development consultation, SEO consultation, book call, growth service, Nepal consultation, Jaipur digital marketing, Vrindavan web development" 
         />
         <link rel="canonical" href="https://growthservice.in/book-call" />
         
         <meta property="og:title" content="Book Free Consultation - Growth Service Digital Agency" />
-        <meta property="og:description" content="Free 30-minute strategy session with our digital experts. Offices in Nepal (Head Office), Jaipur, and Vrindavan." />
+        <meta property="og:description" content="Free 30-minute strategy session with our digital experts. Offices in Nepal, Jaipur, and Vrindavan." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://growthservice.in/book-call" />
       </Helmet>
@@ -353,16 +348,11 @@ I have booked a free consultation call. Please confirm the schedule.`;
               {offices.map((office) => (
                 <div 
                   key={office.id}
-                  className={`bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-sm cursor-pointer hover:bg-white/30 transition-all ${
-                    office.isHeadOffice ? 'border-2 border-yellow-400' : ''
-                  }`}
+                  className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-sm cursor-pointer hover:bg-white/30 transition-all"
                   onClick={() => setSelectedOffice(office.id)}
                 >
                   <span>{office.flag}</span>
                   <span>{office.city}</span>
-                  {office.isHeadOffice && (
-                    <span className="bg-yellow-400 text-gray-900 text-[8px] px-2 py-0.5 rounded-full font-bold">HEAD</span>
-                  )}
                 </div>
               ))}
             </div>
@@ -372,7 +362,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
             </h1>
             <p className="text-lg md:text-xl text-blue-100 mb-6 max-w-3xl mx-auto">
               Schedule a 30-minute call with our digital experts at your preferred office location in 
-              <span className="text-yellow-300 font-semibold"> Nepal (Head Office)</span>, 
+              <span className="text-yellow-300 font-semibold"> Nepal</span>, 
               <span className="text-cyan-300 font-semibold"> Jaipur</span>, or 
               <span className="text-purple-300 font-semibold"> Vrindavan</span>
             </p>
@@ -686,7 +676,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-gray-600">Nepal Head Office</p>
+                    <p className="text-xs text-gray-600">Nepal Office</p>
                     <a href="tel:+9779707382481" className="text-sm font-medium text-gray-900 hover:text-blue-600">
                       +977 970-7382481
                     </a>

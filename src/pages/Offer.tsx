@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { 
   Check, 
-  Star, 
   Rocket, 
   Clock, 
   Users, 
@@ -11,29 +10,13 @@ import {
   Phone, 
   X, 
   Send, 
-  CreditCard, 
-  Shield,
   Search,
-  Globe,
   ShoppingCart,
-  ThumbsUp,
-  Eye,
-  Target,
-  Sparkles,
   Gift,
-  Award,
-  Heart,
-  Quote,
-  ChevronDown,
   MapPin,
-  Mail,
-  Zap,
   Building,
-  TrendingUp,
-  BarChart,
   Megaphone,
   Laptop,
-  Smartphone,
   Briefcase
 } from "lucide-react";
 
@@ -51,7 +34,7 @@ const Offer: React.FC = () => {
     message: ""
   });
 
-  const WHATSAPP_NUMBER = "9779707382481"; // Nepal Head Office
+  const WHATSAPP_NUMBER = "9779707382481"; // Nepal Office
   const INDIA_PHONE = "919341436937";
 
   // Initialize timer from localStorage
@@ -241,12 +224,12 @@ const Offer: React.FC = () => {
       city: "Vrindavan"
     },
     {
-      name: "Nepal Office - Head Office",
+      name: "Nepal Office",
       address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
       phone: "+977 970-7382481",
       flag: "🇳🇵",
       city: "Nepal",
-      isHeadOffice: true
+      isHeadOffice: false
     }
   ];
 
@@ -281,7 +264,7 @@ ${formData.message || 'No additional information provided'}
 I would like to avail the special offer. Please contact me.`;
     
     const encodedMessage = encodeURIComponent(whatsappMessage);
-    // Send to Nepal Head Office WhatsApp
+    // Send to Nepal Office WhatsApp
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
     
     setIsFormOpen(false);
@@ -364,7 +347,7 @@ I would like to avail the special offer. Please contact me.`;
 
           <p className="text-sm md:text-base text-purple-200 mb-8 max-w-2xl mx-auto">
             Services available at our offices in <strong className="text-white">Jaipur</strong>, 
-            <strong className="text-white"> Vrindavan</strong> & <strong className="text-yellow-300"> Nepal (Head Office)</strong>
+            <strong className="text-white"> Vrindavan</strong> & <strong className="text-yellow-300"> Nepal</strong>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -476,21 +459,12 @@ I would like to avail the special offer. Please contact me.`;
             {offices.map((office) => (
               <div 
                 key={office.city}
-                className={`p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 ${
-                  office.isHeadOffice 
-                    ? 'bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-400' 
-                    : 'bg-gray-50 border border-gray-200'
-                }`}
+                className="p-6 rounded-2xl shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 bg-gray-50 border border-gray-200"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-3xl">{office.flag}</span>
                   <div>
                     <h3 className="font-bold text-gray-900">{office.name}</h3>
-                    {office.isHeadOffice && (
-                      <span className="bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                        ★ HEAD OFFICE
-                      </span>
-                    )}
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 mb-3">{office.address}</p>
@@ -529,7 +503,7 @@ I would like to avail the special offer. Please contact me.`;
                 <Building className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-800 mb-2">3 Office Locations</h3>
-              <p className="text-gray-600 text-sm">Jaipur • Vrindavan • Nepal (Head Office)</p>
+              <p className="text-gray-600 text-sm">Jaipur • Vrindavan • Nepal</p>
             </div>
 
             <div className="bg-white p-6 rounded-2xl shadow-lg text-center hover:shadow-xl transition-all hover:-translate-y-2">
@@ -582,7 +556,7 @@ I would like to avail the special offer. Please contact me.`;
           <div className="mt-6 text-sm text-purple-200">
             <span className="flex items-center justify-center gap-2">
               <MapPin className="h-4 w-4" />
-              Jaipur • Vrindavan • Nepal (Head Office)
+              Jaipur • Vrindavan • Nepal
             </span>
           </div>
         </div>
@@ -655,13 +629,13 @@ I would like to avail the special offer. Please contact me.`;
                 <select 
                   name="location" 
                   value={formData.location} 
-                  onChange={handleInputChange}
+                  onChange={handleInputChange} 
                   className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   <option value="">Select your preferred office</option>
                   {offices.map((office) => (
                     <option key={office.city} value={office.city}>
-                      {office.flag} {office.name} {office.isHeadOffice ? '(Head Office)' : ''}
+                      {office.flag} {office.name}
                     </option>
                   ))}
                 </select>
@@ -672,7 +646,7 @@ I would like to avail the special offer. Please contact me.`;
                 <select 
                   name="service" 
                   value={formData.service} 
-                  onChange={handleInputChange}
+                  onChange={handleInputChange} 
                   className="w-full px-4 py-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   <option value="">Select a service</option>
@@ -705,7 +679,7 @@ I would like to avail the special offer. Please contact me.`;
               </button>
               
               <p className="text-xs text-gray-500 text-center">
-                Your request will be sent to our Nepal Head Office for quick response
+                Your request will be sent via WhatsApp for quick response
               </p>
             </form>
           </div>

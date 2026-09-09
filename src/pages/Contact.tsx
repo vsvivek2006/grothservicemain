@@ -12,11 +12,7 @@ import {
   Building,
   Globe,
   ChevronRight,
-  Award,
-  Shield,
-  Users,
-  Target,
-  Zap
+  Target
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -62,9 +58,7 @@ const Contact: React.FC = () => {
     location: ''
   });
 
-  const [activeOffice, setActiveOffice] = useState<number>(3); // Nepal as default
-
-  // Office Locations - Nepal as Head Office
+  // Office Locations
   const offices: OfficeLocation[] = [
     {
       id: 1,
@@ -98,7 +92,7 @@ const Contact: React.FC = () => {
     },
     {
       id: 3,
-      name: "Nepal Office - Head Office",
+      name: "Nepal Office",
       address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
       phone: "+977 970-7382481",
       email: "nepal@growthservice.in",
@@ -108,7 +102,7 @@ const Contact: React.FC = () => {
       country: "Nepal",
       landmark: "Near Bariyarpatti Main Road",
       timings: "Sun-Fri: 10:00 AM - 6:00 PM NPT",
-      isHeadOffice: true,
+      isHeadOffice: false,
       services: ["Web Development", "SEO Services", "Digital Marketing", "E-commerce Solutions", "Performance Marketing"]
     }
   ];
@@ -135,28 +129,28 @@ const Contact: React.FC = () => {
   const contactInfo: ContactInfo[] = [
     {
       icon: <Globe className="h-6 w-6" />,
-      title: 'Head Office - Nepal',
+      title: 'Nepal Office',
       content: 'Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal',
       link: 'https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal',
       location: '🇳🇵 Nepal'
     },
     {
       icon: <Building className="h-6 w-6" />,
-      title: 'India Office - Jaipur',
+      title: 'Jaipur Office',
       content: '138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017',
       link: 'https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur',
       location: '🇮🇳 Jaipur'
     },
     {
       icon: <Building className="h-6 w-6" />,
-      title: 'India Office - Vrindavan',
+      title: 'Vrindavan Office',
       content: 'Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121',
       link: 'https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan',
       location: '🇮🇳 Vrindavan'
     },
     {
       icon: <Phone className="h-6 w-6" />,
-      title: 'Phone - Nepal (Head Office)',
+      title: 'Phone - Nepal Office',
       content: '+977 970-7382481',
       link: 'tel:+9779707382481',
       location: '🇳🇵 Nepal'
@@ -184,7 +178,7 @@ const Contact: React.FC = () => {
     },
     {
       icon: <Clock className="h-6 w-6" />,
-      title: 'Working Hours - Nepal (Head Office)',
+      title: 'Working Hours - Nepal Office',
       content: 'Sun-Fri: 10:00 AM - 6:00 PM NPT',
       link: '#',
       location: '🇳🇵 Nepal'
@@ -201,8 +195,8 @@ const Contact: React.FC = () => {
   // FAQ Section
   const faqs: FAQItem[] = [
     {
-      question: "Where is Growth Service's head office located?",
-      answer: "Our head office is located in Bariyarpatti, Nepal. We also have offices in Jaipur (Rajasthan) and Vrindavan (Uttar Pradesh) to serve our clients across India and globally."
+      question: "Where are Growth Service's offices located?",
+      answer: "Our physical offices are located in Bariyarpatti (Nepal), Jaipur (Rajasthan), and Vrindavan (Uttar Pradesh) to serve our clients across India, Nepal, and globally."
     },
     {
       question: "What digital marketing services do you offer?",
@@ -222,7 +216,7 @@ const Contact: React.FC = () => {
     },
     {
       question: "How can I contact your Nepal office?",
-      answer: "You can contact our Nepal head office at +977 970-7382481 or email us at nepal@growthservice.in. Our office is located near Bariyarpatti Road, Bariyarpatti 56500, Nepal."
+      answer: "You can contact our Nepal office at +977 970-7382481 or email us at nepal@growthservice.in. Our office is located near Bariyarpatti Road, Bariyarpatti 56500, Nepal."
     }
   ];
 
@@ -239,7 +233,7 @@ const Contact: React.FC = () => {
     e.preventDefault();
     const locationLabel = offices.find(o => o.id === parseInt(formData.location))?.name || 'Not specified';
     
-    const whatsappMessage = `Hello Growth Service Team! (Nepal Head Office)
+    const whatsappMessage = `Hello Growth Service Team! (Nepal Office)
 
 *📋 New Contact Form Submission*
 
@@ -252,7 +246,7 @@ const Contact: React.FC = () => {
 
 I would like to discuss my project with you. Please provide more details.`;
 
-    // Send to Nepal WhatsApp (Head Office)
+    // Send to Nepal WhatsApp
     const whatsappUrl = `https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -261,20 +255,20 @@ I would like to discuss my project with you. Please provide more details.`;
     <div className="min-h-screen bg-white">
       <Helmet>
         <title>Contact Growth Service | Offices in Nepal, Jaipur & Vrindavan - Digital Marketing Agency</title>
-        <meta
-          name="description"
-          content="Contact Growth Service with offices in Nepal (Head Office), Jaipur (Rajasthan), and Vrindavan (Uttar Pradesh). Get professional web development, SEO, and digital marketing services."
+        <meta 
+          name="description" 
+          content="Contact Growth Service with offices in Nepal, Jaipur (Rajasthan), and Vrindavan (Uttar Pradesh). Get professional web development, SEO, and digital marketing services." 
         />
         <meta 
           name="keywords" 
-          content="contact digital marketing agency, web development company Nepal, SEO services Jaipur, digital agency Vrindavan, growth service contact, digital marketing India, web development Nepal, SEO India, contact growth service, digital agency Nepal"
+          content="contact digital marketing agency, web development company Nepal, SEO services Jaipur, digital agency Vrindavan, growth service contact, digital marketing India, web development Nepal, SEO India, contact growth service, digital agency Nepal" 
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://growthservice.in/contact" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Contact Growth Service - Offices in Nepal, Jaipur & Vrindavan" />
-        <meta property="og:description" content="Connect with our team at our Nepal Head Office, Jaipur Office, or Vrindavan Office for web development and digital marketing services." />
+        <meta property="og:description" content="Connect with our team at our Nepal Office, Jaipur Office, or Vrindavan Office for web development and digital marketing services." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://growthservice.in/contact" />
         
@@ -289,7 +283,7 @@ I would like to discuss my project with you. Please provide more details.`;
               {
                 "@type": "ContactPoint",
                 "telephone": "+977-9707382481",
-                "contactType": "Head Office - Nepal",
+                "contactType": "Nepal Office",
                 "availableLanguage": ["English", "Hindi", "Nepali"]
               },
               {
@@ -298,57 +292,29 @@ I would like to discuss my project with you. Please provide more details.`;
                 "contactType": "India Office",
                 "availableLanguage": ["English", "Hindi"]
               }
-            ],
-            "address": [
-              {
-                "@type": "PostalAddress",
-                "addressLocality": "Bariyarpatti",
-                "addressCountry": "Nepal",
-                "postalCode": "56500"
-              },
-              {
-                "@type": "PostalAddress",
-                "addressLocality": "Jaipur",
-                "addressRegion": "Rajasthan",
-                "addressCountry": "India",
-                "postalCode": "302017"
-              },
-              {
-                "@type": "PostalAddress",
-                "addressLocality": "Vrindavan",
-                "addressRegion": "Uttar Pradesh",
-                "addressCountry": "India",
-                "postalCode": "281121"
-              }
             ]
           })}
         </script>
       </Helmet>
 
-      {/* === HERO SECTION === */}
-      <section className="bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white py-16 md:py-20 overflow-hidden relative">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-48 h-48 bg-purple-500 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
         </div>
-        
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
-            {/* Office Location Badges */}
-            <div className="flex flex-wrap justify-center gap-3 mb-6">
+            {/* Office Pills */}
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
               {offices.map((office) => (
                 <div 
                   key={office.id}
-                  className={`bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-sm cursor-pointer hover:bg-white/30 transition-all ${
-                    office.isHeadOffice ? 'border-2 border-yellow-400' : ''
-                  }`}
-                  onClick={() => setActiveOffice(office.id)}
+                  className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium flex items-center space-x-1"
                 >
                   <span>{office.flag}</span>
-                  <span>{office.city}</span>
-                  {office.isHeadOffice && (
-                    <span className="bg-yellow-400 text-gray-900 text-[8px] px-2 py-0.5 rounded-full font-bold">HEAD</span>
-                  )}
+                  <span>{office.name}</span>
                 </div>
               ))}
             </div>
@@ -357,7 +323,7 @@ I would like to discuss my project with you. Please provide more details.`;
               Let's Build Something <span className="text-cyan-300">Amazing</span>
             </h1>
             <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-blue-100">
-              Connect with our team at our <span className="text-yellow-300 font-semibold">Nepal Head Office</span>, 
+              Connect with our team at our <span className="text-yellow-300 font-semibold">Nepal Office</span>, 
               <span className="text-cyan-300 font-semibold"> Jaipur Office</span>, or 
               <span className="text-purple-300 font-semibold"> Vrindavan Office</span>.
             </p>
@@ -370,7 +336,7 @@ I would like to discuss my project with you. Please provide more details.`;
                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center space-x-2"
               >
                 <MessageCircle className="h-5 w-5" />
-                <span>Chat on WhatsApp (Nepal HQ)</span>
+                <span>Chat on WhatsApp (Nepal)</span>
               </a>
               <a
                 href="tel:+919341436937"
@@ -392,7 +358,7 @@ I would like to discuss my project with you. Please provide more details.`;
               Our <span className="text-blue-600">Office Locations</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Connect with us at our Nepal Head Office or our India offices in Jaipur and Vrindavan
+              Connect with us at our Nepal office or our India offices in Jaipur and Vrindavan
             </p>
           </div>
 
@@ -400,21 +366,14 @@ I would like to discuss my project with you. Please provide more details.`;
             {offices.map((office) => (
               <div 
                 key={office.id}
-                className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${
-                  office.isHeadOffice ? 'border-2 border-yellow-400 ring-2 ring-yellow-200' : ''
-                }`}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
-                <div className={`p-6 ${office.isHeadOffice ? 'bg-gradient-to-r from-yellow-50 to-amber-50' : 'bg-white'}`}>
+                <div className="p-6 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <span className="text-3xl">{office.flag}</span>
                       <h3 className="text-lg font-bold text-gray-900">{office.name}</h3>
                     </div>
-                    {office.isHeadOffice && (
-                      <span className="bg-yellow-400 text-gray-900 text-[10px] font-bold px-3 py-1 rounded-full">
-                        ⭐ HEAD OFFICE
-                      </span>
-                    )}
                   </div>
 
                   <div className="space-y-3 text-sm">
@@ -451,36 +410,31 @@ I would like to discuss my project with you. Please provide more details.`;
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <p className="text-xs font-semibold text-gray-500 mb-2">Services Available:</p>
                     <div className="flex flex-wrap gap-1">
-                      {office.services.slice(0, 4).map((service, idx) => (
-                        <span key={idx} className="bg-blue-50 text-blue-700 text-[10px] px-2 py-1 rounded-full">
+                      {office.services.map((service, index) => (
+                        <span 
+                          key={index}
+                          className="bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded"
+                        >
                           {service}
                         </span>
                       ))}
-                      {office.services.length > 4 && (
-                        <span className="text-gray-500 text-[10px] px-2 py-1">+{office.services.length - 4} more</span>
-                      )}
                     </div>
                   </div>
 
-                  <div className="mt-4 flex gap-2">
-                    <a 
+                  <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+                    <a
                       href={office.mapLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-semibold text-sm hover:from-blue-600 hover:to-purple-700 transition-all"
+                      className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1"
                     >
-                      🗺️ Get Directions
+                      <span>View on Google Maps</span>
+                      <ExternalLink className="h-3 w-3" />
                     </a>
-                    {office.isHeadOffice && (
-                      <a
-                        href="https://wa.me/9779707382481"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-green-500 text-white py-2 px-4 rounded-lg font-semibold text-sm hover:bg-green-600 transition-all flex items-center"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                      </a>
-                    )}
+                    <span className="text-xs text-green-600 font-medium flex items-center gap-1">
+                      <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                      Open Now
+                    </span>
                   </div>
                 </div>
               </div>
@@ -492,7 +446,7 @@ I would like to discuss my project with you. Please provide more details.`;
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <div className="text-3xl font-bold">🇳🇵</div>
-                <div className="font-bold">Nepal - Head Office</div>
+                <div className="font-bold">Nepal Office</div>
                 <div className="text-sm text-blue-200">Bariyarpatti, Nepal</div>
               </div>
               <div>
@@ -524,7 +478,7 @@ I would like to discuss my project with you. Please provide more details.`;
               </h2>
               <p className="text-gray-600 mb-6">
                 Share your project requirements with our team. We'll get back to you within 2-4 hours. 
-                For instant response, message us on WhatsApp at our Nepal Head Office.
+                For instant response, message us on WhatsApp.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -642,11 +596,11 @@ I would like to discuss my project with you. Please provide more details.`;
                   className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
                 >
                   <Send className="h-5 w-5" />
-                  <span>Send via WhatsApp (Nepal HQ)</span>
+                  <span>Send via WhatsApp</span>
                 </button>
 
                 <p className="text-sm text-gray-500 text-center">
-                  Your message will be sent to our Nepal Head Office WhatsApp for instant response. 
+                  Your message will be sent to our WhatsApp for instant response. 
                   We'll get back to you within 1 hour.
                 </p>
               </form>
@@ -836,7 +790,7 @@ I would like to discuss my project with you. Please provide more details.`;
             Ready to Start Your Project?
           </h2>
           <p className="text-lg mb-6 text-blue-100">
-            Contact our <span className="text-yellow-300 font-semibold">Nepal Head Office</span> or visit our offices 
+            Contact our <span className="text-yellow-300 font-semibold">Nepal Office</span> or visit our offices 
             in <span className="text-cyan-300 font-semibold">Jaipur</span> and 
             <span className="text-purple-300 font-semibold"> Vrindavan</span>.
           </p>
@@ -849,7 +803,7 @@ I would like to discuss my project with you. Please provide more details.`;
               className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
             >
               <MessageCircle className="h-5 w-5" />
-              <span>WhatsApp (Nepal HQ)</span>
+              <span>WhatsApp (Nepal)</span>
             </a>
             <a
               href="tel:+919341436937"
@@ -868,7 +822,7 @@ I would like to discuss my project with you. Please provide more details.`;
           </div>
           
           <p className="text-purple-200 text-sm">
-            🇳🇵 Nepal HQ: +977 970-7382481 • 🇮🇳 India: +91 93414 36937 • 💻 info@growthservice.in
+            🇳🇵 Nepal: +977 970-7382481 • 🇮🇳 India: +91 93414 36937 • 💻 info@growthservice.in
           </p>
           <p className="text-purple-300 text-xs mt-2">
             💻 Web Development • 🔍 SEO • 📱 Digital Marketing • 🚀 Growth Solutions • 🌍 Global Reach

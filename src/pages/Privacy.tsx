@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const Privacy: React.FC = () => {
+  const location = useLocation();
+  const getInitialTab = () => {
+    if (location.pathname.includes("refund")) return "refund";
+    if (location.pathname.includes("cancellation")) return "cancellation";
+    return "privacy";
+  };
+
   const lastUpdated = new Date().toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
     day: "2-digit",
   });
 
-  const [activeTab, setActiveTab] = useState("privacy");
+  const [activeTab, setActiveTab] = useState(getInitialTab);
+
+  useEffect(() => {
+    if (location.pathname.includes("refund")) {
+      setActiveTab("refund");
+    } else if (location.pathname.includes("cancellation")) {
+      setActiveTab("cancellation");
+    }
+  }, [location.pathname]);
 
   return (
     <div>

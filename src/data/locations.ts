@@ -57,7 +57,7 @@ export const regionsData: RegionData[] = [
     state: "Uttar Pradesh",
     country: "India",
     flag: "🇮🇳",
-    description: "Home to Growth Service Global Headquarters in Vrindavan, driving digital growth for heritage hospitality, retail, and industries.",
+    description: "Home to Growth Service Vrindavan office, driving digital growth for heritage hospitality, retail, and industries.",
     citySlugs: ["vrindavan", "mathura", "agra", "lucknow", "varanasi"]
   },
   {
@@ -242,10 +242,10 @@ export const citiesData: CityData[] = [
     localAreas: ["Kailash Nagar", "Raman Reti", "Chhatikara Road", "Parikrama Marg", "Vidyapeeth Chauraha", "Sunrakh Road", "Prem Mandir Road"],
     keyIndustries: ["Guest Houses & Hotels", "Pilgrimage Tourism", "Religious Services", "Handicrafts & Puja Essentials"],
     servicesAvailable: ["seo", "web-development", "social-media", "paid-marketing", "content-marketing"],
-    description: "Growth Service operates its head office in Vrindavan, providing comprehensive digital marketing, web development, and SEO services to businesses locally and globally.",
+    description: "Growth Service operates its company office in Vrindavan, providing comprehensive digital marketing, web development, and SEO services to businesses locally and globally.",
     faqs: [
-      { q: "Is Vrindavan the Head Office of Growth Service?", a: "Yes, our global headquarters is located at Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan 281121." },
-      { q: "What services are managed from the Vrindavan HQ?", a: "Our executive strategy, client onboarding, brand management, and primary SEO auditing are orchestrated from Vrindavan." }
+      { q: "Where is the Vrindavan office of Growth Service located?", a: "Our Vrindavan office is located at Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan 281121." },
+      { q: "What services are available from the Vrindavan office?", a: "Web development, SEO auditing, social media management, and performance marketing are available to clients through our Vrindavan office." }
     ]
   },
   {

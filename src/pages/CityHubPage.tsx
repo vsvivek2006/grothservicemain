@@ -18,19 +18,20 @@ import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
+import NotFound from './NotFound';
 
 export const CityHubPage: React.FC = () => {
   const { citySlug } = useParams<{ citySlug: string }>();
 
   if (!citySlug) {
-    return <Navigate to="/locations" replace />;
+    return <NotFound />;
   }
 
   const city = getCityBySlug(citySlug);
   const region = !city ? getRegionBySlug(citySlug) : null;
 
   if (!city && !region) {
-    return <Navigate to="/locations" replace />;
+    return <NotFound />;
   }
 
   const assignedTeam = teamMembers.slice(0, 3);

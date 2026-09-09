@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ArrowRight, Play, Star, TrendingUp, Users, Target, Award, Globe, Shield, Zap, Clock } from 'lucide-react';
 
@@ -457,19 +458,19 @@ const OurImpact: React.FC = () => {
             Let's create your success story. Partner with Grworth Services for sustainable growth and business excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/consultation"
+            <Link
+              to="/book-call"
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
             >
               Book Free Consultation
               <ArrowRight className="h-5 w-5" />
-            </a>
-            <a
-              href="/services"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200"
+            </Link>
+            <Link
+              to="/services"
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 flex items-center justify-center"
             >
               Explore Our Services
-            </a>
+            </Link>
           </div>
         </div>
       </div>

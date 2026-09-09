@@ -57,13 +57,13 @@ const Header: React.FC = () => {
       name: "India: +91-93414-36937", 
       href: "tel:+919341436937", 
       icon: <Phone className="h-4 w-4" />,
-      location: "🇮🇳 Jaipur/Vrindavan"
+      location: "🇮🇳 Jaipur & Vrindavan Offices"
     },
     { 
       name: "Nepal: +977-9707382481", 
       href: "https://wa.me/9779707382481", 
       icon: <MessageCircle className="h-4 w-4" />,
-      location: "🇳🇵 Nepal HQ"
+      location: "🇳🇵 Nepal Office"
     },
     { 
       name: "Email: info@growthservice.in", 
@@ -120,7 +120,7 @@ const Header: React.FC = () => {
     { name: "Case Studies", href: "/case-studies" },
     { name: "Portfolio", href: "/portfolio" },
     { name: "Testimonials", href: "/testimonials" },
-    { name: "Careers", href: "/careers" },
+    { name: "Careers", href: "/team" },
     { name: "Terms", href: "/terms" },
     { name: "Privacy", href: "/privacy" },
     { name: "Refund", href: "/refund" }
@@ -129,36 +129,40 @@ const Header: React.FC = () => {
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200/80' : 'bg-white shadow-sm'}`}>
       {/* Top Bar - Office Locations & Contact */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-white rounded-full blur-2xl"></div>
-        </div>
-        
+      <div className="bg-slate-900 border-b border-slate-800 text-slate-300 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="flex flex-wrap justify-between items-center py-2 gap-2">
+          <div className="flex flex-wrap justify-between items-center py-1.5 gap-2">
             {/* Left - Office Locations (Desktop) */}
-            <div className="hidden md:flex items-center space-x-4 text-xs">
-              <span className="flex items-center gap-1 bg-white/20 px-2 py-1 rounded-full">
-                <MapPin className="h-3 w-3" /> Jaipur
-              </span>
-              <span className="flex items-center gap-1 bg-white/20 px-2 py-1 rounded-full">
-                <MapPin className="h-3 w-3" /> Vrindavan
-              </span>
-              <span className="flex items-center gap-1 bg-yellow-400/30 px-2 py-1 rounded-full border border-yellow-400/50">
-                <Building className="h-3 w-3" /> Nepal (HQ)
-              </span>
+            <div className="hidden md:flex items-center space-x-2 text-xs">
+              <Link 
+                to="/offices/jaipur" 
+                className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-0.5 rounded-full border border-slate-700/60 transition-colors"
+              >
+                <MapPin className="h-3 w-3 text-purple-400" /> Jaipur
+              </Link>
+              <Link 
+                to="/offices/vrindavan" 
+                className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-0.5 rounded-full border border-slate-700/60 transition-colors"
+              >
+                <MapPin className="h-3 w-3 text-purple-400" /> Vrindavan
+              </Link>
+              <Link 
+                to="/offices/nepal" 
+                className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-0.5 rounded-full border border-slate-700/60 transition-colors"
+              >
+                <Building className="h-3 w-3 text-purple-400" /> Nepal
+              </Link>
             </div>
 
             {/* Center - Animated Text */}
             <div className="flex items-center justify-center flex-1">
-              <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
+              <div className="bg-slate-800/80 px-3 py-0.5 rounded-full border border-slate-700/60">
                 <div className="flex items-center space-x-2">
-                  <span className="text-yellow-300 animate-pulse text-xs">✦</span>
-                  <span className="text-white font-medium text-xs whitespace-nowrap">
+                  <span className="text-purple-400 text-xs">✦</span>
+                  <span className="text-slate-200 font-medium text-xs whitespace-nowrap">
                     {animatedText}
                   </span>
-                  <span className="text-yellow-300 animate-pulse text-xs">✦</span>
+                  <span className="text-purple-400 text-xs">✦</span>
                 </div>
               </div>
             </div>
@@ -169,13 +173,13 @@ const Header: React.FC = () => {
                 <a
                   key={index}
                   href={item.href}
-                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 relative group"
+                  className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-all hover:scale-105 relative group"
                   target={item.href.startsWith('http') ? '_blank' : '_self'}
                   rel={item.href.startsWith('http') ? 'noopener noreferrer' : ''}
                   aria-label={item.name}
                 >
                   {item.icon}
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-950 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg border border-slate-800 z-50 pointer-events-none">
                     {item.location}
                   </span>
                 </a>
@@ -395,7 +399,7 @@ const Header: React.FC = () => {
                   <NavLink to="/locations/uttar-pradesh" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                     <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
                       <span>Uttar Pradesh</span>
-                      <span className="text-[9px] bg-amber-100 text-amber-800 font-semibold px-1 rounded">HQ</span>
+                      <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
                     </div>
                     <div className="text-[10px] text-gray-500">Vrindavan, Lucknow, Agra</div>
                   </NavLink>
@@ -423,7 +427,7 @@ const Header: React.FC = () => {
                   <div className="flex items-center gap-3 font-semibold">
                     <NavLink to="/offices/jaipur" className="text-purple-600 hover:underline">Jaipur</NavLink>
                     <span className="text-slate-300">•</span>
-                    <NavLink to="/offices/vrindavan" className="text-purple-600 hover:underline">Vrindavan (HQ)</NavLink>
+                    <NavLink to="/offices/vrindavan" className="text-purple-600 hover:underline">Vrindavan</NavLink>
                     <span className="text-slate-300">•</span>
                     <NavLink to="/offices/nepal" className="text-purple-600 hover:underline">Nepal</NavLink>
                   </div>
@@ -442,7 +446,7 @@ const Header: React.FC = () => {
                   Jaipur Office (Rajasthan)
                 </NavLink>
                 <NavLink to="/offices/vrindavan" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1 transition-all duration-150">
-                  Vrindavan Office (Head Office)
+                  Vrindavan Office (Uttar Pradesh)
                 </NavLink>
                 <NavLink to="/offices/nepal" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1 transition-all duration-150">
                   Nepal Office (Siraha)
@@ -662,8 +666,7 @@ const Header: React.FC = () => {
                   <p className="text-[10px] font-semibold text-gray-700">Vrindavan</p>
                   <p className="text-[8px] text-gray-500">Uttar Pradesh</p>
                 </div>
-                <div className="bg-green-50 p-2 rounded-lg text-center border border-green-200 relative">
-                  <span className="absolute -top-1 -right-1 bg-yellow-400 text-[6px] px-1 py-0.5 rounded-full font-bold">HQ</span>
+                <div className="bg-green-50 p-2 rounded-lg text-center border border-green-200">
                   <span className="text-lg">🇳🇵</span>
                   <p className="text-[10px] font-semibold text-gray-700">Nepal</p>
                   <p className="text-[8px] text-gray-500">Bariyarpatti</p>
@@ -706,7 +709,7 @@ const Header: React.FC = () => {
                 onClick={() => setIsOpen(false)}
               >
                 <MessageCircle className="h-4 w-4" />
-                WhatsApp (Nepal HQ)
+                WhatsApp (Nepal Office)
               </a>
               
               <a

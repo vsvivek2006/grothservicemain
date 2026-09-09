@@ -21,7 +21,7 @@ export const OfficesHub: React.FC = () => {
         <title>Our 3 Company Offices — Jaipur, Vrindavan & Nepal | Growth Service</title>
         <meta 
           name="description" 
-          content="Explore Growth Service physical offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh Head Office), and Bariyarpatti (Nepal). Verified addresses, direct contacts, and business hours." 
+          content="Explore Growth Service physical offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Bariyarpatti (Nepal). Verified addresses, direct contacts, and business hours." 
         />
         <link rel="canonical" href="https://growthservice.in/offices" />
         
