@@ -1,11 +1,16 @@
-import { teamMembers, TeamMember } from '../data/team';
+import { teamMembers, TeamMember, sortByRolePriority } from '../data/team';
 import { OfficeData } from '../data/offices';
 import { getOfficeById } from './officeSelectors';
 
 /**
- * Returns all 9 verified team members.
+ * Returns all verified team members sorted by role hierarchy (CEO → managers → leads → executives).
  */
-export function getAllTeamMembers(): readonly TeamMember[] {
+export function getAllTeamMembers(): TeamMember[] {
+  return sortByRolePriority(teamMembers);
+}
+
+/** Returns unsorted team members (internal/advanced use). */
+export function getAllTeamMembersRaw(): readonly TeamMember[] {
   return teamMembers;
 }
 
@@ -17,12 +22,12 @@ export function getTeamMemberById(id: number): TeamMember | undefined {
 }
 
 /**
- * Filters team members by office ID ('jaipur' | 'vrindavan' | 'nepal' | 'all').
+ * Filters team members by office ID, sorted by role hierarchy.
  */
-export function getTeamMembersByOffice(officeId: string): readonly TeamMember[] {
-  if (!officeId || officeId === 'all') return teamMembers;
+export function getTeamMembersByOffice(officeId: string): TeamMember[] {
+  if (!officeId || officeId === 'all') return sortByRolePriority(teamMembers);
   const norm = officeId.toLowerCase();
-  return teamMembers.filter(m => m.officeId.toLowerCase() === norm);
+  return sortByRolePriority(teamMembers.filter(m => m.officeId.toLowerCase() === norm));
 }
 
 /**

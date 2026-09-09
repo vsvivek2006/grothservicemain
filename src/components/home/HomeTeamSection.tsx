@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
 import SectionHeader from "../ui/SectionHeader";
-import TeamCard from "../ui/TeamCard";
+import EmployeeCard from "../team/EmployeeCard";
 import { StaggerContainer, StaggerItem } from "../animations";
 import { getAllTeamMembers } from "../../selectors";
 
@@ -24,15 +24,7 @@ export const HomeTeamSection: React.FC = () => {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" staggerDelay={90}>
           {teamMembers.slice(0, 4).map((member, idx) => (
             <StaggerItem key={member.id} index={idx} className="h-full">
-              <TeamCard
-                name={member.name}
-                role={member.role}
-                department={member.department}
-                image={member.image}
-                bio={member.bio}
-                expertise={[...member.expertise]}
-                linkedinUrl={member.socialLinks?.linkedin}
-              />
+              <EmployeeCard member={member} />
             </StaggerItem>
           ))}
         </StaggerContainer>

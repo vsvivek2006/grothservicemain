@@ -128,8 +128,46 @@ export const teamMembers: readonly TeamMember[] = [
   }
 ] as const;
 
+/** Role hierarchy: lower number = higher rank. Unmatched roles get 99. */
+const ROLE_PRIORITY: Record<string, number> = {
+  'ceo': 1,
+  'founder': 1,
+  'co-founder': 2,
+  'cto': 3,
+  'cmo': 3,
+  'coo': 3,
+  'director': 4,
+  'head': 5,
+  'manager': 6,
+  'lead': 7,
+  'senior': 8,
+  'executive': 9,
+  'specialist': 10,
+  'coordinator': 11,
+  'associate': 12,
+  'admin': 13,
+  'intern': 14,
+};
+
+function getRolePriority(role: string): number {
+  const lower = role.toLowerCase();
+  for (const [key, priority] of Object.entries(ROLE_PRIORITY)) {
+    if (lower.includes(key)) return priority;
+  }
+  return 99;
+}
+
+export function sortByRolePriority<T extends { role: string }>(members: readonly T[]): T[] {
+  return [...members].sort((a, b) => getRolePriority(a.role) - getRolePriority(b.role));
+}
+
 export function getAllTeamMembers(): readonly TeamMember[] {
   return teamMembers;
+}
+
+/** Returns all team members sorted by role hierarchy (CEO first, then down). */
+export function getAllTeamMembersSorted(): TeamMember[] {
+  return sortByRolePriority(teamMembers);
 }
 
 export function getTeamMemberById(id: number): TeamMember | undefined {

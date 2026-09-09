@@ -9,7 +9,6 @@ export * from './Textarea';
 export * from './Icon';
 export * from './ServiceCard';
 export * from './StatCard';
-export * from './TeamCard';
 export * from './LocationCard';
 export * from './IndustryCard';
 export * from './TestimonialCard';

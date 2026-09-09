@@ -26,7 +26,7 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
-import TeamCard from '../components/ui/TeamCard';
+import EmployeeCard from '../components/team/EmployeeCard';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
@@ -279,15 +279,7 @@ export const LocationServicePage: React.FC = () => {
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={100}>
               {coreTeam.map((member, idx) => (
                 <StaggerItem key={member.id} index={idx}>
-                  <TeamCard
-                    name={member.name}
-                    role={member.role}
-                    department={member.department}
-                    image={member.image}
-                    bio={member.bio}
-                    expertise={[...member.expertise]}
-                    linkedinUrl={member.socialLinks?.linkedin}
-                  />
+                  <EmployeeCard member={member} />
                 </StaggerItem>
               ))}
             </StaggerContainer>
