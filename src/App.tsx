@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import LoadingFallback from './components/ui/LoadingFallback';
+import ScrollToTop from './components/ScrollToTop';
 
 // Core Pages (Route-level Code Splitting for optimal Core Web Vitals)
 const Home = lazy(() => import('./pages/Home'));
@@ -70,6 +71,7 @@ const TeamPage = lazy(() => import('./pages/TeamPage'));
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       {/* Global SEO + GA4 */}
       <Helmet>
         {/* GA4 Tracking */}
