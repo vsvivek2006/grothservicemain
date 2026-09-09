@@ -19,49 +19,29 @@ export interface TeamMember {
 }
 
 export const teamMembers: readonly TeamMember[] = [
-  // === JAIPUR OFFICE — All Staff ===
+
+  // === NEPAL HEAD OFFICE ===
   {
     id: 1,
     name: "Vikash Singh",
     role: "CEO & Founder",
     department: "Leadership",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-01",
+    officeId: "nepal",
+    employeeCode: "GS-NPL-01",
     image: "",
     bio: "Founder and CEO driving strategic digital transformation, corporate vision, and client growth partnerships across Growth Service's offices in India and Nepal.",
     expertise: ["Business Strategy", "Digital Leadership", "Corporate Growth", "Global Operations"],
     email: "info@growthservice.in"
   },
-  {
-    id: 2,
-    name: "Nupur",
-    role: "Tech Manager",
-    department: "Development",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-02",
-    image: "",
-    bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
-    expertise: ["Technical Architecture", "Web Engineering", "Full-Stack Development", "System Delivery"]
-  },
-  {
-    id: 4,
-    name: "Vivek Singh",
-    role: "Digital Marketing Manager",
-    department: "Marketing",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-04",
-    image: "",
-    bio: "Digital marketing manager leading multi-channel growth campaigns, search engine visibility, and client ROI performance across India and international markets.",
-    expertise: ["Digital Strategy", "SEO & Performance Marketing", "Meta Ads", "Brand Scaling"],
-    email: "info@growthservice.in"
-  },
+
+  // === VRINDAVAN OFFICE ===
   {
     id: 8,
     name: "Praveen Kumar",
     role: "Sales Head",
     department: "Sales",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-08",
+    officeId: "vrindavan",
+    employeeCode: "GS-VRN-01",
     image: "",
     bio: "Sales head spearheading regional business development, client consultative partnerships, and enterprise digital solutions across India and Nepal.",
     expertise: ["Enterprise Sales", "Client Acquisition", "Growth Consultation", "Market Expansion"],
@@ -72,11 +52,36 @@ export const teamMembers: readonly TeamMember[] = [
     name: "Pinki Kumari",
     role: "HR Head",
     department: "Operations",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-07",
+    officeId: "vrindavan",
+    employeeCode: "GS-VRN-02",
     image: "",
     bio: "Human resources head fostering a high-performance culture, talent development, transparent recruitment, and team excellence across all office branches.",
     expertise: ["Talent Acquisition", "Employee Relations", "Organizational Culture", "HR Operations"]
+  },
+
+  // === JAIPUR OFFICE ===
+  {
+    id: 2,
+    name: "Nupur",
+    role: "Tech Manager",
+    department: "Development",
+    officeId: "jaipur",
+    employeeCode: "GS-JPR-01",
+    image: "",
+    bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
+    expertise: ["Technical Architecture", "Web Engineering", "Full-Stack Development", "System Delivery"]
+  },
+  {
+    id: 4,
+    name: "Vivek Singh",
+    role: "Digital Marketing Manager",
+    department: "Marketing",
+    officeId: "jaipur",
+    employeeCode: "GS-JPR-02",
+    image: "",
+    bio: "Digital marketing manager leading multi-channel growth campaigns, search engine visibility, and client ROI performance across India and international markets.",
+    expertise: ["Digital Strategy", "SEO & Performance Marketing", "Meta Ads", "Brand Scaling"],
+    email: "info@growthservice.in"
   },
   {
     id: 3,
@@ -95,7 +100,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "SEO Executive & Team Leader",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-05",
+    employeeCode: "GS-JPR-04",
     image: "",
     bio: "SEO team leader driving organic search performance, technical audit execution, on-page optimization, and SERP rankings for enterprise and local clients.",
     expertise: ["Technical SEO", "On-Page Optimization", "Search Analytics", "Keyword Strategy"]
@@ -106,7 +111,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "SEO Executive",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-06",
+    employeeCode: "GS-JPR-05",
     image: "",
     bio: "SEO executive specializing in in-depth keyword analysis, on-page content optimization, competitive auditing, and sustainable organic traffic growth.",
     expertise: ["Keyword Research", "On-Page SEO", "Link Building", "Content Optimization"]
@@ -117,7 +122,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Sales Executive",
     department: "Sales",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-09",
+    employeeCode: "GS-JPR-06",
     image: "",
     bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
     expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
@@ -128,10 +133,15 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Developer",
     department: "Development",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-13",
+    employeeCode: "GS-JPR-07",
     image: "/team/kishan-kumar.jpg",
     bio: "Frontend and backend developer building fast, responsive web solutions using modern technologies. Focused on clean code, performance, and seamless user experiences.",
-    expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"]
+    expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"],
+    email: "kishan.growthservice@gmail.com",
+    phone: "+91 6203386747",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/kishankr2007"
+    }
   },
   {
     id: 10,
@@ -139,7 +149,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Junior SEO Executive",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-10",
+    employeeCode: "GS-JPR-08",
     image: "",
     bio: "Junior SEO executive contributing to on-page optimization, keyword research, and content strategy to drive organic growth for our clients.",
     expertise: ["On-Page SEO", "Keyword Research", "Content Optimization", "SEO Reporting"]
@@ -150,7 +160,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Junior SEO Executive",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-11",
+    employeeCode: "GS-JPR-09",
     image: "",
     bio: "Junior SEO executive focused on technical SEO implementation, backlink analysis, and supporting campaigns to improve client search rankings.",
     expertise: ["Technical SEO", "Link Analysis", "SERP Tracking", "Audit Support"]
@@ -161,16 +171,15 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Junior SEO Executive",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-12",
+    employeeCode: "GS-JPR-10",
     image: "",
     bio: "Junior SEO executive executing local SEO strategies, Google Business Profile management, and content-led optimization to boost regional search visibility.",
     expertise: ["Local SEO", "Google Business Profile", "Content Strategy", "Rank Tracking"]
   },
 ] as const;
 
-/** Role hierarchy: lower number = higher rank. Unmatched roles get 99.
- *  NOTE: 'junior' MUST come before 'executive' in this object so
- *  "Junior SEO Executive" matches 'junior' (10) not 'executive' (9). */
+/** Role hierarchy: lower number = higher rank.
+ *  'junior' is checked explicitly before the loop to prevent "Junior SEO Executive" matching 'executive'. */
 const ROLE_PRIORITY: Record<string, number> = {
   'ceo': 1,
   'founder': 1,
@@ -195,7 +204,6 @@ const ROLE_PRIORITY: Record<string, number> = {
 
 function getRolePriority(role: string): number {
   const lower = role.toLowerCase();
-  // Check 'junior' first so "Junior SEO Executive" scores 10, not 9
   if (lower.includes('junior')) return ROLE_PRIORITY['junior'];
   for (const [key, priority] of Object.entries(ROLE_PRIORITY)) {
     if (lower.includes(key)) return priority;
@@ -211,7 +219,6 @@ export function getAllTeamMembers(): readonly TeamMember[] {
   return teamMembers;
 }
 
-/** Returns all team members sorted by role hierarchy (CEO first, then down). */
 export function getAllTeamMembersSorted(): TeamMember[] {
   return sortByRolePriority(teamMembers);
 }
