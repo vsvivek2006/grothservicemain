@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Shield, FileText, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
+import { Container } from "../components/ui";
 
 const Terms: React.FC = () => {
   const [expandedSections, setExpandedSections] = useState<number[]>([0, 1, 2]);
@@ -152,7 +153,7 @@ const Terms: React.FC = () => {
           <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
         </div>
         
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Container className="relative text-center">
           <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
             <Shield className="h-5 w-5 mr-2" />
             <span className="text-lg font-semibold">LEGAL TERMS</span>
@@ -182,11 +183,11 @@ const Terms: React.FC = () => {
               })}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Container className="py-16">
         {/* Important Notice */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mb-12">
           <div className="flex items-start gap-4">
@@ -364,7 +365,7 @@ const Terms: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

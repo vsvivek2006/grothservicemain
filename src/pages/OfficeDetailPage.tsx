@@ -15,6 +15,7 @@ import TeamCard from '../components/ui/TeamCard';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
+import { Container, Section } from '../components/ui';
 import NotFound from './NotFound';
 
 export const OfficeDetailPage: React.FC = () => {
@@ -77,7 +78,7 @@ export const OfficeDetailPage: React.FC = () => {
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
             <Breadcrumb
               items={[
@@ -144,197 +145,199 @@ export const OfficeDetailPage: React.FC = () => {
               </div>
             </div>
           </FadeIn>
-        </div>
+        </Container>
       </section>
 
       {/* Office Information & Address Grid */}
-      <section className="py-16 max-w-7xl mx-auto px-4">
-        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16" staggerDelay={120}>
-          {/* Card 1: Official Address */}
-          <StaggerItem index={0} className="h-full">
-            <Card className="bg-white border border-slate-200/80 shadow-card h-full relative overflow-hidden group">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Street Address</h3>
-              <p className="text-slate-700 text-sm leading-relaxed mb-3">{office.address}</p>
-              {office.landmark && (
-                <p className="text-xs text-purple-700 font-medium bg-purple-50 p-2 rounded-lg border border-purple-100 mb-4">
-                  Landmark: {office.landmark}
+      <Section variant="transparent" spacing="none" className="py-16">
+        <Container>
+          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16" staggerDelay={120}>
+            {/* Card 1: Official Address */}
+            <StaggerItem index={0} className="h-full">
+              <Card className="bg-white border border-slate-200/80 shadow-card h-full relative overflow-hidden group">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Street Address</h3>
+                <p className="text-slate-700 text-sm leading-relaxed mb-3">{office.address}</p>
+                {office.landmark && (
+                  <p className="text-xs text-purple-700 font-medium bg-purple-50 p-2 rounded-lg border border-purple-100 mb-4">
+                    Landmark: {office.landmark}
+                  </p>
+                )}
+                <a
+                  href={office.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-700 transition-colors mt-auto"
+                >
+                  <span>Open in Google Maps</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </Card>
+            </StaggerItem>
+
+            {/* Card 2: Contact Info */}
+            <StaggerItem index={1} className="h-full">
+              <Card className="bg-white border border-slate-200/80 shadow-card h-full relative overflow-hidden group">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Direct Contact</h3>
+                <p className="text-xs text-slate-500 mb-1">Telephone:</p>
+                <p className="text-slate-900 font-bold text-sm mb-3">
+                  <a href={`tel:${office.phone.replace(/\s+/g, '')}`} className="hover:text-purple-600 transition-colors">
+                    {office.phone}
+                  </a>
                 </p>
-              )}
-              <a
-                href={office.mapLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-700 transition-colors mt-auto"
-              >
-                <span>Open in Google Maps</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </Card>
-          </StaggerItem>
+                <p className="text-xs text-slate-500 mb-1">Email:</p>
+                <p className="text-slate-900 font-bold text-sm mb-4">
+                  <a href={`mailto:${office.email}`} className="hover:text-purple-600 transition-colors">
+                    {office.email}
+                  </a>
+                </p>
+                <span className="inline-flex items-center gap-1 text-xs text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                  ✓ Verified Contact Line
+                </span>
+              </Card>
+            </StaggerItem>
 
-          {/* Card 2: Contact Info */}
-          <StaggerItem index={1} className="h-full">
-            <Card className="bg-white border border-slate-200/80 shadow-card h-full relative overflow-hidden group">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                <Phone className="w-5 h-5" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Direct Contact</h3>
-              <p className="text-xs text-slate-500 mb-1">Telephone:</p>
-              <p className="text-slate-900 font-bold text-sm mb-3">
-                <a href={`tel:${office.phone.replace(/\s+/g, '')}`} className="hover:text-purple-600 transition-colors">
-                  {office.phone}
-                </a>
-              </p>
-              <p className="text-xs text-slate-500 mb-1">Email:</p>
-              <p className="text-slate-900 font-bold text-sm mb-4">
-                <a href={`mailto:${office.email}`} className="hover:text-purple-600 transition-colors">
-                  {office.email}
-                </a>
-              </p>
-              <span className="inline-flex items-center gap-1 text-xs text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                ✓ Verified Contact Line
-              </span>
-            </Card>
-          </StaggerItem>
-
-          {/* Card 3: Hours & Support */}
-          <StaggerItem index={2} className="h-full">
-            <Card className="bg-white border border-slate-200/80 shadow-card h-full relative overflow-hidden group">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                <Clock className="w-5 h-5" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Office Timings</h3>
-              <p className="text-slate-700 text-sm leading-relaxed mb-3">{office.timings}</p>
-              <p className="text-xs text-slate-500 mb-4">
-                Consultation visits are welcome during operational hours. In-person and virtual consultations available.
-              </p>
-              <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-100">
-                In-Person & Virtual Appointments
-              </span>
-            </Card>
-          </StaggerItem>
-        </StaggerContainer>
-
-        {/* Services Available to Clients in this Region */}
-        <FadeIn direction="up" delay={100}>
-          <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
-            <div className="max-w-3xl mb-6">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                Services Available to Clients in this Region
-              </h3>
-              <p className="text-slate-600 text-sm">
-                Our digital services available to clients in this region include:
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {office.servicesOffered.map((srv, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-purple-200 hover:bg-purple-50/40 transition-all">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span className="text-sm font-semibold text-slate-800">{srv}</span>
+            {/* Card 3: Hours & Support */}
+            <StaggerItem index={2} className="h-full">
+              <Card className="bg-white border border-slate-200/80 shadow-card h-full relative overflow-hidden group">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <Clock className="w-5 h-5" />
                 </div>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Office Timings</h3>
+                <p className="text-slate-700 text-sm leading-relaxed mb-3">{office.timings}</p>
+                <p className="text-xs text-slate-500 mb-4">
+                  Consultation visits are welcome during operational hours. In-person and virtual consultations available.
+                </p>
+                <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-100">
+                  In-Person & Virtual Appointments
+                </span>
+              </Card>
+            </StaggerItem>
+          </StaggerContainer>
 
-        {/* Team Section */}
-        <div className="mb-16">
-          <FadeIn direction="up">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
-              <div>
-                <div className="mb-2">
-                  <Badge variant="purple" size="sm">
-                    Company Team
-                  </Badge>
-                </div>
-                <h2 className="text-3xl font-bold text-slate-900">
-                  Growth Service <span className="text-purple-600">Team</span>
-                </h2>
-                <p className="text-slate-600 text-sm mt-1">
-                  Our core multidisciplinary team supporting our clients and digital campaigns.
+          {/* Services Available to Clients in this Region */}
+          <FadeIn direction="up" delay={100}>
+            <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
+              <div className="max-w-3xl mb-6">
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                  Services Available to Clients in this Region
+                </h3>
+                <p className="text-slate-600 text-sm">
+                  Our digital services available to clients in this region include:
                 </p>
               </div>
-              <Link to="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group">
-                <span>View All Team Members</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {office.servicesOffered.map((srv, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-purple-200 hover:bg-purple-50/40 transition-all">
+                    <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span className="text-sm font-semibold text-slate-800">{srv}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </FadeIn>
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={120}>
-            {coreTeam.map((member, idx) => (
-              <StaggerItem key={member.id} index={idx}>
-                <TeamCard
-                  name={member.name}
-                  role={member.role}
-                  department={member.department}
-                  image={member.image}
-                  bio={member.bio}
-                  expertise={member.expertise}
-                  linkedinUrl={member.socialLinks?.linkedin}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
+          {/* Team Section */}
+          <div className="mb-16">
+            <FadeIn direction="up">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
+                <div>
+                  <div className="mb-2">
+                    <Badge variant="purple" size="sm">
+                      Company Team
+                    </Badge>
+                  </div>
+                  <h2 className="text-3xl font-bold text-slate-900">
+                    Growth Service <span className="text-purple-600">Team</span>
+                  </h2>
+                  <p className="text-slate-600 text-sm mt-1">
+                    Our core multidisciplinary team supporting our clients and digital campaigns.
+                  </p>
+                </div>
+                <Link to="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group">
+                  <span>View All Team Members</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </FadeIn>
 
-        {/* Areas & Cities Served */}
-        <FadeIn direction="up" delay={100}>
-          <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Areas Served
-            </h3>
-            <p className="text-slate-600 text-sm mb-6">
-              Growth Service provides digital marketing, web development, and SEO services across the following areas:
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {office.areasServed.map((area, idx) => (
-                <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors">
-                  📍 {area}
-                </span>
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={120}>
+              {coreTeam.map((member, idx) => (
+                <StaggerItem key={member.id} index={idx}>
+                  <TeamCard
+                    name={member.name}
+                    role={member.role}
+                    department={member.department}
+                    image={member.image}
+                    bio={member.bio}
+                    expertise={member.expertise}
+                    linkedinUrl={member.socialLinks?.linkedin}
+                  />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
-        </FadeIn>
 
-        {/* Other Physical Offices Link */}
-        <FadeIn direction="up" delay={100}>
-          <div className="pt-8 border-t border-slate-200">
-            <h3 className="text-lg font-bold text-slate-900 mb-4">
-              Other Physical Growth Service Offices
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {physicalOffices
-                .filter(o => o.id !== office.id)
-                .map(otherOffice => (
-                  <Link
-                    key={otherOffice.id}
-                    to={`/offices/${otherOffice.slug}`}
-                    className="bg-white p-5 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-xl transition-transform group-hover:scale-110">{otherOffice.flag}</span>
-                      <div>
-                        <h4 className="font-bold text-slate-900 text-sm group-hover:text-purple-600 transition-colors">
-                          {otherOffice.name}
-                        </h4>
-                        <p className="text-xs text-slate-500">{otherOffice.city}, {otherOffice.state}</p>
-                      </div>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
-                  </Link>
+          {/* Areas & Cities Served */}
+          <FadeIn direction="up" delay={100}>
+            <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
+              <h3 className="text-xl font-bold text-slate-900 mb-3">
+                Areas Served
+              </h3>
+              <p className="text-slate-600 text-sm mb-6">
+                Growth Service provides digital marketing, web development, and SEO services across the following areas:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {office.areasServed.map((area, idx) => (
+                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors">
+                    📍 {area}
+                  </span>
                 ))}
+              </div>
             </div>
-          </div>
-        </FadeIn>
-      </section>
+          </FadeIn>
+
+          {/* Other Physical Offices Link */}
+          <FadeIn direction="up" delay={100}>
+            <div className="pt-8 border-t border-slate-200">
+              <h3 className="text-lg font-bold text-slate-900 mb-4">
+                Other Physical Growth Service Offices
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {physicalOffices
+                  .filter(o => o.id !== office.id)
+                  .map(otherOffice => (
+                    <Link
+                      key={otherOffice.id}
+                      to={`/offices/${otherOffice.slug}`}
+                      className="bg-white p-5 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition-all flex items-center justify-between group"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-xl transition-transform group-hover:scale-110">{otherOffice.flag}</span>
+                        <div>
+                          <h4 className="font-bold text-slate-900 text-sm group-hover:text-purple-600 transition-colors">
+                            {otherOffice.name}
+                          </h4>
+                          <p className="text-xs text-slate-500">{otherOffice.city}, {otherOffice.state}</p>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          </FadeIn>
+        </Container>
+      </Section>
 
       {/* CTA */}
       <CTABanner

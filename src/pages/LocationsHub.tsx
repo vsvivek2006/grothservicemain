@@ -9,6 +9,7 @@ import Card from '../components/ui/Card';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
+import { Container, Section } from '../components/ui';
 
 export const LocationsHub: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
@@ -39,7 +40,7 @@ export const LocationsHub: React.FC = () => {
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
             <Breadcrumb
               items={[{ label: 'Locations We Serve' }]}
@@ -81,12 +82,12 @@ export const LocationsHub: React.FC = () => {
               </div>
             </div>
           </FadeIn>
-        </div>
+        </Container>
       </section>
 
       {/* Region Filter Bar */}
       <section className="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm py-3">
-        <div className="max-w-7xl mx-auto px-4">
+        <Container>
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             <button
               onClick={() => setSelectedRegion('all')}
@@ -113,209 +114,211 @@ export const LocationsHub: React.FC = () => {
               </button>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Cities Directory Grid */}
-      <section className="py-16 md:py-24 max-w-7xl mx-auto px-4">
-        {/* Cities Directory: Grouped by Region when 'all' & no search, or filtered grid */}
-        {filteredCities.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200">
-            <p className="text-lg font-bold text-slate-700 mb-2">No locations found matching "{searchQuery}"</p>
-            <p className="text-sm text-slate-500 mb-4">Try clearing your search query or selecting another region.</p>
-            <button
-              onClick={() => { setSearchQuery(''); setSelectedRegion('all'); }}
-              className="px-4 py-2 bg-purple-600 text-white rounded-xl text-sm font-semibold"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : selectedRegion === 'all' && !searchQuery.trim() ? (
-          <div className="space-y-16">
-            {regionsData.map((region) => {
-              const regionCities = getCitiesByRegion(region.slug);
-              if (regionCities.length === 0) return null;
-              return (
-                <FadeIn key={region.slug} direction="up" delay={50}>
-                  <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-card">
-                    {/* Region Header */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-100">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-2xl transition-transform group-hover:scale-110 inline-block">{region.flag}</span>
-                          <h2 className="text-2xl font-bold text-slate-900">{region.name}</h2>
-                          <span className="text-xs bg-purple-50 text-purple-700 font-semibold px-2.5 py-0.5 rounded-full border border-purple-100">
-                            {regionCities.length} Cities
-                          </span>
+      <Section variant="transparent" spacing="none" className="py-16 md:py-24">
+        <Container>
+          {/* Cities Directory: Grouped by Region when 'all' & no search, or filtered grid */}
+          {filteredCities.length === 0 ? (
+            <div className="text-center py-16 bg-white rounded-2xl border border-slate-200">
+              <p className="text-lg font-bold text-slate-700 mb-2">No locations found matching "{searchQuery}"</p>
+              <p className="text-sm text-slate-500 mb-4">Try clearing your search query or selecting another region.</p>
+              <button
+                onClick={() => { setSearchQuery(''); setSelectedRegion('all'); }}
+                className="px-4 py-2 bg-purple-600 text-white rounded-xl text-sm font-semibold"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : selectedRegion === 'all' && !searchQuery.trim() ? (
+            <div className="space-y-16">
+              {regionsData.map((region) => {
+                const regionCities = getCitiesByRegion(region.slug);
+                if (regionCities.length === 0) return null;
+                return (
+                  <FadeIn key={region.slug} direction="up" delay={50}>
+                    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-card">
+                      {/* Region Header */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-100">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-2xl transition-transform group-hover:scale-110 inline-block">{region.flag}</span>
+                            <h2 className="text-2xl font-bold text-slate-900">{region.name}</h2>
+                            <span className="text-xs bg-purple-50 text-purple-700 font-semibold px-2.5 py-0.5 rounded-full border border-purple-100">
+                              {regionCities.length} Cities
+                            </span>
+                          </div>
+                          <p className="text-sm text-slate-600 max-w-2xl">{region.description}</p>
                         </div>
-                        <p className="text-sm text-slate-600 max-w-2xl">{region.description}</p>
+                        <Link
+                          to={`/locations/${region.slug}`}
+                          className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group shrink-0"
+                        >
+                          <span>Explore {region.name}</span>
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
                       </div>
+
+                      {/* Cities in Region */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {regionCities.map((city) => (
+                          <Card
+                            key={city.slug}
+                            className="flex flex-col h-full bg-slate-50/50 border border-slate-200/70 shadow-sm hover:border-purple-300 hover:shadow-card hover:bg-white transition-all duration-300 group"
+                          >
+                            <div className="flex items-start justify-between gap-2 mb-3">
+                              <div className="flex items-center gap-2">
+                                <span className="text-2xl transition-transform duration-300 group-hover:scale-110 inline-block" role="img" aria-label="Flag">{city.flag}</span>
+                                <div>
+                                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                                    {city.name}
+                                  </h3>
+                                  <p className="text-xs text-slate-500">{city.state}</p>
+                                </div>
+                              </div>
+                              {city.isPhysicalOffice && (
+                                <Badge variant="purple" size="sm">
+                                  Office
+                                </Badge>
+                              )}
+                            </div>
+
+                            <p className="text-xs text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-2">
+                              {city.description}
+                            </p>
+
+                            <div className="mb-4">
+                              <p className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                                Areas Served
+                              </p>
+                              <div className="flex flex-wrap gap-1">
+                                {city.localAreas.slice(0, 3).map((area, idx) => (
+                                  <span key={idx} className="text-[11px] bg-white text-slate-600 px-1.5 py-0.5 rounded border border-slate-200/70 font-medium group-hover:border-purple-200 transition-colors">
+                                    {area}
+                                  </span>
+                                ))}
+                                {city.localAreas.length > 3 && (
+                                  <span className="text-[11px] bg-white text-slate-500 px-1.5 py-0.5 rounded border border-slate-200/70">
+                                    +{city.localAreas.length - 3}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs mt-auto">
+                              <span className="text-slate-500 font-medium">
+                                {city.servicesAvailable.length} Core Services
+                              </span>
+                              <Link
+                                to={`/locations/${city.slug}`}
+                                className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
+                              >
+                                <span>Explore City</span>
+                                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                              </Link>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          ) : (
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" staggerDelay={80}>
+              {filteredCities.map((city, idx) => (
+                <StaggerItem key={city.slug} index={idx} className="h-full">
+                  <Card
+                    className="flex flex-col h-full bg-white border border-slate-200/80 shadow-card hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 group"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl transition-transform duration-300 group-hover:scale-110 inline-block" role="img" aria-label="Flag">{city.flag}</span>
+                        <div>
+                          <h2 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                            {city.name}
+                          </h2>
+                          <p className="text-xs text-slate-500">{city.state} • {city.regionName}</p>
+                        </div>
+                      </div>
+                      {city.isPhysicalOffice && (
+                        <Badge variant="purple" size="sm">
+                          Physical Office
+                        </Badge>
+                      )}
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-2">
+                      {city.description}
+                    </p>
+
+                    {/* Key Local Areas */}
+                    <div className="mb-4">
+                      <p className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1.5">
+                        Areas Served
+                      </p>
+                      <div className="flex flex-wrap gap-1">
+                        {city.localAreas.slice(0, 4).map((area, sidx) => (
+                          <span key={sidx} className="text-xs bg-slate-50 text-slate-600 px-2 py-0.5 rounded border border-slate-100 font-medium group-hover:border-purple-200 transition-colors">
+                            {area}
+                          </span>
+                        ))}
+                        {city.localAreas.length > 4 && (
+                          <span className="text-xs bg-slate-50 text-slate-500 px-1.5 py-0.5 rounded border border-slate-100">
+                            +{city.localAreas.length - 4} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Primary Action */}
+                    <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm mt-auto">
+                      <span className="text-slate-500 font-medium">
+                        {city.servicesAvailable.length} Core Services
+                      </span>
                       <Link
-                        to={`/locations/${region.slug}`}
-                        className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group shrink-0"
+                        to={`/locations/${city.slug}`}
+                        className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
                       >
-                        <span>Explore {region.name}</span>
+                        <span>Explore City</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                       </Link>
                     </div>
+                  </Card>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          )}
 
-                    {/* Cities in Region */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {regionCities.map((city) => (
-                        <Card
-                          key={city.slug}
-                          className="flex flex-col h-full bg-slate-50/50 border border-slate-200/70 shadow-sm hover:border-purple-300 hover:shadow-card hover:bg-white transition-all duration-300 group"
-                        >
-                          <div className="flex items-start justify-between gap-2 mb-3">
-                            <div className="flex items-center gap-2">
-                              <span className="text-2xl transition-transform duration-300 group-hover:scale-110 inline-block" role="img" aria-label="Flag">{city.flag}</span>
-                              <div>
-                                <h3 className="text-lg font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
-                                  {city.name}
-                                </h3>
-                                <p className="text-xs text-slate-500">{city.state}</p>
-                              </div>
-                            </div>
-                            {city.isPhysicalOffice && (
-                              <Badge variant="purple" size="sm">
-                                Office
-                              </Badge>
-                            )}
-                          </div>
-
-                          <p className="text-xs text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-2">
-                            {city.description}
-                          </p>
-
-                          <div className="mb-4">
-                            <p className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
-                              Areas Served
-                            </p>
-                            <div className="flex flex-wrap gap-1">
-                              {city.localAreas.slice(0, 3).map((area, idx) => (
-                                <span key={idx} className="text-[11px] bg-white text-slate-600 px-1.5 py-0.5 rounded border border-slate-200/70 font-medium group-hover:border-purple-200 transition-colors">
-                                  {area}
-                                </span>
-                              ))}
-                              {city.localAreas.length > 3 && (
-                                <span className="text-[11px] bg-white text-slate-500 px-1.5 py-0.5 rounded border border-slate-200/70">
-                                  +{city.localAreas.length - 3}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs mt-auto">
-                            <span className="text-slate-500 font-medium">
-                              {city.servicesAvailable.length} Core Services
-                            </span>
-                            <Link
-                              to={`/locations/${city.slug}`}
-                              className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
-                            >
-                              <span>Explore City</span>
-                              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                            </Link>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-                </FadeIn>
-              );
-            })}
-          </div>
-        ) : (
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" staggerDelay={80}>
-            {filteredCities.map((city, idx) => (
-              <StaggerItem key={city.slug} index={idx} className="h-full">
-                <Card
-                  className="flex flex-col h-full bg-white border border-slate-200/80 shadow-card hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 group"
-                >
-                  <div className="flex items-start justify-between gap-2 mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl transition-transform duration-300 group-hover:scale-110 inline-block" role="img" aria-label="Flag">{city.flag}</span>
-                      <div>
-                        <h2 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
-                          {city.name}
-                        </h2>
-                        <p className="text-xs text-slate-500">{city.state} • {city.regionName}</p>
-                      </div>
-                    </div>
-                    {city.isPhysicalOffice && (
-                      <Badge variant="purple" size="sm">
-                        Physical Office
-                      </Badge>
-                    )}
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 flex-grow line-clamp-2">
-                    {city.description}
-                  </p>
-
-                  {/* Key Local Areas */}
-                  <div className="mb-4">
-                    <p className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1.5">
-                      Areas Served
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {city.localAreas.slice(0, 4).map((area, sidx) => (
-                        <span key={sidx} className="text-xs bg-slate-50 text-slate-600 px-2 py-0.5 rounded border border-slate-100 font-medium group-hover:border-purple-200 transition-colors">
-                          {area}
-                        </span>
-                      ))}
-                      {city.localAreas.length > 4 && (
-                        <span className="text-xs bg-slate-50 text-slate-500 px-1.5 py-0.5 rounded border border-slate-100">
-                          +{city.localAreas.length - 4} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Primary Action */}
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm mt-auto">
-                    <span className="text-slate-500 font-medium">
-                      {city.servicesAvailable.length} Core Services
-                    </span>
-                    <Link
-                      to={`/locations/${city.slug}`}
-                      className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
-                    >
-                      <span>Explore City</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </Card>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        )}
-
-        {/* Real Offices Callout */}
-        <FadeIn direction="up" delay={100}>
-          <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-100">
-                Our 3 Company Offices
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-2 mb-1">
-                Looking for Our Verified Physical Offices?
-              </h3>
-              <p className="text-sm text-slate-600">
-                Meet our team in person at our Jaipur, Vrindavan, and Nepal offices.
-              </p>
+          {/* Real Offices Callout */}
+          <FadeIn direction="up" delay={100}>
+            <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden group">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-100">
+                  Our 3 Company Offices
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-2 mb-1">
+                  Looking for Our Verified Physical Offices?
+                </h3>
+                <p className="text-sm text-slate-600">
+                  Meet our team in person at our Jaipur, Vrindavan, and Nepal offices.
+                </p>
+              </div>
+              <Link
+                to="/offices"
+                className="px-6 py-3 rounded-xl bg-purple-600 text-white font-bold text-sm hover:bg-purple-700 transition-all shrink-0 shadow-md inline-flex items-center gap-2 hover:shadow-lg active:scale-[0.98]"
+              >
+                <span>View 3 Company Offices</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
-            <Link
-              to="/offices"
-              className="px-6 py-3 rounded-xl bg-purple-600 text-white font-bold text-sm hover:bg-purple-700 transition-all shrink-0 shadow-md inline-flex items-center gap-2 hover:shadow-lg active:scale-[0.98]"
-            >
-              <span>View 3 Company Offices</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </FadeIn>
-      </section>
+          </FadeIn>
+        </Container>
+      </Section>
 
       {/* CTA */}
       <CTABanner

@@ -21,6 +21,7 @@ import {
   Zap
 } from "lucide-react";
 import { Helmet } from "react-helmet";
+import { Container } from "../components/ui";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
@@ -177,7 +178,7 @@ const NotFound: React.FC = () => {
       </Helmet>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <Container className="py-8 md:py-12">
         {/* 404 Header */}
         <div className="text-center mb-8 md:mb-12">
           {/* Office Location Badges */}
@@ -472,7 +473,7 @@ const NotFound: React.FC = () => {
             </span>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile Optimized Sticky Bottom Bar */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">

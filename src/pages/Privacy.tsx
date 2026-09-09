@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Container } from "../components/ui";
 
 const Privacy: React.FC = () => {
   const location = useLocation();
@@ -29,7 +30,7 @@ const Privacy: React.FC = () => {
     <div>
       {/* Hero */}
       <section className="bg-gradient-to-br from-pink-500 via-purple-500 to-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Container className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">Privacy Policy & Terms</h1>
           <p className="text-pink-100 text-lg md:text-xl">
             How Social Lift protects your information and our service policies.
@@ -69,13 +70,13 @@ const Privacy: React.FC = () => {
               Cancellation Policy
             </button>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Privacy Policy Content */}
       {activeTab === "privacy" && (
         <section className="py-14 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700 space-y-10">
+          <Container variant="narrow" className="text-gray-700 space-y-10">
             {/* Intro */}
             <div>
               <p>
@@ -284,14 +285,14 @@ const Privacy: React.FC = () => {
             <p className="text-xs text-gray-500">
               Disclaimer: This template is for general guidance and not legal advice. Please review with legal counsel.
             </p>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* Refund Policy Content */}
       {activeTab === "refund" && (
         <section className="py-14 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700 space-y-10">
+          <Container variant="narrow" className="text-gray-700 space-y-10">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Refund Policy</h2>
               <p className="text-lg text-gray-600">Our transparent refund policy for digital marketing services</p>
@@ -451,14 +452,14 @@ const Privacy: React.FC = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* Cancellation Policy Content */}
       {activeTab === "cancellation" && (
         <section className="py-14 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700 space-y-10">
+          <Container variant="narrow" className="text-gray-700 space-y-10">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Cancellation Policy</h2>
               <p className="text-lg text-gray-600">Our transparent service cancellation and modification policies</p>
@@ -628,7 +629,7 @@ const Privacy: React.FC = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
       )}
     </div>

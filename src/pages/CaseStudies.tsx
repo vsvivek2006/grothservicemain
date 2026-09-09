@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { ExternalLink, Calendar, Users, TrendingUp, Target, Globe, CheckCircle, ArrowRight, X } from 'lucide-react';
+import { ExternalLink, Calendar, Users, Target, Globe, CheckCircle, ArrowRight, X } from 'lucide-react';
+import { Container, Section } from '../components/ui';
 
 const CaseStudies: React.FC = () => {
   const [selectedCase, setSelectedCase] = useState<number | null>(null);
@@ -238,7 +239,7 @@ const CaseStudies: React.FC = () => {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-indigo-800 text-white py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Case Studies</h1>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
@@ -256,12 +257,12 @@ const CaseStudies: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Filter Section */}
-      <section className="py-8 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default" padding="sm">
+        <Container>
           <div className="text-center mb-6">
             <h2 className="text-lg font-semibold text-gray-700 mb-3">Filter by Industry</h2>
             <div className="flex flex-wrap justify-center gap-2">
@@ -280,12 +281,12 @@ const CaseStudies: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Case Studies Grid */}
-      <section className="py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" padding="md">
+        <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCaseStudies.map((study) => (
               <div 
@@ -374,12 +375,12 @@ const CaseStudies: React.FC = () => {
               </button>
             </div>
           )}
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Stats Section */}
       <section className="py-16 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Impact in Numbers</h2>
             <p className="text-blue-200 max-w-2xl mx-auto">
@@ -405,12 +406,12 @@ const CaseStudies: React.FC = () => {
               <div className="text-blue-200">Revenue Generated</div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <Section variant="default">
+        <Container variant="narrow" className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Ready to Start Your Success Story?</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Let's discuss how we can help your business achieve similar results with our proven strategies.
@@ -433,8 +434,8 @@ const CaseStudies: React.FC = () => {
               Book Strategy Call
             </a>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Modal for Detailed View */}
       {selectedStudy && (

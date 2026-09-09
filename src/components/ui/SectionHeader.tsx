@@ -4,6 +4,7 @@ import { FadeIn } from '../animations/FadeIn';
 
 export interface SectionHeaderProps {
   badge?: string;
+  eyebrow?: string;
   badgeIcon?: React.ReactNode;
   title: string;
   titleHighlight?: string;
@@ -16,6 +17,7 @@ export interface SectionHeaderProps {
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({
   badge,
+  eyebrow,
   badgeIcon,
   title,
   titleHighlight,
@@ -25,11 +27,12 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   className = '',
   dark = false,
 }) => {
+  const displayBadge = eyebrow || badge;
   const alignClasses = align === 'center' ? 'text-center mx-auto' : 'text-left';
 
   return (
     <FadeIn direction="up" distance={20} duration={550} className={`max-w-3xl mb-12 sm:mb-16 ${alignClasses} ${className}`}>
-      {badge && (
+      {displayBadge && (
         <div className={`mb-3.5 flex ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
           <Badge
             variant={dark ? 'purple' : 'purple'}
@@ -37,7 +40,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
             size="md"
             className={dark ? 'bg-purple-900/60 text-purple-200 border-purple-700/50' : ''}
           >
-            {badge}
+            {displayBadge}
           </Badge>
         </div>
       )}

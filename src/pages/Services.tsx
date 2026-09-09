@@ -34,6 +34,7 @@ import {
   Phone
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
+import { Container, Section } from '../components/ui';
 
 const Services = () => {
   const [expandedService, setExpandedService] = useState<number | null>(null);
@@ -438,7 +439,7 @@ const Services = () => {
         </div>
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Container className="relative text-center">
           <div className="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/15 px-5 py-2 rounded-full mb-6 text-sm font-semibold">
             <Zap className="w-4 h-4 text-yellow-400 mr-2" />
             PROFESSIONAL SERVICES
@@ -460,12 +461,12 @@ const Services = () => {
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Services Navigation */}
       <section className="py-6 bg-white border-b sticky top-0 z-40 shadow-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="flex flex-col items-center mb-4">
             <h2 className="text-lg font-bold text-slate-900 mb-3">Browse by Category</h2>
             <div className="flex flex-wrap justify-center gap-2">
@@ -490,12 +491,12 @@ const Services = () => {
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Our <span className="text-purple-600">Professional Services</span>
@@ -644,12 +645,12 @@ const Services = () => {
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section className="bg-gradient-to-r from-blue-50 to-indigo-50">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Choose <span className="text-blue-600">Grworth Services</span>
@@ -700,12 +701,12 @@ const Services = () => {
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Process Section — uses shared ProcessTimeline */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Our <span className="text-purple-600">Process</span>
@@ -721,15 +722,14 @@ const Services = () => {
             { step: '03', title: 'Development', description: 'Build with modern technologies', icon: '' },
             { step: '04', title: 'Delivery', description: 'Launch with full support', icon: '' },
           ]} />
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Final CTA */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
+      <Section className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white" spacing="lg">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/25 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <Container size="narrow" className="relative text-center">
           <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/15 px-5 py-2 rounded-full mb-6">
             <Star className="h-4 w-4 text-yellow-400 mr-2" />
             <span className="text-white font-semibold text-sm">READY TO GET STARTED?</span>
@@ -797,8 +797,8 @@ const Services = () => {
               <div className="text-purple-300 text-sm">Satisfaction</div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import { Container } from "../components/ui";
 import { 
   Check, 
   Rocket, 
@@ -304,7 +305,7 @@ I would like to avail the special offer. Please contact me.`;
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-4 text-center">
+        <Container className="relative text-center">
           {/* Office Locations Badge */}
           <div className="flex flex-wrap justify-center gap-2 mb-6">
             {offices.map((office) => (
@@ -366,12 +367,12 @@ I would like to avail the special offer. Please contact me.`;
               Visit Our Offices
             </Link>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Services Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4">
+        <Container>
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Our <span className="text-purple-600">Special Offers</span>
@@ -440,12 +441,12 @@ I would like to avail the special offer. Please contact me.`;
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Office Locations Section */}
       <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+        <Container>
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-purple-600">Office Locations</span>
@@ -474,12 +475,12 @@ I would like to avail the special offer. Please contact me.`;
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Why Choose Us Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-purple-50 to-pink-50">
-        <div className="max-w-7xl mx-auto px-4">
+        <Container>
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Choose <span className="text-purple-600">Growth Service</span>
@@ -514,12 +515,12 @@ I would like to avail the special offer. Please contact me.`;
               <p className="text-gray-600 text-sm">Round-the-clock assistance across all timezones</p>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+        <Container variant="narrow" className="text-center">
           <h2 className="text-2xl md:text-4xl font-bold mb-4">
             Ready to Grow Your Business?
           </h2>
@@ -559,7 +560,7 @@ I would like to avail the special offer. Please contact me.`;
               Jaipur • Vrindavan • Nepal
             </span>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Contact Form Modal */}

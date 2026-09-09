@@ -10,6 +10,7 @@ import TeamCard from '../components/ui/TeamCard';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
+import { Container, Section } from '../components/ui';
 
 export const TeamPage: React.FC = () => {
   const [selectedDept, setSelectedDept] = useState<string>('all');
@@ -50,7 +51,7 @@ export const TeamPage: React.FC = () => {
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
             <Breadcrumb
               items={[{ label: 'Our Team' }]}
@@ -72,12 +73,12 @@ export const TeamPage: React.FC = () => {
               </p>
             </div>
           </FadeIn>
-        </div>
+        </Container>
       </section>
 
       {/* Department Filter Controls */}
       <section className="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm py-4">
-        <div className="max-w-7xl mx-auto px-4">
+        <Container>
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             <span className="text-xs uppercase font-bold tracking-wider text-slate-400 mr-2 hidden sm:inline">
               Department:
@@ -96,47 +97,49 @@ export const TeamPage: React.FC = () => {
               </button>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Team Grid */}
-      <section className="py-16 md:py-24 max-w-7xl mx-auto px-4">
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={70}>
-          {filteredMembers.map((member, idx) => (
-            <StaggerItem key={member.id} index={idx}>
-              <TeamCard
-                name={member.name}
-                role={member.role}
-                department={member.department}
-                image={member.image}
-                bio={member.bio}
-                expertise={member.expertise}
-                linkedinUrl={member.socialLinks?.linkedin}
-              />
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+      <Section variant="transparent" spacing="none" className="py-16 md:py-24">
+        <Container>
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={70}>
+            {filteredMembers.map((member, idx) => (
+              <StaggerItem key={member.id} index={idx}>
+                <TeamCard
+                  name={member.name}
+                  role={member.role}
+                  department={member.department}
+                  image={member.image}
+                  bio={member.bio}
+                  expertise={member.expertise}
+                  linkedinUrl={member.socialLinks?.linkedin}
+                />
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
 
-        {/* Office Collaboration Standards */}
-        <FadeIn direction="up" delay={120}>
-          <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card relative overflow-hidden group">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-purple-600" />
-              <span>Cross-Office Team Collaboration</span>
-            </h3>
-            <p className="text-sm text-slate-600 leading-relaxed mb-4">
-              Our team collaborates across our physical offices in Jaipur, Vrindavan, and Nepal. When you partner with Growth Service, you get direct access to seasoned professionals who specialize in technical SEO, modern web engineering, and digital marketing.
-            </p>
-            <div className="flex flex-wrap gap-4 items-center pt-2">
-              <Link to="/offices" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
-                <span>Explore Our 3 Company Offices</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+          {/* Office Collaboration Standards */}
+          <FadeIn direction="up" delay={120}>
+            <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card relative overflow-hidden group">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-purple-600" />
+                <span>Cross-Office Team Collaboration</span>
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Our team collaborates across our physical offices in Jaipur, Vrindavan, and Nepal. When you partner with Growth Service, you get direct access to seasoned professionals who specialize in technical SEO, modern web engineering, and digital marketing.
+              </p>
+              <div className="flex flex-wrap gap-4 items-center pt-2">
+                <Link to="/offices" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
+                  <span>Explore Our 3 Company Offices</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
             </div>
-          </div>
-        </FadeIn>
-      </section>
+          </FadeIn>
+        </Container>
+      </Section>
 
       {/* CTA */}
       <CTABanner

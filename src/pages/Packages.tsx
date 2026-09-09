@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Check, Star, ArrowRight, Zap, Crown, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, DollarSign, Target, Award, Headphones, MessageCircle, Phone, Mail } from 'lucide-react';
+import { Container, Section } from '../components/ui';
 
 const Packages: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'web' | 'seo' | 'smm' | 'gmb' | 'business'>('web');
@@ -613,9 +614,9 @@ const Packages: React.FC = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 overflow-hidden">
+      <Section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden" spacing="default">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <Container size="narrow" className="text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Professional Digital Solutions</h1>
           <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
             Affordable packages for website development, SEO, social media marketing, and business setup
@@ -640,12 +641,12 @@ const Packages: React.FC = () => {
               </button>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Benefits Strip */}
-      <section className="py-10 bg-white border-b border-slate-200/80">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default" spacing="sm" className="border-b border-slate-200/80">
+        <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {benefits.map((benefit, index) => (
               <div key={index} className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 shadow-card card-lift-sm hover:border-purple-300/70 transition-all duration-200">
@@ -657,131 +658,133 @@ const Packages: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Services Navigation */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {allServices.map((service) => (
-            <button
-              key={service.id}
-              onClick={() => setActiveTab(service.id as any)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-200 flex items-center gap-2 ${
-                activeTab === service.id
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
-              }`}
-            >
-              {service.icon}
-              {service.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Main Content */}
-        <div className="mb-16">
-          {renderContent()}
-        </div>
-
-        {/* Special Offers Banner */}
-        <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl shadow-2xl p-8 text-white mb-12">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-6 md:mb-0">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2">Limited Time Offer! 🎁</h3>
-              <p className="text-red-100">Get 30% OFF on all annual packages</p>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">30% OFF</div>
-              <div className="text-sm">Valid till December 31</div>
-            </div>
-            <button className="bg-white text-red-600 hover:bg-gray-100 px-8 py-3 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105">
-              Grab Offer Now
-            </button>
-          </div>
-        </div>
-
-        {/* Comparison Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">Why Choose Grworth Services?</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                <Code className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Custom Development</h3>
-              <p className="text-gray-600">No WordPress templates. We write clean, scalable code from scratch using React, Node.js, and MongoDB.</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                <Zap className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Fast Delivery</h3>
-              <p className="text-gray-600">Basic websites in 7-10 days, complex projects in 15-20 days. We respect deadlines and deliver quality.</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                <Shield className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">After-Sales Support</h3>
-              <p className="text-gray-600">30 days free support on all projects. Ongoing maintenance packages available at affordable rates.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Final CTA */}
-        <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-card p-12 text-white text-center overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none"></div>
-          <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Ready to Start Your Project?</h2>
-            <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
-              Contact us today for a free consultation and project estimate
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://wa.me/9779707382481"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-purple-700 hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 hover:-translate-y-1 flex items-center justify-center gap-3 shadow-card hover:shadow-card-hover"
+      <Section variant="transparent" spacing="none" className="py-8">
+        <Container>
+          {/* Services Navigation */}
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
+            {allServices.map((service) => (
+              <button
+                key={service.id}
+                onClick={() => setActiveTab(service.id as any)}
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-200 flex items-center gap-2 ${
+                  activeTab === service.id
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
+                }`}
               >
-                <MessageCircle className="w-5 h-5 text-emerald-600" />
-                WhatsApp Now
-              </a>
+                {service.icon}
+                {service.name}
+              </button>
+            ))}
+          </div>
 
-              <a
-                href="tel:+9779707382481"
-                className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 flex items-center justify-center gap-3"
-              >
-                <Phone className="w-5 h-5" />
-                Call: +9779707382481
-              </a>
+          {/* Main Content */}
+          <div className="mb-16">
+            {renderContent()}
+          </div>
+
+          {/* Special Offers Banner */}
+          <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl shadow-2xl p-8 text-white mb-12">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-6 md:mb-0">
+                <h3 className="text-2xl md:text-3xl font-bold mb-2">Limited Time Offer! 🎁</h3>
+                <p className="text-red-100">Get 30% OFF on all annual packages</p>
+              </div>
+              <div className="text-center">
+                <div className="text-5xl font-bold mb-2">30% OFF</div>
+                <div className="text-sm">Valid till December 31</div>
+              </div>
+              <button className="bg-white text-red-600 hover:bg-gray-100 px-8 py-3 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105">
+                Grab Offer Now
+              </button>
             </div>
+          </div>
 
-            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-10">
-              <div className="text-center">
-                <div className="text-3xl font-bold">500+</div>
-                <div className="text-purple-300 text-sm">Projects Completed</div>
+          {/* Comparison Section */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">Why Choose Grworth Services?</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center p-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
+                  <Code className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Custom Development</h3>
+                <p className="text-gray-600">No WordPress templates. We write clean, scalable code from scratch using React, Node.js, and MongoDB.</p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold">98%</div>
-                <div className="text-purple-300 text-sm">Client Satisfaction</div>
+
+              <div className="text-center p-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
+                  <Zap className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Fast Delivery</h3>
+                <p className="text-gray-600">Basic websites in 7-10 days, complex projects in 15-20 days. We respect deadlines and deliver quality.</p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold">24/7</div>
-                <div className="text-purple-300 text-sm">Support Available</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold">7-10</div>
-                <div className="text-purple-300 text-sm">Days Avg. Delivery</div>
+
+              <div className="text-center p-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
+                  <Shield className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">After-Sales Support</h3>
+                <p className="text-gray-600">30 days free support on all projects. Ongoing maintenance packages available at affordable rates.</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+
+          {/* Final CTA */}
+          <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-card p-12 text-white text-center overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none"></div>
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Ready to Start Your Project?</h2>
+              <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
+                Contact us today for a free consultation and project estimate
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="https://wa.me/9779707382481"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-purple-700 hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 hover:-translate-y-1 flex items-center justify-center gap-3 shadow-card hover:shadow-card-hover"
+                >
+                  <MessageCircle className="w-5 h-5 text-emerald-600" />
+                  WhatsApp Now
+                </a>
+
+                <a
+                  href="tel:+9779707382481"
+                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 flex items-center justify-center gap-3"
+                >
+                  <Phone className="w-5 h-5" />
+                  Call: +9779707382481
+                </a>
+              </div>
+
+              <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-10">
+                <div className="text-center">
+                  <div className="text-3xl font-bold">500+</div>
+                  <div className="text-purple-300 text-sm">Projects Completed</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold">98%</div>
+                  <div className="text-purple-300 text-sm">Client Satisfaction</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold">24/7</div>
+                  <div className="text-purple-300 text-sm">Support Available</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold">7-10</div>
+                  <div className="text-purple-300 text-sm">Days Avg. Delivery</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
     </div>
   );
 };

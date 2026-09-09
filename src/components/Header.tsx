@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight, Zap } from "lucide-react";
+import { Container } from "./ui";
 
 const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
@@ -130,7 +131,7 @@ const Header: React.FC = () => {
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200/80' : 'bg-white shadow-sm'}`}>
       {/* Top Bar - Office Locations & Contact */}
       <div className="bg-gradient-to-r from-purple-900 via-purple-700 to-pink-600 text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <Container className="relative z-10">
           <div className="flex flex-wrap justify-between items-center py-1.5 gap-2">
             {/* Left - Office Locations (Desktop) */}
             <div className="hidden md:flex items-center space-x-2 text-xs">
@@ -186,11 +187,11 @@ const Header: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </div>
 
       {/* Main Navigation */}
-      <nav className="max-w-7xl mx-auto px-4" aria-label="Main">
+      <Container as="nav" aria-label="Main">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center flex-shrink-0">
@@ -514,7 +515,7 @@ const Header: React.FC = () => {
             </NavLink>
           </div>
         </div>
-      </nav>
+      </Container>
 
       {/* Mobile Menu - Complete Access to All Pages */}
       {isOpen && (

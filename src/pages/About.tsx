@@ -6,6 +6,7 @@ import {
   MapPin, Smile, Rocket, TrendingUp, Star, Mail, ArrowRight
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
+import { Container, Section } from '../components/ui';
 
 // Types
 interface TeamMember {
@@ -636,7 +637,7 @@ const About: React.FC = () => {
         <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-purple-600/30 rounded-full blur-[80px] pointer-events-none"></div>
         <div className="absolute bottom-1/4 left-1/4 w-60 h-60 bg-indigo-600/25 rounded-full blur-[60px] pointer-events-none"></div>
         
-        <div className="relative max-w-6xl mx-auto px-4">
+        <Container className="relative">
           {/* Office Location Badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {offices.map((office) => (
@@ -714,12 +715,12 @@ const About: React.FC = () => {
               />
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* === OUR OFFICE LOCATIONS === */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="subtle">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-blue-600">Office Locations</span>
@@ -821,12 +822,12 @@ const About: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === GLOBAL STATS === */}
-      <section className="py-12 bg-white border-b border-slate-200/80">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="default" spacing="sm" className="border-b border-slate-200/80">
+        <Container>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { icon: <Smile className="w-5 h-5" />, number: '300+', label: 'Happy Clients', color: 'from-yellow-400 to-orange-400' },
@@ -846,12 +847,12 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === OUR STORY === */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="subtle">
+        <Container>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="mb-6">
@@ -901,14 +902,14 @@ const About: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ============================================================
           UPDATED TEAM SECTION - Complete Team Display
           ============================================================ */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-blue-600">Expert Team</span>
@@ -1045,12 +1046,12 @@ const About: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === SERVICES WITH LOCATION TAGS === */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="subtle">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-blue-600">Services</span> Across Locations
@@ -1086,12 +1087,12 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === CERTIFICATES === */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-blue-600">Registrations</span>
@@ -1129,12 +1130,12 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === TECHNOLOGY STACK === */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="subtle">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-purple-600">Technology</span> Expertise
@@ -1156,12 +1157,12 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === PROCESS === */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Our <span className="text-purple-600">Process</span> Across Locations
@@ -1177,12 +1178,12 @@ const About: React.FC = () => {
             { step: '03', title: 'Development & Execution', description: 'Our expert teams in India and Nepal implement solutions with precision and quality.', icon: '' },
             { step: '04', title: 'Optimization & Growth', description: 'Continuous monitoring and optimization from all our offices for maximum results.', icon: '' },
           ]} />
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === WHY CHOOSE US === */}
-      <section className="py-16 md:py-24 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="subtle">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Why Choose <span className="text-purple-600">Growth Service</span>
@@ -1217,12 +1218,12 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === TESTIMONIALS === */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
+      <Section variant="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               What Our <span className="text-blue-600">Clients Say</span>
@@ -1256,12 +1257,12 @@ const About: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === CTA === */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      <Section className="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white" spacing="lg">
+        <Container size="narrow" className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Visit Our <span className="text-cyan-300">Offices</span>
           </h2>
@@ -1306,8 +1307,8 @@ const About: React.FC = () => {
               Call: +91 93414 36937
             </a>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };
