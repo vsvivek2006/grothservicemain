@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref } from '../services';
 import { getTechnologyByName } from '../data/technologies';
+import { WhatsAppIcon } from '../components/ui';
 
 const DesignDevelopment: React.FC = () => {
   // Services we offer
@@ -206,9 +207,9 @@ const DesignDevelopment: React.FC = () => {
                 href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+                className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
               >
-                <MessageCircle className="w-5 h-5" />
+                <WhatsAppIcon className="w-5 h-5 text-white" />
                 <span>Discuss Your Project</span>
               </a>
               <a

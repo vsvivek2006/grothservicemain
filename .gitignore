@@ -25,4 +25,4 @@ dist-ssr
 .env
 *.tsbuildinfo
 .codegraph/
-scratch/dist/
+scripts/dist/

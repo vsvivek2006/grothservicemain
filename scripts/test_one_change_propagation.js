@@ -18,7 +18,7 @@ await esbuild.build({
     'src/data/packages.ts',
     'src/data/locations.ts'
   ],
-  outdir: 'scratch/dist',
+  outdir: 'scripts/dist',
   bundle: true,
   format: 'esm',
   platform: 'node'

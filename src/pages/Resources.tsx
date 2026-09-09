@@ -7,6 +7,7 @@ import {
   Layers, CheckSquare, Book, Laptop, Rocket, Gift, MessageCircle 
 } from 'lucide-react';
 import { businessConfig } from '../config/business';
+import { WhatsAppIcon } from '../components/ui';
 
 const Resources: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -647,7 +648,7 @@ const Resources: React.FC = () => {
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
                   >
-                    <MessageCircle className="w-5 h-5 text-white" />
+                    <WhatsAppIcon className="w-5 h-5 text-white" />
                     Request Custom Resource
                   </a>
                   <a

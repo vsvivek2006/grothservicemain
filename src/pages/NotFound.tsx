@@ -24,7 +24,6 @@ import { Helmet } from "react-helmet";
 import { Container } from "../components/ui";
 import { 
   getPhysicalOffices, 
-  getCanonicalOrigin, 
   getPrimaryPhone, 
   getBusinessEmail, 
   getOfficePhone 
@@ -168,7 +167,6 @@ const NotFound: React.FC = () => {
           content="404 page, page not found, digital marketing Jaipur, web development Vrindavan, SEO Nepal, growth service, digital agency"
         />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/404`} />
       </Helmet>
 
       {/* Main Content */}

@@ -24,6 +24,7 @@ import {
 import { getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getMailtoHref } from '../services';
 import { businessConfig } from '../config/business';
+import { WhatsAppIcon } from '../components/ui';
 
 const SEOResults: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -766,7 +767,7 @@ const SEOResults: React.FC = () => {
                 rel="noopener noreferrer"
                 className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
               >
-                <MessageCircle className="w-5 h-5 text-emerald-600" />
+                <WhatsAppIcon className="w-5 h-5 text-emerald-600" />
                 <span>Get Free SEO Audit</span>
               </a>
               <a

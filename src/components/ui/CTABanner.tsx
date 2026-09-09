@@ -1,7 +1,8 @@
 import React from 'react';
-import { Phone, MessageCircle, FileText, Sparkles, MapPin, Clock } from 'lucide-react';
+import { Phone, FileText, Sparkles, MapPin, Clock } from 'lucide-react';
 import Button from './Button';
 import DecorativeGrid from './DecorativeGrid';
+import { WhatsAppIcon } from './WhatsAppIcon';
 import { FadeIn } from '../animations/FadeIn';
 
 export interface CTABannerProps {
@@ -53,7 +54,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({
             isExternal
             variant="whatsapp"
             size="lg"
-            icon={<MessageCircle className="w-5 h-5" />}
+            icon={<WhatsAppIcon className="w-5 h-5" />}
           >
             Chat on WhatsApp
           </Button>

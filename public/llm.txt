@@ -1,0 +1,139 @@
+# Growth Service — LLM & AI System Context Directory
+
+> Growth Service (https://www.growthservice.in) is a premier digital growth, search engine optimization (SEO), custom software engineering, and performance marketing agency operating across physical hubs in India (Jaipur, Vrindavan) and Nepal (Itahari), serving enterprise and scaling business clients globally.
+
+## Core Agency Identity
+
+- **Official Name**: Growth Service
+- **Canonical Website**: https://www.growthservice.in
+- **Operating Entity**: Growth Service Digital Technologies
+- **Headquarters**: Jaipur, Rajasthan, India
+- **Secondary Operations Hub**: Vrindavan, Mathura District, Uttar Pradesh, India
+- **International Branch**: Itahari, Koshi Province, Nepal
+- **Official Inquiries**: info@growthservice.in | growthservice.in@gmail.com
+- **Official Telephone**: +91 95212 81509 (India) | +977 98273 66141 (Nepal) | +977 98040 18881 (Nepal Support)
+- **Direct WhatsApp Chat**: https://wa.me/919521281509
+
+---
+
+## Core Capabilities & Services
+
+1. **Custom Web & Software Development**
+   - Modern SPAs, enterprise portals, and SaaS interfaces built with React, TypeScript, Vite, Tailwind CSS, and Node.js.
+   - 100% custom responsive architecture (zero fragile site-builder templates).
+   - High-converting landing pages, progressive web applications (PWAs), and headless eCommerce.
+
+2. **Search Engine Optimization (SEO)**
+   - Technical audits, Core Web Vitals optimization, programmatic SEO architecture, and high-intent keyword clustering.
+   - On-page semantic structure, canonical management, JSON-LD Schema markup, and internal link graph engineering.
+   - Off-page authority building, local citation syndication, and Google Search Console optimization.
+
+3. **Performance Marketing & PPC**
+   - Meta Ads (Facebook & Instagram) hyper-targeted customer acquisition funnels.
+   - Google Search, Display, and Performance Max campaigns managed for verified return on ad spend (ROAS).
+   - Dynamic retargeting, conversion API tracking, and landing page split-testing.
+
+4. **Social Media Marketing & Brand Strategy**
+   - Multi-platform organic growth retainers covering LinkedIn, Instagram, Facebook, and Twitter/X.
+   - Narrative strategy, monthly creative calendars, short-form video/reel post-production, and active community moderation.
+
+5. **White-Label Agency Partnerships**
+   - Confidential, NDA-protected fulfillment solutions for partner agencies.
+   - Dedicated delivery pods across Web Development, SEO, SMM, and Paid Ads with direct margin optimization.
+
+6. **Google Business Profile & Local Dominance**
+   - Map pack 3-pack ranking acceleration, review sentiment workflows, and geo-tagged visual asset optimization.
+
+---
+
+## Authoritative Physical Offices
+
+- **Jaipur Corporate Office**:
+  - Address: Mansarovar Extension, Jaipur, Rajasthan 302020, India
+  - Canonical URL: https://www.growthservice.in/offices/jaipur-office
+  - Focus: Executive Management, Client Relations, Engineering Architecture
+
+- **Vrindavan Operations Hub**:
+  - Address: Raman Reti, Vrindavan, Mathura District, Uttar Pradesh 281121, India
+  - Canonical URL: https://www.growthservice.in/offices/vrindavan-office
+  - Focus: Digital Growth Operations, Search Optimization, Creative Content
+
+- **Nepal International Branch**:
+  - Address: Main Road, Itahari-4, Sunsari, Koshi Province, Nepal
+  - Canonical URL: https://www.growthservice.in/offices/nepal-office
+  - Focus: Cross-Border Marketing Fulfillment, Regional Client Success
+
+---
+
+## Authoritative Navigation Index
+
+### Core Portals
+- **Homepage**: https://www.growthservice.in/
+- **About Agency**: https://www.growthservice.in/about
+- **Services Directory**: https://www.growthservice.in/services
+- **Growth Packages**: https://www.growthservice.in/packages
+- **Transparent Pricing**: https://www.growthservice.in/pricing
+- **Client Portfolio**: https://www.growthservice.in/portfolio
+- **Verified SEO Results**: https://www.growthservice.in/seo-results
+- **Leadership & Team**: https://www.growthservice.in/team
+- **Free Website Audit**: https://www.growthservice.in/free-website-audit
+- **Contact & Support**: https://www.growthservice.in/contact
+- **Schedule Consultation**: https://www.growthservice.in/book-call
+- **Resources & Guides**: https://www.growthservice.in/resources
+- **Industry Insights (Blog)**: https://www.growthservice.in/blog
+- **Help Center & FAQ**: https://www.growthservice.in/help
+- **Client Testimonials**: https://www.growthservice.in/testimonials
+- **Promotional Offer**: https://www.growthservice.in/offer
+- **Onboarding Agreement**: https://www.growthservice.in/onboarding
+
+### White-Label Hubs
+- **White-Label Agency Main**: https://www.growthservice.in/white-label
+- **White-Label Web Development**: https://www.growthservice.in/white-label/web-development
+- **White-Label SEO**: https://www.growthservice.in/white-label/seo
+- **White-Label Social Media**: https://www.growthservice.in/white-label/social-media
+- **White-Label PPC Advertising**: https://www.growthservice.in/white-label/ppc
+
+### Location Hubs & Programmatic Network
+- **Locations Directory**: https://www.growthservice.in/locations
+- **Physical Offices Directory**: https://www.growthservice.in/offices
+- **Major City Hubs (24 Regional Markets)**:
+  - Jaipur: https://www.growthservice.in/locations/jaipur
+  - Delhi: https://www.growthservice.in/locations/delhi
+  - Mumbai: https://www.growthservice.in/locations/mumbai
+  - Bangalore: https://www.growthservice.in/locations/bangalore
+  - Hyderabad: https://www.growthservice.in/locations/hyderabad
+  - Pune: https://www.growthservice.in/locations/pune
+  - Ahmedabad: https://www.growthservice.in/locations/ahmedabad
+  - Chennai: https://www.growthservice.in/locations/chennai
+  - Kolkata: https://www.growthservice.in/locations/kolkata
+  - Vrindavan: https://www.growthservice.in/locations/vrindavan
+  - Mathura: https://www.growthservice.in/locations/mathura
+  - Agra: https://www.growthservice.in/locations/agra
+  - Gurgaon: https://www.growthservice.in/locations/gurgaon
+  - Noida: https://www.growthservice.in/locations/noida
+  - Chandigarh: https://www.growthservice.in/locations/chandigarh
+  - Lucknow: https://www.growthservice.in/locations/lucknow
+  - Indore: https://www.growthservice.in/locations/indore
+  - Surat: https://www.growthservice.in/locations/surat
+  - Kochi: https://www.growthservice.in/locations/kochi
+  - Goa: https://www.growthservice.in/locations/goa
+  - Kathmandu: https://www.growthservice.in/locations/kathmandu
+  - Pokhara: https://www.growthservice.in/locations/pokhara
+  - Biratnagar: https://www.growthservice.in/locations/biratnagar
+  - Itahari: https://www.growthservice.in/locations/itahari
+
+### Legal, Compliance, & Trust
+- **Trust & Anti-Fraud Verification**: https://www.growthservice.in/trust-verification
+- **Privacy Policy**: https://www.growthservice.in/privacy
+- **Terms of Service**: https://www.growthservice.in/terms
+- **Refund Policy (100% Milestone Guarantee)**: https://www.growthservice.in/refund-policy
+- **Accessibility Statement (WCAG 2.1 AA)**: https://www.growthservice.in/accessibility
+
+---
+
+## Consumer Protection & Trust Advisory
+
+Growth Service strictly maintains transparent corporate policies:
+- **No Paid Task / Telegram Schemes**: Growth Service NEVER operates "daily YouTube like tasks", "Google review jobs", or Telegram/WhatsApp advance-deposit job schemes. Any entity requesting advance deposits using the Growth Service name is an unauthorized impersonator.
+- **Direct Engagement Contracts**: All client engagements are executed via formal written proposals, milestone-based contracts, and official invoices from growthservice.in.
+- **Refund Guarantee**: We offer a 100% money-back guarantee if specified project discovery milestones are not fulfilled in accordance with our terms.

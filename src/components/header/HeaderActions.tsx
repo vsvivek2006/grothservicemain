@@ -1,5 +1,6 @@
 import React from "react";
-import { MessageCircle, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { WhatsAppIcon } from "../ui";
 import { getNepalWhatsAppUrl } from "../../services";
 
 interface HeaderActionsProps {
@@ -17,7 +18,7 @@ export const HeaderActions: React.FC<HeaderActionsProps> = ({ isOpen, setIsOpen 
         className="p-2 bg-[#25D366] text-white rounded-lg hover:bg-emerald-600 transition-colors shadow-sm flex items-center justify-center"
         aria-label="Chat with Growth Service on WhatsApp"
       >
-        <MessageCircle className="h-5 w-5" />
+        <WhatsAppIcon className="h-5 w-5" />
       </a>
       <button
         onClick={() => setIsOpen((v) => !v)}

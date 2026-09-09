@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { getPrimaryPhone, getBusinessEmail } from "../selectors";
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
+import { WhatsAppIcon } from "../components/ui";
 
 const Testimonials: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -548,7 +549,7 @@ const Testimonials: React.FC = () => {
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-emerald-600"><MessageCircle className="w-7 h-7" /></div>
+              <div className="text-emerald-600"><WhatsAppIcon className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">WhatsApp</div>
                 <div className="text-sm text-gray-600">Instant Response</div>

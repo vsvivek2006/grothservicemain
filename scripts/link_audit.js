@@ -15,7 +15,7 @@ esbuild.buildSync({
     path.join(rootDir, 'src/data/offices.ts'),
     path.join(rootDir, 'src/data/services.ts')
   ],
-  outdir: path.join(rootDir, 'scratch/dist'),
+  outdir: path.join(rootDir, 'scripts/dist'),
   format: 'esm',
   bundle: true,
   platform: 'node'

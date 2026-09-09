@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
@@ -121,6 +121,19 @@ const ROUTE_COMPONENTS: Record<string, React.ComponentType> = {
   [APP_ROUTES.onboardingAgreement.path]: OnboardingAgreement,
 };
 
+/**
+ * Dynamic parameter redirect for legacy programmatic URLs.
+ * React Router v6 does not interpolate URL parameters in `<Navigate to="..." />`.
+ * This wrapper extracts `city` and `serviceSlug` and forwards to `/${city}/${serviceSlug}`.
+ */
+function LegacyLocationServiceRedirect() {
+  const { city, serviceSlug } = useParams<{ city: string; serviceSlug: string }>();
+  if (!city || !serviceSlug) {
+    return <Navigate to="/locations" replace />;
+  }
+  return <Navigate to={`/${city}/${serviceSlug}`} replace />;
+}
+
 function App() {
   const routeAliases = getRouteAliases();
 
@@ -159,7 +172,7 @@ function App() {
               {/* Dynamic Legacy Programmatic Alias */}
               <Route
                 path="/locations/:city/:serviceSlug"
-                element={<Navigate to="/:city/:serviceSlug" replace />}
+                element={<LegacyLocationServiceRedirect />}
               />
 
               {/* 404 Fallback */}

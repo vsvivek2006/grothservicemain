@@ -8,7 +8,7 @@ esbuild.buildSync({
     'src/data/services.ts',
     'src/config/business.ts'
   ],
-  outdir: 'scratch/dist',
+  outdir: 'scripts/dist',
   format: 'esm',
   bundle: true,
   platform: 'node'
@@ -106,6 +106,7 @@ const testCases = [
   { path: '/email-marketing', expectedStatus: 301, expectedCanonical: '/digital-marketing' },
   { path: '/sitemap', expectedStatus: 301, expectedCanonical: '/locations' },
   { path: '/locations/jaipur/seo', expectedStatus: 301, expectedCanonical: '/jaipur/seo' },
+  { path: '/locations/vrindavan/social-media', expectedStatus: 301, expectedCanonical: '/vrindavan/social-media' },
 
   // Normalization Edge Cases (Uppercase, Trailing Slash, Double Slash)
   { path: '/ABOUT/', expectedStatus: 200, expectedKind: 'static' },
@@ -117,7 +118,9 @@ const testCases = [
   { path: '/nonexistent/city', expectedStatus: 404 },
   { path: '/jaipur/nonexistent-service', expectedStatus: 404 },
   { path: '/offices/nonexistent', expectedStatus: 404 },
-  { path: '/locations/unknown-city', expectedStatus: 404 }
+  { path: '/offices/bariyarpatti', expectedStatus: 404 },
+  { path: '/locations/unknown-city', expectedStatus: 404 },
+  { path: '/locations/unknown-city/seo', expectedStatus: 404 }
 ];
 
 console.log('====================================================');

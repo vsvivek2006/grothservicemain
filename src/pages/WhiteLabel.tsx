@@ -20,6 +20,7 @@ import {
   Lock,
   Briefcase
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/ui';
 
 const WhiteLabel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -623,7 +624,7 @@ const WhiteLabel: React.FC = () => {
                   rel="noopener noreferrer"
                   className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
                 >
-                  <MessageCircle className="h-8 w-8 text-green-500 mx-auto mb-3" />
+                  <WhatsAppIcon className="h-8 w-8 text-emerald-500 mx-auto mb-3" />
                   <div className="font-bold">WhatsApp</div>
                   <div className="text-sm text-gray-600">Quick chat</div>
                 </a>

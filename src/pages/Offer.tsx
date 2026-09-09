@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { Container, Section } from "../components/ui";
+import { Container, Section, WhatsAppIcon } from "../components/ui";
 import { getPhysicalOffices, getCanonicalOrigin } from "../selectors";
-import { getNepalWhatsAppUrl } from "../services";
+import { getNepalWhatsAppUrl, getTelHref } from "../services";
 import { 
   Check, 
   MessageCircle, 
@@ -339,13 +339,13 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
                 
                 <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
                   <a
-                    href={`tel:${office.phone.replace(/[^0-9+]/g, '')}`}
+                    href={getTelHref(office.phone)}
                     className="text-purple-600 font-semibold text-xs flex items-center gap-1 hover:underline"
                   >
                     <Phone className="h-3.5 w-3.5" /> {office.phone}
                   </a>
                   <Link
-                    to={`/offices/${office.city.toLowerCase()}`}
+                    to={`/offices/${office.slug}`}
                     className="text-slate-600 font-medium text-xs hover:text-purple-600"
                   >
                     Office Details →
@@ -452,7 +452,7 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
                 type="submit"
                 className="w-full bg-[#25D366] hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5" />
                 Confirm Consultation via WhatsApp
               </button>
             </form>

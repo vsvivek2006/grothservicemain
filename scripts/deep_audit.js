@@ -10,7 +10,7 @@ esbuild.buildSync({
     'src/data/services.ts',
     'src/data/team.ts'
   ],
-  outdir: 'scratch/dist',
+  outdir: 'scripts/dist',
   format: 'esm',
   bundle: true,
   platform: 'node'

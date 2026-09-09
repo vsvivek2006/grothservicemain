@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 1. Compile TS data files to scratch/dist/
+// 1. Compile TS data files to scripts/dist/
 esbuild.buildSync({
   entryPoints: [
     'src/data/offices.ts',
@@ -15,7 +15,7 @@ esbuild.buildSync({
     'src/data/team.ts',
     'src/data/industries.ts'
   ],
-  outdir: 'scratch/dist',
+  outdir: 'scripts/dist',
   format: 'esm',
   bundle: true,
   platform: 'node'

@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 import { getTechnologyByName } from '../data/technologies';
+import { WhatsAppIcon } from '../components/ui';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -270,7 +271,7 @@ const Portfolio = () => {
                 rel="noopener noreferrer"
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex items-center gap-3"
               >
-                <MessageCircle className="w-5 h-5" />
+                <WhatsAppIcon className="w-5 h-5 text-emerald-300" />
                 <span>Free Consultation</span>
               </a>
             </div>
@@ -592,7 +593,7 @@ const Portfolio = () => {
               className="bg-white hover:bg-gray-50 text-blue-600 px-6 py-5 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2 group"
             >
               <div className="w-10 h-10 rounded-full bg-emerald-50 text-[#25D366] flex items-center justify-center group-hover:scale-110 transition-transform">
-                <MessageCircle className="w-6 h-6" />
+                <WhatsAppIcon className="w-6 h-6" />
               </div>
               <div>
                 <div className="font-bold text-slate-900">WhatsApp</div>

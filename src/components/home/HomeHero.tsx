@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { 
-  Sparkles, MessageCircle, MapPin, ChevronLeft, 
+  Sparkles, MapPin, ChevronLeft, 
   ChevronRight, Play, Pause, TrendingUp, Users, 
   Star, Headphones, Globe 
 } from "lucide-react";
 import Container from "../ui/Container";
 import DecorativeGrid from "../ui/DecorativeGrid";
 import BentoGrid, { BentoItem } from "../ui/BentoGrid";
+import { WhatsAppIcon } from "../ui";
 import { AnimatedButton } from "../animations";
 import { getPhysicalOffices } from "../../selectors";
 import { getPrimaryWhatsAppUrl } from "../../services";
@@ -272,7 +273,7 @@ export const HomeHero: React.FC = () => {
                       isExternal
                       variant="white"
                       size="lg"
-                      icon={<MessageCircle className="w-5 h-5 text-emerald-600" />}
+                      icon={<WhatsAppIcon className="w-5 h-5 text-emerald-600" />}
                     >
                       Free Consultation
                     </AnimatedButton>

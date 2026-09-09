@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { getPrimaryPhone } from '../../selectors';
 import { getTelHref, getNepalWhatsAppUrl } from '../../services';
+import { WhatsAppIcon } from '../../components/ui';
 
 const WhiteLabelPPC = () => {
   return (
@@ -514,7 +515,7 @@ const WhiteLabelPPC = () => {
                 rel="noopener noreferrer"
                 className="bg-green-800 hover:bg-green-900 border-2 border-green-800 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                <MessageCircle className="w-5 h-5" />
+                <WhatsAppIcon className="w-5 h-5" />
                 <span>WhatsApp Partnership</span>
               </a>
             </div>

@@ -8,7 +8,7 @@ esbuild.buildSync({
     'src/data/services.ts',
     'src/config/business.ts'
   ],
-  outdir: 'scratch/dist',
+  outdir: 'scripts/dist',
   format: 'esm',
   bundle: true,
   platform: 'node'

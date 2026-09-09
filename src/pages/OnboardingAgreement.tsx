@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../selectors";
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
+import { WhatsAppIcon } from "../components/ui";
 
 const OnboardingAgreement: React.FC = () => {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -292,7 +293,7 @@ const OnboardingAgreement: React.FC = () => {
                   <h3 className="font-semibold text-gray-900 mb-2">Primary Channels</h3>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center">
-                      <MessageCircle className="h-4 w-4 text-green-500 mr-2" />
+                      <WhatsAppIcon className="h-4 w-4 text-emerald-500 mr-2" />
                       WhatsApp: {getOfficePhone('nepal')}
                     </li>
                     <li className="flex items-center">
@@ -434,7 +435,7 @@ const OnboardingAgreement: React.FC = () => {
                 rel="noopener noreferrer"
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5" />
                 WhatsApp for Questions
               </a>
             </div>

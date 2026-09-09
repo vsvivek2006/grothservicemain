@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Shield, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
-import { Container } from "../components/ui";
+import { Container, WhatsAppIcon } from "../components/ui";
 import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
 import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
@@ -342,7 +342,7 @@ const Terms: React.FC = () => {
               className="bg-green-50 hover:bg-green-100 text-green-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
-                <MessageCircle className="h-8 w-8" />
+                <WhatsAppIcon className="h-8 w-8" />
                 <div>
                   <div className="font-bold">WhatsApp</div>
                   <div className="text-sm text-green-700">{primaryPhone}</div>

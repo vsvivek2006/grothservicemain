@@ -1,8 +1,9 @@
 import React from "react";
-import { MessageCircle, Phone, MapPin, Clock } from "lucide-react";
+import { Phone, MapPin, Clock } from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
 import DecorativeGrid from "../ui/DecorativeGrid";
+import { WhatsAppIcon } from "../ui";
 import { AnimatedButton, FadeIn } from "../animations";
 import { getPhysicalOffices, getPrimaryPhone } from "../../selectors";
 import { getPrimaryWhatsAppUrl, getTelHref } from "../../services";
@@ -34,7 +35,7 @@ export const HomeCTA: React.FC = () => {
               isExternal
               variant="whatsapp"
               size="lg"
-              icon={<MessageCircle className="w-5 h-5" />}
+              icon={<WhatsAppIcon className="w-5 h-5" />}
             >
               Chat on WhatsApp
             </AnimatedButton>

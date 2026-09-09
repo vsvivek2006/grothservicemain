@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, Award, Calendar, MessageCircle, Sparkles } from 'lucide-react';
-import { Container, Section } from '../components/ui';
+import { Container, Section, WhatsAppIcon } from '../components/ui';
 import { getNepalWhatsAppUrl } from '../services';
 
 const Packages: React.FC = () => {
@@ -268,7 +268,7 @@ const Packages: React.FC = () => {
                       onClick={() => handleWhatsAppClick(pkg.name)}
                       className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:opacity-95 flex items-center justify-center gap-1.5 shadow-sm"
                     >
-                      <MessageCircle className="h-4 w-4" />
+                      <WhatsAppIcon className="h-4 w-4" />
                       Inquire
                     </button>
                     <Link
@@ -335,7 +335,7 @@ const Packages: React.FC = () => {
                     onClick={() => handleWhatsAppClick(seoPackage.name)}
                     className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <MessageCircle className="h-4 w-4" />
+                    <WhatsAppIcon className="h-4 w-4" />
                     Discuss on WhatsApp
                   </button>
                   <Link
@@ -400,7 +400,7 @@ const Packages: React.FC = () => {
                     onClick={() => handleWhatsAppClick(gmbPackage.name)}
                     className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <MessageCircle className="h-4 w-4" />
+                    <WhatsAppIcon className="h-4 w-4" />
                     Inquire on WhatsApp
                   </button>
                   <Link
@@ -460,7 +460,7 @@ const Packages: React.FC = () => {
                   onClick={() => handleWhatsAppClick(smmPackage.name)}
                   className="bg-[#25D366] hover:bg-emerald-600 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
                 >
-                  <MessageCircle className="h-4 w-4" />
+                  <WhatsAppIcon className="h-4 w-4" />
                   WhatsApp
                 </button>
                 <Link
@@ -514,7 +514,7 @@ const Packages: React.FC = () => {
                   onClick={() => handleWhatsAppClick(metaAdsPackage.name)}
                   className="bg-[#25D366] hover:bg-emerald-600 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
                 >
-                  <MessageCircle className="h-4 w-4" />
+                  <WhatsAppIcon className="h-4 w-4" />
                   WhatsApp
                 </button>
                 <Link
@@ -576,7 +576,7 @@ const Packages: React.FC = () => {
                     onClick={() => handleWhatsAppClick(businessSetupPackage.name)}
                     className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <MessageCircle className="h-4 w-4" />
+                    <WhatsAppIcon className="h-4 w-4" />
                     Inquire on WhatsApp
                   </button>
                   <Link
@@ -696,7 +696,7 @@ const Packages: React.FC = () => {
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               Direct WhatsApp Inquiry
             </a>
           </div>

@@ -9,3 +9,8 @@ Disallow: /drafts/
 
 # Authoritative XML Sitemap
 Sitemap: https://www.growthservice.in/sitemap.xml
+
+# LLM & AI Discovery Directives
+# Reference: https://llmstxt.org/
+# Authoritative AI Context: https://www.growthservice.in/llms.txt
+# Singular alias: https://www.growthservice.in/llm.txt

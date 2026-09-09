@@ -50,13 +50,20 @@ export const FooterBottom: React.FC = () => {
 
         {/* Quick Links */}
         <div className="flex flex-wrap justify-center gap-2 text-sm">
-          {['Terms', 'Privacy', 'Refund', 'Sitemap', 'Accessibility', 'Verify'].map((item) => (
+          {[
+            { label: 'Terms', path: '/terms' },
+            { label: 'Privacy', path: '/privacy' },
+            { label: 'Refund', path: '/refund' },
+            { label: 'Sitemap', path: '/locations' },
+            { label: 'Accessibility', path: '/accessibility' },
+            { label: 'Verify', path: '/verify' }
+          ].map((item) => (
             <Link 
-              key={item}
-              to={`/${item.toLowerCase()}`}
+              key={item.label}
+              to={item.path}
               className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1.5 hover:bg-purple-900/30 rounded-full text-xs"
             >
-              {item}
+              {item.label}
             </Link>
           ))}
         </div>

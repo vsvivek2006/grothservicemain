@@ -13,6 +13,7 @@ import {
 } from 'react-icons/fa';
 import { getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref } from '../services';
+import { WhatsAppIcon } from '../components/ui';
 
 const DigitalMarketing: React.FC = () => {
   // Main Services
@@ -274,9 +275,9 @@ const DigitalMarketing: React.FC = () => {
                 href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+                className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5 text-white" />
                 <span>Get Free Strategy Session</span>
               </a>
               <a
