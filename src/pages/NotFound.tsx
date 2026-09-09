@@ -21,7 +21,7 @@ import {
   Zap
 } from "lucide-react";
 import { Helmet } from "react-helmet";
-import { Container } from "../components/ui";
+import { Container, WhatsAppIcon } from "../components/ui";
 import { 
   getPhysicalOffices, 
   getPrimaryPhone, 
@@ -203,9 +203,12 @@ const NotFound: React.FC = () => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-3 mt-4 text-sm text-gray-500">
-            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-purple-600" /> Jaipur</span>
-            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-purple-600" /> Vrindavan</span>
-            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-purple-600" /> Nepal (HQ)</span>
+            {offices.map((off) => (
+              <span key={off.id} className="flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-purple-600" />
+                {off.city} {off.isHeadOffice ? '(HQ)' : ''}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -442,7 +445,7 @@ const NotFound: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
               Chat on WhatsApp
             </a>
             <Link
@@ -492,7 +495,7 @@ const NotFound: React.FC = () => {
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-green-50"
           >
-            <MessageCircle className="h-5 w-5 text-green-600 mb-1" />
+            <WhatsAppIcon className="h-5 w-5 text-green-600 mb-1" />
             <span className="text-[10px] font-medium text-green-700">WhatsApp</span>
           </a>
           <Link

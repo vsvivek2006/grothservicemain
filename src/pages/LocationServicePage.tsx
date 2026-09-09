@@ -94,16 +94,14 @@ export const LocationServicePage: React.FC = () => {
 
         <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
-            <div className="flex justify-center">
-              <Breadcrumb
-                items={[
-                  { label: 'Locations', path: '/locations' },
-                  { label: city.name, path: `/locations/${city.slug}` },
-                  { label: service.title }
-                ]}
-                className="text-purple-300 mb-6"
-              />
-            </div>
+            <Breadcrumb
+              items={[
+                { label: 'Locations', path: '/locations' },
+                { label: city.name, path: `/locations/${city.slug}` },
+                { label: service.title }
+              ]}
+              className="text-purple-300 mb-6"
+            />
 
             <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
               <div className="flex flex-wrap items-center justify-center gap-2 mb-4">

@@ -35,10 +35,9 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       {displayBadge && (
         <div className={`mb-3.5 flex ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
           <Badge
-            variant={dark ? 'purple' : 'purple'}
+            variant={dark ? 'dark' : 'purple'}
             icon={badgeIcon}
             size="md"
-            className={dark ? 'bg-purple-900/60 text-purple-200 border-purple-700/50' : ''}
           >
             {displayBadge}
           </Badge>

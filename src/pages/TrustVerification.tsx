@@ -24,12 +24,10 @@ const TrustVerification: React.FC = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
         <Container className="relative z-10">
-          <div className="flex justify-center">
-            <Breadcrumb
-              items={[{ label: 'Security & Verification' }]}
-              className="text-purple-300 mb-6"
-            />
-          </div>
+          <Breadcrumb
+            items={[{ label: 'Security & Verification' }]}
+            className="text-purple-300 mb-6"
+          />
 
           <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 bg-yellow-500/20 border border-yellow-400/40 text-yellow-300 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">

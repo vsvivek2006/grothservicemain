@@ -19,7 +19,7 @@ export const IndustryCard: React.FC<IndustryCardProps> = ({
   metricsHighlight,
 }) => {
   const getIcon = () => {
-    const props = { className: "w-6 h-6 text-purple-600" };
+    const props = { className: "w-6 h-6 text-purple-600 group-hover:text-white transition-colors duration-300" };
     switch (iconName) {
       case 'ShoppingCart':
         return <ShoppingCart {...props} />;
@@ -40,10 +40,8 @@ export const IndustryCard: React.FC<IndustryCardProps> = ({
   return (
     <Card className="flex flex-col h-full bg-white border border-slate-200/80 group">
       <div className="flex items-center justify-between gap-3 mb-4">
-        <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
-          <div className="group-hover:text-white transition-colors">
-            {getIcon()}
-          </div>
+        <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center group-hover:bg-purple-600 transition-colors duration-300">
+          {getIcon()}
         </div>
         <Badge variant="gold" size="sm">
           {metricsHighlight}
