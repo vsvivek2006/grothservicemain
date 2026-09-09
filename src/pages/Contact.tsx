@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Container, Section, Input, Textarea } from '../components/ui';
+import { Container, Section, Input, Textarea, WhatsAppIcon } from '../components/ui';
 import { 
   getPhysicalOffices, 
   getOfficeById, 
@@ -316,9 +316,9 @@ I would like to discuss my project with you. Please provide more details.`;
                 href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center space-x-2"
+                className="bg-[#25D366] hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center space-x-2"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5 text-white" />
                 <span>Chat on WhatsApp (Nepal)</span>
               </a>
               <a
