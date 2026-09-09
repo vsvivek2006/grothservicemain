@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import { buildBreadcrumbSchema } from '../../seo/schema';
 
 export interface BreadcrumbItem {
   label: string;
@@ -14,30 +15,13 @@ export interface BreadcrumbProps {
 }
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, className = '' }) => {
-  const schemaBreadcrumbs = [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://growthservice.in"
-    },
-    ...items.map((item, idx) => ({
-      "@type": "ListItem",
-      "position": idx + 2,
-      "name": item.label,
-      ...(item.path ? { "item": `https://growthservice.in${item.path}` } : {})
-    }))
-  ];
+  const breadcrumbSchema = buildBreadcrumbSchema(items);
 
   return (
     <nav aria-label="Breadcrumb" className={`flex items-center text-xs sm:text-sm text-slate-500 py-3 ${className}`}>
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": schemaBreadcrumbs
-          })}
+          {JSON.stringify(breadcrumbSchema)}
         </script>
       </Helmet>
 

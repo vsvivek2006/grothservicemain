@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { getPhysicalOffices, getOfficePhone, getPrimaryPhone, getBusinessEmail } from '../selectors';
+import { getPhysicalOffices, getOfficePhone, getPrimaryPhone, getBusinessEmail, getCanonicalOrigin } from '../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../services';
 import { 
   Calendar, 
@@ -311,12 +311,12 @@ I have booked a free consultation call. Please confirm the schedule.`;
           name="keywords" 
           content="free consultation, digital marketing consultation, web development consultation, SEO consultation, book call, growth service, Nepal consultation, Jaipur digital marketing, Vrindavan web development" 
         />
-        <link rel="canonical" href="https://growthservice.in/book-call" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/book-call`} />
         
         <meta property="og:title" content="Book Free Consultation - Growth Service Digital Agency" />
         <meta property="og:description" content="Free 30-minute strategy session with our digital experts. Offices in Nepal, Jaipur, and Vrindavan." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/book-call" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/book-call`} />
       </Helmet>
 
       {/* Hero Section */}

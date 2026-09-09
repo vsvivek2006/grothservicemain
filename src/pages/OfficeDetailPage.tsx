@@ -18,6 +18,8 @@ import {
   getTelHref, 
   getMailtoHref 
 } from '../services';
+import { buildOfficePath, buildCanonicalUrl } from '../routing';
+import { buildLocalBusinessSchema } from '../seo';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
@@ -57,34 +59,11 @@ export const OfficeDetailPage: React.FC = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={`https://www.growthservice.in/offices/${office.slug}`} />
+        <link rel="canonical" href={buildCanonicalUrl(buildOfficePath(office.slug))} />
 
         {/* LocalBusiness Schema for this physical office */}
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": `Growth Service - ${office.name}`,
-            "image": "https://www.growthservice.in/logo.png",
-            "url": `https://www.growthservice.in/offices/${office.slug}`,
-            "telephone": office.phone,
-            "email": office.email,
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": office.address,
-              "addressLocality": office.city,
-              "addressRegion": office.state,
-              "postalCode": office.postalCode,
-              "addressCountry": office.country
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": office.coordinates.lat,
-              "longitude": office.coordinates.lng
-            },
-            "openingHours": office.timings,
-            "areaServed": office.areasServed
-          })}
+          {JSON.stringify(buildLocalBusinessSchema(office))}
         </script>
       </Helmet>
 

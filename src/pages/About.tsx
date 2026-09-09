@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 import { Container, Section } from '../components/ui';
-import { getPhysicalOffices, getPrimaryPhone } from '../selectors';
+import { getPhysicalOffices, getPrimaryPhone, getCanonicalOrigin } from '../selectors';
 import { getTelHref, getNepalWhatsAppUrl } from '../services';
 
 // Types
@@ -591,13 +591,13 @@ const About: React.FC = () => {
           content="digital marketing agency Jaipur, web development company Vrindavan, SEO services Nepal, digital agency India, growth service, digital marketing Rajasthan, web development Uttar Pradesh, SEO Nepal, digital solutions India"
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://growthservice.in/about" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/about`} />
         
         {/* Open Graph */}
         <meta property="og:title" content="About Growth Service - Digital Agency in Jaipur, Vrindavan & Nepal" />
         <meta property="og:description" content="Leading digital marketing agency with 3 offices in India and Nepal. Web development, SEO, and digital marketing services worldwide." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/about" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/about`} />
       </Helmet>
 
       {/* === HERO SECTION WITH OFFICE LOCATIONS === */}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Container, Section } from "../components/ui";
-import { getPhysicalOffices } from "../selectors";
+import { getPhysicalOffices, getCanonicalOrigin } from "../selectors";
 import { getNepalWhatsAppUrl } from "../services";
 import { 
   Check, 
@@ -190,7 +190,7 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
           name="keywords" 
           content="free digital audit, website audit Jaipur, SEO consultation Vrindavan, social media audit Nepal, growth strategy session"
         />
-        <link rel="canonical" href="https://growthservice.in/offer" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/offer`} />
       </Helmet>
 
       {/* Hero Section */}

@@ -29,7 +29,7 @@ import {
   FaInstagram,
   FaYoutube
 } from 'react-icons/fa';
-import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail } from '../../selectors';
+import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
 const LeadGeneration = () => {
@@ -45,12 +45,12 @@ const LeadGeneration = () => {
           name="keywords" 
           content="lead generation Jaipur, B2B lead generation Vrindavan, lead generation Nepal, sales pipeline growth, inbound marketing, LinkedIn lead generation, cold email outreach, lead generation agency India"
         />
-        <link rel="canonical" href="https://growthservice.in/lead-generation" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/lead-generation`} />
         
         <meta property="og:title" content="Best Lead Generation Services in Jaipur, Vrindavan & Nepal" />
         <meta property="og:description" content="Professional lead generation services with 300+ happy clients. Fuel your sales pipeline with qualified leads that convert." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/lead-generation" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/lead-generation`} />
         
         <script type="application/ld+json">
           {JSON.stringify({

@@ -35,6 +35,22 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/consultation", "destination": "/book-call", "permanent": true },
+    { "source": "/email-marketing", "destination": "/digital-marketing", "permanent": true },
+    { "source": "/website-development", "destination": "/web-development", "permanent": true },
+    { "source": "/ui-ux", "destination": "/ui-ux-design", "permanent": true },
+    { "source": "/ecommerce-development", "destination": "/ecommerce", "permanent": true },
+    { "source": "/whitelabel", "destination": "/white-label", "permanent": true },
+    { "source": "/sitemap", "destination": "/locations", "permanent": true },
+    { "source": "/careers", "destination": "/team", "permanent": true },
+    { "source": "/about/team", "destination": "/team", "permanent": true },
+    { "source": "/webinars", "destination": "/resources", "permanent": true },
+    { "source": "/success-stories", "destination": "/case-studies", "permanent": true },
+    { "source": "/scam-alert", "destination": "/verify", "permanent": true },
+    { "source": "/report-scam", "destination": "/verify", "permanent": true },
+    { "source": "/locations/:city/:serviceSlug", "destination": "/:city/:serviceSlug", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/((?!assets/|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\..*).*)",

@@ -27,7 +27,7 @@ import {
   FaTrophy,
   FaGem,
 } from 'react-icons/fa';
-import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName } from '../../selectors';
+import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
 const SEOService = () => {
@@ -40,13 +40,13 @@ const SEOService = () => {
           content="Professional SEO services in Jaipur, Vrindavan, and Nepal. Top Google rankings, organic traffic growth, and verified client outcomes. Free SEO audit available." 
         />
         <meta name="keywords" content="SEO services Jaipur, SEO company Vrindavan, SEO expert Nepal, digital marketing, rank on Google, SEO audit" />
-        <link rel="canonical" href="https://growthservice.in/seo" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/seo`} />
         
         {/* Open Graph */}
         <meta property="og:title" content="Professional SEO Services in Jaipur, Vrindavan & Nepal | Growth Service" />
         <meta property="og:description" content="Professional SEO services with proven ranking track record. Comprehensive organic optimization and technical audits." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/seo" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/seo`} />
         
         <script type="application/ld+json">
           {JSON.stringify({

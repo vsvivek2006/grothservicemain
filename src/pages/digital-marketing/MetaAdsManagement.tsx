@@ -27,7 +27,7 @@ import {
   FaTwitter,
   FaYoutube
 } from 'react-icons/fa';
-import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName } from '../../selectors';
+import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
 const MetaAdsManagement = () => {
@@ -43,12 +43,12 @@ const MetaAdsManagement = () => {
           name="keywords" 
           content="Meta ads management Jaipur, Facebook ads Vrindavan, Instagram advertising Nepal, Meta ads agency, social media advertising, Facebook ads management India, WhatsApp business ads, Meta Ads expert Jaipur"
         />
-        <link rel="canonical" href="https://growthservice.in/paid-marketing" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/paid-marketing`} />
         
         <meta property="og:title" content="Best Meta Ads Management in Jaipur, Vrindavan & Nepal" />
         <meta property="og:description" content="Professional Meta Ads management services with 300+ happy clients. Maximize ROI from Facebook, Instagram & WhatsApp advertising." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/paid-marketing" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/paid-marketing`} />
         
         <script type="application/ld+json">
           {JSON.stringify({

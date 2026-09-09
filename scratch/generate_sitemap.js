@@ -2,103 +2,105 @@ import esbuild from 'esbuild';
 import fs from 'fs';
 import path from 'path';
 
-// 1. Build TS files
+// 1. Bundle TS data and routing modules to temporary runner
 esbuild.buildSync({
   entryPoints: [
-    'src/config/routes.ts',
+    'src/routing/index.ts',
     'src/data/locations.ts',
     'src/data/offices.ts',
-    'src/data/services.ts'
+    'src/data/services.ts',
+    'src/config/business.ts'
   ],
   outdir: 'scratch/dist',
   format: 'esm',
-  bundle: false
+  bundle: true,
+  platform: 'node'
 });
 
-const { APP_ROUTES, getSitemapRoutes } = await import('./dist/config/routes.js');
+const { 
+  getSitemapRoutes, 
+  buildCanonicalUrl, 
+  buildOfficePath, 
+  buildCityPath, 
+  buildLocationServicePath,
+  normalizePath 
+} = await import('./dist/routing/index.js');
+
 const { citiesData } = await import('./dist/data/locations.js');
 const { physicalOffices } = await import('./dist/data/offices.js');
 const { servicesData } = await import('./dist/data/services.js');
-
-const BASE_URL = 'https://www.growthservice.in';
-const TODAY = new Date().toISOString().split('T')[0];
+const { businessConfig } = await import('./dist/config/business.js');
 
 const urls = [];
+const seenLocs = new Set();
 
-// 1. Static Canonical Pages
+function addUrl(loc, priority, changefreq) {
+  const cleanLoc = loc.trim();
+  if (seenLocs.has(cleanLoc)) {
+    throw new Error(`Duplicate sitemap URL generated: ${cleanLoc}`);
+  }
+  seenLocs.add(cleanLoc);
+  urls.push({
+    loc: cleanLoc,
+    priority: priority.toFixed(1),
+    changefreq
+  });
+}
+
+// 1. Static Canonical Indexable Pages from authoritative route registry
 for (const route of getSitemapRoutes()) {
-  if (route.path === '/locations' || route.path === '/offices') continue; // Handled below
-  urls.push({
-    loc: `${BASE_URL}${route.canonical === '/' ? '/' : route.canonical}`,
-    priority: route.priority || 0.7,
-    changefreq: route.changefreq || 'weekly',
-    lastmod: TODAY
-  });
+  if (route.path === '/locations' || route.path === '/offices') {
+    // Generated with specific section priorities below
+    continue;
+  }
+  addUrl(
+    buildCanonicalUrl(route.canonical),
+    route.priority || 0.7,
+    route.changefreq || 'weekly'
+  );
 }
 
-// 2. Physical Offices Hub & Detail Pages
-urls.push({
-  loc: `${BASE_URL}/offices`,
-  priority: 0.8,
-  changefreq: 'monthly',
-  lastmod: TODAY
-});
-
+// 2. Physical Offices Directory & Detail Pages
+addUrl(buildCanonicalUrl(buildOfficePath('')), 0.8, 'monthly');
 for (const office of physicalOffices) {
-  urls.push({
-    loc: `${BASE_URL}/offices/${office.slug}`,
-    priority: 0.8,
-    changefreq: 'monthly',
-    lastmod: TODAY
-  });
+  addUrl(buildCanonicalUrl(buildOfficePath(office.slug)), 0.8, 'monthly');
 }
 
-// 3. Locations Hub & City Hub Pages
-urls.push({
-  loc: `${BASE_URL}/locations`,
-  priority: 0.9,
-  changefreq: 'weekly',
-  lastmod: TODAY
-});
-
+// 3. Locations Directory & City Hub Pages
+addUrl(buildCanonicalUrl(buildCityPath('')), 0.9, 'weekly');
 for (const city of citiesData) {
-  urls.push({
-    loc: `${BASE_URL}/locations/${city.slug}`,
-    priority: 0.8,
-    changefreq: 'weekly',
-    lastmod: TODAY
-  });
+  addUrl(buildCanonicalUrl(buildCityPath(city.slug)), 0.8, 'weekly');
 }
 
-// 4. Programmatic Location-Service Combinations
+// 4. Canonical Programmatic Location-Service Combinations
 for (const city of citiesData) {
   for (const srvSlug of city.servicesAvailable) {
     const srv = servicesData.find(s => s.slug === srvSlug);
     if (srv) {
-      urls.push({
-        loc: `${BASE_URL}/${city.slug}/${srv.slug}`,
-        priority: 0.7,
-        changefreq: 'monthly',
-        lastmod: TODAY
-      });
+      addUrl(
+        buildCanonicalUrl(buildLocationServicePath(city.slug, srv.slug)),
+        0.7,
+        'monthly'
+      );
     }
   }
 }
 
-// Build XML
+// Build XML (omitting artificial lastmod per Google Search guidelines to avoid falsifying modification dates)
 let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
 xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
 for (const u of urls) {
   xml += '  <url>\n';
   xml += `    <loc>${u.loc}</loc>\n`;
-  xml += `    <lastmod>${u.lastmod}</lastmod>\n`;
   xml += `    <changefreq>${u.changefreq}</changefreq>\n`;
-  xml += `    <priority>${u.priority.toFixed(1)}</priority>\n`;
+  xml += `    <priority>${u.priority}</priority>\n`;
   xml += '  </url>\n';
 }
 
 xml += '</urlset>\n';
 
-fs.writeFileSync('public/sitemap.xml', xml, 'utf8');
-console.log(`Generated public/sitemap.xml with ${urls.length} verified URLs.`);
+const outputPath = path.resolve('public/sitemap.xml');
+fs.writeFileSync(outputPath, xml, 'utf-8');
+
+console.log(`✅ Authoritative sitemap.xml generated successfully: ${urls.length} URLs written to ${outputPath}`);

@@ -25,7 +25,7 @@ import {
   FaGem,
   FaCrown
 } from 'react-icons/fa';
-import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail } from '../../selectors';
+import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
 const ContentMarketing = () => {
@@ -41,12 +41,12 @@ const ContentMarketing = () => {
           name="keywords" 
           content="content marketing Jaipur, content writing services Vrindavan, content marketing Nepal, digital content strategy, SEO content writing, blog writing services, content marketing agency India, content strategy Jaipur"
         />
-        <link rel="canonical" href="https://growthservice.in/content-marketing" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/content-marketing`} />
         
         <meta property="og:title" content="Best Content Marketing Services in Jaipur, Vrindavan & Nepal" />
         <meta property="og:description" content="Professional content marketing services with 300+ happy clients. Create content that drives traffic, generates leads, and grows your business." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/content-marketing" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/content-marketing`} />
       </Helmet>
 
       {/* Hero Section */}

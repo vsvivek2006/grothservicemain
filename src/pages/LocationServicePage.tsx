@@ -20,6 +20,8 @@ import {
   getWhatsAppUrl, 
   getTelHref 
 } from '../services';
+import { buildLocationServicePath, buildCanonicalUrl } from '../routing';
+import { buildServiceSchema } from '../seo';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -73,32 +75,16 @@ export const LocationServicePage: React.FC = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={`https://www.growthservice.in/${city.slug}/${service.slug}`} />
+        <link rel="canonical" href={buildCanonicalUrl(buildLocationServicePath(city.slug, service.slug))} />
 
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content={`https://www.growthservice.in/${city.slug}/${service.slug}`} />
+        <meta property="og:url" content={buildCanonicalUrl(buildLocationServicePath(city.slug, service.slug))} />
         <meta property="og:type" content="website" />
 
-        {/* Schema.org Service - Organization provider only (LocalBusiness is reserved only for physical offices) */}
+        {/* Schema.org Service */}
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": `${service.title} in ${city.name}`,
-            "provider": {
-              "@type": "Organization",
-              "name": "Growth Service",
-              "url": "https://www.growthservice.in",
-              "telephone": cityPhone,
-              "email": cityEmail
-            },
-            "areaServed": {
-              "@type": "City",
-              "name": `${city.name}, ${city.state}`
-            },
-            "description": service.fullDesc
-          })}
+          {JSON.stringify(buildServiceSchema(service, city))}
         </script>
       </Helmet>
 

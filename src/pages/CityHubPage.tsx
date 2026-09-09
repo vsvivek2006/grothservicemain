@@ -15,12 +15,14 @@ import {
   getCityEmail, 
   getCityAddress, 
   getOfficeForCity,
-  getBusinessName 
+  getBusinessName,
+  getCanonicalOrigin 
 } from '../selectors';
 import { 
   getWhatsAppUrl, 
   getTelHref 
 } from '../services';
+import { buildCityPath, buildCanonicalUrl } from '../routing';
 import { Container, Section, Button } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
@@ -68,7 +70,7 @@ export const CityHubPage: React.FC = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={`https://www.growthservice.in/locations/${city.slug}`} />
+        <link rel="canonical" href={buildCanonicalUrl(buildCityPath(city.slug))} />
 
         {/* Service Schema - Organization provider (LocalBusiness is reserved only for physical offices) */}
         <script type="application/ld+json">
@@ -87,7 +89,7 @@ export const CityHubPage: React.FC = () => {
             "provider": {
               "@type": "Organization",
               "name": "Growth Service",
-              "url": "https://growthservice.in",
+              "url": getCanonicalOrigin(),
               "telephone": cityPhone,
               "email": cityEmail
             },

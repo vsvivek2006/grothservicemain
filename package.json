@@ -12,12 +12,16 @@
     "data:audit": "node scratch/data_literal_audit.js",
     "architecture:audit": "node scratch/centralization_audit.js",
     "centralization:audit": "node scratch/centralization_audit.js",
-    "test:propagation": "node scratch/test_one_change_propagation.js"
+    "test:propagation": "node scratch/test_one_change_propagation.js",
+    "routes:validate": "node scratch/validate_routes.js",
+    "routes:test": "node scratch/test_route_matrix.js",
+    "sitemap:generate": "node scratch/generate_sitemap.js",
+    "sitemap:validate": "node scratch/validate_sitemap.js",
+    "seo:validate": "node scratch/validate_seo.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/react-router-dom": "^5.3.3",
     "lucide-react": "^0.344.0",
-    "next-seo": "^6.8.0",
     "razorpay": "^2.9.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
