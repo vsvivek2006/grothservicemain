@@ -42,7 +42,7 @@ export const OfficeDetailPage: React.FC = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={`https://growthservice.in/offices/${office.slug}`} />
+        <link rel="canonical" href={`https://www.growthservice.in/offices/${office.slug}`} />
 
         {/* LocalBusiness Schema for this physical office */}
         <script type="application/ld+json">
@@ -50,8 +50,8 @@ export const OfficeDetailPage: React.FC = () => {
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": `Growth Service - ${office.name}`,
-            "image": "https://growthservice.in/logo.png",
-            "url": `https://growthservice.in/offices/${office.slug}`,
+            "image": "https://www.growthservice.in/logo.png",
+            "url": `https://www.growthservice.in/offices/${office.slug}`,
             "telephone": office.phone,
             "email": office.email,
             "address": {

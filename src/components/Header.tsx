@@ -3,6 +3,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight, Zap } from "lucide-react";
 import { Container } from "./ui";
 
+import { businessConfig } from "../config/business";
+
 const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
 const Header: React.FC = () => {
@@ -52,23 +54,23 @@ const Header: React.FC = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Contact Info with Office Locations
+  // Contact Info with Office Locations from single source of truth
   const topNavItems = [
     { 
-      name: "India: +91-93414-36937", 
-      href: "tel:+919341436937", 
+      name: `India: ${businessConfig.phones.indiaPrimary}`, 
+      href: `tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`, 
       icon: <Phone className="h-4 w-4" />,
       location: "🇮🇳 Jaipur & Vrindavan Offices"
     },
     { 
-      name: "Nepal: +977-9707382481", 
-      href: "https://wa.me/9779707382481", 
+      name: `Nepal: ${businessConfig.phones.nepalPrimary}`, 
+      href: `https://wa.me/${businessConfig.whatsapp.nepalNumber}`, 
       icon: <MessageCircle className="h-4 w-4" />,
       location: "🇳🇵 Nepal Office"
     },
     { 
-      name: "Email: info@growthservice.in", 
-      href: "mailto:info@growthservice.in", 
+      name: `Email: ${businessConfig.emails.primary}`, 
+      href: `mailto:${businessConfig.emails.primary}`, 
       icon: <Mail className="h-4 w-4" />,
       location: "🌐 Global"
     }
@@ -110,7 +112,7 @@ const Header: React.FC = () => {
     { name: "White Label Web Development", href: "/white-label-web" }
   ];
 
-  // Other Pages
+  // Other Pages (Canonical destinations)
   const otherPages = [
     { name: "Locations", href: "/locations" },
     { name: "Offices", href: "/offices" },
@@ -124,7 +126,7 @@ const Header: React.FC = () => {
     { name: "Careers", href: "/team" },
     { name: "Terms", href: "/terms" },
     { name: "Privacy", href: "/privacy" },
-    { name: "Refund", href: "/refund" }
+    { name: "Refund", href: "/privacy" }
   ];
 
   return (
@@ -697,23 +699,25 @@ const Header: React.FC = () => {
             {/* Quick Action Buttons */}
             <div className="grid grid-cols-2 gap-2 pt-3">
               <a
-                href="https://wa.me/9779707382481"
+                href={businessConfig.whatsapp.defaultUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-3.5 rounded-lg font-semibold text-sm text-center flex items-center justify-center gap-2 shadow-md"
+                className="bg-[#25D366] hover:bg-emerald-600 text-white px-4 py-3.5 rounded-lg font-semibold text-sm text-center flex items-center justify-center gap-2 shadow-md transition-colors"
                 onClick={() => setIsOpen(false)}
+                aria-label="Chat on WhatsApp"
               >
                 <MessageCircle className="h-4 w-4" />
-                WhatsApp (Nepal Office)
+                WhatsApp Chat
               </a>
               
               <a
-                href="tel:+919341436937"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3.5 rounded-lg font-semibold text-sm text-center flex items-center justify-center gap-2 shadow-md"
+                href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3.5 rounded-lg font-semibold text-sm text-center flex items-center justify-center gap-2 shadow-md transition-colors"
                 onClick={() => setIsOpen(false)}
+                aria-label="Call Growth Service India Office"
               >
                 <Phone className="h-4 w-4" />
-                Call India
+                Call Office
               </a>
             </div>
 

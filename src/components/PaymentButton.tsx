@@ -32,10 +32,9 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: formatAmount(amount),
         currency: currency,
-        name: 'DiziGrow',
+        name: 'Growth Service',
         description: `Payment for ${planName}`,
         handler: function (response: any) {
-          // Payment successful - success page redirect karo
           console.log('Payment Success:', response);
           navigate('/payment/success', { 
             state: { 
@@ -46,16 +45,16 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           });
         },
         prefill: {
-          name: 'Customer',
-          email: 'customer@dizigrow.com',
-          contact: '+919999999999'
+          name: '',
+          email: '',
+          contact: ''
         },
         notes: {
           plan: planName,
-          company: 'DiziGrow'
+          company: 'Growth Service'
         },
         theme: {
-          color: '#8B5CF6'
+          color: '#7C3AED'
         },
         modal: {
           ondismiss: function() {

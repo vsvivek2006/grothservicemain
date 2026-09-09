@@ -42,7 +42,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "North India's largest economic powerhouse, comprising high-growth enterprise, corporate SaaS, retail, and tech startup hubs.",
-    citySlugs: ["delhi", "gurgaon", "noida", "ghaziabad", "faridabad"]
+    citySlugs: ["delhi", "gurgaon", "noida"]
   },
   {
     slug: "rajasthan",
@@ -60,7 +60,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "Home to Growth Service Vrindavan office, driving digital growth for heritage hospitality, retail, and industries.",
-    citySlugs: ["vrindavan", "mathura", "agra", "lucknow", "varanasi"]
+    citySlugs: ["vrindavan", "mathura", "agra", "lucknow"]
   },
   {
     slug: "bihar",
@@ -69,7 +69,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "A fast-emerging consumer market with booming education, healthcare, retail, and local professional services seeking digital visibility.",
-    citySlugs: ["patna", "gaya", "muzaffarpur", "bhagalpur", "darbhanga"]
+    citySlugs: ["patna", "gaya", "muzaffarpur"]
   },
   {
     slug: "punjab-chandigarh",
@@ -78,7 +78,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "Prominent northern commercial zone with thriving manufacturing, agricultural technology, export trade, and educational centers.",
-    citySlugs: ["chandigarh", "ludhiana", "amritsar", "jalandhar"]
+    citySlugs: ["chandigarh", "ludhiana"]
   },
   {
     slug: "goa",
@@ -87,7 +87,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "India's tourism and hospitality capital, featuring boutique luxury resorts, international dining, real estate, and lifestyle brands.",
-    citySlugs: ["panaji", "margao", "vasco-da-gama"]
+    citySlugs: ["goa"]
   },
   {
     slug: "maharashtra",
@@ -96,7 +96,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "India's financial and industrial capital, featuring intense competition across fintech, e-commerce, media, and B2B services.",
-    citySlugs: ["mumbai", "pune", "nagpur"]
+    citySlugs: ["mumbai", "pune"]
   },
   {
     slug: "karnataka",
@@ -105,7 +105,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "The technology capital of India, with deep demand for high-performance React web engineering, data-driven SEO, and paid media.",
-    citySlugs: ["bangalore", "mysore"]
+    citySlugs: ["bangalore"]
   },
   {
     slug: "nepal",
@@ -114,7 +114,7 @@ export const regionsData: RegionData[] = [
     country: "Nepal",
     flag: "🇳🇵",
     description: "Home to our Bariyarpatti Office, empowering cross-border Himalayan commerce, regional businesses, and international startups.",
-    citySlugs: ["bariyarpatti", "kathmandu", "biratnagar"]
+    citySlugs: ["bariyarpatti", "kathmandu"]
   }
 ];
 
@@ -636,7 +636,11 @@ export function getAllLocations(): LocationData[] {
 export const locationsData = citiesData;
 
 export function getCityBySlug(slug: string): CityData | undefined {
-  return citiesData.find(c => c.slug.toLowerCase() === slug.toLowerCase());
+  const normalized = slug.toLowerCase();
+  if (normalized === 'panaji') {
+    return citiesData.find(c => c.slug === 'goa');
+  }
+  return citiesData.find(c => c.slug.toLowerCase() === normalized);
 }
 
 export function getCitiesByRegion(regionSlug: string): CityData[] {

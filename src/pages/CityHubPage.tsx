@@ -52,7 +52,7 @@ export const CityHubPage: React.FC = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={`https://growthservice.in/locations/${city.slug}`} />
+        <link rel="canonical" href={`https://www.growthservice.in/locations/${city.slug}`} />
 
         {/* Service Schema - Organization provider (LocalBusiness is reserved only for physical offices) */}
         <script type="application/ld+json">

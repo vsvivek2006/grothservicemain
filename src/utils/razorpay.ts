@@ -78,13 +78,13 @@ export const initializeRazorpayPayment = async (options: {
       key: razorpayKey,
       amount: formatAmount(options.amount),
       currency: options.currency || 'INR',
-      name: 'Your Company Name',
+      name: 'Growth Service',
       description: 'Payment for services',
       receipt: options.receipt || `receipt_${Date.now()}`,
       prefill: options.prefill || {},
       notes: options.notes || {},
       theme: {
-        color: '#2563eb'
+        color: '#7C3AED'
       },
       handler: function (response: any) {
         console.log('Payment successful:', response);

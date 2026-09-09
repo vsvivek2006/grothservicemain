@@ -24,14 +24,14 @@ export const OfficesHub: React.FC = () => {
           name="description" 
           content="Explore Growth Service physical offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Bariyarpatti (Nepal). Verified addresses, direct contacts, and business hours." 
         />
-        <link rel="canonical" href="https://growthservice.in/offices" />
+        <link rel="canonical" href="https://www.growthservice.in/offices" />
         
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Growth Service",
-            "url": "https://growthservice.in",
+            "url": "https://www.growthservice.in",
             "department": physicalOffices.map(o => ({
               "@type": "LocalBusiness",
               "name": `Growth Service - ${o.name}`,

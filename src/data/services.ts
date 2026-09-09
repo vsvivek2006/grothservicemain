@@ -171,6 +171,144 @@ export const servicesData: ServiceData[] = [
       "Transparent Performance Analytics & Reporting"
     ],
     technologies: ["Google Analytics 4", "Meta Ads Manager", "Google Ads", "Google Search Console", "SEMrush"]
+  },
+  {
+    slug: "local-seo",
+    title: "Google Business Profile & Local SEO",
+    shortDesc: "Dominate Google Maps and local 3-pack search results to capture high-intent nearby customers.",
+    fullDesc: "Complete local search optimization encompassing Google Business Profile verification, citation building, localized keyword strategy, and customer review management.",
+    category: "seo",
+    path: "/local-seo",
+    features: [
+      "Google Business Profile Optimization",
+      "Local 3-Pack Rankings",
+      "Citation & Directory Building",
+      "Review Generation Strategy",
+      "Hyper-Local Content",
+      "Google Maps Tracking"
+    ],
+    deliverables: [
+      "Optimized GMB Listing with Verified Categories",
+      "NAP Consistency Audit Across Top Directories",
+      "Weekly Geo-Targeted Updates & Posts",
+      "Monthly Local Rank Tracking Reports"
+    ],
+    technologies: ["Google Business Profile", "BrightLocal", "Whitespark", "Google Search Console"]
+  },
+  {
+    slug: "lead-generation",
+    title: "B2B & B2C Lead Generation",
+    shortDesc: "High-converting funnel engineering and targeted outreach to generate qualified commercial leads.",
+    fullDesc: "Predictable lead acquisition architectures integrating paid media funnels, landing page conversion rate optimization, automated email sequences, and CRM attribution.",
+    category: "marketing",
+    path: "/lead-generation",
+    features: [
+      "High-Converting Landing Pages",
+      "Paid Traffic Funnels",
+      "Automated Lead Nurturing",
+      "CRM & Pipeline Integration",
+      "Multi-Step Qualification Forms",
+      "ROAS & CAC Attribution"
+    ],
+    deliverables: [
+      "Custom Conversion-Engineered Landing Pages",
+      "Pre-Qualified Inbound Lead Flow",
+      "Automated WhatsApp & Email Follow-Ups",
+      "Weekly Cost-Per-Qualified-Lead Metrics"
+    ],
+    technologies: ["Meta Ads Manager", "Google Ads", "Zapier", "HubSpot", "Google Tag Manager"]
+  },
+  {
+    slug: "branding",
+    title: "Brand Strategy & Identity",
+    shortDesc: "Memorable brand positioning, visual identity systems, and narrative guidelines that command authority.",
+    fullDesc: "End-to-end strategic branding that defines market positioning, authentic brand voice, design token palettes, typography standards, and brand collateral.",
+    category: "marketing",
+    path: "/branding",
+    features: [
+      "Brand Positioning & Narrative",
+      "Visual Identity Design",
+      "Color & Typography Systems",
+      "Brand Guidelines Document",
+      "Social & Marketing Collateral",
+      "Packaging & Print Design"
+    ],
+    deliverables: [
+      "Comprehensive Brand Style Guide (PDF)",
+      "Vector Logo Variations & Asset Suite",
+      "Social Media Template Kits",
+      "Brand Story & Core Value Proposition"
+    ],
+    technologies: ["Adobe Illustrator", "Figma", "Adobe Photoshop", "Canva Pro"]
+  },
+  {
+    slug: "ui-ux-design",
+    title: "UI/UX Design",
+    shortDesc: "User-centric interface and experience design engineered for maximum engagement and seamless conversion.",
+    fullDesc: "Research-driven UX wireframing, high-fidelity UI design, clickable interactive prototypes, and design system creation tailored for web applications.",
+    category: "design",
+    path: "/ui-ux-design",
+    features: [
+      "User Research & Journey Mapping",
+      "Wireframing & Prototyping",
+      "Design System Architecture",
+      "Mobile App UI Design",
+      "Web Application Interfaces",
+      "Usability Testing"
+    ],
+    deliverables: [
+      "Figma Design Files with Reusable Components",
+      "Interactive Clickable Prototypes",
+      "Developer Handoff Tokens & Specs",
+      "Responsive Mobile & Desktop Breakpoints"
+    ],
+    technologies: ["Figma", "FigJam", "Adobe XD", "Miro"]
+  },
+  {
+    slug: "wordpress-development",
+    title: "WordPress Development",
+    shortDesc: "Custom WordPress websites engineered for speed, security, SEO, and effortless content management.",
+    fullDesc: "Enterprise-grade WordPress engineering with bespoke block themes, WooCommerce stores, headless WP configurations, and advanced speed optimizations.",
+    category: "development",
+    path: "/wordpress-development",
+    features: [
+      "Custom Theme Development",
+      "WooCommerce Integration",
+      "Speed & Core Web Vitals Optimization",
+      "Security Hardening",
+      "Custom Plugin Development",
+      "Seamless Data Migration"
+    ],
+    deliverables: [
+      "Bespoke Gutenberg/FSE Theme Architecture",
+      "Under-2-Second Load Times (90+ PageSpeed)",
+      "Automated Daily Backups & Security Walls",
+      "Complete Admin Training & Documentation"
+    ],
+    technologies: ["WordPress", "WooCommerce", "PHP", "MySQL", "WP Rocket", "Cloudflare"]
+  },
+  {
+    slug: "app-development",
+    title: "Mobile App Development",
+    shortDesc: "Cross-platform iOS and Android mobile applications crafted for blazing performance and intuitive UX.",
+    fullDesc: "Modern mobile applications built with React Native and Flutter, connected to scalable cloud backends, secure payment gateways, and real-time notification services.",
+    category: "development",
+    path: "/app-development",
+    features: [
+      "Cross-Platform iOS & Android",
+      "React Native & Flutter",
+      "RESTful & GraphQL API Integration",
+      "Push Notifications & Offline Mode",
+      "In-App Purchases & Payments",
+      "App Store & Play Store Publishing"
+    ],
+    deliverables: [
+      "Production-Ready iOS & Android Builds",
+      "App Store & Google Play Submission",
+      "Cloud Backend API Documentation",
+      "Post-Launch Performance Monitoring"
+    ],
+    technologies: ["React Native", "Flutter", "Node.js", "Firebase", "TypeScript"]
   }
 ];
 

@@ -68,26 +68,19 @@ const LocationsHub = lazy(() => import('./pages/LocationsHub'));
 const CityHubPage = lazy(() => import('./pages/CityHubPage'));
 const TeamPage = lazy(() => import('./pages/TeamPage'));
 
+import { useParams, Navigate } from 'react-router-dom';
+import { businessConfig } from './config/business';
+
+// Helper component for programmatic dynamic route alias redirection
+const LocationServiceRedirect: React.FC = () => {
+  const { city, serviceSlug } = useParams<{ city: string; serviceSlug: string }>();
+  return <Navigate to={`/${city}/${serviceSlug}`} replace />;
+};
+
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      {/* Global SEO + GA4 */}
-      <Helmet>
-        {/* GA4 Tracking */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-M92TJDJ055"></script>
-        <script>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-M92TJDJ055');
-          `}
-        </script>
-
-        {/* ✅ Razorpay Script for Payment Functionality */}
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-      </Helmet>
 
       <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
         <Header />
@@ -122,14 +115,14 @@ function App() {
               <Route path="/lead-generation" element={<LeadGeneration />} />
               <Route path="/branding" element={<BrandStrategy />} />
 
-              {/* Design & Development Suite with Canonical Aliases */}
+              {/* Design & Development Suite with Canonical Paths */}
               <Route path="/design-development" element={<DesignDevelopment />} />
-              <Route path="/website-development" element={<WebsiteDevelopment />} />
               <Route path="/web-development" element={<WebsiteDevelopment />} />
+              <Route path="/website-development" element={<Navigate to="/web-development" replace />} />
               <Route path="/ui-ux-design" element={<UIUXDesign />} />
               <Route path="/wordpress-development" element={<WordPressDevelopment />} />
-              <Route path="/ecommerce-development" element={<EcommerceDevelopment />} />
               <Route path="/ecommerce" element={<EcommerceDevelopment />} />
+              <Route path="/ecommerce-development" element={<Navigate to="/ecommerce" replace />} />
               <Route path="/app-development" element={<MobileAppDevelopment />} />
 
               {/* White Label Agency Suite */}
@@ -151,20 +144,21 @@ function App() {
               <Route path="/offices/:officeSlug" element={<OfficeDetailPage />} />
               <Route path="/team" element={<TeamPage />} />
 
-              {/* Canonical Route Aliases & Direct Entry Points */}
-              <Route path="/careers" element={<TeamPage />} />
-              <Route path="/refund" element={<Privacy />} />
-              <Route path="/success-stories" element={<CaseStudies />} />
-              <Route path="/webinars" element={<Resources />} />
-              <Route path="/email-marketing" element={<DigitalMarketing />} />
-              <Route path="/ui-ux" element={<UIUXDesign />} />
-              <Route path="/consultation" element={<BookCall />} />
-              <Route path="/whitelabel" element={<WhiteLabel />} />
-              <Route path="/sitemap" element={<LocationsHub />} />
-              <Route path="/accessibility" element={<Terms />} />
-              <Route path="/scam-alert" element={<HelpCenter />} />
-              <Route path="/verify" element={<Contact />} />
-              <Route path="/report-scam" element={<Contact />} />
+              {/* Canonical Route Aliases -> Redirect to Canonical */}
+              <Route path="/careers" element={<Navigate to="/team" replace />} />
+              <Route path="/about/team" element={<Navigate to="/team" replace />} />
+              <Route path="/refund" element={<Navigate to="/privacy" replace />} />
+              <Route path="/success-stories" element={<Navigate to="/case-studies" replace />} />
+              <Route path="/webinars" element={<Navigate to="/resources" replace />} />
+              <Route path="/email-marketing" element={<Navigate to="/digital-marketing" replace />} />
+              <Route path="/ui-ux" element={<Navigate to="/ui-ux-design" replace />} />
+              <Route path="/consultation" element={<Navigate to="/book-call" replace />} />
+              <Route path="/whitelabel" element={<Navigate to="/white-label" replace />} />
+              <Route path="/sitemap" element={<Navigate to="/locations" replace />} />
+              <Route path="/accessibility" element={<Navigate to="/terms" replace />} />
+              <Route path="/scam-alert" element={<Navigate to="/help-center" replace />} />
+              <Route path="/verify" element={<Navigate to="/contact" replace />} />
+              <Route path="/report-scam" element={<Navigate to="/contact" replace />} />
 
               {/* Scalable Locations Directory & City Hubs */}
               <Route path="/locations" element={<LocationsHub />} />
@@ -172,16 +166,20 @@ function App() {
 
               {/* Programmatic Location SEO Dynamic Routes */}
               <Route path="/:city/:serviceSlug" element={<LocationServicePage />} />
-              <Route path="/locations/:city/:serviceSlug" element={<LocationServicePage />} />
+              <Route path="/locations/:city/:serviceSlug" element={<LocationServiceRedirect />} />
 
-              {/* ✅ PAYMENT SUCCESS PAGE */}
+              {/* ✅ PAYMENT SUCCESS PAGE (Non-Indexable) */}
               <Route path="/payment/success" element={
                 <div className="min-h-screen flex items-center justify-center bg-green-50 py-12">
+                  <Helmet>
+                    <title>Payment Successful | Growth Service</title>
+                    <meta name="robots" content="noindex, nofollow" />
+                  </Helmet>
                   <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md mx-4 border border-green-100">
                     <div className="text-green-500 text-6xl mb-4">✅</div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
                     <p className="text-gray-600 mb-6 leading-relaxed">
-                      Thank you for your payment. We've received your order and will contact you within 24 hours.
+                      Thank you for your payment. We've received your order and our account manager will contact you within 24 hours.
                     </p>
                     <div className="space-y-3">
                       <a
@@ -191,10 +189,10 @@ function App() {
                         Return to Home
                       </a>
                       <a
-                        href="https://wa.me/919521281509"
+                        href={businessConfig.whatsapp.defaultUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
+                        className="bg-[#25D366] hover:bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
                       >
                         💬 WhatsApp Support
                       </a>
@@ -203,9 +201,13 @@ function App() {
                 </div>
               } />
 
-              {/* ✅ PAYMENT FAILED PAGE */}
+              {/* ✅ PAYMENT FAILED PAGE (Non-Indexable) */}
               <Route path="/payment/failed" element={
                 <div className="min-h-screen flex items-center justify-center bg-red-50 py-12">
+                  <Helmet>
+                    <title>Payment Failed | Growth Service</title>
+                    <meta name="robots" content="noindex, nofollow" />
+                  </Helmet>
                   <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md mx-4 border border-red-100">
                     <div className="text-red-500 text-6xl mb-4">❌</div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Failed</h1>
@@ -220,16 +222,16 @@ function App() {
                         Try Again
                       </a>
                       <a
-                        href="https://wa.me/919521281509"
+                        href={businessConfig.whatsapp.defaultUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
+                        className="bg-[#25D366] hover:bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
                       >
                         💬 WhatsApp Support
                       </a>
                       <a
-                        href="tel:+919521281509"
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
+                        href={`tel:${businessConfig.phones.supportDesk.replace(/[^0-9+]/g, '')}`}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
                       >
                         📞 Call Support
                       </a>

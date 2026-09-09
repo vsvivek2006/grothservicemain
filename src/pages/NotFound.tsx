@@ -22,31 +22,18 @@ import {
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Container } from "../components/ui";
+import { businessConfig } from "../config/business";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
-  // Office Locations
-  const offices = [
-    {
-      city: "Jaipur",
-      flag: "🇮🇳",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553"
-    },
-    {
-      city: "Vrindavan",
-      flag: "🇮🇳",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121",
-      phone: "+91 93414 36937"
-    },
-    {
-      city: "Nepal",
-      flag: "🇳🇵",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481"
-    }
-  ];
+  // Office Locations from single source of truth
+  const offices = businessConfig.offices.map(o => ({
+    city: o.city,
+    flag: o.flag,
+    address: o.address,
+    phone: o.phone
+  }));
 
   // Popular Services
   const popularServices = [

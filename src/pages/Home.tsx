@@ -15,6 +15,7 @@ import {
 import { teamMembers } from "../data/team";
 import { industriesData } from "../data/industries";
 import { officeLocations, expansionLocations } from "../data/locations";
+import { businessConfig } from "../config/business";
 import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import SectionHeader from "../components/ui/SectionHeader";
@@ -84,30 +85,14 @@ const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
-  // Office Locations (Verbatim from existing)
-  const offices: OfficeLocation[] = [
-    {
-      name: "Jaipur Office",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553",
-      flag: "🇮🇳",
-      mapLink: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur"
-    },
-    {
-      name: "Vrindavan Office",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
-      phone: "+91 93414 36937",
-      flag: "🇮🇳",
-      mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan"
-    },
-    {
-      name: "Nepal Office",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      flag: "🇳🇵",
-      mapLink: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal"
-    }
-  ];
+  // Office Locations from single source of truth
+  const offices: OfficeLocation[] = businessConfig.offices.map(o => ({
+    name: o.name,
+    address: o.address,
+    phone: o.phone,
+    flag: o.flag,
+    mapLink: o.mapLink
+  }));
 
   // Hero Slides with Office Locations (Verbatim text from existing)
   const heroSlides: HeroSlide[] = [

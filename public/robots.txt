@@ -1,92 +1,11 @@
-# robots.txt for GrowthService.in - SEO Friendly for All Search Engines
-# Last Updated: 2025-12-12
+# robots.txt for Growth Service (https://www.growthservice.in)
 
-# ======================================
-# Global rule for all search engines
-# ======================================
 User-agent: *
-Disallow: /node_modules/
-Disallow: /dist/
-Disallow: /build/
-Disallow: /private/
+Allow: /
+Disallow: /payment/
 Disallow: /admin/
+Disallow: /private/
 Disallow: /drafts/
-Allow: /
 
-# Sitemap location
-Sitemap: https://growthservice.in/sitemap.xml
-
-# Prevent server overload
-Crawl-delay: 10
-
-# ======================================
-# Googlebot
-# ======================================
-User-agent: Googlebot
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# Bingbot
-# ======================================
-User-agent: Bingbot
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# Yahoo Slurp
-# ======================================
-User-agent: Slurp
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# DuckDuckBot
-# ======================================
-User-agent: DuckDuckBot
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# Baiduspider
-# ======================================
-User-agent: Baiduspider
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# Yandex
-# ======================================
-User-agent: Yandex
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# Sogou Spider
-# ======================================
-User-agent: Sogou
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# Exabot
-# ======================================
-User-agent: Exabot
-Disallow: /private/
-Disallow: /admin/
-Allow: /
-
-# ======================================
-# All other unknown bots
-# ======================================
-User-agent: *
-Disallow: /private/
-Disallow: /admin/
-Allow: /
+# Authoritative XML Sitemap
+Sitemap: https://www.growthservice.in/sitemap.xml

@@ -68,6 +68,8 @@ interface SocialLink {
   handle: string;
 }
 
+import { businessConfig } from "../config/business";
+
 interface TrustBadge {
   text: string;
   path: string;
@@ -77,40 +79,40 @@ interface TrustBadge {
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
-  // Office Locations Data - 3 factual offices
+  // Office Locations Data - 3 factual company offices from businessConfig
   const offices: OfficeLocation[] = [
     {
       id: "india-jaipur",
       name: "Jaipur Office (Rajasthan)",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553",
-      country: "India",
-      flag: "🇮🇳",
-      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
-      googleMaps: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
-      landmark: "Near Jagatpura Flyover"
+      address: businessConfig.offices[0].address,
+      phone: businessConfig.offices[0].phone,
+      country: businessConfig.offices[0].country,
+      flag: businessConfig.offices[0].flag,
+      timings: businessConfig.offices[0].timings,
+      googleMaps: businessConfig.offices[0].mapLink,
+      landmark: businessConfig.offices[0].landmark
     },
     {
       id: "india-vrindavan",
       name: "Vrindavan Office (Uttar Pradesh)",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
-      phone: "+91 93414 36937",
-      country: "India",
-      flag: "🇮🇳",
-      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
-      googleMaps: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
-      landmark: "Radhika Sadan ki Bassinet me"
+      address: businessConfig.offices[1].address,
+      phone: businessConfig.offices[1].phone,
+      country: businessConfig.offices[1].country,
+      flag: businessConfig.offices[1].flag,
+      timings: businessConfig.offices[1].timings,
+      googleMaps: businessConfig.offices[1].mapLink,
+      landmark: businessConfig.offices[1].landmark
     },
     {
       id: "nepal",
       name: "Nepal Office (Siraha)",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      country: "Nepal",
-      flag: "🇳🇵",
-      timings: "Sun-Fri: 10:00 AM - 6:00 PM",
-      googleMaps: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal",
-      landmark: "Near Bariyarpatti Main Road"
+      address: businessConfig.offices[2].address,
+      phone: businessConfig.offices[2].phone,
+      country: businessConfig.offices[2].country,
+      flag: businessConfig.offices[2].flag,
+      timings: businessConfig.offices[2].timings,
+      googleMaps: businessConfig.offices[2].mapLink,
+      landmark: businessConfig.offices[2].landmark
     }
   ];
 
@@ -122,7 +124,7 @@ const Footer: React.FC = () => {
     { name: "Careers", path: "/team", icon: Briefcase },
     { name: "Terms & Conditions", path: "/terms", icon: FileText },
     { name: "Privacy Policy", path: "/privacy", icon: Lock },
-    { name: "Refund Policy", path: "/refund", icon: DollarSign },
+    { name: "Refund Policy", path: "/privacy", icon: DollarSign },
     { name: "Client Success Stories", path: "/case-studies", icon: Trophy }
   ];
 
@@ -142,17 +144,17 @@ const Footer: React.FC = () => {
     { name: "Case Studies", path: "/case-studies", icon: BarChart3 },
     { name: "Free Digital Audit", path: "/free-audit", icon: Search },
     { name: "Digital Marketing Guides", path: "/resources", icon: BookOpen },
-    { name: "Video Tutorials", path: "/resources#tutorials", icon: Video },
+    { name: "Video Tutorials", path: "/resources", icon: Video },
     { name: "Webinars", path: "/resources", icon: Mic },
     { name: "Help Center", path: "/help-center", icon: HelpCircle },
     { name: "FAQs", path: "/faq", icon: HelpCircle }
   ];
 
   const socialLinks: SocialLink[] = [
-    { icon: Facebook, href: "https://facebook.com/growthservices", label: "Facebook", color: "hover:text-blue-500", handle: "@growthservices" },
-    { icon: Instagram, href: "https://instagram.com/growth_servces", label: "Instagram", color: "hover:text-pink-500", handle: "@growth_servces" },
-    { icon: Linkedin, href: "https://linkedin.com/company/growthservice", label: "LinkedIn", color: "hover:text-blue-400", handle: "growthservice" },
-    { icon: Youtube, href: "https://youtube.com/@growthservice", label: "YouTube", color: "hover:text-red-500", handle: "@growthservice" }
+    { icon: Facebook, href: businessConfig.social.facebook, label: "Facebook", color: "hover:text-blue-500", handle: "@growthservices" },
+    { icon: Instagram, href: businessConfig.social.instagram, label: "Instagram", color: "hover:text-pink-500", handle: "@growth_servces" },
+    { icon: Linkedin, href: businessConfig.social.linkedin, label: "LinkedIn", color: "hover:text-blue-400", handle: "growthservice" },
+    { icon: Youtube, href: businessConfig.social.youtube, label: "YouTube", color: "hover:text-red-500", handle: "@growthservice" }
   ];
 
   const trustBadges: TrustBadge[] = [
@@ -160,7 +162,7 @@ const Footer: React.FC = () => {
     { text: "Meta Ads Management", path: "/paid-marketing", icon: Target },
     { text: "SEO Services", path: "/seo", icon: Search },
     { text: "Website Development", path: "/web-development", icon: Layout },
-    { text: "Email Marketing", path: "/digital-marketing", icon: TrendingUp },
+    { text: "Performance Marketing", path: "/paid-marketing", icon: TrendingUp },
     { text: "E-commerce Solutions", path: "/ecommerce", icon: ShoppingCart },
     { text: "App Development", path: "/app-development", icon: Layout },
     { text: "UI/UX Design", path: "/ui-ux-design", icon: Palette }

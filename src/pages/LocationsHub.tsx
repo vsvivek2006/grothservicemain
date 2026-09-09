@@ -32,7 +32,7 @@ export const LocationsHub: React.FC = () => {
           name="description" 
           content="Explore Growth Service digital marketing, SEO, and web development services across Delhi NCR, Rajasthan, Uttar Pradesh, Bihar, Punjab, Goa, Maharashtra, Karnataka, and Nepal." 
         />
-        <link rel="canonical" href="https://growthservice.in/locations" />
+        <link rel="canonical" href="https://www.growthservice.in/locations" />
       </Helmet>
 
       {/* Hero Section */}
