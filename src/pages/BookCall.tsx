@@ -14,6 +14,7 @@ import {
   Globe,
   ChevronRight
 } from 'lucide-react';
+import { Container, Input, Textarea } from '../components/ui';
 
 // Types
 interface OfficeLocation {
@@ -341,7 +342,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
           <div className="absolute bottom-20 left-20 w-48 h-48 bg-purple-500 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <Container className="relative z-10">
           <div className="text-center">
             {/* Office Location Badges */}
             <div className="flex flex-wrap justify-center gap-3 mb-6">
@@ -385,10 +386,10 @@ I have booked a free consultation call. Please confirm the schedule.`;
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <Container className="py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Booking Form */}
           <div className="lg:col-span-2">
@@ -486,71 +487,49 @@ I have booked a free consultation call. Please confirm the schedule.`;
 
                 {/* Personal Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
+                  <Input
+                    label="Full Name *"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter your full name"
+                  />
                   
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Mobile Number *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="+91 98765 43210"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">For booking confirmation</p>
-                  </div>
+                  <Input
+                    label="Mobile Number *"
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    required
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="+91 98765 43210"
+                    helperText="For booking confirmation"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="email@example.com"
-                    />
-                  </div>
+                  <Input
+                    label="Email Address *"
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="email@example.com"
+                  />
                   
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                      Company / Business
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="Your business name"
-                    />
-                  </div>
+                  <Input
+                    label="Company / Business"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    placeholder="Your business name"
+                  />
                 </div>
 
                 {/* Service Selection */}
@@ -564,7 +543,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
                     required
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-subtle min-h-[44px] text-sm md:text-base"
                   >
                     <option value="">Select a service</option>
                     {services.map((service) => (
@@ -576,20 +555,15 @@ I have booked a free consultation call. Please confirm the schedule.`;
                 </div>
 
                 {/* Additional Message */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Project Requirements
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={3}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                    placeholder="Briefly describe your project requirements, timeline, and specific needs..."
-                  />
-                </div>
+                <Textarea
+                  label="Project Requirements"
+                  id="message"
+                  name="message"
+                  rows={3}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Briefly describe your project requirements, timeline, and specific needs..."
+                />
 
                 {/* Submit Button */}
                 <button
@@ -785,7 +759,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile-friendly touch improvements */}
       <style jsx>{`

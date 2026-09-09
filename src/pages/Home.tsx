@@ -25,6 +25,8 @@ import IndustryCard from "../components/ui/IndustryCard";
 import DecorativeGrid from "../components/ui/DecorativeGrid";
 import ProcessTimeline from "../components/ui/ProcessTimeline";
 import BentoGrid, { BentoItem } from "../components/ui/BentoGrid";
+import Container from "../components/ui/Container";
+import Section from "../components/ui/Section";
 import { FadeIn, StaggerContainer, StaggerItem, AnimatedButton } from "../components/animations";
 
 // Types
@@ -573,7 +575,7 @@ const Home: React.FC = () => {
         <div className="absolute -top-10 -right-10 w-96 h-96 bg-blue-600/25 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
         <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-purple-600/25 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '4s' }}></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container className="relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column: Hero Text & Dynamic Slides */}
             <div className="lg:col-span-7 flex flex-col justify-center text-left">
@@ -590,7 +592,10 @@ const Home: React.FC = () => {
                     {/* Location Pill */}
                     <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5 shadow-inner transition-colors">
                       <span className="text-base">{slide.flag}</span>
-                      <span className="text-purple-200">📍 {slide.location}</span>
+                      <span className="text-purple-200 flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-yellow-400" />
+                        <span>{slide.location}</span>
+                      </span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     </div>
 
@@ -659,14 +664,14 @@ const Home: React.FC = () => {
               <BentoGrid columns={2} items={heroBentoItems} />
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* ========================================================================= */}
       {/* 2. OFFICE LOCATIONS INTERACTIVE RIBBON (Jaipur, Vrindavan, Nepal HQ)      */}
       {/* ========================================================================= */}
       <section className="bg-gradient-to-r from-purple-800 via-indigo-900 to-purple-900 border-y border-purple-700/50 py-3.5 text-white shadow-md relative z-20">
-        <div className="max-w-7xl mx-auto px-4">
+        <Container>
           <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs sm:text-sm">
             <span className="font-bold uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-yellow-400" />
@@ -689,14 +694,14 @@ const Home: React.FC = () => {
               </a>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* ========================================================================= */}
       {/* 3. TRUST & SOCIAL PROOF STRIP (500+ Projects, 300+ Clients, Verified)    */}
       {/* ========================================================================= */}
-      <section className="py-10 md:py-12 bg-white border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section padding="sm" className="bg-white border-b border-slate-200/80">
+        <Container>
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 md:divide-x md:divide-slate-200/80 gap-6 md:gap-0 text-center" staggerDelay={70}>
             <StaggerItem index={0} className="px-4">
               <div className="group">
@@ -735,14 +740,14 @@ const Home: React.FC = () => {
               </div>
             </StaggerItem>
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 4. SERVICE CATEGORIES OVERVIEW (Verbatim copy)                           */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-slate-50" aria-label="Our Services Categories">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="subtle" aria-label="Our Services Categories">
+        <Container>
           <SectionHeader
             badge="Digital Solutions"
             title="Our"
@@ -780,14 +785,14 @@ const Home: React.FC = () => {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 5. HOW WE WORK (Connected Process Timeline — Verbatim copy)               */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-white" aria-label="Our Process">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="default" aria-label="Our Process">
+        <Container>
           <SectionHeader
             badge="Execution Framework"
             title="How We"
@@ -798,14 +803,14 @@ const Home: React.FC = () => {
           <FadeIn direction="up" distance={24} duration={600}>
             <ProcessTimeline steps={process} />
           </FadeIn>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 6. COMPLETE DIGITAL SERVICES (Detailed Services - Verbatim copy)         */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-slate-50" aria-label="Detailed Services">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="subtle" aria-label="Detailed Services">
+        <Container>
           <SectionHeader
             badge="Full-Funnel Capabilities"
             title="Complete"
@@ -1016,14 +1021,14 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 7. NEW: OUR WORK / CASE STUDIES HIGHLIGHT (From Verified Portfolio)      */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-white" aria-label="Our Work">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="default" aria-label="Our Work">
+        <Container>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <div className="mb-3">
@@ -1077,14 +1082,14 @@ const Home: React.FC = () => {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 8. NEW: MEET OUR TEAM (Authentic Real Staff from About.tsx)                */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-slate-50" aria-label="Our Team">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="subtle" aria-label="Our Team">
+        <Container>
           <SectionHeader
             badge="Leadership & Specialists"
             title="Meet Our"
@@ -1117,14 +1122,14 @@ const Home: React.FC = () => {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 9. NEW: INDUSTRIES WE SERVE (Scalable Business Verticals)                 */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-white" aria-label="Industries We Serve">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="default" aria-label="Industries We Serve">
+        <Container>
           <SectionHeader
             badge="Sector Expertise"
             title="Industries We"
@@ -1145,14 +1150,14 @@ const Home: React.FC = () => {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 10. NEW: LOCATIONS DIRECTORY (Programmatic SEO Foundation)                 */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-slate-50" aria-label="Locations We Serve">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="subtle" aria-label="Locations We Serve">
+        <Container>
           <SectionHeader
             badge="Physical & Regional Presence"
             title="Locations We"
@@ -1227,14 +1232,14 @@ const Home: React.FC = () => {
               ))}
             </div>
           </FadeIn>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 11. TECHNOLOGY STACK (react-icons/si — Verbatim copy)                     */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-white" aria-label="Technology Stack">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="default" aria-label="Technology Stack">
+        <Container>
           <SectionHeader
             badge="Modern Architecture"
             title="Our"
@@ -1256,14 +1261,14 @@ const Home: React.FC = () => {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 12. CLIENTS (Trusted Businesses - Verbatim copy)                          */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-slate-50" aria-label="Our Clients">
-        <div className="max-w-7xl mx-auto px-4">
+      <Section variant="subtle" aria-label="Our Clients">
+        <Container>
           <SectionHeader
             badge="Portfolio Proof"
             title="Our"
@@ -1286,20 +1291,20 @@ const Home: React.FC = () => {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 13. BENEFITS (Why Choose Us — Lucide icons, upgraded glass cards)          */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-gradient-to-r from-blue-900 to-purple-900 text-white relative overflow-hidden" aria-label="Why Choose Us">
+      <Section className="bg-gradient-to-r from-blue-900 to-purple-900 text-white relative overflow-hidden" aria-label="Why Choose Us">
         <DecorativeGrid variant="dots" dark />
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-0 right-10 w-96 h-96 bg-purple-600 rounded-full blur-[100px] animate-pulse-subtle"></div>
           <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-600 rounded-full blur-[100px] animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <Container className="relative z-10">
           <SectionHeader
             badge="The Growth Service Advantage"
             title="Why Choose"
@@ -1323,14 +1328,14 @@ const Home: React.FC = () => {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 14. TESTIMONIALS — Spotlight layout with large quote mark                 */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-slate-50" aria-label="Client Testimonials">
-        <div className="max-w-4xl mx-auto px-4">
+      <Section variant="subtle" aria-label="Client Testimonials">
+        <Container size="narrow">
           <SectionHeader
             badge="Verified Client Reviews"
             title="Client"
@@ -1388,19 +1393,19 @@ const Home: React.FC = () => {
               </div>
             </div>
           </FadeIn>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ========================================================================= */}
       {/* 15. FINAL CALL TO ACTION (Verbatim copy)                                  */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-gradient-to-r from-gray-900 to-blue-900 text-white relative overflow-hidden" aria-label="Contact Call to Action">
+      <Section className="bg-gradient-to-r from-gray-900 to-blue-900 text-white relative overflow-hidden" aria-label="Contact Call to Action">
         <DecorativeGrid variant="dots" dark />
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-600/30 rounded-full blur-[140px] animate-pulse-subtle"></div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+        <Container size="narrow" className="text-center relative z-10">
           <FadeIn direction="up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 tracking-tight leading-tight">
               Ready to Transform Your Business?
@@ -1465,8 +1470,8 @@ const Home: React.FC = () => {
               </div>
             </div>
           </FadeIn>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

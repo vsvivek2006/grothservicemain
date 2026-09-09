@@ -39,6 +39,7 @@ import {
 } from "lucide-react";
 
 import DecorativeGrid from "./ui/DecorativeGrid";
+import { Container } from "./ui";
 import { FadeIn } from "./animations/FadeIn";
 
 interface OfficeLocation {
@@ -174,7 +175,7 @@ const Footer: React.FC = () => {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+      <Container className="py-12 relative z-10">
         {/* Rating Section */}
         <FadeIn direction="up" className="text-center mb-12 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
@@ -546,7 +547,7 @@ const Footer: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

@@ -12,10 +12,12 @@ import {
   Building,
   Globe,
   ChevronRight,
-  Target
+  Target,
+  ExternalLink
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Container, Section, Input, Textarea } from '../components/ui';
 
 // Types
 interface OfficeLocation {
@@ -304,7 +306,7 @@ I would like to discuss my project with you. Please provide more details.`;
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <Container className="relative z-10">
           <div className="text-center">
             {/* Office Pills */}
             <div className="flex flex-wrap justify-center gap-2 mb-6">
@@ -347,12 +349,12 @@ I would like to discuss my project with you. Please provide more details.`;
               </a>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* === OFFICE LOCATIONS SECTION === */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" className="py-12">
+        <Container>
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
               Our <span className="text-blue-600">Office Locations</span>
@@ -464,12 +466,12 @@ I would like to discuss my project with you. Please provide more details.`;
               ⏰ 24/7 Support Available • 🌍 Serving Clients Worldwide
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === CONTACT FORM & INFO === */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default" className="py-12">
+        <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Form */}
             <div>
@@ -482,54 +484,38 @@ I would like to discuss my project with you. Please provide more details.`;
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    placeholder="Your full name"
-                  />
-                </div>
+                <Input
+                  label="Full Name *"
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your full name"
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
+                  <Input
+                    label="Email *"
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="your.email@example.com"
+                  />
 
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone / WhatsApp *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                      placeholder="+91 98765 43210"
-                    />
-                  </div>
+                  <Input
+                    label="Phone / WhatsApp *"
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    placeholder="+91 98765 43210"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -543,7 +529,7 @@ I would like to discuss my project with you. Please provide more details.`;
                       value={formData.service}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all shadow-subtle min-h-[44px]"
                     >
                       <option value="">Select a service</option>
                       {services.map((service, index) => (
@@ -563,7 +549,7 @@ I would like to discuss my project with you. Please provide more details.`;
                       name="location"
                       value={formData.location}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all shadow-subtle min-h-[44px]"
                     >
                       <option value="">Select office location</option>
                       {offices.map((office) => (
@@ -575,25 +561,20 @@ I would like to discuss my project with you. Please provide more details.`;
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                    Project Requirements *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    placeholder="Tell us about your project, timeline, budget, and specific requirements..."
-                  />
-                </div>
+                <Textarea
+                  label="Project Requirements *"
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={4}
+                  placeholder="Tell us about your project, timeline, budget, and specific requirements..."
+                />
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3.5 rounded-xl font-semibold transition-all hover:scale-[1.01] hover:shadow-lg flex items-center justify-center space-x-2"
                 >
                   <Send className="h-5 w-5" />
                   <span>Send via WhatsApp</span>
@@ -754,12 +735,12 @@ I would like to discuss my project with you. Please provide more details.`;
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === FAQ SECTION === */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" className="py-12">
+        <Container size="narrow">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
               Frequently Asked Questions
@@ -780,12 +761,12 @@ I would like to discuss my project with you. Please provide more details.`;
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* === FINAL CTA === */}
-      <section className="py-12 bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+      <Section className="py-12 bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white">
+        <Container size="narrow" className="text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
             Ready to Start Your Project?
           </h2>
@@ -827,8 +808,8 @@ I would like to discuss my project with you. Please provide more details.`;
           <p className="text-purple-300 text-xs mt-2">
             💻 Web Development • 🔍 SEO • 📱 Digital Marketing • 🚀 Growth Solutions • 🌍 Global Reach
           </p>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };
