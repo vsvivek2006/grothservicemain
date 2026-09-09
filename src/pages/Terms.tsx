@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Shield, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
 import { Container } from "../components/ui";
-import { businessConfig } from "../config/business";
+import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
+import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
 const Terms: React.FC = () => {
+  const primaryEmail = getBusinessEmail();
+  const primaryPhone = getPrimaryPhone();
+  const primaryWhatsApp = getPrimaryWhatsAppUrl();
   const [expandedSections, setExpandedSections] = useState<number[]>([0, 1, 2]);
 
   const toggleSection = (index: number) => {
@@ -146,7 +150,7 @@ const Terms: React.FC = () => {
           name="keywords"
           content="terms of service, website development agreement, SEO services terms, social media management contract, business setup terms, digital solutions agreement"
         />
-        <link rel="canonical" href="https://www.growthservice.in/terms" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/terms`} />
       </Helmet>
 
       {/* Hero Section */}
@@ -319,20 +323,20 @@ const Terms: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a
-              href={`mailto:${businessConfig.emails.primary}`}
+              href={getMailtoHref(primaryEmail)}
               className="bg-blue-50 hover:bg-blue-100 text-blue-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
                 <Mail className="h-8 w-8" />
                 <div>
                   <div className="font-bold">Email Us</div>
-                  <div className="text-sm text-blue-700">{businessConfig.emails.primary}</div>
+                  <div className="text-sm text-blue-700">{primaryEmail}</div>
                 </div>
               </div>
             </a>
             
             <a
-              href={businessConfig.whatsapp.defaultUrl}
+              href={primaryWhatsApp}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-50 hover:bg-green-100 text-green-600 p-6 rounded-xl text-center transition-colors"
@@ -341,20 +345,20 @@ const Terms: React.FC = () => {
                 <MessageCircle className="h-8 w-8" />
                 <div>
                   <div className="font-bold">WhatsApp</div>
-                  <div className="text-sm text-green-700">{businessConfig.phones.indiaPrimary}</div>
+                  <div className="text-sm text-green-700">{primaryPhone}</div>
                 </div>
               </div>
             </a>
             
             <a
-              href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
+              href={getTelHref(primaryPhone)}
               className="bg-purple-50 hover:bg-purple-100 text-purple-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
                 <Phone className="h-8 w-8" />
                 <div>
                   <div className="font-bold">Call Us</div>
-                  <div className="text-sm text-purple-700">{businessConfig.phones.indiaPrimary}</div>
+                  <div className="text-sm text-purple-700">{primaryPhone}</div>
                 </div>
               </div>
             </a>

@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { ChevronDown, ChevronUp, MessageCircle, Search } from "lucide-react";
-import { businessConfig, buildWhatsAppUrl, formatTelHref } from "./config";
+import { buildWhatsAppUrl } from "./config";
+import { getTelHref } from "./services";
+import { getPrimaryPhone, getBusinessName } from "./selectors";
 
 type QA = { q: string; a: string; category: string };
 
@@ -271,7 +273,7 @@ const FAQ: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href={buildWhatsAppUrl('india', 'Hello Growth Service, I have a question about your services')}
+              href={buildWhatsAppUrl('india', `Hello ${getBusinessName()}, I have a question about your services`)}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-3"
@@ -280,7 +282,7 @@ const FAQ: React.FC = () => {
               💬 Chat on WhatsApp
             </a>
             <a
-              href={formatTelHref(businessConfig.phones.indiaPrimary)}
+              href={getTelHref(getPrimaryPhone())}
               className="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300"
             >
               📞 Call Us Directly

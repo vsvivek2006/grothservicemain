@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Mail, Building2 } from 'lucide-react';
 import { TeamMember } from '../../data/team';
-import { physicalOffices } from '../../data/offices';
+import { getOfficeById } from '../../selectors';
+import { getMailtoHref } from '../../services';
 import EmployeeAvatar from './EmployeeAvatar';
 
 interface EmployeeCardProps {
@@ -10,9 +11,7 @@ interface EmployeeCardProps {
 }
 
 export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
-  const office = physicalOffices.find(
-    (o) => o.id.toLowerCase() === member.officeId.toLowerCase()
-  );
+  const office = getOfficeById(member.officeId);
 
   const deptBadgeStyles: Record<string, string> = {
     Leadership: 'bg-purple-100 text-purple-800 border-purple-200',
@@ -129,7 +128,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
 
             {member.email ? (
               <a
-                href={`mailto:${member.email}?subject=Inquiry%20for%20${encodeURIComponent(member.name)}`}
+                href={getMailtoHref(member.email, `Inquiry for ${member.name}`)}
                 className="inline-flex items-center gap-1 text-[11px] font-medium text-purple-600 hover:text-purple-800 transition-colors"
               >
                 <Mail className="w-3.5 h-3.5" />

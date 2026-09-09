@@ -247,13 +247,13 @@ I would like to discuss my project with you. Please provide more details.`;
           content="contact digital marketing agency, web development company Nepal, SEO services Jaipur, digital agency Vrindavan, growth service contact, digital marketing India, web development Nepal, SEO India, contact growth service, digital agency Nepal" 
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://growthservice.in/contact" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/contact`} />
         
         {/* Open Graph */}
         <meta property="og:title" content="Contact Growth Service - Offices in Nepal, Jaipur & Vrindavan" />
         <meta property="og:description" content="Connect with our team at our Nepal Office, Jaipur Office, or Vrindavan Office for web development and digital marketing services." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://growthservice.in/contact" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/contact`} />
         
         {/* JSON-LD Structured Data for Multiple Offices */}
         <script type="application/ld+json">

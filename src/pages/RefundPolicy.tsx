@@ -7,9 +7,11 @@ import {
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
-import { businessConfig } from '../config';
+import { getBusinessEmail } from '../selectors';
+import { getMailtoHref } from '../services';
 
 export const RefundPolicy: React.FC = () => {
+  const primaryEmail = getBusinessEmail();
   const lastUpdated = "September 2026";
 
   const policies = [
@@ -140,11 +142,11 @@ export const RefundPolicy: React.FC = () => {
                 </p>
                 <div className="flex flex-wrap gap-4 pt-2">
                   <a
-                    href={`mailto:${businessConfig.emails.primary}?subject=Refund%20or%20Billing%20Inquiry`}
+                    href={getMailtoHref(primaryEmail, 'Refund or Billing Inquiry')}
                     className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-gray-950 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors"
                   >
                     <Mail className="w-4 h-4" />
-                    <span>Email Accounts ({businessConfig.emails.primary})</span>
+                    <span>Email Accounts ({primaryEmail})</span>
                   </a>
                   <Link
                     to="/contact"

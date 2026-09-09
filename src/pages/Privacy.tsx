@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Container } from "../components/ui";
-import { businessConfig } from "../config/business";
+import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
+import { getPrimaryWhatsAppUrl, getMailtoHref } from "../services";
 
 const Privacy: React.FC = () => {
+  const primaryEmail = getBusinessEmail();
+  const primaryWhatsApp = getPrimaryWhatsAppUrl();
+  const canonicalOrigin = getCanonicalOrigin();
   const location = useLocation();
   const getInitialTab = () => {
     if (location.pathname.includes("refund")) return "refund";
@@ -35,8 +39,8 @@ const Privacy: React.FC = () => {
       : "Privacy Policy | Growth Service";
 
   const canonicalUrl = activeTab === "refund"
-    ? "https://www.growthservice.in/refund"
-    : "https://www.growthservice.in/privacy";
+    ? `${canonicalOrigin}/refund`
+    : `${canonicalOrigin}/privacy`;
 
   return (
     <div>
@@ -645,13 +649,13 @@ const Privacy: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href={`mailto:${businessConfig.emails.primary}`} 
+                  href={getMailtoHref(primaryEmail)} 
                   className="bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors"
                 >
                   Email Cancellation Request
                 </a>
                 <a 
-                  href={businessConfig.whatsapp.defaultUrl} 
+                  href={primaryWhatsApp} 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"

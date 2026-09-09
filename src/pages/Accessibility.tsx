@@ -4,9 +4,13 @@ import { Eye, ShieldCheck, CheckCircle, Mail, Phone } from 'lucide-react';
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
-import { businessConfig } from '../config/business';
+import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from '../selectors';
+import { getMailtoHref, getTelHref } from '../services';
 
 const Accessibility: React.FC = () => {
+  const primaryEmail = getBusinessEmail();
+  const primaryPhone = getPrimaryPhone();
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
@@ -15,7 +19,7 @@ const Accessibility: React.FC = () => {
           name="description" 
           content="Growth Service is committed to digital accessibility. Learn about our WCAG 2.1 AA compliance, accessibility features, and support contact channels." 
         />
-        <link rel="canonical" href="https://www.growthservice.in/accessibility" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/accessibility`} />
       </Helmet>
 
       {/* Hero Header */}
@@ -93,7 +97,7 @@ const Accessibility: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <a
-                href={`mailto:${businessConfig.emails.primary}?subject=Accessibility%20Inquiry`}
+                href={getMailtoHref(primaryEmail, 'Accessibility Inquiry')}
                 className="p-5 rounded-2xl border border-purple-200 bg-purple-50/50 hover:bg-purple-100/50 transition-colors flex items-center gap-4"
               >
                 <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center">
@@ -101,12 +105,12 @@ const Accessibility: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase font-semibold">Email Accessibility Team</div>
-                  <div className="font-bold text-purple-700">{businessConfig.emails.primary}</div>
+                  <div className="font-bold text-purple-700">{primaryEmail}</div>
                 </div>
               </a>
 
               <a
-                href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
+                href={getTelHref(primaryPhone)}
                 className="p-5 rounded-2xl border border-blue-200 bg-blue-50/50 hover:bg-blue-100/50 transition-colors flex items-center gap-4"
               >
                 <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center">
@@ -114,7 +118,7 @@ const Accessibility: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase font-semibold">Direct Telephone Assistance</div>
-                  <div className="font-bold text-blue-700">{businessConfig.phones.indiaPrimary}</div>
+                  <div className="font-bold text-blue-700">{primaryPhone}</div>
                 </div>
               </a>
             </div>

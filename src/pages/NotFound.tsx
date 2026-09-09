@@ -22,18 +22,29 @@ import {
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Container } from "../components/ui";
-import { businessConfig, buildWhatsAppUrl, formatTelHref } from "../config";
+import { 
+  getPhysicalOffices, 
+  getCanonicalOrigin, 
+  getPrimaryPhone, 
+  getBusinessEmail, 
+  getOfficePhone 
+} from "../selectors";
+import { 
+  getNepalWhatsAppUrl, 
+  getPrimaryWhatsAppUrl, 
+  getTelHref, 
+  getMailtoHref 
+} from "../services";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   // Office Locations from single source of truth
-  const offices = businessConfig.offices.map(o => ({
-    city: o.city,
-    flag: o.flag,
-    address: o.address,
-    phone: o.phone
-  }));
+  const offices = getPhysicalOffices();
+  const primaryPhone = getPrimaryPhone();
+  const primaryEmail = getBusinessEmail();
+  const nepalPhone = getOfficePhone('nepal');
+  const primaryWhatsApp = getPrimaryWhatsAppUrl();
 
   // Popular Services
   const popularServices = [
@@ -157,7 +168,7 @@ const NotFound: React.FC = () => {
           content="404 page, page not found, digital marketing Jaipur, web development Vrindavan, SEO Nepal, growth service, digital agency"
         />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://growthservice.in/404" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/404`} />
       </Helmet>
 
       {/* Main Content */}
@@ -347,7 +358,7 @@ const NotFound: React.FC = () => {
                       )}
                     </div>
                     <p className="text-xs text-gray-600 mt-1">{office.address}</p>
-                    <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-xs text-purple-600 hover:underline">
+                    <a href={getTelHref(office.phone)} className="text-xs text-purple-600 hover:underline">
                       📞 {office.phone}
                     </a>
                   </div>
@@ -363,7 +374,7 @@ const NotFound: React.FC = () => {
               </h2>
               <div className="space-y-3">
                 <a
-                  href={buildWhatsAppUrl('nepal')}
+                  href={getNepalWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors group"
@@ -371,27 +382,27 @@ const NotFound: React.FC = () => {
                   <MessageCircle className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="font-semibold text-sm">WhatsApp (Nepal Office)</div>
-                    <div className="text-xs opacity-90">{businessConfig.phones.nepalPrimary}</div>
+                    <div className="text-xs opacity-90">{nepalPhone}</div>
                   </div>
                 </a>
                 <a
-                  href={formatTelHref(businessConfig.phones.indiaPrimary)}
+                  href={getTelHref(primaryPhone)}
                   className="flex items-center gap-3 p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors group"
                 >
                   <Phone className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="font-semibold text-sm">India Office</div>
-                    <div className="text-xs opacity-90">{businessConfig.phones.indiaPrimary}</div>
+                    <div className="text-xs opacity-90">{primaryPhone}</div>
                   </div>
                 </a>
                 <a
-                  href={`mailto:${businessConfig.emails.primary}`}
+                  href={getMailtoHref(primaryEmail)}
                   className="flex items-center gap-3 p-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors group"
                 >
                   <Mail className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="font-semibold text-sm">Email Support</div>
-                    <div className="text-xs opacity-90">{businessConfig.emails.primary}</div>
+                    <div className="text-xs opacity-90">{primaryEmail}</div>
                   </div>
                 </a>
               </div>
@@ -427,7 +438,7 @@ const NotFound: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href={`https://wa.me/${whatsappNumber}`}
+              href={primaryWhatsApp}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
@@ -476,7 +487,7 @@ const NotFound: React.FC = () => {
             <span className="text-[10px] font-medium text-purple-700">Home</span>
           </Link>
           <a
-            href={`https://wa.me/${whatsappNumber}`}
+            href={primaryWhatsApp}
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-green-50"

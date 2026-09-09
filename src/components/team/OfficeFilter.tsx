@@ -1,7 +1,7 @@
 import React from 'react';
 import { Building2 } from 'lucide-react';
-import { physicalOffices } from '../../data/offices';
 import { TeamMember } from '../../data/team';
+import { getPhysicalOffices } from '../../selectors';
 
 interface OfficeFilterProps {
   selectedOffice: string;
@@ -14,9 +14,10 @@ export const OfficeFilter: React.FC<OfficeFilterProps> = ({
   onSelectOffice,
   teamMembers,
 }) => {
+  const offices = getPhysicalOffices();
   const totalCount = teamMembers.length;
 
-  const officeCounts = physicalOffices.reduce((acc, office) => {
+  const officeCounts = offices.reduce((acc, office) => {
     acc[office.id] = teamMembers.filter(
       (m) => m.officeId.toLowerCase() === office.id.toLowerCase()
     ).length;
@@ -61,7 +62,7 @@ export const OfficeFilter: React.FC<OfficeFilterProps> = ({
             </button>
 
             {/* Individual Office Tabs */}
-            {physicalOffices.map((office) => {
+            {offices.map((office) => {
               const isSelected = selectedOffice.toLowerCase() === office.id.toLowerCase();
               const count = officeCounts[office.id] || 0;
 
@@ -95,7 +96,7 @@ export const OfficeFilter: React.FC<OfficeFilterProps> = ({
 
           <div className="hidden md:flex items-center gap-2 text-xs text-slate-500 font-medium shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>3 Verified Corporate Locations</span>
+            <span>{offices.length} Verified Corporate Locations</span>
           </div>
         </div>
       </div>

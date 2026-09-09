@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { OfficeData } from '../../data/offices';
 import { TeamMember } from '../../data/team';
+import { getTelHref } from '../../services';
 import EmployeeCard from './EmployeeCard';
 
 interface OfficeTeamSectionProps {
@@ -103,7 +104,7 @@ export const OfficeTeamSection: React.FC<OfficeTeamSectionProps> = ({
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-yellow-400 shrink-0" />
               <a 
-                href={`tel:${office.phone.replace(/\s+/g, '')}`}
+                href={getTelHref(office.phone)}
                 className="hover:text-yellow-300 font-semibold transition-colors"
               >
                 {office.phone}
