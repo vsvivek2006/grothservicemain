@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { 
-  TrendingUp, 
-  Code, 
+import {
+  TrendingUp,
+  Code,
   Globe,
   Smartphone,
   Search,
@@ -30,8 +30,10 @@ import {
   Brush,
   CreditCard,
   FileText,
-  Clock
+  Clock,
+  Phone
 } from 'lucide-react';
+import ProcessTimeline from '../components/ui/ProcessTimeline';
 
 const Services = () => {
   const [expandedService, setExpandedService] = useState<number | null>(null);
@@ -430,29 +432,31 @@ const Services = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
+      <section className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white py-24 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" aria-hidden="true">
+          <div style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '28px 28px' }} className="w-full h-full" />
         </div>
-        
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] pointer-events-none" />
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <span className="text-lg font-semibold">🚀 PROFESSIONAL SERVICES</span>
+          <div className="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/15 px-5 py-2 rounded-full mb-6 text-sm font-semibold">
+            <Zap className="w-4 h-4 text-yellow-400 mr-2" />
+            PROFESSIONAL SERVICES
           </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Transform Your Business<br />With Our <span className="text-cyan-300">Expert Services</span>
+
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
+            Transform Your Business<br />With Our <span className="text-purple-400">Expert Services</span>
           </h1>
-          <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-blue-100 leading-relaxed">
-            Professional digital solutions tailored to your business needs. From website development 
+          <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-slate-300 leading-relaxed">
+            Professional digital solutions tailored to your business needs. From website development
             to complete digital marketing – we have everything you need to grow online.
           </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="text-3xl font-bold mb-2">{stat.number}</div>
-                <div className="text-blue-200 text-sm">{stat.label}</div>
+              <div key={index} className="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl p-4 card-lift-sm hover:bg-white/12 transition-all">
+                <div className="text-3xl font-extrabold mb-1 text-white">{stat.number}</div>
+                <div className="text-slate-400 text-xs font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -460,24 +464,26 @@ const Services = () => {
       </section>
 
       {/* Services Navigation */}
-      <section className="py-8 bg-white border-b sticky top-0 z-40 shadow-sm">
+      <section className="py-6 bg-white border-b sticky top-0 z-40 shadow-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Browse by Category</h2>
+          <div className="flex flex-col items-center mb-4">
+            <h2 className="text-lg font-bold text-slate-900 mb-3">Browse by Category</h2>
             <div className="flex flex-wrap justify-center gap-2">
               {serviceCategories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setActiveTab(category.id)}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+                  className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 text-sm ${
                     activeTab === category.id
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                      ? 'bg-purple-600 text-white shadow-md'
+                      : 'bg-slate-100 text-slate-700 hover:bg-purple-50 hover:text-purple-600'
                   }`}
                 >
-                  <span className="text-lg">{category.icon}</span>
+                  <span>{category.icon}</span>
                   {category.name}
-                  <span className="bg-white/20 px-2 py-1 rounded text-xs">
+                  <span className={`px-1.5 py-0.5 rounded text-xs font-bold ${
+                    activeTab === category.id ? 'bg-white/20 text-white' : 'bg-white text-slate-500'
+                  }`}>
                     {category.count}
                   </span>
                 </button>
@@ -488,27 +494,27 @@ const Services = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-16">
+      <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-blue-600">Professional Services</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Our <span className="text-purple-600">Professional Services</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               Choose from our comprehensive range of digital solutions designed for business success
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filteredServices.map((service) => {
               const color = getColorClasses(service.color);
               const discount = calculateDiscount(service.price, service.originalPrice);
               
               return (
-                <div 
+                <div
                   key={service.id}
-                  className={`bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border ${
-                    service.popular ? 'border-blue-300 transform hover:-translate-y-2' : 'border-gray-200'
+                  className={`bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden border card-lift ${
+                    service.popular ? 'border-purple-300/70' : 'border-slate-200/80'
                   }`}
                 >
                   {/* Service Header */}
@@ -697,114 +703,98 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Process Section */}
+      {/* Process Section — uses shared ProcessTimeline */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-blue-600">Process</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Our <span className="text-purple-600">Process</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               A systematic approach that ensures project success and client satisfaction
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {/* Connecting Line */}
-            <div className="hidden md:block absolute top-12 left-10 right-10 h-0.5 bg-blue-200 z-0"></div>
-            
-            {[
-              { step: 1, title: 'Consultation', desc: 'Understand your requirements', icon: '🎯' },
-              { step: 2, title: 'Planning', desc: 'Create detailed project roadmap', icon: '📋' },
-              { step: 3, title: 'Development', desc: 'Build with modern technologies', icon: '💻' },
-              { step: 4, title: 'Delivery', desc: 'Launch with full support', icon: '🚀' }
-            ].map((step, index) => (
-              <div key={step.step} className="relative z-10 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg border-4 border-white">
-                  {step.icon}
-                </div>
-                <div className="bg-gray-50 rounded-xl p-6">
-                  <div className="text-lg font-bold text-gray-900 mb-2">Step {step.step}</div>
-                  <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+
+          <ProcessTimeline steps={[
+            { step: '01', title: 'Consultation', description: 'Understand your requirements', icon: '' },
+            { step: '02', title: 'Planning', description: 'Create detailed project roadmap', icon: '' },
+            { step: '03', title: 'Development', description: 'Build with modern technologies', icon: '' },
+            { step: '04', title: 'Delivery', description: 'Launch with full support', icon: '' },
+          ]} />
         </div>
       </section>
 
       {/* Final CTA */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+
         <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <Star className="h-5 w-5 text-yellow-300 mr-2" />
-            <span className="text-white font-semibold">READY TO GET STARTED?</span>
+          <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/15 px-5 py-2 rounded-full mb-6">
+            <Star className="h-4 w-4 text-yellow-400 mr-2" />
+            <span className="text-white font-semibold text-sm">READY TO GET STARTED?</span>
           </div>
-          
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 tracking-tight">
             Let's Build Something Amazing Together
           </h2>
-          <p className="text-xl mb-10 text-blue-100 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl mb-10 text-purple-200 leading-relaxed max-w-2xl mx-auto">
             Share your vision with us. We'll provide a custom solution and quote within 24 hours.
           </p>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
             <a
               href="https://wa.me/9779707382481"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white hover:bg-slate-50 text-purple-700 px-6 py-4 rounded-xl font-bold transition-all duration-200 hover:-translate-y-1 shadow-card hover:shadow-card-hover flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">💬</div>
+              <MessageCircle className="w-6 h-6 text-emerald-600" />
               <div>
-                <div className="font-bold">WhatsApp</div>
-                <div className="text-sm text-gray-600">Instant Response</div>
+                <div className="font-bold text-sm">WhatsApp</div>
+                <div className="text-xs text-slate-500">Instant Response</div>
               </div>
             </a>
-            
+
             <a
               href="tel:+9779707382481"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white hover:bg-slate-50 text-purple-700 px-6 py-4 rounded-xl font-bold transition-all duration-200 hover:-translate-y-1 shadow-card hover:shadow-card-hover flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">📞</div>
+              <Phone className="w-6 h-6 text-purple-600" />
               <div>
-                <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">+9779707382481</div>
+                <div className="font-bold text-sm">Call Now</div>
+                <div className="text-xs text-slate-500">+9779707382481</div>
               </div>
             </a>
-            
+
             <a
               href="mailto:contact@grworth.com"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white hover:bg-slate-50 text-purple-700 px-6 py-4 rounded-xl font-bold transition-all duration-200 hover:-translate-y-1 shadow-card hover:shadow-card-hover flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">✉️</div>
+              <Mail className="w-6 h-6 text-blue-600" />
               <div>
-                <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">contact@grworth.com</div>
+                <div className="font-bold text-sm">Email Us</div>
+                <div className="text-xs text-slate-500">contact@grworth.com</div>
               </div>
             </a>
           </div>
-          
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-10">
             <div className="text-center">
               <div className="text-3xl font-bold text-white">24/7</div>
-              <div className="text-blue-200">Support</div>
+              <div className="text-purple-300 text-sm">Support</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-white">100%</div>
-              <div className="text-blue-200">Custom Code</div>
+              <div className="text-purple-300 text-sm">Custom Code</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white">30 Days</div>
-              <div className="text-blue-200">Free Support</div>
+              <div className="text-3xl font-bold text-white">500+</div>
+              <div className="text-purple-300 text-sm">Projects Done</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white">7-15 Days</div>
-              <div className="text-blue-200">Delivery Time</div>
+              <div className="text-3xl font-bold text-white">98%</div>
+              <div className="text-purple-300 text-sm">Satisfaction</div>
             </div>
           </div>
         </div>

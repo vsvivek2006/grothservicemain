@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import {
+  Users, Clock, Building2, Globe, Laptop, Lock, MessageCircle, Phone,
+  MapPin, Smile, Rocket, TrendingUp, Star
+} from 'lucide-react';
+import ProcessTimeline from '../components/ui/ProcessTimeline';
 
 // Types
 interface TeamMember {
@@ -627,11 +632,9 @@ const About: React.FC = () => {
       </Helmet>
 
       {/* === HERO SECTION WITH OFFICE LOCATIONS === */}
-      <section className="relative bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 text-white py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-48 h-48 bg-white rotate-45 blur-3xl"></div>
-        </div>
+      <section className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white py-16 md:py-24 overflow-hidden">
+        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-60 h-60 bg-indigo-600/15 rounded-full blur-[60px] pointer-events-none"></div>
         
         <div className="relative max-w-6xl mx-auto px-4">
           {/* Office Location Badges */}
@@ -822,18 +825,24 @@ const About: React.FC = () => {
       </section>
 
       {/* === GLOBAL STATS === */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-white border-b border-slate-200/80">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.map((stat, index) => (
-              <div 
+            {[
+              { icon: <Smile className="w-5 h-5" />, number: '300+', label: 'Happy Clients', color: 'from-yellow-400 to-orange-400' },
+              { icon: <Rocket className="w-5 h-5" />, number: '500+', label: 'Projects Completed', color: 'from-blue-500 to-indigo-500' },
+              { icon: <Building2 className="w-5 h-5" />, number: '3', label: 'Office Locations', color: 'from-purple-500 to-pink-500' },
+              { icon: <Clock className="w-5 h-5" />, number: '24/7', label: 'Global Support', color: 'from-emerald-500 to-teal-500' },
+            ].map((stat, index) => (
+              <div
                 key={index}
-                className="text-center p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
-                style={{animationDelay: stat.delay}}
+                className="text-center p-5 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-card card-lift-sm hover:border-purple-300/60 transition-all"
               >
-                <div className="text-2xl mb-2">{stat.icon}</div>
-                <div className="text-2xl md:text-3xl font-bold text-blue-600 mb-1">{stat.number}</div>
-                <div className="text-gray-700 text-sm">{stat.label}</div>
+                <div className={`w-10 h-10 bg-gradient-to-tr ${stat.color} rounded-xl flex items-center justify-center text-white mx-auto mb-3`}>
+                  {stat.icon}
+                </div>
+                <div className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-1">{stat.number}</div>
+                <div className="text-slate-500 text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -1154,60 +1163,55 @@ const About: React.FC = () => {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-blue-600">Process</span> Across Locations
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Our <span className="text-purple-600">Process</span> Across Locations
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 max-w-2xl mx-auto">
               How we work across our Jaipur, Vrindavan, and Nepal offices
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {process.map((step, index) => (
-              <div 
-                key={index}
-                className="relative"
-              >
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 text-center group h-full">
-                  <div className="text-2xl mb-3 group-hover:scale-110 transition-transform">{step.icon}</div>
-                  <div className="text-sm font-semibold text-blue-600 mb-1">{step.step}</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">{step.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
-                </div>
-                
-                {index < process.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 right-0 w-4 h-0.5 bg-blue-200 transform translate-x-2"></div>
-                )}
-              </div>
-            ))}
-          </div>
+
+          <ProcessTimeline steps={[
+            { step: '01', title: 'Discovery & Consultation', description: 'Understanding your business needs across our offices in Jaipur, Vrindavan, and Nepal.', icon: '' },
+            { step: '02', title: 'Strategy & Planning', description: 'Creating customized digital strategies with clear objectives and timelines from all locations.', icon: '' },
+            { step: '03', title: 'Development & Execution', description: 'Our expert teams in India and Nepal implement solutions with precision and quality.', icon: '' },
+            { step: '04', title: 'Optimization & Growth', description: 'Continuous monitoring and optimization from all our offices for maximum results.', icon: '' },
+          ]} />
         </div>
       </section>
 
       {/* === WHY CHOOSE US === */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-indigo-50 to-blue-50">
+      <section className="py-16 md:py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose <span className="text-blue-600">Growth Service</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Why Choose <span className="text-purple-600">Growth Service</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 max-w-2xl mx-auto">
               Advantages of working with our team across 3 locations
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyChooseUs.map((point, index) => (
-              <div 
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { Icon: Building2, color: 'from-blue-500 to-indigo-500', title: '3 Office Locations', description: 'Operating from Jaipur, Vrindavan, and Nepal to serve you better with localized expertise.' },
+              { Icon: Clock, color: 'from-emerald-500 to-teal-500', title: '24/7 Service', description: 'Round-the-clock support from our India and Nepal offices across all timezones.' },
+              { Icon: Globe, color: 'from-purple-500 to-pink-500', title: 'Global Experience', description: 'Experience working with clients from 20+ countries from our offices in India and Nepal.' },
+              { Icon: Laptop, color: 'from-cyan-500 to-blue-500', title: 'Full Tech Stack', description: 'Expertise in all modern technologies - from React to AWS, available across all locations.' },
+              { Icon: Building2, color: 'from-orange-500 to-amber-500', title: 'Registered Company', description: 'Fully registered and compliant with all necessary certifications across India and Nepal.' },
+              { Icon: Lock, color: 'from-slate-600 to-slate-800', title: 'Secure & Compliant', description: 'GDPR compliant solutions with international security standards from all offices.' },
+            ].map((point, index) => (
+              <div
                 key={index}
-                className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 group"
-                style={{animationDelay: point.delay}}
+                className="bg-white p-5 rounded-2xl shadow-card border border-slate-200/80 hover:shadow-card-hover hover:border-purple-300/60 card-lift transition-all duration-200"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="text-2xl group-hover:scale-110 transition-transform">{point.icon}</div>
+                <div className="flex items-start gap-4">
+                  <div className={`w-10 h-10 bg-gradient-to-tr ${point.color} rounded-xl flex items-center justify-center text-white flex-shrink-0`}>
+                    <point.Icon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">{point.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{point.description}</p>
+                    <h3 className="text-base font-bold text-slate-900 mb-1">{point.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{point.description}</p>
                   </div>
                 </div>
               </div>
@@ -1288,18 +1292,18 @@ const About: React.FC = () => {
               href="https://wa.me/9779707382481"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 text-lg"
+              className="bg-white text-purple-700 hover:bg-slate-50 px-8 py-4 rounded-xl font-bold transition-all duration-200 hover:-translate-y-1 shadow-card hover:shadow-card-hover flex items-center justify-center gap-3"
             >
-              <span>💬</span>
-              <span>Chat on WhatsApp</span>
+              <MessageCircle className="w-5 h-5 text-emerald-600" />
+              Chat on WhatsApp
             </a>
-            
+
             <a
               href="tel:+919341436937"
-              className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 text-lg"
+              className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-3"
             >
-              <span>📞</span>
-              <span>Call: +91 93414 36937</span>
+              <Phone className="w-5 h-5" />
+              Call: +91 93414 36937
             </a>
           </div>
         </div>
