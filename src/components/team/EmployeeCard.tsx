@@ -25,7 +25,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
     deptBadgeStyles[member.department] || 'bg-purple-100 text-purple-800 border-purple-200';
 
   return (
-    <article 
+    <article
       className="group relative flex flex-col h-full bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-purple-300/80 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
       aria-labelledby={`employee-name-${member.id}`}
     >
@@ -34,7 +34,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
           <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-200">
-            Growth Service Staff
+            Growth Service
           </span>
         </div>
         <span className="text-[10px] font-mono font-bold bg-white/10 px-2 py-0.5 rounded text-yellow-300 border border-white/15">
@@ -59,7 +59,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
 
         {/* Name & Title */}
         <div className="text-center mb-3">
-          <h3 
+          <h3
             id={`employee-name-${member.id}`}
             className="text-lg font-extrabold text-slate-900 tracking-tight group-hover:text-purple-700 transition-colors"
           >
