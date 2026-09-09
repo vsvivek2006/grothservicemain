@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { Container } from "../components/ui";
+import { businessConfig } from "../config/business";
 
 const Privacy: React.FC = () => {
   const location = useLocation();
@@ -26,14 +28,39 @@ const Privacy: React.FC = () => {
     }
   }, [location.pathname]);
 
+  const pageTitle = activeTab === "refund"
+    ? "Refund Policy | Growth Service"
+    : activeTab === "cancellation"
+      ? "Cancellation Policy | Growth Service"
+      : "Privacy Policy | Growth Service";
+
+  const canonicalUrl = activeTab === "refund"
+    ? "https://www.growthservice.in/refund"
+    : "https://www.growthservice.in/privacy";
+
   return (
     <div>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta 
+          name="description" 
+          content={
+            activeTab === "refund"
+              ? "Read Growth Service's official refund policy, criteria, and payment protection guidelines."
+              : "Read Growth Service's privacy policy and data governance practices compliant with India's DPDP Act."
+          }
+        />
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+
       {/* Hero */}
       <section className="bg-gradient-to-br from-pink-500 via-purple-500 to-blue-600 text-white py-16">
         <Container className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">Privacy Policy & Terms</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+            {activeTab === "refund" ? "Refund Policy" : activeTab === "cancellation" ? "Cancellation Policy" : "Privacy Policy"}
+          </h1>
           <p className="text-pink-100 text-lg md:text-xl">
-            How Social Lift protects your information and our service policies.
+            How Growth Service protects your information and service satisfaction.
           </p>
           <p className="text-sm text-blue-200 mt-2">Last updated: {lastUpdated}</p>
           
@@ -80,7 +107,7 @@ const Privacy: React.FC = () => {
             {/* Intro */}
             <div>
               <p>
-                This Privacy Policy explains how <strong>Social Lift Digital Marketing Agency</strong> ("we", "us", "our") collects,
+                This Privacy Policy explains how <strong>Growth Service</strong> ("we", "us", "our") collects,
                 uses, discloses, and safeguards personal information when you visit our website, engage
                 with our digital marketing campaigns, or use our services. By using our website/services,
                 you agree to this Policy. If you do not agree, please discontinue use.
@@ -236,11 +263,11 @@ const Privacy: React.FC = () => {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-3">12) How to Contact / Exercise Rights</h2>
               <p>
-                Email <a className="text-pink-700 underline" href="mailto:Sociallift91@Gmail.com">Sociallift91@Gmail.com</a> or call{" "}
-                <a className="text-pink-700 underline" href="tel:+917428606849">+91 7428606849</a>. We aim to respond within 7 business days.
+                Email <a className="text-pink-700 underline" href={`mailto:${businessConfig.emails.primary}`}>{businessConfig.emails.primary}</a> or call{" "}
+                <a className="text-pink-700 underline" href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}>{businessConfig.phones.indiaPrimary}</a>. We aim to respond within 7 business days.
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                Address: Social Lift Digital Marketing Agency, Professional Services Across India
+                Address: Growth Service, Offices in Jaipur, Vrindavan, and Nepal.
               </p>
             </div>
 
@@ -302,7 +329,7 @@ const Privacy: React.FC = () => {
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
               <h3 className="text-xl font-bold text-blue-900 mb-3">General Refund Policy</h3>
               <p className="text-blue-800">
-                At Social Lift Digital Marketing Agency, we strive to deliver exceptional results. However, 
+                At Growth Service, we strive to deliver exceptional results. However, 
                 we understand that circumstances may require refund considerations under specific conditions.
               </p>
             </div>
@@ -379,7 +406,7 @@ const Privacy: React.FC = () => {
                   <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
                   <div>
                     <p className="font-semibold">Submit Refund Request</p>
-                    <p className="text-gray-600">Email Sociallift91@Gmail.com with your request and reason</p>
+                    <p className="text-gray-600">Email {businessConfig.emails.primary} with your request and project reference</p>
                   </div>
                 </div>
                 
@@ -439,13 +466,15 @@ const Privacy: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="mailto:Sociallift91@Gmail.com" 
+                  href={`mailto:${businessConfig.emails.primary}`} 
                   className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
                 >
                   Email Us
                 </a>
                 <a 
-                  href="https://wa.me/917428606849" 
+                  href={businessConfig.whatsapp.defaultUrl} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
                 >
                   WhatsApp
@@ -548,7 +577,7 @@ const Privacy: React.FC = () => {
                   <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
                   <div>
                     <p className="font-semibold">Written Notice</p>
-                    <p className="text-gray-600">Send cancellation request via email to Sociallift91@Gmail.com</p>
+                    <p className="text-gray-600">Send cancellation request via email to {businessConfig.emails.primary}</p>
                   </div>
                 </div>
                 
@@ -616,13 +645,15 @@ const Privacy: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="mailto:Sociallift91@Gmail.com" 
+                  href={`mailto:${businessConfig.emails.primary}`} 
                   className="bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors"
                 >
                   Email Cancellation Request
                 </a>
                 <a 
-                  href="https://wa.me/917428606849" 
+                  href={businessConfig.whatsapp.defaultUrl} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
                 >
                   Discuss on WhatsApp

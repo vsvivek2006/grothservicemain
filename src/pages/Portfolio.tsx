@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ExternalLink, Filter, Star, TrendingUp, Users, Clock, MessageCircle, Globe, Code, Smartphone, Search, Target, Zap, Award, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import { businessConfig } from '../config/business';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -127,7 +128,7 @@ const Portfolio = () => {
     {
       name: "Rajesh Verma",
       company: "Travel & Tourism",
-      text: "Grworth built our travel portal in just 15 days! The website is fast, responsive, and already generating 5x more bookings than our old site.",
+      text: "Growth Service built our travel portal in just 15 days! The website is fast, responsive, and already generating 5x more bookings than our old site.",
       rating: 5,
       image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=600",
       project: "Tour & Travel Portal"
@@ -135,7 +136,7 @@ const Portfolio = () => {
     {
       name: "Priya Sharma",
       company: "Fashion Boutique",
-      text: "Our e-commerce store built by Grworth increased sales by 300% in 3 months. The payment integration and admin panel are flawless!",
+      text: "Our e-commerce store built by Growth Service increased sales by 300% in 3 months. The payment integration and admin panel are flawless!",
       rating: 5,
       image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600",
       project: "E-commerce Store"
@@ -143,7 +144,7 @@ const Portfolio = () => {
     {
       name: "Amit Patel",
       company: "Restaurant Owner",
-      text: "SEO services from Grworth put us on Google's first page. We're getting 220% more organic traffic and 150% more orders!",
+      text: "SEO services from Growth Service put us on Google's first page. We're getting 220% more organic traffic and 150% more orders!",
       rating: 5,
       image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
       project: "Local SEO Campaign"
@@ -211,7 +212,7 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Our Portfolio - Real Projects & Case Studies | Grworth Services</title>
+        <title>Our Portfolio - Real Projects & Case Studies | Growth Service</title>
         <meta
           name="description"
           content="Explore our portfolio of website development, SEO services, social media campaigns, and business setup projects. See real results and case studies."
@@ -220,6 +221,7 @@ const Portfolio = () => {
           name="keywords"
           content="web development portfolio, SEO case studies, social media marketing projects, business setup examples, react js projects, MERN stack portfolio"
         />
+        <link rel="canonical" href="https://www.growthservice.in/portfolio" />
       </Helmet>
 
       {/* Hero Section */}
@@ -429,7 +431,7 @@ const Portfolio = () => {
                     )}
                     
                     <a
-                      href={`https://wa.me/9779707382481?text=Hello%20Grworth%20Team,%20I'm%20interested%20in%20a%20project%20similar%20to%20${encodeURIComponent(project.title)}`}
+                      href={`https://wa.me/${businessConfig.whatsapp.number}?text=Hello%20Growth%20Service%20Team,%20I'm%20interested%20in%20a%20project%20similar%20to%20${encodeURIComponent(project.title)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-gray-900 hover:bg-black text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
@@ -589,24 +591,24 @@ const Portfolio = () => {
             </a>
             
             <a
-              href="tel:+9779707382481"
+              href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">📞</div>
               <div>
                 <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">+9779707382481</div>
+                <div className="text-sm text-gray-600">{businessConfig.phones.indiaPrimary}</div>
               </div>
             </a>
             
             <a
-              href="mailto:contact@grworth.com"
+              href={`mailto:${businessConfig.emails.primary}`}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">✉️</div>
               <div>
                 <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">contact@grworth.com</div>
+                <div className="text-sm text-gray-600">{businessConfig.emails.primary}</div>
               </div>
             </a>
           </div>

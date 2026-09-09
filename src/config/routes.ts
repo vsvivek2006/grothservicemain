@@ -77,7 +77,6 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     includeInSitemap: true,
     priority: 0.7,
     changefreq: "monthly",
-    aliases: ["/verify", "/report-scam"],
   },
   bookCall: {
     path: "/book-call",
@@ -386,7 +385,6 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     includeInSitemap: true,
     priority: 0.6,
     changefreq: "monthly",
-    aliases: ["/scam-alert"],
   },
   faq: {
     path: "/faq",
@@ -398,7 +396,19 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     changefreq: "monthly",
   },
 
-  // Legal
+  // Security & Verification
+  verify: {
+    path: "/verify",
+    canonical: "/verify",
+    label: "Trust & Verification",
+    category: "company",
+    includeInSitemap: true,
+    priority: 0.5,
+    changefreq: "monthly",
+    aliases: ["/scam-alert", "/report-scam"],
+  },
+
+  // Legal & Compliance
   terms: {
     path: "/terms",
     canonical: "/terms",
@@ -407,7 +417,6 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     includeInSitemap: true,
     priority: 0.4,
     changefreq: "yearly",
-    aliases: ["/accessibility"],
   },
   privacy: {
     path: "/privacy",
@@ -417,7 +426,24 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     includeInSitemap: true,
     priority: 0.4,
     changefreq: "yearly",
-    aliases: ["/refund"],
+  },
+  refund: {
+    path: "/refund",
+    canonical: "/refund",
+    label: "Refund Policy",
+    category: "legal",
+    includeInSitemap: true,
+    priority: 0.4,
+    changefreq: "yearly",
+  },
+  accessibility: {
+    path: "/accessibility",
+    canonical: "/accessibility",
+    label: "Accessibility Statement",
+    category: "legal",
+    includeInSitemap: true,
+    priority: 0.4,
+    changefreq: "yearly",
   },
   onboardingAgreement: {
     path: "/onboarding-agreement",

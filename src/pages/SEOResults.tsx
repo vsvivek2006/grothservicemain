@@ -19,6 +19,7 @@ import {
   Zap,
   ChevronRight
 } from 'lucide-react';
+import { businessConfig } from '../config/business';
 
 const SEOResults: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -107,15 +108,16 @@ const SEOResults: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>SEO Results & Analytics Dashboard | Grworth Services</title>
+        <title>SEO Results & Analytics Dashboard | Growth Service</title>
         <meta 
           name="description" 
           content="Track SEO performance, keyword rankings, traffic growth, and competitor analysis with our comprehensive SEO results dashboard." 
         />
         <meta 
           name="keywords" 
-          content="SEO results, keyword rankings, organic traffic analytics, SEO performance, competitor analysis, Google ranking"
+          content="SEO results, keyword rankings, organic traffic analytics, SEO performance, competitor analysis, Google ranking" 
         />
+        <link rel="canonical" href="https://www.growthservice.in/seo-results" />
       </Helmet>
 
       {/* Hero Section */}
@@ -760,7 +762,7 @@ const SEOResults: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/9779707382481"
+                href={businessConfig.whatsapp.defaultUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
@@ -769,7 +771,7 @@ const SEOResults: React.FC = () => {
                 Get Free SEO Audit
               </a>
               <a
-                href="mailto:contact@grworth.com"
+                href={`mailto:${businessConfig.emails.primary}`}
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3"
               >
                 <span className="text-2xl">📧</span>

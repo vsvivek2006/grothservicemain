@@ -297,8 +297,8 @@ const LeadGeneration = () => {
                 <a href="tel:+919341436937" className="text-blue-600 hover:text-blue-800 text-sm block">
                   📞 +91 93414 36937
                 </a>
-                <a href="mailto:vivek@growthservice.com" className="text-blue-600 hover:text-blue-800 text-sm block">
-                  📧 vivek@growthservice.com
+                <a href="mailto:info@growthservice.in" className="text-blue-600 hover:text-blue-800 text-sm block">
+                  📧 info@growthservice.in
                 </a>
               </div>
             </div>
@@ -642,8 +642,8 @@ const LeadGeneration = () => {
               <a href="tel:+919341436937" className="text-white hover:text-blue-200 text-sm block">
                 📞 +91 93414 36937
               </a>
-              <a href="mailto:vivek@growthservice.com" className="text-white hover:text-blue-200 text-sm block">
-                📧 vivek@growthservice.com
+              <a href="mailto:info@growthservice.in" className="text-white hover:text-blue-200 text-sm block">
+                📧 info@growthservice.in
               </a>
             </div>
             

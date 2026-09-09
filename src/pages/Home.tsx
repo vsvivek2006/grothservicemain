@@ -6,7 +6,8 @@ import {
   MessageCircle, Star, Sparkles, MapPin,
   ExternalLink, Globe, Users, TrendingUp,
   Target, Headphones, Quote, Search,
-  Code, BarChart3, ShoppingBag, Clock
+  Code, BarChart3, ShoppingBag, Clock,
+  Play, Pause, ChevronLeft, ChevronRight
 } from "lucide-react";
 import {
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress,
@@ -83,7 +84,11 @@ interface OfficeLocation {
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   // Office Locations from single source of truth
   const offices: OfficeLocation[] = businessConfig.offices.map(o => ({
@@ -347,10 +352,9 @@ const Home: React.FC = () => {
     }
   ];
 
-  // WhatsApp Contact (Verbatim credentials)
-  const whatsappNumber = "9779707382481";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hello%20Growth%20Service,%20I%20want%20to%20discuss%20my%20digital%20marketing%20project.`;
-  const phoneNumber = "+91 93414 36937";
+  // WhatsApp & Phone Contact from single source of truth
+  const whatsappUrl = businessConfig.whatsapp.defaultUrl;
+  const phoneNumber = businessConfig.phones.indiaPrimary;
 
   // Hero Bento Grid Metric Showcase Items (Exclusively Verified Facts)
   const heroBentoItems: BentoItem[] = [
@@ -473,13 +477,16 @@ const Home: React.FC = () => {
     }
   ];
 
-  // Auto slide change
+  // Auto slide change with pause and reduced-motion support
   useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isHeroPaused || prefersReducedMotion) return;
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
+    }, 6500);
     return () => clearInterval(interval);
-  }, [heroSlides.length]);
+  }, [heroSlides.length, isHeroPaused]);
 
   // Auto testimonial change
   useEffect(() => {
@@ -564,14 +571,28 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column: Hero Text & Dynamic Slides */}
             <div className="lg:col-span-7 flex flex-col justify-center text-left">
-              <div className="relative min-h-[440px] sm:min-h-[400px] lg:min-h-[440px] flex flex-col justify-center">
+              <div 
+                className="relative min-h-[520px] sm:min-h-[420px] lg:min-h-[440px] flex flex-col justify-center focus:outline-none"
+                onMouseEnter={() => setIsHeroPaused(true)}
+                onMouseLeave={() => setIsHeroPaused(false)}
+                onFocus={() => setIsHeroPaused(true)}
+                onBlur={() => setIsHeroPaused(false)}
+                tabIndex={0}
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Growth Service Capabilities and Regional Presence"
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowLeft") prevSlide();
+                  if (e.key === "ArrowRight") nextSlide();
+                }}
+              >
                 {heroSlides.map((slide, index) => (
                   <div
                     key={index}
                     className={`transition-all duration-700 ease-out ${
                       index === currentSlide 
                         ? 'opacity-100 translate-y-0 relative z-10' 
-                        : 'opacity-0 translate-y-8 absolute inset-0 pointer-events-none z-0'
+                        : 'opacity-0 translate-y-6 absolute inset-0 pointer-events-none z-0'
                     }`}
                   >
                     {/* Location Pill */}
@@ -624,21 +645,49 @@ const Home: React.FC = () => {
                 ))}
               </div>
 
-              {/* Slide Indicators with Interactive Switching */}
-              <div className="flex items-center gap-3 mt-6 sm:mt-8 z-20 relative pt-2" aria-label="Hero Slide Navigation">
-                {heroSlides.map((slide, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white ${
-                      index === currentSlide 
-                        ? 'bg-yellow-400 w-10 shadow-glow' 
-                        : 'bg-white/30 hover:bg-white/60 w-3'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}: ${slide.location}`}
-                  />
-                ))}
-                <span className="text-xs text-purple-300/80 font-medium ml-2">
+              {/* Accessible Controls Bar: Prev, Indicators, Next, Pause/Play */}
+              <div className="flex flex-wrap items-center gap-3 mt-6 sm:mt-8 z-20 relative pt-2" aria-label="Hero Slide Navigation">
+                <button
+                  onClick={prevSlide}
+                  aria-label="Previous slide (ArrowLeft)"
+                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-yellow-400"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+
+                <div className="flex items-center gap-2">
+                  {heroSlides.map((slide, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-yellow-400 ${
+                        index === currentSlide 
+                          ? 'bg-yellow-400 w-9 shadow-glow' 
+                          : 'bg-white/30 hover:bg-white/60 w-2.5'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}: ${slide.location}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={nextSlide}
+                  aria-label="Next slide (ArrowRight)"
+                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-yellow-400"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+
+                <button
+                  onClick={() => setIsHeroPaused((v) => !v)}
+                  aria-label={isHeroPaused ? "Resume auto rotation" : "Pause auto rotation"}
+                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-yellow-400 ml-1"
+                  title={isHeroPaused ? "Resume auto rotation" : "Pause auto rotation"}
+                >
+                  {isHeroPaused ? <Play className="w-3.5 h-3.5 text-yellow-300" /> : <Pause className="w-3.5 h-3.5 text-purple-200" />}
+                </button>
+
+                <span className="text-xs text-purple-300/80 font-medium ml-1">
                   {currentSlide + 1} / {heroSlides.length} • {heroSlides[currentSlide].location}
                 </span>
               </div>

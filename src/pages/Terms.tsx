@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Shield, FileText, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
+import { Shield, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
 import { Container } from "../components/ui";
+import { businessConfig } from "../config/business";
 
 const Terms: React.FC = () => {
   const [expandedSections, setExpandedSections] = useState<number[]>([0, 1, 2]);
@@ -18,7 +19,7 @@ const Terms: React.FC = () => {
     {
       id: 1,
       title: "Acceptance & Scope of Services",
-      content: `By engaging with Grworth Services, you agree to be bound by these Terms of Service. We provide comprehensive digital solutions including Website Development, SEO Services, Social Media Management, Business Setup, and Google Business Profile Optimization. Exact project scope is defined in the individual proposal or Statement of Work (SOW).`
+      content: `By engaging with Growth Service, you agree to be bound by these Terms of Service. We provide comprehensive digital solutions including Website Development, SEO Services, Social Media Management, Business Setup, and Google Business Profile Optimization. Exact project scope is defined in the individual proposal or Statement of Work (SOW).`
     },
     {
       id: 2,
@@ -128,7 +129,7 @@ const Terms: React.FC = () => {
     const element = document.createElement("a");
     const file = new Blob([document.getElementById("terms-content")?.innerText || ""], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = "Grworth-Services-Terms-of-Service.txt";
+    element.download = "Growth-Service-Terms-of-Service.txt";
     document.body.appendChild(element);
     element.click();
   };
@@ -136,15 +137,16 @@ const Terms: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Terms of Service | Grworth Services - Professional Digital Solutions</title>
+        <title>Terms of Service | Growth Service - Professional Digital Solutions</title>
         <meta
           name="description"
-          content="Read Grworth Services' Terms of Service for website development, SEO, social media management, and business setup services. Professional agreements and policies."
+          content="Read Growth Service's Terms of Service for website development, SEO, social media management, and business setup services. Professional agreements and policies."
         />
         <meta
           name="keywords"
           content="terms of service, website development agreement, SEO services terms, social media management contract, business setup terms, digital solutions agreement"
         />
+        <link rel="canonical" href="https://www.growthservice.in/terms" />
       </Helmet>
 
       {/* Hero Section */}
@@ -195,7 +197,7 @@ const Terms: React.FC = () => {
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Important Notice</h3>
               <p className="text-gray-700">
-                These Terms of Service govern your use of Grworth Services' professional digital solutions. 
+                These Terms of Service govern your use of Growth Service's professional digital solutions. 
                 By engaging with our services, you agree to these terms. For custom agreements, please contact us.
               </p>
             </div>
@@ -317,20 +319,20 @@ const Terms: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a
-              href="mailto:contact@grworth.com"
+              href={`mailto:${businessConfig.emails.primary}`}
               className="bg-blue-50 hover:bg-blue-100 text-blue-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
                 <Mail className="h-8 w-8" />
                 <div>
                   <div className="font-bold">Email Us</div>
-                  <div className="text-sm text-blue-700">contact@grworth.com</div>
+                  <div className="text-sm text-blue-700">{businessConfig.emails.primary}</div>
                 </div>
               </div>
             </a>
             
             <a
-              href="https://wa.me/9779707382481"
+              href={businessConfig.whatsapp.defaultUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-50 hover:bg-green-100 text-green-600 p-6 rounded-xl text-center transition-colors"
@@ -339,20 +341,20 @@ const Terms: React.FC = () => {
                 <MessageCircle className="h-8 w-8" />
                 <div>
                   <div className="font-bold">WhatsApp</div>
-                  <div className="text-sm text-green-700">+9779707382481</div>
+                  <div className="text-sm text-green-700">{businessConfig.phones.indiaPrimary}</div>
                 </div>
               </div>
             </a>
             
             <a
-              href="tel:+9779707382481"
+              href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
               className="bg-purple-50 hover:bg-purple-100 text-purple-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
                 <Phone className="h-8 w-8" />
                 <div>
                   <div className="font-bold">Call Us</div>
-                  <div className="text-sm text-purple-700">+9779707382481</div>
+                  <div className="text-sm text-purple-700">{businessConfig.phones.indiaPrimary}</div>
                 </div>
               </div>
             </a>

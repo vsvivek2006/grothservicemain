@@ -67,6 +67,8 @@ const OfficeDetailPage = lazy(() => import('./pages/OfficeDetailPage'));
 const LocationsHub = lazy(() => import('./pages/LocationsHub'));
 const CityHubPage = lazy(() => import('./pages/CityHubPage'));
 const TeamPage = lazy(() => import('./pages/TeamPage'));
+const Accessibility = lazy(() => import('./pages/Accessibility'));
+const TrustVerification = lazy(() => import('./pages/TrustVerification'));
 
 import { useParams, Navigate } from 'react-router-dom';
 import { businessConfig } from './config/business';
@@ -143,11 +145,17 @@ function App() {
               <Route path="/offices" element={<OfficesHub />} />
               <Route path="/offices/:officeSlug" element={<OfficeDetailPage />} />
               <Route path="/team" element={<TeamPage />} />
+              <Route path="/careers" element={<TeamPage />} />
+              <Route path="/about/team" element={<Navigate to="/team" replace />} />
+
+              {/* Legal & Verification Dedicated Routes */}
+              <Route path="/refund" element={<Privacy />} />
+              <Route path="/accessibility" element={<Accessibility />} />
+              <Route path="/verify" element={<TrustVerification />} />
 
               {/* Canonical Route Aliases -> Redirect to Canonical */}
-              <Route path="/careers" element={<Navigate to="/team" replace />} />
-              <Route path="/about/team" element={<Navigate to="/team" replace />} />
-              <Route path="/refund" element={<Navigate to="/privacy" replace />} />
+              <Route path="/scam-alert" element={<Navigate to="/verify" replace />} />
+              <Route path="/report-scam" element={<Navigate to="/verify" replace />} />
               <Route path="/success-stories" element={<Navigate to="/case-studies" replace />} />
               <Route path="/webinars" element={<Navigate to="/resources" replace />} />
               <Route path="/email-marketing" element={<Navigate to="/digital-marketing" replace />} />
@@ -155,10 +163,6 @@ function App() {
               <Route path="/consultation" element={<Navigate to="/book-call" replace />} />
               <Route path="/whitelabel" element={<Navigate to="/white-label" replace />} />
               <Route path="/sitemap" element={<Navigate to="/locations" replace />} />
-              <Route path="/accessibility" element={<Navigate to="/terms" replace />} />
-              <Route path="/scam-alert" element={<Navigate to="/help-center" replace />} />
-              <Route path="/verify" element={<Navigate to="/contact" replace />} />
-              <Route path="/report-scam" element={<Navigate to="/contact" replace />} />
 
               {/* Scalable Locations Directory & City Hubs */}
               <Route path="/locations" element={<LocationsHub />} />

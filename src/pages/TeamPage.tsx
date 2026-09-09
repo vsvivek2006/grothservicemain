@@ -11,6 +11,7 @@ import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
+import { businessConfig } from '../config/business';
 
 export const TeamPage: React.FC = () => {
   const [selectedDept, setSelectedDept] = useState<string>('all');
@@ -25,7 +26,7 @@ export const TeamPage: React.FC = () => {
           name="description" 
           content="Meet the leadership, developers, SEO executives, and marketers behind Growth Service. Delivering web development, SEO, and digital marketing across India and Nepal." 
         />
-        <link rel="canonical" href="https://growthservice.in/team" />
+        <link rel="canonical" href="https://www.growthservice.in/team" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -138,6 +139,33 @@ export const TeamPage: React.FC = () => {
               </div>
             </div>
           </FadeIn>
+
+          {/* Careers & Openings */}
+          <FadeIn direction="up" delay={150}>
+            <div id="careers" className="mt-8 bg-gradient-to-r from-purple-900 via-indigo-950 to-blue-900 rounded-2xl p-8 text-white relative overflow-hidden">
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 bg-yellow-400/20 text-yellow-300 text-xs font-bold px-3 py-1 rounded-full mb-3">
+                  🚀 Join Growth Service
+                </div>
+                <h3 className="text-2xl font-bold mb-2">Build the Future of Digital Growth With Us</h3>
+                <p className="text-sm text-purple-200 leading-relaxed mb-6 max-w-2xl">
+                  We are always looking for ambitious SEO strategists, full-stack React/Node.js engineers, and performance marketing specialists across Jaipur, Vrindavan, and remote locations.
+                </p>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <a
+                    href={`mailto:${businessConfig.emails.primary}?subject=Career%20Application%20at%20Growth%20Service`}
+                    className="bg-yellow-400 hover:bg-yellow-300 text-gray-950 px-5 py-2.5 rounded-xl text-sm font-bold transition-colors inline-flex items-center gap-2"
+                  >
+                    <span>Send Your Resume / Portfolio</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <span className="text-xs text-purple-300">
+                    Apply via email: {businessConfig.emails.primary}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
         </Container>
       </Section>
 
@@ -145,8 +173,8 @@ export const TeamPage: React.FC = () => {
       <CTABanner
         title="Ready to Work with Our Dedicated Team?"
         description="Partner directly with experienced leaders and technical developers who take complete ownership of your digital metrics."
-        whatsappUrl="https://wa.me/9779707382481?text=Hello%20Growth%20Service,%20I%20want%20to%20consult%20with%20your%20team."
-        phoneNumber="+91 93414 36937"
+        whatsappUrl={businessConfig.whatsapp.defaultUrl}
+        phoneNumber={businessConfig.phones.indiaPrimary}
       />
     </div>
   );

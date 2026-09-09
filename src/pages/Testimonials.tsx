@@ -17,6 +17,7 @@ import {
   Search,
   ShoppingCart
 } from "lucide-react";
+import { businessConfig } from "../config/business";
 
 const Testimonials: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -41,7 +42,7 @@ const Testimonials: React.FC = () => {
       category: "website",
       rating: 5,
       image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Grworth built our travel portal in just 15 days! The website is fast, responsive, and already generating 5x more bookings than our old site. Their team was professional and delivered exactly what we needed.",
+      quote: "Growth Service built our travel portal in just 15 days! The website is fast, responsive, and already generating 5x more bookings than our old site. Their team was professional and delivered exactly what we needed.",
       project: "Tour & Travel Website",
       duration: "15 Days",
       results: ["+500% bookings", "+300% website traffic", "+45% conversion rate"],
@@ -56,7 +57,7 @@ const Testimonials: React.FC = () => {
       category: "smm",
       rating: 5,
       image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Our social media presence was non-existent before Grworth. In 3 months, we gained 10,000+ followers and sales increased by 300%. Their content strategy is simply brilliant!",
+      quote: "Our social media presence was non-existent before Growth Service. In 3 months, we gained 10,000+ followers and sales increased by 300%. Their content strategy is simply brilliant!",
       project: "Social Media Management",
       duration: "3 Months",
       results: ["+10,000 followers", "+300% sales", "+250% engagement"],
@@ -71,7 +72,7 @@ const Testimonials: React.FC = () => {
       category: "seo",
       rating: 5,
       image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "SEO services from Grworth put us on Google's first page. We're getting 220% more organic traffic and 150% more online orders! Their monthly reports are detailed and transparent.",
+      quote: "SEO services from Growth Service put us on Google's first page. We're getting 220% more organic traffic and 150% more online orders! Their monthly reports are detailed and transparent.",
       project: "Local SEO Campaign",
       duration: "4 Months",
       results: ["+220% organic traffic", "+150% online orders", "Top 3 rankings"],
@@ -86,7 +87,7 @@ const Testimonials: React.FC = () => {
       category: "business",
       rating: 5,
       image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Complete business setup by Grworth transformed our operations. From website to social media to Google Business Profile - everything done professionally. Highly recommended!",
+      quote: "Complete business setup by Growth Service transformed our operations. From website to social media to Google Business Profile - everything done professionally. Highly recommended!",
       project: "Business Digital Setup",
       duration: "45 Days",
       results: ["Complete online presence", "+60% efficiency", "-35% operational costs"],
@@ -101,7 +102,7 @@ const Testimonials: React.FC = () => {
       category: "website",
       rating: 5,
       image: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Our corporate website was outdated. Grworth developed a modern, responsive site that perfectly represents our brand. The admin panel makes updates super easy.",
+      quote: "Our corporate website was outdated. Growth Service developed a modern, responsive site that perfectly represents our brand. The admin panel makes updates super easy.",
       project: "Corporate Website",
       duration: "20 Days",
       results: ["Modern responsive design", "Easy content management", "+180% lead generation"],
@@ -131,7 +132,7 @@ const Testimonials: React.FC = () => {
       category: "seo",
       rating: 5,
       image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Local SEO work by Grworth increased our property inquiries by 180%. Now we rank #1 for all important local keywords. Worth every penny!",
+      quote: "Local SEO work by Growth Service increased our property inquiries by 180%. Now we rank #1 for all important local keywords. Worth every penny!",
       project: "Local Real Estate SEO",
       duration: "5 Months",
       results: ["#1 local rankings", "+180% inquiries", "+120% website visits"],
@@ -193,15 +194,16 @@ const Testimonials: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Client Testimonials & Success Stories | Grworth Services</title>
+        <title>Client Testimonials & Success Stories | Growth Service</title>
         <meta
           name="description"
-          content="Read real client testimonials and success stories about Grworth Services' website development, SEO, social media management, and business setup services."
+          content="Read real client testimonials and success stories about Growth Service' website development, SEO, social media management, and business setup services."
         />
         <meta
           name="keywords"
           content="client testimonials, success stories, website development reviews, SEO service feedback, social media management testimonials, business setup reviews"
         />
+        <link rel="canonical" href="https://www.growthservice.in/testimonials" />
       </Helmet>
 
       {/* Hero Section */}
@@ -547,24 +549,24 @@ const Testimonials: React.FC = () => {
             </a>
             
             <a
-              href="tel:+9779707382481"
+              href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">📞</div>
               <div>
                 <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">+9779707382481</div>
+                <div className="text-sm text-gray-600">{businessConfig.phones.indiaPrimary}</div>
               </div>
             </a>
             
             <a
-              href="mailto:contact@grworth.com"
+              href={`mailto:${businessConfig.emails.primary}`}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">✉️</div>
               <div>
                 <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">contact@grworth.com</div>
+                <div className="text-sm text-gray-600">{businessConfig.emails.primary}</div>
               </div>
             </a>
           </div>

@@ -89,19 +89,19 @@ const FAQ: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-purple-50">
       <Helmet>
-        <title>FAQ | DiziGrow - Digital Marketing & Web Development in Jaipur, India</title>
+        <title>Frequently Asked Questions | Growth Service</title>
         <meta
           name="description"
-          content="Frequently asked questions about digital marketing, web development, branding, SEO, logo design, and website design. Get answers from DiziGrow, Jaipur, India."
+          content="Frequently asked questions about digital marketing, web development, branding, SEO, and white label solutions. Get answers from Growth Service."
         />
         <meta
           name="keywords"
-          content="digital marketing, web development, branding, SEO, logo design, website design, Jaipur, India"
+          content="digital marketing faq, web development questions, SEO questions, Growth Service"
         />
-        <link rel="canonical" href="https://dizigrow.com/faq" />
+        <link rel="canonical" href="https://www.growthservice.in/faq" />
         <meta name="robots" content="index, follow" />
-        <meta name="author" content="DiziGrow" />
-        <meta name="publisher" content="DiziGrow" />
+        <meta name="author" content="Growth Service" />
+        <meta name="publisher" content="Growth Service" />
         <html lang="en" />
 
         <script type="application/ld+json">
@@ -270,7 +270,7 @@ const FAQ: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="https://wa.me/919521281509?text=Hello%20DiziGrow,%20I%20have%20a%20question%20about%20your%20services"
+              href="https://wa.me/919521281509?text=Hello%20Growth%20Service,%20I%20have%20a%20question%20about%20your%20services"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-3"

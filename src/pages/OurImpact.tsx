@@ -170,15 +170,16 @@ const OurImpact: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       <Helmet>
-        <title>Our Impact - Business Transformation Stories | Grworth Services</title>
+        <title>Our Impact - Business Transformation Stories | Growth Service</title>
         <meta 
           name="description" 
-          content="See how Grworth Services transforms businesses with digital solutions, automation, and growth strategies. Real results and success stories." 
+          content="See how Growth Service transforms businesses with digital solutions, automation, and growth strategies. Real results and success stories." 
         />
         <meta 
           name="keywords" 
           content="business transformation, digital marketing, business automation, branding, web development, growth strategy" 
         />
+        <link rel="canonical" href="https://www.growthservice.in/impact" />
       </Helmet>
 
       {/* Hero Section */}
@@ -186,7 +187,7 @@ const OurImpact: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Transforming Businesses, Driving Growth</h1>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            At Grworth Services, we don't just deliver services - we deliver results that transform businesses and drive sustainable growth.
+            At Growth Service, we don't just deliver services - we deliver results that transform businesses and drive sustainable growth.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <span className="bg-white/20 px-4 py-2 rounded-full">Digital Marketing</span>
@@ -378,7 +379,7 @@ const OurImpact: React.FC = () => {
                 ))}
               </div>
               <p className="text-blue-100 mb-4">
-                "Grworth transformed our manufacturing business from traditional to digital-first. 185% revenue growth in 8 months!"
+                "Growth Service transformed our manufacturing business from traditional to digital-first. 185% revenue growth in 8 months!"
               </p>
               <div className="font-semibold">- Manufacturing Company CEO</div>
             </div>
@@ -402,7 +403,7 @@ const OurImpact: React.FC = () => {
                 ))}
               </div>
               <p className="text-blue-100 mb-4">
-                "Our brand identity and digital strategy by Grworth made us industry leaders within a year."
+                "Our brand identity and digital strategy by Growth Service made us industry leaders within a year."
               </p>
               <div className="font-semibold">- Healthcare Startup Founder</div>
             </div>
@@ -455,7 +456,7 @@ const OurImpact: React.FC = () => {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Business?</h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Let's create your success story. Partner with Grworth Services for sustainable growth and business excellence.
+            Let's create your success story. Partner with Growth Service for sustainable growth and business excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

@@ -154,12 +154,10 @@ const WhiteLabel: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    // Show success message or redirect
+    alert('Thank you for your interest! We will contact you within 24 hours.');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -169,7 +167,7 @@ const WhiteLabel: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>White Label Partner Program | Grworth Services</title>
+        <title>White Label Partner Program | Growth Service</title>
         <meta
           name="description"
           content="White label digital marketing, website development, and SEO services for agencies. Resell our services under your brand with 40-85% profit margins."
@@ -178,6 +176,7 @@ const WhiteLabel: React.FC = () => {
           name="keywords"
           content="white label services, digital marketing white label, website development white label, SEO white label, agency partnership, reseller program"
         />
+        <link rel="canonical" href="https://www.growthservice.in/white-label" />
       </Helmet>
 
       {/* Hero Section */}
@@ -502,7 +501,7 @@ const WhiteLabel: React.FC = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Apply for White Label Partnership</h2>
               <p className="text-lg text-gray-600">
-                Fill out the form below to start your journey as a Grworth Services White Label Partner.
+                Fill out the form below to start your journey as a Growth Service White Label Partner.
                 We'll contact you within 24 hours.
               </p>
             </div>
@@ -619,7 +618,7 @@ const WhiteLabel: React.FC = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Apply Options</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <a
-                  href="https://wa.me/9779707382481?text=Interested%20in%20White%20Label%20Partnership"
+                  href={businessConfig.whatsapp.defaultUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
@@ -629,20 +628,20 @@ const WhiteLabel: React.FC = () => {
                   <div className="text-sm text-gray-600">Quick chat</div>
                 </a>
                 <a
-                  href="tel:+9779707382481"
+                  href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
                   className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
                 >
                   <Smartphone className="h-8 w-8 text-blue-500 mx-auto mb-3" />
                   <div className="font-bold">Call Now</div>
-                  <div className="text-sm text-gray-600">+9779707382481</div>
+                  <div className="text-sm text-gray-600">{businessConfig.phones.indiaPrimary}</div>
                 </a>
                 <a
-                  href="mailto:partners@grworth.com"
+                  href={`mailto:${businessConfig.emails.primary}`}
                   className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
                 >
                   <Mail className="h-8 w-8 text-red-500 mx-auto mb-3" />
                   <div className="font-bold">Email</div>
-                  <div className="text-sm text-gray-600">partners@grworth.com</div>
+                  <div className="text-sm text-gray-600">{businessConfig.emails.primary}</div>
                 </a>
               </div>
             </div>

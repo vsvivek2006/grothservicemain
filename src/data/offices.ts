@@ -70,6 +70,7 @@ export const physicalOffices: OfficeData[] = [
     address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
     phone: "+91 93414 36937",
     email: "info@growthservice.in",
+    landmark: "Near Pushpa Garden, Kailash Nagar",
     postalCode: "281121",
     mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
     timings: "Mon-Sat: 9:00 AM - 7:00 PM",
