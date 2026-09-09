@@ -1,6 +1,8 @@
 import React from 'react';
 import { Phone, MessageCircle, FileText, Sparkles, MapPin, Clock } from 'lucide-react';
 import Button from './Button';
+import DecorativeGrid from './DecorativeGrid';
+import { FadeIn } from '../animations/FadeIn';
 
 export interface CTABannerProps {
   title: string;
@@ -25,15 +27,17 @@ export const CTABanner: React.FC<CTABannerProps> = ({
 }) => {
   return (
     <section className="relative py-16 md:py-24 bg-gradient-to-r from-gray-900 via-purple-950 to-gray-900 text-white overflow-hidden" aria-label="Contact Call to Action">
-      {/* Ambient background glows */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Ambient background glows & grid */}
+      <DecorativeGrid variant="dots" dark />
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-        <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
-          <Sparkles className="w-4 h-4 text-yellow-400" />
-          <span>Scale Your Digital Growth Today</span>
-        </div>
+        <FadeIn direction="up">
+          <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-6 shadow-sm">
+            <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse-light" />
+            <span>Scale Your Digital Growth Today</span>
+          </div>
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-5 leading-tight">
           {title}
@@ -94,6 +98,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({
             </div>
           </div>
         )}
+        </FadeIn>
       </div>
     </section>
   );

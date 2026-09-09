@@ -30,11 +30,12 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
     .toUpperCase();
 
   return (
-    <Card className="flex flex-col h-full bg-white relative">
+    <Card className="flex flex-col h-full bg-white relative group hover:border-purple-300/80 transition-all duration-300 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1 text-amber-400">
           {[...Array(rating)].map((_, i) => (
-            <Star key={i} className="w-4 h-4 fill-amber-400" />
+            <Star key={i} className="w-4 h-4 fill-amber-400 group-hover:scale-110 transition-transform duration-200" style={{ transitionDelay: `${i * 40}ms` }} />
           ))}
         </div>
         {verified && (
@@ -50,7 +51,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
       </p>
 
       <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
-        <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+        <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300">
           {initials}
         </div>
         <div>

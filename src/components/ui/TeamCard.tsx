@@ -39,19 +39,20 @@ export const TeamCard: React.FC<TeamCardProps> = ({
   };
 
   return (
-    <Card className="flex flex-col h-full bg-white border border-slate-200/80">
+    <Card className="flex flex-col h-full bg-white border border-slate-200/80 group hover:border-purple-300/80 transition-all duration-300 relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="flex items-start gap-4 mb-4">
-        <div className="relative shrink-0">
+        <div className="relative shrink-0 overflow-hidden rounded-2xl">
           {!imageError && image ? (
             <img
               src={image}
               alt={name}
               onError={() => setImageError(true)}
-              className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-100 shadow-sm"
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-100 shadow-sm group-hover:scale-105 transition-transform duration-500 ease-luxury"
               loading="lazy"
             />
           ) : (
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-700 via-purple-600 to-indigo-600 text-white font-bold text-lg flex items-center justify-center shadow-md">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-700 via-purple-600 to-indigo-600 text-white font-bold text-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
               {initials}
             </div>
           )}
@@ -70,14 +71,14 @@ export const TeamCard: React.FC<TeamCardProps> = ({
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-blue-600 transition-colors"
+                className="text-slate-400 hover:text-blue-600 hover:scale-110 transition-all duration-200 p-1"
                 aria-label={`${name}'s LinkedIn`}
               >
                 <Linkedin className="w-4 h-4" />
               </a>
             )}
           </div>
-          <h3 className="text-lg font-bold text-slate-900 mt-1">{name}</h3>
+          <h3 className="text-lg font-bold text-slate-900 mt-1 group-hover:text-purple-600 transition-colors duration-200">{name}</h3>
           <p className="text-xs font-semibold text-purple-600">{role}</p>
         </div>
       </div>

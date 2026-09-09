@@ -1,13 +1,23 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Search, Phone, MessageCircle, Mail, Home, Info, BookOpen, FileText, Sparkles, MapPin, Globe, Building, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight } from "lucide-react";
+
+const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [animatedText, setAnimatedText] = React.useState<string>("");
+  const [scrolled, setScrolled] = React.useState<boolean>(false);
   const location = useLocation();
 
-  const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const [currentTextIndex, setCurrentTextIndex] = React.useState(0);
 
   // Text animation effect
@@ -117,7 +127,7 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200/80' : 'bg-white shadow-sm'}`}>
       {/* Top Bar - Office Locations & Contact */}
       <div className="bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -259,20 +269,20 @@ const Header: React.FC = () => {
           <div className="flex flex-wrap justify-center items-center gap-1">
             {/* Digital Marketing Dropdown */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300">
-                Digital Marketing
-                <ChevronDown className="h-3 w-3" />
+              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-200">
+                <span>Digital Marketing</span>
+                <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
               </button>
-              <div className="absolute left-0 mt-1 w-56 rounded-xl border border-gray-200 bg-white shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div className="absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto">
                 {digitalMarketingSubmenu.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
                     className={({ isActive }) =>
-                      `block px-3 py-2 rounded-lg text-sm transition-all ${
+                      `block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
                         isActive
-                          ? "bg-purple-50 text-purple-700 font-medium"
-                          : "text-gray-700 hover:bg-purple-50 hover:text-purple-600"
+                          ? "bg-purple-50 text-purple-700 font-semibold"
+                          : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
                       }`
                     }
                   >
@@ -284,20 +294,20 @@ const Header: React.FC = () => {
 
             {/* Design & Development Dropdown */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300">
-                Design & Development
-                <ChevronDown className="h-3 w-3" />
+              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-200">
+                <span>Design & Development</span>
+                <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
               </button>
-              <div className="absolute left-0 mt-1 w-56 rounded-xl border border-gray-200 bg-white shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div className="absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto">
                 {designDevelopmentSubmenu.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
                     className={({ isActive }) =>
-                      `block px-3 py-2 rounded-lg text-sm transition-all ${
+                      `block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
                         isActive
-                          ? "bg-purple-50 text-purple-700 font-medium"
-                          : "text-gray-700 hover:bg-purple-50 hover:text-purple-600"
+                          ? "bg-purple-50 text-purple-700 font-semibold"
+                          : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
                       }`
                     }
                   >
@@ -309,20 +319,20 @@ const Header: React.FC = () => {
 
             {/* White Label Dropdown */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300">
-                White Label
-                <ChevronDown className="h-3 w-3" />
+              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-200">
+                <span>White Label</span>
+                <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
               </button>
-              <div className="absolute left-0 mt-1 w-56 rounded-xl border border-gray-200 bg-white shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div className="absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto">
                 {whiteLabelSubmenu.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
                     className={({ isActive }) =>
-                      `block px-3 py-2 rounded-lg text-sm transition-all ${
+                      `block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
                         isActive
-                          ? "bg-purple-50 text-purple-700 font-medium"
-                          : "text-gray-700 hover:bg-purple-50 hover:text-purple-600"
+                          ? "bg-purple-50 text-purple-700 font-semibold"
+                          : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
                       }`
                     }
                   >
@@ -336,12 +346,12 @@ const Header: React.FC = () => {
             <div className="relative group">
               <NavLink
                 to="/locations"
-                className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300"
+                className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-200"
               >
-                Locations
-                <ChevronDown className="h-3 w-3" />
+                <span>Locations</span>
+                <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
               </NavLink>
-              <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-[640px] rounded-2xl border border-gray-200 bg-white shadow-2xl p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div className="absolute left-1/2 -translate-x-1/2 mt-1.5 w-[660px] max-w-[95vw] rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-5 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-luxury z-50 origin-top pointer-events-none group-hover:pointer-events-auto">
                 <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-purple-600">
@@ -423,18 +433,18 @@ const Header: React.FC = () => {
 
             {/* Offices Dropdown */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300">
-                Offices
-                <ChevronDown className="h-3 w-3" />
+              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-200">
+                <span>Offices</span>
+                <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
               </button>
-              <div className="absolute left-0 mt-1 w-56 rounded-xl border border-gray-200 bg-white shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <NavLink to="/offices/jaipur" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+              <div className="absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto">
+                <NavLink to="/offices/jaipur" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1 transition-all duration-150">
                   Jaipur Office (Rajasthan)
                 </NavLink>
-                <NavLink to="/offices/vrindavan" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                <NavLink to="/offices/vrindavan" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1 transition-all duration-150">
                   Vrindavan Office (Head Office)
                 </NavLink>
-                <NavLink to="/offices/nepal" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                <NavLink to="/offices/nepal" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1 transition-all duration-150">
                   Nepal Office (Siraha)
                 </NavLink>
                 <div className="mt-1 pt-1 border-t border-gray-100">
@@ -504,7 +514,7 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu - Complete Access to All Pages */}
       {isOpen && (
-        <div className="lg:hidden fixed inset-0 top-[72px] bg-white z-40 overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 top-[72px] bg-white/98 backdrop-blur-md z-40 overflow-y-auto animate-fade-in">
           <div className="px-4 py-3 space-y-1 pb-20">
             {/* Quick Contact Banner */}
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 mb-3 border border-purple-200">

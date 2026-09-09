@@ -4,8 +4,6 @@ import {
   Star, 
   MapPin, 
   Phone, 
-  Mail, 
-  MessageCircle, 
   Building,
   Facebook,
   Instagram,
@@ -17,11 +15,12 @@ import {
   Award,
   Globe,
   ChevronRight,
-  Briefcase,
   Users,
-  Target,
   Zap
 } from "lucide-react";
+
+import DecorativeGrid from "./ui/DecorativeGrid";
+import { FadeIn } from "./animations/FadeIn";
 
 interface OfficeLocation {
   id: string;
@@ -151,15 +150,16 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 opacity-10">
+      {/* Decorative background grid and ambient glow */}
+      <DecorativeGrid variant="dots" dark />
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         {/* Rating Section */}
-        <div className="text-center mb-12 relative">
+        <FadeIn direction="up" className="text-center mb-12 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
           <div className="relative bg-gradient-to-r from-purple-900/50 to-pink-900/50 backdrop-blur-sm border border-purple-700/50 rounded-2xl p-6 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300">
             <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
@@ -188,7 +188,7 @@ const Footer: React.FC = () => {
               <span className="flex items-center"><Award className="h-3 w-3 mr-1 text-yellow-400" /> Trustpilot 4.7</span>
             </div>
           </div>
-        </div>
+        </FadeIn>
 
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">

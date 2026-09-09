@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { 
-  ArrowRight, CheckCircle, ChevronLeft, ChevronRight, Phone, 
-  MessageCircle, Star, Sparkles, MapPin, Building, ShieldCheck, 
-  TrendingUp, Users, Clock, Award, ExternalLink, Globe, Layers
+  ArrowRight, CheckCircle, Phone, 
+  MessageCircle, Star, Sparkles, MapPin, 
+  ExternalLink, Globe 
 } from "lucide-react";
 import { teamMembers } from "../data/team";
 import { industriesData } from "../data/industries";
 import { officeLocations, expansionLocations } from "../data/locations";
-import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import SectionHeader from "../components/ui/SectionHeader";
 import ServiceCard from "../components/ui/ServiceCard";
-import TestimonialCard from "../components/ui/TestimonialCard";
 import TeamCard from "../components/ui/TeamCard";
 import LocationCard from "../components/ui/LocationCard";
 import IndustryCard from "../components/ui/IndustryCard";
+import DecorativeGrid from "../components/ui/DecorativeGrid";
+import { FadeIn, StaggerContainer, StaggerItem, AnimatedButton } from "../components/animations";
 
 // Types
 interface HeroSlide {
@@ -81,7 +81,6 @@ interface OfficeLocation {
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [teamTab, setTeamTab] = useState<'All' | 'Leadership' | 'Development' | 'Marketing' | 'Operations'>('All');
 
   // Office Locations (Verbatim from existing)
   const offices: OfficeLocation[] = [
@@ -374,10 +373,6 @@ const Home: React.FC = () => {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-  const filteredTeam = teamTab === 'All' 
-    ? teamMembers 
-    : teamMembers.filter(m => m.department === teamTab);
-
   return (
     <div className="min-h-screen bg-slate-50 overflow-hidden selection:bg-purple-600 selection:text-white">
       <Helmet>
@@ -443,13 +438,11 @@ const Home: React.FC = () => {
       {/* 1. HERO SECTION WITH ENHANCED VISUAL DEPTH & AMBIENT MESH               */}
       {/* ========================================================================= */}
       <section className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white pt-14 pb-24 md:pt-20 md:pb-32 overflow-hidden">
-        {/* Ambient backdrop glow layers */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute -top-10 -right-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none"></div>
-
-        {/* Subtle dot pattern overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(#a855f7_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
+        {/* Ambient backdrop glow layers & grid */}
+        <DecorativeGrid variant="dots" dark />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse-subtle"></div>
+        <div className="absolute -top-10 -right-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '4s' }}></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
@@ -486,16 +479,16 @@ const Home: React.FC = () => {
                 
                 {/* Dual CTAs (Verbatim text) */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <Button
+                  <AnimatedButton
                     to={slide.ctaLink}
                     variant="primary"
                     size="lg"
                     icon={<Sparkles className="w-5 h-5 text-yellow-300" />}
                   >
                     {slide.cta}
-                  </Button>
+                  </AnimatedButton>
 
-                  <Button
+                  <AnimatedButton
                     href={whatsappUrl}
                     isExternal
                     variant="white"
@@ -503,7 +496,7 @@ const Home: React.FC = () => {
                     icon={<MessageCircle className="w-5 h-5 text-emerald-600" />}
                   >
                     💬 Free Consultation
-                  </Button>
+                  </AnimatedButton>
                 </div>
               </div>
             ))}
@@ -562,24 +555,32 @@ const Home: React.FC = () => {
       {/* ========================================================================= */}
       <section className="py-12 bg-white border-b border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">500+</div>
-              <div className="text-xs sm:text-sm font-semibold text-slate-700">Businesses Scaled</div>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">3</div>
-              <div className="text-xs sm:text-sm font-semibold text-slate-700">Company Offices (IN & NP)</div>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">98%</div>
-              <div className="text-xs sm:text-sm font-semibold text-slate-700">Client Retention</div>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">24/7</div>
-              <div className="text-xs sm:text-sm font-semibold text-slate-700">Dedicated Support</div>
-            </div>
-          </div>
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center" staggerDelay={80}>
+            <StaggerItem index={0}>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
+                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">500+</div>
+                <div className="text-xs sm:text-sm font-semibold text-slate-700">Businesses Scaled</div>
+              </div>
+            </StaggerItem>
+            <StaggerItem index={1}>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
+                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">3</div>
+                <div className="text-xs sm:text-sm font-semibold text-slate-700">Company Offices (IN & NP)</div>
+              </div>
+            </StaggerItem>
+            <StaggerItem index={2}>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
+                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">98%</div>
+                <div className="text-xs sm:text-sm font-semibold text-slate-700">Client Retention</div>
+              </div>
+            </StaggerItem>
+            <StaggerItem index={3}>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
+                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">24/7</div>
+                <div className="text-xs sm:text-sm font-semibold text-slate-700">Dedicated Support</div>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -595,34 +596,36 @@ const Home: React.FC = () => {
             description="Comprehensive digital solutions to grow your business online"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8" staggerDelay={90}>
             {serviceCategories.map((category, index) => (
-              <Link 
-                key={index} 
-                to={category.path}
-                className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300 transition-all duration-300 flex flex-col group"
-              >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-tr ${category.color} flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform duration-300 mb-5`}>
-                  {category.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-4">
-                  {category.title}
-                </h3>
-                <ul className="space-y-2.5 mb-6 flex-grow text-sm text-slate-600">
-                  {category.services.map((service, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
-                      <span>{service}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto pt-3 border-t border-slate-100 flex items-center gap-2 text-sm font-semibold text-purple-600 group-hover:translate-x-1.5 transition-transform">
-                  <span>Learn More</span>
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </Link>
+              <StaggerItem key={index} index={index} className="h-full">
+                <Link 
+                  to={category.path}
+                  className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col group h-full relative overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-tr ${category.color} flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-110 group-hover:rotate-2 transition-all duration-300 ease-luxury mb-5`}>
+                    {category.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-4">
+                    {category.title}
+                  </h3>
+                  <ul className="space-y-2.5 mb-6 flex-grow text-sm text-slate-600">
+                    {category.services.map((service, idx) => (
+                      <li key={idx} className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                        <span>{service}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto pt-3 border-t border-slate-100 flex items-center gap-2 text-sm font-semibold text-purple-600 group-hover:translate-x-1.5 transition-transform duration-200">
+                    <span>Learn More</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -639,11 +642,11 @@ const Home: React.FC = () => {
             description="Our structured process ensures successful project delivery"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative" staggerDelay={100}>
             {process.map((item, index) => (
-              <div key={index} className="relative flex flex-col">
-                <Card className="bg-gradient-to-b from-slate-50 to-purple-50/40 border border-slate-200/80 text-center h-full flex flex-col items-center">
-                  <div className="w-14 h-14 rounded-2xl bg-white shadow-md border border-purple-100 flex items-center justify-center text-2xl mb-4">
+              <StaggerItem key={index} index={index} className="relative flex flex-col h-full">
+                <Card className="bg-gradient-to-b from-slate-50 to-purple-50/40 border border-slate-200/80 text-center h-full flex flex-col items-center group hover:border-purple-300/80 transition-all duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-white shadow-md border border-purple-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-luxury">
                     {item.icon}
                   </div>
                   <span className="text-xs font-extrabold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full mb-3">
@@ -652,9 +655,9 @@ const Home: React.FC = () => {
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
                   <p className="text-sm text-slate-600 leading-relaxed">{item.description}</p>
                 </Card>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -671,19 +674,20 @@ const Home: React.FC = () => {
             description="Everything you need to succeed in the digital landscape"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" staggerDelay={90}>
             {ourServices.map((service, index) => (
-              <ServiceCard
-                key={index}
-                title={service.title}
-                description={service.description}
-                features={service.features}
-                path={service.path}
-                iconEmoji={service.icon}
-                highlightColor={service.color}
-              />
+              <StaggerItem key={index} index={index} className="h-full">
+                <ServiceCard
+                  title={service.title}
+                  description={service.description}
+                  features={service.features}
+                  path={service.path}
+                  iconEmoji={service.icon}
+                  highlightColor={service.color}
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -715,33 +719,36 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8" staggerDelay={100}>
             {featuredCases.map((item, idx) => (
-              <Card key={idx} className="flex flex-col h-full bg-slate-50/70 border border-slate-200">
-                <div className="flex items-center justify-between mb-3 text-xs font-semibold text-purple-600">
-                  <span>{item.category}</span>
-                  <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[11px] font-bold">
-                    VERIFIED
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
-                <p className="text-sm font-medium text-slate-500 mb-4">Client: {item.client}</p>
-
-                <div className="bg-purple-100/60 p-3 rounded-xl border border-purple-200/50 mb-5">
-                  <div className="text-xs uppercase tracking-wider text-purple-700 font-bold">Outcome</div>
-                  <div className="text-base font-extrabold text-purple-900">{item.result}</div>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 mt-auto pt-4 border-t border-slate-200/60">
-                  {item.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="text-xs bg-white text-slate-600 px-2.5 py-1 rounded border border-slate-200 font-medium">
-                      {tag}
+              <StaggerItem key={idx} index={idx} className="h-full">
+                <Card className="flex flex-col h-full bg-slate-50/70 border border-slate-200 card-lift group hover:border-purple-300/80 hover:shadow-card-hover transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="flex items-center justify-between mb-3 text-xs font-semibold text-purple-600">
+                    <span>{item.category}</span>
+                    <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[11px] font-bold">
+                      VERIFIED
                     </span>
-                  ))}
-                </div>
-              </Card>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition-colors">{item.title}</h3>
+                  <p className="text-sm font-medium text-slate-500 mb-4">Client: {item.client}</p>
+
+                  <div className="bg-purple-100/60 p-3 rounded-xl border border-purple-200/50 mb-5 group-hover:bg-purple-100 transition-colors">
+                    <div className="text-xs uppercase tracking-wider text-purple-700 font-bold">Outcome</div>
+                    <div className="text-base font-extrabold text-purple-900">{item.result}</div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 mt-auto pt-4 border-t border-slate-200/60">
+                    {item.tags.map((tag, tIdx) => (
+                      <span key={tIdx} className="text-xs bg-white text-slate-600 px-2.5 py-1 rounded border border-slate-200 font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -757,28 +764,29 @@ const Home: React.FC = () => {
             description="Experienced strategists, full-stack developers, and marketers operating across Jaipur, Vrindavan, and Nepal."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            {teamMembers.slice(0, 4).map((member) => (
-              <TeamCard
-                key={member.id}
-                name={member.name}
-                role={member.role}
-                department={member.department}
-                image={member.image}
-                bio={member.bio}
-                expertise={member.expertise}
-                linkedinUrl={member.socialLinks?.linkedin}
-              />
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" staggerDelay={90}>
+            {teamMembers.slice(0, 4).map((member, idx) => (
+              <StaggerItem key={member.id} index={idx} className="h-full">
+                <TeamCard
+                  name={member.name}
+                  role={member.role}
+                  department={member.department}
+                  image={member.image}
+                  bio={member.bio}
+                  expertise={member.expertise}
+                  linkedinUrl={member.socialLinks?.linkedin}
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           <div className="text-center">
             <Link
               to="/team"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-base transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-base transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 group"
             >
               <span>Meet the Full Team</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
           </div>
         </div>
@@ -796,18 +804,19 @@ const Home: React.FC = () => {
             description="Tailored digital marketing funnels, search authority, and custom web platforms built for high-growth sectors."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {industriesData.map((industry) => (
-              <IndustryCard
-                key={industry.id}
-                name={industry.name}
-                iconName={industry.iconName}
-                shortDesc={industry.shortDesc}
-                keySolutions={industry.keySolutions}
-                metricsHighlight={industry.metricsHighlight}
-              />
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" staggerDelay={90}>
+            {industriesData.map((industry, idx) => (
+              <StaggerItem key={industry.id} index={idx} className="h-full">
+                <IndustryCard
+                  name={industry.name}
+                  iconName={industry.iconName}
+                  shortDesc={industry.shortDesc}
+                  keySolutions={industry.keySolutions}
+                  metricsHighlight={industry.metricsHighlight}
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -837,25 +846,26 @@ const Home: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
-            {officeLocations.map((loc) => (
-              <LocationCard
-                key={loc.slug}
-                name={loc.name}
-                state={loc.state}
-                country={loc.country}
-                flag={loc.flag}
-                address={loc.address}
-                phone={loc.phone}
-                mapLink={loc.mapLink}
-                timings={loc.timings}
-                isHeadOffice={loc.slug === 'vrindavan'}
-              />
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12" staggerDelay={90}>
+            {officeLocations.map((loc, idx) => (
+              <StaggerItem key={loc.slug} index={idx} className="h-full">
+                <LocationCard
+                  name={loc.name}
+                  state={loc.state}
+                  country={loc.country}
+                  flag={loc.flag}
+                  address={loc.address}
+                  phone={loc.phone}
+                  mapLink={loc.mapLink}
+                  timings={loc.timings}
+                  isHeadOffice={loc.slug === 'vrindavan'}
+                />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           {/* Regional Hub Expansion Links */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-card">
+          <FadeIn direction="up" className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-card">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 mb-1 flex items-center gap-2">
@@ -868,10 +878,10 @@ const Home: React.FC = () => {
               </div>
               <Link
                 to="/locations"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all shadow-sm hover:shadow-md shrink-0"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all shadow-sm hover:shadow-md shrink-0 group"
               >
                 <span>All Locations Directory</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
             </div>
 
@@ -880,15 +890,15 @@ const Home: React.FC = () => {
                 <Link
                   key={loc.slug}
                   to={`/locations/${loc.slug}`}
-                  className="bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-xl border border-slate-200 hover:border-purple-300 transition-all flex items-center gap-1.5"
+                  className="bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-xl border border-slate-200 hover:border-purple-300 transition-all flex items-center gap-1.5 group"
                 >
                   <span>{loc.flag}</span>
                   <span>{loc.name}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform duration-200" />
                 </Link>
               ))}
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -905,20 +915,21 @@ const Home: React.FC = () => {
             description="Modern tools and technologies for cutting-edge solutions"
           />
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4" staggerDelay={50}>
             {technologies.map((tech, index) => (
-              <div 
-                key={index} 
-                className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200/80 hover:border-purple-300 hover:shadow-card transition-all duration-200 group"
-              >
-                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
-                  {tech.icon}
+              <StaggerItem key={index} index={index}>
+                <div 
+                  className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200/80 hover:border-purple-300 hover:shadow-card card-lift-sm transition-all duration-200 group"
+                >
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300 ease-luxury">
+                    {tech.icon}
+                  </div>
+                  <div className="font-bold text-slate-900 text-sm">{tech.name}</div>
+                  <div className="text-xs text-slate-500">{tech.type}</div>
                 </div>
-                <div className="font-bold text-slate-900 text-sm">{tech.name}</div>
-                <div className="text-xs text-slate-500">{tech.type}</div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -934,20 +945,21 @@ const Home: React.FC = () => {
             description="500+ businesses trust us for their digital growth"
           />
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+          <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6" staggerDelay={60}>
             {clients.map((client, index) => (
-              <div 
-                key={index} 
-                className="bg-white rounded-xl p-5 text-center border border-slate-200/80 hover:border-purple-300 hover:shadow-card transition-all group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform">
-                  {client.logo}
+              <StaggerItem key={index} index={index}>
+                <div 
+                  className="bg-white rounded-xl p-5 text-center border border-slate-200/80 hover:border-purple-300 hover:shadow-card card-lift-sm transition-all duration-200 group"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 ease-luxury">
+                    {client.logo}
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-sm truncate">{client.name}</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">{client.industry}</p>
                 </div>
-                <h3 className="font-bold text-slate-900 text-sm truncate">{client.name}</h3>
-                <p className="text-xs text-slate-500 mt-0.5">{client.industry}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -955,9 +967,10 @@ const Home: React.FC = () => {
       {/* 13. BENEFITS (Why Choose Us - Verbatim copy)                              */}
       {/* ========================================================================= */}
       <section className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white relative overflow-hidden" aria-label="Why Choose Us">
+        <DecorativeGrid variant="dots" dark />
         <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 right-10 w-96 h-96 bg-purple-600 rounded-full blur-[100px]"></div>
-          <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-600 rounded-full blur-[100px]"></div>
+          <div className="absolute top-0 right-10 w-96 h-96 bg-purple-600 rounded-full blur-[100px] animate-pulse-subtle"></div>
+          <div className="absolute bottom-0 left-10 w-96 h-96 bg-blue-600 rounded-full blur-[100px] animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -970,20 +983,21 @@ const Home: React.FC = () => {
             dark
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8" staggerDelay={90}>
             {benefits.map((benefit, index) => (
-              <div 
-                key={index} 
-                className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-7 text-center hover:bg-white/10 hover:border-purple-400/40 transition-all duration-300 group"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-3xl mx-auto mb-5 group-hover:scale-110 transition-transform">
-                  {benefit.icon}
+              <StaggerItem key={index} index={index} className="h-full">
+                <div 
+                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-7 text-center hover:bg-white/10 hover:border-purple-400/40 card-lift transition-all duration-300 group h-full"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-3xl mx-auto mb-5 group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300 ease-luxury">
+                    {benefit.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-purple-200 leading-relaxed">{benefit.description}</p>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
-                <p className="text-sm text-purple-200 leading-relaxed">{benefit.description}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -999,7 +1013,7 @@ const Home: React.FC = () => {
             description="Real feedback from our valued clients"
           />
 
-          <div className="bg-gradient-to-br from-purple-50/60 to-indigo-50/60 rounded-3xl p-8 sm:p-12 border border-purple-100 shadow-card">
+          <FadeIn direction="up" className="bg-gradient-to-br from-purple-50/60 to-indigo-50/60 rounded-3xl p-8 sm:p-12 border border-purple-100 shadow-card">
             <div className="text-center max-w-2xl mx-auto">
               <div className="flex items-center justify-center gap-1.5 text-amber-400 text-xl mb-6">
                 {[...Array(5)].map((_, i) => (
@@ -1030,7 +1044,7 @@ const Home: React.FC = () => {
                 />
               ))}
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -1038,73 +1052,76 @@ const Home: React.FC = () => {
       {/* 15. FINAL CALL TO ACTION (Verbatim copy)                                  */}
       {/* ========================================================================= */}
       <section className="py-20 md:py-28 bg-gradient-to-r from-slate-950 via-[#1c0836] to-slate-900 text-white relative overflow-hidden" aria-label="Contact Call to Action">
+        <DecorativeGrid variant="dots" dark />
         <div className="absolute inset-0 opacity-15 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-600 rounded-full blur-[140px]"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-600 rounded-full blur-[140px] animate-pulse-subtle"></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 tracking-tight leading-tight">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-lg sm:text-xl text-purple-200 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Let's discuss your digital needs. We serve clients from Jaipur, Vrindavan, Nepal, and globally.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              href={whatsappUrl}
-              isExternal
-              variant="whatsapp"
-              size="lg"
-              icon={<MessageCircle className="w-5 h-5" />}
-            >
-              Chat on WhatsApp
-            </Button>
-            
-            <Button
-              href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
-              variant="white"
-              size="lg"
-              icon={<Phone className="w-5 h-5 text-slate-800" />}
-            >
-              Call +91 93414 36937
-            </Button>
-
-            <Button
-              to="/contact"
-              variant="outline"
-              size="lg"
-              className="border-purple-400 text-purple-200 hover:bg-purple-800/40 hover:text-white"
-            >
-              Contact Form
-            </Button>
-          </div>
-          
-          <div className="mt-14 pt-8 border-t border-white/10">
-            <p className="text-purple-300 text-sm font-medium mb-4 flex items-center justify-center gap-1.5">
-              <MapPin className="w-4 h-4 text-purple-400" />
-              <span>📍 Our Office Locations</span>
+          <FadeIn direction="up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 tracking-tight leading-tight">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-lg sm:text-xl text-purple-200 mb-10 max-w-2xl mx-auto leading-relaxed">
+              Let's discuss your digital needs. We serve clients from Jaipur, Vrindavan, Nepal, and globally.
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-xs sm:text-sm text-purple-200">
-              {offices.map((office, index) => (
-                <a 
-                  key={index}
-                  href={office.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 transition-colors"
-                >
-                  <span>{office.flag}</span>
-                  <span className="font-semibold text-white">{office.name}</span>
-                </a>
-              ))}
-              <span className="text-purple-500 hidden sm:inline">|</span>
-              <span className="flex items-center gap-1.5 text-emerald-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
-                <span>⏰</span>
-                <span className="font-semibold text-white">24/7 Support</span>
-              </span>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <AnimatedButton
+                href={whatsappUrl}
+                isExternal
+                variant="whatsapp"
+                size="lg"
+                icon={<MessageCircle className="w-5 h-5" />}
+              >
+                Chat on WhatsApp
+              </AnimatedButton>
+              
+              <AnimatedButton
+                href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
+                variant="white"
+                size="lg"
+                icon={<Phone className="w-5 h-5 text-slate-800" />}
+              >
+                Call +91 93414 36937
+              </AnimatedButton>
+
+              <AnimatedButton
+                to="/contact"
+                variant="outline"
+                size="lg"
+                className="border-purple-400 text-purple-200 hover:bg-purple-800/40 hover:text-white"
+              >
+                Contact Form
+              </AnimatedButton>
             </div>
-          </div>
+            
+            <div className="mt-14 pt-8 border-t border-white/10">
+              <p className="text-purple-300 text-sm font-medium mb-4 flex items-center justify-center gap-1.5">
+                <MapPin className="w-4 h-4 text-purple-400" />
+                <span>📍 Our Office Locations</span>
+              </p>
+              <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-xs sm:text-sm text-purple-200">
+                {offices.map((office, index) => (
+                  <a 
+                    key={index}
+                    href={office.mapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 transition-colors"
+                  >
+                    <span>{office.flag}</span>
+                    <span className="font-semibold text-white">{office.name}</span>
+                  </a>
+                ))}
+                <span className="text-purple-500 hidden sm:inline">|</span>
+                <span className="flex items-center gap-1.5 text-emerald-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+                  <span>⏰</span>
+                  <span className="font-semibold text-white">24/7 Support</span>
+                </span>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </div>

@@ -27,14 +27,15 @@ export const LocationCard: React.FC<LocationCardProps> = ({
   isHeadOffice = false,
 }) => {
   return (
-    <Card className="flex flex-col h-full bg-white border border-slate-200/80 relative">
+    <Card className="flex flex-col h-full bg-white border border-slate-200/80 group hover:border-purple-300/80 transition-all duration-300 relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       <div className="flex items-center justify-between gap-2 mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-2xl" role="img" aria-label="Flag">
+          <span className="text-2xl group-hover:scale-110 transition-transform duration-300 select-none" role="img" aria-label="Flag">
             {flag}
           </span>
           <div>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900">{name}</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors duration-200">{name}</h3>
             {state && (
               <p className="text-xs text-purple-600 font-semibold">{state}{country ? ` • ${country}` : ''}</p>
             )}
@@ -49,7 +50,7 @@ export const LocationCard: React.FC<LocationCardProps> = ({
 
       {address && (
         <div className="flex items-start gap-2 text-sm text-slate-600 mb-4 flex-grow">
-          <MapPin className="w-4 h-4 text-purple-600 shrink-0 mt-1" />
+          <MapPin className="w-4 h-4 text-purple-600 shrink-0 mt-1 group-hover:scale-110 transition-transform duration-200" />
           <p className="leading-relaxed">{address}</p>
         </div>
       )}

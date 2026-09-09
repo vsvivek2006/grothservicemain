@@ -1,5 +1,6 @@
 import React from 'react';
 import Badge from './Badge';
+import { FadeIn } from '../animations/FadeIn';
 
 export interface SectionHeaderProps {
   badge?: string;
@@ -27,7 +28,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   const alignClasses = align === 'center' ? 'text-center mx-auto' : 'text-left';
 
   return (
-    <div className={`max-w-3xl mb-12 sm:mb-16 ${alignClasses} ${className}`}>
+    <FadeIn direction="up" distance={20} duration={550} className={`max-w-3xl mb-12 sm:mb-16 ${alignClasses} ${className}`}>
       {badge && (
         <div className={`mb-3.5 flex ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
           <Badge
@@ -53,7 +54,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           {description}
         </p>
       )}
-    </div>
+    </FadeIn>
   );
 };
 
