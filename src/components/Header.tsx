@@ -362,7 +362,7 @@ const Header: React.FC = () => {
                     <span className="text-xs font-bold uppercase tracking-wider text-purple-600">
                       Regional Coverage Directory
                     </span>
-                    <p className="text-[11px] text-gray-500">Structured by region/state across India & Nepal</p>
+                    <p className="text-[11px] text-gray-500">Key service locations across India & Nepal</p>
                   </div>
                   <NavLink
                     to="/locations"
@@ -374,50 +374,44 @@ const Header: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-3 gap-2.5">
-                  <NavLink to="/locations/delhi-ncr" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Delhi NCR</div>
-                    <div className="text-[10px] text-gray-500">Delhi, Gurgaon, Noida</div>
+                  <NavLink to="/locations/delhi" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Delhi</div>
+                    <div className="text-[10px] text-gray-500">National Capital Region</div>
                   </NavLink>
-                  <NavLink to="/locations/bihar" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Bihar</div>
-                    <div className="text-[10px] text-gray-500">Patna, Gaya, Muzaffarpur</div>
-                  </NavLink>
-                  <NavLink to="/locations/rajasthan" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                  <NavLink to="/locations/jaipur" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                     <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
-                      <span>Rajasthan</span>
+                      <span>Jaipur</span>
                       <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
                     </div>
-                    <div className="text-[10px] text-gray-500">Jaipur, Jodhpur, Udaipur</div>
+                    <div className="text-[10px] text-gray-500">Rajasthan</div>
+                  </NavLink>
+                  <NavLink to="/locations/patna" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Patna</div>
+                    <div className="text-[10px] text-gray-500">Bihar</div>
                   </NavLink>
                   <NavLink to="/locations/goa" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                     <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Goa</div>
-                    <div className="text-[10px] text-gray-500">Panaji, Margao</div>
+                    <div className="text-[10px] text-gray-500">Goa</div>
                   </NavLink>
-                  <NavLink to="/locations/punjab-chandigarh" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Punjab / Chandigarh</div>
-                    <div className="text-[10px] text-gray-500">Chandigarh, Mohali, Ludhiana</div>
+                  <NavLink to="/locations/gurgaon" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Gurgaon</div>
+                    <div className="text-[10px] text-gray-500">Cyber City, Haryana</div>
                   </NavLink>
-                  <NavLink to="/locations/uttar-pradesh" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
-                      <span>Uttar Pradesh</span>
-                      <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
-                    </div>
-                    <div className="text-[10px] text-gray-500">Vrindavan, Lucknow, Agra</div>
+                  <NavLink to="/locations/chandigarh" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Chandigarh</div>
+                    <div className="text-[10px] text-gray-500">Punjab / Tricity</div>
                   </NavLink>
-                  <NavLink to="/locations/maharashtra" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Maharashtra</div>
-                    <div className="text-[10px] text-gray-500">Mumbai, Pune, Nagpur</div>
+                  <NavLink to="/locations/mumbai" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Mumbai</div>
+                    <div className="text-[10px] text-gray-500">Maharashtra</div>
                   </NavLink>
-                  <NavLink to="/locations/karnataka" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Karnataka</div>
-                    <div className="text-[10px] text-gray-500">Bangalore, Mysore</div>
+                  <NavLink to="/locations/bangalore" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Bangalore</div>
+                    <div className="text-[10px] text-gray-500">Karnataka</div>
                   </NavLink>
-                  <NavLink to="/locations/nepal" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
-                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
-                      <span>Nepal</span>
-                      <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
-                    </div>
-                    <div className="text-[10px] text-gray-500">Bariyarpatti, Kathmandu</div>
+                  <NavLink to="/locations/lucknow" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Lucknow</div>
+                    <div className="text-[10px] text-gray-500">Uttar Pradesh</div>
                   </NavLink>
                 </div>
 

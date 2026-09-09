@@ -8,7 +8,7 @@ export interface RegionData {
   citySlugs: string[];
 }
 
-export interface CityData {
+export interface LocationData {
   slug: string;
   name: string;
   regionSlug: string;
@@ -31,6 +31,8 @@ export interface CityData {
   description: string;
   faqs: Array<{ q: string; a: string }>;
 }
+
+export type CityData = LocationData;
 
 export const regionsData: RegionData[] = [
   {
@@ -486,6 +488,25 @@ export const citiesData: CityData[] = [
       { q: "How do you help Goa restaurants and resorts gain online bookings?", a: "We run localized Google Maps optimization, high-engagement Instagram reels, and frictionless direct booking websites." }
     ]
   },
+  {
+    slug: "goa",
+    name: "Goa",
+    regionSlug: "goa",
+    regionName: "Goa",
+    state: "Goa",
+    country: "India",
+    flag: "🇮🇳",
+    isPhysicalOffice: false,
+    phone: "+91 93414 36937",
+    email: "info@growthservice.in",
+    localAreas: ["Panaji", "Margao", "Calangute", "Candolim", "Vasco da Gama", "Fontainhas", "Anjuna", "Baga"],
+    keyIndustries: ["Hospitality & Tourism", "Luxury Resorts & Villas", "Water Sports", "Dining & Nightlife", "Boutique Real Estate"],
+    servicesAvailable: ["web-development", "seo", "social-media", "paid-marketing"],
+    description: "Growth Service provides digital marketing, luxury hospitality web design, local SEO, and paid media for resorts, restaurants, and businesses across Goa.",
+    faqs: [
+      { q: "Do you offer digital marketing for resorts and villas in Goa?", a: "Yes, we specialize in high-converting booking websites, local SEO, and Instagram marketing for luxury villas, boutique hotels, and restaurants in Goa." }
+    ]
+  },
 
   // --- MAHARASHTRA ---
   {
@@ -608,6 +629,12 @@ export function getAllCities(): CityData[] {
   return citiesData;
 }
 
+export function getAllLocations(): LocationData[] {
+  return citiesData;
+}
+
+export const locationsData = citiesData;
+
 export function getCityBySlug(slug: string): CityData | undefined {
   return citiesData.find(c => c.slug.toLowerCase() === slug.toLowerCase());
 }
@@ -617,7 +644,7 @@ export function getCitiesByRegion(regionSlug: string): CityData[] {
 }
 
 // Backward compatibility helper
-export function getLocationBySlug(slug: string): CityData | undefined {
+export function getLocationBySlug(slug: string): LocationData | undefined {
   return getCityBySlug(slug);
 }
 

@@ -152,13 +152,13 @@ export const LocationsHub: React.FC = () => {
                           </div>
                           <p className="text-sm text-slate-600 max-w-2xl">{region.description}</p>
                         </div>
-                        <Link
-                          to={`/locations/${region.slug}`}
+                        <button
+                          onClick={() => setSelectedRegion(region.slug)}
                           className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group shrink-0"
                         >
-                          <span>Explore {region.name}</span>
+                          <span>Filter {region.name}</span>
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
+                        </button>
                       </div>
 
                       {/* Cities in Region */}
