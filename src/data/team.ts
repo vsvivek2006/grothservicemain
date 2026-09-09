@@ -2,11 +2,15 @@ export interface TeamMember {
   id: number;
   name: string;
   role: string;
-  department: 'Leadership' | 'Development' | 'Marketing' | 'Operations';
+  department: 'Leadership' | 'Development' | 'Marketing' | 'Operations' | 'Sales';
   image: string;
   bio: string;
   expertise: string[];
-  officeIds?: string[];
+  officeId: 'jaipur' | 'vrindavan' | 'nepal';
+  officeSlug: string;
+  employeeCode: string;
+  email?: string;
+  phone?: string;
   socialLinks?: {
     linkedin?: string;
     twitter?: string;
@@ -14,101 +18,121 @@ export interface TeamMember {
 }
 
 export const teamMembers: TeamMember[] = [
+  // === JAIPUR CORPORATE & TECH OFFICE ===
   {
     id: 1,
     name: "Vikash Singh",
-    role: "Founder & CEO",
+    role: "CEO & Founder",
     department: "Leadership",
-    image: "/images/ceo.jpg",
-    bio: "Visionary leader with 10+ years of experience in digital transformation. Passionate about helping businesses grow through innovative technology solutions across Jaipur, Vrindavan, and Nepal.",
-    expertise: ["Business Strategy", "Digital Transformation", "Leadership", "Global Operations"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    officeId: "jaipur",
+    officeSlug: "jaipur",
+    employeeCode: "GS-JPR-01",
+    image: "",
+    bio: "Founder and CEO driving strategic digital transformation, corporate vision, and client growth partnerships across Growth Service's offices in India and Nepal.",
+    expertise: ["Business Strategy", "Digital Leadership", "Corporate Growth", "Global Operations"],
+    email: "info@growthservice.in"
   },
   {
     id: 2,
-    name: "Vivek Singh",
-    role: "Digital Marketing Expert",
-    department: "Leadership",
-    image: "/images/digital-marketing-expert.jpg",
-    bio: "Strategic digital marketing specialist with expertise in SEO, PPC, and content marketing. Leading digital campaigns across all three office locations.",
-    expertise: ["Digital Strategy", "SEO", "PPC", "Content Marketing"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    name: "Nupur",
+    role: "Tech Manager",
+    department: "Development",
+    officeId: "jaipur",
+    officeSlug: "jaipur",
+    employeeCode: "GS-JPR-02",
+    image: "",
+    bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
+    expertise: ["Technical Architecture", "Web Engineering", "Full-Stack Development", "System Delivery"]
   },
   {
     id: 3,
-    name: "Nupur Mishara",
-    role: "Team Leader",
-    department: "Leadership",
-    image: "/images/team-leader.jpg",
-    bio: "Experienced team leader managing operations across Jaipur, Vrindavan, and Nepal offices. Ensuring seamless project delivery and client satisfaction.",
-    expertise: ["Team Management", "Project Coordination", "Client Relations", "Operations"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    name: "Ashish",
+    role: "Admin",
+    department: "Operations",
+    officeId: "jaipur",
+    officeSlug: "jaipur",
+    employeeCode: "GS-JPR-03",
+    image: "",
+    bio: "Administrative coordinator managing operational logistics, client communication coordination, and smooth day-to-day workflow across our corporate facilities.",
+    expertise: ["Office Operations", "Client Support", "Workflow Coordination", "Administrative Management"]
   },
+
+  // === VRINDAVAN DIGITAL MARKETING & OPERATIONS OFFICE ===
   {
     id: 4,
-    name: "Rahul Kumar",
-    role: "Team Lead - Developer",
-    department: "Development",
-    image: "/images/developer-lead.jpg",
-    bio: "Expert full-stack developer and team lead specializing in React, TypeScript, and Node.js. Leading development teams across all office locations to deliver high-performance web applications.",
-    expertise: ["React.js", "TypeScript", "Node.js", "Team Leadership", "MongoDB"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    name: "Vivek Singh",
+    role: "Digital Marketing Manager",
+    department: "Marketing",
+    officeId: "vrindavan",
+    officeSlug: "vrindavan",
+    employeeCode: "GS-VRN-01",
+    image: "",
+    bio: "Digital marketing manager leading multi-channel growth campaigns, search engine visibility, and client ROI performance across India and international markets.",
+    expertise: ["Digital Strategy", "SEO & Performance Marketing", "Meta Ads", "Brand Scaling"],
+    email: "info@growthservice.in"
   },
   {
     id: 5,
     name: "Nutan Mishra",
-    role: "SEO Executive",
+    role: "SEO Executive & Team Leader (SEO Team)",
     department: "Marketing",
-    image: "/images/seo-executive.jpg",
-    bio: "Results-driven SEO professional with expertise in on-page and off-page optimization. Helping businesses rank higher on search engines and drive organic traffic.",
-    expertise: ["On-Page SEO", "Off-Page SEO", "Technical SEO", "Keyword Research"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    officeId: "vrindavan",
+    officeSlug: "vrindavan",
+    employeeCode: "GS-VRN-02",
+    image: "",
+    bio: "SEO team leader driving organic search performance, technical audit execution, on-page optimization, and SERP rankings for enterprise and local clients.",
+    expertise: ["Technical SEO", "On-Page Optimization", "Search Analytics", "Keyword Strategy"]
   },
   {
     id: 6,
-    name: "Priyansh Sharma",
-    role: "Performance Marketer",
+    name: "Tripti Sharma",
+    role: "SEO Executive",
     department: "Marketing",
-    image: "/images/performance-marketer.jpg",
-    bio: "Performance marketing expert specializing in Google Ads, social media advertising, and conversion optimization. Driving measurable ROI for clients across all locations.",
-    expertise: ["Google Ads", "Social Media Advertising", "PPC", "Conversion Optimization"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    officeId: "vrindavan",
+    officeSlug: "vrindavan",
+    employeeCode: "GS-VRN-03",
+    image: "",
+    bio: "SEO executive specializing in in-depth keyword analysis, on-page content optimization, competitive auditing, and sustainable organic traffic growth.",
+    expertise: ["Keyword Research", "On-Page SEO", "Link Building", "Content Optimization"]
   },
   {
     id: 7,
-    name: "Lalan Kumar",
-    role: "Junior SEO Executive",
-    department: "Marketing",
-    image: "/images/junior-seo.jpg",
-    bio: "Passionate SEO professional with expertise in keyword research, content optimization, and local SEO. Helping businesses grow their online presence and reach new audiences.",
-    expertise: ["Keyword Research", "Local SEO", "Content Optimization", "SEO Analytics"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    name: "Pinki Kumari",
+    role: "HR Head",
+    department: "Operations",
+    officeId: "vrindavan",
+    officeSlug: "vrindavan",
+    employeeCode: "GS-VRN-04",
+    image: "",
+    bio: "Human resources head fostering a high-performance culture, talent development, transparent recruitment, and team excellence across all office branches.",
+    expertise: ["Talent Acquisition", "Employee Relations", "Organizational Culture", "HR Operations"]
   },
+
+  // === NEPAL CLIENT GROWTH & SALES OFFICE ===
   {
     id: 8,
-    name: "Ashish Singh",
-    role: "Admin",
-    department: "Operations",
-    image: "/images/admin.jpg",
-    bio: "Dedicated administrative professional managing office operations across all locations. Ensuring smooth day-to-day functioning, client support, and operational excellence.",
-    expertise: ["Office Administration", "Client Support", "Operations", "Coordination"],
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/company/growthservice"
-    }
+    name: "Praveen Kumar",
+    role: "Sales Head",
+    department: "Sales",
+    officeId: "nepal",
+    officeSlug: "nepal",
+    employeeCode: "GS-NPL-01",
+    image: "",
+    bio: "Sales head spearheading regional business development, client consultative partnerships, and enterprise digital solutions across Nepal and border regions.",
+    expertise: ["Enterprise Sales", "Client Acquisition", "Growth Consultation", "Market Expansion"],
+    email: "nepal@growthservice.in"
+  },
+  {
+    id: 9,
+    name: "Rana Praveen",
+    role: "Sales Executive",
+    department: "Sales",
+    officeId: "nepal",
+    officeSlug: "nepal",
+    employeeCode: "GS-NPL-02",
+    image: "",
+    bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
+    expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
   }
 ];
 
@@ -118,6 +142,11 @@ export function getAllTeamMembers(): TeamMember[] {
 
 export function getTeamMemberById(id: number): TeamMember | undefined {
   return teamMembers.find(m => m.id === id);
+}
+
+export function getTeamMembersByOffice(officeId: string): TeamMember[] {
+  if (!officeId || officeId === 'all') return teamMembers;
+  return teamMembers.filter(m => m.officeId.toLowerCase() === officeId.toLowerCase());
 }
 
 export function getTeamMembersByDepartment(dept: string): TeamMember[] {

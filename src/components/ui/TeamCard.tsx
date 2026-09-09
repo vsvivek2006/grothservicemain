@@ -36,6 +36,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
     Development: 'blue',
     Marketing: 'green',
     Operations: 'gold',
+    Sales: 'blue',
   };
 
   return (

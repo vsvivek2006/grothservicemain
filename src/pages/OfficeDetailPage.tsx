@@ -6,7 +6,7 @@ import {
   CheckCircle, ArrowRight, Navigation 
 } from 'lucide-react';
 import { getOfficeBySlug, physicalOffices } from '../data/offices';
-import { teamMembers } from '../data/team';
+import { teamMembers, getTeamMembersByOffice } from '../data/team';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
@@ -31,7 +31,8 @@ export const OfficeDetailPage: React.FC = () => {
     return <NotFound />;
   }
 
-  const coreTeam = teamMembers.slice(0, 3);
+  const officeTeam = getTeamMembersByOffice(office.id);
+  const coreTeam = officeTeam.length > 0 ? officeTeam : teamMembers.slice(0, 3);
   const whatsappUrl = `https://wa.me/${office.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20inquiring%20about%20your%20services%20from%20the%20${encodeURIComponent(office.name)}.`;
 
   const pageTitle = `${office.name} — ${office.city}, ${office.state} | Growth Service`;

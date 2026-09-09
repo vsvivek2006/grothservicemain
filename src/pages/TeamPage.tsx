@@ -1,30 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
-  Users, ShieldCheck, ArrowRight 
+  Users, ShieldCheck, ArrowRight, Building2, Sparkles 
 } from 'lucide-react';
-import { teamMembers, getTeamMembersByDepartment } from '../data/team';
+import { 
+  teamMembers, 
+  getAllTeamMembers, 
+  getTeamMembersByOffice 
+} from '../data/team';
+import { physicalOffices } from '../data/offices';
 import Breadcrumb from '../components/ui/Breadcrumb';
-import TeamCard from '../components/ui/TeamCard';
 import CTABanner from '../components/ui/CTABanner';
-import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
+import { FadeIn } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
 import { businessConfig } from '../config/business';
+import { OfficeFilter } from '../components/team/OfficeFilter';
+import { OfficeTeamSection } from '../components/team/OfficeTeamSection';
 
 export const TeamPage: React.FC = () => {
-  const [selectedDept, setSelectedDept] = useState<string>('all');
+  const [selectedOffice, setSelectedOffice] = useState<string>('all');
 
-  const filteredMembers = getTeamMembersByDepartment(selectedDept);
+  const allEmployees = useMemo(() => getAllTeamMembers(), []);
+
+  // Filtered offices to display: if 'all', show all offices that exist; otherwise, show only the selected office
+  const displayedOffices = useMemo(() => {
+    if (selectedOffice === 'all') {
+      return physicalOffices;
+    }
+    return physicalOffices.filter(
+      (o) => o.id.toLowerCase() === selectedOffice.toLowerCase()
+    );
+  }, [selectedOffice]);
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>Meet Our Team | Growth Service</title>
+        <title>Meet Our Team | Growth Service Employee Directory</title>
         <meta 
           name="description" 
-          content="Meet the leadership, developers, SEO executives, and marketers behind Growth Service. Delivering web development, SEO, and digital marketing across India and Nepal." 
+          content="Meet the verified leadership, developers, SEO specialists, and marketing team across Growth Service's offices in Jaipur, Vrindavan, and Nepal." 
         />
         <link rel="canonical" href="https://www.growthservice.in/team" />
 
@@ -32,25 +48,33 @@ export const TeamPage: React.FC = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
+            "name": "Meet Our Team - Growth Service",
+            "description": "Official employee directory of Growth Service across Jaipur, Vrindavan, and Nepal branches.",
             "mainEntity": {
               "@type": "Organization",
               "name": "Growth Service",
-              "employee": teamMembers.map(m => ({
+              "url": "https://www.growthservice.in",
+              "employee": allEmployees.map(m => ({
                 "@type": "Person",
                 "name": m.name,
                 "jobTitle": m.role,
                 "description": m.bio,
-                "knowsAbout": m.expertise
+                "knowsAbout": m.expertise,
+                "workLocation": {
+                  "@type": "Place",
+                  "name": `${m.officeSlug.toUpperCase()} Office, Growth Service`
+                }
               }))
             }
           })}
         </script>
       </Helmet>
 
-      {/* Hero Header */}
+      {/* Hero Header Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle" />
+        <div className="absolute bottom-0 left-10 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
         <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
@@ -62,80 +86,116 @@ export const TeamPage: React.FC = () => {
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
                 <Users className="w-4 h-4 text-yellow-400" />
-                <span>Growth Service Core Team</span>
+                <span>Verified Corporate Directory</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-emerald-300 font-bold">{allEmployees.length} Staff Members</span>
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
                 Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Team</span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
                 Our multidisciplinary team collaborates across our company offices in Jaipur, Vrindavan, and Nepal to deliver transparent, results-driven digital marketing and web development.
               </p>
+
+              {/* Quick Office Anchors / Status */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                {physicalOffices.map((office) => {
+                  const count = allEmployees.filter(m => m.officeId.toLowerCase() === office.id.toLowerCase()).length;
+                  return (
+                    <button
+                      key={office.id}
+                      onClick={() => setSelectedOffice(office.id)}
+                      className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1.5 rounded-lg text-xs font-semibold text-purple-100 transition-colors"
+                    >
+                      <span>{office.flag}</span>
+                      <span>{office.city} Office</span>
+                      <span className="bg-yellow-400/20 text-yellow-300 text-[11px] font-bold px-1.5 rounded">
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </FadeIn>
         </Container>
       </section>
 
-      {/* Department Filter Controls */}
-      <section className="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm py-4">
+      {/* Sticky Interactive Office Filter */}
+      <OfficeFilter
+        selectedOffice={selectedOffice}
+        onSelectOffice={setSelectedOffice}
+        teamMembers={allEmployees}
+      />
+
+      {/* Main Office-Wise Directory Content */}
+      <Section variant="transparent" spacing="none" className="py-12 md:py-20">
         <Container>
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-slate-400 mr-2 hidden sm:inline">
-              Department:
-            </span>
-            {['all', 'Leadership', 'Development', 'Marketing', 'Operations'].map((dept) => (
-              <button
-                key={dept}
-                onClick={() => setSelectedDept(dept)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all ${
-                  selectedDept.toLowerCase() === dept.toLowerCase()
-                    ? 'bg-purple-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-              >
-                {dept === 'all' ? `All Members (${teamMembers.length})` : dept}
-              </button>
-            ))}
+          {/* Active Filter State Announcement for Screen Readers */}
+          <div className="sr-only" role="status" aria-live="polite">
+            {selectedOffice === 'all' 
+              ? `Showing all team members across 3 corporate locations (${allEmployees.length} members total)`
+              : `Showing team members for ${selectedOffice} office (${getTeamMembersByOffice(selectedOffice).length} members)`
+            }
           </div>
-        </Container>
-      </section>
 
-      {/* Team Grid */}
-      <Section variant="transparent" spacing="none" className="py-16 md:py-24">
-        <Container>
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={70}>
-            {filteredMembers.map((member, idx) => (
-              <StaggerItem key={member.id} index={idx}>
-                <TeamCard
-                  name={member.name}
-                  role={member.role}
-                  department={member.department}
-                  image={member.image}
-                  bio={member.bio}
-                  expertise={member.expertise}
-                  linkedinUrl={member.socialLinks?.linkedin}
+          {/* Render Office Sections */}
+          <div className="space-y-12">
+            {displayedOffices.map((office) => {
+              const officeEmployees = allEmployees.filter(
+                (m) => m.officeId.toLowerCase() === office.id.toLowerCase()
+              );
+
+              return (
+                <OfficeTeamSection
+                  key={office.id}
+                  office={office}
+                  employees={officeEmployees}
                 />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+              );
+            })}
+          </div>
 
-          {/* Office Collaboration Standards */}
-          <FadeIn direction="up" delay={120}>
-            <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card relative overflow-hidden group">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-purple-600" />
-                <span>Cross-Office Team Collaboration</span>
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Our team collaborates across our physical offices in Jaipur, Vrindavan, and Nepal. When you partner with Growth Service, you get direct access to seasoned professionals who specialize in technical SEO, modern web engineering, and digital marketing.
-              </p>
-              <div className="flex flex-wrap gap-4 items-center pt-2">
-                <Link to="/offices" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
-                  <span>Explore Our 3 Company Offices</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+          {/* Cross-Office Team Collaboration Banner */}
+          <FadeIn direction="up" delay={100}>
+            <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200 shadow-card relative overflow-hidden group">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500" />
+              
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div className="space-y-3 max-w-2xl">
+                  <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-100 px-3 py-1 rounded-full">
+                    <Sparkles className="w-3.5 h-3.5 text-yellow-500" />
+                    <span>Cross-Border Operational Synergy</span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                    Unified Multi-Office Execution
+                  </h3>
+
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Our team collaborates across our physical offices in Jaipur, Vrindavan, and Nepal. When you partner with Growth Service, you get direct access to seasoned professionals who specialize in technical SEO, modern web engineering, and digital marketing.
+                  </p>
+                </div>
+
+                <div className="shrink-0 flex flex-col sm:flex-row gap-3">
+                  <Link 
+                    to="/offices" 
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-sm transition-all"
+                  >
+                    <Building2 className="w-4 h-4" />
+                    <span>Explore Our 3 Physical Offices</span>
+                  </Link>
+
+                  <Link
+                    to="/verify"
+                    className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-colors"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span>Verify Authenticity</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </FadeIn>
