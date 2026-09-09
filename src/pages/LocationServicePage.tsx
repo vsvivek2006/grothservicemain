@@ -49,10 +49,10 @@ export const LocationServicePage: React.FC = () => {
     return <NotFound />;
   }
 
-  const office = getOfficeForCity(city.id);
-  const cityPhone = getCityPhone(city.id);
-  const cityEmail = getCityEmail(city.id);
-  const cityAddress = getCityAddress(city.id);
+  const office = getOfficeForCity(city);
+  const cityPhone = getCityPhone(city);
+  const cityEmail = getCityEmail(city);
+  const cityAddress = getCityAddress(city);
   const businessName = getBusinessName();
 
   const canonicalUrl = buildCanonicalUrl(buildLocationServicePath(city.slug, service.slug));
@@ -61,15 +61,15 @@ export const LocationServicePage: React.FC = () => {
     `Hello ${businessName}, I am inquiring about ${service.title} in ${city.name}.`
   );
 
-  const otherServices = getAllServices()
+  const otherServicesInCity = getAllServices()
     .filter((s) => s.slug !== service.slug && city.servicesAvailable.includes(s.slug))
     .slice(0, 3);
 
-  const locationTeam = getAllTeamMembers().filter(
+  const coreTeam = getAllTeamMembers().filter(
     (m) => m.officeId.toLowerCase() === (city.officeId || 'jaipur').toLowerCase()
   );
 
-  const serviceSchema = buildServiceSchema(service, canonicalUrl, city.name);
+  const serviceSchema = buildServiceSchema(service, city);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -285,7 +285,7 @@ export const LocationServicePage: React.FC = () => {
                     department={member.department}
                     image={member.image}
                     bio={member.bio}
-                    expertise={member.expertise}
+                    expertise={[...member.expertise]}
                     linkedinUrl={member.socialLinks?.linkedin}
                   />
                 </StaggerItem>

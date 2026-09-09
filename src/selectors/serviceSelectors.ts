@@ -36,8 +36,3 @@ export function getServiceCities(serviceSlug: string): readonly CityData[] {
   const norm = serviceSlug.toLowerCase();
   return citiesData.filter(c => c.servicesAvailable.includes(norm));
 }
-
-/**
- * Alias for getServiceCities.
- */
-export const getCitiesForService = getServiceCities;

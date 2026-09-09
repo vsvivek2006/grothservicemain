@@ -27,6 +27,7 @@ const FreeWebsiteAudit: React.FC = () => {
   const [auditType, setAuditType] = useState('basic');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+  const [paymentComplete] = useState(false); // payment flow not active
 
   // Free audit types
   const freeAuditTypes = [

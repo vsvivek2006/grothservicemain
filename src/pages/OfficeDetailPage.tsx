@@ -24,6 +24,7 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import WhatsAppIcon from '../components/ui/WhatsAppIcon';
 import TeamCard from '../components/ui/TeamCard';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
@@ -274,7 +275,7 @@ export const OfficeDetailPage: React.FC = () => {
                     department={member.department}
                     image={member.image}
                     bio={member.bio}
-                    expertise={member.expertise}
+                    expertise={[...member.expertise]}
                     linkedinUrl={member.socialLinks?.linkedin}
                   />
                 </StaggerItem>

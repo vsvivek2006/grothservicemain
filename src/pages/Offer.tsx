@@ -133,7 +133,8 @@ const Offer: React.FC = () => {
     address: o.address,
     phone: o.phone,
     flag: o.flag,
-    city: o.city
+    city: o.city,
+    slug: o.slug
   }));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

@@ -5,6 +5,7 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
   variant?: 'default' | 'subtle' | 'dark' | 'primary' | 'transparent';
   padding?: 'default' | 'sm' | 'lg' | 'none';
+  spacing?: 'default' | 'sm' | 'lg' | 'none' | string;
   id?: string;
 }
 
@@ -13,9 +14,11 @@ export const Section: React.FC<SectionProps> = ({
   className = '',
   variant = 'default',
   padding = 'default',
+  spacing,
   id,
   ...props
 }) => {
+  const effectivePadding = (spacing && ['default', 'sm', 'lg', 'none'].includes(spacing) ? spacing : padding) as keyof typeof paddingStyles;
   const variantStyles = {
     default: 'bg-white text-slate-900',
     subtle: 'bg-slate-50 text-slate-900 border-y border-slate-200/60',
@@ -34,7 +37,7 @@ export const Section: React.FC<SectionProps> = ({
   return (
     <section
       id={id}
-      className={`${variantStyles[variant]} ${paddingStyles[padding]} ${className}`}
+      className={`${variantStyles[variant]} ${paddingStyles[effectivePadding]} ${className}`}
       {...props}
     >
       {children}

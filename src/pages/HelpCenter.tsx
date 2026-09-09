@@ -503,7 +503,7 @@ const HelpCenter: React.FC = () => {
       </div>
 
       {/* Mobile-friendly styles */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 640px) {
           button, a {
             min-height: 44px;
@@ -520,7 +520,7 @@ const HelpCenter: React.FC = () => {
             grid-template-columns: repeat(2, 1fr);
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 };

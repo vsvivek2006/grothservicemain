@@ -95,7 +95,7 @@ export function resolveRoute(rawPath: string): RouteResolution {
         status: 200,
         kind: 'dynamic-city',
         canonical: buildCityPath(city.slug),
-        entityId: city.id,
+        entityId: city.slug,
         label: `${city.name} Growth Hub`,
         params: { citySlug: city.slug },
       };

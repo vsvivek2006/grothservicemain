@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Shield, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
+import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";
 import { Container, WhatsAppIcon } from "../components/ui";
 import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
 import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";

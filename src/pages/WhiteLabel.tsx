@@ -21,6 +21,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/ui';
+import { businessConfig } from '../config/business';
 
 const WhiteLabel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');

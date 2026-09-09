@@ -113,29 +113,29 @@ const Contact: React.FC = () => {
     {
       icon: <Globe className="h-6 w-6" />,
       title: 'Nepal Office',
-      content: getOfficeAddress('nepal'),
-      link: getOfficeMapLink('nepal'),
+      content: getOfficeAddress('nepal') ?? '',
+      link: getOfficeMapLink('nepal') ?? '#',
       location: '🇳🇵 Nepal'
     },
     {
       icon: <Building className="h-6 w-6" />,
       title: 'Jaipur Office',
-      content: getOfficeAddress('jaipur'),
-      link: getOfficeMapLink('jaipur'),
+      content: getOfficeAddress('jaipur') ?? '',
+      link: getOfficeMapLink('jaipur') ?? '#',
       location: '🇮🇳 Jaipur'
     },
     {
       icon: <Building className="h-6 w-6" />,
       title: 'Vrindavan Office',
-      content: getOfficeAddress('vrindavan'),
-      link: getOfficeMapLink('vrindavan'),
+      content: getOfficeAddress('vrindavan') ?? '',
+      link: getOfficeMapLink('vrindavan') ?? '#',
       location: '🇮🇳 Vrindavan'
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Phone - Nepal Office',
-      content: getOfficePhone('nepal'),
-      link: getTelHref(getOfficePhone('nepal')),
+      content: getOfficePhone('nepal') ?? '',
+      link: getTelHref(getOfficePhone('nepal') ?? ''),
       location: '🇳🇵 Nepal'
     },
     {
@@ -155,21 +155,21 @@ const Contact: React.FC = () => {
     {
       icon: <MessageCircle className="h-6 w-6" />,
       title: 'WhatsApp - 24/7 Support',
-      content: getOfficePhone('nepal'),
+      content: getOfficePhone('nepal') ?? '',
       link: getNepalWhatsAppUrl(),
       location: 'Instant'
     },
     {
       icon: <Clock className="h-6 w-6" />,
       title: 'Working Hours - Nepal Office',
-      content: getOfficeTimings('nepal'),
+      content: getOfficeTimings('nepal') ?? '',
       link: '#',
       location: '🇳🇵 Nepal'
     },
     {
       icon: <Clock className="h-6 w-6" />,
       title: 'Working Hours - India',
-      content: getOfficeTimings('jaipur'),
+      content: getOfficeTimings('jaipur') ?? '',
       link: '#',
       location: '🇮🇳 India'
     }

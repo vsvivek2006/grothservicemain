@@ -13,9 +13,10 @@ import { WhatsAppIcon } from '../components/ui';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [selectedCaseStudy, setSelectedCaseStudy] = useState<any>(null);
 
   const filters = ['All', 'Website Development', 'SEO Services', 'SMM Campaigns', 'Business Setup', 'GMB Optimization'];
 
@@ -209,7 +210,8 @@ const Portfolio = () => {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const openCaseStudy = (project) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const openCaseStudy = (project: any) => {
     setSelectedCaseStudy(project);
   };
 
@@ -699,7 +701,7 @@ const Portfolio = () => {
                   <h4 className="font-bold text-gray-900 mb-3">Results Achieved</h4>
                   <div className="space-y-3 mb-6">
                     {selectedCaseStudy.metrics ? (
-                      selectedCaseStudy.metrics.map((metric, idx) => (
+                      selectedCaseStudy.metrics.map((metric: string, idx: number) => (
                         <div key={idx} className="bg-green-50 p-4 rounded-lg">
                           <p className="text-green-700 font-semibold flex items-center gap-2">
                             <Check className="w-4 h-4 text-green-600 shrink-0" />
@@ -719,7 +721,7 @@ const Portfolio = () => {
                   
                   <h4 className="font-bold text-gray-900 mb-3">Technologies Used</h4>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {selectedCaseStudy.technologies.map((tech, idx) => (
+                    {selectedCaseStudy.technologies.map((tech: string, idx: number) => (
                       <span key={idx} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
                         {tech}
                       </span>

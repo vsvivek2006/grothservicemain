@@ -3,20 +3,26 @@ import React from 'react';
 export interface DecorativeGridProps {
   className?: string;
   variant?: 'dots' | 'grid' | 'mesh';
+  pattern?: 'dots' | 'grid' | 'mesh';
+  opacity?: number;
   dark?: boolean;
 }
 
 export const DecorativeGrid: React.FC<DecorativeGridProps> = ({
   className = '',
-  variant = 'dots',
+  variant,
+  pattern = 'dots',
+  opacity,
   dark = false,
 }) => {
+  const activeVariant = variant || pattern;
   const dotColor = dark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(106, 13, 173, 0.07)';
   const gridLineColor = dark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(106, 13, 173, 0.04)';
+  const style = opacity !== undefined ? { opacity } : undefined;
 
   return (
-    <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none ${className}`} aria-hidden="true">
-      {variant === 'dots' && (
+    <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none ${className}`} style={style} aria-hidden="true">
+      {activeVariant === 'dots' && (
         <svg className="absolute inset-0 w-full h-full opacity-60" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="dot-pattern" width="24" height="24" patternUnits="userSpaceOnUse">
@@ -27,7 +33,7 @@ export const DecorativeGrid: React.FC<DecorativeGridProps> = ({
         </svg>
       )}
 
-      {variant === 'grid' && (
+      {activeVariant === 'grid' && (
         <svg className="absolute inset-0 w-full h-full opacity-40" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -38,7 +44,7 @@ export const DecorativeGrid: React.FC<DecorativeGridProps> = ({
         </svg>
       )}
 
-      {variant === 'mesh' && (
+      {activeVariant === 'mesh' && (
         <div className="absolute inset-0">
           <div className="absolute -top-32 -left-32 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-subtle" />
           <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse-subtle" style={{ animationDelay: '2s' }} />

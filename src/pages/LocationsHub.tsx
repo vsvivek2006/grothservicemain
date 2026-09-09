@@ -10,6 +10,7 @@ import Card from '../components/ui/Card';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import { Container, Section } from '../components/ui';
+import DecorativeGrid from '../components/ui/DecorativeGrid';
 
 export const LocationsHub: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<string>('all');

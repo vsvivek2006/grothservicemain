@@ -30,7 +30,7 @@ export const HomeTeamSection: React.FC = () => {
                 department={member.department}
                 image={member.image}
                 bio={member.bio}
-                expertise={member.expertise}
+                expertise={[...member.expertise]}
                 linkedinUrl={member.socialLinks?.linkedin}
               />
             </StaggerItem>

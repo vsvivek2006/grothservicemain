@@ -30,7 +30,7 @@ const DesignDevelopment: React.FC = () => {
       ]
     },
     {
-      icon: <Mobile className="h-8 w-8" />,
+      icon: <Smartphone className="h-8 w-8" />,
       title: "Mobile App Development",
       description: "Cross-platform mobile applications for iOS and Android",
       features: [

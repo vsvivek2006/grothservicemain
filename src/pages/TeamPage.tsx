@@ -135,7 +135,7 @@ export const TeamPage: React.FC = () => {
       <OfficeFilter
         selectedOffice={selectedOffice}
         onSelectOffice={setSelectedOffice}
-        teamMembers={allEmployees}
+        teamMembers={[...allEmployees]}
       />
 
       {/* Main Office-Wise Directory Content */}

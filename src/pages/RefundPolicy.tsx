@@ -9,6 +9,7 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { getBusinessEmail } from '../selectors';
 import { getMailtoHref } from '../services';
+import { businessConfig } from '../config/business';
 
 export const RefundPolicy: React.FC = () => {
   const primaryEmail = getBusinessEmail();

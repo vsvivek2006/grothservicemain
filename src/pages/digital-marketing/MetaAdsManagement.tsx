@@ -44,6 +44,8 @@ import {
   Award,
   Briefcase,
   Building2,
+  Store,
+  Mail,
 } from 'lucide-react';
 import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';

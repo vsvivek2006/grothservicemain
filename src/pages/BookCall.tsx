@@ -750,7 +750,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
       </Container>
 
       {/* Mobile-friendly touch improvements */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 640px) {
           button, a {
             min-height: 44px;
@@ -767,7 +767,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
             transform: translateY(-1px);
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 };

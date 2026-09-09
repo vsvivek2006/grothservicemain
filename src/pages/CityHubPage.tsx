@@ -23,7 +23,7 @@ import {
   getTelHref 
 } from '../services';
 import { buildCityPath, buildCanonicalUrl } from '../routing';
-import { Container, Section, Button, WhatsAppIcon } from '../components/ui';
+import { Container, Section, Button, WhatsAppIcon, CTABanner } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
@@ -46,10 +46,10 @@ export const CityHubPage: React.FC = () => {
     return <NotFound />;
   }
 
-  const office = getOfficeForCity(city.id);
-  const cityPhone = getCityPhone(city.id);
-  const cityEmail = getCityEmail(city.id);
-  const cityAddress = getCityAddress(city.id);
+  const office = getOfficeForCity(city);
+  const cityPhone = getCityPhone(city);
+  const cityEmail = getCityEmail(city);
+  const cityAddress = getCityAddress(city);
   const businessName = getBusinessName();
   const canonicalOrigin = getCanonicalOrigin();
 
@@ -61,6 +61,10 @@ export const CityHubPage: React.FC = () => {
 
   const assignedTeam = getAllTeamMembers().filter(
     (m) => m.officeId.toLowerCase() === (city.officeId || 'jaipur').toLowerCase()
+  );
+
+  const relatedCities = getCitiesByRegion(city.regionSlug).filter(
+    (c) => c.slug !== city.slug
   );
 
   return (
@@ -337,7 +341,7 @@ export const CityHubPage: React.FC = () => {
                     department={member.department}
                     image={member.image}
                     bio={member.bio}
-                    expertise={member.expertise}
+                    expertise={[...member.expertise]}
                     linkedinUrl={member.socialLinks?.linkedin}
                   />
                 </StaggerItem>

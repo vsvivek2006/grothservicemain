@@ -5,6 +5,7 @@ import { Container } from "../components/ui";
 import { CheckCircle, XCircle } from "lucide-react";
 import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
 import { getPrimaryWhatsAppUrl, getMailtoHref } from "../services";
+import { businessConfig } from "../config/business";
 
 const Privacy: React.FC = () => {
   const primaryEmail = getBusinessEmail();

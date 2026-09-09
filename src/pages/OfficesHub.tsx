@@ -6,6 +6,8 @@ import {
   ArrowRight, ShieldCheck, CheckCircle 
 } from 'lucide-react';
 import { getPhysicalOffices } from '../selectors';
+import { buildWhatsAppUrl } from '../services';
+import { businessConfig } from '../config/business';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';

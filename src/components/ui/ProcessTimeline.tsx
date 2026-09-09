@@ -9,8 +9,15 @@ interface ProcessStep {
 }
 
 interface ProcessTimelineProps {
-  steps: ProcessStep[];
+  steps?: ProcessStep[];
 }
+
+const DEFAULT_STEPS: ProcessStep[] = [
+  { step: '1', title: 'Discovery Call', description: 'We understand your business, goals, and current challenges in a focused consultation.', icon: 'search' },
+  { step: '2', title: 'Strategy & Plan', description: 'We craft a customized digital growth roadmap tailored to your market and budget.', icon: 'clipboard' },
+  { step: '3', title: 'Execution', description: 'Our team implements the strategy with precision — on time, every milestone.', icon: 'rocket' },
+  { step: '4', title: 'Measure & Scale', description: 'We track KPIs, report results monthly, and scale what works for compounding ROI.', icon: 'chart' },
+];
 
 // Map step numbers to Lucide icons
 const stepIcons = [
@@ -27,7 +34,7 @@ const stepColors = [
   { ring: 'ring-emerald-500/30', bg: 'bg-emerald-500/10', icon: 'text-emerald-500', num: 'text-emerald-500', connector: '' },
 ];
 
-export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ steps }) => {
+export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ steps = DEFAULT_STEPS }) => {
   return (
     <div className="relative">
       {/* Desktop: horizontal row */}

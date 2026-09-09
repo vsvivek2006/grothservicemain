@@ -315,7 +315,7 @@ const CaseStudies: React.FC = () => {
       </Section>
 
       {/* Case Studies Grid */}
-      <Section variant="subtle" padding="md">
+      <Section variant="subtle">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCaseStudies.map((study) => (
