@@ -135,7 +135,7 @@ export const teamMembers: readonly TeamMember[] = [
     officeId: "jaipur",
     employeeCode: "GS-JPR-07",
     image: "/team/kishan-kumar.jpg",
-    bio: "Frontend and backend developer building fast, responsive web solutions using modern technologies. Focused on clean code, performance, and seamless user experiences.",
+    bio: "Frontend developer crafting fast, responsive, and visually polished web interfaces using React.js and modern CSS. Focused on pixel-perfect UI implementation, Core Web Vitals performance, and smooth user experiences across devices.",
     expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"],
     email: "kishan.growthservice@gmail.com",
     phone: "+91 6203386747",
