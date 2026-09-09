@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Globe, Search, ArrowRight } from 'lucide-react';
-import { regionsData, citiesData, getCitiesByRegion } from '../data/locations';
+import { getAllCities, getAllRegions, getCitiesByRegion, getPrimaryPhone } from '../selectors';
+import { getNepalWhatsAppUrl } from '../services';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import { Container, Section } from '../components/ui';
-import { businessConfig, buildWhatsAppUrl } from '../config';
 
 export const LocationsHub: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const allCitiesList = getAllCities();
+  const allRegionsList = getAllRegions();
 
-  const filteredCities = citiesData.filter((city) => {
+  const filteredCities = allCitiesList.filter((city) => {
     const matchesRegion = selectedRegion === 'all' || city.regionSlug === selectedRegion;
     const matchesSearch = searchQuery.trim() === '' || 
       city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -97,9 +99,9 @@ export const LocationsHub: React.FC = () => {
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
-              All Regions ({citiesData.length} Cities)
+              All Regions ({allCitiesList.length} Cities)
             </button>
-            {regionsData.map((reg) => (
+            {allRegionsList.map((reg) => (
               <button
                 key={reg.slug}
                 onClick={() => setSelectedRegion(reg.slug)}
@@ -134,7 +136,7 @@ export const LocationsHub: React.FC = () => {
             </div>
           ) : selectedRegion === 'all' && !searchQuery.trim() ? (
             <div className="space-y-16">
-              {regionsData.map((region) => {
+              {allRegionsList.map((region) => {
                 const regionCities = getCitiesByRegion(region.slug);
                 if (regionCities.length === 0) return null;
                 return (
@@ -324,8 +326,8 @@ export const LocationsHub: React.FC = () => {
       <CTABanner
         title="Start Your Digital Growth Project Anywhere in India or Nepal"
         description="Whether you're based in Delhi NCR, Rajasthan, Bihar, or internationally, our specialized digital teams are ready to scale your business."
-        whatsappUrl={buildWhatsAppUrl('nepal', 'Hello Growth Service, I would like to discuss services in my city.')}
-        phoneNumber={businessConfig.phones.indiaPrimary}
+        whatsappUrl={getNepalWhatsAppUrl('Hello Growth Service, I would like to discuss services in my city.')}
+        phoneNumber={getPrimaryPhone()}
       />
     </div>
   );

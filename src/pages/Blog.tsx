@@ -8,6 +8,7 @@ import {
   BarChart, PieChart, Lock, Users, Building, ShoppingCart,
   Video, Image, Cloud, Wifi, Cpu, Battery, MapPin
 } from 'lucide-react';
+import { getNepalWhatsAppUrl } from '../services';
 
 const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -927,7 +928,7 @@ Our Transformation Package:
                     Close
                   </button>
                   <a
-                    href={`https://wa.me/97797073824881?text=I%20read%20your%20article:%20${encodeURIComponent(selectedPost.title)}`}
+                    href={getNepalWhatsAppUrl(`I read your article: ${selectedPost.title}`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition-colors text-center"

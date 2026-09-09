@@ -15,8 +15,8 @@ import {
 } from 'react-icons/si';
 import { teamMembers } from "../data/team";
 import { industriesData } from "../data/industries";
-import { officeLocations, expansionLocations } from "../data/locations";
-import { businessConfig } from "../config/business";
+import { getPhysicalOffices, getPrimaryPhone } from "../selectors";
+import { getPrimaryWhatsAppUrl, getTelHref } from "../services";
 import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import SectionHeader from "../components/ui/SectionHeader";
@@ -91,7 +91,7 @@ const Home: React.FC = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   // Office Locations from single source of truth
-  const offices: OfficeLocation[] = businessConfig.offices.map(o => ({
+  const offices: OfficeLocation[] = getPhysicalOffices().map(o => ({
     name: o.name,
     address: o.address,
     phone: o.phone,
@@ -353,8 +353,8 @@ const Home: React.FC = () => {
   ];
 
   // WhatsApp & Phone Contact from single source of truth
-  const whatsappUrl = businessConfig.whatsapp.defaultUrl;
-  const phoneNumber = businessConfig.phones.indiaPrimary;
+  const whatsappUrl = getPrimaryWhatsAppUrl();
+  const phoneNumber = getPrimaryPhone();
 
   // Hero Bento Grid Metric Showcase Items (Exclusively Verified Facts)
   const heroBentoItems: BentoItem[] = [
@@ -1460,12 +1460,12 @@ const Home: React.FC = () => {
               </AnimatedButton>
               
               <AnimatedButton
-                href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
+                href={getTelHref(phoneNumber)}
                 variant="white"
                 size="lg"
                 icon={<Phone className="w-5 h-5 text-slate-800" />}
               >
-                Call +91 93414 36937
+                Call {phoneNumber}
               </AnimatedButton>
 
               <AnimatedButton

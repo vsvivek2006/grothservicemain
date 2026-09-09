@@ -5,8 +5,19 @@ import {
   Building2, MapPin, Phone, Clock, ExternalLink, 
   CheckCircle, ArrowRight, Navigation 
 } from 'lucide-react';
-import { getOfficeBySlug, physicalOffices } from '../data/offices';
-import { teamMembers, getTeamMembersByOffice } from '../data/team';
+import { 
+  getOfficeBySlug, 
+  getPhysicalOffices, 
+  getTeamMembersByOffice, 
+  getAllTeamMembers, 
+  getBusinessName, 
+  getCanonicalOrigin 
+} from '../selectors';
+import { 
+  getOfficeWhatsAppUrl, 
+  getTelHref, 
+  getMailtoHref 
+} from '../services';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
@@ -17,8 +28,6 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations'
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
 import NotFound from './NotFound';
-
-import { buildWhatsAppUrl } from '../config';
 
 export const OfficeDetailPage: React.FC = () => {
   const { officeSlug } = useParams<{ officeSlug: string }>();
@@ -34,10 +43,10 @@ export const OfficeDetailPage: React.FC = () => {
   }
 
   const officeTeam = getTeamMembersByOffice(office.id);
-  const coreTeam = officeTeam.length > 0 ? officeTeam : teamMembers.slice(0, 3);
-  const whatsappUrl = buildWhatsAppUrl(
-    office.phone,
-    `Hello Growth Service, I am inquiring about your services from the ${office.name}.`
+  const coreTeam = officeTeam.length > 0 ? officeTeam : getAllTeamMembers().slice(0, 3);
+  const whatsappUrl = getOfficeWhatsAppUrl(
+    office.id,
+    `Hello ${getBusinessName()}, I am inquiring about your services from the ${office.name}.`
   );
 
   const pageTitle = `${office.name} — ${office.city}, ${office.state} | Growth Service`;
@@ -130,7 +139,7 @@ export const OfficeDetailPage: React.FC = () => {
                 </Button>
 
                 <Button
-                  href={`tel:${office.phone.replace(/\s+/g, '')}`}
+                  href={getTelHref(office.phone)}
                   variant="white"
                   size="lg"
                   icon={<Phone className="w-5 h-5 text-slate-800" />}
@@ -194,13 +203,13 @@ export const OfficeDetailPage: React.FC = () => {
                 <h3 className="text-lg font-bold text-slate-900 mb-2">Direct Contact</h3>
                 <p className="text-xs text-slate-500 mb-1">Telephone:</p>
                 <p className="text-slate-900 font-bold text-sm mb-3">
-                  <a href={`tel:${office.phone.replace(/\s+/g, '')}`} className="hover:text-purple-600 transition-colors">
+                  <a href={getTelHref(office.phone)} className="hover:text-purple-600 transition-colors">
                     {office.phone}
                   </a>
                 </p>
                 <p className="text-xs text-slate-500 mb-1">Email:</p>
                 <p className="text-slate-900 font-bold text-sm mb-4">
-                  <a href={`mailto:${office.email}`} className="hover:text-purple-600 transition-colors">
+                  <a href={getMailtoHref(office.email)} className="hover:text-purple-600 transition-colors">
                     {office.email}
                   </a>
                 </p>
@@ -319,7 +328,7 @@ export const OfficeDetailPage: React.FC = () => {
                 Other Physical Growth Service Offices
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {physicalOffices
+                {getPhysicalOffices()
                   .filter(o => o.id !== office.id)
                   .map(otherOffice => (
                     <Link

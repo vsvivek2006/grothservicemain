@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { ExternalLink, Filter, Star, TrendingUp, Users, Clock, MessageCircle, Globe, Code, Smartphone, Search, Target, Zap, Award, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { Helmet } from 'react-helmet';
-import { businessConfig } from '../config/business';
+import { getPrimaryPhone, getBusinessEmail } from '../selectors';
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -257,7 +258,7 @@ const Portfolio = () => {
                 </svg>
               </a>
               <a
-                href="https://wa.me/9779707382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex items-center gap-3"
@@ -431,7 +432,7 @@ const Portfolio = () => {
                     )}
                     
                     <a
-                      href={`https://wa.me/${businessConfig.whatsapp.number}?text=Hello%20Growth%20Service%20Team,%20I'm%20interested%20in%20a%20project%20similar%20to%20${encodeURIComponent(project.title)}`}
+                      href={getNepalWhatsAppUrl(`Hello Growth Service Team, I'm interested in a project similar to ${project.title}`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-gray-900 hover:bg-black text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
@@ -578,7 +579,7 @@ const Portfolio = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
@@ -591,24 +592,24 @@ const Portfolio = () => {
             </a>
             
             <a
-              href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
+              href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">📞</div>
               <div>
                 <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">{businessConfig.phones.indiaPrimary}</div>
+                <div className="text-sm text-gray-600">{getPrimaryPhone()}</div>
               </div>
             </a>
             
             <a
-              href={`mailto:${businessConfig.emails.primary}`}
+              href={getMailtoHref(getBusinessEmail())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">✉️</div>
               <div>
                 <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">{businessConfig.emails.primary}</div>
+                <div className="text-sm text-gray-600">{getBusinessEmail()}</div>
               </div>
             </a>
           </div>
@@ -706,7 +707,7 @@ const Portfolio = () => {
                   
                   <div className="grid grid-cols-2 gap-4">
                     <a
-                      href={`https://wa.me/9779707382481?text=Hello,%20I'm%20interested%20in%20a%20project%20similar%20to%20${encodeURIComponent(selectedCaseStudy.title)}`}
+                      href={getNepalWhatsAppUrl(`Hello, I'm interested in a project similar to ${selectedCaseStudy.title}`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105 text-center"

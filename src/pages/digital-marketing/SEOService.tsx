@@ -26,8 +26,9 @@ import {
   FaAward,
   FaTrophy,
   FaGem,
-  FaDollarSign
 } from 'react-icons/fa';
+import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName } from '../../selectors';
+import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
 const SEOService = () => {
   return (
@@ -625,80 +626,46 @@ const SEOService = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Jaipur Office */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2">
-              <div className="text-4xl mb-4">🇮🇳</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Jaipur Office</h3>
-              <p className="text-gray-600 text-sm mb-3">
-                138 A, Vivek Vihar, Mayapuri,<br />
-                Jagatpura, Jaipur, Rajasthan 302017
-              </p>
-              <div className="space-y-2 text-sm">
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaPhone className="text-blue-600" /> +91 62073 00553
-                </p>
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaEnvelope className="text-blue-600" /> jaipur@growthservice.in
-                </p>
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaClock className="text-blue-600" /> Mon-Sat: 9AM-7PM IST
-                </p>
-              </div>
-              <Link to="/contact" className="mt-4 inline-block text-blue-600 font-semibold hover:underline">
-                Get Directions →
-              </Link>
-            </div>
-
-            {/* Vrindavan Office */}
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2">
-              <div className="text-4xl mb-4">🇮🇳</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Vrindavan Office</h3>
-              <p className="text-gray-600 text-sm mb-3">
-                Radhika Sadan, Pushpa Garden,<br />
-                Kailash Nagar, Vrindavan, UP 281121
-              </p>
-              <div className="space-y-2 text-sm">
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaPhone className="text-purple-600" /> +91 93414 36937
-                </p>
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaEnvelope className="text-purple-600" /> info@growthservice.in
-                </p>
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaClock className="text-purple-600" /> Mon-Sat: 9AM-7PM IST
-                </p>
-              </div>
-              <Link to="/contact" className="mt-4 inline-block text-purple-600 font-semibold hover:underline">
-                Get Directions →
-              </Link>
-            </div>
-
-            {/* Nepal Office */}
-            <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 relative">
-              <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
-                ★ HEAD OFFICE
-              </div>
-              <div className="text-4xl mb-4">🇳🇵</div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Nepal Office</h3>
-              <p className="text-gray-600 text-sm mb-3">
-                Near Bariyarpatti Rd,<br />
-                Bariyarpatti 56500, Nepal
-              </p>
-              <div className="space-y-2 text-sm">
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaPhone className="text-green-600" /> +977 970-7382481
-                </p>
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaEnvelope className="text-green-600" /> nepal@growthservice.in
-                </p>
-                <p className="flex items-center gap-2 text-gray-700">
-                  <FaClock className="text-green-600" /> Sun-Fri: 10AM-6PM NPT
-                </p>
-              </div>
-              <Link to="/contact" className="mt-4 inline-block text-green-600 font-semibold hover:underline">
-                Get Directions →
-              </Link>
-            </div>
+            {getPhysicalOffices().map((office) => {
+              const bgGradient = office.id === 'jaipur'
+                ? 'from-blue-50 to-blue-100'
+                : office.id === 'vrindavan'
+                ? 'from-purple-50 to-purple-100'
+                : 'from-green-50 to-green-100';
+              const textAccent = office.id === 'jaipur'
+                ? 'text-blue-600'
+                : office.id === 'vrindavan'
+                ? 'text-purple-600'
+                : 'text-green-600';
+              return (
+                <div key={office.id} className={`bg-gradient-to-br ${bgGradient} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 relative`}>
+                  {office.isHeadOffice && (
+                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
+                      ★ HEAD OFFICE
+                    </div>
+                  )}
+                  <div className="text-4xl mb-4">{office.flag}</div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{office.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    {office.address}
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    <p className="flex items-center gap-2 text-gray-700">
+                      <FaPhone className={textAccent} /> {office.phone}
+                    </p>
+                    <p className="flex items-center gap-2 text-gray-700">
+                      <FaEnvelope className={textAccent} /> {office.email}
+                    </p>
+                    <p className="flex items-center gap-2 text-gray-700">
+                      <FaClock className={textAccent} /> {office.timings}
+                    </p>
+                  </div>
+                  <Link to="/contact" className={`mt-4 inline-block ${textAccent} font-semibold hover:underline`}>
+                    Get Directions →
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -845,34 +812,42 @@ const SEOService = () => {
               </a>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all relative">
-              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                HEAD OFFICE
+            {/* Direct Contact Options */}
+            <div className="bg-white/10 backdrop-blur p-4 rounded-xl max-w-xl mx-auto mb-8 text-left">
+              <p className="text-white text-xs font-semibold uppercase tracking-wider mb-2 text-center">📞 Direct Office Lines</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div>
+                  <span className="text-blue-300 font-bold block">🇮🇳 India Office (Jaipur/Vrindavan):</span>
+                  <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block">
+                    📞 {getPrimaryPhone()}
+                  </a>
+                  <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-xs block">
+                    ✉️ {getBusinessEmail()}
+                  </a>
+                </div>
+                <div>
+                  <span className="text-purple-300 font-bold block">🇳🇵 Nepal Office (HQ):</span>
+                  <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-purple-200 text-sm block">
+                    📞 {getOfficePhone('nepal')}
+                  </a>
+                  <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-200 text-sm block">
+                    💬 WhatsApp: {getOfficePhone('nepal')}
+                  </a>
+                </div>
               </div>
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-purple-600 mx-auto mb-4">
-                VS
-              </div>
-              <h3 className="text-xl font-bold mb-1">Vikash Singh</h3>
-              <p className="text-sm opacity-90 mb-3">Sales Manager - Nepal</p>
-              <a href="tel:+9779707382481" className="text-white hover:text-purple-200 text-sm block">
-                📞 +977 970-7382481
-              </a>
-              <a href="https://wa.me/9779707382481" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-200 text-sm block">
-                💬 WhatsApp: +977 9707382481
-              </a>
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all">
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-green-600 mx-auto mb-4">
                 GS
               </div>
-              <h3 className="text-xl font-bold mb-1">Growth Service</h3>
+              <h3 className="text-xl font-bold mb-1">{getBusinessName()}</h3>
               <p className="text-sm opacity-90 mb-3">SEO Support Team</p>
-              <a href="tel:+916207300553" className="text-white hover:text-green-200 text-sm block">
-                📞 +91 62073 00553
+              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-green-200 text-sm block">
+                📞 {getPrimaryPhone()}
               </a>
-              <a href="mailto:info@growthservice.in" className="text-white hover:text-green-200 text-sm block">
-                📧 info@growthservice.in
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-green-200 text-sm block">
+                📧 {getBusinessEmail()}
               </a>
             </div>
           </div>
@@ -971,11 +946,11 @@ const SEOService = () => {
             
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-6">
               <h4 className="font-bold text-blue-800 mb-2">📞 Ready to Rank Higher on Google?</h4>
-              <p className="text-blue-700">
-                Contact our SEO team in Jaipur, Vrindavan, or Nepal for a free consultation. 
-                Call us at <a href="tel:+919341436937" className="font-bold hover:underline">+91 93414 36937</a> 
-                or <a href="tel:+9779707382481" className="font-bold hover:underline">+977 970-7382481</a>
-              </p>
+              <p className="text-gray-600 text-sm">
+              Questions before booking? 
+              Call us at <a href={getTelHref(getPrimaryPhone())} className="font-bold hover:underline">{getPrimaryPhone()}</a> 
+              or <a href={getTelHref(getOfficePhone('nepal'))} className="font-bold hover:underline">{getOfficePhone('nepal')}</a>
+            </p>
             </div>
           </div>
         </div>

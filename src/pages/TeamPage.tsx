@@ -5,34 +5,42 @@ import {
   Users, ShieldCheck, ArrowRight, Building2, Sparkles 
 } from 'lucide-react';
 import { 
-  teamMembers, 
   getAllTeamMembers, 
-  getTeamMembersByOffice 
-} from '../data/team';
-import { physicalOffices } from '../data/offices';
+  getTeamMembersByOffice,
+  getPhysicalOffices,
+  getBusinessName,
+  getBusinessEmail,
+  getPrimaryPhone,
+  getCanonicalOrigin
+} from '../selectors';
+import { getMailtoHref, getPrimaryWhatsAppUrl } from '../services';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
-import { businessConfig } from '../config/business';
 import { OfficeFilter } from '../components/team/OfficeFilter';
 import { OfficeTeamSection } from '../components/team/OfficeTeamSection';
 
 export const TeamPage: React.FC = () => {
   const [selectedOffice, setSelectedOffice] = useState<string>('all');
+  const physicalOfficesList = getPhysicalOffices();
+  const businessEmail = getBusinessEmail();
+  const primaryPhone = getPrimaryPhone();
+  const businessName = getBusinessName();
+  const canonicalOrigin = getCanonicalOrigin();
 
   const allEmployees = useMemo(() => getAllTeamMembers(), []);
 
   // Filtered offices to display: if 'all', show all offices that exist; otherwise, show only the selected office
   const displayedOffices = useMemo(() => {
     if (selectedOffice === 'all') {
-      return physicalOffices;
+      return physicalOfficesList;
     }
-    return physicalOffices.filter(
+    return physicalOfficesList.filter(
       (o) => o.id.toLowerCase() === selectedOffice.toLowerCase()
     );
-  }, [selectedOffice]);
+  }, [selectedOffice, physicalOfficesList]);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -48,12 +56,12 @@ export const TeamPage: React.FC = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
-            "name": "Meet Our Team - Growth Service",
-            "description": "Official employee directory of Growth Service across Jaipur, Vrindavan, and Nepal branches.",
+            "name": `Meet Our Team - ${businessName}`,
+            "description": `Official employee directory of ${businessName} across Jaipur, Vrindavan, and Nepal branches.`,
             "mainEntity": {
               "@type": "Organization",
-              "name": "Growth Service",
-              "url": "https://www.growthservice.in",
+              "name": businessName,
+              "url": canonicalOrigin,
               "employee": allEmployees.map(m => ({
                 "@type": "Person",
                 "name": m.name,
@@ -62,7 +70,7 @@ export const TeamPage: React.FC = () => {
                 "knowsAbout": m.expertise,
                 "workLocation": {
                   "@type": "Place",
-                  "name": `${m.officeId.toUpperCase()} Office, Growth Service`
+                  "name": `${m.officeId.toUpperCase()} Office, ${businessName}`
                 }
               }))
             }
@@ -101,7 +109,7 @@ export const TeamPage: React.FC = () => {
 
               {/* Quick Office Anchors / Status */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                {physicalOffices.map((office) => {
+                {physicalOfficesList.map((office) => {
                   const count = allEmployees.filter(m => m.officeId.toLowerCase() === office.id.toLowerCase()).length;
                   return (
                     <button
@@ -213,14 +221,14 @@ export const TeamPage: React.FC = () => {
                 </p>
                 <div className="flex flex-wrap gap-4 items-center">
                   <a
-                    href={`mailto:${businessConfig.emails.primary}?subject=Career%20Application%20at%20Growth%20Service`}
+                    href={getMailtoHref(businessEmail, `Career Application at ${businessName}`)}
                     className="bg-yellow-400 hover:bg-yellow-300 text-gray-950 px-5 py-2.5 rounded-xl text-sm font-bold transition-colors inline-flex items-center gap-2"
                   >
                     <span>Send Your Resume / Portfolio</span>
                     <ArrowRight className="w-4 h-4" />
                   </a>
                   <span className="text-xs text-purple-300">
-                    Apply via email: {businessConfig.emails.primary}
+                    Apply via email: {businessEmail}
                   </span>
                 </div>
               </div>
@@ -233,8 +241,8 @@ export const TeamPage: React.FC = () => {
       <CTABanner
         title="Ready to Work with Our Dedicated Team?"
         description="Partner directly with experienced leaders and technical developers who take complete ownership of your digital metrics."
-        whatsappUrl={businessConfig.whatsapp.defaultUrl}
-        phoneNumber={businessConfig.phones.indiaPrimary}
+        whatsappUrl={getPrimaryWhatsAppUrl()}
+        phoneNumber={primaryPhone}
       />
     </div>
   );

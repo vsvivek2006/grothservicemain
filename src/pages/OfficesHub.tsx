@@ -5,7 +5,7 @@ import {
   Building2, MapPin, Phone, Clock, 
   ArrowRight, ShieldCheck, CheckCircle 
 } from 'lucide-react';
-import { physicalOffices, businessConfig, buildWhatsAppUrl } from '../config';
+import { getPhysicalOffices } from '../selectors';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
@@ -16,6 +16,8 @@ import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
 
 export const OfficesHub: React.FC = () => {
+  const offices = getPhysicalOffices();
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
@@ -32,7 +34,7 @@ export const OfficesHub: React.FC = () => {
             "@type": "Organization",
             "name": "Growth Service",
             "url": "https://www.growthservice.in",
-            "department": physicalOffices.map(o => ({
+            "department": offices.map(o => ({
               "@type": "LocalBusiness",
               "name": `Growth Service - ${o.name}`,
               "telephone": o.phone,
@@ -90,7 +92,7 @@ export const OfficesHub: React.FC = () => {
           />
 
           <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16" staggerDelay={120}>
-            {physicalOffices.map((office, idx) => (
+            {offices.map((office, idx) => (
               <StaggerItem key={office.id} index={idx} className="h-full">
                 <Card 
                   className="flex flex-col h-full bg-white border border-slate-200/80 shadow-card hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 relative overflow-hidden group"

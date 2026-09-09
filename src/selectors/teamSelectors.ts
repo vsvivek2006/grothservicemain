@@ -40,3 +40,24 @@ export function getTeamMembersByDepartment(dept: string): readonly TeamMember[] 
 export function getEmployeeOffice(member: TeamMember): OfficeData | undefined {
   return getOfficeById(member.officeId);
 }
+
+/**
+ * Alias for getEmployeeOffice.
+ */
+export const getOfficeForTeamMember = getEmployeeOffice;
+
+/**
+ * Returns total team member count.
+ */
+export function getTeamMemberCount(): number {
+  return teamMembers.length;
+}
+
+/**
+ * Returns staff headcount for a specific office.
+ */
+export function getTeamMemberCountByOffice(officeId: string): number {
+  if (!officeId || officeId === 'all') return teamMembers.length;
+  const norm = officeId.toLowerCase();
+  return teamMembers.filter(m => m.officeId.toLowerCase() === norm).length;
+}

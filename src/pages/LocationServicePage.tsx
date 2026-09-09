@@ -5,16 +5,21 @@ import {
   CheckCircle, ArrowRight, Phone, MessageCircle, 
   ShieldCheck, Sparkles, ChevronRight
 } from 'lucide-react';
-import { getCityBySlug } from '../data/locations';
-import { getServiceBySlug, servicesData } from '../data/services';
-import { teamMembers } from '../data/team';
 import { 
+  getCityBySlug, 
+  getServiceBySlug, 
+  getAllServices, 
+  getAllTeamMembers, 
   getCityPhone, 
   getCityEmail, 
   getCityAddress, 
-  getOfficeForCity 
+  getOfficeForCity,
+  getBusinessName 
 } from '../selectors';
-import { buildWhatsAppUrl } from '../config';
+import { 
+  getWhatsAppUrl, 
+  getTelHref 
+} from '../services';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -52,12 +57,12 @@ export const LocationServicePage: React.FC = () => {
   const cityPhone = getCityPhone(city);
   const cityEmail = getCityEmail(city);
   const cityAddress = getCityAddress(city);
-  const coreTeam = teamMembers.slice(0, 3);
-  const otherServicesInCity = servicesData.filter(s => s.slug !== service.slug && city.servicesAvailable.includes(s.slug));
+  const coreTeam = getAllTeamMembers().slice(0, 3);
+  const otherServicesInCity = getAllServices().filter(s => s.slug !== service.slug && city.servicesAvailable.includes(s.slug));
 
-  const whatsappUrl = buildWhatsAppUrl(
+  const whatsappUrl = getWhatsAppUrl(
     cityPhone, 
-    `Hello Growth Service, I am looking for ${service.title} in ${city.name}.`
+    `Hello ${getBusinessName()}, I am looking for ${service.title} in ${city.name}.`
   );
 
   const pageTitle = `${service.title} in ${city.name}, ${city.state} | Growth Service`;
@@ -150,7 +155,7 @@ export const LocationServicePage: React.FC = () => {
                 </Button>
 
                 <Button
-                  href={`tel:${cityPhone.replace(/\s+/g, '')}`}
+                  href={getTelHref(cityPhone)}
                   variant="white"
                   size="lg"
                   icon={<Phone className="w-5 h-5 text-slate-800" />}

@@ -27,7 +27,7 @@ export function getOfficeBySlug(slug: string): OfficeData | undefined {
 /**
  * Returns the authoritative phone line for a given office ID.
  */
-export function getOfficePhone(id: OfficeId): string {
+export function getOfficePhone(id: OfficeId | string): string {
   const office = getOfficeById(id);
   return office?.phone ?? '+91 93414 36937';
 }
@@ -35,9 +35,33 @@ export function getOfficePhone(id: OfficeId): string {
 /**
  * Returns the authoritative email address for a given office ID.
  */
-export function getOfficeEmail(id: OfficeId): string {
+export function getOfficeEmail(id: OfficeId | string): string {
   const office = getOfficeById(id);
   return office?.email ?? 'info@growthservice.in';
+}
+
+/**
+ * Returns the physical office address string.
+ */
+export function getOfficeAddress(id: OfficeId | string): string | undefined {
+  const office = getOfficeById(id);
+  return office?.address;
+}
+
+/**
+ * Returns Google Maps link for the office.
+ */
+export function getOfficeMapLink(id: OfficeId | string): string | undefined {
+  const office = getOfficeById(id);
+  return office?.mapLink;
+}
+
+/**
+ * Returns operating hours for the office.
+ */
+export function getOfficeTimings(id: OfficeId | string): string | undefined {
+  const office = getOfficeById(id);
+  return office?.timings;
 }
 
 /**
@@ -64,3 +88,8 @@ export function getOfficeTeamMembers(officeId: string): readonly TeamMember[] {
   const norm = officeId.toLowerCase();
   return teamMembers.filter(m => m.officeId.toLowerCase() === norm);
 }
+
+/**
+ * Alias for getOfficeTeamMembers.
+ */
+export const getOfficeEmployees = getOfficeTeamMembers;

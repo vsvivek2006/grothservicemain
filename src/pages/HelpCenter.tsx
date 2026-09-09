@@ -8,10 +8,16 @@ import {
   ChevronDown, ChevronUp, Headphones, Award, Building
 } from 'lucide-react';
 
+import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from '../selectors';
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
+
 const HelpCenter: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedFaqs, setExpandedFaqs] = useState<number[]>([]);
+  const primaryPhone = getPrimaryPhone();
+  const businessEmail = getBusinessEmail();
+  const nepalPhone = getOfficePhone('nepal');
 
   const categories = [
     { id: 'all', name: 'All Topics', icon: <BookOpen className="h-5 w-5" /> },
@@ -168,28 +174,28 @@ const HelpCenter: React.FC = () => {
       title: "WhatsApp Support",
       description: "Fastest response (24/7)",
       icon: <MessageCircle className="h-6 w-6" />,
-      contact: "+977 97073824881",
+      contact: nepalPhone,
       action: "Chat Now",
       color: "bg-green-500",
-      href: "https://wa.me/97797073824881"
+      href: getNepalWhatsAppUrl()
     },
     {
       title: "Phone Support",
       description: "Mon-Sat, 9 AM - 7 PM",
       icon: <Phone className="h-6 w-6" />,
-      contact: "+91 93414 36937",
+      contact: primaryPhone,
       action: "Call Now",
       color: "bg-blue-500",
-      href: "tel:+919341436937"
+      href: getTelHref(primaryPhone)
     },
     {
       title: "Email Support",
       description: "Response within 4 hours",
       icon: <Mail className="h-6 w-6" />,
-      contact: "info@growthservice.in",
+      contact: businessEmail,
       action: "Send Email",
       color: "bg-purple-500",
-      href: "mailto:info@growthservice.in"
+      href: getMailtoHref(businessEmail)
     }
   ];
 
@@ -349,7 +355,7 @@ const HelpCenter: React.FC = () => {
                     <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                     <div className="mt-4 flex space-x-3">
                       <a
-                        href={`https://wa.me/97797073824881?text=I%20have%20a%20question%20about:%20${encodeURIComponent(faq.question)}`}
+                        href={getNepalWhatsAppUrl(`I have a question about: ${faq.question}`)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-blue-600 hover:text-blue-800 font-medium"

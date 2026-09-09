@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Check, Shield, Clock, MessageCircle, Code, Award, Calendar, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { Container, Section } from '../components/ui';
+import { getNepalWhatsAppUrl } from '../services';
 
 interface ServiceItem {
   id: number;
@@ -298,8 +299,7 @@ const Pricing: React.FC = () => {
 
   const handleWhatsAppClick = (serviceName: string) => {
     const message = `🚀 *Growth Service - Consultation Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to request a custom quote and project scope for this service. Please share details on consultation availability.`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+    window.open(getNepalWhatsAppUrl(message), '_blank');
   };
 
   const filteredServices = selectedTab === 'all' 
@@ -631,7 +631,7 @@ const Pricing: React.FC = () => {
             </Link>
             
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"

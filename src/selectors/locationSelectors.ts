@@ -4,6 +4,17 @@ import { servicesData, ServiceData } from '../data/services';
 import { getOfficeById } from './officeSelectors';
 
 /**
+ * Helper to resolve city object from CityData or slug string.
+ */
+function resolveCity(cityOrSlug: CityData | string | undefined): CityData | undefined {
+  if (!cityOrSlug) return undefined;
+  if (typeof cityOrSlug === 'object') return cityOrSlug;
+  const norm = cityOrSlug.toLowerCase();
+  if (norm === 'panaji') return citiesData.find(c => c.slug === 'goa');
+  return citiesData.find(c => c.slug.toLowerCase() === norm);
+}
+
+/**
  * Returns all 9 regions.
  */
 export function getAllRegions(): readonly RegionData[] {
@@ -36,11 +47,16 @@ export function getAllLocations(): readonly LocationData[] {
  * Finds a city by its slug (normalizes aliases like panaji -> goa).
  */
 export function getCityBySlug(slug: string): CityData | undefined {
-  const norm = slug.toLowerCase();
-  if (norm === 'panaji') {
-    return citiesData.find(c => c.slug === 'goa');
-  }
-  return citiesData.find(c => c.slug.toLowerCase() === norm);
+  return resolveCity(slug);
+}
+
+/**
+ * Resolves the parent region for a city.
+ */
+export function getRegionForCity(cityOrSlug: CityData | string): RegionData | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city) return undefined;
+  return getRegionBySlug(city.regionSlug);
 }
 
 /**
@@ -68,22 +84,26 @@ export function getExpansionCities(): readonly CityData[] {
 /**
  * Resolves the physical OfficeData entity associated with a city (if any).
  */
-export function getOfficeForCity(city: CityData): OfficeData | undefined {
-  if (!city.officeId) return undefined;
+export function getOfficeForCity(cityOrSlug: CityData | string): OfficeData | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city?.officeId) return undefined;
   return getOfficeById(city.officeId);
 }
 
 /**
  * Alias for getOfficeForCity.
  */
-export function getCityOffice(city: CityData): OfficeData | undefined {
-  return getOfficeForCity(city);
+export function getCityOffice(cityOrSlug: CityData | string): OfficeData | undefined {
+  return getOfficeForCity(cityOrSlug);
 }
 
 /**
  * Returns the canonical phone for a city (physical office phone, or regional serving office phone, or primary line).
  */
-export function getCityPhone(city: CityData): string {
+export function getCityPhone(cityOrSlug: CityData | string): string {
+  const city = resolveCity(cityOrSlug);
+  if (!city) return '+91 93414 36937';
+
   if (city.officeId) {
     const office = getOfficeById(city.officeId);
     if (office) return office.phone;
@@ -98,7 +118,10 @@ export function getCityPhone(city: CityData): string {
 /**
  * Returns the canonical email for a city (physical office email, or regional serving office email, or primary email).
  */
-export function getCityEmail(city: CityData): string {
+export function getCityEmail(cityOrSlug: CityData | string): string {
+  const city = resolveCity(cityOrSlug);
+  if (!city) return 'info@growthservice.in';
+
   if (city.officeId) {
     const office = getOfficeById(city.officeId);
     if (office) return office.email;
@@ -113,60 +136,62 @@ export function getCityEmail(city: CityData): string {
 /**
  * Resolves physical office address if present.
  */
-export function getCityAddress(city: CityData): string | undefined {
-  if (city.officeId) {
-    return getOfficeById(city.officeId)?.address;
-  }
-  return undefined;
+export function getCityAddress(cityOrSlug: CityData | string): string | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city?.officeId) return undefined;
+  return getOfficeById(city.officeId)?.address;
 }
 
 /**
  * Resolves physical office landmark if present.
  */
-export function getCityLandmark(city: CityData): string | undefined {
-  if (city.officeId) {
-    return getOfficeById(city.officeId)?.landmark;
-  }
-  return undefined;
+export function getCityLandmark(cityOrSlug: CityData | string): string | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city?.officeId) return undefined;
+  return getOfficeById(city.officeId)?.landmark;
 }
 
 /**
  * Resolves physical office postal code if present.
  */
-export function getCityPostalCode(city: CityData): string | undefined {
-  if (city.officeId) {
-    return getOfficeById(city.officeId)?.postalCode;
-  }
-  return undefined;
+export function getCityPostalCode(cityOrSlug: CityData | string): string | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city?.officeId) return undefined;
+  return getOfficeById(city.officeId)?.postalCode;
 }
 
 /**
  * Resolves physical office map link if present.
  */
-export function getCityMapLink(city: CityData): string | undefined {
-  if (city.officeId) {
-    return getOfficeById(city.officeId)?.mapLink;
-  }
-  return undefined;
+export function getCityMapLink(cityOrSlug: CityData | string): string | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city?.officeId) return undefined;
+  return getOfficeById(city.officeId)?.mapLink;
 }
 
 /**
  * Resolves physical office operating hours if present.
  */
-export function getCityTimings(city: CityData): string | undefined {
-  if (city.officeId) {
-    return getOfficeById(city.officeId)?.timings;
-  }
-  return undefined;
+export function getCityTimings(cityOrSlug: CityData | string): string | undefined {
+  const city = resolveCity(cityOrSlug);
+  if (!city?.officeId) return undefined;
+  return getOfficeById(city.officeId)?.timings;
 }
 
 /**
  * Resolves the full ServiceData objects for the services available in a city.
  */
-export function getServicesForCity(city: CityData): readonly ServiceData[] {
+export function getServicesForCity(cityOrSlug: CityData | string): readonly ServiceData[] {
+  const city = resolveCity(cityOrSlug);
+  if (!city) return [];
   const slugSet = new Set(city.servicesAvailable);
   return servicesData.filter(s => slugSet.has(s.slug));
 }
+
+/**
+ * Alias for getServicesForCity.
+ */
+export const getAvailableServicesForCity = getServicesForCity;
 
 /**
  * Checks if a canonical service is available in a city.

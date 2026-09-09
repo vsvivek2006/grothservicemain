@@ -1,11 +1,11 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
+import { getNepalWhatsAppUrl } from '../services';
+import { getOfficePhone } from '../selectors';
 
 const WhatsAppFloat = () => {
-  // Correct WhatsApp number: +977 9707382481
-  const whatsappNumber = "9779707382481";
-  const defaultMessage = "Hello%20Growth%20Service,%20I%20want%20to%20discuss%20my%20digital%20marketing%20project.";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${defaultMessage}`;
+  const displayPhone = getOfficePhone('nepal');
+  const whatsappUrl = getNepalWhatsAppUrl("Hello Growth Service, I want to discuss my digital marketing project.");
 
   return (
     <div className="fixed bottom-6 right-6 z-50 group">
@@ -46,7 +46,7 @@ const WhatsAppFloat = () => {
             Quick Response • 24/7 Support
           </div>
           <div className="text-xs text-green-400 font-mono mt-1">
-            +977 9707382481
+            {displayPhone}
           </div>
         </div>
         {/* Tooltip Arrow */}
@@ -64,7 +64,7 @@ const WhatsAppFloat = () => {
 
       {/* WhatsApp Number Display (Mobile Only) */}
       <div className="lg:hidden absolute -left-4 bottom-0 transform -translate-x-full bg-gray-900/90 backdrop-blur-sm text-white px-3 py-2 rounded-lg text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <div className="font-mono">+977 9707382481</div>
+        <div className="font-mono">{getOfficePhone('nepal')}</div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, Award, Calendar, MessageCircle, Sparkles } from 'lucide-react';
 import { Container, Section } from '../components/ui';
+import { getNepalWhatsAppUrl } from '../services';
 
 const Packages: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'web' | 'seo' | 'smm' | 'gmb' | 'business'>('web');
@@ -207,8 +208,7 @@ const Packages: React.FC = () => {
 
   const handleWhatsAppClick = (serviceName: string) => {
     const message = `🚀 *Growth Service - Engagement Scope Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to discuss our project scope and request a consultation.`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+    window.open(getNepalWhatsAppUrl(message), '_blank');
   };
 
   const renderContent = () => {
@@ -689,7 +689,7 @@ const Packages: React.FC = () => {
             </Link>
             
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"

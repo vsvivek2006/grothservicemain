@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "data:validate": "node scratch/validate_data_architecture.js",
-    "data:audit": "node scratch/data_literal_audit.js"
+    "data:audit": "node scratch/data_literal_audit.js",
+    "architecture:audit": "node scratch/centralization_audit.js",
+    "centralization:audit": "node scratch/centralization_audit.js",
+    "test:propagation": "node scratch/test_one_change_propagation.js"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",

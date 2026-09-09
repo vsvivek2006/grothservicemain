@@ -21,7 +21,8 @@ import {
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 import { Container, Section } from '../components/ui';
-import { commercialPackages } from '../data/packages';
+import { getAllPackages } from '../selectors';
+import { getNepalWhatsAppUrl } from '../services';
 
 interface ServiceData {
   id: number;
@@ -66,7 +67,7 @@ const Services = () => {
   };
 
   // All Services dynamically derived from canonical commercialPackages
-  const allServices: ServiceData[] = commercialPackages.map(pkg => ({
+  const allServices: ServiceData[] = getAllPackages().map(pkg => ({
     id: pkg.id,
     title: pkg.title,
     category: pkg.category,
@@ -132,8 +133,7 @@ const Services = () => {
 
   const handleWhatsAppClick = (serviceName: string) => {
     const message = `🚀 *Growth Service - Service Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to request a consultation and discuss our requirements for this service.`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+    window.open(getNepalWhatsAppUrl(message), '_blank');
   };
 
   const stats = [
@@ -403,7 +403,7 @@ const Services = () => {
               Book a Consultation
             </Link>
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-all shadow-lg flex items-center gap-2"

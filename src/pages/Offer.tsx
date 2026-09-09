@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Container, Section } from "../components/ui";
-import { businessConfig } from "../config";
+import { getPhysicalOffices } from "../selectors";
+import { getNepalWhatsAppUrl } from "../services";
 import { 
   Check, 
   MessageCircle, 
@@ -31,7 +32,6 @@ const Offer: React.FC = () => {
     message: ""
   });
 
-  const WHATSAPP_NUMBER = "9779707382481"; // Nepal Office
 
   // Consultation Domains & Capabilities
   const services = [
@@ -127,8 +127,8 @@ const Offer: React.FC = () => {
     }
   ];
 
-  // 3 Factual Physical Office Locations derived from central businessConfig
-  const offices = businessConfig.offices.map((o) => ({
+  // 3 Factual Physical Office Locations derived from single source of truth
+  const offices = getPhysicalOffices().map((o) => ({
     name: `${o.name} (${o.state})`,
     address: o.address,
     phone: o.phone,
@@ -166,8 +166,7 @@ ${formData.message || 'No additional details provided'}
 
 Hi, I would like to schedule a strategy consultation and digital audit. Please let me know the available time slots.`;
     
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+    window.open(getNepalWhatsAppUrl(whatsappMessage), '_blank');
     
     setIsFormOpen(false);
     setFormData({ name: "", email: "", phone: "", service: "", location: "Jaipur", message: "" });

@@ -5,17 +5,22 @@ import {
   Building2, Phone, MessageCircle, ArrowRight, 
   ChevronRight, HelpCircle
 } from 'lucide-react';
-import { getCityBySlug, getCitiesByRegion } from '../data/locations';
-import { getOfficeById } from '../data/offices';
-import { getServiceBySlug } from '../data/services';
-import { teamMembers } from '../data/team';
 import { 
+  getCityBySlug, 
+  getCitiesByRegion, 
+  getOfficeById, 
+  getServiceBySlug, 
+  getAllTeamMembers, 
   getCityPhone, 
   getCityEmail, 
   getCityAddress, 
-  getOfficeForCity 
+  getOfficeForCity,
+  getBusinessName 
 } from '../selectors';
-import { buildWhatsAppUrl } from '../config';
+import { 
+  getWhatsAppUrl, 
+  getTelHref 
+} from '../services';
 import { Container, Section, Button } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
@@ -41,16 +46,16 @@ export const CityHubPage: React.FC = () => {
     return <NotFound />;
   }
 
-  const assignedTeam = teamMembers.slice(0, 3);
+  const assignedTeam = getAllTeamMembers().slice(0, 3);
   const office = getOfficeForCity(city);
   const cityPhone = getCityPhone(city);
   const cityEmail = getCityEmail(city);
   const cityAddress = getCityAddress(city);
   const relatedCities = getCitiesByRegion(city.regionSlug).filter(c => c.slug !== city.slug);
 
-  const whatsappUrl = buildWhatsAppUrl(
+  const whatsappUrl = getWhatsAppUrl(
     cityPhone,
-    `Hello Growth Service, I am looking for digital marketing services in ${city.name}.`
+    `Hello ${getBusinessName()}, I am looking for digital marketing services in ${city.name}.`
   );
 
   const pageTitle = `Digital Marketing, SEO & Web Development in ${city.name}, ${city.state} | Growth Service`;
@@ -146,7 +151,7 @@ export const CityHubPage: React.FC = () => {
                 </Button>
 
                 <Button
-                  href={`tel:${cityPhone.replace(/\s+/g, '')}`}
+                  href={getTelHref(cityPhone)}
                   variant="white"
                   size="lg"
                   icon={<Phone className="w-5 h-5 text-slate-800" />}

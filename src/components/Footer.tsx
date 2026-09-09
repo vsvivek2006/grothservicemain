@@ -69,7 +69,15 @@ interface SocialLink {
   handle: string;
 }
 
-import { businessConfig } from "../config";
+import { 
+  getPhysicalOffices, 
+  getBusinessName, 
+  getBusinessTagline, 
+  getBusinessEmail, 
+  getSocialProfiles, 
+  getTrustSignals 
+} from "../selectors";
+import { getMailtoHref } from "../services";
 
 interface TrustBadge {
   text: string;
@@ -81,7 +89,7 @@ const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
   // Office Locations Data - dynamically mapped from single source of truth
-  const offices: OfficeLocation[] = businessConfig.offices.map((o) => ({
+  const offices: OfficeLocation[] = getPhysicalOffices().map((o) => ({
     id: o.id,
     name: `${o.name} (${o.state})`,
     address: o.address,
@@ -157,11 +165,14 @@ const Footer: React.FC = () => {
     { name: "Book a Consultation", path: "/book-call", icon: Phone }
   ];
 
+  const social = getSocialProfiles();
+  const trustSignals = getTrustSignals();
+
   const socialLinks: SocialLink[] = [
-    { icon: Facebook, href: businessConfig.social.facebook, label: "Facebook", color: "hover:text-blue-500", handle: "@growthservices" },
-    { icon: Instagram, href: businessConfig.social.instagram, label: "Instagram", color: "hover:text-pink-500", handle: "@growth_servces" },
-    { icon: Linkedin, href: businessConfig.social.linkedin, label: "LinkedIn", color: "hover:text-blue-400", handle: "growthservice" },
-    { icon: Youtube, href: businessConfig.social.youtube, label: "YouTube", color: "hover:text-red-500", handle: "@growthservice" }
+    { icon: Facebook, href: social.facebook, label: "Facebook", color: "hover:text-blue-500", handle: social.handles.facebook },
+    { icon: Instagram, href: social.instagram, label: "Instagram", color: "hover:text-pink-500", handle: social.handles.instagram },
+    { icon: Linkedin, href: social.linkedin, label: "LinkedIn", color: "hover:text-blue-400", handle: social.handles.linkedin },
+    { icon: Youtube, href: social.youtube, label: "YouTube", color: "hover:text-red-500", handle: social.handles.youtube }
   ];
 
   const trustBadges: TrustBadge[] = [
@@ -196,11 +207,11 @@ const Footer: React.FC = () => {
                 ))}
               </div>
               <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-bold px-4 py-1.5 rounded-full text-sm">
-                4.8/5
+                {trustSignals.displayString}
               </span>
               <span className="text-gray-300 text-sm flex items-center">
                 <Users className="h-4 w-4 mr-1" />
-                300+ Reviews
+                {trustSignals.reviewCount}+ Reviews
               </span>
             </div>
             <p className="text-xl font-bold bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent mb-2">
@@ -518,7 +529,7 @@ const Footer: React.FC = () => {
                 <ShieldCheck className="w-3.5 h-3.5" /> Verify Official Domain & Staff
               </Link>
               <a 
-                href="mailto:info@growthservice.in?subject=Report%20Fraud" 
+                href={getMailtoHref(getBusinessEmail(), "Report Fraud")} 
                 className="border border-yellow-500/60 hover:bg-yellow-500/10 text-yellow-300 font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1.5"
               >
                 Report Fraud
@@ -538,10 +549,10 @@ const Footer: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">
-                    © {year} <span className="text-purple-300 font-bold">Growth Service</span>
+                    © {year} <span className="text-purple-300 font-bold">{getBusinessName()}</span>
                   </p>
                   <p className="text-gray-500 text-xs">
-                    Your Trusted Digital Growth Partner
+                    {getBusinessTagline()}
                   </p>
                 </div>
               </div>

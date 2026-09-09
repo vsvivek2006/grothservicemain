@@ -18,7 +18,22 @@ import {
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Container, Section, Input, Textarea } from '../components/ui';
-import { businessConfig } from '../config';
+import { 
+  getPhysicalOffices, 
+  getOfficeById, 
+  getOfficePhone,
+  getOfficeEmail,
+  getOfficeAddress,
+  getOfficeMapLink,
+  getOfficeTimings,
+  getPrimaryPhone, 
+  getBusinessEmail, 
+  getBusinessLegalName,
+  getCanonicalOrigin,
+  getAllServices,
+  getSocialProfiles 
+} from '../selectors';
+import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../services';
 
 // Types
 interface OfficeLocation {
@@ -61,8 +76,16 @@ const Contact: React.FC = () => {
     location: ''
   });
 
+  const physicalOfficesList = getPhysicalOffices();
+  const nepalOffice = getOfficeById('nepal');
+  const jaipurOffice = getOfficeById('jaipur');
+  const vrindavanOffice = getOfficeById('vrindavan');
+  const primaryPhone = getPrimaryPhone();
+  const businessEmail = getBusinessEmail();
+  const social = getSocialProfiles();
+
   // Office Locations from single source of truth
-  const offices: OfficeLocation[] = businessConfig.offices.map((o, idx) => ({
+  const offices: OfficeLocation[] = physicalOfficesList.map((o, idx) => ({
     id: idx + 1,
     name: o.name,
     address: o.address,
@@ -75,89 +98,78 @@ const Contact: React.FC = () => {
     landmark: o.landmark || '',
     timings: o.timings,
     isHeadOffice: o.isHeadOffice,
-    services: o.servicesOffered
+    services: [...o.servicesOffered]
   }));
 
-  // Services list for dropdown
+  // Services list derived from canonical services
   const services = [
-    'Website Development',
-    'SEO Services',
-    'Social Media Management',
-    'Google Business Profile',
-    'Meta Ads Management',
-    'Lead Generation',
-    'App Development',
-    'Brand Strategy',
-    'Digital Marketing',
-    'E-commerce Solutions',
-    'Performance Marketing',
-    'Content Marketing',
+    ...getAllServices().map(s => s.title),
     'Custom Project',
     'Other'
   ];
 
-  // Contact Information with all locations
+  // Contact Information dynamically derived from canonical entities
   const contactInfo: ContactInfo[] = [
     {
       icon: <Globe className="h-6 w-6" />,
       title: 'Nepal Office',
-      content: 'Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal',
-      link: 'https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal',
+      content: getOfficeAddress('nepal'),
+      link: getOfficeMapLink('nepal'),
       location: '🇳🇵 Nepal'
     },
     {
       icon: <Building className="h-6 w-6" />,
       title: 'Jaipur Office',
-      content: '138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017',
-      link: 'https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur',
+      content: getOfficeAddress('jaipur'),
+      link: getOfficeMapLink('jaipur'),
       location: '🇮🇳 Jaipur'
     },
     {
       icon: <Building className="h-6 w-6" />,
       title: 'Vrindavan Office',
-      content: 'Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121',
-      link: 'https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan',
+      content: getOfficeAddress('vrindavan'),
+      link: getOfficeMapLink('vrindavan'),
       location: '🇮🇳 Vrindavan'
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Phone - Nepal Office',
-      content: '+977 970-7382481',
-      link: 'tel:+9779707382481',
+      content: getOfficePhone('nepal'),
+      link: getTelHref(getOfficePhone('nepal')),
       location: '🇳🇵 Nepal'
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Phone - India',
-      content: '+91 93414 36937',
-      link: 'tel:+919341436937',
+      content: primaryPhone,
+      link: getTelHref(primaryPhone),
       location: '🇮🇳 India'
     },
     {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email',
-      content: 'info@growthservice.in',
-      link: 'mailto:info@growthservice.in',
+      content: businessEmail,
+      link: getMailtoHref(businessEmail),
       location: '🌐 Global'
     },
     {
       icon: <MessageCircle className="h-6 w-6" />,
       title: 'WhatsApp - 24/7 Support',
-      content: '+977 9707382481',
-      link: 'https://wa.me/9779707382481',
+      content: getOfficePhone('nepal'),
+      link: getNepalWhatsAppUrl(),
       location: '💬 Instant'
     },
     {
       icon: <Clock className="h-6 w-6" />,
       title: 'Working Hours - Nepal Office',
-      content: 'Sun-Fri: 10:00 AM - 6:00 PM NPT',
+      content: getOfficeTimings('nepal'),
       link: '#',
       location: '🇳🇵 Nepal'
     },
     {
       icon: <Clock className="h-6 w-6" />,
       title: 'Working Hours - India',
-      content: 'Mon-Sat: 9:00 AM - 7:00 PM IST',
+      content: getOfficeTimings('jaipur'),
       link: '#',
       location: '🇮🇳 India'
     }
@@ -167,7 +179,7 @@ const Contact: React.FC = () => {
   const faqs: FAQItem[] = [
     {
       question: "Where are Growth Service's offices located?",
-      answer: "Our physical offices are located in Bariyarpatti (Nepal), Jaipur (Rajasthan), and Vrindavan (Uttar Pradesh) to serve our clients across India, Nepal, and globally."
+      answer: `Our physical offices are located in ${physicalOfficesList.map(o => `${o.city} (${o.country})`).join(', ')} to serve our clients across India, Nepal, and globally.`
     },
     {
       question: "What digital marketing services do you offer?",
@@ -187,7 +199,7 @@ const Contact: React.FC = () => {
     },
     {
       question: "How can I contact your Nepal office?",
-      answer: "You can contact our Nepal office at +977 970-7382481 or email us at nepal@growthservice.in. Our office is located near Bariyarpatti Road, Bariyarpatti 56500, Nepal."
+      answer: `You can contact our Nepal office at ${getOfficePhone('nepal')} or email us at ${getOfficeEmail('nepal')}. Our office is located at ${getOfficeAddress('nepal')}.`
     }
   ];
 
@@ -218,7 +230,7 @@ const Contact: React.FC = () => {
 I would like to discuss my project with you. Please provide more details.`;
 
     // Send to Nepal WhatsApp
-    const whatsappUrl = `https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = getNepalWhatsAppUrl(whatsappMessage);
     window.open(whatsappUrl, '_blank');
   };
 
@@ -248,18 +260,18 @@ I would like to discuss my project with you. Please provide more details.`;
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Growth Service Digital Solutions Pvt Ltd",
-            "url": "https://growthservice.in",
+            "name": getBusinessLegalName(),
+            "url": getCanonicalOrigin(),
             "contactPoint": [
               {
                 "@type": "ContactPoint",
-                "telephone": "+977-9707382481",
+                "telephone": getOfficePhone('nepal'),
                 "contactType": "Nepal Office",
                 "availableLanguage": ["English", "Hindi", "Nepali"]
               },
               {
                 "@type": "ContactPoint",
-                "telephone": "+91-9341436937",
+                "telephone": primaryPhone,
                 "contactType": "India Office",
                 "availableLanguage": ["English", "Hindi"]
               }
@@ -301,7 +313,7 @@ I would like to discuss my project with you. Please provide more details.`;
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href="https://wa.me/9779707382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center space-x-2"
@@ -310,7 +322,7 @@ I would like to discuss my project with you. Please provide more details.`;
                 <span>Chat on WhatsApp (Nepal)</span>
               </a>
               <a
-                href="tel:+919341436937"
+                href={getTelHref(primaryPhone)}
                 className="bg-white hover:bg-gray-100 text-purple-700 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center space-x-2"
               >
                 <Phone className="h-5 w-5" />
@@ -603,7 +615,7 @@ I would like to discuss my project with you. Please provide more details.`;
                 </h3>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://wa.me/9779707382481"
+                    href={getNepalWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-lg transition-colors"
@@ -612,7 +624,7 @@ I would like to discuss my project with you. Please provide more details.`;
                     <MessageCircle className="h-5 w-5" />
                   </a>
                   <a
-                    href="https://www.instagram.com/growth_servces"
+                    href={social.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-lg transition-colors"
@@ -747,7 +759,7 @@ I would like to discuss my project with you. Please provide more details.`;
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mb-6">
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
@@ -756,7 +768,7 @@ I would like to discuss my project with you. Please provide more details.`;
               <span>WhatsApp (Nepal)</span>
             </a>
             <a
-              href="tel:+919341436937"
+              href={getTelHref(primaryPhone)}
               className="bg-white hover:bg-gray-100 text-purple-700 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
             >
               <Phone className="h-5 w-5" />
@@ -772,7 +784,7 @@ I would like to discuss my project with you. Please provide more details.`;
           </div>
           
           <p className="text-purple-200 text-sm">
-            🇳🇵 Nepal: +977 970-7382481 • 🇮🇳 India: +91 93414 36937 • 💻 info@growthservice.in
+            🇳🇵 Nepal: {getOfficePhone('nepal')} • 🇮🇳 India: {primaryPhone} • 💻 {businessEmail}
           </p>
           <p className="text-purple-300 text-xs mt-2">
             💻 Web Development • 🔍 SEO • 📱 Digital Marketing • 🚀 Growth Solutions • 🌍 Global Reach

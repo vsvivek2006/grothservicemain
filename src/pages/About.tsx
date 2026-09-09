@@ -7,7 +7,8 @@ import {
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 import { Container, Section } from '../components/ui';
-import { businessConfig } from '../config';
+import { getPhysicalOffices, getPrimaryPhone } from '../selectors';
+import { getTelHref, getNepalWhatsAppUrl } from '../services';
 
 // Types
 interface TeamMember {
@@ -121,8 +122,8 @@ interface WhyChooseUs {
 const About: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Office Locations with Images derived from central businessConfig
-  const offices: OfficeLocation[] = businessConfig.offices.map((o, idx) => ({
+  // Office Locations with Images derived from single source of truth
+  const offices: OfficeLocation[] = getPhysicalOffices().map((o, idx) => ({
     id: idx + 1,
     name: `${o.name} - ${o.state}`,
     address: o.address,
@@ -136,7 +137,7 @@ const About: React.FC = () => {
     landmark: o.landmark || '',
     timings: o.timings,
     isHeadOffice: o.isHeadOffice,
-    services: o.servicesOffered
+    services: [...o.servicesOffered]
   }));
 
   // Hero Slides with Office Locations
@@ -652,7 +653,7 @@ const About: React.FC = () => {
                         {slide.cta}
                       </Link>
                       <a
-                        href="https://wa.me/9779707382481"
+                        href={getNepalWhatsAppUrl()}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2"
@@ -1257,7 +1258,7 @@ const About: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white text-purple-700 hover:bg-slate-50 px-8 py-4 rounded-xl font-bold transition-all duration-200 hover:-translate-y-1 shadow-card hover:shadow-card-hover flex items-center justify-center gap-3"
@@ -1267,11 +1268,11 @@ const About: React.FC = () => {
             </a>
 
             <a
-              href="tel:+919341436937"
+              href={getTelHref(getPrimaryPhone())}
               className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-3"
             >
               <Phone className="w-5 h-5" />
-              Call: +91 93414 36937
+              Call: {getPrimaryPhone()}
             </a>
           </div>
         </Container>

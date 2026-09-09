@@ -7,6 +7,8 @@ import {
   Hash, Camera, PenTool, DollarSign, Megaphone,
   Monitor, Smartphone, Cloud, Headphones
 } from 'lucide-react';
+import { getPrimaryPhone } from '../selectors';
+import { getNepalWhatsAppUrl, getTelHref } from '../services';
 
 const DigitalMarketing: React.FC = () => {
   // Main Services
@@ -265,7 +267,7 @@ const DigitalMarketing: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
               <a
-                href="https://wa.me/97797073824881"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
@@ -343,7 +345,7 @@ const DigitalMarketing: React.FC = () => {
                 </div>
 
                 <a
-                  href={`https://wa.me/97797073824881?text=Hello! I'm interested in ${service.title} services. Please provide details.`}
+                  href={getNepalWhatsAppUrl(`Hello! I'm interested in ${service.title} services. Please provide details.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-purple-600 hover:text-purple-700 font-semibold text-sm"
@@ -522,7 +524,7 @@ const DigitalMarketing: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
@@ -532,11 +534,11 @@ const DigitalMarketing: React.FC = () => {
             </a>
             
             <a
-              href="tel:+919341436937"
+              href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-purple-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
             >
               <span>📞</span>
-              <span>Call: +91 93414 36937</span>
+              <span>Call: {getPrimaryPhone()}</span>
             </a>
           </div>
           

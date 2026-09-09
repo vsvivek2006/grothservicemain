@@ -18,6 +18,7 @@ import {
   Link as LinkIcon
 } from "lucide-react";
 import { Container, Section } from "../components/ui";
+import { getNepalWhatsAppUrl } from "../services";
 
 interface GrowthServiceItem {
   id: string;
@@ -42,8 +43,6 @@ const GrowthServices: React.FC = () => {
     website: "",
     message: ""
   });
-
-  const WHATSAPP_NUMBER = "9779707382481"; // Nepal Office
 
   // Specialized Backlink & Outreach Capabilities
   const backlinkServices: GrowthServiceItem[] = [
@@ -187,8 +186,7 @@ ${formData.message || 'I would like to discuss our requirements and scope a cust
 
 Hi, I am reaching out to discuss this growth service. Please share details on scheduling a discovery call.`;
     
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+    window.open(getNepalWhatsAppUrl(whatsappMessage), '_blank');
     
     setIsFormOpen(false);
     setFormData({ name: "", email: "", phone: "", service: "", website: "", message: "" });
@@ -236,7 +234,7 @@ Hi, I am reaching out to discuss this growth service. Please share details on sc
               Schedule Strategy Discussion
             </Link>
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg flex items-center gap-2"

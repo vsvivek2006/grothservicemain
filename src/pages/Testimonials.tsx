@@ -17,7 +17,8 @@ import {
   Search,
   ShoppingCart
 } from "lucide-react";
-import { businessConfig } from "../config/business";
+import { getPrimaryPhone } from "../selectors";
+import { getNepalWhatsAppUrl, getTelHref } from "../services";
 
 const Testimonials: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -536,7 +537,7 @@ const Testimonials: React.FC = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
@@ -549,7 +550,7 @@ const Testimonials: React.FC = () => {
             </a>
             
             <a
-              href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
+              href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
               <div className="text-2xl">📞</div>

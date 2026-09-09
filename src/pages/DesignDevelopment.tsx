@@ -7,6 +7,8 @@ import {
   ShoppingCart, Briefcase, Home, Calendar, Camera
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getPrimaryPhone } from '../selectors';
+import { getNepalWhatsAppUrl, getTelHref } from '../services';
 
 const DesignDevelopment: React.FC = () => {
   // Services we offer
@@ -199,7 +201,7 @@ const DesignDevelopment: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
               <a
-                href="https://wa.me/97797073824881"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
@@ -256,7 +258,7 @@ const DesignDevelopment: React.FC = () => {
                 </ul>
 
                 <a
-                  href={`https://wa.me/97797073824881?text=Hello! I'm interested in ${service.title} service. Please provide details.`}
+                  href={getNepalWhatsAppUrl(`Hello! I'm interested in ${service.title} service. Please provide details.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm"
@@ -373,7 +375,7 @@ const DesignDevelopment: React.FC = () => {
                 </div>
 
                 <a
-                  href={`https://wa.me/97797073824881?text=Hello! I'm interested in ${project.type} development. Please provide details.`}
+                  href={getNepalWhatsAppUrl(`Hello! I'm interested in ${project.type} development. Please provide details.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm"
@@ -461,7 +463,7 @@ const DesignDevelopment: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
@@ -471,11 +473,11 @@ const DesignDevelopment: React.FC = () => {
             </a>
             
             <a
-              href="tel:+919341436937"
+              href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
             >
               <span>📞</span>
-              <span>Call: +91 93414 36937</span>
+              <span>Call: {getPrimaryPhone()}</span>
             </a>
           </div>
           

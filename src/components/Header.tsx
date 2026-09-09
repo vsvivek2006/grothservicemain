@@ -3,7 +3,9 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight, Zap, Shield, ShieldCheck, ChevronRight } from "lucide-react";
 import { Container } from "./ui";
 
-import { businessConfig, navigationConfig, buildWhatsAppUrl, formatTelHref } from "../config";
+import { navigationConfig } from "../config";
+import { getPhysicalOffices, getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../selectors";
+import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from "../services";
 
 const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
@@ -79,23 +81,29 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Sourced directly from single source of truth via selectors
+  const offices = getPhysicalOffices();
+  const primaryPhone = getPrimaryPhone();
+  const businessEmail = getBusinessEmail();
+  const nepalOffice = offices.find(o => o.id === 'nepal');
+
   // Contact Info with Office Locations from single source of truth
   const topNavItems = [
     { 
-      name: `India: ${businessConfig.phones.indiaPrimary}`, 
-      href: formatTelHref(businessConfig.phones.indiaPrimary), 
+      name: `India: ${primaryPhone}`, 
+      href: getTelHref(primaryPhone), 
       icon: <Phone className="h-4 w-4" />,
       location: "🇮🇳 Jaipur & Vrindavan Offices"
     },
     { 
-      name: `Nepal: ${businessConfig.phones.nepalPrimary}`, 
-      href: buildWhatsAppUrl('nepal'), 
+      name: `Nepal: ${getOfficePhone('nepal')}`, 
+      href: getNepalWhatsAppUrl(), 
       icon: <MessageCircle className="h-4 w-4" />,
       location: "🇳🇵 Nepal Office"
     },
     { 
-      name: `Email: ${businessConfig.emails.primary}`, 
-      href: `mailto:${businessConfig.emails.primary}`, 
+      name: `Email: ${businessEmail}`, 
+      href: getMailtoHref(businessEmail), 
       icon: <Mail className="h-4 w-4" />,
       location: "🌐 Global Support"
     }
@@ -123,24 +131,20 @@ const Header: React.FC = () => {
           <div className="flex flex-wrap justify-between items-center py-1.5 gap-2">
             {/* Left - Office Locations (Desktop) */}
             <div className="hidden md:flex items-center space-x-2 text-xs">
-              <Link 
-                to="/offices/jaipur" 
-                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
-              >
-                <MapPin className="h-3 w-3 text-yellow-300" /> Jaipur
-              </Link>
-              <Link 
-                to="/offices/vrindavan" 
-                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
-              >
-                <MapPin className="h-3 w-3 text-yellow-300" /> Vrindavan
-              </Link>
-              <Link 
-                to="/offices/nepal" 
-                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
-              >
-                <Building className="h-3 w-3 text-yellow-300" /> Nepal
-              </Link>
+              {offices.map((office) => (
+                <Link 
+                  key={office.id}
+                  to={`/offices/${office.slug}`} 
+                  className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
+                >
+                  {office.id === 'nepal' ? (
+                    <Building className="h-3 w-3 text-yellow-300" />
+                  ) : (
+                    <MapPin className="h-3 w-3 text-yellow-300" />
+                  )}
+                  {office.city}
+                </Link>
+              ))}
             </div>
 
             {/* Center - Animated Text */}

@@ -1,9 +1,7 @@
-/**
- * Domain Selectors Index
- * Pure, typed, read-only data accessors and relation resolvers.
- */
-
+export * from './businessSelectors';
 export * from './officeSelectors';
 export * from './locationSelectors';
 export * from './serviceSelectors';
+export * from './packageSelectors';
 export * from './teamSelectors';
+export * from './industrySelectors';

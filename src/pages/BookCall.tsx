@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { getPhysicalOffices, getOfficePhone, getPrimaryPhone, getBusinessEmail } from '../selectors';
+import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../services';
 import { 
   Calendar, 
   Clock, 
@@ -44,8 +46,8 @@ const BookCall: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [bookingId, setBookingId] = useState('');
 
-  // Office Locations derived from central businessConfig
-  const offices: OfficeLocation[] = businessConfig.offices.map((o, idx) => ({
+  // Office Locations derived from single source of truth
+  const offices: OfficeLocation[] = getPhysicalOffices().map((o, idx) => ({
     id: idx + 1,
     name: o.name,
     address: o.address,
@@ -55,6 +57,10 @@ const BookCall: React.FC = () => {
     country: o.country,
     isHeadOffice: o.isHeadOffice
   }));
+
+  const primaryPhone = getPrimaryPhone();
+  const nepalPhone = getOfficePhone('nepal');
+  const businessEmail = getBusinessEmail();
 
   const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', 
@@ -137,9 +143,8 @@ Project Requirements: ${formData.message || 'No additional information'}
 
 I have booked a free consultation call. Please confirm the schedule.`;
 
-    const encodedMessage = encodeURIComponent(confirmationMessage);
     // Send to Nepal WhatsApp (Head Office)
-    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+    window.open(getNepalWhatsAppUrl(confirmationMessage), '_blank');
   };
 
   const getNextWeekdays = () => {
@@ -266,14 +271,14 @@ I have booked a free consultation call. Please confirm the schedule.`;
               
               <div className="grid grid-cols-2 gap-3">
                 <a
-                  href="tel:+919341436937"
+                  href={getTelHref(primaryPhone)}
                   className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                 >
                   <Phone className="h-4 w-4" />
                   Call India
                 </a>
                 <a
-                  href="tel:+9779707382481"
+                  href={getTelHref(nepalPhone)}
                   className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                 >
                   <Phone className="h-4 w-4" />
@@ -630,8 +635,8 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <Phone className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-gray-600">Nepal Office</p>
-                    <a href="tel:+9779707382481" className="text-sm font-medium text-gray-900 hover:text-blue-600">
-                      +977 970-7382481
+                    <a href={getTelHref(nepalPhone)} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                      {nepalPhone}
                     </a>
                   </div>
                 </div>
@@ -639,8 +644,8 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <Phone className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-gray-600">India Office</p>
-                    <a href="tel:+919341436937" className="text-sm font-medium text-gray-900 hover:text-blue-600">
-                      +91 93414 36937
+                    <a href={getTelHref(primaryPhone)} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                      {primaryPhone}
                     </a>
                   </div>
                 </div>
@@ -648,8 +653,8 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <Mail className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-gray-600">Email</p>
-                    <a href="mailto:info@growthservice.in" className="text-sm font-medium text-gray-900 hover:text-blue-600">
-                      info@growthservice.in
+                    <a href={getMailtoHref(businessEmail)} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                      {businessEmail}
                     </a>
                   </div>
                 </div>
@@ -658,12 +663,12 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <div>
                     <p className="text-xs text-gray-600">WhatsApp Business</p>
                     <a 
-                      href="https://wa.me/9779707382481" 
+                      href={getNepalWhatsAppUrl()} 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium text-gray-900 hover:text-green-600"
                     >
-                      +977 9707382481
+                      {nepalPhone}
                     </a>
                   </div>
                 </div>
@@ -702,7 +707,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
               <h3 className="text-lg font-bold mb-2">Need Immediate Help?</h3>
               <p className="text-blue-100 text-sm mb-3">Chat with us on WhatsApp for quick queries</p>
               <a
-                href="https://wa.me/9779707382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-white text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 text-center text-sm"

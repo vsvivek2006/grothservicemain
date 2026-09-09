@@ -6,6 +6,8 @@ import {
   Building, Globe, Smartphone, CreditCard,
   Mail, Phone, ExternalLink
 } from "lucide-react";
+import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../selectors";
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
 const OnboardingAgreement: React.FC = () => {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -43,7 +45,7 @@ const OnboardingAgreement: React.FC = () => {
                 🏢 Growth Service Agency
               </span>
               <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                📱 +91 93414 36937
+                📱 {getPrimaryPhone()}
               </span>
             </div>
           </div>
@@ -61,14 +63,14 @@ const OnboardingAgreement: React.FC = () => {
             Download PDF Version
           </button>
           <a
-            href="tel:+919341436937"
+            href={getTelHref(getPrimaryPhone())}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
           >
             <Phone className="h-4 w-4" />
             Call for Questions
           </a>
           <a
-            href="mailto:info@growthservice.in"
+            href={getMailtoHref(getBusinessEmail())}
             className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-medium flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
@@ -288,15 +290,15 @@ const OnboardingAgreement: React.FC = () => {
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center">
                       <MessageCircle className="h-4 w-4 text-green-500 mr-2" />
-                      WhatsApp: +977 97073824881
+                      WhatsApp: {getOfficePhone('nepal')}
                     </li>
                     <li className="flex items-center">
                       <Mail className="h-4 w-4 text-blue-500 mr-2" />
-                      Email: info@growthservice.in
+                      Email: {getBusinessEmail()}
                     </li>
                     <li className="flex items-center">
                       <Phone className="h-4 w-4 text-purple-500 mr-2" />
-                      Phone: +91 93414 36937
+                      Phone: {getPrimaryPhone()}
                     </li>
                   </ul>
                 </div>
@@ -424,7 +426,7 @@ const OnboardingAgreement: React.FC = () => {
               </button>
               
               <a
-                href="https://wa.me/97797073824881"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
@@ -435,7 +437,7 @@ const OnboardingAgreement: React.FC = () => {
             </div>
             
             <p className="text-sm text-gray-500 mt-6">
-              Need clarification? Contact us at <a href="tel:+919341436937" className="text-blue-600">+91 93414 36937</a> or <a href="mailto:info@growthservice.in" className="text-blue-600">info@growthservice.in</a>
+              Need clarification? Contact us at <a href={getTelHref(getPrimaryPhone())} className="text-blue-600">{getPrimaryPhone()}</a> or <a href={getMailtoHref(getBusinessEmail())} className="text-blue-600">{getBusinessEmail()}</a>
             </p>
           </div>
         </div>

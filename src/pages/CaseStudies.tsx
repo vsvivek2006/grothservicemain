@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { ExternalLink, Calendar, Users, Target, Globe, CheckCircle, ArrowRight, X } from 'lucide-react';
 import { Container, Section } from '../components/ui';
+import { getNepalWhatsAppUrl } from '../services';
 
 const CaseStudies: React.FC = () => {
   const [selectedCase, setSelectedCase] = useState<number | null>(null);
@@ -418,7 +419,7 @@ const CaseStudies: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
@@ -569,7 +570,7 @@ const CaseStudies: React.FC = () => {
               <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href="https://wa.me/97797073824881"
+                    href={getNepalWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 text-center"
