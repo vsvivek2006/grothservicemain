@@ -1,64 +1,52 @@
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
   CheckCircle, ArrowRight, Phone, MessageCircle, 
-  MapPin, Star, ShieldCheck, Sparkles, Building2, ChevronRight, HelpCircle
+  ShieldCheck, Sparkles, ChevronRight
 } from 'lucide-react';
-import { getCityBySlug, getCitiesByRegion } from '../data/locations';
-import { physicalOffices, getOfficeById } from '../data/offices';
+import { getCityBySlug } from '../data/locations';
+import { getOfficeById } from '../data/offices';
 import { getServiceBySlug, servicesData } from '../data/services';
-import { getTeamMembersByOffice } from '../data/team';
+import { teamMembers } from '../data/team';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import TeamCard from '../components/ui/TeamCard';
-import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
-
-// Helper to normalize URL service slugs like "seo-company" -> "seo", "digital-marketing-agency" -> "digital-marketing"
-function normalizeServiceSlug(rawSlug: string): string {
-  const s = rawSlug.toLowerCase();
-  if (s.includes('digital-marketing') || s.includes('marketing-agency') || s.includes('marketing-company')) return 'digital-marketing';
-  if (s.includes('seo')) return 'seo';
-  if (s.includes('web-dev') || s.includes('website') || s.includes('web-development')) return 'web-development';
-  if (s.includes('paid') || s.includes('ppc') || s.includes('ads')) return 'paid-marketing';
-  if (s.includes('social') || s.includes('smm')) return 'social-media';
-  if (s.includes('content')) return 'content-marketing';
-  if (s.includes('ecom') || s.includes('store')) return 'ecommerce';
-  return s;
-}
+import NotFound from './NotFound';
 
 export const LocationServicePage: React.FC = () => {
   const { city: rawCity, serviceSlug: rawServiceSlug } = useParams<{ city: string; serviceSlug: string }>();
 
   if (!rawCity || !rawServiceSlug) {
-    return <Navigate to="/locations" replace />;
+    return <NotFound />;
   }
 
   const city = getCityBySlug(rawCity);
-  const normalizedSlug = normalizeServiceSlug(rawServiceSlug);
-  const service = getServiceBySlug(normalizedSlug);
+  const service = getServiceBySlug(rawServiceSlug);
 
-  if (!city || !service) {
-    return <Navigate to={service ? service.path : "/locations"} replace />;
+  // Strict Programmatic SEO Safety:
+  // 1. City must exist in data
+  // 2. Service must exist in data
+  // 3. City must explicitly support this service in servicesAvailable
+  const isServiceAvailableInCity = Boolean(
+    city && service && city.servicesAvailable.includes(service.slug)
+  );
+
+  if (!city || !service || !isServiceAvailableInCity) {
+    return <NotFound />;
   }
 
   const office = city.officeId ? getOfficeById(city.officeId) : null;
-  const servingOffice = office || (city.regionSlug === 'rajasthan' 
-    ? getOfficeById('jaipur') 
-    : city.regionSlug === 'nepal' 
-      ? getOfficeById('nepal') 
-      : getOfficeById('vrindavan')) || physicalOffices[0];
-
-  const assignedTeam = getTeamMembersByOffice(servingOffice.id);
-  const otherServicesInCity = servicesData.filter(s => s.slug !== service.slug);
+  const coreTeam = teamMembers.slice(0, 3);
+  const otherServicesInCity = servicesData.filter(s => s.slug !== service.slug && city.servicesAvailable.includes(s.slug));
 
   const whatsappUrl = `https://wa.me/${city.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20looking%20for%20${encodeURIComponent(service.title)}%20in%20${encodeURIComponent(city.name)}.`;
 
   const pageTitle = `${service.title} in ${city.name}, ${city.state} | Growth Service`;
-  const pageDescription = `Top-rated ${service.title.toLowerCase()} in ${city.name}, ${city.state}. Certified digital growth by Growth Service. Serving ${city.localAreas.slice(0, 3).join(', ')}. Call ${city.phone}.`;
+  const pageDescription = `Professional ${service.title.toLowerCase()} in ${city.name}, ${city.state}. Digital growth solutions by Growth Service. Serving ${city.localAreas.slice(0, 3).join(', ')}. Contact: ${city.phone}.`;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -72,27 +60,13 @@ export const LocationServicePage: React.FC = () => {
         <meta property="og:url" content={`https://growthservice.in/${city.slug}/${service.slug}`} />
         <meta property="og:type" content="website" />
 
-        {/* Schema.org Service - Accurate attribution without fake physical locations */}
+        {/* Schema.org Service - Organization provider only (LocalBusiness is reserved only for physical offices) */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
             "name": `${service.title} in ${city.name}`,
-            "provider": city.isPhysicalOffice && office ? {
-              "@type": "LocalBusiness",
-              "name": `Growth Service - ${office.name}`,
-              "image": "https://growthservice.in/logo.png",
-              "telephone": office.phone,
-              "email": office.email,
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": office.address,
-                "addressLocality": office.city,
-                "addressRegion": office.state,
-                "postalCode": office.postalCode,
-                "addressCountry": office.country
-              }
-            } : {
+            "provider": {
               "@type": "Organization",
               "name": "Growth Service",
               "url": "https://growthservice.in",
@@ -126,21 +100,25 @@ export const LocationServicePage: React.FC = () => {
             <div className="flex items-center gap-2 mb-4">
               <span className="text-3xl" role="img" aria-label="Flag">{city.flag}</span>
               <div className="inline-flex items-center gap-2 bg-purple-900/70 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full">
-                <span>Serving {city.name}, {city.state}</span>
+                <span>{city.name}, {city.state}</span>
               </div>
-              {city.isPhysicalOffice && (
+              {city.isPhysicalOffice ? (
                 <Badge variant="purple" size="sm">
-                  Physical Office
+                  Company Office
+                </Badge>
+              ) : (
+                <Badge variant="neutral" size="sm">
+                  Service Location
                 </Badge>
               )}
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
               {service.title} in <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">{city.name}</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed">
-              {city.description} We specialize in high-converting {service.title.toLowerCase()} strategies tailored for businesses across {city.name}.
+              {service.shortDesc} Tailored for businesses and enterprises in {city.name}, {city.state}.
             </p>
 
             <div className="flex flex-wrap gap-4 items-center">
@@ -169,32 +147,26 @@ export const LocationServicePage: React.FC = () => {
                 size="lg"
                 className="border-purple-400 text-purple-200 hover:bg-purple-800/40 hover:text-white"
               >
-                View {city.name} City Hub
+                View {city.name} Overview
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Service Highlights */}
-      <section className="py-16 md:py-24 max-w-7xl mx-auto px-4">
-        <SectionHeader
-          badge="Deliverables & Capabilities"
-          title="What We Deliver in"
-          titleHighlight={city.name}
-          description={service.fullDesc}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      {/* Main Service Content */}
+      <section className="py-16 max-w-7xl mx-auto px-4">
+        {/* Features & Deliverables Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           <Card className="bg-white border border-slate-200/80 shadow-card">
             <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-purple-600" />
-              <span>Core Features</span>
+              <span>Core Service Features</span>
             </h3>
             <ul className="space-y-3 text-slate-700 text-sm sm:text-base">
               {service.features.map((f, idx) => (
                 <li key={idx} className="flex items-center gap-2.5">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>{f}</span>
                 </li>
               ))}
@@ -223,7 +195,7 @@ export const LocationServicePage: React.FC = () => {
             {service.title} Across {city.name} Commercial Districts
           </h3>
           <p className="text-slate-600 text-sm mb-6">
-            We adapt keyword strategies, localized Google My Business profiles, and paid geo-fencing for:
+            We adapt search optimization, web design, and digital campaigns for businesses across:
           </p>
           <div className="flex flex-wrap gap-2">
             {city.localAreas.map((area, idx) => (
@@ -238,34 +210,50 @@ export const LocationServicePage: React.FC = () => {
         <div className="mb-16">
           <div className="bg-gradient-to-br from-purple-50 to-indigo-50/60 rounded-3xl p-8 border border-purple-100 mb-8">
             <span className="text-xs font-bold uppercase tracking-wider text-purple-700">
-              {city.isPhysicalOffice ? 'Physical Office' : 'Supervising Regional Hub'}
+              {city.isPhysicalOffice ? 'Company Office' : 'Service Location'}
             </span>
             <h3 className="text-2xl font-bold text-slate-900 mt-1 mb-2">
               {city.isPhysicalOffice 
-                ? `Stationed at Our ${city.name} Office` 
-                : `Supervised by Our ${servingOffice.name} (${servingOffice.city})`}
+                ? `Growth Service Office in ${city.name}` 
+                : `Growth Service Team Supporting ${city.name}`}
             </h3>
             <p className="text-sm text-slate-600 max-w-2xl leading-relaxed mb-4">
               {city.isPhysicalOffice 
-                ? `Clients in ${city.name} can meet directly with our technical team at ${city.address}.`
-                : `Your ${city.name} campaigns are managed with direct oversight from our ${servingOffice.name}, ensuring certified execution and dedicated communication.`}
+                ? `Clients in ${city.name} can meet directly with our team at ${city.address}. In-person visits and strategic consultations are available.`
+                : `Campaigns for businesses in ${city.name} are managed by our core team with dedicated project management and regular communication.`}
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link 
-                to={`/offices/${servingOffice.slug}`}
-                className="text-xs sm:text-sm font-bold text-purple-700 hover:text-purple-800 inline-flex items-center gap-1 bg-white px-3.5 py-1.5 rounded-lg border border-purple-200 shadow-sm"
-              >
-                <span>View {servingOffice.name} Details</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              {city.isPhysicalOffice && office ? (
+                <Link 
+                  to={`/offices/${office.slug}`}
+                  className="text-xs sm:text-sm font-bold text-purple-700 hover:text-purple-800 inline-flex items-center gap-1 bg-white px-3.5 py-1.5 rounded-lg border border-purple-200 shadow-sm"
+                >
+                  <span>View Office Details</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              ) : (
+                <Link 
+                  to="/offices"
+                  className="text-xs sm:text-sm font-bold text-purple-700 hover:text-purple-800 inline-flex items-center gap-1 bg-white px-3.5 py-1.5 rounded-lg border border-purple-200 shadow-sm"
+                >
+                  <span>Our 3 Company Offices</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              )}
             </div>
           </div>
 
-          <h3 className="text-xl font-bold text-slate-900 mb-4">
-            Campaign Leaders Assigned to {city.name}
-          </h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-slate-900">
+              Growth Service Team
+            </h3>
+            <Link to="/team" className="text-xs sm:text-sm font-bold text-purple-600 hover:underline inline-flex items-center gap-1">
+              <span>Meet Full Team</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {assignedTeam.slice(0, 3).map((member) => (
+            {coreTeam.map((member) => (
               <TeamCard
                 key={member.id}
                 name={member.name}
@@ -281,38 +269,40 @@ export const LocationServicePage: React.FC = () => {
         </div>
 
         {/* Other Services in City */}
-        <div className="pt-8 border-t border-slate-200">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-slate-900">
-              Other Digital Services in {city.name}
-            </h3>
-            <Link to={`/locations/${city.slug}`} className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1">
-              <span>View City Hub</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {otherServicesInCity.map(otherService => (
-              <Link
-                key={otherService.slug}
-                to={`/${city.slug}/${otherService.slug}`}
-                className="bg-white p-5 rounded-xl border border-slate-200/80 hover:border-purple-300 hover:shadow-md transition-all flex items-center justify-between group"
-              >
-                <span className="font-semibold text-slate-800 group-hover:text-purple-600 transition-colors text-sm">
-                  {otherService.title} in {city.name}
-                </span>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all shrink-0" />
+        {otherServicesInCity.length > 0 && (
+          <div className="pt-8 border-t border-slate-200">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-slate-900">
+                Other Digital Services in {city.name}
+              </h3>
+              <Link to={`/locations/${city.slug}`} className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1">
+                <span>View {city.name} Overview</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {otherServicesInCity.map(otherService => (
+                <Link
+                  key={otherService.slug}
+                  to={`/${city.slug}/${otherService.slug}`}
+                  className="bg-white p-5 rounded-xl border border-slate-200/80 hover:border-purple-300 hover:shadow-md transition-all flex items-center justify-between group"
+                >
+                  <span className="font-semibold text-slate-800 group-hover:text-purple-600 transition-colors text-sm">
+                    {otherService.title} in {city.name}
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all shrink-0" />
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* CTA Section */}
       <CTABanner
-        title={`Ready to Elevate Your Business in ${city.name}?`}
-        description={`Partner with Growth Service for performance-driven ${service.title.toLowerCase()}. Offices in Jaipur, Vrindavan, Nepal, and serving clients nationwide.`}
+        title={`Scale Your Business in ${city.name}`}
+        description={`Partner with Growth Service for results-driven ${service.title.toLowerCase()}. Offices in Jaipur, Vrindavan, Nepal, and serving clients nationwide.`}
         whatsappUrl={whatsappUrl}
         phoneNumber={city.phone}
       />

@@ -2,17 +2,16 @@ import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
-  Building2, MapPin, Phone, Mail, Clock, ExternalLink, 
-  CheckCircle, ArrowRight, ShieldCheck, Users, Sparkles, Navigation
+  Building2, MapPin, Phone, Clock, ExternalLink, 
+  CheckCircle, ArrowRight, Navigation 
 } from 'lucide-react';
 import { getOfficeBySlug, physicalOffices } from '../data/offices';
-import { getTeamMembersByOffice } from '../data/team';
+import { teamMembers } from '../data/team';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import TeamCard from '../components/ui/TeamCard';
-import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
 
 export const OfficeDetailPage: React.FC = () => {
@@ -28,11 +27,11 @@ export const OfficeDetailPage: React.FC = () => {
     return <Navigate to="/offices" replace />;
   }
 
-  const stationedTeam = getTeamMembersByOffice(office.id);
+  const coreTeam = teamMembers.slice(0, 3);
   const whatsappUrl = `https://wa.me/${office.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20inquiring%20about%20your%20services%20from%20the%20${encodeURIComponent(office.name)}.`;
 
   const pageTitle = `${office.name} — ${office.city}, ${office.state} | Growth Service`;
-  const pageDescription = `${office.description} Verified address: ${office.address}. Contact: ${office.phone}. Working hours: ${office.timings}.`;
+  const pageDescription = `${office.name} of Growth Service located at ${office.address}. Contact: ${office.phone}. Services available to clients in this region include ${office.servicesOffered.slice(0, 3).join(', ')}.`;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -117,7 +116,7 @@ export const OfficeDetailPage: React.FC = () => {
                 size="lg"
                 icon={<Phone className="w-5 h-5" />}
               >
-                Chat with Office Team
+                Chat on WhatsApp
               </Button>
 
               <Button
@@ -201,7 +200,7 @@ export const OfficeDetailPage: React.FC = () => {
             <h3 className="text-lg font-bold text-slate-900 mb-2">Office Timings</h3>
             <p className="text-slate-700 text-sm leading-relaxed mb-3">{office.timings}</p>
             <p className="text-xs text-slate-500 mb-4">
-              Consultation visits are welcome during operational hours. We recommend scheduling 24 hours in advance for technical architectural discussions.
+              Consultation visits are welcome during operational hours. In-person and virtual consultations available.
             </p>
             <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-100">
               In-Person & Virtual Appointments
@@ -209,14 +208,14 @@ export const OfficeDetailPage: React.FC = () => {
           </Card>
         </div>
 
-        {/* Specialized Services Provided by this Office */}
+        {/* Services Available to Clients in this Region */}
         <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
           <div className="max-w-3xl mb-6">
             <h3 className="text-2xl font-bold text-slate-900 mb-2">
-              Capabilities & Services Handled from {office.name}
+              Services Available to Clients in this Region
             </h3>
             <p className="text-slate-600 text-sm">
-              Our stationed specialists at this location directly execute and supervise these initiatives:
+              Our digital services available to clients in this region include:
             </p>
           </div>
 
@@ -230,30 +229,30 @@ export const OfficeDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Stationed Team Members */}
+        {/* Team Section */}
         <div className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
             <div>
               <div className="mb-2">
                 <Badge variant="purple" size="sm">
-                  Stationed Personnel
+                  Company Team
                 </Badge>
               </div>
               <h2 className="text-3xl font-bold text-slate-900">
-                Meet Our <span className="text-purple-600">{office.name} Team</span>
+                Growth Service <span className="text-purple-600">Team</span>
               </h2>
               <p className="text-slate-600 text-sm mt-1">
-                Real Growth Service staff members stationed at or directing operations from this office.
+                Our core multidisciplinary team supporting our clients and digital campaigns.
               </p>
             </div>
             <Link to="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700">
-              <span>View All 3 Offices Team</span>
+              <span>View All Team Members</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {stationedTeam.map((member) => (
+            {coreTeam.map((member) => (
               <TeamCard
                 key={member.id}
                 name={member.name}
@@ -268,13 +267,13 @@ export const OfficeDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Areas & Cities Served from this Office */}
+        {/* Areas & Cities Served */}
         <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
           <h3 className="text-xl font-bold text-slate-900 mb-3">
-            Key Territories & Zones Directly Supported by {office.name}
+            Areas Served
           </h3>
           <p className="text-slate-600 text-sm mb-6">
-            Our local field agents and technical teams provide localized search optimization and client delivery across these regions:
+            Growth Service provides digital marketing, web development, and SEO services across the following areas:
           </p>
           <div className="flex flex-wrap gap-2">
             {office.areasServed.map((area, idx) => (
@@ -317,8 +316,8 @@ export const OfficeDetailPage: React.FC = () => {
 
       {/* CTA */}
       <CTABanner
-        title={`Connect Directly with Our ${office.name} Team`}
-        description={`Schedule an in-person meeting at ${office.address} or discuss your digital growth goals over WhatsApp.`}
+        title={`Connect with Growth Service`}
+        description={`Schedule a consultation or discuss your digital growth goals with our team over WhatsApp.`}
         whatsappUrl={whatsappUrl}
         phoneNumber={office.phone}
       />

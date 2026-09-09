@@ -33,7 +33,12 @@ export const LocationCard: React.FC<LocationCardProps> = ({
           <span className="text-2xl" role="img" aria-label="Flag">
             {flag}
           </span>
-          <h3 className="text-lg sm:text-xl font-bold text-slate-900">{name}</h3>
+          <div>
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900">{name}</h3>
+            {state && (
+              <p className="text-xs text-purple-600 font-semibold">{state}{country ? ` • ${country}` : ''}</p>
+            )}
+          </div>
         </div>
         {isHeadOffice && (
           <Badge variant="gold" size="sm">

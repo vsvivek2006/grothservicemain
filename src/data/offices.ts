@@ -11,7 +11,7 @@ export interface OfficeData {
   address: string;
   phone: string;
   email: string;
-  landmark: string;
+  landmark?: string;
   postalCode: string;
   mapLink: string;
   timings: string;
@@ -21,7 +21,7 @@ export interface OfficeData {
   };
   servicesOffered: string[];
   areasServed: string[];
-  teamMemberIds: number[];
+  teamMemberIds?: number[];
   description: string;
 }
 
@@ -55,8 +55,7 @@ export const physicalOffices: OfficeData[] = [
       "C-Scheme", "Sitapura", "Tonk Road", "Ajmer Road", 
       "Raja Park", "Bani Park"
     ],
-    teamMemberIds: [1, 4, 6],
-    description: "Our Jaipur office specializes in web development, SEO, and digital marketing services. Serving clients across Jaipur, Rajasthan, and beyond with world-class digital solutions."
+    description: "Our Jaipur office provides web development, SEO, and digital marketing services to clients in Jaipur, Rajasthan, and across India."
   },
   {
     id: "vrindavan",
@@ -71,7 +70,6 @@ export const physicalOffices: OfficeData[] = [
     address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
     phone: "+91 93414 36937",
     email: "info@growthservice.in",
-    landmark: "Radhika Sadan ki Bassinet me",
     postalCode: "281121",
     mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
     timings: "Mon-Sat: 9:00 AM - 7:00 PM",
@@ -86,8 +84,7 @@ export const physicalOffices: OfficeData[] = [
       "Vrindavan", "Mathura", "Agra", "Aligarh", "Lucknow", 
       "Kanpur", "Noida", "Delhi NCR"
     ],
-    teamMemberIds: [1, 2, 3, 5, 8],
-    description: "Our Vrindavan head office delivers comprehensive digital solutions including web development, SEO, and performance marketing to clients worldwide."
+    description: "Our Vrindavan head office provides digital marketing, web development, SEO, and strategic consulting to businesses in India and internationally."
   },
   {
     id: "nepal",
@@ -117,8 +114,7 @@ export const physicalOffices: OfficeData[] = [
       "Bariyarpatti", "Lahan", "Siraha", "Janakpur", 
       "Biratnagar", "Kathmandu"
     ],
-    teamMemberIds: [1, 7],
-    description: "Growth Service operates from Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Bariyarpatti (Nepal). We deliver cutting-edge web development, SEO, and digital marketing services to clients across India and globally."
+    description: "Our Nepal office in Bariyarpatti (Siraha) delivers web development, SEO, and e-commerce solutions for businesses across Nepal."
   }
 ];
 

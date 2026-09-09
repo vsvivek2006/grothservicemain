@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingCart, Hotel, Activity, Building2, GraduationCap, Briefcase, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Hotel, Activity, Building2, GraduationCap, Briefcase } from 'lucide-react';
 import Card from './Card';
 import Badge from './Badge';
 

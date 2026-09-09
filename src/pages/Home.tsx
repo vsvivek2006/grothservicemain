@@ -569,7 +569,7 @@ const Home: React.FC = () => {
             </div>
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
               <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">3</div>
-              <div className="text-xs sm:text-sm font-semibold text-slate-700">Office Hubs (IN & NP)</div>
+              <div className="text-xs sm:text-sm font-semibold text-slate-700">Company Offices (IN & NP)</div>
             </div>
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
               <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">98%</div>
@@ -754,7 +754,7 @@ const Home: React.FC = () => {
             badge="Leadership & Specialists"
             title="Meet Our"
             titleHighlight="Team"
-            description="Experienced strategists, full-stack developers, and certified marketers operating across Jaipur, Vrindavan, and Nepal."
+            description="Experienced strategists, full-stack developers, and marketers operating across Jaipur, Vrindavan, and Nepal."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -820,19 +820,19 @@ const Home: React.FC = () => {
             badge="Physical & Regional Presence"
             title="Locations We"
             titleHighlight="Serve"
-            description="Operating active offices in Jaipur, Vrindavan, and Nepal, while executing growth campaigns across major economic hubs."
+            description="Operating 3 company offices in Jaipur, Vrindavan, and Nepal, with digital growth campaigns delivered across major regions."
           />
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-xl font-bold text-slate-900">Physical Office Hubs</h3>
+              <h3 className="text-xl font-bold text-slate-900">Our 3 Company Offices</h3>
               <p className="text-sm text-slate-500">Visit our active operational facilities in India & Nepal</p>
             </div>
             <Link
               to="/offices"
               className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 hover:underline"
             >
-              <span>View All 3 Company Offices & Teams</span>
+              <span>View All 3 Company Offices</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

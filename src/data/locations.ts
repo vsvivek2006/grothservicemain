@@ -48,7 +48,7 @@ export const regionsData: RegionData[] = [
     state: "Rajasthan",
     country: "India",
     flag: "🇮🇳",
-    description: "Home to our Jaipur Technology & Web Development Hub, serving premier handicrafts, tourism, gems, and real estate enterprises.",
+    description: "Home to our Jaipur office, serving premier handicrafts, tourism, gems, and real estate enterprises.",
     citySlugs: ["jaipur", "jodhpur", "udaipur", "kota", "ajmer"]
   },
   {
@@ -138,10 +138,10 @@ export const citiesData: CityData[] = [
     localAreas: ["Jagatpura", "Malviya Nagar", "Mansarovar", "Vaishali Nagar", "C-Scheme", "Sitapura", "Tonk Road", "Raja Park", "Bani Park", "Ajmer Road"],
     keyIndustries: ["Gems & Jewellery", "Handicrafts & Textiles", "Hospitality & Tourism", "Real Estate", "Higher Education"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media", "content-marketing", "ecommerce"],
-    description: "Our Jaipur physical office serves as the core engineering and design lab for Growth Service, powering high-converting web apps and top Google rankings for Pink City brands.",
+    description: "Growth Service operates a physical office in Jaipur, delivering web development, SEO, and digital marketing services to businesses across Jaipur and Rajasthan.",
     faqs: [
       { q: "Where is the Growth Service office located in Jaipur?", a: "Our physical office is located at 138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017 (Near Jagatpura Flyover)." },
-      { q: "Can I meet the technical and marketing team in Jaipur?", a: "Yes, our development leads and performance marketing specialists are stationed at our Jaipur office. In-person consultations are available Monday to Saturday." },
+      { q: "Can I meet the technical and marketing team in Jaipur?", a: "Yes, our team is available at our Jaipur office for in-person consultations from Monday to Saturday." },
       { q: "Do you offer localized SEO for Jaipur businesses?", a: "Yes, we specialize in local GMB map-pack optimization, Hindi/English content strategies, and commercial area targeting (e.g. Sitapura, Mansarovar, C-Scheme)." }
     ]
   },
@@ -236,14 +236,13 @@ export const citiesData: CityData[] = [
     address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
     phone: "+91 93414 36937",
     email: "info@growthservice.in",
-    landmark: "Radhika Sadan ki Bassinet me",
     postalCode: "281121",
     mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
     timings: "Mon-Sat: 9:00 AM - 7:00 PM",
     localAreas: ["Kailash Nagar", "Raman Reti", "Chhatikara Road", "Parikrama Marg", "Vidyapeeth Chauraha", "Sunrakh Road", "Prem Mandir Road"],
     keyIndustries: ["Guest Houses & Hotels", "Pilgrimage Tourism", "Religious Services", "Handicrafts & Puja Essentials"],
     servicesAvailable: ["seo", "web-development", "social-media", "paid-marketing", "content-marketing"],
-    description: "Global Headquarters of Growth Service. Here our executive leadership and strategy teams design national SEO campaigns and support local pilgrimage enterprises.",
+    description: "Growth Service operates its head office in Vrindavan, providing comprehensive digital marketing, web development, and SEO services to businesses locally and globally.",
     faqs: [
       { q: "Is Vrindavan the Head Office of Growth Service?", a: "Yes, our global headquarters is located at Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan 281121." },
       { q: "What services are managed from the Vrindavan HQ?", a: "Our executive strategy, client onboarding, brand management, and primary SEO auditing are orchestrated from Vrindavan." }
@@ -385,7 +384,7 @@ export const citiesData: CityData[] = [
     description: "Helping Patna businesses dominate local search rankings, generate verified student and patient leads, and launch modern websites.",
     faqs: [
       { q: "How do you help local coaching institutes in Patna?", a: "We run hyper-targeted Meta/Google ad funnels and local SEO to generate student admissions during enrollment seasons." },
-      { q: "Which Growth Service office oversees Bihar campaigns?", a: "Campaigns for Bihar are coordinated jointly through our Vrindavan headquarters and Nepal operations hub." }
+      { q: "Which Growth Service office oversees Bihar campaigns?", a: "Campaigns for Bihar are coordinated through our Vrindavan head office and Nepal office." }
     ]
   },
   {
@@ -570,7 +569,7 @@ export const citiesData: CityData[] = [
     localAreas: ["Main Road", "Bariyarpatti Bazaar", "Lahan Corridor", "Siraha Town"],
     keyIndustries: ["Cross-Border Trade", "Regional Commerce", "Agriculture & Retail"],
     servicesAvailable: ["web-development", "seo", "ecommerce"],
-    description: "Our active physical office in Bariyarpatti serves as the regional hub for Nepal operations, managing technical research and cross-border digital campaigns.",
+    description: "Growth Service operates a physical office in Bariyarpatti (Siraha), delivering web development, SEO, and digital marketing services across Nepal.",
     faqs: [
       { q: "Is the Nepal office a physical office?", a: "Yes, our team operates from our office near Bariyarpatti Rd, Bariyarpatti 56500, Nepal." }
     ]

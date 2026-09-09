@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Phone, MessageCircle, FileText, Sparkles, MapPin, Clock } from 'lucide-react';
 import Button from './Button';
 

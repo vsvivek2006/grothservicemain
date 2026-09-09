@@ -2,18 +2,16 @@ import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
-  Building2, MapPin, Phone, MessageCircle, ArrowRight, 
-  CheckCircle, Globe, ChevronRight, ShieldCheck, Sparkles, HelpCircle
+  Building2, Phone, MessageCircle, ArrowRight, 
+  CheckCircle, ChevronRight, HelpCircle
 } from 'lucide-react';
 import { getCityBySlug, getRegionBySlug, getCitiesByRegion, getAllRegions } from '../data/locations';
-import { physicalOffices, getOfficeById } from '../data/offices';
-import { servicesData, getServiceBySlug } from '../data/services';
-import { getTeamMembersByOffice } from '../data/team';
+import { getOfficeById } from '../data/offices';
+import { getServiceBySlug } from '../data/services';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
-import TeamCard from '../components/ui/TeamCard';
 import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
 
@@ -147,7 +145,7 @@ export const CityHubPage: React.FC = () => {
         <section className="py-16 md:py-24 max-w-7xl mx-auto px-4">
           <SectionHeader
             badge="Territory Coverage"
-            title="Commercial Hubs & Cities in"
+            title="Cities & Locations in"
             titleHighlight={region.name}
             description={`Explore local market capabilities, localized SEO services, and custom web development across ${region.name}.`}
           />
@@ -206,7 +204,7 @@ export const CityHubPage: React.FC = () => {
                     to={`/locations/${cityItem.slug}`}
                     className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
                   >
-                    <span>Explore City Hub</span>
+                    <span>Explore City</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -244,7 +242,7 @@ export const CityHubPage: React.FC = () => {
                   to="/locations"
                   className="px-6 py-3 rounded-xl bg-white text-purple-700 font-bold text-sm hover:bg-purple-50 border border-purple-200 transition-colors shrink-0 shadow-sm inline-flex items-center gap-2"
                 >
-                  <span>View All Regional Hubs</span>
+                  <span>View All Locations</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               )}
@@ -288,20 +286,14 @@ export const CityHubPage: React.FC = () => {
 
   // === RENDER CITY HUB ===
   const office = city!.officeId ? getOfficeById(city!.officeId) : null;
-  const fallbackOffice = city!.regionSlug === 'rajasthan' 
-    ? getOfficeById('jaipur') 
-    : city!.regionSlug === 'nepal' 
-      ? getOfficeById('nepal') 
-      : getOfficeById('vrindavan');
-
-  const servingOffice = office || fallbackOffice || physicalOffices[0];
-  const assignedTeam = getTeamMembersByOffice(servingOffice.id);
   const relatedCities = getCitiesByRegion(city!.regionSlug).filter(c => c.slug !== city!.slug);
 
   const whatsappUrl = `https://wa.me/${city!.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20looking%20for%20digital%20marketing%20services%20in%20${encodeURIComponent(city!.name)}.`;
 
   const pageTitle = `Digital Marketing, SEO & Web Development in ${city!.name}, ${city!.state} | Growth Service`;
-  const pageDescription = `${city!.description} Certified SEO, Google Ads, and custom React web development serving ${city!.name} businesses across ${city!.localAreas.slice(0, 3).join(', ')}.`;
+  const pageDescription = city!.isPhysicalOffice 
+    ? `Growth Service has a physical office in ${city!.name}. ${city!.description} Web development, SEO, and digital marketing services.` 
+    : `Growth Service provides digital marketing, SEO, and web development services to businesses in ${city!.name}, ${city!.state}.`;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -310,12 +302,12 @@ export const CityHubPage: React.FC = () => {
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={`https://growthservice.in/locations/${city!.slug}`} />
 
-        {/* Local Area Schema - accurate attribution */}
+        {/* Service Schema - Organization provider (LocalBusiness is reserved only for physical offices) */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
-            "name": `Digital Growth & Web Services in ${city!.name}`,
+            "name": `Digital Marketing, SEO & Web Development in ${city!.name}`,
             "areaServed": {
               "@type": "City",
               "name": city!.name,
@@ -324,21 +316,7 @@ export const CityHubPage: React.FC = () => {
                 "name": city!.state
               }
             },
-            "provider": city!.isPhysicalOffice && office ? {
-              "@type": "LocalBusiness",
-              "name": `Growth Service - ${office.name}`,
-              "telephone": office.phone,
-              "email": office.email,
-              "image": "https://growthservice.in/logo.png",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": office.address,
-                "addressLocality": office.city,
-                "addressRegion": office.state,
-                "postalCode": office.postalCode,
-                "addressCountry": office.country
-              }
-            } : {
+            "provider": {
               "@type": "Organization",
               "name": "Growth Service",
               "url": "https://growthservice.in",
@@ -370,9 +348,13 @@ export const CityHubPage: React.FC = () => {
               <div className="inline-flex items-center gap-2 bg-purple-900/70 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full">
                 <span>{city.name}, {city.state} • {city.regionName}</span>
               </div>
-              {city.isPhysicalOffice && (
+              {city.isPhysicalOffice ? (
                 <Badge variant="purple" size="sm">
-                  Physical Office Hub
+                  Company Office
+                </Badge>
+              ) : (
+                <Badge variant="neutral" size="sm">
+                  Service Location
                 </Badge>
               )}
             </div>
@@ -382,7 +364,10 @@ export const CityHubPage: React.FC = () => {
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed">
-              {city.description}
+              {city.isPhysicalOffice 
+                ? `Growth Service has a physical office in ${city.name}. ${city.description}`
+                : `Growth Service provides digital marketing services to businesses in ${city.name}. ${city.description}`
+              }
             </p>
 
             <div className="flex flex-wrap gap-4 items-center">
@@ -516,17 +501,17 @@ export const CityHubPage: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-purple-700">
-                  {city.isPhysicalOffice ? 'Official Company Office' : 'Regional Operational Hub'}
+                  {city.isPhysicalOffice ? 'Official Company Office' : 'Dedicated Service Area'}
                 </span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-1 mb-2">
                   {city.isPhysicalOffice 
-                    ? `Our Physical ${city.name} Office` 
+                    ? `Growth Service Office in ${city.name}` 
                     : `Growth Service Team Serving ${city.name}`}
                 </h3>
                 <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
                   {city.isPhysicalOffice 
-                    ? `Growth Service operates an active physical company presence in ${city.name} at ${city.address}. In-person visits and strategic workshops are available.`
-                    : `Clients in ${city.name} are directly supported by our ${servingOffice.name} (${servingOffice.city}), with dedicated project managers and technical architects.`}
+                    ? `Growth Service operates an active physical office in ${city.name} at ${city.address}. In-person visits and consultations are welcome.`
+                    : `Growth Service provides digital marketing, SEO, and web development services to businesses in ${city.name}. All projects are managed by our core team with direct communication.`}
                 </p>
               </div>
 
@@ -535,15 +520,15 @@ export const CityHubPage: React.FC = () => {
                   to={`/offices/${office.slug}`}
                   className="px-6 py-3 rounded-xl bg-purple-600 text-white font-bold text-sm hover:bg-purple-700 transition-colors shrink-0 shadow-md inline-flex items-center gap-2"
                 >
-                  <span>Visit {office.name}</span>
+                  <span>View Office Details</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               ) : (
                 <Link
-                  to={`/offices/${servingOffice.slug}`}
+                  to="/offices"
                   className="px-6 py-3 rounded-xl bg-white text-purple-700 font-bold text-sm hover:bg-purple-50 border border-purple-200 transition-colors shrink-0 shadow-sm inline-flex items-center gap-2"
                 >
-                  <span>Overseeing Office ({servingOffice.city})</span>
+                  <span>Our 3 Company Offices</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               )}
@@ -551,14 +536,10 @@ export const CityHubPage: React.FC = () => {
           </div>
 
           <h3 className="text-xl font-bold text-slate-900 mb-1">
-            {city.isPhysicalOffice 
-              ? `Stationed Specialists at Our ${city.name} Office` 
-              : `Growth Service Specialists Serving ${city.name}`}
+            Growth Service Team
           </h3>
           <p className="text-xs text-slate-500 mb-4">
-            {city.isPhysicalOffice 
-              ? `On-site staff operating directly from our ${city.name} office.`
-              : `Dedicated team members providing digital marketing and engineering for ${city.name} businesses from our ${servingOffice.name}.`}
+            Our core digital team delivers strategy, SEO, web development, and performance marketing across all client locations.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {assignedTeam.slice(0, 3).map((member) => (
@@ -599,7 +580,7 @@ export const CityHubPage: React.FC = () => {
         {relatedCities.length > 0 && (
           <div className="pt-8 border-t border-slate-200">
             <h3 className="text-lg font-bold text-slate-900 mb-4">
-              Other Commercial Hubs in {city.regionName}
+              Other Cities & Areas in {city.regionName}
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {relatedCities.map((c) => (

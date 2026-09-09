@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { 
-  Globe, MapPin, Search, ArrowRight, Building, 
-  Sparkles, CheckCircle, ChevronRight, Layers 
-} from 'lucide-react';
-import { regionsData, citiesData, getAllRegions, getCitiesByRegion } from '../data/locations';
+import { Globe, Search, ArrowRight } from 'lucide-react';
+import { regionsData, citiesData, getCitiesByRegion } from '../data/locations';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
-import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
 
 export const LocationsHub: React.FC = () => {
@@ -53,11 +49,11 @@ export const LocationsHub: React.FC = () => {
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              Locations & Regional <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Hubs We Serve</span>
+              Locations & Areas <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">We Serve</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-300 leading-relaxed mb-8">
-              Explore localized digital solutions structured by state and metropolitan territory. From physical offices in Jaipur, Vrindavan, and Nepal to dedicated client delivery across major commerce hubs.
+              Explore localized digital solutions structured by state and territory. Growth Service operates 3 company offices in Jaipur, Vrindavan, and Nepal with digital services delivered nationwide.
             </p>
 
             {/* Search Bar */}
@@ -152,7 +148,7 @@ export const LocationsHub: React.FC = () => {
                       to={`/locations/${region.slug}`}
                       className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 hover:underline shrink-0"
                     >
-                      <span>Explore {region.name} Region Hub</span>
+                      <span>Explore {region.name}</span>
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
@@ -278,7 +274,7 @@ export const LocationsHub: React.FC = () => {
                     to={`/locations/${city.slug}`}
                     className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
                   >
-                    <span>Explore City Hub</span>
+                    <span>Explore City</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -291,7 +287,7 @@ export const LocationsHub: React.FC = () => {
         <div className="mt-16 bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-100">
-              Corporate Headquarters & Hubs
+              Our 3 Company Offices
             </span>
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-2 mb-1">
               Looking for Our Verified Physical Offices?

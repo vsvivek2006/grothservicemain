@@ -2,15 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
-  Building2, MapPin, Phone, Mail, Clock, ExternalLink, 
-  ArrowRight, ShieldCheck, Users, Sparkles 
+  Building2, MapPin, Phone, Clock, 
+  ArrowRight, ShieldCheck, CheckCircle 
 } from 'lucide-react';
 import { physicalOffices } from '../data/offices';
-import { getTeamMembersByOffice } from '../data/team';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
 import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
 
@@ -18,10 +16,10 @@ export const OfficesHub: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>Our Offices — Jaipur, Vrindavan & Nepal | Growth Service</title>
+        <title>Our 3 Company Offices — Jaipur, Vrindavan & Nepal | Growth Service</title>
         <meta 
           name="description" 
-          content="Explore Growth Service physical offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh Head Office), and Bariyarpatti (Nepal). Real teams, verified addresses, and local digital excellence." 
+          content="Explore Growth Service physical offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh Head Office), and Bariyarpatti (Nepal). Verified addresses, direct contacts, and business hours." 
         />
         <link rel="canonical" href="https://growthservice.in/offices" />
         
@@ -65,11 +63,11 @@ export const OfficesHub: React.FC = () => {
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              Our Physical <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Offices & Hubs</span>
+              Our 3 Company <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Offices</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-300 leading-relaxed">
-              Growth Service operates 3 active physical offices across India and Nepal. Our certified strategists, developers, and marketers work collaboratively to deliver transparent, high-ROI digital solutions.
+              Growth Service operates 3 active physical offices across India and Nepal. Our team collaborates to deliver transparent, high-ROI digital solutions.
             </p>
           </div>
         </div>
@@ -80,95 +78,92 @@ export const OfficesHub: React.FC = () => {
         <SectionHeader
           badge="Company Locations"
           title="Growth Service"
-          titleHighlight="Office Network"
-          description="Factual, verifiable office locations with stationed personnel, direct communication channels, and local operational hours."
+          titleHighlight="Office Locations"
+          description="Physical office locations with verified addresses, direct communication channels, and local operational hours."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {physicalOffices.map((office) => {
-            const team = getTeamMembersByOffice(office.id);
-            return (
-              <Card 
-                key={office.id} 
-                className="flex flex-col h-full bg-white border border-slate-200/80 shadow-card hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 relative overflow-hidden group"
-              >
-                {/* Office Header */}
-                <div className="flex items-start justify-between gap-3 mb-5">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-2xl" role="img" aria-label="Country flag">{office.flag}</span>
-                      <h2 className="text-2xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
-                        {office.name}
-                      </h2>
-                    </div>
-                    <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
-                      {office.city}, {office.state}
-                    </p>
+          {physicalOffices.map((office) => (
+            <Card 
+              key={office.id} 
+              className="flex flex-col h-full bg-white border border-slate-200/80 shadow-card hover:border-purple-300 hover:shadow-card-hover transition-all duration-300 relative overflow-hidden group"
+            >
+              {/* Office Header */}
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-2xl" role="img" aria-label="Country flag">{office.flag}</span>
+                    <h2 className="text-2xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
+                      {office.name}
+                    </h2>
                   </div>
-                  {office.isHeadOffice && (
-                    <Badge variant="gold" size="sm">
-                      Global HQ
-                    </Badge>
-                  )}
-                </div>
-
-                <p className="text-sm font-medium text-slate-700 mb-6 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  {office.tagline}
-                </p>
-
-                {/* Details List */}
-                <div className="space-y-3.5 text-sm text-slate-600 mb-6 flex-grow">
-                  <div className="flex items-start gap-2.5">
-                    <MapPin className="w-4 h-4 text-purple-600 shrink-0 mt-1" />
-                    <p className="leading-relaxed text-xs sm:text-sm">{office.address}</p>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm">
-                    <Clock className="w-4 h-4 text-slate-400 shrink-0" />
-                    <span>{office.timings}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm">
-                    <Users className="w-4 h-4 text-purple-600 shrink-0" />
-                    <span>{team.length} Active Team Members Assigned</span>
-                  </div>
-                </div>
-
-                {/* Services Pills */}
-                <div className="pt-4 border-t border-slate-100 mb-6">
-                  <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">
-                    Key Hub Specializations
+                  <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                    {office.city}, {office.state}
                   </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {office.servicesOffered.slice(0, 3).map((srv, idx) => (
-                      <span key={idx} className="text-xs bg-purple-50 text-purple-700 px-2.5 py-1 rounded-md font-medium">
-                        {srv.split('(')[0].trim()}
-                      </span>
-                    ))}
-                  </div>
+                </div>
+                {office.isHeadOffice && (
+                  <Badge variant="gold" size="sm">
+                    Global HQ
+                  </Badge>
+                )}
+              </div>
+
+              <p className="text-sm font-medium text-slate-700 mb-6 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                {office.tagline}
+              </p>
+
+              {/* Details List */}
+              <div className="space-y-3.5 text-sm text-slate-600 mb-6 flex-grow">
+                <div className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-purple-600 shrink-0 mt-1" />
+                  <p className="leading-relaxed text-xs sm:text-sm">{office.address}</p>
                 </div>
 
-                {/* Bottom Actions */}
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 mt-auto">
-                  <a
-                    href={`tel:${office.phone.replace(/\s+/g, '')}`}
-                    className="inline-flex items-center gap-1.5 font-bold text-sm text-slate-800 hover:text-purple-600 transition-colors"
-                  >
-                    <Phone className="w-4 h-4 text-purple-600" />
-                    <span>{office.phone}</span>
-                  </a>
-
-                  <Link
-                    to={`/offices/${office.slug}`}
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
-                  >
-                    <span>Office Details</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm">
+                  <Clock className="w-4 h-4 text-slate-400 shrink-0" />
+                  <span>{office.timings}</span>
                 </div>
-              </Card>
-            );
-          })}
+
+                <div className="flex items-center gap-2.5 text-xs sm:text-sm">
+                  <CheckCircle className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>Verified Physical Office</span>
+                </div>
+              </div>
+
+              {/* Services Pills */}
+              <div className="pt-4 border-t border-slate-100 mb-6">
+                <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">
+                  Services Available
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {office.servicesOffered.slice(0, 3).map((srv, idx) => (
+                    <span key={idx} className="text-xs bg-purple-50 text-purple-700 px-2.5 py-1 rounded-md font-medium">
+                      {srv.split('(')[0].trim()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Actions */}
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 mt-auto">
+                <a
+                  href={`tel:${office.phone.replace(/\s+/g, '')}`}
+                  className="inline-flex items-center gap-1.5 font-bold text-sm text-slate-800 hover:text-purple-600 transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-purple-600" />
+                  <span>{office.phone}</span>
+                </a>
+
+                <Link
+                  to={`/offices/${office.slug}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
+                >
+                  <span>Office Details</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </Card>
+          ))}
         </div>
 
         {/* Global Transparency Banner */}
@@ -176,19 +171,19 @@ export const OfficesHub: React.FC = () => {
           <div className="max-w-3xl">
             <h3 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-purple-600" />
-              <span>Authentic Presence & Physical Hub Standards</span>
+              <span>Authentic Office Standards</span>
             </h3>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
-              Unlike agencies that list virtual postal mailboxes as physical offices, Growth Service only designates a location as an "Office" where our full-time engineers, marketers, or executives actively work. For all other cities, our services are delivered through designated regional hubs.
+              Unlike agencies that list virtual postal mailboxes as physical offices, Growth Service only designates a location as an office where we have actual physical premises. For all other cities, our digital marketing, web development, and SEO services are provided with direct team communication.
             </p>
             <div className="flex flex-wrap gap-4 items-center">
               <Link to="/locations" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5">
-                <span>View All Regions & Cities We Serve</span>
+                <span>View All Locations We Serve</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <span className="text-slate-300">•</span>
               <Link to="/team" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5">
-                <span>Meet Our Stationed Team Members</span>
+                <span>Meet Our Team</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
