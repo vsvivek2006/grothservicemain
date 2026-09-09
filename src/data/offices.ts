@@ -37,7 +37,7 @@ export const physicalOffices: readonly OfficeData[] = [
     country: "India",
     flag: "🇮🇳",
     isHeadOffice: false,
-    tagline: "Web Development & SEO Services in Rajasthan",
+    tagline: "Web Development, SEO & Digital Marketing in Rajasthan",
     address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
     phone: "+91 62073 00553",
     email: "jaipur@growthservice.in",
@@ -50,15 +50,17 @@ export const physicalOffices: readonly OfficeData[] = [
       "Web Development",
       "SEO Services",
       "Digital Marketing",
-      "Social Media Management"
+      "Social Media Management",
+      "Google Ads & PPC",
+      "E-commerce Solutions"
     ],
     areasServed: [
       "Jagatpura", "Malviya Nagar", "Mansarovar", "Vaishali Nagar", 
       "C-Scheme", "Sitapura", "Tonk Road", "Ajmer Road", 
-      "Raja Park", "Bani Park"
+      "Raja Park", "Bani Park", "Sanganer", "Pratap Nagar"
     ],
     teamMemberIds: [1, 2, 3],
-    description: "Our Jaipur office provides web development, SEO, and digital marketing services to clients in Jaipur, Rajasthan, and across India."
+    description: "Our Jaipur office serves as the corporate and technology hub for Growth Service's India operations. Located in Jagatpura, Jaipur, we deliver premium web development, SEO, digital marketing, and Google Ads services to businesses across Rajasthan and pan-India clients."
   },
   {
     id: "vrindavan",
@@ -69,7 +71,7 @@ export const physicalOffices: readonly OfficeData[] = [
     country: "India",
     flag: "🇮🇳",
     isHeadOffice: false,
-    tagline: "Digital Marketing, Web Development & SEO Solutions",
+    tagline: "Digital Marketing, Web Development & SEO Solutions in Uttar Pradesh",
     address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
     phone: "+91 93414 36937",
     email: "info@growthservice.in",
@@ -82,14 +84,16 @@ export const physicalOffices: readonly OfficeData[] = [
       "Web Development",
       "SEO Services",
       "Digital Marketing",
-      "Content Creation"
+      "Content Creation",
+      "Social Media Marketing",
+      "WhatsApp Marketing"
     ],
     areasServed: [
       "Vrindavan", "Mathura", "Agra", "Aligarh", "Lucknow", 
-      "Kanpur", "Noida", "Delhi NCR"
+      "Kanpur", "Noida", "Delhi NCR", "Ghaziabad", "Firozabad"
     ],
     teamMemberIds: [4, 5, 6, 7],
-    description: "Our Vrindavan office provides digital marketing, web development, SEO, and strategic consulting to businesses in India and internationally."
+    description: "Our Vrindavan office is the digital marketing and operations hub for Growth Service. Located in the spiritual city of Vrindavan, Uttar Pradesh, we serve businesses across Mathura, Agra, Lucknow, and the entire UP region with expert SEO, social media marketing, content creation, and web development services."
   },
   {
     id: "nepal",
@@ -99,9 +103,9 @@ export const physicalOffices: readonly OfficeData[] = [
     state: "Siraha",
     country: "Nepal",
     flag: "🇳🇵",
-    isHeadOffice: false,
-    tagline: "Nepal Digital Solutions Office",
-    address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
+    isHeadOffice: true,
+    tagline: "Growth Service International Head Office — Nepal",
+    address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Siraha, Nepal",
     phone: "+977 970-7382481",
     email: "nepal@growthservice.in",
     landmark: "Near Bariyarpatti Main Road",
@@ -113,14 +117,17 @@ export const physicalOffices: readonly OfficeData[] = [
       "Web Development",
       "SEO Services",
       "Digital Marketing",
-      "E-commerce Solutions"
+      "E-commerce Solutions",
+      "Meta Ads Management",
+      "WhatsApp Marketing",
+      "Business Setup Consulting"
     ],
     areasServed: [
       "Bariyarpatti", "Lahan", "Siraha", "Janakpur", 
-      "Biratnagar", "Kathmandu"
+      "Biratnagar", "Kathmandu", "Pokhara", "Birgunj", "Dharan"
     ],
     teamMemberIds: [8, 9],
-    description: "Our Nepal office in Bariyarpatti (Siraha) delivers web development, SEO, and e-commerce solutions for businesses across Nepal."
+    description: "Growth Service Nepal — our international head office — is located in Bariyarpatti, Siraha district. This is our global operations headquarters, directing digital strategy, client management, and business partnerships across Nepal, India, and international markets. We provide world-class web development, SEO, Meta Ads, e-commerce, and WhatsApp marketing solutions from Nepal."
   }
 ] as const;
 
