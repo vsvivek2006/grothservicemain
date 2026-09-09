@@ -53,7 +53,7 @@ interface SocialLink {
 interface TrustBadge {
   text: string;
   path: string;
-  icon: string;
+  icon?: string;
 }
 
 const Footer: React.FC = () => {
@@ -97,10 +97,11 @@ const Footer: React.FC = () => {
     }
   ];
 
-  // Navigation Links
   const aboutLinks: FooterLink[] = [
     { name: "About Growth Service", path: "/about", emoji: "🏢" },
-    { name: "Our Team", path: "/about#team", emoji: "👥" },
+    { name: "Our Team", path: "/team", emoji: "👥" },
+    { name: "Company Offices", path: "/offices", emoji: "📍" },
+    { name: "Locations Directory", path: "/locations", emoji: "🗺️" },
     { name: "Careers", path: "/careers", emoji: "💼" },
     { name: "Terms & Conditions", path: "/terms", emoji: "📜" },
     { name: "Privacy Policy", path: "/privacy", emoji: "🔒" },
@@ -259,10 +260,15 @@ const Footer: React.FC = () => {
 
           {/* OFFICE LOCATIONS - Now showing all 3 */}
           <div className="lg:col-span-2">
-            <h3 className="text-lg font-bold mb-6 text-purple-300 border-b border-purple-600 pb-2 flex items-center">
-              <Building className="h-5 w-5 mr-2" />
-              OUR OFFICES
-            </h3>
+            <div className="flex items-center justify-between mb-6 border-b border-purple-600 pb-2">
+              <Link to="/offices" className="text-lg font-bold text-purple-300 hover:text-white transition-colors flex items-center">
+                <Building className="h-5 w-5 mr-2" />
+                OUR OFFICES
+              </Link>
+              <Link to="/locations" className="text-xs text-purple-300 hover:text-white transition-colors">
+                All Locations →
+              </Link>
+            </div>
             <div className="space-y-4">
               {offices.map((office) => (
                 <div 
@@ -287,12 +293,15 @@ const Footer: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-purple-300 text-sm flex items-center gap-2">
+                      <Link 
+                        to={`/offices/${office.id.replace('india-', '')}`}
+                        className="font-semibold text-purple-300 hover:text-white transition-colors text-sm flex items-center gap-2 group-hover:underline"
+                      >
                         {office.name}
                         {office.isHeadOffice && (
                           <Zap className="h-3 w-3 text-yellow-400 fill-yellow-400" />
                         )}
-                      </p>
+                      </Link>
                       <div className="mt-1 space-y-1">
                         <p className="text-gray-300 text-xs leading-relaxed flex items-start gap-1">
                           <MapPin className="h-3 w-3 text-purple-400 flex-shrink-0 mt-0.5" />

@@ -32,6 +32,24 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .glass-card-dark {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-mesh {
+    background: radial-gradient(circle at 50% 20%, rgba(106, 13, 173, 0.45) 0%, rgba(15, 23, 42, 0.95) 75%);
+  }
 }
 
 @layer utilities {
@@ -71,10 +89,7 @@ html {
   scroll-behavior: smooth;
 }
 
-button:focus,
-input:focus,
-textarea:focus,
-select:focus {
+:focus-visible {
   outline: 2px solid #6A0DAD;
   outline-offset: 2px;
 }
@@ -94,5 +109,14 @@ select:focus {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

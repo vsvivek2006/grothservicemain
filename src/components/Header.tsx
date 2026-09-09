@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Search, Phone, MessageCircle, Mail, Home, Info, BookOpen, FileText, Sparkles, MapPin, Globe, Building } from "lucide-react";
+import { Menu, X, ChevronDown, Search, Phone, MessageCircle, Mail, Home, Info, BookOpen, FileText, Sparkles, MapPin, Globe, Building, ArrowRight } from "lucide-react";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -101,6 +101,9 @@ const Header: React.FC = () => {
 
   // Other Pages
   const otherPages = [
+    { name: "Locations", href: "/locations" },
+    { name: "Offices", href: "/offices" },
+    { name: "Meet The Team", href: "/team" },
     { name: "Packages", href: "/packages" },
     { name: "Our Impact", href: "/impact" },
     { name: "Contact Us", href: "/contact" },
@@ -328,6 +331,133 @@ const Header: React.FC = () => {
                 ))}
               </div>
             </div>
+
+            {/* Locations Mega Menu */}
+            <div className="relative group">
+              <NavLink
+                to="/locations"
+                className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300"
+              >
+                Locations
+                <ChevronDown className="h-3 w-3" />
+              </NavLink>
+              <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-[640px] rounded-2xl border border-gray-200 bg-white shadow-2xl p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-purple-600">
+                      Regional Coverage Directory
+                    </span>
+                    <p className="text-[11px] text-gray-500">Structured by region/state across India & Nepal</p>
+                  </div>
+                  <NavLink
+                    to="/locations"
+                    className="text-xs font-bold text-purple-600 hover:text-purple-700 hover:underline flex items-center gap-1"
+                  >
+                    <span>All Locations Directory</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </NavLink>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2.5">
+                  <NavLink to="/locations/delhi-ncr" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Delhi NCR</div>
+                    <div className="text-[10px] text-gray-500">Delhi, Gurgaon, Noida</div>
+                  </NavLink>
+                  <NavLink to="/locations/bihar" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Bihar</div>
+                    <div className="text-[10px] text-gray-500">Patna, Gaya, Muzaffarpur</div>
+                  </NavLink>
+                  <NavLink to="/locations/rajasthan" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
+                      <span>Rajasthan</span>
+                      <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
+                    </div>
+                    <div className="text-[10px] text-gray-500">Jaipur, Jodhpur, Udaipur</div>
+                  </NavLink>
+                  <NavLink to="/locations/goa" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Goa</div>
+                    <div className="text-[10px] text-gray-500">Panaji, Margao</div>
+                  </NavLink>
+                  <NavLink to="/locations/punjab-chandigarh" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Punjab / Chandigarh</div>
+                    <div className="text-[10px] text-gray-500">Chandigarh, Mohali, Ludhiana</div>
+                  </NavLink>
+                  <NavLink to="/locations/uttar-pradesh" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
+                      <span>Uttar Pradesh</span>
+                      <span className="text-[9px] bg-amber-100 text-amber-800 font-semibold px-1 rounded">HQ</span>
+                    </div>
+                    <div className="text-[10px] text-gray-500">Vrindavan, Lucknow, Agra</div>
+                  </NavLink>
+                  <NavLink to="/locations/maharashtra" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Maharashtra</div>
+                    <div className="text-[10px] text-gray-500">Mumbai, Pune, Nagpur</div>
+                  </NavLink>
+                  <NavLink to="/locations/karnataka" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Karnataka</div>
+                    <div className="text-[10px] text-gray-500">Bangalore, Mysore</div>
+                  </NavLink>
+                  <NavLink to="/locations/nepal" className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+                    <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
+                      <span>Nepal</span>
+                      <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
+                    </div>
+                    <div className="text-[10px] text-gray-500">Bariyarpatti, Kathmandu</div>
+                  </NavLink>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs bg-purple-50/40 p-2.5 rounded-xl">
+                  <span className="text-slate-600 font-medium">
+                    Our 3 Company Offices:
+                  </span>
+                  <div className="flex items-center gap-3 font-semibold">
+                    <NavLink to="/offices/jaipur" className="text-purple-600 hover:underline">Jaipur</NavLink>
+                    <span className="text-slate-300">•</span>
+                    <NavLink to="/offices/vrindavan" className="text-purple-600 hover:underline">Vrindavan (HQ)</NavLink>
+                    <span className="text-slate-300">•</span>
+                    <NavLink to="/offices/nepal" className="text-purple-600 hover:underline">Nepal</NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Offices Dropdown */}
+            <div className="relative group">
+              <button className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-all duration-300">
+                Offices
+                <ChevronDown className="h-3 w-3" />
+              </button>
+              <div className="absolute left-0 mt-1 w-56 rounded-xl border border-gray-200 bg-white shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <NavLink to="/offices/jaipur" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                  Jaipur Office (Rajasthan)
+                </NavLink>
+                <NavLink to="/offices/vrindavan" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                  Vrindavan Office (Head Office)
+                </NavLink>
+                <NavLink to="/offices/nepal" className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600">
+                  Nepal Office (Siraha)
+                </NavLink>
+                <div className="mt-1 pt-1 border-t border-gray-100">
+                  <NavLink to="/offices" className="block px-3 py-1.5 rounded-lg text-xs font-bold text-purple-600 hover:bg-purple-50 text-center">
+                    All 3 Company Offices →
+                  </NavLink>
+                </div>
+              </div>
+            </div>
+
+            {/* Team Link */}
+            <NavLink 
+              to="/team" 
+              className={({ isActive }) =>
+                `px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                  isActive
+                    ? "text-purple-700 bg-purple-50"
+                    : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
+                }`
+              }
+            >
+              Team
+            </NavLink>
 
             {/* Direct Links */}
             <NavLink 
