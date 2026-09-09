@@ -1,40 +1,47 @@
+import { OfficeId, physicalOfficesById } from './offices';
+
+export type RegionSlug =
+  | 'delhi-ncr'
+  | 'rajasthan'
+  | 'uttar-pradesh'
+  | 'bihar'
+  | 'punjab-chandigarh'
+  | 'goa'
+  | 'maharashtra'
+  | 'karnataka'
+  | 'nepal';
+
 export interface RegionData {
-  slug: string;
-  name: string;
-  state: string;
-  country: string;
-  flag: string;
-  description: string;
-  citySlugs: string[];
+  readonly slug: RegionSlug;
+  readonly name: string;
+  readonly state: string;
+  readonly country: string;
+  readonly flag: string;
+  readonly description: string;
+  readonly citySlugs: readonly string[];
 }
 
 export interface LocationData {
-  slug: string;
-  name: string;
-  regionSlug: string;
-  regionName: string;
-  state: string;
-  country: string;
-  flag: string;
-  isPhysicalOffice: boolean;
-  officeId?: 'jaipur' | 'vrindavan' | 'nepal';
-  address?: string;
-  phone: string;
-  email: string;
-  landmark?: string;
-  postalCode?: string;
-  mapLink?: string;
-  timings?: string;
-  localAreas: string[];
-  keyIndustries: string[];
-  servicesAvailable: string[];
-  description: string;
-  faqs: Array<{ q: string; a: string }>;
+  readonly slug: string;
+  readonly name: string;
+  readonly regionSlug: RegionSlug;
+  readonly regionName: string;
+  readonly state: string;
+  readonly country: string;
+  readonly flag: string;
+  readonly isPhysicalOffice: boolean;
+  readonly officeId?: OfficeId;
+  readonly servingOfficeId?: OfficeId;
+  readonly localAreas: readonly string[];
+  readonly keyIndustries: readonly string[];
+  readonly servicesAvailable: readonly string[];
+  readonly description: string;
+  readonly faqs: readonly { readonly q: string; readonly a: string }[];
 }
 
 export type CityData = LocationData;
 
-export const regionsData: RegionData[] = [
+export const regionsData: readonly RegionData[] = [
   {
     slug: "delhi-ncr",
     name: "Delhi NCR",
@@ -87,7 +94,7 @@ export const regionsData: RegionData[] = [
     country: "India",
     flag: "🇮🇳",
     description: "India's tourism and hospitality capital, featuring boutique luxury resorts, international dining, real estate, and lifestyle brands.",
-    citySlugs: ["goa"]
+    citySlugs: ["goa", "panaji"]
   },
   {
     slug: "maharashtra",
@@ -116,9 +123,9 @@ export const regionsData: RegionData[] = [
     description: "Home to our Bariyarpatti Office, empowering cross-border Himalayan commerce, regional businesses, and international startups.",
     citySlugs: ["bariyarpatti", "kathmandu"]
   }
-];
+] as const;
 
-export const citiesData: CityData[] = [
+export const citiesData: readonly CityData[] = [
   // --- RAJASTHAN ---
   {
     slug: "jaipur",
@@ -130,19 +137,13 @@ export const citiesData: CityData[] = [
     flag: "🇮🇳",
     isPhysicalOffice: true,
     officeId: "jaipur",
-    address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-    phone: "+91 62073 00553",
-    email: "jaipur@growthservice.in",
-    landmark: "Near Jagatpura Flyover",
-    postalCode: "302017",
-    mapLink: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
-    timings: "Mon-Sat: 9:00 AM - 7:00 PM",
+    servingOfficeId: "jaipur",
     localAreas: ["Jagatpura", "Malviya Nagar", "Mansarovar", "Vaishali Nagar", "C-Scheme", "Sitapura", "Tonk Road", "Raja Park", "Bani Park", "Ajmer Road"],
     keyIndustries: ["Gems & Jewellery", "Handicrafts & Textiles", "Hospitality & Tourism", "Real Estate", "Higher Education"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media", "content-marketing", "ecommerce"],
     description: "Growth Service operates a physical office in Jaipur, delivering web development, SEO, and digital marketing services to businesses across Jaipur and Rajasthan.",
     faqs: [
-      { q: "Where is the Growth Service office located in Jaipur?", a: "Our physical office is located at 138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017 (Near Jagatpura Flyover)." },
+      { q: "Where is the Growth Service office located in Jaipur?", a: `Our physical office is located at ${physicalOfficesById.jaipur.address}.` },
       { q: "Can I meet the technical and marketing team in Jaipur?", a: "Yes, our team is available at our Jaipur office for in-person consultations from Monday to Saturday." },
       { q: "Do you offer localized SEO for Jaipur businesses?", a: "Yes, we specialize in local GMB map-pack optimization, Hindi/English content strategies, and commercial area targeting (e.g. Sitapura, Mansarovar, C-Scheme)." }
     ]
@@ -156,8 +157,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 62073 00553",
-    email: "jaipur@growthservice.in",
+    servingOfficeId: "jaipur",
     localAreas: ["Ratanada", "Shastri Nagar", "Sardarpura", "Pal Road", "Basni"],
     keyIndustries: ["Wooden Handicrafts", "Heritage Hospitality", "Export Trade", "Textiles"],
     servicesAvailable: ["seo", "web-development", "ecommerce", "paid-marketing"],
@@ -175,8 +175,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 62073 00553",
-    email: "jaipur@growthservice.in",
+    servingOfficeId: "jaipur",
     localAreas: ["Fatehpura", "Hiran Magri", "Panchwati", "Sukher", "Lake Pichola Area"],
     keyIndustries: ["Destination Weddings", "Luxury Hospitality", "Mineral Mining", "Artisan Crafts"],
     servicesAvailable: ["web-development", "seo", "social-media", "paid-marketing"],
@@ -194,8 +193,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 62073 00553",
-    email: "jaipur@growthservice.in",
+    servingOfficeId: "jaipur",
     localAreas: ["Vigyan Nagar", "Talwandi", "Indra Vihar", "Rajeev Gandhi Nagar", "Dadabari"],
     keyIndustries: ["EdTech & Coaching", "Hostel & Housing", "Local Retail"],
     servicesAvailable: ["seo", "paid-marketing", "web-development", "lead-generation"],
@@ -213,8 +211,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 62073 00553",
-    email: "jaipur@growthservice.in",
+    servingOfficeId: "jaipur",
     localAreas: ["Vaishali Nagar", "Civil Lines", "Adarsh Nagar", "Pushkar Road"],
     keyIndustries: ["Pilgrimage Tourism", "Education", "Food & Confectionery"],
     servicesAvailable: ["seo", "local-seo", "web-development"],
@@ -235,18 +232,13 @@ export const citiesData: CityData[] = [
     flag: "🇮🇳",
     isPhysicalOffice: true,
     officeId: "vrindavan",
-    address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
-    postalCode: "281121",
-    mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
-    timings: "Mon-Sat: 9:00 AM - 7:00 PM",
+    servingOfficeId: "vrindavan",
     localAreas: ["Kailash Nagar", "Raman Reti", "Chhatikara Road", "Parikrama Marg", "Vidyapeeth Chauraha", "Sunrakh Road", "Prem Mandir Road"],
     keyIndustries: ["Guest Houses & Hotels", "Pilgrimage Tourism", "Religious Services", "Handicrafts & Puja Essentials"],
     servicesAvailable: ["seo", "web-development", "social-media", "paid-marketing", "content-marketing"],
     description: "Growth Service operates its company office in Vrindavan, providing comprehensive digital marketing, web development, and SEO services to businesses locally and globally.",
     faqs: [
-      { q: "Where is the Vrindavan office of Growth Service located?", a: "Our Vrindavan office is located at Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan 281121." },
+      { q: "Where is the Vrindavan office of Growth Service located?", a: `Our Vrindavan office is located at ${physicalOfficesById.vrindavan.address}.` },
       { q: "What services are available from the Vrindavan office?", a: "Web development, SEO auditing, social media management, and performance marketing are available to clients through our Vrindavan office." }
     ]
   },
@@ -259,8 +251,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Krishna Nagar", "Civil Lines", "Dampier Nagar", "Highway City", "Refinery Township"],
     keyIndustries: ["Hotels & Restaurants", "Silver & Brass Artisans", "Dairy & Confectionery"],
     servicesAvailable: ["seo", "web-development", "local-seo", "paid-marketing"],
@@ -278,8 +269,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Sanjay Place", "Tajganj", "Dayalbagh", "Kamla Nagar", "Sikandra"],
     keyIndustries: ["Leather & Footwear", "Marble Inlay Crafts", "Tourism & Hotels", "Handicrafts Export"],
     servicesAvailable: ["seo", "web-development", "ecommerce", "paid-marketing"],
@@ -297,8 +287,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Gomti Nagar", "Hazratganj", "Aliganj", "Indira Nagar", "Vibhuti Khand"],
     keyIndustries: ["Chikan & Textiles", "Healthcare", "Real Estate", "Education"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media"],
@@ -318,8 +307,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "delhi@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Connaught Place", "Saket", "South Extension", "Nehru Place", "Dwarka", "Rohini", "Lajpat Nagar", "Pitampura", "Karol Bagh", "Okhla Industrial Area"],
     keyIndustries: ["Corporate Services", "E-commerce & D2C", "Retail Chains", "Legal & Financial", "Healthcare"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media", "content-marketing", "ecommerce"],
@@ -338,8 +326,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "gurgaon@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Cyber City", "Golf Course Road", "DLF Phase 1-5", "Sohna Road", "Udyog Vihar", "Sector 29", "Golf Course Extension"],
     keyIndustries: ["Fintech & SaaS", "Corporate Real Estate", "B2B Professional Services", "Luxury Retail"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "branding", "lead-generation"],
@@ -357,8 +344,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "noida@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Sector 62", "Sector 18", "Sector 135", "Noida Expressway", "Sector 16", "Greater Noida", "Pari Chowk"],
     keyIndustries: ["IT & Software", "Media & Entertainment", "Real Estate Development", "Manufacturing"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media"],
@@ -378,8 +364,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "patna@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Boring Road", "Kankarbagh", "Bailey Road", "Fraser Road", "Rajendra Nagar", "Patliputra Colony", "Danapur", "Anisabad"],
     keyIndustries: ["Education & Test Prep", "Healthcare & Clinics", "Automobile Dealerships", "Retail Showrooms"],
     servicesAvailable: ["seo", "local-seo", "web-development", "social-media", "paid-marketing"],
@@ -398,8 +383,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Bodh Gaya", "Civil Lines", "AP Colony", "Rampur", "Tekari Road"],
     keyIndustries: ["Buddhist Tourism & Hospitality", "Pilgrimage Travel", "Local Retail"],
     servicesAvailable: ["seo", "web-development", "local-seo"],
@@ -417,8 +401,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Mithanpura", "Motijheel", "Jawahar Lal Road", "Ahiyapur", "Bela Industrial Area"],
     keyIndustries: ["Agriculture & Litchi Trade", "Textile Wholesalers", "Medical Services"],
     servicesAvailable: ["seo", "web-development", "ecommerce"],
@@ -438,8 +421,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Sector 17", "Sector 35", "Sector 8", "IT Park", "Phase 8 Mohali", "Panchkula Sector 5"],
     keyIndustries: ["IT & Technology", "Immigration & Visa Consultants", "Education", "Healthcare"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "lead-generation"],
@@ -457,8 +439,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Model Town", "Ferozepur Road", "Focal Point", "Civil Lines", "Sarabha Nagar"],
     keyIndustries: ["Hosiery & Apparel", "Bicycle & Parts Manufacturing", "Textile Machinery", "Auto Components"],
     servicesAvailable: ["web-development", "seo", "ecommerce", "paid-marketing"],
@@ -478,8 +459,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Fontainhas", "Miramar", "Campal", "Dona Paula", "Patto Plaza"],
     keyIndustries: ["Luxury Resorts", "Water Sports & Tours", "Gastronomy & Dining", "Boutique Real Estate"],
     servicesAvailable: ["web-development", "seo", "social-media", "paid-marketing"],
@@ -497,8 +477,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "info@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Panaji", "Margao", "Calangute", "Candolim", "Vasco da Gama", "Fontainhas", "Anjuna", "Baga"],
     keyIndustries: ["Hospitality & Tourism", "Luxury Resorts & Villas", "Water Sports", "Dining & Nightlife", "Boutique Real Estate"],
     servicesAvailable: ["web-development", "seo", "social-media", "paid-marketing"],
@@ -518,8 +497,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "mumbai@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Bandra Kurla Complex (BKC)", "Andheri East & West", "Nariman Point", "Lower Parel", "Powai", "Juhu", "Malad", "Thane", "Navi Mumbai"],
     keyIndustries: ["Financial Services", "Entertainment & Media", "D2C Brands", "Luxury Real Estate"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media", "content-marketing", "ecommerce"],
@@ -537,8 +515,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "pune@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Hinjawadi IT Park", "Kothrud", "Viman Nagar", "Kalyani Nagar", "Baner", "Kharadi", "Aundh"],
     keyIndustries: ["IT & SaaS Startups", "Automobile & Manufacturing", "Higher Education"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "content-marketing"],
@@ -558,8 +535,7 @@ export const citiesData: CityData[] = [
     country: "India",
     flag: "🇮🇳",
     isPhysicalOffice: false,
-    phone: "+91 93414 36937",
-    email: "bangalore@growthservice.in",
+    servingOfficeId: "vrindavan",
     localAreas: ["Indiranagar", "Koramangala", "HSR Layout", "Whitefield", "Electronic City", "JP Nagar", "Marathahalli", "Bellandur"],
     keyIndustries: ["SaaS & DeepTech", "E-Commerce & D2C", "Fintech", "HealthTech"],
     servicesAvailable: ["seo", "web-development", "paid-marketing", "social-media", "ecommerce"],
@@ -580,19 +556,13 @@ export const citiesData: CityData[] = [
     flag: "🇳🇵",
     isPhysicalOffice: true,
     officeId: "nepal",
-    address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-    phone: "+977 970-7382481",
-    email: "nepal@growthservice.in",
-    landmark: "Near Bariyarpatti Main Road",
-    postalCode: "56500",
-    mapLink: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal",
-    timings: "Sun-Fri: 10:00 AM - 6:00 PM",
+    servingOfficeId: "nepal",
     localAreas: ["Main Road", "Bariyarpatti Bazaar", "Lahan Corridor", "Siraha Town"],
     keyIndustries: ["Cross-Border Trade", "Regional Commerce", "Agriculture & Retail"],
     servicesAvailable: ["web-development", "seo", "ecommerce"],
     description: "Growth Service operates a physical office in Bariyarpatti (Siraha), delivering web development, SEO, and digital marketing services across Nepal.",
     faqs: [
-      { q: "Is the Nepal office a physical office?", a: "Yes, our team operates from our office near Bariyarpatti Rd, Bariyarpatti 56500, Nepal." }
+      { q: "Is the Nepal office a physical office?", a: `Yes, our team operates from our office at ${physicalOfficesById.nepal.address}.` }
     ]
   },
   {
@@ -604,8 +574,7 @@ export const citiesData: CityData[] = [
     country: "Nepal",
     flag: "🇳🇵",
     isPhysicalOffice: false,
-    phone: "+977 970-7382481",
-    email: "nepal@growthservice.in",
+    servingOfficeId: "nepal",
     localAreas: ["Thamel", "Durbar Marg", "Patan (Lalitpur)", "Baneshwor", "Jhamsikhel", "Lazimpat"],
     keyIndustries: ["Himalayan Tourism & Trekking", "Hospitality", "Handicrafts & Pashmina Export", "IT Services"],
     servicesAvailable: ["web-development", "seo", "paid-marketing", "social-media"],
@@ -614,10 +583,10 @@ export const citiesData: CityData[] = [
       { q: "Do you support trekking and mountaineering agencies in Kathmandu?", a: "Yes, we create multi-currency adventure booking platforms and international travel SEO." }
     ]
   }
-];
+] as const;
 
-// Helper Functions
-export function getAllRegions(): RegionData[] {
+// Backward-compatibility and convenience exports
+export function getAllRegions(): readonly RegionData[] {
   return regionsData;
 }
 
@@ -625,11 +594,11 @@ export function getRegionBySlug(slug: string): RegionData | undefined {
   return regionsData.find(r => r.slug.toLowerCase() === slug.toLowerCase());
 }
 
-export function getAllCities(): CityData[] {
+export function getAllCities(): readonly CityData[] {
   return citiesData;
 }
 
-export function getAllLocations(): LocationData[] {
+export function getAllLocations(): readonly LocationData[] {
   return citiesData;
 }
 
@@ -643,16 +612,13 @@ export function getCityBySlug(slug: string): CityData | undefined {
   return citiesData.find(c => c.slug.toLowerCase() === normalized);
 }
 
-export function getCitiesByRegion(regionSlug: string): CityData[] {
+export function getCitiesByRegion(regionSlug: string): readonly CityData[] {
   return citiesData.filter(c => c.regionSlug.toLowerCase() === regionSlug.toLowerCase());
 }
 
-// Backward compatibility helper
 export function getLocationBySlug(slug: string): LocationData | undefined {
   return getCityBySlug(slug);
 }
 
-// Convenient exports for Home & Landing previews
 export const officeLocations = citiesData.filter(c => c.isPhysicalOffice);
 export const expansionLocations = citiesData.filter(c => !c.isPhysicalOffice);
-

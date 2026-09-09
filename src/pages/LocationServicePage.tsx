@@ -6,9 +6,15 @@ import {
   ShieldCheck, Sparkles, ChevronRight
 } from 'lucide-react';
 import { getCityBySlug } from '../data/locations';
-import { getOfficeById } from '../data/offices';
 import { getServiceBySlug, servicesData } from '../data/services';
 import { teamMembers } from '../data/team';
+import { 
+  getCityPhone, 
+  getCityEmail, 
+  getCityAddress, 
+  getOfficeForCity 
+} from '../selectors';
+import { buildWhatsAppUrl } from '../config';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -42,14 +48,20 @@ export const LocationServicePage: React.FC = () => {
     return <NotFound />;
   }
 
-  const office = city.officeId ? getOfficeById(city.officeId) : null;
+  const office = getOfficeForCity(city);
+  const cityPhone = getCityPhone(city);
+  const cityEmail = getCityEmail(city);
+  const cityAddress = getCityAddress(city);
   const coreTeam = teamMembers.slice(0, 3);
   const otherServicesInCity = servicesData.filter(s => s.slug !== service.slug && city.servicesAvailable.includes(s.slug));
 
-  const whatsappUrl = `https://wa.me/${city.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20looking%20for%20${encodeURIComponent(service.title)}%20in%20${encodeURIComponent(city.name)}.`;
+  const whatsappUrl = buildWhatsAppUrl(
+    cityPhone, 
+    `Hello Growth Service, I am looking for ${service.title} in ${city.name}.`
+  );
 
   const pageTitle = `${service.title} in ${city.name}, ${city.state} | Growth Service`;
-  const pageDescription = `Professional ${service.title.toLowerCase()} in ${city.name}, ${city.state}. Digital growth solutions by Growth Service. Serving ${city.localAreas.slice(0, 3).join(', ')}. Contact: ${city.phone}.`;
+  const pageDescription = `Professional ${service.title.toLowerCase()} in ${city.name}, ${city.state}. Digital growth solutions by Growth Service. Serving ${city.localAreas.slice(0, 3).join(', ')}. Contact: ${cityPhone}.`;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -73,8 +85,8 @@ export const LocationServicePage: React.FC = () => {
               "@type": "Organization",
               "name": "Growth Service",
               "url": "https://www.growthservice.in",
-              "telephone": city.phone,
-              "email": city.email
+              "telephone": cityPhone,
+              "email": cityEmail
             },
             "areaServed": {
               "@type": "City",
@@ -138,12 +150,12 @@ export const LocationServicePage: React.FC = () => {
                 </Button>
 
                 <Button
-                  href={`tel:${city.phone.replace(/\s+/g, '')}`}
+                  href={`tel:${cityPhone.replace(/\s+/g, '')}`}
                   variant="white"
                   size="lg"
                   icon={<Phone className="w-5 h-5 text-slate-800" />}
                 >
-                  Call {city.phone}
+                  Call {cityPhone}
                 </Button>
 
                 <Button
@@ -236,7 +248,7 @@ export const LocationServicePage: React.FC = () => {
                 </h3>
                 <p className="text-sm text-slate-600 max-w-2xl leading-relaxed mb-4">
                   {city.isPhysicalOffice 
-                    ? `Clients in ${city.name} can meet directly with our team at ${city.address}. In-person visits and strategic consultations are available.`
+                    ? `Clients in ${city.name} can meet directly with our team at ${cityAddress}. In-person visits and strategic consultations are available.`
                     : `Campaigns for businesses in ${city.name} are managed by our core team with dedicated project management and regular communication.`}
                 </p>
                 <div className="flex flex-wrap gap-3">
@@ -329,7 +341,7 @@ export const LocationServicePage: React.FC = () => {
         title={`Scale Your Business in ${city.name}`}
         description={`Partner with Growth Service for results-driven ${service.title.toLowerCase()}. Offices in Jaipur, Vrindavan, Nepal, and serving clients nationwide.`}
         whatsappUrl={whatsappUrl}
-        phoneNumber={city.phone}
+        phoneNumber={cityPhone}
       />
     </div>
   );

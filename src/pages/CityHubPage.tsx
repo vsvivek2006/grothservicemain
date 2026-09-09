@@ -9,16 +9,21 @@ import { getCityBySlug, getCitiesByRegion } from '../data/locations';
 import { getOfficeById } from '../data/offices';
 import { getServiceBySlug } from '../data/services';
 import { teamMembers } from '../data/team';
+import { 
+  getCityPhone, 
+  getCityEmail, 
+  getCityAddress, 
+  getOfficeForCity 
+} from '../selectors';
+import { buildWhatsAppUrl } from '../config';
+import { Container, Section, Button } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
-import TeamCard from '../components/ui/TeamCard';
 import SectionHeader from '../components/ui/SectionHeader';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
-import { Container, Section } from '../components/ui';
 import NotFound from './NotFound';
 
 export const CityHubPage: React.FC = () => {
@@ -37,10 +42,16 @@ export const CityHubPage: React.FC = () => {
   }
 
   const assignedTeam = teamMembers.slice(0, 3);
-  const office = city.officeId ? getOfficeById(city.officeId) : null;
+  const office = getOfficeForCity(city);
+  const cityPhone = getCityPhone(city);
+  const cityEmail = getCityEmail(city);
+  const cityAddress = getCityAddress(city);
   const relatedCities = getCitiesByRegion(city.regionSlug).filter(c => c.slug !== city.slug);
 
-  const whatsappUrl = `https://wa.me/${city.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20looking%20for%20digital%20marketing%20services%20in%20${encodeURIComponent(city.name)}.`;
+  const whatsappUrl = buildWhatsAppUrl(
+    cityPhone,
+    `Hello Growth Service, I am looking for digital marketing services in ${city.name}.`
+  );
 
   const pageTitle = `Digital Marketing, SEO & Web Development in ${city.name}, ${city.state} | Growth Service`;
   const pageDescription = city.isPhysicalOffice 
@@ -72,8 +83,8 @@ export const CityHubPage: React.FC = () => {
               "@type": "Organization",
               "name": "Growth Service",
               "url": "https://growthservice.in",
-              "telephone": city.phone,
-              "email": city.email
+              "telephone": cityPhone,
+              "email": cityEmail
             },
             "description": city.description
           })}
@@ -135,12 +146,12 @@ export const CityHubPage: React.FC = () => {
                 </Button>
 
                 <Button
-                  href={`tel:${city.phone.replace(/\s+/g, '')}`}
+                  href={`tel:${cityPhone.replace(/\s+/g, '')}`}
                   variant="white"
                   size="lg"
                   icon={<Phone className="w-5 h-5 text-slate-800" />}
                 >
-                  Call {city.phone}
+                  Call {cityPhone}
                 </Button>
 
                 {city.isPhysicalOffice && office && (
@@ -272,7 +283,7 @@ export const CityHubPage: React.FC = () => {
                     </h3>
                     <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
                       {city.isPhysicalOffice 
-                        ? `Growth Service operates an active physical office in ${city.name} at ${city.address}. In-person visits and consultations are welcome.`
+                        ? `Growth Service operates an active physical office in ${city.name} at ${cityAddress}. In-person visits and consultations are welcome.`
                         : `Growth Service provides digital marketing, SEO, and web development services to businesses in ${city.name}. All projects are managed by our core team with direct communication.`}
                     </p>
                   </div>
@@ -375,7 +386,7 @@ export const CityHubPage: React.FC = () => {
         title={`Ready to Scale Your Business in ${city.name}?`}
         description={`Connect with Growth Service today for high-performing SEO, performance marketing, or custom web development in ${city.name}.`}
         whatsappUrl={whatsappUrl}
-        phoneNumber={city.phone}
+        phoneNumber={cityPhone}
       />
     </div>
   );

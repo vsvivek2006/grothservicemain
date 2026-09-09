@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 import { Container, Section } from '../components/ui';
+import { commercialPackages } from '../data/packages';
 
 interface ServiceData {
   id: number;
@@ -49,251 +50,35 @@ const Services = () => {
     { id: 'business', name: 'Business Setup', icon: '🏢', count: 2 }
   ];
 
-  // All Services with Detailed Information
-  const allServices: ServiceData[] = [
-    {
-      id: 1,
-      title: 'Custom Business Website (5 Pages)',
-      category: 'web',
-      description: 'Professional responsive website tailored to your brand identity with WhatsApp integration',
-      delivery: '7-10 Days',
-      icon: <Globe className="h-10 w-10" />,
-      features: [
-        'Home Page with Hero Section',
-        'About Us Narrative Page',
-        'Services/Products Showcase',
-        'Contact Us with Inquiry Form',
-        'WhatsApp Live Integration',
-        'Mobile-First Responsive Layout',
-        'Basic SEO & Meta Setup',
-        '1 Year Free Hosting Setup',
-        'SSL Certificate Configuration',
-        'Social Media Integration',
-        'Dedicated Technical Support',
-        'Google Analytics & Search Console Setup'
-      ],
-      technologies: ['React.js', 'TypeScript', 'Tailwind CSS', 'Node.js'],
-      useCases: ['Startups', 'Small Businesses', 'Portfolio Sites', 'Service Providers'],
-      color: 'blue'
-    },
-    {
-      id: 2,
-      title: 'Tour & Travel Booking Platform',
-      category: 'web',
-      description: 'Complete travel booking platform with dynamic tour itineraries and inquiry workflows',
-      delivery: '10-15 Days',
-      icon: <Globe className="h-10 w-10" />,
-      features: [
-        'Dynamic Tour Showcase Home Page',
-        'Tour Packages Detail Pages',
-        'Booking Inquiry Engine',
-        'Payment Gateway Ready',
-        'Admin Management Dashboard',
-        'Photo & Media Gallery',
-        'Verified Customer Reviews',
-        'SEO-Optimized Structure',
-        'Mobile Responsive Architecture',
-        'Email Booking Notifications',
-        'Departure Calendar Integration',
-        'Performance Optimization'
-      ],
-      technologies: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Stripe/Razorpay'],
-      useCases: ['Travel Agencies', 'Tour Operators', 'Hotel Chains', 'Adventure Companies'],
-      color: 'green'
-    },
-    {
-      id: 3,
-      title: 'E-commerce Store Architecture',
-      category: 'web',
-      description: 'Full-featured online store with inventory tracking, payment gateways, and order control',
-      delivery: '20-25 Days',
-      icon: <ShoppingCart className="h-10 w-10" />,
-      features: [
-        'Product Catalog Management',
-        'Shopping Cart System',
-        'Secure Payment Gateway Integration',
-        'User Account & Authentication',
-        'Administrative Dashboard',
-        'Order Processing & Management',
-        'Inventory Tracking',
-        'Customer Reviews & Ratings',
-        'Discount & Coupon Engine',
-        'Analytics Dashboard',
-        'Mobile Responsive Design',
-        'Ongoing Technical Support'
-      ],
-      technologies: ['MERN Stack', 'Redux', 'Stripe', 'AWS S3'],
-      useCases: ['Retail Stores', 'Brand Outlets', 'Dropshipping', 'Product Businesses'],
-      color: 'purple'
-    },
-    {
-      id: 4,
-      title: 'Hospitality & Guest House Website',
-      category: 'web',
-      description: 'Hotel and accommodation portal with room showcase and direct reservation inquiries',
-      delivery: '12-18 Days',
-      icon: <Headphones className="h-10 w-10" />,
-      features: [
-        'Homepage with Hero Slider',
-        'Room Listings & Showcase',
-        'Direct Booking Inquiries',
-        'Admin Control Panel',
-        'Customer Review System',
-        'Amenities Showcase',
-        'Interactive Location Map',
-        'Photo Gallery',
-        'Booking Calendar Sync',
-        'Email Notifications',
-        'Mobile Responsive Design',
-        'SEO Optimized Architecture'
-      ],
-      technologies: ['MERN Stack', 'Razorpay/Stripe', 'JWT Auth', 'Cloudinary'],
-      useCases: ['Hotels', 'Guest Houses', 'Resorts', 'Vacation Rentals'],
-      color: 'indigo'
-    },
-    {
-      id: 5,
-      title: 'Professional Search Engine Optimization',
-      category: 'seo',
-      description: 'Complete SEO optimization program for sustainable organic rankings and high-intent traffic',
-      duration: '3-6 Months Retainer',
-      icon: <Search className="h-10 w-10" />,
-      features: [
-        'Monthly 4 Comprehensive Performance Reports',
-        '4 In-Depth SEO Content Articles',
-        'High-Intent Keyword Cluster Optimization',
-        'On-Page Code & Meta Optimization',
-        'Off-Page Link Acquisition Strategy',
-        'Technical Site Health Audit',
-        'Competitor Keyword & Backlink Analysis',
-        'Organic Traffic Growth Roadmap',
-        'Quality Authority Link Building',
-        'Quarterly Content Strategy Plan',
-        'Local SEO Optimization',
-        'Core Web Vitals Performance Optimization'
-      ],
-      technologies: ['Google Analytics', 'Search Console', 'Ahrefs/SEMrush', 'Screaming Frog'],
-      useCases: ['Local Businesses', 'E-commerce Sites', 'Service Providers', 'Corporate Brands'],
-      color: 'orange'
-    },
-    {
-      id: 6,
-      title: 'Social Media Brand Management',
-      category: 'smm',
-      description: 'Multi-channel creative content production and audience community management',
-      duration: 'Ongoing Retainer',
-      icon: <Instagram className="h-10 w-10" />,
-      features: [
-        'Monthly Content Calendar Planning',
-        'Creative Graphic & Video Asset Production',
-        'Community Interaction & Management',
-        'Brand Narrative & Visual Consistency',
-        'High-Engagement Social Creative Design',
-        'Audience Interaction Protocols',
-        'Hashtag & Discovery Strategy',
-        'Monthly Performance Analytics',
-        'Instagram & Facebook Management',
-        'LinkedIn Corporate Page Optimization',
-        'Audience Growth Monitoring'
-      ],
-      technologies: ['Meta Business Suite', 'Buffer', 'Canva', 'Analytics Tools'],
-      useCases: ['Consumer Brands', 'Influencers', 'Local Businesses', 'Emerging Startups'],
-      color: 'pink'
-    },
-    {
-      id: 7,
-      title: 'Google Business Profile Optimization',
-      category: 'business',
-      description: 'Local search engine dominance to drive calls, direction requests, and in-store visits',
-      duration: 'Ongoing Local Retainer',
-      icon: <MapPin className="h-10 w-10" />,
-      features: [
-        'Complete Profile Verification & Setup',
-        'Weekly Geotagged Visual Updates',
-        'Review Management & Reputation Response',
-        'Local 3-Pack Map Optimization',
-        'Rich Photo & Video Media Posts',
-        'Real-Time Call & Direction Insights Tracking',
-        'Active Q&A Management',
-        'Local Search Citation Synchronization',
-        'Business Category Tuning',
-        'Service Area Precision Setup'
-      ],
-      technologies: ['Google My Business', 'Local SEO Tools', 'Review Management', 'Analytics'],
-      useCases: ['Local Services', 'Restaurants', 'Retail Stores', 'Healthcare Clinics'],
-      color: 'green'
-    },
-    {
-      id: 8,
-      title: 'Complete Business Digital Setup',
-      category: 'business',
-      description: 'End-to-end business digital foundation covering branding, responsive web, and acquisition',
-      delivery: '45-60 Days',
-      icon: <Users className="h-10 w-10" />,
-      features: [
-        'Custom Business Website Portal',
-        'Complete Social Media Channels Setup',
-        'Market Entry Strategy Guidance',
-        'Assigned Senior Consultant Lead',
-        'Brand Identity Guidelines',
-        'Inbound Lead Generation Infrastructure',
-        'CRM Setup Consultation',
-        'Complimentary Post-Launch Support',
-        'Google Business Profile Setup',
-        'Corporate Email Configuration',
-        'Search Engine Indexation',
-        'Performance Analytics Dashboard'
-      ],
-      technologies: ['React', 'Social Platforms', 'CRM Integrations', 'Email Setup', 'Analytics'],
-      useCases: ['New Ventures', 'Enterprise Expansion', 'Digital Transformation', 'Family Businesses'],
-      color: 'purple'
-    },
-    {
-      id: 9,
-      title: 'Meta Ads Performance Management',
-      category: 'seo',
-      description: 'Targeted Facebook & Instagram paid campaigns designed for maximum return on ad spend',
-      duration: 'Campaign-Based / Monthly',
-      icon: <Zap className="h-10 w-10" />,
-      features: [
-        'Ad Account & Pixel Setup',
-        'Demographic & Lookalike Audience Targeting',
-        'High-Converting Ad Creative Development',
-        'Systematic A/B Split Testing',
-        'Conversion Tracking & Attribution',
-        'ROAS Optimization & Budget Pacing',
-        'Weekly Performance Review Reports',
-        'Campaign Budget Management',
-        'Full-Funnel Remarketing Campaigns',
-        'High-Intent Lead Generation Funnels'
-      ],
-      technologies: ['Meta Ads Manager', 'Pixel Setup', 'Audience Insights', 'Analytics'],
-      useCases: ['E-commerce', 'Service Providers', 'Event Promotion', 'Direct Response Brands'],
-      color: 'blue'
-    },
-    {
-      id: 10,
-      title: 'Business WhatsApp System Setup',
-      category: 'business',
-      description: 'Professional Business WhatsApp with catalog management and automated inquiry workflows',
-      delivery: '2-3 Days',
-      icon: <MessageCircle className="h-10 w-10" />,
-      features: [
-        'Business WhatsApp Profile Configuration',
-        'Complete Verified Business Details',
-        'Product & Service Catalog Listings',
-        'Quick Reply Templates Setup',
-        'Automated Away & Greeting Messages',
-        'Operating Hours Configuration',
-        'Customer Support Routing Workflow',
-        'Label Organization System',
-        'Analytics Integration'
-      ],
-      technologies: ['WhatsApp Business API', 'Catalog Tools', 'Automation Flows'],
-      useCases: ['Customer Support', 'Sales Teams', 'Local Service Businesses', 'D2C Brands'],
-      color: 'green'
+  const getPackageIcon = (iconName: string): JSX.Element => {
+    switch (iconName) {
+      case 'Globe': return <Globe className="h-10 w-10" />;
+      case 'ShoppingCart': return <ShoppingCart className="h-10 w-10" />;
+      case 'Headphones': return <Headphones className="h-10 w-10" />;
+      case 'Search': return <Search className="h-10 w-10" />;
+      case 'Instagram': return <Instagram className="h-10 w-10" />;
+      case 'MapPin': return <MapPin className="h-10 w-10" />;
+      case 'Users': return <Users className="h-10 w-10" />;
+      case 'Zap': return <Zap className="h-10 w-10" />;
+      case 'MessageCircle': return <MessageCircle className="h-10 w-10" />;
+      default: return <Globe className="h-10 w-10" />;
     }
-  ];
+  };
+
+  // All Services dynamically derived from canonical commercialPackages
+  const allServices: ServiceData[] = commercialPackages.map(pkg => ({
+    id: pkg.id,
+    title: pkg.title,
+    category: pkg.category,
+    description: pkg.description,
+    delivery: pkg.delivery,
+    duration: pkg.duration,
+    icon: getPackageIcon(pkg.iconName),
+    features: [...pkg.features],
+    technologies: [...pkg.technologies],
+    useCases: [...pkg.useCases],
+    color: pkg.color
+  }));
 
   const filteredServices = activeTab === 'all' 
     ? allServices 

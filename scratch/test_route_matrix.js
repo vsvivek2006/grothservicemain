@@ -11,7 +11,8 @@ esbuild.buildSync({
   ],
   outdir: 'scratch/dist',
   format: 'esm',
-  bundle: false
+  bundle: true,
+  platform: 'node'
 });
 
 const { APP_ROUTES, getCanonicalPath } = await import('./dist/config/routes.js');

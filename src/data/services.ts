@@ -1,16 +1,33 @@
+export type ServiceCategory = 'seo' | 'development' | 'marketing' | 'design';
+
+export type ServiceSlug =
+  | 'seo'
+  | 'web-development'
+  | 'paid-marketing'
+  | 'social-media'
+  | 'content-marketing'
+  | 'ecommerce'
+  | 'digital-marketing'
+  | 'local-seo'
+  | 'lead-generation'
+  | 'branding'
+  | 'ui-ux-design'
+  | 'wordpress-development'
+  | 'app-development';
+
 export interface ServiceData {
-  slug: string;
-  title: string;
-  shortDesc: string;
-  fullDesc: string;
-  category: 'seo' | 'development' | 'marketing' | 'design';
-  path: string;
-  features: string[];
-  deliverables: string[];
-  technologies: string[];
+  readonly slug: ServiceSlug;
+  readonly title: string;
+  readonly shortDesc: string;
+  readonly fullDesc: string;
+  readonly category: ServiceCategory;
+  readonly path: string;
+  readonly features: readonly string[];
+  readonly deliverables: readonly string[];
+  readonly technologies: readonly string[];
 }
 
-export const servicesData: ServiceData[] = [
+export const servicesData: readonly ServiceData[] = [
   {
     slug: "seo",
     title: "Search Engine Optimization (SEO)",
@@ -310,7 +327,7 @@ export const servicesData: ServiceData[] = [
     ],
     technologies: ["React Native", "Flutter", "Node.js", "Firebase", "TypeScript"]
   }
-];
+] as const;
 
 export function getServiceBySlug(slug: string): ServiceData | undefined {
   return servicesData.find(s => s.slug.toLowerCase() === slug.toLowerCase());

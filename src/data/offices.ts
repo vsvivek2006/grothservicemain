@@ -1,31 +1,33 @@
+export type OfficeId = 'jaipur' | 'vrindavan' | 'nepal';
+
 export interface OfficeData {
-  id: string;
-  slug: string;
-  name: string;
-  city: string;
-  state: string;
-  country: string;
-  flag: string;
-  isHeadOffice: boolean;
-  tagline: string;
-  address: string;
-  phone: string;
-  email: string;
-  landmark?: string;
-  postalCode: string;
-  mapLink: string;
-  timings: string;
-  coordinates: {
-    lat: number;
-    lng: number;
+  readonly id: OfficeId;
+  readonly slug: string;
+  readonly name: string;
+  readonly city: string;
+  readonly state: string;
+  readonly country: string;
+  readonly flag: string;
+  readonly isHeadOffice: boolean;
+  readonly tagline: string;
+  readonly address: string;
+  readonly phone: string;
+  readonly email: string;
+  readonly landmark?: string;
+  readonly postalCode: string;
+  readonly mapLink: string;
+  readonly timings: string;
+  readonly coordinates: {
+    readonly lat: number;
+    readonly lng: number;
   };
-  servicesOffered: string[];
-  areasServed: string[];
-  teamMemberIds?: number[];
-  description: string;
+  readonly servicesOffered: readonly string[];
+  readonly areasServed: readonly string[];
+  readonly teamMemberIds?: readonly number[];
+  readonly description: string;
 }
 
-export const physicalOffices: OfficeData[] = [
+export const physicalOffices: readonly OfficeData[] = [
   {
     id: "jaipur",
     slug: "jaipur",
@@ -55,6 +57,7 @@ export const physicalOffices: OfficeData[] = [
       "C-Scheme", "Sitapura", "Tonk Road", "Ajmer Road", 
       "Raja Park", "Bani Park"
     ],
+    teamMemberIds: [1, 2, 3],
     description: "Our Jaipur office provides web development, SEO, and digital marketing services to clients in Jaipur, Rajasthan, and across India."
   },
   {
@@ -85,6 +88,7 @@ export const physicalOffices: OfficeData[] = [
       "Vrindavan", "Mathura", "Agra", "Aligarh", "Lucknow", 
       "Kanpur", "Noida", "Delhi NCR"
     ],
+    teamMemberIds: [4, 5, 6, 7],
     description: "Our Vrindavan office provides digital marketing, web development, SEO, and strategic consulting to businesses in India and internationally."
   },
   {
@@ -115,9 +119,14 @@ export const physicalOffices: OfficeData[] = [
       "Bariyarpatti", "Lahan", "Siraha", "Janakpur", 
       "Biratnagar", "Kathmandu"
     ],
+    teamMemberIds: [8, 9],
     description: "Our Nepal office in Bariyarpatti (Siraha) delivers web development, SEO, and e-commerce solutions for businesses across Nepal."
   }
-];
+] as const;
+
+export const physicalOfficesById = Object.fromEntries(
+  physicalOffices.map(o => [o.id, o])
+) as Record<OfficeId, OfficeData>;
 
 export function getOfficeBySlug(slug: string): OfficeData | undefined {
   return physicalOffices.find(o => o.slug.toLowerCase() === slug.toLowerCase());

@@ -1,23 +1,24 @@
+import { OfficeId } from './offices';
+
 export interface TeamMember {
-  id: number;
-  name: string;
-  role: string;
-  department: 'Leadership' | 'Development' | 'Marketing' | 'Operations' | 'Sales';
-  image: string;
-  bio: string;
-  expertise: string[];
-  officeId: 'jaipur' | 'vrindavan' | 'nepal';
-  officeSlug: string;
-  employeeCode: string;
-  email?: string;
-  phone?: string;
-  socialLinks?: {
-    linkedin?: string;
-    twitter?: string;
+  readonly id: number;
+  readonly name: string;
+  readonly role: string;
+  readonly department: 'Leadership' | 'Development' | 'Marketing' | 'Operations' | 'Sales';
+  readonly image: string;
+  readonly bio: string;
+  readonly expertise: readonly string[];
+  readonly officeId: OfficeId;
+  readonly employeeCode: string;
+  readonly email?: string;
+  readonly phone?: string;
+  readonly socialLinks?: {
+    readonly linkedin?: string;
+    readonly twitter?: string;
   };
 }
 
-export const teamMembers: TeamMember[] = [
+export const teamMembers: readonly TeamMember[] = [
   // === JAIPUR CORPORATE & TECH OFFICE ===
   {
     id: 1,
@@ -25,7 +26,6 @@ export const teamMembers: TeamMember[] = [
     role: "CEO & Founder",
     department: "Leadership",
     officeId: "jaipur",
-    officeSlug: "jaipur",
     employeeCode: "GS-JPR-01",
     image: "",
     bio: "Founder and CEO driving strategic digital transformation, corporate vision, and client growth partnerships across Growth Service's offices in India and Nepal.",
@@ -38,7 +38,6 @@ export const teamMembers: TeamMember[] = [
     role: "Tech Manager",
     department: "Development",
     officeId: "jaipur",
-    officeSlug: "jaipur",
     employeeCode: "GS-JPR-02",
     image: "",
     bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
@@ -50,7 +49,6 @@ export const teamMembers: TeamMember[] = [
     role: "Admin",
     department: "Operations",
     officeId: "jaipur",
-    officeSlug: "jaipur",
     employeeCode: "GS-JPR-03",
     image: "",
     bio: "Administrative coordinator managing operational logistics, client communication coordination, and smooth day-to-day workflow across our corporate facilities.",
@@ -64,7 +62,6 @@ export const teamMembers: TeamMember[] = [
     role: "Digital Marketing Manager",
     department: "Marketing",
     officeId: "vrindavan",
-    officeSlug: "vrindavan",
     employeeCode: "GS-VRN-01",
     image: "",
     bio: "Digital marketing manager leading multi-channel growth campaigns, search engine visibility, and client ROI performance across India and international markets.",
@@ -77,7 +74,6 @@ export const teamMembers: TeamMember[] = [
     role: "SEO Executive & Team Leader (SEO Team)",
     department: "Marketing",
     officeId: "vrindavan",
-    officeSlug: "vrindavan",
     employeeCode: "GS-VRN-02",
     image: "",
     bio: "SEO team leader driving organic search performance, technical audit execution, on-page optimization, and SERP rankings for enterprise and local clients.",
@@ -89,7 +85,6 @@ export const teamMembers: TeamMember[] = [
     role: "SEO Executive",
     department: "Marketing",
     officeId: "vrindavan",
-    officeSlug: "vrindavan",
     employeeCode: "GS-VRN-03",
     image: "",
     bio: "SEO executive specializing in in-depth keyword analysis, on-page content optimization, competitive auditing, and sustainable organic traffic growth.",
@@ -101,7 +96,6 @@ export const teamMembers: TeamMember[] = [
     role: "HR Head",
     department: "Operations",
     officeId: "vrindavan",
-    officeSlug: "vrindavan",
     employeeCode: "GS-VRN-04",
     image: "",
     bio: "Human resources head fostering a high-performance culture, talent development, transparent recruitment, and team excellence across all office branches.",
@@ -115,7 +109,6 @@ export const teamMembers: TeamMember[] = [
     role: "Sales Head",
     department: "Sales",
     officeId: "nepal",
-    officeSlug: "nepal",
     employeeCode: "GS-NPL-01",
     image: "",
     bio: "Sales head spearheading regional business development, client consultative partnerships, and enterprise digital solutions across Nepal and border regions.",
@@ -128,15 +121,14 @@ export const teamMembers: TeamMember[] = [
     role: "Sales Executive",
     department: "Sales",
     officeId: "nepal",
-    officeSlug: "nepal",
     employeeCode: "GS-NPL-02",
     image: "",
     bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
     expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
   }
-];
+] as const;
 
-export function getAllTeamMembers(): TeamMember[] {
+export function getAllTeamMembers(): readonly TeamMember[] {
   return teamMembers;
 }
 
@@ -144,12 +136,7 @@ export function getTeamMemberById(id: number): TeamMember | undefined {
   return teamMembers.find(m => m.id === id);
 }
 
-export function getTeamMembersByOffice(officeId: string): TeamMember[] {
+export function getTeamMembersByOffice(officeId: string): readonly TeamMember[] {
   if (!officeId || officeId === 'all') return teamMembers;
   return teamMembers.filter(m => m.officeId.toLowerCase() === officeId.toLowerCase());
-}
-
-export function getTeamMembersByDepartment(dept: string): TeamMember[] {
-  if (!dept || dept === 'all') return teamMembers;
-  return teamMembers.filter(m => m.department.toLowerCase() === dept.toLowerCase());
 }

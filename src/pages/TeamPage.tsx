@@ -62,7 +62,7 @@ export const TeamPage: React.FC = () => {
                 "knowsAbout": m.expertise,
                 "workLocation": {
                   "@type": "Place",
-                  "name": `${m.officeSlug.toUpperCase()} Office, Growth Service`
+                  "name": `${m.officeId.toUpperCase()} Office, Growth Service`
                 }
               }))
             }

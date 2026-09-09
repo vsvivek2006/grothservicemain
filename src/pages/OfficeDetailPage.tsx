@@ -18,6 +18,8 @@ import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
 import NotFound from './NotFound';
 
+import { buildWhatsAppUrl } from '../config';
+
 export const OfficeDetailPage: React.FC = () => {
   const { officeSlug } = useParams<{ officeSlug: string }>();
 
@@ -33,7 +35,10 @@ export const OfficeDetailPage: React.FC = () => {
 
   const officeTeam = getTeamMembersByOffice(office.id);
   const coreTeam = officeTeam.length > 0 ? officeTeam : teamMembers.slice(0, 3);
-  const whatsappUrl = `https://wa.me/${office.phone.replace(/[^0-9]/g, '') || '9779707382481'}?text=Hello%20Growth%20Service,%20I%20am%20inquiring%20about%20your%20services%20from%20the%20${encodeURIComponent(office.name)}.`;
+  const whatsappUrl = buildWhatsAppUrl(
+    office.phone,
+    `Hello Growth Service, I am inquiring about your services from the ${office.name}.`
+  );
 
   const pageTitle = `${office.name} — ${office.city}, ${office.state} | Growth Service`;
   const pageDescription = `${office.name} of Growth Service located at ${office.address}. Contact: ${office.phone}. Services available to clients in this region include ${office.servicesOffered.slice(0, 3).join(', ')}.`;

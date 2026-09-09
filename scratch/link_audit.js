@@ -17,7 +17,8 @@ esbuild.buildSync({
   ],
   outdir: path.join(rootDir, 'scratch/dist'),
   format: 'esm',
-  bundle: false
+  bundle: true,
+  platform: 'node'
 });
 
 // 2. Import compiled modules
