@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { 
-  ArrowRight, CheckCircle, Phone, 
-  MessageCircle, Star, Sparkles, MapPin, 
-  ExternalLink, Globe 
+import {
+  ArrowRight, CheckCircle, Phone,
+  MessageCircle, Star, Sparkles, MapPin,
+  ExternalLink, Globe, Users, TrendingUp,
+  Target, Headphones, Quote
 } from "lucide-react";
+import {
+  SiReact, SiNextdotjs, SiNodedotjs, SiExpress,
+  SiMongodb, SiTailwindcss, SiTypescript, SiGraphql
+} from 'react-icons/si';
 import { teamMembers } from "../data/team";
 import { industriesData } from "../data/industries";
 import { officeLocations, expansionLocations } from "../data/locations";
@@ -17,6 +22,7 @@ import TeamCard from "../components/ui/TeamCard";
 import LocationCard from "../components/ui/LocationCard";
 import IndustryCard from "../components/ui/IndustryCard";
 import DecorativeGrid from "../components/ui/DecorativeGrid";
+import ProcessTimeline from "../components/ui/ProcessTimeline";
 import { FadeIn, StaggerContainer, StaggerItem, AnimatedButton } from "../components/animations";
 
 // Types
@@ -51,11 +57,7 @@ interface Client {
   logo: string;
 }
 
-interface Technology {
-  name: string;
-  type: string;
-  icon: string;
-}
+
 
 interface Testimonial {
   text: string;
@@ -64,11 +66,7 @@ interface Testimonial {
   company: string;
 }
 
-interface Benefit {
-  title: string;
-  description: string;
-  icon: string;
-}
+
 
 interface OfficeLocation {
   name: string;
@@ -266,16 +264,16 @@ const Home: React.FC = () => {
     { name: "StyleHub Fashion", industry: "Retail", logo: "👗" }
   ];
 
-  // Technologies (Verbatim from existing)
-  const technologies: Technology[] = [
-    { name: "React.js", type: "Frontend", icon: "⚛️" },
-    { name: "Next.js", type: "Frontend", icon: "▲" },
-    { name: "Node.js", type: "Backend", icon: "🟢" },
-    { name: "Express.js", type: "Backend", icon: "🚂" },
-    { name: "MongoDB", type: "Database", icon: "🍃" },
-    { name: "Tailwind CSS", type: "Styling", icon: "🎨" },
-    { name: "TypeScript", type: "Language", icon: "📘" },
-    { name: "GraphQL", type: "API", icon: "📊" }
+  // Technologies (Verbatim from existing) — icons replaced with react-icons/si
+  const technologies = [
+    { name: "React.js",    type: "Frontend",  Icon: SiReact,      color: "text-sky-500" },
+    { name: "Next.js",     type: "Frontend",  Icon: SiNextdotjs,  color: "text-slate-900" },
+    { name: "Node.js",     type: "Backend",   Icon: SiNodedotjs,  color: "text-emerald-600" },
+    { name: "Express.js",  type: "Backend",   Icon: SiExpress,    color: "text-slate-700" },
+    { name: "MongoDB",     type: "Database",  Icon: SiMongodb,    color: "text-emerald-500" },
+    { name: "Tailwind CSS",type: "Styling",   Icon: SiTailwindcss,color: "text-sky-400" },
+    { name: "TypeScript",  type: "Language",  Icon: SiTypescript, color: "text-blue-600" },
+    { name: "GraphQL",     type: "API",       Icon: SiGraphql,    color: "text-pink-600" },
   ];
 
   // Testimonials (Verbatim quotes & authors from existing)
@@ -300,28 +298,36 @@ const Home: React.FC = () => {
     }
   ];
 
-  // Benefits (Verbatim from existing)
-  const benefits: Benefit[] = [
+  // Benefits (Verbatim text — icons upgraded to Lucide)
+  const benefits = [
     {
       title: "Expert Digital Team",
       description: "Certified professionals specializing in SEO, web development, and performance marketing",
-      icon: "👨‍💻"
+      Icon: Users,
+      iconBg: "bg-blue-500/20",
+      iconColor: "text-blue-300",
     },
     {
       title: "Proven Results",
       description: "Track record of delivering measurable growth and ROI for 500+ businesses",
-      icon: "📈"
+      Icon: TrendingUp,
+      iconBg: "bg-emerald-500/20",
+      iconColor: "text-emerald-300",
     },
     {
       title: "Customized Solutions",
       description: "Tailored digital strategies aligned with your unique business goals",
-      icon: "🎯"
+      Icon: Target,
+      iconBg: "bg-amber-500/20",
+      iconColor: "text-amber-300",
     },
     {
       title: "24/7 Support",
       description: "Ongoing support and maintenance from our offices in India and Nepal",
-      icon: "🛠️"
-    }
+      Icon: Headphones,
+      iconBg: "bg-purple-500/20",
+      iconColor: "text-purple-300",
+    },
   ];
 
   // Verified Case Studies from existing portfolio
@@ -630,7 +636,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. HOW WE WORK (Structured Process - Verbatim copy)                       */}
+      {/* 5. HOW WE WORK (Connected Process Timeline — Verbatim copy)               */}
       {/* ========================================================================= */}
       <section className="py-20 md:py-28 bg-white" aria-label="Our Process">
         <div className="max-w-7xl mx-auto px-4">
@@ -641,23 +647,9 @@ const Home: React.FC = () => {
             highlightColor="text-blue-600"
             description="Our structured process ensures successful project delivery"
           />
-
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative" staggerDelay={100}>
-            {process.map((item, index) => (
-              <StaggerItem key={index} index={index} className="relative flex flex-col h-full">
-                <Card className="bg-gradient-to-b from-slate-50 to-purple-50/40 border border-slate-200/80 text-center h-full flex flex-col items-center group hover:border-purple-300/80 transition-all duration-300">
-                  <div className="w-14 h-14 rounded-2xl bg-white shadow-md border border-purple-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-luxury">
-                    {item.icon}
-                  </div>
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full mb-3">
-                    STEP {item.step}
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">{item.description}</p>
-                </Card>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+          <FadeIn direction="up" distance={24} duration={600}>
+            <ProcessTimeline steps={process} />
+          </FadeIn>
         </div>
       </section>
 
@@ -903,7 +895,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 11. TECHNOLOGY STACK (Verbatim copy)                                      */}
+      {/* 11. TECHNOLOGY STACK (react-icons/si — Verbatim copy)                     */}
       {/* ========================================================================= */}
       <section className="py-20 md:py-28 bg-white" aria-label="Technology Stack">
         <div className="max-w-7xl mx-auto px-4">
@@ -918,14 +910,12 @@ const Home: React.FC = () => {
           <StaggerContainer className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4" staggerDelay={50}>
             {technologies.map((tech, index) => (
               <StaggerItem key={index} index={index}>
-                <div 
-                  className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200/80 hover:border-purple-300 hover:shadow-card card-lift-sm transition-all duration-200 group"
-                >
-                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300 ease-luxury">
-                    {tech.icon}
+                <div className="bg-white rounded-xl p-4 text-center border border-slate-200/80 hover:border-purple-300/80 hover:shadow-card-hover card-lift-sm transition-all duration-200 group">
+                  <div className={`flex justify-center mb-2.5 group-hover:scale-110 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${tech.color}`}>
+                    <tech.Icon size={32} />
                   </div>
-                  <div className="font-bold text-slate-900 text-sm">{tech.name}</div>
-                  <div className="text-xs text-slate-500">{tech.type}</div>
+                  <div className="font-bold text-slate-900 text-xs sm:text-sm leading-tight">{tech.name}</div>
+                  <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5">{tech.type}</div>
                 </div>
               </StaggerItem>
             ))}
@@ -964,7 +954,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 13. BENEFITS (Why Choose Us - Verbatim copy)                              */}
+      {/* 13. BENEFITS (Why Choose Us — Lucide icons, upgraded glass cards)          */}
       {/* ========================================================================= */}
       <section className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white relative overflow-hidden" aria-label="Why Choose Us">
         <DecorativeGrid variant="dots" dark />
@@ -986,14 +976,13 @@ const Home: React.FC = () => {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8" staggerDelay={90}>
             {benefits.map((benefit, index) => (
               <StaggerItem key={index} index={index} className="h-full">
-                <div 
-                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-7 text-center hover:bg-white/10 hover:border-purple-400/40 card-lift transition-all duration-300 group h-full"
-                >
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-3xl mx-auto mb-5 group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300 ease-luxury">
-                    {benefit.icon}
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-7 text-center hover:bg-white/10 hover:border-purple-400/50 card-lift transition-all duration-300 group h-full flex flex-col items-center">
+                  {/* Lucide icon in coloured ring */}
+                  <div className={`w-14 h-14 rounded-2xl ${benefit.iconBg} flex items-center justify-center mx-auto mb-5 group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]`}>
+                    <benefit.Icon className={`w-7 h-7 ${benefit.iconColor}`} strokeWidth={1.75} />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
-                  <p className="text-sm text-purple-200 leading-relaxed">{benefit.description}</p>
+                  <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">{benefit.description}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -1002,9 +991,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 14. TESTIMONIALS (Client Testimonials - Verbatim copy)                    */}
+      {/* 14. TESTIMONIALS — Spotlight layout with large quote mark                 */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-white" aria-label="Client Testimonials">
+      <section className="py-20 md:py-28 bg-slate-50" aria-label="Client Testimonials">
         <div className="max-w-4xl mx-auto px-4">
           <SectionHeader
             badge="Verified Client Reviews"
@@ -1013,36 +1002,54 @@ const Home: React.FC = () => {
             description="Real feedback from our valued clients"
           />
 
-          <FadeIn direction="up" className="bg-gradient-to-br from-purple-50/60 to-indigo-50/60 rounded-3xl p-8 sm:p-12 border border-purple-100 shadow-card">
-            <div className="text-center max-w-2xl mx-auto">
-              <div className="flex items-center justify-center gap-1.5 text-amber-400 text-xl mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+          <FadeIn direction="up">
+            <div className="relative bg-white rounded-3xl border border-slate-200/80 shadow-card-hover overflow-hidden">
+              {/* Decorative large quote */}
+              <div className="absolute top-6 left-6 opacity-[0.06] pointer-events-none select-none" aria-hidden="true">
+                <Quote className="w-32 h-32 text-purple-600" />
+              </div>
+
+              <div className="relative z-10 p-8 sm:p-12">
+                {/* Stars */}
+                <div className="flex items-center gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                  <span className="ml-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Verified Review</span>
+                </div>
+
+                {/* Quote */}
+                <blockquote className="text-xl sm:text-2xl font-medium text-slate-800 leading-relaxed mb-8 italic">
+                  &ldquo;{testimonials[currentTestimonial].text}&rdquo;
+                </blockquote>
+
+                {/* Author */}
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                    {testimonials[currentTestimonial].author.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900">{testimonials[currentTestimonial].author}</p>
+                    <p className="text-sm text-slate-500">{testimonials[currentTestimonial].role} · <span className="text-purple-600 font-semibold">{testimonials[currentTestimonial].company}</span></p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation dots */}
+              <div className="flex items-center gap-3 px-8 sm:px-12 pb-8" aria-label="Testimonial Navigation">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTestimonial(index)}
+                    className={`h-2 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-purple-500 ${
+                      index === currentTestimonial
+                        ? 'bg-purple-600 w-8'
+                        : 'bg-slate-300 hover:bg-slate-400 w-2'
+                    }`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
                 ))}
               </div>
-
-              <blockquote className="text-lg sm:text-xl text-slate-800 mb-8 italic leading-relaxed font-normal">
-                "{testimonials[currentTestimonial].text}"
-              </blockquote>
-
-              <div>
-                <p className="font-bold text-slate-900 text-lg">{testimonials[currentTestimonial].author}</p>
-                <p className="text-sm text-slate-600">{testimonials[currentTestimonial].role}</p>
-                <p className="text-sm font-semibold text-purple-600 mt-0.5">{testimonials[currentTestimonial].company}</p>
-              </div>
-            </div>
-
-            <div className="flex justify-center mt-8 space-x-2.5" aria-label="Testimonial Navigation">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentTestimonial ? 'bg-purple-600 w-8' : 'bg-slate-300 hover:bg-slate-400 w-2.5'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
             </div>
           </FadeIn>
         </div>
