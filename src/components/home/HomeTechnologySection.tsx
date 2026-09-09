@@ -21,7 +21,7 @@ export const HomeTechnologySection: React.FC = () => {
         <StaggerContainer className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4" staggerDelay={50}>
           {technologies.map((tech, index) => (
             <StaggerItem key={tech.id} index={index}>
-              <div className="bg-white rounded-xl p-4 text-center border border-slate-200/80 hover:border-purple-300/80 hover:shadow-card-hover card-lift-sm transition-all duration-200 group">
+              <div className="bg-gradient-to-b from-white to-purple-50/60 rounded-xl p-4 text-center border border-purple-200/70 hover:border-purple-400/80 hover:shadow-lg hover:shadow-purple-100 hover:from-purple-50 hover:to-indigo-50/60 card-lift-sm transition-all duration-200 group">
                 <div className={`flex justify-center mb-2.5 group-hover:scale-110 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${tech.color}`}>
                   <tech.Icon size={32} />
                 </div>

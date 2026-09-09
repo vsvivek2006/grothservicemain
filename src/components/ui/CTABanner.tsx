@@ -27,7 +27,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({
   ]
 }) => {
   return (
-    <section className="relative py-16 md:py-24 bg-gradient-to-r from-gray-900 via-purple-950 to-gray-900 text-white overflow-hidden" aria-label="Contact Call to Action">
+    <section className="relative py-16 md:py-24 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white overflow-hidden" aria-label="Contact Call to Action">
       {/* Ambient background glows & grid */}
       <DecorativeGrid variant="dots" dark />
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
