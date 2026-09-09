@@ -130,7 +130,7 @@ export const teamMembers: readonly TeamMember[] = [
   {
     id: 13,
     name: "Kishan Kumar",
-    role: "Developer",
+    role: "Frontend Developer",
     department: "Development",
     officeId: "jaipur",
     employeeCode: "GS-JPR-07",
