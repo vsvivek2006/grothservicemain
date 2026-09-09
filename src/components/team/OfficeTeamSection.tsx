@@ -4,7 +4,7 @@ import {
   Building2, MapPin, Phone, Clock, ArrowRight, ShieldCheck, Users 
 } from 'lucide-react';
 import { OfficeData } from '../../data/offices';
-import { TeamMember } from '../../data/team';
+import { TeamMember, sortByRolePriority } from '../../data/team';
 import { getTelHref } from '../../services';
 import EmployeeCard from './EmployeeCard';
 
@@ -15,8 +15,9 @@ interface OfficeTeamSectionProps {
 
 export const OfficeTeamSection: React.FC<OfficeTeamSectionProps> = ({
   office,
-  employees,
+  employees: rawEmployees,
 }) => {
+  const employees = sortByRolePriority(rawEmployees);
   if (employees.length === 0) {
     return (
       <section 
