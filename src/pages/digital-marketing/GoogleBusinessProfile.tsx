@@ -299,67 +299,69 @@ const GoogleBusinessProfile = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Google Business Profile Packages
+              Google Business Profile Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose the right level of management for your business
+              Structured local map management tiers to capture nearby customer searches
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { 
-                name: 'Basic', 
-                price: '₹4,999', 
-                bestFor: 'New Businesses',
+                name: 'Basic Scope', 
+                tier: 'Foundation Setup',
+                bestFor: 'Single Location & New Businesses',
                 features: ['Profile Setup', 'Basic Optimization', 'Monthly Updates', 'Review Monitoring'],
                 color: 'border-blue-200'
               },
               { 
-                name: 'Professional', 
-                price: '₹9,999', 
-                bestFor: 'Growing Businesses',
+                name: 'Professional Scope', 
+                tier: 'Active Growth Retainer',
+                bestFor: 'Growing Local Businesses',
                 features: ['Complete Optimization', 'Weekly Google Posts', 'Review Management', 'Photo Updates', 'Monthly Reports'],
                 color: 'border-red-300',
                 popular: true
               },
               { 
-                name: 'Enterprise', 
-                price: '₹19,999', 
-                bestFor: 'Multiple Locations',
+                name: 'Enterprise Scope', 
+                tier: 'Multi-Location Network',
+                bestFor: 'Regional Chains & Franchises',
                 features: ['Multi-Location Management', 'Daily Monitoring', 'Competitor Analysis', 'Advanced Analytics', 'Local SEO Integration', 'Priority Support'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
+              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative flex flex-col justify-between`}>
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    RECOMMENDED
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-md">
+                    POPULAR SCOPE
                   </div>
                 )}
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-4">Best for: <span className="font-semibold">{plan.bestFor}</span></p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-1">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-red-600 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-xs mb-4">Best for: <span className="font-semibold text-gray-800">{plan.bestFor}</span></p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700 text-sm">
+                        <span className="text-green-500 mr-2">✓</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-500 to-red-500 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Get Started Now
+                  Discuss GMB Scope
                 </Link>
               </div>
             ))}
           </div>
           
-          <div className="text-center mt-8 text-gray-600">
-            *All packages include Google Business Profile verification assistance
+          <div className="text-center mt-8 text-gray-600 text-sm">
+            *All engagements include Google Business Profile verification guidance
           </div>
         </div>
       </section>

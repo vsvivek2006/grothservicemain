@@ -323,10 +323,10 @@ const WhiteLabelSocialMedia = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Social Media Packages
+              White Label Social Media Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible monthly plans for agencies
+              Turnkey social media management and creative execution delivered under your agency brand
             </p>
           </div>
           
@@ -334,35 +334,35 @@ const WhiteLabelSocialMedia = () => {
             {[
               { 
                 name: 'Basic Social', 
-                price: '₹7,999', 
-                platforms: '2 Platforms',
-                features: ['12 Posts/Month', 'Basic Graphics', 'Community Management', 'Monthly Reports', 'Content Calendar', 'Email Support'],
+                tier: 'Brand Visibility & Consistency', 
+                platforms: '2 Core Platforms',
+                features: ['12 Posts/Month', 'Brand-Aligned Creatives', 'Active Community Engagement', 'White-Label Monthly Reports', 'Curated Content Calendar', 'Dedicated Email Support'],
                 color: 'border-pink-200'
               },
               { 
                 name: 'Professional Social', 
-                price: '₹14,999', 
-                platforms: '3 Platforms',
-                features: ['24 Posts/Month', 'Advanced Graphics', 'Video Content', 'Engagement Strategy', 'Weekly Reports', 'Strategy Calls', 'Phone Support'],
+                tier: 'High-Growth & Multimedia', 
+                platforms: '3-4 Multi-Platforms',
+                features: ['24 Posts/Month', 'High-Fidelity Visuals & Motion', 'Reels & Video Content Creation', 'Audience Growth & Engagement', 'Bi-Weekly White-Label Reports', 'Strategic Client Reviews', 'Priority Phone Support'],
                 color: 'border-orange-300',
                 popular: true
               },
               { 
                 name: 'Enterprise Social', 
-                price: '₹29,999', 
-                platforms: '5+ Platforms',
-                features: ['Daily Posts', 'Premium Content Creation', 'Influencer Outreach', 'Paid Advertising', 'Crisis Management', 'Dedicated Manager', 'Priority Support'],
+                tier: 'Full Brand Authority & Ads', 
+                platforms: '5+ Cross-Platform Channels',
+                features: ['Daily High-Impact Posts', 'Bespoke Motion & Video Assets', 'Influencer & Creator Outreach', 'Organic + Paid Amplification', 'Brand Reputation Management', 'Dedicated Senior Manager', 'Custom Turnaround SLAs'],
                 color: 'border-pink-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-500 to-orange-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    MOST REQUESTED
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
+                <div className="text-2xl font-bold text-pink-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Platforms: <span className="font-semibold">{plan.platforms}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -376,7 +376,7 @@ const WhiteLabelSocialMedia = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-pink-600 to-orange-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start White Label Partnership
+                  Partner Inquiry
                 </Link>
               </div>
             ))}
@@ -384,7 +384,7 @@ const WhiteLabelSocialMedia = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Setup fee: ₹4,999 per client. Minimum 3-month commitment. Custom packages available.
+              *Agency volume retainers and multi-client bundled contracts scoped individually
             </p>
           </div>
         </div>

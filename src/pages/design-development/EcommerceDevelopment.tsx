@@ -322,10 +322,10 @@ const EcommerceDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              E-commerce Development Packages
+              E-commerce Engineering Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose the perfect solution for your business needs
+              Custom digital storefronts, multi-vendor marketplaces, and headless commerce platforms tailored to high-conversion transactional journeys
             </p>
           </div>
           
@@ -333,35 +333,35 @@ const EcommerceDevelopment = () => {
             {[
               { 
                 name: 'Starter Store', 
-                price: '₹49,999', 
-                platform: 'Shopify/WooCommerce',
-                features: ['Up to 50 Products', 'Mobile-Responsive Design', 'Basic Payment Gateway', 'Contact Form', 'Social Media Integration', '1 Month Support'],
+                tier: 'Direct-to-Consumer Storefront', 
+                platform: 'Shopify / Modern WooCommerce',
+                features: ['Up to 50 Products', 'Mobile-Responsive High-Speed UI', 'Secure Payment Gateway & Checkout', 'Lead & Abandoned Cart Recovery', 'Social Shopping Integration', '1 Month Support & Optimization'],
                 color: 'border-orange-200'
               },
               { 
                 name: 'Business Store', 
-                price: '₹1,49,999', 
-                platform: 'Custom WooCommerce/Magento',
-                features: ['Up to 500 Products', 'Advanced Design', 'Multiple Payment Gateways', 'Inventory Management', 'SEO Optimization', 'Marketing Integration', '3 Months Support'],
+                tier: 'Scalable Brand Commerce', 
+                platform: 'Custom WooCommerce / Shopify Plus',
+                features: ['Up to 500 Products', 'Custom Checkout & Subscription Flows', 'Multi-Currency Payment Gateways', 'Automated Inventory & Warehouse Sync', 'E-commerce Schema & SEO Optimization', 'Marketing & CRM Automation', '3 Months Dedicated Engineering Support'],
                 color: 'border-red-300',
                 popular: true
               },
               { 
                 name: 'Enterprise Store', 
-                price: '₹4,99,999', 
-                platform: 'Custom/Magento Enterprise',
-                features: ['Unlimited Products', 'Custom UI/UX Design', 'Multi-vendor Marketplace', 'Advanced Analytics', 'ERP Integration', 'Mobile App', '6 Months Support', 'Priority Support'],
+                tier: 'Enterprise & Multi-Vendor Hub', 
+                platform: 'Headless Commerce / Magento / Custom',
+                features: ['High-Volume Catalog Architecture', 'Custom Headless Frontend Experience', 'Multi-Vendor Marketplace Infrastructure', 'Real-Time ERP / Logistics Integration', 'B2B Wholesale / Tiered Pricing Engine', 'PWA & Native App Integration', '6 Months Priority SLA Support'],
                 color: 'border-orange-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    RECOMMENDED FRAMEWORK
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-orange-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Platform: <span className="font-semibold">{plan.platform}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -375,7 +375,7 @@ const EcommerceDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-orange-600 to-red-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Build My Store
+                  Discuss Commerce Scope
                 </Link>
               </div>
             ))}

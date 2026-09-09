@@ -48,14 +48,14 @@ const FreeWebsiteAudit: React.FC = () => {
     }
   ];
 
-  // Advanced paid audit types
+  // Advanced audit types
   const advancedAuditTypes = [
     {
       id: 'pro',
       name: 'Professional Audit',
       icon: '📊',
-      description: 'Complete website analysis',
-      price: '₹499',
+      description: 'Complete website & technical analysis',
+      tier: 'Technical Architecture',
       color: 'from-purple-50 to-purple-100',
       features: [
         'Complete SEO audit (50+ metrics)',
@@ -64,15 +64,15 @@ const FreeWebsiteAudit: React.FC = () => {
         'Security vulnerabilities check',
         'Detailed PDF report (15+ pages)',
         '30-minute consultation call',
-        'Priority support'
+        'Priority advisory support'
       ]
     },
     {
       id: 'ecommerce',
       name: 'E-commerce Pro Audit',
       icon: '🛒',
-      description: 'Online store optimization',
-      price: '₹899',
+      description: 'Online store optimization & conversion analysis',
+      tier: 'Funnel & CRO Analysis',
       color: 'from-green-50 to-green-100',
       features: [
         'Complete e-commerce audit',
@@ -88,8 +88,8 @@ const FreeWebsiteAudit: React.FC = () => {
       id: 'enterprise',
       name: 'Enterprise Audit',
       icon: '🏢',
-      description: 'Business website comprehensive',
-      price: '₹1,499',
+      description: 'Business website comprehensive review',
+      tier: 'Enterprise Scale',
       color: 'from-orange-50 to-orange-100',
       features: [
         'Complete website audit',
@@ -140,75 +140,20 @@ Looking forward to the free audit report!`;
     setIsSubmitted(true);
   };
 
-  const handlePayment = async (audit: any) => {
-    // In production, you would generate order_id from your backend
-    const orderId = `GS-AUDIT-${Date.now()}`;
-    
-    const options = {
-      key: 'rzp_test_YOUR_KEY_ID', // Replace with your Razorpay key
-      amount: audit.id === 'pro' ? 49900 : audit.id === 'ecommerce' ? 89900 : 149900, // Amount in paise
-      currency: 'INR',
-      name: 'Growth Service',
-      description: `${audit.name} - Professional Website Audit`,
-      order_id: orderId,
-      handler: function(response: any) {
-        // Payment success handler
-        const paymentDetails = {
-          paymentId: response.razorpay_payment_id,
-          orderId: response.razorpay_order_id,
-          signature: response.razorpay_signature,
-          auditType: audit.name,
-          amount: audit.price,
-          websiteUrl,
-          email,
-          businessType
-        };
+  const handlePayment = (audit: any) => {
+    const whatsappMessage = `*${audit.name} Inquiry - Growth Service*
 
-        console.log('Payment successful:', paymentDetails);
-        setPaymentComplete(true);
+🌐 Website URL: ${websiteUrl || 'Not provided'}
+📧 Email: ${email || 'Not provided'}
+🏢 Business Type: ${businessType || 'Not specified'}
+🎯 Focus: ${audit.tier} - ${audit.description}
 
-        // Send WhatsApp confirmation
-        const whatsappMessage = `*✅ Payment Confirmed - ${audit.name} - Growth Service*
-
-💰 Payment ID: ${response.razorpay_payment_id}
-📋 Order ID: ${response.razorpay_order_id}
-💸 Amount Paid: ${audit.price}
-🎯 Audit Type: ${audit.name}
-
-📝 Client Details:
-🌐 Website: ${websiteUrl}
-📧 Email: ${email}
-🏢 Business: ${businessType || 'Not specified'}
-
-*Audit Includes:*
+*Key Requirements:*
 ${audit.features.map((feature: string) => `• ${feature}`).join('\n')}
 
-*Next Steps:*
-1. Our team will start audit within 2 hours
-2. Complete report delivered in 24-48 hours
-3. Schedule consultation call
+I would like to schedule an audit strategy session with your digital growth team.`;
 
-Thank you for your payment!`;
-
-        // ✅ FIXED: WhatsApp number corrected
-        window.open(`https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
-      },
-      prefill: {
-        name: 'Client',
-        email: email,
-        contact: ''
-      },
-      notes: {
-        website: websiteUrl,
-        audit_type: audit.name
-      },
-      theme: {
-        color: '#4F46E5'
-      }
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
+    window.open(`https://wa.me/9779707382481?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
   };
 
   const handleDownloadSample = () => {
@@ -349,9 +294,9 @@ Thank you for your payment!`;
               </div>
 
               <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded">
-                <h3 className="font-semibold text-gray-900 mb-4">Upgrade to Professional Audit</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">Upgrade to Deep-Dive Strategy Audit</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Get detailed insights with our Professional Audit starting at ₹499
+                  Get actionable technical and conversion insights with a dedicated growth specialist
                 </p>
                 <ul className="space-y-2 text-sm text-gray-700">
                   <li className="flex items-center">
@@ -469,10 +414,10 @@ Thank you for your payment!`;
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <Helmet>
-        <title>Free Website Audit & Professional Analysis | Growth Service</title>
+        <title>Free Website Audit & Strategic Analysis | Growth Service</title>
         <meta 
           name="description" 
-          content="Get free basic SEO audit or upgrade to professional audit starting at ₹499. Comprehensive website analysis with detailed PDF report." 
+          content="Get a comprehensive website audit and strategic growth analysis. Technical SEO, speed benchmarking, and conversion optimization." 
         />
       </Helmet>
 
@@ -484,31 +429,31 @@ Thank you for your payment!`;
         </div>
         
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Website Audit Service</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Website Audit & Performance Analysis</h1>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Free basic audit or professional analysis starting at ₹499
+            Comprehensive SEO, technical architecture, and conversion rate audits
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
               <div className="text-2xl mb-2">🎯</div>
               <h3 className="font-semibold text-sm">Basic Audit</h3>
-              <p className="text-blue-200 text-xs">Free</p>
+              <p className="text-blue-200 text-xs">Instant Review</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
               <div className="text-2xl mb-2">📊</div>
               <h3 className="font-semibold text-sm">Professional</h3>
-              <p className="text-blue-200 text-xs">₹499</p>
+              <p className="text-blue-200 text-xs">Deep Technical</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
               <div className="text-2xl mb-2">🛒</div>
               <h3 className="font-semibold text-sm">E-commerce</h3>
-              <p className="text-blue-200 text-xs">₹899</p>
+              <p className="text-blue-200 text-xs">CRO & Funnel</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
               <div className="text-2xl mb-2">🏢</div>
               <h3 className="font-semibold text-sm">Enterprise</h3>
-              <p className="text-blue-200 text-xs">₹1,499</p>
+              <p className="text-blue-200 text-xs">Full Architecture</p>
             </div>
           </div>
         </div>
@@ -522,7 +467,7 @@ Thank you for your payment!`;
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">Free Basic Audit</h2>
                 <span className="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full">
-                  ₹0 FREE
+                  Complimentary
                 </span>
               </div>
               
@@ -617,7 +562,7 @@ Thank you for your payment!`;
                       <div className="text-center mb-4">
                         <div className="text-3xl mb-2">{audit.icon}</div>
                         <h4 className="font-bold text-gray-900 text-lg mb-1">{audit.name}</h4>
-                        <div className="text-2xl font-bold text-gray-900 mb-2">{audit.price}</div>
+                        <div className="text-sm font-semibold text-purple-700 bg-purple-100 px-3 py-1 rounded-full inline-block mb-2">{audit.tier}</div>
                         <p className="text-gray-600 text-sm">{audit.description}</p>
                       </div>
                       
@@ -634,7 +579,7 @@ Thank you for your payment!`;
                         onClick={() => handlePayment(audit)}
                         className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 hover:scale-105"
                       >
-                        Get {audit.name}
+                        Inquire About {audit.name}
                       </button>
                     </div>
                   ))}
@@ -642,7 +587,7 @@ Thank you for your payment!`;
 
                 <div className="mt-6 bg-white rounded-xl p-4 text-center">
                   <p className="text-sm text-gray-600">
-                    ✅ Secure payment via Razorpay • 💰 GST invoice provided • 🔒 100% secure
+                    ✅ Custom PDF audit report • 📞 1-on-1 strategy walkthrough • 🔒 Confidential analysis
                   </p>
                 </div>
               </div>
@@ -752,9 +697,9 @@ Thank you for your payment!`;
                 ))}
                 
                 <div className="grid grid-cols-3 gap-4 text-sm font-medium pt-4">
-                  <div>Price</div>
-                  <div className="text-center">₹0 FREE</div>
-                  <div className="text-center">Starting ₹499</div>
+                  <div>Access</div>
+                  <div className="text-center">Complimentary</div>
+                  <div className="text-center">Strategy Session</div>
                 </div>
               </div>
             </div>

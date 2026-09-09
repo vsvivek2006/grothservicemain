@@ -23,7 +23,7 @@ const Portfolio = () => {
       client: 'Travel Agency',
       rating: 5,
       technologies: ['React', 'TypeScript', 'Node.js', 'MongoDB'],
-      budget: '₹14,999',
+      scope: 'Custom Web Engineering',
       liveUrl: '#',
       caseStudy: true
     },
@@ -39,7 +39,7 @@ const Portfolio = () => {
       client: 'Fashion Brand',
       rating: 5,
       technologies: ['MERN', 'Redux', 'Stripe', 'AWS'],
-      budget: '₹24,999',
+      scope: 'E-Commerce Platform',
       liveUrl: '#',
       caseStudy: true
     },
@@ -55,7 +55,7 @@ const Portfolio = () => {
       client: 'Restaurant Chain',
       rating: 5,
       technologies: ['SEO Audit', 'Technical SEO', 'Content Strategy'],
-      budget: '₹7,779/month',
+      scope: 'Search Authority Retainer',
       metrics: ['+220% Organic Traffic', '+150% Leads', '+300% Visibility'],
       caseStudy: true
     },
@@ -71,7 +71,7 @@ const Portfolio = () => {
       client: 'Beauty Brand',
       rating: 5,
       technologies: ['Meta Ads', 'Content Calendar', 'Analytics'],
-      budget: '₹4,449/month',
+      scope: 'Omni-Channel Social Retainer',
       metrics: ['+400% Followers', '+250% Engagement', '+180% Website Clicks'],
       caseStudy: true
     },
@@ -87,7 +87,7 @@ const Portfolio = () => {
       client: 'Manufacturing Co.',
       rating: 5,
       technologies: ['Custom Website', 'Social Setup', 'Process Automation'],
-      budget: '₹24,999',
+      scope: 'Enterprise Digital Transformation',
       metrics: ['+60% Efficiency', '-35% Costs', '+45% Productivity'],
       caseStudy: true
     },
@@ -103,7 +103,7 @@ const Portfolio = () => {
       client: 'Service Business',
       rating: 5,
       technologies: ['GMB Optimization', 'Review System', 'Local Listings'],
-      budget: '₹2,499/month',
+      scope: 'Local Maps & Review Engine',
       metrics: ['+200% Calls', '+150% Website Visits', '+180% Reviews'],
       caseStudy: true
     }
@@ -373,7 +373,7 @@ const Portfolio = () => {
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                    <p className="text-blue-100 text-sm mt-1">Budget: {project.budget}</p>
+                    <p className="text-blue-100 text-sm mt-1">Scope: {project.scope}</p>
                   </div>
                 </div>
                 
@@ -666,8 +666,8 @@ const Portfolio = () => {
                         <p className="font-semibold">{selectedCaseStudy.duration}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">Budget</p>
-                        <p className="font-semibold">{selectedCaseStudy.budget}</p>
+                        <p className="text-sm text-gray-600">Scope</p>
+                        <p className="font-semibold">{selectedCaseStudy.scope}</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Category</p>

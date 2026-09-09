@@ -111,40 +111,40 @@ const OnboardingAgreement: React.FC = () => {
             {[
               {
                 title: "Website Development",
-                price: "₹9,999+",
+                scope: "Custom Milestone",
                 features: ["7-10 days delivery", "React/TypeScript", "Mobile responsive", "SEO optimized"]
               },
               {
                 title: "SEO Services",
-                price: "₹7,779/month",
+                scope: "Monthly Retainer",
                 features: ["4 monthly reports", "4 blog articles", "Keyword optimization", "Performance tracking"]
               },
               {
                 title: "Social Media Management",
-                price: "₹4,449/month",
+                scope: "Monthly Retainer",
                 features: ["Content calendar", "Daily posts", "Engagement management", "Analytics reports"]
               },
               {
                 title: "Google Business Profile",
-                price: "₹2,499",
+                scope: "Local Authority",
                 features: ["Profile setup", "Review management", "Local SEO", "Photo optimization"]
               },
               {
                 title: "Meta Ads Management",
-                price: "₹9,999/month",
+                scope: "Performance Retainer",
                 features: ["Campaign strategy", "Ad creative", "Audience targeting", "ROI tracking"]
               },
               {
                 title: "Lead Generation",
-                price: "₹6,000/month",
+                scope: "Growth Retainer",
                 features: ["Lead strategy", "Campaign setup", "CRM integration", "Conversion tracking"]
               }
             ].map((service, index) => (
               <div key={index} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-semibold text-gray-900">{service.title}</h3>
-                  <span className="bg-blue-100 text-blue-700 text-sm font-semibold px-2 py-1 rounded">
-                    {service.price}
+                  <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">
+                    {service.scope}
                   </span>
                 </div>
                 <ul className="space-y-2">

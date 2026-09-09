@@ -37,48 +37,48 @@ const WhiteLabel: React.FC = () => {
       icon: <Globe className="h-10 w-10" />,
       title: 'Website Development',
       description: 'Custom websites, e-commerce stores, web applications',
-      pricing: '₹8,000 - ₹25,000 per project',
-      margin: '40-60%',
+      pricing: 'Scoped per project architecture',
+      margin: '40-60% margin potential',
       features: ['React.js Development', 'MERN Stack', 'Responsive Design', 'SEO Ready']
     },
     {
       icon: <TrendingUp className="h-10 w-10" />,
       title: 'SEO Services',
       description: 'Complete SEO optimization and ranking services',
-      pricing: '₹5,000 - ₹15,000/month',
-      margin: '50-70%',
+      pricing: 'Monthly Retainer SLA',
+      margin: '50-70% margin potential',
       features: ['Keyword Research', 'Technical SEO', 'Content Strategy', 'Ranking Reports']
     },
     {
       icon: <MessageCircle className="h-10 w-10" />,
       title: 'Social Media Management',
       description: 'Complete social media marketing and management',
-      pricing: '₹3,500 - ₹10,000/month',
-      margin: '50-75%',
+      pricing: 'Monthly Content Retainer',
+      margin: '50-75% margin potential',
       features: ['Content Creation', 'Community Management', 'Performance Analytics', 'Video Production']
     },
     {
       icon: <Target className="h-10 w-10" />,
       title: 'Digital Advertising',
       description: 'Meta, Google, and LinkedIn ad campaigns',
-      pricing: '₹7,000 - ₹20,000/month',
-      margin: '40-60%',
+      pricing: 'Campaign Management Retainer',
+      margin: '40-60% margin potential',
       features: ['Campaign Strategy', 'Ad Creation', 'A/B Testing', 'ROI Optimization']
     },
     {
       icon: <BarChart className="h-10 w-10" />,
       title: 'Analytics & Reporting',
       description: 'Custom dashboards and performance tracking',
-      pricing: '₹2,500 - ₹8,000/month',
-      margin: '60-80%',
+      pricing: 'Custom Dashboard Retainer',
+      margin: '60-80% margin potential',
       features: ['Custom Dashboards', 'Performance Reports', 'Competitor Analysis', 'ROI Tracking']
     },
     {
       icon: <Headphones className="h-10 w-10" />,
       title: 'Support & Maintenance',
       description: 'Ongoing technical support and maintenance',
-      pricing: '₹1,500 - ₹5,000/month',
-      margin: '70-85%',
+      pricing: 'Tiered Maintenance SLA',
+      margin: '70-85% margin potential',
       features: ['24/7 Support', 'Security Updates', 'Performance Monitoring', 'Backup Management']
     }
   ];
@@ -387,11 +387,11 @@ const WhiteLabel: React.FC = () => {
                     
                     <div className="mb-6">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-gray-500">White Label Pricing:</span>
+                        <span className="text-sm text-gray-500">Delivery Model:</span>
                         <span className="font-bold text-blue-600">{service.pricing}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">Your Margin:</span>
+                        <span className="text-sm text-gray-500">Partner Margin:</span>
                         <span className="font-bold text-green-600">{service.margin}</span>
                       </div>
                     </div>

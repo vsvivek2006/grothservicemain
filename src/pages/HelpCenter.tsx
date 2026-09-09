@@ -28,14 +28,14 @@ const HelpCenter: React.FC = () => {
     {
       id: 1,
       question: "How much does website development cost?",
-      answer: "Website development starts at ₹9,999 for basic business websites. Custom solutions range from ₹14,999 to ₹50,000+ depending on complexity. We provide transparent pricing with detailed quotes before starting any project.",
+      answer: "Website development is scoped individually based on business goals, features, and technical architecture. We provide comprehensive, itemized proposals with clear milestone deliverables before initiating any build.",
       category: 'webdev',
       views: 1250
     },
     {
       id: 2,
-      question: "What's included in the ₹7,779/month SEO package?",
-      answer: "Our ₹7,779/month SEO package includes: 4 detailed performance reports, 4 SEO-optimized blog articles, optimization for 5-10 keywords, technical SEO audit, backlink building strategy, and local SEO optimization. Results typically show within 3-6 months.",
+      question: "What is included in an SEO engagement framework?",
+      answer: "Our SEO engagements include: detailed performance audits, SEO-optimized content production, search intent keyword research, technical SEO optimization, white-hat backlink outreach, and local map rankings. Results typically show within 3-6 months.",
       category: 'seo',
       views: 980
     },
@@ -56,14 +56,14 @@ const HelpCenter: React.FC = () => {
     {
       id: 5,
       question: "Do you provide ongoing website maintenance?",
-      answer: "Yes, we offer maintenance packages starting at ₹999/month. This includes regular updates, security monitoring, backups, and basic support. Professional packages (₹2,999/month) include performance optimization and priority support.",
+      answer: "Yes, we offer ongoing maintenance and support retainers. This includes regular CMS updates, security monitoring, automated backups, performance optimization, and SLA response support.",
       category: 'support',
       views: 720
     },
     {
       id: 6,
       question: "Can you help with Google My Business setup?",
-      answer: "Absolutely! Our ₹2,499 GMB setup package includes: Complete profile setup and verification, category optimization, professional photos, review management setup, weekly posts, and performance tracking. This service helps improve local search visibility significantly.",
+      answer: "Absolutely! Our GMB optimization service includes: Complete profile setup and verification, category optimization, geotagged photos, review management framework, weekly local updates, and performance tracking to drive foot traffic and inquiries.",
       category: 'seo',
       views: 550
     },
@@ -91,7 +91,7 @@ const HelpCenter: React.FC = () => {
     {
       id: 10,
       question: "Do you provide social media management?",
-      answer: "Yes, our social media management starts at ₹4,449/month. This includes content calendar planning, daily posts creation, community management, performance analytics, and monthly strategy reports for Facebook, Instagram, LinkedIn, and Twitter.",
+      answer: "Yes, we provide full-service social media management. This includes content calendar architecture, multi-format creative production, community management, conversion tracking, and monthly strategic executive reports for Facebook, Instagram, LinkedIn, and Twitter.",
       category: 'social',
       views: 510
     },
@@ -112,21 +112,21 @@ const HelpCenter: React.FC = () => {
     {
       id: 13,
       question: "How do I improve my website speed?",
-      answer: "We offer website speed optimization starting at ₹3,999. This includes image optimization, code minification, caching setup, CDN implementation, and performance monitoring. Typically improves loading speed by 60-80%.",
+      answer: "We offer end-to-end Core Web Vitals and speed optimization. This includes image compression, code minification, server caching, CDN routing, and database query optimization, typically improving load speed by 60-80%.",
       category: 'webdev',
       views: 590
     },
     {
       id: 14,
       question: "Do you provide hosting services?",
-      answer: "Yes, we offer managed hosting starting at ₹499/month. This includes SSL certificate, daily backups, security monitoring, and 99.9% uptime guarantee. We recommend hosting with us for optimal performance and support.",
+      answer: "Yes, we provide enterprise managed cloud hosting. This includes SSL certificates, automated daily backups, proactive firewall security, and 99.9% uptime SLAs.",
       category: 'support',
       views: 480
     },
     {
       id: 15,
       question: "Can you migrate my existing website?",
-      answer: "Yes, we offer website migration services starting at ₹2,999. We ensure zero downtime, data integrity, and post-migration testing. This includes SEO preservation, URL redirection setup, and complete backup.",
+      answer: "Yes, we offer zero-downtime website migrations. We ensure data integrity, 301 SEO redirection mappings, database transfers, and rigorous post-migration QA testing.",
       category: 'webdev',
       views: 320
     }

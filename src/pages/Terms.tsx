@@ -28,7 +28,7 @@ const Terms: React.FC = () => {
     {
       id: 3,
       title: "Payment Terms & Pricing",
-      content: `All prices are in Indian Rupees (₹). Website Development: 50% advance, 50% on delivery. Monthly Services: Pre-paid, auto-renew unless cancelled with 30-day notice. Advertising spend billed directly by platforms. Late payments may incur 2% monthly interest. Advance payments receive special discounts as per our pricing page.`
+      content: `All quotes are provided in Indian Rupees (₹) or agreed local currency based on project scope. Website Development: 50% advance, 50% on delivery. Monthly Retainers: Pre-paid, auto-renew unless cancelled with 30-day written notice. Advertising spend billed directly by advertising platforms. Late payments may incur 2% monthly interest.`
     },
     {
       id: 4,
@@ -43,7 +43,7 @@ const Terms: React.FC = () => {
     {
       id: 6,
       title: "Revisions & Change Requests",
-      content: `Website Development includes 2 rounds of revisions. Additional revisions at ₹1,500/hour. Social Media content changes within 24 hours of posting. Major scope changes require new estimate. Monthly services include reasonable adjustments within package limits.`
+      content: `Website Development includes 2 rounds of design revisions. Additional revisions billed at agreed hourly scope rates. Social Media content changes within 24 hours of posting. Major scope changes require new scope estimates. Monthly services include reasonable adjustments within agreed retainer limits.`
     },
     {
       id: 7,
@@ -81,12 +81,12 @@ const Terms: React.FC = () => {
     {
       service: "Website Development",
       terms: [
-        "5-page responsive website standard package",
-        "1 year hosting and SSL included",
-        "6 months technical support",
-        "Additional pages: ₹2,000/page",
-        "E-commerce features extra",
-        "Source code delivered upon final payment"
+        "Modern responsive web architecture aligned to agreed brief",
+        "Managed hosting and SSL options available",
+        "Dedicated post-launch technical support",
+        "Additional pages or complex features scoped individually",
+        "E-commerce, API, and database integrations quoted per architecture",
+        "Source code delivered upon final milestone sign-off"
       ]
     },
     {

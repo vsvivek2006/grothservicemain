@@ -115,7 +115,7 @@ const Header: React.FC = () => {
     { name: "Locations", href: "/locations" },
     { name: "Offices", href: "/offices" },
     { name: "Meet The Team", href: "/team" },
-    { name: "Packages", href: "/packages" },
+    { name: "Solutions", href: "/packages" },
     { name: "Our Impact", href: "/impact" },
     { name: "Contact Us", href: "/contact" },
     { name: "Case Studies", href: "/case-studies" },
@@ -479,7 +479,7 @@ const Header: React.FC = () => {
                 }`
               }
             >
-              Packages
+              Solutions
             </NavLink>
             
             <NavLink 

@@ -506,15 +506,15 @@ const MetaAdsManagement = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Meta Ads Management Frameworks */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Meta Ads Management Packages
+              Meta Ads Performance Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Transparent pricing with clear deliverables for Jaipur, Vrindavan & Nepal
+              Structured campaign execution with clear deliverables for Jaipur, Vrindavan & Nepal
             </p>
           </div>
 
@@ -522,53 +522,55 @@ const MetaAdsManagement = () => {
             {[
               {
                 name: 'Starter Ads',
-                price: '₹19,999',
-                platform: '1 Platform',
-                features: ['Basic Campaign Setup', 'Weekly Optimization', 'Monthly Reports', 'Ad Budget: ₹10,000+', 'Basic Audience Targeting'],
+                tier: 'Foundation Scope',
+                platform: '1 Platform Focus',
+                features: ['Basic Campaign Setup', 'Weekly Optimization', 'Monthly Reports', 'Targeted Campaign Spend', 'Basic Audience Targeting'],
                 color: 'border-blue-200',
                 icon: <FaStar className="text-blue-600" />
               },
               {
                 name: 'Growth Ads',
-                price: '₹34,999',
-                platform: '2 Platforms',
-                features: ['Advanced Targeting', 'A/B Testing', 'Creative Development', 'Weekly Strategy Calls', 'Ad Budget: ₹25,000+', 'Retargeting Setup'],
+                tier: 'Scale & Retargeting Scope',
+                platform: 'Multi-Platform (FB + IG)',
+                features: ['Advanced Targeting', 'A/B Testing', 'Creative Development', 'Weekly Strategy Calls', 'Multi-Channel Spend Pacing', 'Retargeting Setup'],
                 color: 'border-indigo-300',
                 popular: true,
                 icon: <FaCrown className="text-indigo-600" />
               },
               {
                 name: 'Enterprise Ads',
-                price: '₹59,999',
-                platform: '3+ Platforms',
-                features: ['Full Funnel Strategy', 'Custom Audience Building', 'Video Ad Production', 'Daily Monitoring', 'WhatsApp Ads', 'Ad Budget: ₹50,000+', 'Dedicated Manager'],
+                tier: 'Full Funnel Acquisition',
+                platform: 'Omnichannel Network',
+                features: ['Full Funnel Strategy', 'Custom Audience Building', 'Video Ad Production', 'Daily Monitoring', 'WhatsApp Ads', 'Enterprise Scale Budgeting', 'Dedicated Manager'],
                 color: 'border-purple-300',
                 icon: <FaGem className="text-purple-600" />
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative hover:shadow-xl transition-all hover:-translate-y-2`}>
+              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative hover:shadow-xl transition-all hover:-translate-y-2 flex flex-col justify-between`}>
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-lg">
                     ⭐ MOST POPULAR
                   </div>
                 )}
-                <div className="text-3xl mb-4">{plan.icon}</div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-6">{plan.platform}</p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start text-gray-700 text-sm">
-                      <FaCheckCircle className="text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <div className="text-3xl mb-4">{plan.icon}</div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-1">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-purple-700 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-xs mb-6 font-medium">{plan.platform}</p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-start text-gray-700 text-sm">
+                        <FaCheckCircle className="text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Advertising
+                  Discuss Campaign Scope
                 </Link>
               </div>
             ))}
@@ -635,7 +637,7 @@ const MetaAdsManagement = () => {
             {[
               { title: 'Massive Reach', desc: 'Reach 2.8+ billion monthly active users across Facebook, Instagram & WhatsApp' },
               { title: 'Precise Targeting', desc: 'Target audiences by location, interests, behavior, and demographics with laser precision' },
-              { title: 'Cost-Effective', desc: 'Start with just ₹10,000 per month and scale based on performance' },
+              { title: 'Cost-Effective', desc: 'Tailored ad spend to your business goals and scale based on proven performance' },
               { title: 'Measurable Results', desc: 'Track every rupee spent with detailed analytics and conversion tracking' },
               { title: 'Multiple Ad Formats', desc: 'Choose from images, videos, carousels, stories, and WhatsApp messages' },
               { title: 'Retargeting Power', desc: 'Re-engage website visitors and previous customers for higher conversions' },

@@ -544,14 +544,15 @@ const LeadGeneration = () => {
       </section>
 
       {/* Pricing Section */}
+      {/* Lead Generation Frameworks */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Lead Generation Packages
+              Lead Generation Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible plans to fill your sales pipeline with qualified leads
+              Custom scopes to fill your sales pipeline with verified, high-intent decision-makers
             </p>
           </div>
 
@@ -559,16 +560,16 @@ const LeadGeneration = () => {
             {[
               {
                 name: 'Starter Leads',
-                price: '₹19,999',
-                leads: '50 Leads/Month',
+                tier: 'Foundation Outreach',
+                leads: 'Focused Pipeline Target',
                 features: ['LinkedIn & Email Outreach', 'Basic Lead Qualification', 'Weekly Reports', 'Dedicated Lead Gen Executive'],
                 color: 'border-blue-200',
                 icon: <FaStar className="text-blue-600" />
               },
               {
                 name: 'Growth Leads',
-                price: '₹39,999',
-                leads: '150 Leads/Month',
+                tier: 'Multi-Channel Acquisition',
+                leads: 'Accelerated Pipeline Target',
                 features: ['Multi-Channel Outreach', 'Advanced Lead Qualification', 'Detailed Analytics', '2 Dedicated Executives', 'Quarterly Strategy Review'],
                 color: 'border-cyan-300',
                 popular: true,
@@ -576,36 +577,38 @@ const LeadGeneration = () => {
               },
               {
                 name: 'Enterprise Leads',
-                price: '₹79,999',
-                leads: '500+ Leads/Month',
+                tier: 'Account-Based Marketing (ABM)',
+                leads: 'High-Volume Enterprise Scale',
                 features: ['Full-Funnel Lead Gen', 'Account-Based Marketing', 'CRM Integration', 'Dedicated Team', 'Real-Time Dashboard', 'Monthly Strategy Review'],
                 color: 'border-teal-300',
                 icon: <FaGem className="text-teal-600" />
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative hover:shadow-xl transition-all hover:-translate-y-2`}>
+              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative hover:shadow-xl transition-all hover:-translate-y-2 flex flex-col justify-between`}>
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-lg">
                     ⭐ MOST POPULAR
                   </div>
                 )}
-                <div className="text-3xl mb-4">{plan.icon}</div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-6">{plan.leads}</p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start text-gray-700 text-sm">
-                      <FaCheckCircle className="text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <div className="text-3xl mb-4">{plan.icon}</div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-1">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-cyan-700 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-xs font-medium mb-6">{plan.leads}</p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-start text-gray-700 text-sm">
+                        <FaCheckCircle className="text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Generating Leads
+                  Discuss Lead Scope
                 </Link>
               </div>
             ))}

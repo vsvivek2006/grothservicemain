@@ -53,44 +53,44 @@ const NotFound: React.FC = () => {
     {
       icon: <Search className="h-5 w-5" />,
       title: "SEO Services",
-      description: "From ₹8,999/month • Complete SEO",
+      description: "Organic search ranking & technical audits",
       link: "/seo",
-      tag: "40% OFF"
+      tag: "Organic Growth"
     },
     {
       icon: <Code className="h-5 w-5" />,
       title: "Website Development",
-      description: "From ₹9,999 • 7-10 days",
+      description: "Modern, high-performance web applications",
       link: "/web-development",
-      tag: "52% OFF"
+      tag: "Custom Code"
     },
     {
       icon: <Globe className="h-5 w-5" />,
       title: "Social Media Marketing",
-      description: "From ₹4,999/month • 3 Platforms",
+      description: "Content strategy & multi-channel brand reach",
       link: "/social-media",
-      tag: "50% OFF"
+      tag: "Engagement"
     },
     {
       icon: <Smartphone className="h-5 w-5" />,
       title: "Google Business Profile",
-      description: "Only ₹999 • Full Setup",
+      description: "Local SEO, map rankings & review management",
       link: "/local-seo",
-      tag: "Hot Deal"
+      tag: "Local Maps"
     },
     {
       icon: <TrendingUp className="h-5 w-5" />,
       title: "Meta Ads Management",
-      description: "From ₹9,999/month • Professional Ads",
+      description: "ROI-driven conversion campaigns & creative testing",
       link: "/paid-marketing",
-      tag: "Expert Setup"
+      tag: "Paid Media"
     },
     {
       icon: <Users className="h-5 w-5" />,
       title: "Consultation",
-      description: "Only ₹1 • 30-Minute Strategy",
+      description: "30-Minute 1-on-1 Growth Strategy Session",
       link: "/book-call",
-      tag: "Special Offer"
+      tag: "Strategy Call"
     }
   ];
 
@@ -110,42 +110,42 @@ const NotFound: React.FC = () => {
     { name: "Portfolio", path: "/portfolio" }
   ];
 
-  // Popular Projects with Pricing
+  // Popular Projects
   const projectTypes = [
     {
       type: "Business Website",
-      price: "₹9,999",
-      desc: "5 Page Responsive Website",
+      tier: "Custom Design & CMS",
+      desc: "Responsive brand architecture & lead engine",
       link: "/web-development"
     },
     {
       type: "E-commerce Store",
-      price: "₹14,999",
-      desc: "Complete Online Store Setup",
+      tier: "High-Volume Commerce",
+      desc: "Custom storefront, payments & inventory sync",
       link: "/ecommerce"
     },
     {
       type: "Tour & Travel Website",
-      price: "₹14,999",
-      desc: "Booking & Tour Management",
+      tier: "Booking Engine",
+      desc: "Tour itineraries, booking & payment flows",
       link: "/web-development"
     },
     {
       type: "Guest House Website",
-      price: "₹12,999",
-      desc: "Room Booking & Management",
+      tier: "Hospitality Portal",
+      desc: "Direct reservation & guest management",
       link: "/web-development"
     },
     {
       type: "B2B Setup",
-      price: "₹24,999",
-      desc: "Complete B2B Digital Solution",
+      tier: "Enterprise Digital Hub",
+      desc: "Complete B2B digital infrastructure & CRM",
       link: "/web-development"
     },
     {
-      type: "SEO Package",
-      price: "₹7,779/month",
-      desc: "Monthly SEO Optimization",
+      type: "SEO Retainer",
+      tier: "Technical & Content Scale",
+      desc: "Sustained organic traffic & search dominance",
       link: "/seo"
     }
   ];
@@ -167,7 +167,7 @@ const NotFound: React.FC = () => {
         <title>404 - Page Not Found | Growth Service - Digital Agency in Jaipur, Vrindavan & Nepal</title>
         <meta
           name="description"
-          content="Page not found. Explore Growth Service's professional web development & digital marketing services. Offices in Jaipur, Vrindavan & Nepal. Get website from ₹9,999, SEO from ₹7,779/month."
+          content="Page not found. Explore Growth Service's professional web development & digital marketing services. Offices in Jaipur, Vrindavan & Nepal. Custom digital strategies & engineering."
         />
         <meta 
           name="keywords" 
@@ -297,7 +297,7 @@ const NotFound: React.FC = () => {
             <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200">
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Award className="h-5 w-5 text-purple-600" />
-                Popular Projects & Pricing
+                Popular Project Frameworks
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {projectTypes.map((project, index) => (
@@ -313,7 +313,7 @@ const NotFound: React.FC = () => {
                       <p className="text-xs text-gray-500">{project.desc}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-purple-600 text-sm">{project.price}</span>
+                      <span className="font-medium text-purple-700 text-xs bg-purple-100 px-2 py-0.5 rounded-full">{project.tier}</span>
                       <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-purple-600" />
                     </div>
                   </Link>

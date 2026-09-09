@@ -283,10 +283,10 @@ const WhiteLabelPPC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label PPC Packages
+              White Label PPC Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible pricing for agencies of all sizes
+              High-converting Google Ads and Meta Ads performance fulfillment delivered under your agency's banner
             </p>
           </div>
           
@@ -294,36 +294,36 @@ const WhiteLabelPPC = () => {
             {[
               { 
                 name: 'Starter', 
-                price: '₹14,999', 
-                clients: '1-5 Clients',
-                features: ['Google OR Meta Ads', 'Monthly Strategy', 'Basic Reporting', 'Weekly Optimization', 'Email Support', 'White Label Reports'],
+                tier: 'Single-Channel Paid Search / Social', 
+                clients: '1-5 Client Accounts',
+                features: ['Google OR Meta Ads Management', 'Campaign Architecture & Strategy', 'White-Label Performance Reporting', 'Weekly Bid & Negative Match Optimization', 'Dedicated Email Support', 'Pixel & Conversion API Verification'],
                 color: 'border-green-200'
               },
               { 
                 name: 'Growth', 
-                price: '₹29,999', 
-                clients: '6-15 Clients',
-                features: ['Google + Meta Ads', 'Weekly Strategy Calls', 'Advanced Reporting', 'Daily Optimization', 'Phone Support', 'Client Dashboard', 'Performance Guarantee'],
+                tier: 'Multi-Channel Performance Scale', 
+                clients: '6-15 Client Accounts',
+                features: ['Full Google + Meta Ads Synergy', 'Weekly Strategic Optimization', 'Advanced Multi-Touch Attribution Reporting', 'Daily Bid & Audience Optimization', 'Priority Phone Support', 'Live White-Label Client Dashboards', 'Creative Ad Copy & Hook Testing'],
                 color: 'border-blue-300',
                 popular: true
               },
               { 
                 name: 'Enterprise', 
-                price: '₹59,999', 
-                clients: '16+ Clients',
-                features: ['All Platforms', 'Dedicated Account Manager', 'Custom Reporting', '24/7 Optimization', 'Priority Support', 'Agency Training', 'Volume Discounts', 'Strategic Planning'],
+                tier: 'Omni-Channel & High Spend Retainer', 
+                clients: '16+ Client Accounts',
+                features: ['Omnichannel (Google, Meta, YouTube, LinkedIn)', 'Dedicated Senior Media Buyer', 'Custom White-Label Executive Dashboards', 'Continuous Real-Time Budget Optimization', 'Priority Agency SLA', 'Internal Agency Team Strategy Sessions', 'Volume Retainer Discounts'],
                 color: 'border-green-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    MOST REQUESTED
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-4">For agencies with: <span className="font-semibold">{plan.clients}</span></p>
+                <div className="text-2xl font-bold text-green-900 mb-2">{plan.tier}</div>
+                <p className="text-gray-600 mb-4">Scale: <span className="font-semibold">{plan.clients}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
@@ -336,7 +336,7 @@ const WhiteLabelPPC = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-green-600 to-blue-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start White Label Partnership
+                  Partner Inquiry
                 </Link>
               </div>
             ))}
@@ -344,7 +344,7 @@ const WhiteLabelPPC = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Setup fee: ₹9,999 per client. Minimum 3-month commitment. Volume discounts available.
+              *Agency volume retainers and custom multi-client performance agreements scoped individually
             </p>
           </div>
         </div>
@@ -575,7 +575,7 @@ const WhiteLabelPPC = () => {
                     'Professional website and branding',
                     'Experience in client management',
                     'Commitment to client success',
-                    'Minimum ₹50K/month client ad spend',
+                    'Active client ad spend qualification',
                     'Willingness to learn and grow',
                     '3-month minimum commitment'
                   ].map((item, index) => (

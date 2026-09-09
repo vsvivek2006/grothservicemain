@@ -328,10 +328,10 @@ const MobileAppDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Mobile App Development Packages
+              Mobile App Engineering Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose the perfect plan for your mobile app project
+              Custom iOS, Android, and cross-platform mobile architectures engineered for speed, security, and scale
             </p>
           </div>
           
@@ -339,35 +339,35 @@ const MobileAppDevelopment = () => {
             {[
               { 
                 name: 'Basic App', 
-                price: '₹2,49,999', 
-                platform: 'Single Platform',
-                features: ['Native iOS OR Android', 'Basic UI/UX Design', 'Up to 10 Screens', 'Simple Backend API', 'Basic Features', '3 Months Support'],
+                tier: 'Native MVP Engineering', 
+                platform: 'Native iOS or Android',
+                features: ['Native iOS OR Android', 'Tailored UI/UX Design', 'Up to 10 Core Screens', 'REST / GraphQL API Backend', 'Standard Cloud Integration', '3 Months Support & Bug Fix SLA'],
                 color: 'border-blue-200'
               },
               { 
                 name: 'Business App', 
-                price: '₹6,99,999', 
-                platform: 'Cross-Platform',
-                features: ['React Native/Flutter', 'Advanced UI/UX Design', 'Up to 30 Screens', 'Custom Backend', 'Admin Panel', 'Advanced Features', '6 Months Support'],
+                tier: 'Cross-Platform Ecosystem', 
+                platform: 'React Native / Flutter Multi-Platform',
+                features: ['React Native / Flutter Multi-Platform', 'Advanced UI/UX Architecture', 'Up to 30 Screens', 'Microservices Backend & Cloud DB', 'Role-Based Admin Portal', 'Push Notifications & Deep Linking', '6 Months Dedicated Support'],
                 color: 'border-cyan-300',
                 popular: true
               },
               { 
                 name: 'Enterprise App', 
-                price: '₹14,99,999', 
-                platform: 'Multiple Platforms',
-                features: ['Native iOS + Android', 'Premium UI/UX Design', 'Unlimited Screens', 'Scalable Backend', 'Real-time Features', 'Advanced Security', '12 Months Support', 'Priority Support'],
+                tier: 'Enterprise Scale & High Concurrency', 
+                platform: 'Dual Native or Tailored Hybrid',
+                features: ['Dual Native iOS + Android', 'High-Fidelity Custom Design System', 'Scalable Cloud Architecture & Serverless', 'Real-time WebSockets & Data Streaming', 'Enterprise Security & Compliance', 'CI/CD Pipeline Automation', '12 Months Priority Support SLA'],
                 color: 'border-blue-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    RECOMMENDED FRAMEWORK
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-blue-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Platform: <span className="font-semibold">{plan.platform}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -381,7 +381,7 @@ const MobileAppDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-600 to-cyan-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start App Project
+                  Discuss App Scope
                 </Link>
               </div>
             ))}

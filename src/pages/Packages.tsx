@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Check, Star, ArrowRight, Zap, Crown, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, DollarSign, Target, Award, Headphones, MessageCircle, Phone, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Check, ArrowRight, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, Award, Calendar, MessageCircle, Sparkles } from 'lucide-react';
 import { Container, Section } from '../components/ui';
 
 const Packages: React.FC = () => {
@@ -9,299 +10,238 @@ const Packages: React.FC = () => {
   const webDevelopmentPackages = [
     {
       id: 1,
-      name: "Basic Website",
-      originalPrice: 29999,
-      offerPrice: 9999,
-      description: "Professional responsive website for startups",
-      deliveryTime: "7-10 days",
-      icon: <Globe className="h-8 w-8" />,
+      name: "Custom Business Website",
+      description: "Professional responsive website tailored for corporate branding and lead acquisition",
+      deliveryTime: "7-10 Days",
+      icon: <Globe className="h-8 w-8 text-blue-600" />,
       features: [
-        "1 Home Page Design",
-        "About Us Page",
-        "Services Page",
-        "Contact Us Form",
-        "WhatsApp Integration",
-        "Mobile Responsive Design",
-        "SEO Friendly Structure",
-        "Basic Speed Optimization"
+        "Custom Home Page Architecture",
+        "About Us Company Narrative",
+        "Services & Offerings Grid",
+        "Lead Capture & Contact System",
+        "WhatsApp Live Integration",
+        "Mobile-First Responsive Layout",
+        "SEO-Optimized Structure",
+        "Basic Performance & Speed Tuning"
       ],
       technologies: ["HTML5", "CSS3", "JavaScript", "React.js"],
-      cta: "Order Now",
-      color: "from-blue-500 to-cyan-500",
-      tag: "HOT DEAL"
+      color: "from-blue-600 to-indigo-600"
     },
     {
       id: 2,
-      name: "Tour & Travel Website",
-      originalPrice: 24999,
-      offerPrice: 14999,
-      description: "Complete travel booking platform",
-      deliveryTime: "10-15 days",
-      icon: <MapPin className="h-8 w-8" />,
+      name: "Tour & Travel Platform",
+      description: "Comprehensive travel booking platform with dynamic tour itineraries and inquiry workflows",
+      deliveryTime: "10-15 Days",
+      icon: <MapPin className="h-8 w-8 text-emerald-600" />,
       features: [
-        "Dynamic Home Page",
-        "Upcoming Tours Section",
-        "Tour Packages Pages",
-        "About Company Page",
-        "Contact Us with Map",
-        "Booking Inquiry Form",
-        "Gallery Section",
-        "Testimonials Section"
+        "Dynamic Tour Itinerary Showcase",
+        "Upcoming Departure Modules",
+        "Tour Detail & Pricing Architecture",
+        "Interactive Booking Inquiry Engine",
+        "Payment Gateway Integration Ready",
+        "Administrative Management Portal",
+        "Media Gallery & Photo Showcase",
+        "Verified Client Reviews & Testimonials"
       ],
       technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
-      cta: "Get Quote",
-      color: "from-green-500 to-teal-500",
-      tag: "POPULAR"
+      color: "from-emerald-600 to-teal-600"
     },
     {
       id: 3,
-      name: "Guest House Website",
-      originalPrice: 19999,
-      offerPrice: 12999,
-      description: "Hotel/Guest house with payment integration",
-      deliveryTime: "12-18 days",
-      icon: <Smartphone className="h-8 w-8" />,
+      name: "Hospitality & Guest House Portal",
+      description: "Dedicated portal for hotels and guest houses with room showcase and reservation inquiries",
+      deliveryTime: "12-18 Days",
+      icon: <Smartphone className="h-8 w-8 text-purple-600" />,
       features: [
-        "Homepage with Hero Slider",
-        "Room Listings Page",
-        "Booking System",
-        "Payment Gateway Integration",
-        "Admin Dashboard",
-        "Customer Reviews",
-        "Amenities Section",
-        "Location & Directions"
+        "Engaging Hero & Room Showcase",
+        "Detailed Accommodation Listings",
+        "Direct Reservation System",
+        "Secure Payment Integration",
+        "Administrative Control Dashboard",
+        "Guest Feedback & Ratings System",
+        "Amenities & Facility Breakdown",
+        "Location Directions & Map Integration"
       ],
       technologies: ["MERN Stack", "Razorpay/Stripe", "JWT Auth"],
-      cta: "Start Project",
-      color: "from-purple-500 to-pink-500",
-      tag: "FEATURED"
+      color: "from-purple-600 to-pink-600"
     }
   ];
 
   const seoPackage = {
-    name: "Professional SEO Package",
-    originalPrice: 24999,
-    offerPrice: 7779,
-    description: "Complete SEO optimization for better rankings",
-    duration: "3-6 months",
-    icon: <Search className="h-8 w-8" />,
+    name: "Professional SEO Retainer",
+    description: "Holistic search engine optimization program engineered for organic domain dominance",
+    duration: "3-6 Months Retainer",
+    icon: <Search className="h-8 w-8 text-amber-600" />,
     features: [
-      "Monthly 4 Performance Reports",
-      "4 Blog Posts (500+ words)",
-      "5-10 Keyword Optimization",
-      "On-Page SEO Optimization",
-      "Off-Page SEO Activities",
-      "Technical SEO Audit",
-      "Competitor Analysis",
-      "Traffic Growth Strategy"
+      "Monthly 4 In-Depth Performance Reports",
+      "4 Structured SEO Content Articles",
+      "High-Intent Keyword Cluster Optimization",
+      "Technical On-Page Code & Meta Optimization",
+      "Off-Page Link Acquisition Strategy",
+      "Comprehensive Technical Site Health Audit",
+      "Competitor Keyword & Backlink Analysis",
+      "Long-Term Organic Traffic Roadmap"
     ],
     deliverables: [
-      "Keyword Research Report",
-      "SEO Audit Report",
-      "Monthly Ranking Report",
-      "Backlink Profile Analysis",
-      "Content Strategy Document"
+      "Target Keyword Analysis Dossier",
+      "Complete Technical SEO Health Audit",
+      "Monthly Ranking & Organic Impression Audit",
+      "Backlink Profile & Toxic Link Audit",
+      "Quarterly Content Strategy Specification"
     ],
-    cta: "Start SEO Campaign",
-    color: "from-orange-500 to-red-500"
+    color: "from-amber-500 to-orange-600"
   };
 
   const gmbPackage = {
-    name: "Google My Business Optimization",
-    originalPrice: 12499,
-    offerPrice: 2499,
-    description: "Complete local business presence setup",
-    duration: "Ongoing",
-    icon: <Target className="h-8 w-8" />,
+    name: "Google Business Profile Dominance",
+    description: "Local search presence optimization to capture nearby customer searches and inquiries",
+    duration: "Ongoing Local Visibility",
+    icon: <MapPin className="h-8 w-8 text-blue-600" />,
     features: [
-      "GMB Profile Complete Setup",
-      "Weekly 4-5 Posts",
-      "Review Management System",
-      "Local SEO Optimization",
-      "Photo & Video Posts",
-      "Performance Tracking",
-      "Q&A Management",
-      "Insights & Analytics"
+      "Complete GMB Profile Setup & Verification",
+      "Weekly 4-5 Geotagged Visual Updates",
+      "Reputation & Review Response System",
+      "Local Map 3-Pack SEO Optimization",
+      "Rich Photo & Video Content Integration",
+      "Real-Time Call & Direction Insights Tracking",
+      "Active Q&A Monitoring & Engagement",
+      "Local Citation & Directory Synchronization"
     ],
     benefits: [
-      "Increase Local Visibility",
-      "Generate More Calls",
-      "Improve Customer Trust",
-      "Boost Website Traffic",
-      "Competitive Edge"
+      "Increase Local High-Intent Search Visibility",
+      "Drive Direct Phone Calls & Directions",
+      "Strengthen Credibility with Verified Reviews",
+      "Boost Foot Traffic & Store Visits",
+      "Gain Actionable Local Search Intelligence"
     ],
-    cta: "Optimize GMB",
-    color: "from-blue-600 to-indigo-600"
+    color: "from-blue-600 to-indigo-700"
   };
 
   const smmPackage = {
-    name: "Social Media Marketing",
-    originalPrice: 24999,
-    offerPrice: 4449,
-    description: "Complete social media management",
-    duration: "Monthly",
-    icon: <MessageSquare className="h-8 w-8" />,
+    name: "Social Media Growth Retainer",
+    description: "Multi-channel creative content production and audience community management",
+    duration: "Monthly Engagement",
+    icon: <MessageSquare className="h-8 w-8 text-pink-600" />,
     features: [
-      "Content Calendar Planning",
-      "Daily Post Creation & Scheduling",
-      "Community Management",
-      "Brand Storytelling",
-      "Visual Content Creation",
-      "Audience Engagement",
-      "Hashtag Strategy",
-      "Performance Analytics"
+      "Comprehensive Monthly Content Calendar",
+      "Creative Graphic & Reel Asset Creation",
+      "Active Comment & DM Community Engagement",
+      "Brand Narrative & Consistency Strategy",
+      "High-Engagement Visual Post Design",
+      "Trend & Industry Hashtag Research",
+      "Monthly Audience Growth Analytics"
     ],
     platforms: ["Facebook", "Instagram", "LinkedIn", "Twitter"],
-    cta: "Start SMM",
-    color: "from-pink-500 to-rose-500"
+    color: "from-pink-600 to-rose-600"
   };
 
   const metaAdsPackage = {
-    name: "Meta Ads Management",
-    originalPrice: 19999,
-    offerPrice: 9999,
-    description: "Professional Facebook & Instagram advertising",
-    duration: "Monthly",
-    icon: <TrendingUp className="h-8 w-8" />,
+    name: "Meta Ads Performance Campaign",
+    description: "Targeted Facebook & Instagram paid campaigns designed for maximum return on ad spend",
+    duration: "Campaign-Based / Monthly",
+    icon: <TrendingUp className="h-8 w-8 text-purple-600" />,
     features: [
-      "Ad Account Setup & Optimization",
-      "Audience Targeting Strategy",
-      "Ad Creative Development",
-      "A/B Testing Setup",
-      "Conversion Tracking",
-      "ROI Optimization",
-      "Monthly Performance Report",
-      "Ad Budget Management"
+      "Conversion Pixel & Event Tracking Setup",
+      "Demographic & Lookalike Audience Building",
+      "High-Converting Creative Ad Copy & Design",
+      "Systematic Multi-Variant A/B Testing",
+      "Lead Quality Scoring & CRM Synchronization",
+      "ROAS Optimization & Budget Pacing",
+      "Bi-Weekly Performance Reviews",
+      "Dynamic Retargeting Funnel Setup"
     ],
     adTypes: ["Lead Generation", "Website Traffic", "Sales Conversions", "Brand Awareness"],
-    cta: "Launch Ads",
-    color: "from-blue-500 to-purple-600"
+    color: "from-blue-600 to-purple-700"
   };
 
   const businessSetupPackage = {
-    name: "Complete Business Setup",
-    originalPrice: 39999,
-    offerPrice: 24999,
-    description: "End-to-end business digital presence",
-    duration: "45-60 days",
-    icon: <Award className="h-8 w-8" />,
+    name: "Complete Business Digital Setup",
+    description: "End-to-end digital foundation unifying identity, web architecture, and acquisition channels",
+    duration: "45-60 Days Implementation",
+    icon: <Award className="h-8 w-8 text-emerald-600" />,
     features: [
-      "Professional Business Website",
-      "Complete Social Media Setup",
-      "Market Entry Strategy Guidance",
-      "Assigned Industry Expert",
-      "Brand Identity Development",
-      "Lead Generation System",
-      "CRM Setup Consultation",
-      "3 Months Support"
+      "Custom 5-Page Responsive Business Portal",
+      "Cohesive Social Media Profiles Architecture",
+      "Digital Market Entry & Channel Strategy",
+      "Assigned Senior Technical & Growth Consultant",
+      "Brand Identity & Asset Guidelines",
+      "Inbound Lead Generation Infrastructure",
+      "CRM & Sales Workflow Consultation",
+      "Post-Launch Support & Training"
     ],
     inclusions: [
-      "Website Development",
-      "Social Media Profiles",
-      "Content Strategy",
-      "Marketing Plan",
-      "Ongoing Support"
+      "Custom Web Development",
+      "Social Media Setup",
+      "Content Strategy Document",
+      "Growth Roadmap",
+      "Dedicated Consultant Support"
     ],
-    cta: "Setup Business",
-    color: "from-green-600 to-emerald-600"
+    color: "from-emerald-600 to-teal-700"
   };
 
   const allServices = [
-    {
-      id: 'web',
-      name: 'Website Development',
-      icon: <Code className="h-5 w-5" />,
-      count: 3
-    },
-    {
-      id: 'seo',
-      name: 'SEO Services',
-      icon: <Search className="h-5 w-5" />,
-      count: 1
-    },
-    {
-      id: 'gmb',
-      name: 'GMB Optimization',
-      icon: <MapPin className="h-5 w-5" />,
-      count: 1
-    },
-    {
-      id: 'smm',
-      name: 'Social Media Marketing',
-      icon: <MessageSquare className="h-5 w-5" />,
-      count: 1
-    },
-    {
-      id: 'business',
-      name: 'Business Setup',
-      icon: <Users className="h-5 w-5" />,
-      count: 1
-    }
+    { id: 'web', name: 'Website Development', icon: <Code className="h-5 w-5" /> },
+    { id: 'seo', name: 'SEO Services', icon: <Search className="h-5 w-5" /> },
+    { id: 'gmb', name: 'GMB Optimization', icon: <MapPin className="h-5 w-5" /> },
+    { id: 'smm', name: 'Social Media & Ads', icon: <MessageSquare className="h-5 w-5" /> },
+    { id: 'business', name: 'Business Setup', icon: <Users className="h-5 w-5" /> }
   ];
 
   const benefits = [
     {
-      icon: <Clock className="h-6 w-6" />,
-      title: "Fast Delivery",
-      description: "7-15 days average turnaround time"
+      icon: <Clock className="h-6 w-6 text-purple-600" />,
+      title: "Fast Turnaround",
+      description: "Structured sprint milestones with predictable delivery schedules"
     },
     {
-      icon: <Shield className="h-6 w-6" />,
-      title: "100% Custom Code",
-      description: "No WordPress, pure HTML/CSS/React"
+      icon: <Shield className="h-6 w-6 text-blue-600" />,
+      title: "100% Custom Architecture",
+      description: "No fragile templates — robust code using React, Node.js, and TypeScript"
     },
     {
-      icon: <Headphones className="h-6 w-6" />,
-      title: "Free Support",
-      description: "30 days free support included"
-    },
-    {
-      icon: <DollarSign className="h-6 w-6" />,
-      title: "No Hidden Cost",
-      description: "Transparent pricing, all-inclusive"
+      icon: <Users className="h-6 w-6 text-emerald-600" />,
+      title: "Dedicated Agency Team",
+      description: "Direct collaboration with senior engineers across Jaipur, Vrindavan, and Nepal"
     }
   ];
 
+  const handleWhatsAppClick = (serviceName: string) => {
+    const message = `🚀 *Growth Service - Engagement Scope Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to discuss our project scope and request a consultation.`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+  };
+
   const renderContent = () => {
-    switch (activeTab) {
+    switch(activeTab) {
       case 'web':
         return (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {webDevelopmentPackages.map((pkg) => (
-              <div key={pkg.id} className="relative bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 border border-slate-200/80 card-lift overflow-visible">
-                {pkg.tag && (
-                  <div className="absolute -top-3 right-5 z-10">
-                    <div className={`bg-gradient-to-r ${pkg.color} text-white px-4 py-1 rounded-full font-bold text-xs shadow-md`}>
-                      {pkg.tag}
-                    </div>
-                  </div>
-                )}
-                <div className="p-6">
-                  <div className="text-center mb-6">
-                    <div className={`w-16 h-16 bg-gradient-to-r ${pkg.color} rounded-2xl flex items-center justify-center text-white mx-auto mb-4`}>
+              <div 
+                key={pkg.id}
+                className="bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 border border-slate-200/80 flex flex-col justify-between"
+              >
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/60">
                       {pkg.icon}
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
-                    <p className="text-gray-600 text-sm">{pkg.description}</p>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-900">{pkg.name}</h3>
+                      <div className="text-xs text-purple-600 font-semibold flex items-center gap-1 mt-0.5">
+                        <Clock className="h-3 w-3" /> {pkg.deliveryTime}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="mb-6 text-center">
-                    <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold text-gray-900">₹{pkg.offerPrice.toLocaleString()}</span>
-                      <span className="text-gray-500 line-through">₹{pkg.originalPrice.toLocaleString()}</span>
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      <Clock className="h-4 w-4 inline mr-1" />
-                      Delivery: {pkg.deliveryTime}
-                    </div>
-                  </div>
+                  <p className="text-sm text-slate-600 mb-6 leading-relaxed">{pkg.description}</p>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Features:</h4>
+                    <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-3">Included Capabilities:</h4>
                     <ul className="space-y-2">
                       {pkg.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm">
-                          <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                          <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -309,19 +249,33 @@ const Packages: React.FC = () => {
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-2">Technologies:</h4>
-                    <div className="flex flex-wrap gap-2">
+                    <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-2">Technologies:</h4>
+                    <div className="flex flex-wrap gap-1.5">
                       {pkg.technologies.map((tech, idx) => (
-                        <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">
+                        <span key={idx} className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded text-xs font-medium">
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
+                </div>
 
-                  <button className={`w-full bg-gradient-to-r ${pkg.color} hover:shadow-lg text-white py-3 rounded-lg font-semibold transition-all duration-200`}>
-                    {pkg.cta}
-                  </button>
+                <div className="p-6 md:p-8 pt-0 border-t border-slate-100">
+                  <div className="grid grid-cols-2 gap-3 pt-4">
+                    <button 
+                      onClick={() => handleWhatsAppClick(pkg.name)}
+                      className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:opacity-95 flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Inquire
+                    </button>
+                    <Link
+                      to="/book-call"
+                      className="border border-slate-300 text-slate-700 hover:border-purple-600 hover:text-purple-600 py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:bg-purple-50 flex items-center justify-center"
+                    >
+                      Discuss Project
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
@@ -330,59 +284,65 @@ const Packages: React.FC = () => {
 
       case 'seo':
         return (
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white rounded-2xl shadow-card border border-slate-200/80 p-6 md:p-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-20 h-20 bg-gradient-to-r ${seoPackage.color} rounded-2xl flex items-center justify-center text-white`}>
+                  <div className="w-16 h-16 bg-amber-50 rounded-2xl border border-amber-200 flex items-center justify-center">
                     {seoPackage.icon}
                   </div>
                   <div>
-                    <h3 className="text-3xl font-bold text-gray-900">{seoPackage.name}</h3>
-                    <div className="flex items-baseline gap-3 mt-2">
-                      <span className="text-4xl font-bold text-gray-900">₹{seoPackage.offerPrice.toLocaleString()}</span>
-                      <span className="text-gray-500 line-through text-xl">₹{seoPackage.originalPrice.toLocaleString()}</span>
-                      <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm font-bold">
-                        Save {Math.round((1 - seoPackage.offerPrice/seoPackage.originalPrice) * 100)}%
-                      </span>
-                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900">{seoPackage.name}</h3>
+                    <p className="text-sm text-slate-600 mt-1">{seoPackage.description}</p>
+                    <span className="inline-block mt-2 bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full text-xs font-semibold">
+                      {seoPackage.duration}
+                    </span>
                   </div>
                 </div>
 
                 <div className="mb-8">
-                  <h4 className="font-semibold text-gray-900 mb-3 text-lg">Package Includes:</h4>
+                  <h4 className="font-semibold text-slate-900 mb-3 text-sm uppercase tracking-wider">Strategy Inclusions:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {seoPackage.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
-                        <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
+                      <div key={idx} className="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-700">
+                        <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                        <span>{feature}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div>
-                <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-4 text-lg">Deliverables:</h4>
+              <div className="flex flex-col justify-between">
+                <div className="bg-slate-50 rounded-2xl border border-slate-200/80 p-6 mb-6">
+                  <h4 className="font-semibold text-slate-900 mb-4 text-sm uppercase tracking-wider">Formal Deliverables:</h4>
                   <ul className="space-y-3">
                     {seoPackage.deliverables.map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-3">
-                        <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">
+                      <li key={idx} className="flex items-center gap-3 text-sm text-slate-700">
+                        <div className="w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-xs font-bold shrink-0">
                           {idx + 1}
                         </div>
-                        <span className="text-gray-700">{item}</span>
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Duration: {seoPackage.duration}</h4>
-                  <p className="text-gray-600 text-sm mb-4">Optimal results visible within 3-6 months</p>
-                  <button className={`w-full bg-gradient-to-r ${seoPackage.color} hover:shadow-lg text-white py-3 rounded-lg font-semibold text-lg transition-all duration-200`}>
-                    {seoPackage.cta}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button 
+                    onClick={() => handleWhatsAppClick(seoPackage.name)}
+                    className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Discuss on WhatsApp
                   </button>
+                  <Link
+                    to="/book-call"
+                    className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    Book SEO Consultation
+                  </Link>
                 </div>
               </div>
             </div>
@@ -391,53 +351,64 @@ const Packages: React.FC = () => {
 
       case 'gmb':
         return (
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white rounded-2xl shadow-card border border-slate-200/80 p-6 md:p-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <div className="mb-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className={`w-20 h-20 bg-gradient-to-r ${gmbPackage.color} rounded-2xl flex items-center justify-center text-white`}>
-                      {gmbPackage.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-gray-900">{gmbPackage.name}</h3>
-                      <div className="flex items-baseline gap-3 mt-2">
-                        <span className="text-4xl font-bold text-gray-900">₹{gmbPackage.offerPrice.toLocaleString()}/month</span>
-                        <span className="text-gray-500 line-through text-xl">₹{gmbPackage.originalPrice.toLocaleString()}</span>
-                      </div>
-                    </div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-blue-50 rounded-2xl border border-blue-200 flex items-center justify-center">
+                    {gmbPackage.icon}
                   </div>
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900">{gmbPackage.name}</h3>
+                    <p className="text-sm text-slate-600 mt-1">{gmbPackage.description}</p>
+                    <span className="inline-block mt-2 bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs font-semibold">
+                      {gmbPackage.duration}
+                    </span>
+                  </div>
+                </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    {gmbPackage.features.map((feature, idx) => (
-                      <div key={idx} className="bg-gray-50 p-4 rounded-lg">
-                        <Check className="h-5 w-5 text-green-500 mb-2" />
-                        <p className="text-sm font-medium text-gray-700">{feature}</p>
-                      </div>
-                    ))}
-                  </div>
+                <h4 className="font-semibold text-slate-900 mb-3 text-sm uppercase tracking-wider">Optimization Protocol:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {gmbPackage.features.map((feature, idx) => (
+                    <div key={idx} className="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-start gap-2 text-sm text-slate-700">
+                      <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div>
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-4 text-lg">Key Benefits:</h4>
+              <div className="flex flex-col justify-between">
+                <div className="bg-blue-50/50 rounded-2xl border border-blue-100 p-6 mb-6">
+                  <h4 className="font-semibold text-slate-900 mb-4 text-sm uppercase tracking-wider">Business Outcomes:</h4>
                   <ul className="space-y-3">
                     {gmbPackage.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
-                          <Check className="h-4 w-4 text-blue-600" />
+                      <li key={idx} className="flex items-center gap-3 text-sm text-slate-700">
+                        <div className="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center shrink-0">
+                          <Check className="h-3.5 w-3.5 text-blue-600" />
                         </div>
-                        <span className="text-gray-700 font-medium">{benefit}</span>
+                        <span>{benefit}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <button className={`w-full bg-gradient-to-r ${gmbPackage.color} hover:shadow-lg text-white py-4 rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3`}>
-                  {gmbPackage.cta}
-                  <ArrowRight className="h-5 w-5" />
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button 
+                    onClick={() => handleWhatsAppClick(gmbPackage.name)}
+                    className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Inquire on WhatsApp
+                  </button>
+                  <Link
+                    to="/book-call"
+                    className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    Consult With Strategist
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -446,233 +417,241 @@ const Packages: React.FC = () => {
       case 'smm':
         return (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <div className="mb-8">
+            {/* SMM Card */}
+            <div className="bg-white rounded-2xl shadow-card border border-slate-200/80 p-6 md:p-8 flex flex-col justify-between">
+              <div>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${smmPackage.color} rounded-2xl flex items-center justify-center text-white`}>
+                  <div className="w-14 h-14 bg-pink-50 rounded-2xl border border-pink-200 flex items-center justify-center">
                     {smmPackage.icon}
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900">{smmPackage.name}</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-bold text-gray-900">₹{smmPackage.offerPrice.toLocaleString()}/month</span>
-                      <span className="text-gray-500 line-through">₹{smmPackage.originalPrice.toLocaleString()}</span>
-                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900">{smmPackage.name}</h3>
+                    <p className="text-xs text-slate-600 mt-1">{smmPackage.description}</p>
+                    <span className="inline-block mt-2 bg-pink-50 text-pink-700 border border-pink-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                      {smmPackage.duration}
+                    </span>
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Platforms Covered:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {smmPackage.platforms.map((platform, idx) => (
-                      <span key={idx} className="bg-pink-50 text-pink-700 px-4 py-2 rounded-full font-medium">
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-3">
+                <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-3">Scope Inclusions:</h4>
+                <ul className="space-y-2 mb-6">
                   {smmPackage.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
+                    <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                      <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-2">Supported Platforms:</h4>
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {smmPackage.platforms.map((p, idx) => (
+                    <span key={idx} className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded text-xs font-medium">
+                      {p}
+                    </span>
                   ))}
                 </div>
               </div>
 
-              <button className={`w-full bg-gradient-to-r ${smmPackage.color} hover:shadow-lg text-white py-3 rounded-lg font-semibold text-lg transition-all duration-200`}>
-                {smmPackage.cta}
-              </button>
+              <div className="pt-4 border-t border-slate-100 grid grid-cols-2 gap-3">
+                <button 
+                  onClick={() => handleWhatsAppClick(smmPackage.name)}
+                  className="bg-[#25D366] hover:bg-emerald-600 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </button>
+                <Link
+                  to="/book-call"
+                  className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Calendar className="h-4 w-4" />
+                  Consultation
+                </Link>
+              </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <div className="mb-8">
+            {/* Meta Ads Card */}
+            <div className="bg-white rounded-2xl shadow-card border border-slate-200/80 p-6 md:p-8 flex flex-col justify-between">
+              <div>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${metaAdsPackage.color} rounded-2xl flex items-center justify-center text-white`}>
+                  <div className="w-14 h-14 bg-purple-50 rounded-2xl border border-purple-200 flex items-center justify-center">
                     {metaAdsPackage.icon}
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900">{metaAdsPackage.name}</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-bold text-gray-900">₹{metaAdsPackage.offerPrice.toLocaleString()}/month</span>
-                      <span className="text-gray-500 line-through">₹{metaAdsPackage.originalPrice.toLocaleString()}</span>
-                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900">{metaAdsPackage.name}</h3>
+                    <p className="text-xs text-slate-600 mt-1">{metaAdsPackage.description}</p>
+                    <span className="inline-block mt-2 bg-purple-50 text-purple-700 border border-purple-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                      {metaAdsPackage.duration}
+                    </span>
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Ad Types:</h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    {metaAdsPackage.adTypes.map((type, idx) => (
-                      <div key={idx} className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-center font-medium">
-                        {type}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-3">
+                <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-3">Campaign Execution:</h4>
+                <ul className="space-y-2 mb-6">
                   {metaAdsPackage.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
+                    <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                      <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-2">Campaign Types:</h4>
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {metaAdsPackage.adTypes.map((type, idx) => (
+                    <span key={idx} className="bg-purple-50 text-purple-700 border border-purple-200 px-2.5 py-1 rounded text-xs font-medium">
+                      {type}
+                    </span>
                   ))}
                 </div>
               </div>
 
-              <button className={`w-full bg-gradient-to-r ${metaAdsPackage.color} hover:shadow-lg text-white py-3 rounded-lg font-semibold text-lg transition-all duration-200`}>
-                {metaAdsPackage.cta}
-              </button>
+              <div className="pt-4 border-t border-slate-100 grid grid-cols-2 gap-3">
+                <button 
+                  onClick={() => handleWhatsAppClick(metaAdsPackage.name)}
+                  className="bg-[#25D366] hover:bg-emerald-600 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </button>
+                <Link
+                  to="/book-call"
+                  className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Calendar className="h-4 w-4" />
+                  Consultation
+                </Link>
+              </div>
             </div>
           </div>
         );
 
       case 'business':
         return (
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="mb-10">
-              <div className="flex items-center gap-6 mb-8">
-                <div className={`w-24 h-24 bg-gradient-to-r ${businessSetupPackage.color} rounded-2xl flex items-center justify-center text-white`}>
-                  {businessSetupPackage.icon}
-                </div>
-                <div>
-                  <h3 className="text-4xl font-bold text-gray-900">{businessSetupPackage.name}</h3>
-                  <div className="flex items-baseline gap-4 mt-3">
-                    <span className="text-5xl font-bold text-gray-900">₹{businessSetupPackage.offerPrice.toLocaleString()}</span>
-                    <span className="text-gray-500 line-through text-2xl">₹{businessSetupPackage.originalPrice.toLocaleString()}</span>
-                    <span className="bg-green-100 text-green-600 px-4 py-2 rounded-full font-bold">
-                      Complete Business Solution
+          <div className="bg-white rounded-2xl shadow-card border border-slate-200/80 p-6 md:p-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 bg-emerald-50 rounded-2xl border border-emerald-200 flex items-center justify-center">
+                    {businessSetupPackage.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900">{businessSetupPackage.name}</h3>
+                    <p className="text-sm text-slate-600 mt-1">{businessSetupPackage.description}</p>
+                    <span className="inline-block mt-2 bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">
+                      {businessSetupPackage.duration}
                     </span>
                   </div>
                 </div>
+
+                <h4 className="font-semibold text-slate-900 mb-3 text-sm uppercase tracking-wider">Scope Deliverables:</h4>
+                <div className="space-y-2.5">
+                  {businessSetupPackage.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                      <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-4 text-xl">Package Features:</h4>
-                  <div className="space-y-4">
-                    {businessSetupPackage.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl">
-                        <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0">
-                          {idx + 1}
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">{feature}</p>
-                        </div>
-                      </div>
+              <div className="flex flex-col justify-between">
+                <div className="bg-emerald-50/50 rounded-2xl border border-emerald-100 p-6 mb-6">
+                  <h4 className="font-semibold text-slate-900 mb-4 text-sm uppercase tracking-wider">Complete Inclusions:</h4>
+                  <ul className="space-y-2.5">
+                    {businessSetupPackage.inclusions.map((item, idx) => (
+                      <li key={idx} className="flex items-center gap-3 text-sm text-slate-700">
+                        <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                        <span className="font-medium">{item}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
 
-                <div>
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-4 text-lg">What's Included:</h4>
-                    <ul className="space-y-3">
-                      {businessSetupPackage.inclusions.map((item, idx) => (
-                        <li key={idx} className="flex items-center gap-3">
-                          <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                          <span className="text-gray-700 font-medium">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Delivery Time: {businessSetupPackage.duration}</h4>
-                    <p className="text-gray-600 text-sm mb-4">Complete B2B setup with ongoing guidance</p>
-                    <button className={`w-full bg-gradient-to-r ${businessSetupPackage.color} hover:shadow-xl text-white py-4 rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3`}>
-                      <Users className="h-5 w-5" />
-                      {businessSetupPackage.cta}
-                    </button>
-                  </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button 
+                    onClick={() => handleWhatsAppClick(businessSetupPackage.name)}
+                    className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Inquire on WhatsApp
+                  </button>
+                  <Link
+                    to="/book-call"
+                    className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    Discuss Business Setup
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         );
-
-      default:
-        return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>Digital Solutions Packages - Affordable Pricing | Grworth Services</title>
-        <meta 
-          name="description" 
-          content="Professional website development from ₹9999, SEO services from ₹7779, SMM packages from ₹4449. Complete digital solutions for your business growth." 
+        <title>Engagement Models & Solutions | Growth Service</title>
+        <meta
+          name="description"
+          content="Explore structured engagement models and service solutions across web development, SEO, social media, and digital marketing tailored to your business needs."
         />
         <meta 
           name="keywords" 
-          content="website development packages, SEO services India, social media marketing, Google My Business optimization, business setup packages" 
+          content="digital marketing solutions, custom web development scope, SEO retainers, social media management, Growth Service India Nepal"
         />
       </Helmet>
 
       {/* Hero Section */}
-      <Section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden" spacing="default">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none" />
-        <Container size="narrow" className="text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Professional Digital Solutions</h1>
-          <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
-            Affordable packages for website development, SEO, social media marketing, and business setup
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full mb-6 border border-white/15">
+            <Sparkles className="h-4 w-4 text-yellow-400" />
+            <span className="text-sm font-semibold tracking-wide text-yellow-300 uppercase">
+              Transparent Frameworks & Custom Scope
+            </span>
+          </div>
+          
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+            Service Solutions & <br />
+            <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
+              Engagement Models
+            </span>
+          </h1>
+          <p className="text-base md:text-xl mb-10 max-w-3xl mx-auto text-slate-200 leading-relaxed">
+            We provide structured engagement models engineered for real business growth. Review our capability architectures and connect with our team to formulate a personalized scope.
           </p>
 
-          <div className="inline-flex items-center bg-white/8 backdrop-blur-sm border border-white/10 rounded-2xl p-1 mb-8 overflow-x-auto max-w-full">
-            {allServices.map((service) => (
-              <button
-                key={service.id}
-                onClick={() => setActiveTab(service.id as any)}
-                className={`px-4 py-2.5 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 text-sm whitespace-nowrap ${
-                  activeTab === service.id
-                    ? 'bg-white text-purple-700 shadow-md'
-                    : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                {service.icon}
-                {service.name}
-                <span className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
-                  {service.count}
-                </span>
-              </button>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* Benefits Strip */}
-      <Section variant="default" spacing="sm" className="border-b border-slate-200/80">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 shadow-card card-lift-sm hover:border-purple-300/70 transition-all duration-200">
-                <div className="w-10 h-10 bg-gradient-to-tr from-purple-600 to-indigo-500 rounded-xl flex items-center justify-center text-white mb-3">
-                  {benefit.icon}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {benefits.map((b, idx) => (
+              <div key={idx} className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10 text-left">
+                <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3">
+                  {b.icon}
                 </div>
-                <h3 className="text-base font-bold text-slate-900 mb-1">{benefit.title}</h3>
-                <p className="text-slate-500 text-sm">{benefit.description}</p>
+                <h4 className="font-bold text-white text-base mb-1">{b.title}</h4>
+                <p className="text-xs text-purple-200 leading-relaxed">{b.description}</p>
               </div>
             ))}
           </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
-      <Section variant="transparent" spacing="none" className="py-8">
+      {/* Domain Navigation Tabs */}
+      <div className="sticky top-[68px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm py-4">
         <Container>
-          {/* Services Navigation */}
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
+          <div className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             {allServices.map((service) => (
               <button
                 key={service.id}
                 onClick={() => setActiveTab(service.id as any)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-200 flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-full font-semibold text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                   activeTab === service.id
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                    : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
+                    ? 'bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white shadow-md'
+                    : 'bg-slate-100 text-slate-700 hover:bg-purple-50 hover:text-purple-700'
                 }`}
               >
                 {service.icon}
@@ -680,108 +659,44 @@ const Packages: React.FC = () => {
               </button>
             ))}
           </div>
+        </Container>
+      </div>
 
-          {/* Main Content */}
-          <div className="mb-16">
-            {renderContent()}
-          </div>
+      {/* Main Content Area */}
+      <Section className="py-16">
+        <Container>
+          {renderContent()}
+        </Container>
+      </Section>
 
-          {/* Special Offers Banner */}
-          <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl shadow-2xl p-8 text-white mb-12">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="mb-6 md:mb-0">
-                <h3 className="text-2xl md:text-3xl font-bold mb-2">Limited Time Offer! 🎁</h3>
-                <p className="text-red-100">Get 30% OFF on all annual packages</p>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-bold mb-2">30% OFF</div>
-                <div className="text-sm">Valid till December 31</div>
-              </div>
-              <button className="bg-white text-red-600 hover:bg-gray-100 px-8 py-3 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105">
-                Grab Offer Now
-              </button>
-            </div>
-          </div>
+      {/* Consultation CTA Banner */}
+      <Section className="bg-gradient-to-r from-gray-900 via-purple-900 to-blue-900 text-white">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Need a Custom Engagement Model?
+          </h2>
+          <p className="text-base md:text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
+            Our team works with founders and marketing heads to design multi-quarter roadmaps, dedicated development teams, and performance marketing programs.
+          </p>
 
-          {/* Comparison Section */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">Why Choose Grworth Services?</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              to="/book-call"
+              className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
+            >
+              <Calendar className="h-5 w-5" />
+              Schedule a Project Discussion
+            </Link>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                  <Code className="h-8 w-8" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Custom Development</h3>
-                <p className="text-gray-600">No WordPress templates. We write clean, scalable code from scratch using React, Node.js, and MongoDB.</p>
-              </div>
-
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                  <Zap className="h-8 w-8" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Fast Delivery</h3>
-                <p className="text-gray-600">Basic websites in 7-10 days, complex projects in 15-20 days. We respect deadlines and deliver quality.</p>
-              </div>
-
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                  <Shield className="h-8 w-8" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">After-Sales Support</h3>
-                <p className="text-gray-600">30 days free support on all projects. Ongoing maintenance packages available at affordable rates.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Final CTA */}
-          <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-card p-12 text-white text-center overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none"></div>
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Ready to Start Your Project?</h2>
-              <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
-                Contact us today for a free consultation and project estimate
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="https://wa.me/9779707382481"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white text-purple-700 hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 hover:-translate-y-1 flex items-center justify-center gap-3 shadow-card hover:shadow-card-hover"
-                >
-                  <MessageCircle className="w-5 h-5 text-emerald-600" />
-                  WhatsApp Now
-                </a>
-
-                <a
-                  href="tel:+9779707382481"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 flex items-center justify-center gap-3"
-                >
-                  <Phone className="w-5 h-5" />
-                  Call: +9779707382481
-                </a>
-              </div>
-
-              <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/10 pt-10">
-                <div className="text-center">
-                  <div className="text-3xl font-bold">500+</div>
-                  <div className="text-purple-300 text-sm">Projects Completed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">98%</div>
-                  <div className="text-purple-300 text-sm">Client Satisfaction</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">24/7</div>
-                  <div className="text-purple-300 text-sm">Support Available</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">7-10</div>
-                  <div className="text-purple-300 text-sm">Days Avg. Delivery</div>
-                </div>
-              </div>
-            </div>
+            <a
+              href="https://wa.me/9779707382481"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
+            >
+              <MessageCircle className="h-5 w-5" />
+              Direct WhatsApp Inquiry
+            </a>
           </div>
         </Container>
       </Section>

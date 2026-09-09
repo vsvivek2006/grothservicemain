@@ -323,10 +323,10 @@ const WhiteLabelWebDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Web Development Packages
+              White Label Web Development Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible pricing for different types of web projects
+              Production-ready development capacities engineered seamlessly under your agency's brand
             </p>
           </div>
           
@@ -334,35 +334,35 @@ const WhiteLabelWebDevelopment = () => {
             {[
               { 
                 name: 'Basic Website', 
-                price: '₹24,999', 
+                tier: 'Agency Turnkey Site', 
                 type: 'Brochure Website',
-                features: ['5-7 Pages', 'Responsive Design', 'Contact Form', 'Basic SEO', 'CMS Integration', '1 Month Support'],
+                features: ['5-7 Pages', 'Responsive Modern Design', 'Contact Form & Lead Capture', 'On-Page SEO', 'CMS Integration', '1 Month Post-Launch Support'],
                 color: 'border-indigo-200'
               },
               { 
                 name: 'Business Website', 
-                price: '₹49,999', 
+                tier: 'Corporate Platform', 
                 type: 'Corporate Website',
-                features: ['10-15 Pages', 'Custom Design', 'Advanced Features', 'Blog Setup', 'Performance SEO', '3 Months Support', 'Training'],
+                features: ['10-15 Pages', 'Custom UI/UX Architecture', 'Advanced CMS Features', 'Integrated Blog', 'Performance Optimization', '3 Months Dedicated Support', 'White-Label Client Training'],
                 color: 'border-purple-300',
                 popular: true
               },
               { 
                 name: 'E-commerce Store', 
-                price: '₹99,999', 
+                tier: 'Full Commerce Engine', 
                 type: 'Online Store',
-                features: ['Full E-commerce', 'Payment Gateway', 'Product Management', 'Inventory System', 'Mobile Responsive', '6 Months Support', 'Priority Support'],
+                features: ['Full E-commerce Capability', 'Payment Gateway Integration', 'Catalog & Inventory Management', 'ERP Sync Ready', 'Mobile-Responsive UI', '6 Months Support', 'Dedicated Account Manager'],
                 color: 'border-indigo-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    MOST REQUESTED
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-indigo-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Type: <span className="font-semibold">{plan.type}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -376,7 +376,7 @@ const WhiteLabelWebDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start White Label Partnership
+                  Partner Inquiry
                 </Link>
               </div>
             ))}
@@ -384,7 +384,7 @@ const WhiteLabelWebDevelopment = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Custom enterprise solutions and monthly maintenance packages available separately
+              *Custom agency volume tiers and enterprise multi-site agreements scoped individually
             </p>
           </div>
         </div>
@@ -395,10 +395,10 @@ const WhiteLabelWebDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Maintenance Plans
+              White Label Maintenance Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Recurring revenue from website maintenance services
+              Reliable recurring maintenance fulfillment for your agency's client portfolio
             </p>
           </div>
           
@@ -406,30 +406,27 @@ const WhiteLabelWebDevelopment = () => {
             {[
               { 
                 name: 'Basic Care', 
-                price: '₹2,999', 
-                period: '/month',
-                features: ['Weekly Backups', 'Security Updates', 'Uptime Monitoring', 'Basic Support', 'Monthly Reports', 'Performance Check'],
+                tier: 'Essential Maintenance', 
+                features: ['Weekly Backups', 'Security Updates', 'Uptime Monitoring', 'White-Label Bug Fixes', 'Monthly Performance Reports', 'Core Updates'],
                 color: 'bg-indigo-50'
               },
               { 
                 name: 'Professional Care', 
-                price: '₹5,999', 
-                period: '/month',
-                features: ['Daily Backups', 'Advanced Security', 'Performance Optimization', 'Content Updates', 'Priority Support', 'Quarterly Reviews'],
+                tier: 'Proactive Optimization', 
+                features: ['Daily Backups', 'Advanced Security', 'Speed Optimization', 'Monthly Content Updates', 'Priority Agency SLA', 'Quarterly Review Audits'],
                 color: 'bg-purple-50',
                 popular: true
               },
               { 
                 name: 'Enterprise Care', 
-                price: '₹11,999', 
-                period: '/month',
-                features: ['Real-time Backups', 'Premium Security', '24/7 Monitoring', 'Unlimited Edits', 'Emergency Support', 'Strategic Planning'],
+                tier: 'Dedicated SLA', 
+                features: ['Real-time Backups', 'Enterprise Hardening', '24/7 Monitoring', 'Active Hours Retainer', 'Emergency Incident Response', 'Strategic Technical Architecture'],
                 color: 'bg-indigo-50'
               },
             ].map((plan) => (
               <div key={plan.name} className={`${plan.color} p-8 rounded-xl border border-indigo-200`}>
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">{plan.period}</span></div>
+                <div className="text-2xl font-bold text-indigo-900 mb-4">{plan.tier}</div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
@@ -442,7 +439,7 @@ const WhiteLabelWebDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Add Maintenance Service
+                  Discuss Maintenance Retainers
                 </Link>
               </div>
             ))}

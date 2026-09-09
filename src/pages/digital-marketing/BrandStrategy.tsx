@@ -358,10 +358,10 @@ const BrandStrategy = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Brand Strategy Packages
+              Brand Strategy Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Strategic brand development for businesses at every stage
+              Strategic brand architecture and identity systems designed for businesses at every milestone
             </p>
           </div>
           
@@ -369,35 +369,35 @@ const BrandStrategy = () => {
             {[
               { 
                 name: 'Brand Foundation', 
-                price: '₹99,999', 
-                idealFor: 'Startups & New Businesses',
-                features: ['Brand Discovery Workshop', 'Brand Positioning Strategy', 'Logo & Basic Visual Identity', 'Brand Voice Guidelines', '3-Month Support'],
+                tier: 'Identity & Core Positioning', 
+                idealFor: 'Startups & Emerging Ventures',
+                features: ['Brand Discovery Workshop', 'Brand Positioning Strategy', 'Logo & Basic Visual Identity', 'Brand Voice Guidelines', '3-Month Advisory Support'],
                 color: 'border-purple-200'
               },
               { 
                 name: 'Brand Growth', 
-                price: '₹2,49,999', 
-                idealFor: 'Growing Businesses',
-                features: ['Complete Brand Strategy', 'Full Visual Identity System', 'Brand Guidelines Manual', 'Launch Strategy', 'Employee Brand Training', '6-Month Support'],
+                tier: 'Complete Market Identity', 
+                idealFor: 'Scaling Businesses & Scale-ups',
+                features: ['Complete Brand Strategy', 'Full Visual Identity System', 'Brand Guidelines Manual', 'Launch Strategy', 'Employee Brand Training', '6-Month Partnership Support'],
                 color: 'border-indigo-300',
                 popular: true
               },
               { 
                 name: 'Brand Transformation', 
-                price: '₹4,99,999', 
-                idealFor: 'Established Companies',
-                features: ['Enterprise Brand Audit', 'Complete Rebranding', 'Multi-channel Implementation', 'Internal Comms Strategy', 'Brand Performance Tracking', '12-Month Partnership'],
+                tier: 'Full Enterprise Rebranding', 
+                idealFor: 'Established Companies & Conglomerates',
+                features: ['Enterprise Brand Audit', 'Complete Rebranding', 'Multi-channel Implementation', 'Internal Comms Strategy', 'Brand Performance Tracking', '12-Month Advisory Partnership'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST COMPREHENSIVE
+                    RECOMMENDED SCOPE
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-purple-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Ideal for: <span className="font-semibold">{plan.idealFor}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -411,7 +411,7 @@ const BrandStrategy = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-purple-600 to-indigo-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Brand Journey
+                  Discuss Brand Strategy
                 </Link>
               </div>
             ))}
@@ -419,7 +419,7 @@ const BrandStrategy = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Custom enterprise brand strategy projects quoted individually
+              *Enterprise brand transformations and multi-brand architectures scoped individually
             </p>
           </div>
         </div>

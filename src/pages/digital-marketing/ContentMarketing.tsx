@@ -108,7 +108,7 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Cost-Effective Marketing</h3>
               <p className="text-gray-600">
-                Content marketing costs 62% less than traditional marketing and generates 3x more leads. Our affordable content packages start at just ₹14,999/month.
+                Content marketing costs 62% less than traditional marketing and generates 3x more leads. We design high-impact content strategies tailored to your market and goals.
               </p>
             </div>
             
@@ -347,10 +347,10 @@ const ContentMarketing = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Content Marketing Packages
+              Content Marketing Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible plans to match your content needs and budget
+              Strategic editorial and multimedia content frameworks tailored to your industry, audience, and growth objectives
             </p>
           </div>
           
@@ -358,16 +358,16 @@ const ContentMarketing = () => {
             {[
               { 
                 name: 'Starter Content', 
-                price: '₹14,999', 
-                content: '4 Blog Posts',
+                tier: 'Consistent Publishing', 
+                content: '4 Structured Content Pieces',
                 features: ['4 Blog Posts/Month', 'Basic SEO Optimization', 'Social Media Graphics', 'Monthly Content Calendar', 'Performance Report'],
                 color: 'border-teal-200',
                 icon: <FaStar className="text-teal-600" />
               },
               { 
                 name: 'Growth Content', 
-                price: '₹29,999', 
-                content: '8 Content Pieces',
+                tier: 'Multi-Channel Velocity', 
+                content: '8 Comprehensive Assets',
                 features: ['6 Blog Posts/Month', '2 Video Content', 'Email Newsletter', 'Content Strategy', 'Performance Analytics', 'Dedicated Content Manager'],
                 color: 'border-emerald-300',
                 popular: true,
@@ -375,8 +375,8 @@ const ContentMarketing = () => {
               },
               { 
                 name: 'Enterprise Content', 
-                price: '₹59,999', 
-                content: '16+ Content Pieces',
+                tier: 'Full Editorial Scale', 
+                content: '16+ High-Authority Assets',
                 features: ['12 Blog Posts/Month', '4 Videos/Month', 'E-book/Whitepaper', 'Guest Post Outreach', 'Content Distribution', 'Monthly Strategy Calls', 'Priority Support'],
                 color: 'border-green-300',
                 icon: <FaGem className="text-green-600" />
@@ -385,12 +385,12 @@ const ContentMarketing = () => {
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative hover:shadow-xl transition-all hover:-translate-y-2`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-teal-500 to-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
-                    ⭐ MOST POPULAR
+                    POPULAR FRAMEWORK
                   </div>
                 )}
                 <div className="text-3xl mb-4">{plan.icon}</div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
+                <div className="text-2xl font-bold text-gray-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">{plan.content}</p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -404,7 +404,7 @@ const ContentMarketing = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-teal-500 to-emerald-600 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Content Creation
+                  Discuss Content Scope
                 </Link>
               </div>
             ))}
@@ -412,7 +412,7 @@ const ContentMarketing = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600 text-sm">
-              *Custom content packages available for enterprise clients • Available in Jaipur, Vrindavan & Nepal
+              *Custom content strategies tailored for enterprise clients • Available in Jaipur, Vrindavan & Nepal
             </p>
           </div>
         </div>

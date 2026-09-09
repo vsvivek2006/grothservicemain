@@ -282,10 +282,10 @@ const WhiteLabelSEO = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label SEO Packages
+              White Label SEO Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible monthly plans for agencies of all sizes
+              White-hat organic growth, technical site audits, and search rankings executed seamlessly behind your agency
             </p>
           </div>
           
@@ -293,36 +293,36 @@ const WhiteLabelSEO = () => {
             {[
               { 
                 name: 'Starter SEO', 
-                price: '₹9,999', 
-                clients: '1-5 Clients',
-                features: ['Basic Technical SEO', 'On-Page Optimization', 'Monthly Reports', 'Keyword Research', 'Weekly Updates', 'Email Support'],
+                tier: 'Foundation & On-Page SEO', 
+                clients: '1-5 Client Engagements',
+                features: ['Core Technical SEO Audit', 'On-Page Optimization', 'White-Label Monthly Ranking Reports', 'Keyword Research & Search Intent', 'Bi-Weekly Progress Updates', 'Dedicated Email Support'],
                 color: 'border-blue-200'
               },
               { 
                 name: 'Professional SEO', 
-                price: '₹19,999', 
-                clients: '6-15 Clients',
-                features: ['Complete Technical SEO', 'Advanced On-Page SEO', 'Off-Page Link Building', 'Local SEO Optimization', 'Monthly Strategy Calls', 'Client Portal Access', 'Phone Support'],
+                tier: 'High-Authority Organic Scale', 
+                clients: '6-15 Client Engagements',
+                features: ['Comprehensive Technical Architecture', 'Advanced On-Page & Schema Optimization', 'White-Hat Editorial Outreach & Backlinks', 'Local SEO & Multi-Location Maps', 'Monthly Strategy Reviews', 'Custom Client Portal Access', 'Direct Priority Support'],
                 color: 'border-purple-300',
                 popular: true
               },
               { 
                 name: 'Enterprise SEO', 
-                price: '₹39,999', 
-                clients: '16+ Clients',
-                features: ['Full-Scale SEO Strategy', 'Advanced Link Building', 'E-commerce SEO', 'Competitor Analysis', 'Dedicated Account Manager', 'Priority Support', 'Custom Reporting', 'Volume Discounts'],
+                tier: 'Full Enterprise Search Domination', 
+                clients: '16+ Client Engagements',
+                features: ['Full-Scale Competitive SEO Strategy', 'High-DA Link Syndication & Digital PR', 'Enterprise E-commerce Architecture', 'Algorithmic Penalty Recovery', 'Dedicated SEO Director', 'Custom White-Label Live Dashboards', 'Dedicated SLA Turnaround'],
                 color: 'border-blue-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    MOST REQUESTED
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-4">For agencies with: <span className="font-semibold">{plan.clients}</span></p>
+                <div className="text-2xl font-bold text-blue-900 mb-2">{plan.tier}</div>
+                <p className="text-gray-600 mb-4">Scale: <span className="font-semibold">{plan.clients}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
@@ -335,7 +335,7 @@ const WhiteLabelSEO = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start White Label Partnership
+                  Partner Inquiry
                 </Link>
               </div>
             ))}
@@ -343,7 +343,7 @@ const WhiteLabelSEO = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Setup fee: ₹14,999 per client. Minimum 6-month commitment for best results.
+              *Agency volume retainers and custom multi-account white-label agreements scoped individually
             </p>
           </div>
         </div>

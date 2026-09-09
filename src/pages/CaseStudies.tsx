@@ -16,7 +16,7 @@ const CaseStudies: React.FC = () => {
       industry: "Travel & Tourism",
       duration: "10 Days",
       teamSize: "3 Members",
-      budget: "₹14,999",
+      scope: "Full-Stack Custom Web Architecture",
       results: {
         metric1: { label: "Online Bookings", value: "150+" },
         metric2: { label: "Revenue Increase", value: "200%" },
@@ -47,7 +47,7 @@ const CaseStudies: React.FC = () => {
       industry: "Hospitality",
       duration: "6 Months",
       teamSize: "2 Members",
-      budget: "₹7,779/month",
+      scope: "Enterprise Local SEO & Authority Growth",
       results: {
         metric1: { label: "Organic Traffic", value: "300%" },
         metric2: { label: "Direct Bookings", value: "180+" },
@@ -78,7 +78,7 @@ const CaseStudies: React.FC = () => {
       industry: "Retail & E-commerce",
       duration: "15 Days",
       teamSize: "4 Members",
-      budget: "₹24,999",
+      scope: "Full-Stack Custom Commerce & Inventory Engine",
       results: {
         metric1: { label: "Online Sales", value: "₹5L+" },
         metric2: { label: "Products Listed", value: "500+" },
@@ -109,7 +109,7 @@ const CaseStudies: React.FC = () => {
       industry: "Food & Beverage",
       duration: "3 Months",
       teamSize: "2 Members",
-      budget: "₹4,449/month",
+      scope: "Multi-Channel Social Growth & Content Strategy",
       results: {
         metric1: { label: "Social Engagement", value: "250%" },
         metric2: { label: "Customer Reach", value: "10K+" },
@@ -140,7 +140,7 @@ const CaseStudies: React.FC = () => {
       industry: "Education",
       duration: "12 Days",
       teamSize: "3 Members",
-      budget: "₹12,999",
+      scope: "Custom Institutional Web & Student Portal",
       results: {
         metric1: { label: "Student Inquiries", value: "200+" },
         metric2: { label: "Course Enrollment", value: "85%" },
@@ -171,7 +171,7 @@ const CaseStudies: React.FC = () => {
       industry: "Food & Retail",
       duration: "2 Months",
       teamSize: "2 Members",
-      budget: "₹9,999/month",
+      scope: "Targeted Performance Ads & Funnel Optimization",
       results: {
         metric1: { label: "Ad Reach", value: "50K+" },
         metric2: { label: "Conversion Rate", value: "15%" },
@@ -324,13 +324,13 @@ const CaseStudies: React.FC = () => {
                     ))}
                   </div>
 
-                  {/* Duration and Budget */}
+                  {/* Duration and Scope */}
                   <div className="flex justify-between items-center text-sm text-gray-500 mb-6">
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2" />
                       <span>{study.duration}</span>
                     </div>
-                    <div className="font-semibold text-gray-700">{study.budget}</div>
+                    <div className="font-semibold text-gray-700 text-xs text-right max-w-[55%]">{study.scope}</div>
                   </div>
 
                   {/* Technologies */}
@@ -548,7 +548,7 @@ const CaseStudies: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Budget & Team */}
+                {/* Scope & Team */}
                 <div className="grid grid-cols-3 gap-6 text-center">
                   <div className="bg-gray-50 p-4 rounded-xl">
                     <div className="text-sm text-gray-500 mb-1">Project Duration</div>
@@ -559,8 +559,8 @@ const CaseStudies: React.FC = () => {
                     <div className="font-semibold text-gray-900">{selectedStudy.teamSize}</div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl">
-                    <div className="text-sm text-gray-500 mb-1">Project Budget</div>
-                    <div className="font-semibold text-gray-900">{selectedStudy.budget}</div>
+                    <div className="text-sm text-gray-500 mb-1">Engagement Scope</div>
+                    <div className="font-semibold text-gray-900 text-sm">{selectedStudy.scope}</div>
                   </div>
                 </div>
               </div>

@@ -289,40 +289,42 @@ const SocialMediaManagement = () => {
         </div>
       </section>
 
-      {/* Pricing Packages */}
+      {/* Social Media Engagement Frameworks */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Social Media Packages
+              Social Media Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose the perfect plan for your business needs
+              Structured multi-channel creative scopes tailored to your brand's growth objectives
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Starter', price: '₹15,999', color: 'bg-blue-50', features: ['2 Platforms', '12 Posts/Month', 'Basic Analytics', 'Community Management'] },
-              { name: 'Growth', price: '₹29,999', color: 'bg-pink-50', features: ['3 Platforms', '24 Posts/Month', 'Advanced Analytics', 'Content Creation', 'Ad Management'] },
-              { name: 'Enterprise', price: '₹49,999', color: 'bg-purple-50', features: ['5+ Platforms', 'Daily Posts', 'Full Analytics', 'Influencer Collabs', 'Strategy Planning', 'Monthly Reports'] },
+              { name: 'Starter Scope', tier: 'Foundation Management', color: 'bg-blue-50', features: ['2 Platforms', '12 Posts/Month', 'Basic Analytics', 'Community Management'] },
+              { name: 'Growth Scope', tier: 'Active Multi-Channel', color: 'bg-pink-50', features: ['3 Platforms', '24 Posts/Month', 'Advanced Analytics', 'Content Creation', 'Ad Management'] },
+              { name: 'Enterprise Scope', tier: 'Omnichannel Brand Leadership', color: 'bg-purple-50', features: ['5+ Platforms', 'Daily Posts', 'Full Analytics', 'Influencer Collabs', 'Strategy Planning', 'Monthly Reports'] },
             ].map((plan) => (
-              <div key={plan.name} className={`${plan.color} p-8 rounded-xl border border-gray-200`}>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-4">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <ul className="space-y-3 mb-6">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+              <div key={plan.name} className={`${plan.color} p-8 rounded-xl border border-gray-200 flex flex-col justify-between`}>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-1">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-purple-700 mb-4">{plan.tier}</div>
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700">
+                        <span className="text-green-500 mr-2">✓</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-pink-500 to-orange-500 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Get Started
+                  Discuss Scope
                 </Link>
               </div>
             ))}

@@ -307,10 +307,10 @@ const WebsiteDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Website Development Packages
+              Website Development Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Transparent pricing for different business needs
+              Engineered web architectures structured for scalability, user conversion, and search authority
             </p>
           </div>
 
@@ -318,35 +318,35 @@ const WebsiteDevelopment = () => {
             {[
               {
                 name: 'Basic Website',
-                price: '₹24,999',
-                type: 'Informational Website',
-                features: ['5-7 Pages', 'Responsive Design', 'Contact Form', 'Basic SEO', '6 Months Support'],
+                tier: 'High-Performance Brand Site',
+                type: 'Informational & Corporate Website',
+                features: ['5-7 Pages', 'Responsive Design', 'Contact Form & Lead Capture', 'On-Page SEO Optimization', '6 Months Post-Launch Support'],
                 color: 'border-blue-200'
               },
               {
                 name: 'Business Website',
-                price: '₹49,999',
-                type: 'Small Business Website',
-                features: ['10-15 Pages', 'CMS Integration', 'Blog Setup', 'Advanced SEO', 'Contact Management', '1 Year Support'],
+                tier: 'Dynamic CMS & Content Hub',
+                type: 'Growth-Stage Business Website',
+                features: ['10-15 Pages', 'Headless / CMS Integration', 'Integrated Blog Architecture', 'Advanced Technical SEO', 'Lead Management & CRM Sync', '1 Year Dedicated Support'],
                 color: 'border-indigo-300',
                 popular: true
               },
               {
                 name: 'E-commerce Store',
-                price: '₹99,999',
-                type: 'Online Store',
-                features: ['Full E-commerce', 'Payment Gateway', 'Product Management', 'Inventory System', 'Mobile App', '2 Years Support'],
+                tier: 'Enterprise Commerce Architecture',
+                type: 'High-Volume Transactional Store',
+                features: ['Custom Commerce Architecture', 'Secure Payment Gateway Integration', 'Catalog & Inventory Management', 'ERP / CRM Integration', 'Mobile-First PWA Experience', '2 Years Extended Engineering SLA'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    RECOMMENDED FRAMEWORK
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-indigo-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">{plan.type}</p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -360,7 +360,7 @@ const WebsiteDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Project
+                  Discuss Web Scope
                 </Link>
               </div>
             ))}
@@ -368,7 +368,7 @@ const WebsiteDevelopment = () => {
 
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Custom development projects are quoted individually based on requirements
+              *Enterprise custom web applications, SaaS portals, and custom API architectures scoped individually
             </p>
           </div>
         </div>

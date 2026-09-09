@@ -383,10 +383,10 @@ const UIUXDesign = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              UI/UX Design Packages
+              UI/UX Design Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible design solutions for projects of all sizes
+              Human-centered product design, interactive prototypes, and scalable design systems
             </p>
           </div>
           
@@ -394,35 +394,35 @@ const UIUXDesign = () => {
             {[
               { 
                 name: 'Basic Design', 
-                price: '₹49,999', 
+                tier: 'Focused Flow & Wireframes', 
                 scope: 'Single Platform Design',
-                features: ['Up to 10 Screens', 'Basic UI Design', 'Wireframing', 'Color Palette', 'Typography', '1 Round of Revisions'],
+                features: ['Up to 10 Screens', 'Basic UI Design', 'Wireframing', 'Color Palette & Typography', 'Clickable Prototype', 'Design Handoff Assets'],
                 color: 'border-purple-200'
               },
               { 
                 name: 'Professional Design', 
-                price: '₹1,49,999', 
-                scope: 'Multi-Platform Design',
-                features: ['Up to 30 Screens', 'Complete UI/UX Design', 'Interactive Prototypes', 'Design System', 'User Testing', 'Responsive Design', '3 Rounds of Revisions'],
+                tier: 'Multi-Platform Product Design', 
+                scope: 'Cross-Platform Applications',
+                features: ['Up to 30 Screens', 'Complete UI/UX Design', 'Interactive High-Fidelity Prototypes', 'Design System & Component Library', 'User Usability Testing', 'Responsive Layouts'],
                 color: 'border-pink-300',
                 popular: true
               },
               { 
                 name: 'Enterprise Design', 
-                price: '₹3,99,999', 
-                scope: 'Full Product Design',
-                features: ['Unlimited Screens', 'End-to-End UX Process', 'Advanced Prototyping', 'Design System Creation', 'User Research', 'Accessibility Audit', 'Unlimited Revisions', 'Design Support'],
+                tier: 'Full Product Architecture', 
+                scope: 'End-to-End Enterprise Software',
+                features: ['Full Product Architecture', 'End-to-End UX Process', 'Advanced Prototyping & Motion Design', 'Enterprise Design System Creation', 'User Research & Journey Mapping', 'WCAG Accessibility Audit', 'Design-to-Engineering Oversight'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    RECOMMENDED SCOPE
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-purple-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Scope: <span className="font-semibold">{plan.scope}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
@@ -436,7 +436,7 @@ const UIUXDesign = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-purple-600 to-pink-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Design Project
+                  Discuss Design Scope
                 </Link>
               </div>
             ))}
@@ -444,7 +444,7 @@ const UIUXDesign = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Custom enterprise design solutions and ongoing design support available
+              *Complex SaaS platforms, design system governance, and mobile design sprints scoped individually
             </p>
           </div>
         </div>

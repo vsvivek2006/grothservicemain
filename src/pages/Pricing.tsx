@@ -1,43 +1,55 @@
 import React, { useState } from 'react';
-import { Check, Star, Zap, Shield, Clock, Users, TrendingUp, ShoppingCart, Video, Mail, MessageCircle, CreditCard, Heart, Globe, Code, Smartphone, Search, Target, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Check, Shield, Clock, MessageCircle, Code, Award, Calendar, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import { Container, Section } from '../components/ui';
 
-const Pricing = () => {
+interface ServiceItem {
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  delivery?: string;
+  duration?: string;
+  features: string[];
+  deliverables?: string[];
+  platforms?: string[];
+  technologies?: string[];
+  color: string;
+}
+
+const Pricing: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('all');
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
 
   // Tabs for filtering
   const tabs = [
     { id: 'all', name: 'All Services', icon: '🌟' },
     { id: 'web', name: 'Website', icon: '🌐' },
     { id: 'seo', name: 'SEO', icon: '🔍' },
-    { id: 'smm', name: 'SMM', icon: '📱' },
-    { id: 'gmb', name: 'GMB', icon: '📍' },
-    { id: 'combo', name: 'Combo', icon: '🎁' }
+    { id: 'smm', name: 'Social Media', icon: '📱' },
+    { id: 'gmb', name: 'Google Business', icon: '📍' },
+    { id: 'combo', name: 'Integrated Solutions', icon: '🚀' }
   ];
 
   // Website Development Services
-  const websiteServices = [
+  const websiteServices: ServiceItem[] = [
     { 
       id: 1,
-      name: 'Basic Website (5 Pages)', 
+      name: 'Custom Business Website (5 Pages)', 
       category: 'web',
-      price: '₹9,999', 
-      originalPrice: '₹29,999',
-      description: 'Professional 5-page responsive website with WhatsApp integration',
+      description: 'Professional responsive website tailored to your brand identity with WhatsApp integration',
       delivery: '7-10 Days',
-      popular: true,
-      badge: 'BEST DEAL',
       features: [
         'Home Page Design',
         'About Us Page',
         'Services Page',
         'Contact Us with Form',
         'WhatsApp Integration',
-        'Mobile Responsive',
+        'Mobile Responsive Design',
         'Basic SEO Setup',
-        '1 Year Free Support',
-        'Free SSL Certificate',
+        '1 Year Technical Support',
+        'SSL Certificate Setup',
         'Social Media Integration'
       ],
       technologies: ['HTML5', 'CSS3', 'JavaScript', 'React.js'],
@@ -45,14 +57,10 @@ const Pricing = () => {
     },
     { 
       id: 2,
-      name: 'Tour & Travel Website', 
+      name: 'Tour & Travel Booking Platform', 
       category: 'web',
-      price: '₹14,999', 
-      originalPrice: '₹24,999',
-      description: 'Complete travel booking platform with dynamic content',
+      description: 'Complete travel booking platform with dynamic tour itineraries and inquiry management',
       delivery: '10-15 Days',
-      popular: false,
-      badge: 'HOT',
       features: [
         'Dynamic Home Page',
         'Upcoming Tours Section',
@@ -61,33 +69,29 @@ const Pricing = () => {
         'Payment Gateway Ready',
         'Admin Dashboard',
         'Gallery Section',
-        'Testimonials',
-        'SEO Optimized',
-        'Mobile App Ready'
+        'Client Testimonials',
+        'SEO Optimized Architecture',
+        'Mobile App Ready Structure'
       ],
       technologies: ['React', 'TypeScript', 'Node.js', 'MongoDB'],
       color: 'green'
     },
     { 
       id: 3,
-      name: 'Guest House Website', 
+      name: 'Hospitality & Guest House Website', 
       category: 'web',
-      price: '₹12,999', 
-      originalPrice: '₹19,999',
-      description: 'Hotel/Guest house website with payment gateway',
+      description: 'Hotel and accommodation portal with room showcase and direct reservation inquiries',
       delivery: '12-18 Days',
-      popular: false,
-      badge: 'POPULAR',
       features: [
         'Homepage with Hero Slider',
-        'Room Listings & Booking',
-        'Payment Gateway Integration',
+        'Room Listings & Showcase',
+        'Direct Booking Inquiries',
         'Admin Control Panel',
         'Customer Review System',
         'Amenities Showcase',
-        'Location Map',
+        'Interactive Location Map',
         'Photo Gallery',
-        'Booking Calendar',
+        'Booking Calendar Sync',
         'Email Notifications'
       ],
       technologies: ['MERN Stack', 'Razorpay/Stripe', 'JWT Auth'],
@@ -95,240 +99,190 @@ const Pricing = () => {
     },
     { 
       id: 4,
-      name: 'E-commerce Website', 
+      name: 'E-commerce Architecture', 
       category: 'web',
-      price: '₹24,999', 
-      originalPrice: '₹49,999',
-      description: 'Complete e-commerce solution with admin panel',
+      description: 'Full-featured online store with inventory tracking, payment gateways, and order control',
       delivery: '20-25 Days',
-      popular: true,
-      badge: 'PREMIUM',
       features: [
-        'Product Catalog',
-        'Shopping Cart',
-        'Payment Gateway',
+        'Product Catalog Management',
+        'Secure Shopping Cart',
+        'Payment Gateway Integration',
         'User Authentication',
-        'Admin Dashboard',
-        'Order Management',
+        'Admin Management Dashboard',
+        'Order Processing System',
         'Inventory Tracking',
-        'Customer Reviews',
-        'Discount Coupons',
+        'Customer Reviews & Ratings',
+        'Coupon & Promo Engine',
         'Analytics Dashboard'
       ],
-      technologies: ['MERN', 'Redux', 'Stripe', 'AWS'],
+      technologies: ['MERN Stack', 'Redux', 'Stripe', 'AWS'],
       color: 'pink'
     }
   ];
 
   // SEO Services
-  const seoServices = [
+  const seoServices: ServiceItem[] = [
     { 
       id: 5,
-      name: 'Professional SEO', 
+      name: 'Professional SEO Engagement', 
       category: 'seo',
-      price: '₹7,779/month', 
-      originalPrice: '₹24,999',
-      description: 'Complete SEO optimization for better rankings',
-      duration: '3-6 Months',
-      popular: true,
-      badge: 'LIMITED OFFER',
+      description: 'Comprehensive search optimization strategy to improve organic Google rankings and domain authority',
+      duration: '3-6 Months Retainer',
       features: [
-        'Monthly 4 Performance Reports',
-        '4 Blog Posts (500+ words)',
-        '5-10 Keyword Optimization',
-        'On-Page SEO Optimization',
-        'Off-Page SEO Activities',
-        'Technical SEO Audit',
-        'Competitor Analysis',
-        'Traffic Growth Strategy',
-        'Backlink Building',
-        'Content Strategy'
+        'Monthly Performance Reports',
+        'Content Optimization & Articles',
+        'High-Intent Keyword Targeting',
+        'On-Page Optimization',
+        'Off-Page Authority Building',
+        'Technical SEO Audit & Fixes',
+        'Competitor Ranking Analysis',
+        'Organic Traffic Strategy',
+        'Quality Backlink Profile Development',
+        'Comprehensive Content Strategy'
       ],
       deliverables: [
-        'Keyword Research Report',
-        'SEO Audit Report',
-        'Monthly Ranking Report',
-        'Backlink Analysis',
-        'Content Strategy Document'
+        'Keyword Research Dossier',
+        'Technical SEO Audit Report',
+        'Monthly Ranking Progression Reports',
+        'Backlink Profile Analysis',
+        'Quarterly Content Strategy Plan'
       ],
       color: 'orange'
     }
   ];
 
   // SMM Services
-  const smmServices = [
+  const smmServices: ServiceItem[] = [
     { 
       id: 6,
       name: 'Social Media Management', 
       category: 'smm',
-      price: '₹4,449/month', 
-      originalPrice: '₹24,999',
-      description: 'Complete social media marketing solution',
-      duration: 'Minimum 3 Months',
-      popular: true,
-      badge: 'MOST POPULAR',
+      description: 'Strategic social brand growth and multi-channel creative storytelling across platforms',
+      duration: 'Ongoing Engagement',
       features: [
         'Content Calendar Planning',
-        'Daily Post Creation',
-        'Community Management',
-        'Brand Storytelling',
-        'Visual Content Creation',
-        'Audience Engagement',
-        'Hashtag Strategy',
-        'Performance Analytics',
-        'Instagram & Facebook',
-        'Twitter & LinkedIn'
+        'Creative Post Production',
+        'Active Community Management',
+        'Brand Narrative & Storytelling',
+        'Visual Design & Graphic Assets',
+        'Audience Interaction & Engagement',
+        'Hashtag & Discovery Strategy',
+        'Monthly Performance Analytics',
+        'Instagram & Facebook Coverage',
+        'LinkedIn & Twitter Optimization'
       ],
       platforms: ['Facebook', 'Instagram', 'LinkedIn', 'Twitter'],
       color: 'pink'
     },
     { 
       id: 7,
-      name: 'Meta Ads Management', 
+      name: 'Meta Ads Performance Management', 
       category: 'smm',
-      price: '₹9,999/month', 
-      originalPrice: '₹19,999',
-      description: 'Professional Facebook & Instagram advertising',
-      duration: 'Minimum 3 Months',
-      popular: false,
-      badge: 'HIGH ROI',
+      description: 'High-conversion paid acquisition campaigns across Facebook and Instagram networks',
+      duration: 'Campaign-Based / Monthly',
       features: [
-        'Ad Account Setup',
-        'Audience Targeting',
-        'Ad Creative Development',
-        'A/B Testing Setup',
-        'Conversion Tracking',
-        'ROI Optimization',
-        'Monthly Reports',
-        'Budget Management',
-        'Remarketing Campaigns',
-        'Lead Generation'
+        'Ad Account & Pixel Setup',
+        'Precision Audience Targeting',
+        'High-Converting Ad Creatives',
+        'Systematic A/B Testing',
+        'Conversion Tracking & Attribution',
+        'ROAS & Cost-Per-Acquisition Optimization',
+        'Transparent Weekly Performance Reports',
+        'Campaign Budget Allocation',
+        'Full-Funnel Remarketing Setup',
+        'High-Intent Lead Generation'
       ],
-      adTypes: ['Lead Generation', 'Traffic', 'Sales', 'Awareness'],
+      platforms: ['Meta Ads Manager', 'Instagram', 'Facebook'],
       color: 'blue'
     }
   ];
 
   // GMB Services
-  const gmbServices = [
+  const gmbServices: ServiceItem[] = [
     { 
       id: 8,
-      name: 'Google My Business', 
+      name: 'Google Business Profile Optimization', 
       category: 'gmb',
-      price: '₹2,499/month', 
-      originalPrice: '₹12,499',
-      description: 'Complete local business presence setup',
-      duration: 'Ongoing',
-      popular: true,
-      badge: 'BEST VALUE',
+      description: 'Local search engine dominance to drive calls, direction requests, and in-store foot traffic',
+      duration: 'Ongoing Local Visibility',
       features: [
-        'GMB Profile Complete Setup',
-        'Weekly 4-5 Posts',
-        'Review Management System',
-        'Local SEO Optimization',
-        'Photo & Video Posts',
-        'Performance Tracking',
-        'Q&A Management',
-        'Insights & Analytics',
-        'Google Map Ranking',
-        'Local Citations'
-      ],
-      benefits: [
-        'Increase Local Visibility',
-        'Generate More Calls',
-        'Improve Customer Trust',
-        'Boost Website Traffic',
-        'Competitive Edge'
+        'Complete Profile Verification & Setup',
+        'Regular Updates & Offer Posts',
+        'Review Management & Response Protocol',
+        'Local 3-Pack Map Optimization',
+        'Geotagged Photo & Video Assets',
+        'Performance Insights & Tracking',
+        'Google Q&A Management',
+        'Local Citation Building',
+        'Category & Attribute Optimization',
+        'Competitor Proximity Analysis'
       ],
       color: 'green'
     }
   ];
 
   // Business Setup Services
-  const businessServices = [
+  const businessServices: ServiceItem[] = [
     { 
       id: 9,
-      name: 'Complete Business Setup', 
+      name: 'Complete Business Digital Setup', 
       category: 'business',
-      price: '₹24,999', 
-      originalPrice: '₹39,999',
-      description: 'End-to-end business digital presence',
+      description: 'Turnkey online foundation covering branding, responsive web presence, and acquisition channels',
       delivery: '45-60 Days',
-      popular: true,
-      badge: 'COMPLETE SOLUTION',
       features: [
-        'Professional Business Website',
-        'Complete Social Media Setup',
-        'Market Strategy Guidance',
-        'Assigned Industry Expert',
-        'Brand Identity Development',
-        'Lead Generation System',
-        'CRM Setup Consultation',
-        '3 Months Free Support',
-        'Google Business Profile',
-        'Email Marketing Setup'
-      ],
-      inclusions: [
-        'Website Development',
-        'Social Media Profiles',
-        'Content Strategy',
-        'Marketing Plan',
-        'Ongoing Support'
+        'Custom Business Web Portal',
+        'Complete Social Channels Setup',
+        'Market Entry & Channel Guidance',
+        'Assigned Lead Strategy Consultant',
+        'Brand Identity Guidelines',
+        'Inbound Lead Generation Infrastructure',
+        'CRM Onboarding Consultation',
+        'Dedicated Post-Launch Support',
+        'Google Business Profile Setup',
+        'Corporate Email Setup'
       ],
       color: 'purple'
     }
   ];
 
-  // Combo Packages
-  const comboPackages = [
+  // Integrated Solutions
+  const comboPackages: ServiceItem[] = [
     {
       id: 10,
-      name: 'Website + SEO + SMM',
+      name: 'Integrated Web + SEO + Social Growth',
       category: 'combo',
-      price: '₹44,999',
-      originalPrice: '₹90,000',
-      description: 'Complete digital package for 3 months',
-      duration: '3 Months Service',
-      popular: true,
-      badge: 'BEST SELLER',
+      description: 'Holistic digital presence unifying modern web architecture with organic search and brand visibility',
+      duration: '3-Month Comprehensive Sprint',
       features: [
-        'Professional Website (5 pages)',
-        '3 Months SEO Service',
-        '3 Months Social Media Management',
-        'Google Business Profile Setup',
-        'Meta Ads Setup',
-        'Mobile Responsive Design',
-        '45 Creative Posts Included',
-        '12 Blog Posts',
-        '12 Months Technical Support',
-        'Performance Analytics Dashboard'
+        'Custom Business Website (5 Pages)',
+        'Quarterly Search Engine Optimization',
+        'Active Multi-Platform Social Management',
+        'Google Business Profile Setup & Optimization',
+        'Meta Paid Advertising Campaign Setup',
+        'Mobile-First Responsive Design',
+        'Tailored Creative Content Calendar',
+        'Dedicated Technical & Account Support',
+        'Live Growth Analytics Dashboard'
       ],
-      savings: '₹45,001',
       color: 'gradient'
     },
     {
       id: 11,
-      name: 'Business Digital Package',
+      name: 'Enterprise Digital Transformation Suite',
       category: 'combo',
-      price: '₹64,999',
-      originalPrice: '₹1,20,000',
-      description: 'Everything you need for digital presence',
-      duration: '6 Months Service',
-      popular: false,
-      badge: 'ENTERPRISE',
+      description: 'Full-stack agency partnership providing end-to-end technical engineering and digital marketing',
+      duration: '6-Month Strategic Engagement',
       features: [
-        'Custom Website Development',
-        '6 Months SEO Service',
-        '6 Months Social Media Management',
-        'Google Business Profile',
-        'Meta Ads Management',
-        'Email Marketing Setup',
-        'CRM Consultation',
-        'Brand Identity',
-        'Dedicated Account Manager',
-        '24/7 Priority Support'
+        'Bespoke Web Application Development',
+        'Comprehensive Multi-Channel SEO Program',
+        'Full Social Media Brand Management',
+        'Local Search Dominance Protocol',
+        'Meta & Google Performance Ads Execution',
+        'Automated Email Acquisition Funnels',
+        'CRM Integration & Sales Workflow',
+        'Dedicated Fractional Account Lead',
+        'Priority Technical Support & SLAs'
       ],
-      savings: '₹55,001',
       color: 'premium'
     }
   ];
@@ -342,62 +296,8 @@ const Pricing = () => {
     ...comboPackages
   ];
 
-  const getColorClasses = (color) => {
-    const colors = {
-      blue: {
-        gradient: 'from-blue-500 to-cyan-500',
-        light: 'bg-blue-50 border-blue-200',
-        text: 'text-blue-600',
-        border: 'border-blue-300'
-      },
-      green: {
-        gradient: 'from-green-500 to-emerald-500',
-        light: 'bg-green-50 border-green-200',
-        text: 'text-green-600',
-        border: 'border-green-300'
-      },
-      purple: {
-        gradient: 'from-purple-500 to-indigo-500',
-        light: 'bg-purple-50 border-purple-200',
-        text: 'text-purple-600',
-        border: 'border-purple-300'
-      },
-      pink: {
-        gradient: 'from-pink-500 to-rose-500',
-        light: 'bg-pink-50 border-pink-200',
-        text: 'text-pink-600',
-        border: 'border-pink-300'
-      },
-      orange: {
-        gradient: 'from-orange-500 to-yellow-500',
-        light: 'bg-orange-50 border-orange-200',
-        text: 'text-orange-600',
-        border: 'border-orange-300'
-      },
-      gradient: {
-        gradient: 'from-blue-500 via-purple-500 to-pink-500',
-        light: 'bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50',
-        text: 'text-blue-600',
-        border: 'border-blue-300'
-      },
-      premium: {
-        gradient: 'from-gray-800 to-gray-900',
-        light: 'bg-gray-50 border-gray-200',
-        text: 'text-gray-600',
-        border: 'border-gray-300'
-      }
-    };
-    return colors[color] || colors.blue;
-  };
-
-  const calculateDiscount = (currentPrice, originalPrice) => {
-    const current = parseInt(currentPrice.replace(/[^0-9]/g, ''));
-    const original = parseInt(originalPrice.replace(/[^0-9]/g, ''));
-    return Math.round((1 - current / original) * 100);
-  };
-
-  const handleWhatsAppClick = (serviceName, price, category = 'service') => {
-    const message = `🚀 *Grworth Services - Service Inquiry*\n\n*Service:* ${serviceName}\n*Price:* ${price}\n*Category:* ${category}\n\nHi, I'm interested in this service. Please share more details and the next steps.`;
+  const handleWhatsAppClick = (serviceName: string) => {
+    const message = `🚀 *Growth Service - Consultation Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to request a custom quote and project scope for this service. Please share details on consultation availability.`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
   };
@@ -407,52 +307,51 @@ const Pricing = () => {
     : allServices.filter(service => service.category === selectedTab);
 
   const stats = [
-    { number: '500+', label: 'Projects Delivered', icon: '✅' },
-    { number: '98%', label: 'Client Satisfaction', icon: '⭐' },
-    { number: '7-15 Days', label: 'Average Delivery', icon: '⚡' },
-    { number: '24/7', label: 'Support Available', icon: '🛡️' }
+    { number: '300+', label: 'Delivered Engagements' },
+    { number: '98%', label: 'Client Satisfaction' },
+    { number: 'Jaipur • Vrindavan • Nepal', label: 'Physical Agency Offices' },
+    { number: 'Custom Scoping', label: 'Milestone-Based Agility' }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>Pricing - Website ₹9,999, SEO ₹7,779, Social Media ₹4,449 | Grworth Services</title>
+        <title>Custom Quotes & Solutions | Growth Service</title>
         <meta
           name="description"
-          content="Affordable pricing for professional services: Website Development from ₹9,999, SEO from ₹7,779/month, Social Media from ₹4,449/month. Special discounts available."
+          content="Request custom quotes and scope consultations for website development, SEO, social media management, and digital transformation tailored to your business."
         />
         <meta 
           name="keywords" 
-          content="website development price, SEO service cost, social media management pricing, Google My Business setup, digital marketing packages India"
+          content="digital services quote, custom website development, SEO consultation, social media marketing agency, business growth solutions India Nepal"
         />
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <span className="text-lg font-semibold">🔥 LIMITED TIME OFFERS</span>
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full mb-6 border border-white/15">
+            <Sparkles className="h-4 w-4 text-yellow-400" />
+            <span className="text-sm font-semibold tracking-wide text-yellow-300 uppercase">
+              Bespoke Solutions & Transparent Scoping
+            </span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Transparent <span className="text-cyan-300">Pricing</span><br />
-            For Your <span className="text-cyan-300">Success</span>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+            Tailored Digital Solutions <br />
+            <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
+              Built For Measurable Growth
+            </span>
           </h1>
-          <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-blue-100 leading-relaxed">
-            Professional digital solutions at affordable rates. No hidden costs, just honest pricing for quality services.
+          <p className="text-base md:text-xl mb-10 max-w-3xl mx-auto text-slate-200 leading-relaxed">
+            Every business has unique market dynamics and objectives. We scope every engagement around your specific requirements, technical architecture, and milestones.
           </p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="text-3xl font-bold mb-2">{stat.number}</div>
-                <div className="text-blue-200 text-sm">{stat.label}</div>
+              <div key={index} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
+                <div className="text-xl md:text-2xl font-bold text-white mb-1">{stat.number}</div>
+                <div className="text-purple-200 text-xs md:text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -460,17 +359,17 @@ const Pricing = () => {
       </section>
 
       {/* Services Tabs */}
-      <section className="py-8 bg-white sticky top-0 z-40 border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2">
+      <div className="sticky top-[68px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm py-4">
+        <Container>
+          <div className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setSelectedTab(tab.id)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-full font-semibold text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                   selectedTab === tab.id
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                    ? 'bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white shadow-md'
+                    : 'bg-slate-100 text-slate-700 hover:bg-purple-50 hover:text-purple-700'
                 }`}
               >
                 <span>{tab.icon}</span>
@@ -478,363 +377,68 @@ const Pricing = () => {
               </button>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </div>
 
       {/* Services Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section className="py-16 bg-slate-50">
+        <Container>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-blue-600">Service Packages</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Explore Our <span className="text-purple-600">Service Capabilities</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Choose from our range of professional services. All packages include free support.
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+              Select a domain to inspect scope inclusions, technologies, and delivery frameworks. Connect with our team for a tailored proposal.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredServices.map((service) => {
-              const color = getColorClasses(service.color);
-              const discount = calculateDiscount(service.price, service.originalPrice);
-              
-              return (
-                <div 
-                  key={service.id}
-                  className={`bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border ${
-                    service.popular ? 'border-blue-300 transform hover:-translate-y-2' : 'border-gray-200'
-                  }`}
-                >
-                  {service.popular && (
-                    <div className="absolute -top-3 right-6">
-                      <div className={`bg-gradient-to-r ${color.gradient} text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg`}>
-                        {service.badge}
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="p-6">
-                    {/* Service Header */}
-                    <div className="mb-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{service.description}</p>
-                      
-                      {/* Pricing */}
-                      <div className="flex items-baseline gap-3 mb-2">
-                        <span className="text-3xl font-bold text-gray-900">{service.price}</span>
-                        <span className="text-gray-400 line-through">{service.originalPrice}</span>
-                        <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-                          {discount}% OFF
-                        </span>
-                      </div>
-                      
-                      {/* Duration/Delivery */}
-                      <div className="text-sm text-gray-500 mb-4">
-                        {service.delivery ? `📅 Delivery: ${service.delivery}` : `⏱️ Duration: ${service.duration}`}
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-3">Features:</h4>
-                      <ul className="space-y-2">
-                        {service.features.slice(0, 5).map((feature, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm">
-                            <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      {service.features.length > 5 && (
-                        <div className="mt-2 text-sm text-blue-600">
-                          + {service.features.length - 5} more features
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Technologies (if any) */}
-                    {service.technologies && (
-                      <div className="mb-6">
-                        <h4 className="font-semibold text-gray-900 mb-2">Technologies:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {service.technologies.map((tech, idx) => (
-                            <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Savings (for combos) */}
-                    {service.savings && (
-                      <div className="mb-6 bg-green-50 p-4 rounded-lg">
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-green-700">Total Savings:</span>
-                          <span className="font-bold text-green-700">{service.savings}</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <button
-                        onClick={() => handleWhatsAppClick(service.name, service.price, service.category)}
-                        className={`bg-gradient-to-r ${color.gradient} hover:scale-105 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2`}
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        Get Quote
-                      </button>
-                      
-                      <button
-                        onClick={() => setSelectedService(service)}
-                        className="border border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-4 rounded-lg font-semibold transition-all duration-200"
-                      >
-                        Details
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose <span className="text-blue-600">Grworth Services</span>
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white mb-6">
-                <Code className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">100% Custom Code</h3>
-              <p className="text-gray-600">
-                No WordPress templates. We write clean, scalable code using React, Node.js, and MongoDB for optimal performance.
-              </p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center text-white mb-6">
-                <Shield className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Free Support</h3>
-              <p className="text-gray-600">
-                30 days free support on all projects. Ongoing maintenance packages available at affordable rates.
-              </p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white mb-6">
-                <Zap className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Fast Delivery</h3>
-              <p className="text-gray-600">
-                Basic websites in 7-10 days, complex projects in 15-20 days. We respect deadlines and deliver quality.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          
-          <div className="space-y-6">
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Q: What's included in the website development package?</h3>
-              <p className="text-gray-600">
-                Our ₹9,999 package includes 5 pages (Home, About, Services, Contact), WhatsApp integration, mobile responsive design, basic SEO setup, and 1 year free support.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Q: How long does SEO take to show results?</h3>
-              <p className="text-gray-600">
-                SEO is a long-term strategy. Initial improvements appear in 1-2 months, but significant results typically take 3-6 months of consistent optimization.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Q: Is hosting included in website packages?</h3>
-              <p className="text-gray-600">
-                Yes! All website packages include 1 year of premium hosting and free SSL certificate. Renewal charges apply after the first year.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full translate-y-32 -translate-x-32"></div>
-        
-        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <span className="text-lg font-semibold">🎯 SPECIAL OFFER</span>
-          </div>
-          
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-xl mb-10 text-blue-100 max-w-2xl mx-auto">
-            Get professional digital solutions at unbeatable prices. Contact us today for a free consultation.
-          </p>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <a
-              href="https://wa.me/9779707382481"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
-            >
-              <div className="text-2xl">💬</div>
-              <div>
-                <div className="font-bold">WhatsApp</div>
-                <div className="text-sm text-gray-600">Instant Response</div>
-              </div>
-            </a>
-            
-            <a
-              href="tel:+9779707382481"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
-            >
-              <div className="text-2xl">📞</div>
-              <div>
-                <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">+9779707382481</div>
-              </div>
-            </a>
-            
-            <a
-              href="mailto:contact@grworth.com"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
-            >
-              <div className="text-2xl">✉️</div>
-              <div>
-                <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">contact@grworth.com</div>
-              </div>
-            </a>
-          </div>
-          
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold">98%</div>
-              <div className="text-blue-200">Satisfaction</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold">500+</div>
-              <div className="text-blue-200">Projects</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold">24/7</div>
-              <div className="text-blue-200">Support</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold">₹25Cr+</div>
-              <div className="text-blue-200">Revenue</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Detail Modal */}
-      {selectedService && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">{selectedService.name}</h3>
-                  <p className="text-gray-600 mt-2">{selectedService.description}</p>
-                </div>
-                <button
-                  onClick={() => setSelectedService(null)}
-                  className="text-gray-500 hover:text-gray-700 text-2xl"
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl mb-6">
-                    <h4 className="font-bold text-gray-900 mb-3">Package Details</h4>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm text-gray-600">Price</p>
-                        <p className="font-bold text-xl text-gray-900">{selectedService.price}</p>
-                        <p className="text-sm text-gray-400 line-through">{selectedService.originalPrice}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">{selectedService.delivery ? 'Delivery' : 'Duration'}</p>
-                        <p className="font-bold text-gray-900">{selectedService.delivery || selectedService.duration}</p>
-                      </div>
-                    </div>
-                  </div>
-                  
+            {filteredServices.map((service) => (
+              <div 
+                key={service.id}
+                className="bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden border border-slate-200/80 flex flex-col justify-between"
+              >
+                <div className="p-6 md:p-8">
+                  {/* Header */}
                   <div className="mb-6">
-                    <h4 className="font-bold text-gray-900 mb-3">All Features:</h4>
+                    <div className="inline-block text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-3">
+                      {service.category.toUpperCase()}
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2 leading-snug">{service.name}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{service.description}</p>
+                  </div>
+
+                  {/* Timeline / Duration Badge */}
+                  <div className="mb-6 bg-slate-50 border border-slate-200/60 rounded-xl p-3 flex items-center gap-2.5 text-xs font-medium text-slate-700">
+                    <Clock className="h-4 w-4 text-purple-600 shrink-0" />
+                    <span>{service.delivery ? `Estimated Timeline: ${service.delivery}` : `Engagement Model: ${service.duration}`}</span>
+                  </div>
+
+                  {/* Key Features */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-slate-900 text-sm mb-3">Key Capabilities Included:</h4>
                     <ul className="space-y-2">
-                      {selectedService.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-700">{feature}</span>
+                      {service.features.slice(0, 5).map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                          <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
+                    {service.features.length > 5 && (
+                      <div className="mt-2 text-xs font-semibold text-purple-600">
+                        + {service.features.length - 5} more inclusions
+                      </div>
+                    )}
                   </div>
-                </div>
-                
-                <div>
-                  <div className="bg-gray-50 p-6 rounded-xl mb-6">
-                    <h4 className="font-bold text-gray-900 mb-3">Ready to Get Started?</h4>
-                    <p className="text-gray-600 mb-4">
-                      Contact us now to discuss your project requirements and get started.
-                    </p>
-                    
-                    <div className="space-y-3">
-                      <button
-                        onClick={() => {
-                          handleWhatsAppClick(selectedService.name, selectedService.price, selectedService.category);
-                          setSelectedService(null);
-                        }}
-                        className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:scale-105 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2"
-                      >
-                        <MessageCircle className="h-5 w-5" />
-                        Contact on WhatsApp
-                      </button>
-                      
-                      <button
-                        onClick={() => setSelectedService(null)}
-                        className="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-4 rounded-lg font-semibold transition-all duration-200"
-                      >
-                        Back to Services
-                      </button>
-                    </div>
-                  </div>
-                  
-                  {selectedService.technologies && (
-                    <div className="bg-blue-50 p-6 rounded-xl">
-                      <h4 className="font-bold text-gray-900 mb-3">Technologies Used:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedService.technologies.map((tech, idx) => (
-                          <span key={idx} className="bg-white text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
+
+                  {/* Technologies if present */}
+                  {service.technologies && (
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-slate-900 text-xs mb-2">Technology Stack:</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {service.technologies.map((tech, idx) => (
+                          <span key={idx} className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded text-xs font-medium">
                             {tech}
                           </span>
                         ))}
@@ -842,6 +446,279 @@ const Pricing = () => {
                     </div>
                   )}
                 </div>
+
+                {/* Actions */}
+                <div className="p-6 md:p-8 pt-0 border-t border-slate-100 bg-white">
+                  <div className="grid grid-cols-2 gap-3 pt-4">
+                    <button
+                      onClick={() => handleWhatsAppClick(service.name)}
+                      className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:opacity-95 flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Get Quote
+                    </button>
+                    
+                    <button
+                      onClick={() => setSelectedService(service)}
+                      className="border border-slate-300 text-slate-700 hover:border-purple-600 hover:text-purple-600 py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:bg-purple-50 flex items-center justify-center"
+                    >
+                      Scope Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Engagement Process */}
+      <Section className="bg-white">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              How We Work With You
+            </h2>
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+              A transparent, milestone-driven partnership from initial consultation to continuous optimization.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold mb-4">
+                1
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Discovery Call</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                We review your business goals, target audience, competitors, and technical requirements.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-4">
+                2
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Tailored Scope</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                We prepare an exact scope of work, architecture plan, milestones, and deliverable commitments.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-4">
+                3
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Agile Execution</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Dedicated developers and growth specialists execute according to weekly sprints with transparent updates.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-4">
+                4
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Launch & Support</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Rigorous QA verification, deployment to production, and ongoing post-launch technical assistance.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Why Choose Us */}
+      <Section className="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Why Partner With Growth Service
+            </h2>
+            <p className="text-purple-200 max-w-2xl mx-auto">
+              Engineered for high performance, business reliability, and measurable client outcomes.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-yellow-300 mb-6 border border-white/10">
+                <Code className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Clean, Scalable Architecture</h3>
+              <p className="text-slate-200 text-sm leading-relaxed">
+                We craft custom codebases using modern frameworks like React, TypeScript, Node.js, and MongoDB for long-term scalability and speed.
+              </p>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10">
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center text-yellow-300 mb-6 border border-white/10">
+                <Shield className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Dedicated Support & SLAs</h3>
+              <p className="text-slate-200 text-sm leading-relaxed">
+                Every project includes direct communication with senior engineers and strategists across our Jaipur, Vrindavan, and Nepal offices.
+              </p>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-yellow-300 mb-6 border border-white/10">
+                <Award className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Proven Track Record</h3>
+              <p className="text-slate-200 text-sm leading-relaxed">
+                Trusted by 300+ businesses across local retail, healthcare, hospitality, e-commerce, and professional service sectors.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* FAQ Section */}
+      <Section className="bg-white">
+        <Container className="max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-slate-600">
+              Clear answers regarding our scoping process, engagements, and support.
+            </p>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="bg-slate-50 p-6 rounded-xl border border-slate-200/80">
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">How do you determine the project quote and timeline?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Quotes are formulated based on your exact business requirements, scope of features, third-party integrations, and technical architecture after a structured discovery call.
+              </p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-xl border border-slate-200/80">
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">How long does an SEO engagement take to show results?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                SEO is a sustainable compounding growth channel. Technical improvements and indexation updates typically reflect within 30-60 days, with substantial ranking and lead growth developing over a 3-6 month window.
+              </p>
+            </div>
+            
+            <div className="bg-slate-50 p-6 rounded-xl border border-slate-200/80">
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">Do you provide ongoing maintenance after project delivery?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Yes. All custom development projects include complimentary warranty support covering bug fixes and adjustments, with flexible ongoing retainer agreements available.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Final Consultation CTA */}
+      <Section className="bg-gradient-to-r from-gray-900 via-purple-900 to-blue-900 text-white">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Ready to Discuss Your Project Requirements?
+          </h2>
+          <p className="text-lg text-purple-200 mb-10 max-w-2xl mx-auto">
+            Book a complimentary strategy call with our senior consultants or reach out directly to our offices.
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              to="/book-call"
+              className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
+            >
+              <Calendar className="h-5 w-5" />
+              Book a Strategy Call
+            </Link>
+            
+            <a
+              href="https://wa.me/9779707382481"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
+            >
+              <MessageCircle className="h-5 w-5" />
+              Chat on WhatsApp
+            </a>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Service Detail Modal */}
+      {selectedService && (
+        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
+            <div className="p-6 md:p-8">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+                    {selectedService.category.toUpperCase()}
+                  </span>
+                  <h3 className="text-2xl font-bold text-slate-900 mt-2">{selectedService.name}</h3>
+                  <p className="text-slate-600 mt-1 text-sm">{selectedService.description}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="text-slate-400 hover:text-slate-700 text-2xl p-1"
+                  aria-label="Close dialog"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Timeline */}
+              <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center gap-2 text-sm text-slate-700 font-medium">
+                <Clock className="h-4 w-4 text-purple-600" />
+                <span>{selectedService.delivery ? `Estimated Timeline: ${selectedService.delivery}` : `Engagement Scope: ${selectedService.duration}`}</span>
+              </div>
+              
+              {/* Features */}
+              <div className="mb-6">
+                <h4 className="font-bold text-slate-900 text-sm mb-3">Scope Inclusions & Deliverables:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {selectedService.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                      <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies */}
+              {selectedService.technologies && (
+                <div className="mb-8 bg-blue-50/60 border border-blue-100 p-4 rounded-xl">
+                  <h4 className="font-bold text-slate-900 text-xs mb-2">Technology Framework:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedService.technologies.map((tech, idx) => (
+                      <span key={idx} className="bg-white text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs font-medium">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-100">
+                <button
+                  onClick={() => {
+                    handleWhatsAppClick(selectedService.name);
+                    setSelectedService(null);
+                  }}
+                  className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Request Scope via WhatsApp
+                </button>
+                
+                <Link
+                  to="/book-call"
+                  onClick={() => setSelectedService(null)}
+                  className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2"
+                >
+                  <Calendar className="h-4 w-4" />
+                  Schedule Consultation
+                </Link>
               </div>
             </div>
           </div>
