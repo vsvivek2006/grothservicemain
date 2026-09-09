@@ -17,7 +17,12 @@ import {
   ShoppingCart,
   Headphones,
   Clock,
-  Calendar
+  Calendar,
+  Sparkles,
+  Share2,
+  Building2,
+  CheckCircle2,
+  Star
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 import { Container, Section } from '../components/ui';
@@ -44,11 +49,11 @@ const Services = () => {
 
   // Service Categories
   const serviceCategories = [
-    { id: 'all', name: 'All Services', icon: '🌟', count: 10 },
-    { id: 'web', name: 'Website Development', icon: '🌐', count: 4 },
-    { id: 'seo', name: 'SEO & Marketing', icon: '🔍', count: 2 },
-    { id: 'smm', name: 'Social Media', icon: '📱', count: 2 },
-    { id: 'business', name: 'Business Setup', icon: '🏢', count: 2 }
+    { id: 'all', name: 'All Services', Icon: Sparkles, count: 10 },
+    { id: 'web', name: 'Website Development', Icon: Globe, count: 4 },
+    { id: 'seo', name: 'SEO & Marketing', Icon: Search, count: 2 },
+    { id: 'smm', name: 'Social Media', Icon: Share2, count: 2 },
+    { id: 'business', name: 'Business Setup', Icon: Building2, count: 2 }
   ];
 
   const getPackageIcon = (iconName: string): JSX.Element => {
@@ -137,10 +142,10 @@ const Services = () => {
   };
 
   const stats = [
-    { number: '300+', label: 'Projects Completed', icon: '✅' },
-    { number: '98%', label: 'Client Satisfaction', icon: '⭐' },
-    { number: '7-15 Days', label: 'Avg. Sprint Delivery', icon: '⚡' },
-    { number: '3 Offices', label: 'Jaipur • Vrindavan • Nepal', icon: '📍' }
+    { number: '300+', label: 'Projects Completed', Icon: CheckCircle2 },
+    { number: '98%', label: 'Client Satisfaction', Icon: Star },
+    { number: '7-15 Days', label: 'Avg. Sprint Delivery', Icon: Zap },
+    { number: '3 Offices', label: 'Jaipur • Vrindavan • Nepal', Icon: MapPin }
   ];
 
   return (
@@ -181,7 +186,8 @@ const Services = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
+              <div key={index} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 text-center">
+                <stat.Icon className="w-5 h-5 text-yellow-300 mx-auto mb-2" />
                 <div className="text-xl md:text-2xl font-bold text-white mb-1">{stat.number}</div>
                 <div className="text-purple-200 text-xs md:text-sm">{stat.label}</div>
               </div>
@@ -205,7 +211,7 @@ const Services = () => {
                     : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
                 }`}
               >
-                <span>{category.icon}</span>
+                <category.Icon className="w-4 h-4" />
                 <span>{category.name}</span>
               </button>
             ))}

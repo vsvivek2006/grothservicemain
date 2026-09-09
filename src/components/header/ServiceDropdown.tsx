@@ -27,15 +27,23 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
         <div className="relative group">
           <button 
             onClick={() => toggleDropdown('marketing')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                toggleDropdown('marketing');
+              } else if (e.key === 'Escape') {
+                closeDropdown();
+              }
+            }}
             aria-haspopup="true"
             aria-expanded={activeDropdown === 'marketing'}
-            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 transition-all duration-200"
+            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-1 transition-all duration-200"
           >
             <span>Digital Marketing</span>
-            <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === 'marketing' ? 'rotate-180 text-purple-600' : 'group-hover:rotate-180'}`} />
           </button>
           <div 
-            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto ${
+            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-[''] ${
               activeDropdown === 'marketing' ? 'opacity-100 visible translate-y-0 scale-100 pointer-events-auto' : ''
             }`}
           >
@@ -62,15 +70,23 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
         <div className="relative group">
           <button 
             onClick={() => toggleDropdown('dev')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                toggleDropdown('dev');
+              } else if (e.key === 'Escape') {
+                closeDropdown();
+              }
+            }}
             aria-haspopup="true"
             aria-expanded={activeDropdown === 'dev'}
-            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 transition-all duration-200"
+            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-1 transition-all duration-200"
           >
             <span>Design & Development</span>
-            <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === 'dev' ? 'rotate-180 text-purple-600' : 'group-hover:rotate-180'}`} />
           </button>
           <div 
-            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto ${
+            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-[''] ${
               activeDropdown === 'dev' ? 'opacity-100 visible translate-y-0 scale-100 pointer-events-auto' : ''
             }`}
           >
@@ -97,15 +113,23 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
         <div className="relative group">
           <button 
             onClick={() => toggleDropdown('whitelabel')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                toggleDropdown('whitelabel');
+              } else if (e.key === 'Escape') {
+                closeDropdown();
+              }
+            }}
             aria-haspopup="true"
             aria-expanded={activeDropdown === 'whitelabel'}
-            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 transition-all duration-200"
+            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-1 transition-all duration-200"
           >
             <span>White Label</span>
-            <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === 'whitelabel' ? 'rotate-180 text-purple-600' : 'group-hover:rotate-180'}`} />
           </button>
           <div 
-            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto ${
+            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-[''] ${
               activeDropdown === 'whitelabel' ? 'opacity-100 visible translate-y-0 scale-100 pointer-events-auto' : ''
             }`}
           >
@@ -132,15 +156,23 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
         <div className="relative group">
           <button 
             onClick={() => toggleDropdown('locations')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                toggleDropdown('locations');
+              } else if (e.key === 'Escape') {
+                closeDropdown();
+              }
+            }}
             aria-haspopup="true"
             aria-expanded={activeDropdown === 'locations'}
-            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 transition-all duration-200"
+            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-1 transition-all duration-200"
           >
             <span>Locations</span>
-            <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === 'locations' ? 'rotate-180 text-purple-600' : 'group-hover:rotate-180'}`} />
           </button>
           <div 
-            className={`absolute left-1/2 -translate-x-1/2 mt-1.5 w-[660px] max-w-[95vw] rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-5 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto ${
+            className={`absolute left-1/2 -translate-x-1/2 mt-1.5 w-[660px] max-w-[95vw] rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-5 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-[''] ${
               activeDropdown === 'locations' ? 'opacity-100 visible translate-y-0 scale-100 pointer-events-auto' : ''
             }`}
           >
@@ -225,15 +257,23 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
         <div className="relative group">
           <button 
             onClick={() => toggleDropdown('offices')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                toggleDropdown('offices');
+              } else if (e.key === 'Escape') {
+                closeDropdown();
+              }
+            }}
             aria-haspopup="true"
             aria-expanded={activeDropdown === 'offices'}
-            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 transition-all duration-200"
+            className="text-gray-700 hover:text-purple-600 font-semibold text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-purple-50 focus:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-1 transition-all duration-200"
           >
             <span>Offices</span>
-            <ChevronDown className="h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
+            <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === 'offices' ? 'rotate-180 text-purple-600' : 'group-hover:rotate-180'}`} />
           </button>
           <div 
-            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto ${
+            className={`absolute left-0 mt-1.5 w-56 rounded-2xl border border-slate-200/90 bg-white shadow-2xl p-2 opacity-0 invisible -translate-y-2 scale-95 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:scale-100 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 focus-within:scale-100 transition-all duration-200 ease-luxury z-50 origin-top-left pointer-events-none group-hover:pointer-events-auto focus-within:pointer-events-auto before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-[''] ${
               activeDropdown === 'offices' ? 'opacity-100 visible translate-y-0 scale-100 pointer-events-auto' : ''
             }`}
           >

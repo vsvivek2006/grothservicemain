@@ -1,8 +1,14 @@
 import React, { useState, useMemo } from 'react';
-import { ExternalLink, Filter, Star, TrendingUp, Users, Clock, MessageCircle, Globe, Code, Smartphone, Search, Target, Zap, Award, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { 
+  ExternalLink, Filter, Star, TrendingUp, Users, Clock, 
+  MessageCircle, Globe, Code, Smartphone, Search, Target, 
+  Zap, Award, ChevronLeft, ChevronRight, Play,
+  ClipboardList, CheckCircle, Rocket, Phone, Mail, Sparkles, X, Check 
+} from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
+import { getTechnologyByName } from '../data/technologies';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -153,12 +159,12 @@ const Portfolio = () => {
   ];
 
   const technologies = [
-    { name: 'React.js', icon: '⚛️', color: 'bg-blue-100 text-blue-800' },
-    { name: 'Node.js', icon: '🟢', color: 'bg-green-100 text-green-800' },
-    { name: 'MongoDB', icon: '🍃', color: 'bg-green-100 text-green-800' },
-    { name: 'TypeScript', icon: '📘', color: 'bg-blue-100 text-blue-800' },
-    { name: 'SEO', icon: '🔍', color: 'bg-purple-100 text-purple-800' },
-    { name: 'Social Media', icon: '📱', color: 'bg-pink-100 text-pink-800' }
+    { name: 'React.js', Icon: getTechnologyByName('react')?.Icon || Code, color: 'bg-sky-50 text-sky-700 border border-sky-200' },
+    { name: 'Node.js', Icon: getTechnologyByName('nodejs')?.Icon || Code, color: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
+    { name: 'MongoDB', Icon: getTechnologyByName('mongodb')?.Icon || Code, color: 'bg-green-50 text-green-700 border border-green-200' },
+    { name: 'TypeScript', Icon: getTechnologyByName('typescript')?.Icon || Code, color: 'bg-blue-50 text-blue-700 border border-blue-200' },
+    { name: 'Next.js', Icon: getTechnologyByName('nextjs')?.Icon || Code, color: 'bg-slate-50 text-slate-800 border border-slate-200' },
+    { name: 'Tailwind CSS', Icon: getTechnologyByName('tailwindcss')?.Icon || Code, color: 'bg-cyan-50 text-cyan-700 border border-cyan-200' },
   ];
 
   const processSteps = [
@@ -166,31 +172,31 @@ const Portfolio = () => {
       step: 1,
       title: "Discovery & Analysis",
       description: "Understanding business goals and requirements",
-      icon: "🔍"
+      Icon: Search
     },
     {
       step: 2,
       title: "Planning & Strategy",
       description: "Creating detailed project roadmap",
-      icon: "📋"
+      Icon: ClipboardList
     },
     {
       step: 3,
       title: "Design & Development",
       description: "Building with modern technologies",
-      icon: "💻"
+      Icon: Code
     },
     {
       step: 4,
       title: "Testing & Quality",
       description: "Rigorous testing and optimization",
-      icon: "✅"
+      Icon: CheckCircle
     },
     {
       step: 5,
       title: "Launch & Support",
       description: "Deployment and ongoing maintenance",
-      icon: "🚀"
+      Icon: Rocket
     }
   ];
 
@@ -235,8 +241,9 @@ const Portfolio = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <span className="text-sm font-semibold">🎯 500+ Projects Delivered</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+              <Sparkles className="w-4 h-4 text-yellow-300" />
+              <span className="text-sm font-semibold">500+ Projects Delivered</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -296,9 +303,9 @@ const Portfolio = () => {
             <p className="text-gray-600">Built with modern technologies for optimal performance</p>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
-            {technologies.map((tech, index) => (
-              <div key={index} className={`px-4 py-2 rounded-full font-medium ${tech.color} flex items-center gap-2`}>
-                <span>{tech.icon}</span>
+            {technologies.map((tech) => (
+              <div key={tech.name} className={`px-4 py-2 rounded-full font-medium ${tech.color} flex items-center gap-2 text-sm shadow-sm`}>
+                <tech.Icon className="w-4 h-4" />
                 <span>{tech.name}</span>
               </div>
             ))}
@@ -467,8 +474,8 @@ const Portfolio = () => {
             {processSteps.map((step, index) => (
               <div key={step.step} className="relative z-10">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg border-4 border-white">
-                    {step.icon}
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white mx-auto mb-4 shadow-lg border-4 border-white">
+                    <step.Icon className="w-7 h-7 text-white" />
                   </div>
                   <div className="bg-blue-50 rounded-xl p-6">
                     <div className="text-lg font-bold text-gray-900 mb-2">Step {step.step}</div>
@@ -582,34 +589,40 @@ const Portfolio = () => {
               href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white hover:bg-gray-50 text-blue-600 px-6 py-5 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2 group"
             >
-              <div className="text-2xl">💬</div>
+              <div className="w-10 h-10 rounded-full bg-emerald-50 text-[#25D366] flex items-center justify-center group-hover:scale-110 transition-transform">
+                <MessageCircle className="w-6 h-6" />
+              </div>
               <div>
-                <div className="font-bold">WhatsApp</div>
-                <div className="text-sm text-gray-600">Instant Response</div>
+                <div className="font-bold text-slate-900">WhatsApp</div>
+                <div className="text-sm text-gray-500 font-medium">Instant Response</div>
               </div>
             </a>
             
             <a
               href={getTelHref(getPrimaryPhone())}
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white hover:bg-gray-50 text-blue-600 px-6 py-5 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2 group"
             >
-              <div className="text-2xl">📞</div>
+              <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Phone className="w-6 h-6" />
+              </div>
               <div>
-                <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">{getPrimaryPhone()}</div>
+                <div className="font-bold text-slate-900">Call Now</div>
+                <div className="text-sm text-gray-500 font-medium">{getPrimaryPhone()}</div>
               </div>
             </a>
             
             <a
               href={getMailtoHref(getBusinessEmail())}
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white hover:bg-gray-50 text-blue-600 px-6 py-5 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2 group"
             >
-              <div className="text-2xl">✉️</div>
+              <div className="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Mail className="w-6 h-6" />
+              </div>
               <div>
-                <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">{getBusinessEmail()}</div>
+                <div className="font-bold text-slate-900">Email Us</div>
+                <div className="text-sm text-gray-500 font-medium">{getBusinessEmail()}</div>
               </div>
             </a>
           </div>
@@ -644,9 +657,10 @@ const Portfolio = () => {
                 <h3 className="text-2xl font-bold text-gray-900">{selectedCaseStudy.title}</h3>
                 <button
                   onClick={closeCaseStudy}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 hover:text-gray-700 p-1 rounded-lg hover:bg-gray-100"
+                  aria-label="Close dialog"
                 >
-                  ✕
+                  <X className="w-6 h-6" />
                 </button>
               </div>
               
@@ -686,12 +700,18 @@ const Portfolio = () => {
                     {selectedCaseStudy.metrics ? (
                       selectedCaseStudy.metrics.map((metric, idx) => (
                         <div key={idx} className="bg-green-50 p-4 rounded-lg">
-                          <p className="text-green-700 font-semibold">✓ {metric}</p>
+                          <p className="text-green-700 font-semibold flex items-center gap-2">
+                            <Check className="w-4 h-4 text-green-600 shrink-0" />
+                            <span>{metric}</span>
+                          </p>
                         </div>
                       ))
                     ) : (
                       <div className="bg-green-50 p-4 rounded-lg">
-                        <p className="text-green-700 font-semibold">✓ {selectedCaseStudy.results}</p>
+                        <p className="text-green-700 font-semibold flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-600 shrink-0" />
+                          <span>{selectedCaseStudy.results}</span>
+                        </p>
                       </div>
                     )}
                   </div>

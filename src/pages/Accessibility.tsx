@@ -28,12 +28,14 @@ const Accessibility: React.FC = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
         <Container className="relative z-10">
-          <Breadcrumb
-            items={[{ label: 'Accessibility Statement' }]}
-            className="text-purple-300 mb-6"
-          />
+          <div className="flex justify-center">
+            <Breadcrumb
+              items={[{ label: 'Accessibility Statement' }]}
+              className="text-purple-300 mb-6"
+            />
+          </div>
 
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
               <Eye className="w-4 h-4 text-yellow-400" />
               <span>Inclusive Web Experience</span>
@@ -43,7 +45,7 @@ const Accessibility: React.FC = () => {
               Accessibility <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Statement</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl">
               Growth Service is committed to ensuring that our digital agency website and client deliverables are accessible to people of all abilities, adhering to Web Content Accessibility Guidelines (WCAG 2.1 AA).
             </p>
           </div>

@@ -142,28 +142,28 @@ const HelpCenter: React.FC = () => {
     {
       title: "Website Development Guide",
       description: "Complete guide to planning, developing, and launching your website",
-      icon: "🌐",
+      Icon: Globe,
       download: "PDF Guide",
       pages: "15 pages"
     },
     {
       title: "SEO Starter Kit",
       description: "Beginner's guide to SEO optimization for small businesses",
-      icon: "🔍",
+      Icon: Search,
       download: "PDF Guide",
       pages: "12 pages"
     },
     {
       title: "Social Media Calendar",
       description: "Free template for planning your social media content",
-      icon: "📅",
+      Icon: Calendar,
       download: "Excel Template",
       pages: "Template"
     },
     {
       title: "Website Security Checklist",
       description: "Essential security measures for your website",
-      icon: "🔒",
+      Icon: Shield,
       download: "Checklist PDF",
       pages: "8 pages"
     }
@@ -358,9 +358,10 @@ const HelpCenter: React.FC = () => {
                         href={getNepalWhatsAppUrl(`I have a question about: ${faq.question}`)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                        className="text-sm text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1.5"
                       >
-                        💬 Ask more about this
+                        <MessageCircle className="w-4 h-4 text-emerald-500" />
+                        <span>Ask more about this</span>
                       </a>
                     </div>
                   </div>
@@ -385,7 +386,9 @@ const HelpCenter: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {guides.map((guide, index) => (
               <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
-                <div className="text-3xl mb-4">{guide.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                  <guide.Icon className="w-6 h-6" />
+                </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{guide.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{guide.description}</p>
                 <div className="flex items-center justify-between">
@@ -472,10 +475,11 @@ const HelpCenter: React.FC = () => {
               Send Message
             </button>
             <a
-              href="tel:+919341436937"
-              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-lg font-medium transition-colors text-center"
+              href={getTelHref(primaryPhone)}
+              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-lg font-medium transition-colors text-center inline-flex items-center justify-center gap-2"
             >
-              📞 Call Instead
+              <Phone className="w-4 h-4 text-blue-600" />
+              <span>Call Instead</span>
             </a>
           </div>
         </div>

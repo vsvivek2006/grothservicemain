@@ -18,3 +18,4 @@ export * from './ProcessTimeline';
 export * from './Breadcrumb';
 export * from './CTABanner';
 export * from './DecorativeGrid';
+export * from './WhatsAppIcon';

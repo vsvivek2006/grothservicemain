@@ -2,7 +2,31 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaTiktok, FaUsers, FaChartLine, FaCalendarAlt, FaPalette, FaComment, FaRocket } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaUsers, FaChartLine, FaCalendarAlt, FaPalette, FaComment, FaRocket } from 'react-icons/fa';
+import {
+  ClipboardList,
+  Target,
+  Palette as LucidePalette,
+  BarChart3,
+  Tag,
+  Calendar,
+  BookOpen,
+  TrendingUp,
+  CheckCircle2,
+  Users as LucideUsers,
+  Bot,
+  LifeBuoy,
+  Phone,
+  MessageCircle,
+  Share2,
+  DollarSign,
+  Smartphone,
+  Check,
+  Zap,
+  Rocket as LucideRocket,
+} from 'lucide-react';
+import { getPrimaryPhone } from '../../selectors';
+import { getTelHref, getNepalWhatsAppUrl } from '../../services';
 
 const WhiteLabelSocialMedia = () => {
   return (
@@ -46,10 +70,10 @@ const WhiteLabelSocialMedia = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Scale Your Agency with Social Media
+              Scale Your Agency with White Label Social Media
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Add high-demand social media services to your agency offerings
+              Add recurring revenue streams without the overhead of building an in-house content team
             </p>
           </div>
           
@@ -60,142 +84,154 @@ const WhiteLabelSocialMedia = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">60-70% Profit Margin</h3>
               <p className="text-gray-600">
-                Social media management offers 60-70% profit margins for agencies
+                Resell our social media packages at your own prices and keep substantial margins
               </p>
             </div>
             
             <div className="text-center p-6">
               <div className="bg-orange-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaUsers className="text-orange-600 text-3xl" />
+                <FaRocket className="text-orange-600 text-3xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">High Client Demand</h3>
+              <h3 className="text-xl font-semibold mb-3">Immediate Capacity</h3>
               <p className="text-gray-600">
-                90% of businesses use social media, creating massive service demand
+                Onboard 10+ clients this month without worrying about hiring or bandwidth
               </p>
             </div>
             
             <div className="text-center p-6">
               <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaCalendarAlt className="text-purple-600 text-3xl" />
+                <FaUsers className="text-purple-600 text-3xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Recurring Revenue</h3>
+              <h3 className="text-xl font-semibold mb-3">100% White Label</h3>
               <p className="text-gray-600">
-                Monthly social media retainers create predictable recurring income
+                Complete brand invisibility. Your clients will only see your agency's branding
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* White Label Social Media Services */}
+      {/* Social Media Services We Manage */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Complete White Label Social Media Services
+              Complete Social Media Management Suite
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Full-service social media management delivered under your brand
+              Everything your clients need to succeed across all major social networks
             </p>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="text-pink-600 text-3xl mb-4">
                 <FaPalette />
               </div>
               <h3 className="text-xl font-semibold mb-3">Content Creation & Design</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Social media graphics design</li>
-                <li>• Video content creation</li>
-                <li>• Reels & Stories content</li>
-                <li>• Carousel posts creation</li>
-                <li>• Branded content templates</li>
+              <p className="text-gray-600 mb-4 text-sm">
+                Custom branded graphics, short-form videos, carousels, and stories designed by our creative team.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Custom branded templates</li>
+                <li>• Reels, TikToks & Shorts</li>
+                <li>• Carousel post design</li>
+                <li>• Engaging story content</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-blue-600 text-3xl mb-4">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-orange-600 text-3xl mb-4">
                 <FaCalendarAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Content Strategy & Planning</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Monthly content calendars</li>
-                <li>• Platform-specific strategies</li>
-                <li>• Hashtag research & strategy</li>
-                <li>• Trend analysis & implementation</li>
-                <li>• Campaign planning</li>
+              <h3 className="text-xl font-semibold mb-3">Strategy & Scheduling</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                Monthly content calendars, hashtag strategies, and optimal posting time analysis for every platform.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• 30-day content calendar</li>
+                <li>• Niche hashtag research</li>
+                <li>• Optimal timing scheduling</li>
+                <li>• Multi-platform distribution</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-green-600 text-3xl mb-4">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-purple-600 text-3xl mb-4">
                 <FaComment />
               </div>
               <h3 className="text-xl font-semibold mb-3">Community Management</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Daily engagement & responses</li>
-                <li>• Comment moderation</li>
-                <li>• Direct message management</li>
-                <li>• Review monitoring</li>
-                <li>• Crisis management</li>
+              <p className="text-gray-600 mb-4 text-sm">
+                Active engagement, comment responses, direct message triage, and proactive outreach to build community.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Daily comment monitoring</li>
+                <li>• DM triage & responses</li>
+                <li>• Proactive niche outreach</li>
+                <li>• Brand reputation management</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-purple-600 text-3xl mb-4">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-blue-600 text-3xl mb-4">
                 <FaChartLine />
               </div>
               <h3 className="text-xl font-semibold mb-3">Analytics & Reporting</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Monthly performance reports</li>
-                <li>• Competitor analysis</li>
-                <li>• ROI tracking</li>
-                <li>• Audience insights</li>
-                <li>• Growth recommendations</li>
+              <p className="text-gray-600 mb-4 text-sm">
+                Custom white-label reports showing follower growth, engagement rates, top posts, and ROI metrics.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Monthly white-label reports</li>
+                <li>• Engagement & growth metrics</li>
+                <li>• Top performing content audit</li>
+                <li>• Audience demographic insights</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-green-600 text-3xl mb-4">
+                <FaUsers />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Audience Growth</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                Organic growth strategies, influencer collaborations, and contest management to build real audiences.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Organic engagement tactics</li>
+                <li>• Micro-influencer outreach</li>
+                <li>• Giveaway & contest management</li>
+                <li>• Cross-platform promotion</li>
+              </ul>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="text-red-600 text-3xl mb-4">
                 <FaRocket />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Social Media Advertising</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Facebook/Instagram ads</li>
-                <li>• LinkedIn advertising</li>
-                <li>• TikTok ads management</li>
-                <li>• Ad creative development</li>
-                <li>• Campaign optimization</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-yellow-600 text-3xl mb-4">
-                <FaUsers />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Influencer Marketing</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Influencer identification</li>
-                <li>• Campaign management</li>
-                <li>• Content collaboration</li>
-                <li>• Performance tracking</li>
-                <li>• Relationship management</li>
+              <h3 className="text-xl font-semibold mb-3">Paid Social Add-on</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                Seamlessly boost top-performing organic posts or run dedicated ad campaigns on Meta, LinkedIn, and TikTok.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Post boosting management</li>
+                <li>• Lead gen ad campaigns</li>
+                <li>• Retargeting audiences</li>
+                <li>• Ad spend ROI reporting</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Social Media Platforms */}
+      {/* Platforms Covered */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Social Media Platforms We Manage
+              Social Platforms We Manage
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Comprehensive coverage across all major social platforms
+              Complete coverage across every major social media channel
             </p>
           </div>
           
@@ -207,16 +243,12 @@ const WhiteLabelSocialMedia = () => {
               { platform: 'Twitter/X', icon: <FaTwitter className="text-3xl" />, color: 'bg-gray-100 text-gray-800' },
               { platform: 'YouTube', icon: <FaYoutube className="text-3xl" />, color: 'bg-red-100 text-red-800' },
               { platform: 'TikTok', icon: <FaTiktok className="text-3xl" />, color: 'bg-black text-white' },
-              { platform: 'Pinterest', icon: '📌', color: 'bg-red-50 text-red-700' },
-              { platform: 'Threads', icon: '🧵', color: 'bg-gray-100 text-gray-800' },
+              { platform: 'Pinterest', icon: <FaPinterest className="text-3xl" />, color: 'bg-red-50 text-red-700' },
+              { platform: 'Threads', icon: <Share2 className="w-8 h-8 mx-auto" />, color: 'bg-gray-100 text-gray-800' },
             ].map((item, index) => (
               <div key={index} className={`${item.color} p-6 rounded-xl text-center`}>
                 <div className="flex justify-center mb-3">
-                  {typeof item.icon === 'string' ? (
-                    <span className="text-3xl">{item.icon}</span>
-                  ) : (
-                    item.icon
-                  )}
+                  {item.icon}
                 </div>
                 <h3 className="font-bold text-lg">{item.platform}</h3>
               </div>
@@ -234,20 +266,23 @@ const WhiteLabelSocialMedia = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: 1, title: 'Client Onboarding', desc: 'Share client details & access', icon: '📋' },
-              { step: 2, title: 'Strategy Development', desc: 'Create monthly content plan', icon: '🎯' },
-              { step: 3, title: 'Content Creation', desc: 'Design & schedule posts', icon: '🎨' },
-              { step: 4, title: 'Management & Reporting', desc: 'Engage & report results', icon: '📊' },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="bg-gradient-to-r from-pink-500 to-orange-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  {item.step}
+              { step: 1, title: 'Client Onboarding', desc: 'Share client details & access', icon: ClipboardList },
+              { step: 2, title: 'Strategy Development', desc: 'Create monthly content plan', icon: Target },
+              { step: 3, title: 'Content Creation', desc: 'Design & schedule posts', icon: LucidePalette },
+              { step: 4, title: 'Management & Reporting', desc: 'Engage & report results', icon: BarChart3 },
+            ].map((item) => {
+              const StepIcon = item.icon;
+              return (
+                <div key={item.step} className="text-center">
+                  <div className="bg-gradient-to-r from-pink-500 to-orange-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                    {item.step}
+                  </div>
+                  <div className="text-pink-600 mb-3 flex justify-center"><StepIcon className="w-8 h-8" /></div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
                 </div>
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -266,26 +301,27 @@ const WhiteLabelSocialMedia = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { feature: 'White Label Dashboard', desc: 'Your branding, your clients', icon: '🏷️' },
-              { feature: 'Content Calendar', desc: 'Monthly scheduling & planning', icon: '📅' },
-              { feature: 'Content Library', desc: 'Branded templates & assets', icon: '📚' },
-              { feature: 'Analytics Dashboard', desc: 'Performance tracking', icon: '📈' },
-              { feature: 'Approval Workflows', desc: 'Client content approval', icon: '✅' },
-              { feature: 'Collaboration Tools', desc: 'Team & client collaboration', icon: '👥' },
-              { feature: 'Automated Reporting', desc: 'Monthly client reports', icon: '🤖' },
-              { feature: '24/7 Support', desc: 'Technical & strategic support', icon: '🛟' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              { feature: 'White Label Dashboard', desc: 'Your branding, your clients', icon: Tag },
+              { feature: 'Content Calendar', desc: 'Monthly scheduling & planning', icon: Calendar },
+              { feature: 'Content Library', desc: 'Branded templates & assets', icon: BookOpen },
+              { feature: 'Analytics Dashboard', desc: 'Performance tracking', icon: TrendingUp },
+              { feature: 'Approval Workflows', desc: 'Client content approval', icon: CheckCircle2 },
+              { feature: 'Collaboration Tools', desc: 'Team & client collaboration', icon: LucideUsers },
+              { feature: 'Automated Reporting', desc: 'Monthly client reports', icon: Bot },
+              { feature: '24/7 Support', desc: 'Technical & strategic support', icon: LifeBuoy },
+            ].map((item, index) => {
+              const FeatureIcon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="text-pink-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
+                  <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
-
-      {/* Social Media Results */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -367,7 +403,7 @@ const WhiteLabelSocialMedia = () => {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -417,7 +453,7 @@ const WhiteLabelSocialMedia = () => {
                   'Increase agency valuation with recurring revenue'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center text-gray-700">
-                    <span className="text-pink-500 mr-3">🚀</span>
+                    <LucideRocket className="w-4 h-4 text-pink-500 mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -438,7 +474,7 @@ const WhiteLabelSocialMedia = () => {
                   'Expert creative team at your service'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center">
-                    <span className="text-white mr-3">⚡</span>
+                    <Zap className="w-4 h-4 text-white mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -519,31 +555,42 @@ const WhiteLabelSocialMedia = () => {
                 Book White Label Demo
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(getPrimaryPhone())}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {getPrimaryPhone()}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                💬 WhatsApp Partnership
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Partnership</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🏷️ 100% White Label</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <Tag className="w-4 h-4" />
+                  <span>100% White Label</span>
+                </div>
                 <div className="text-sm opacity-90">Your brand only</div>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">💰 High Margins</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <DollarSign className="w-4 h-4" />
+                  <span>High Margins</span>
+                </div>
                 <div className="text-sm opacity-90">60-70% profit margins</div>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">📱 All Platforms</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <Smartphone className="w-4 h-4" />
+                  <span>All Platforms</span>
+                </div>
                 <div className="text-sm opacity-90">8+ social platforms</div>
               </div>
             </div>
@@ -657,7 +704,7 @@ const WhiteLabelSocialMedia = () => {
                     'Ethical business practices'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-pink-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-pink-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -678,7 +725,7 @@ const WhiteLabelSocialMedia = () => {
                     'Dedicated account manager'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center">
-                      <span className="text-white mr-2">⚡</span>
+                      <Zap className="w-4 h-4 text-white mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}

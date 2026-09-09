@@ -27,6 +27,26 @@ import {
   FaTrophy,
   FaGem,
 } from 'react-icons/fa';
+import {
+  MapPin,
+  Search,
+  Phone,
+  Star,
+  Award,
+  Globe,
+  Check,
+  CheckCircle2,
+  ShieldCheck,
+  Code2,
+  Smartphone,
+  Target,
+  FileText,
+  ShoppingCart,
+  Palette,
+  Mail,
+  ClipboardList,
+  MessageCircle,
+} from 'lucide-react';
 import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
@@ -77,9 +97,9 @@ const SEOService = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap justify-center gap-2 mb-4">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Jaipur</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Vrindavan</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Nepal</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-yellow-300" /> Jaipur</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-yellow-300" /> Vrindavan</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-yellow-300" /> Nepal</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Best SEO Services in <span className="text-yellow-300">Jaipur</span>, <span className="text-cyan-300">Vrindavan</span> & <span className="text-green-300">Nepal</span>
@@ -91,21 +111,23 @@ const SEOService = () => {
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2"
               >
-                🔍 Get Free SEO Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free SEO Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Book Strategy Call
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Call</span>
               </Link>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
-              <span className="flex items-center gap-1">⭐ 300+ Happy Clients</span>
-              <span className="flex items-center gap-1">🏆 500+ Projects</span>
-              <span className="flex items-center gap-1">🌍 3 Office Locations</span>
+              <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-300" /> 300+ Happy Clients</span>
+              <span className="flex items-center gap-1.5"><Award className="w-4 h-4 text-yellow-300" /> 500+ Projects</span>
+              <span className="flex items-center gap-1.5"><Globe className="w-4 h-4 text-yellow-300" /> 3 Office Locations</span>
             </div>
           </div>
         </div>
@@ -170,12 +192,12 @@ const SEOService = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Technical SEO</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Website speed optimization</li>
-                <li>✓ Mobile-first indexing</li>
-                <li>✓ Site structure & XML sitemaps</li>
-                <li>✓ Schema markup implementation</li>
-                <li>✓ Core Web Vitals optimization</li>
-                <li>✓ Crawlability & indexing fixes</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Website speed optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Mobile-first indexing</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Site structure & XML sitemaps</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Schema markup implementation</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Core Web Vitals optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Crawlability & indexing fixes</span></li>
               </ul>
               <div className="mt-4 text-xs text-blue-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -186,12 +208,12 @@ const SEOService = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">On-Page SEO</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Keyword research & optimization</li>
-                <li>✓ Content optimization</li>
-                <li>✓ Meta tags & descriptions</li>
-                <li>✓ Header tag optimization</li>
-                <li>✓ Internal linking strategy</li>
-                <li>✓ Image optimization</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Keyword research & optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Content optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Meta tags & descriptions</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Header tag optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Internal linking strategy</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Image optimization</span></li>
               </ul>
               <div className="mt-4 text-xs text-green-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -202,12 +224,12 @@ const SEOService = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Off-Page SEO</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Quality backlink building</li>
-                <li>✓ Local SEO optimization</li>
-                <li>✓ Directory submissions</li>
-                <li>✓ Brand mention monitoring</li>
-                <li>✓ Guest posting strategy</li>
-                <li>✓ Social media signals</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Quality backlink building</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Local SEO optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Directory submissions</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Brand mention monitoring</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Guest posting strategy</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Social media signals</span></li>
               </ul>
               <div className="mt-4 text-xs text-purple-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -218,12 +240,12 @@ const SEOService = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Local SEO</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Google Business Profile optimization</li>
-                <li>✓ Local citation building</li>
-                <li>✓ Review management</li>
-                <li>✓ Local keyword targeting</li>
-                <li>✓ Map pack optimization</li>
-                <li>✓ "Near Me" searches</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-yellow-600 shrink-0" /><span>Google Business Profile optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-yellow-600 shrink-0" /><span>Local citation building</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-yellow-600 shrink-0" /><span>Review management</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-yellow-600 shrink-0" /><span>Local keyword targeting</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-yellow-600 shrink-0" /><span>Map pack optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-yellow-600 shrink-0" /><span>"Near Me" searches</span></li>
               </ul>
               <div className="mt-4 text-xs text-yellow-600">Specialized in Jaipur & Vrindavan</div>
             </div>
@@ -234,12 +256,12 @@ const SEOService = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">E-commerce SEO</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Product page optimization</li>
-                <li>✓ Category page SEO</li>
-                <li>✓ E-commerce site structure</li>
-                <li>✓ Product schema markup</li>
-                <li>✓ Shopping feed optimization</li>
-                <li>✓ Conversion optimization</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Product page optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Category page SEO</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>E-commerce site structure</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Product schema markup</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Shopping feed optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Conversion optimization</span></li>
               </ul>
               <div className="mt-4 text-xs text-red-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -250,12 +272,12 @@ const SEOService = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">SEO Analytics</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Monthly performance reports</li>
-                <li>✓ Competitor analysis</li>
-                <li>✓ Rank tracking</li>
-                <li>✓ Traffic analysis</li>
-                <li>✓ ROI tracking</li>
-                <li>✓ Custom dashboards</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Monthly performance reports</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Competitor analysis</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Rank tracking</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Traffic analysis</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>ROI tracking</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Custom dashboards</span></li>
               </ul>
               <div className="mt-4 text-xs text-indigo-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -274,9 +296,9 @@ const SEOService = () => {
               Structured organic optimization programs tailored for local brands, expanding businesses, and enterprise platforms
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">📍 Jaipur</span>
-              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">📍 Vrindavan</span>
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">📍 Nepal</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Jaipur</span>
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Vrindavan</span>
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Nepal</span>
             </div>
           </div>
 
@@ -605,7 +627,10 @@ const SEOService = () => {
 
           {/* Quality Standards Note */}
           <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
-            <h4 className="font-bold text-blue-800 mb-2">🛡️ White-Hat Quality Standard</h4>
+            <h4 className="font-bold text-blue-800 mb-2 flex items-center justify-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-blue-800" />
+              <span>White-Hat Quality Standard</span>
+            </h4>
             <p className="text-blue-700 text-sm">
               All link acquisition follows strict search engine guidelines. Transparent placement reports and indexing verification provided for every engagement.
             </p>
@@ -640,8 +665,9 @@ const SEOService = () => {
               return (
                 <div key={office.id} className={`bg-gradient-to-br ${bgGradient} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 relative`}>
                   {office.isHeadOffice && (
-                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
-                      ★ HEAD OFFICE
+                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-gray-900" />
+                      <span>HEAD OFFICE</span>
                     </div>
                   )}
                   <div className="text-4xl mb-4">{office.flag}</div>
@@ -683,50 +709,50 @@ const SEOService = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Link to="/web-development" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">💻</div>
+            <Link to="/web-development" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Code2 className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Web Development</h3>
               <p className="text-gray-500 text-sm">Responsive Architecture</p>
             </Link>
 
-            <Link to="/social-media" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">📱</div>
+            <Link to="/social-media" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Smartphone className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Social Media Management</h3>
               <p className="text-gray-500 text-sm">Creative Brand Strategy</p>
             </Link>
 
-            <Link to="/paid-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">🎯</div>
+            <Link to="/paid-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Target className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Meta Ads Management</h3>
               <p className="text-gray-500 text-sm">Performance Acquisition</p>
             </Link>
 
-            <Link to="/local-seo" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">📍</div>
+            <Link to="/local-seo" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><MapPin className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Google Business Profile</h3>
               <p className="text-gray-500 text-sm">Local 3-Pack Dominance</p>
             </Link>
 
-            <Link to="/content-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">✍️</div>
+            <Link to="/content-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><FileText className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Content Writing</h3>
               <p className="text-gray-500 text-sm">SEO Content Strategy</p>
             </Link>
 
-            <Link to="/ecommerce" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">🛒</div>
+            <Link to="/ecommerce" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><ShoppingCart className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">E-commerce Solutions</h3>
               <p className="text-gray-500 text-sm">Custom Store Architecture</p>
             </Link>
 
-            <Link to="/branding" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">🎨</div>
+            <Link to="/branding" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Palette className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Brand Strategy</h3>
               <p className="text-gray-500 text-sm">Identity & Positioning</p>
             </Link>
 
-            <Link to="/digital-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center">
-              <div className="text-3xl mb-3">📧</div>
+            <Link to="/digital-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-2 text-center group">
+              <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Mail className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Email Marketing</h3>
               <p className="text-gray-500 text-sm">Lifecycle Funnels</p>
             </Link>
@@ -745,19 +771,19 @@ const SEOService = () => {
             <div>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">📋</span>
+                  <ClipboardList className="w-4 h-4 text-blue-600 mr-2 mt-0.5 shrink-0" />
                   <span>Milestone-based delivery agreements</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">📋</span>
+                  <ClipboardList className="w-4 h-4 text-blue-600 mr-2 mt-0.5 shrink-0" />
                   <span>Structured white-hat outreach campaigns</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-600 font-bold mr-2">✅</span>
+                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 mt-0.5 shrink-0" />
                   <span>Proper invoice & live report provided</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-600 font-bold mr-2">✅</span>
+                  <CheckCircle2 className="w-4 h-4 text-green-600 mr-2 mt-0.5 shrink-0" />
                   <span>100% White-hat SEO only</span>
                 </li>
               </ul>
@@ -766,19 +792,19 @@ const SEOService = () => {
             <div>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">✔</span>
+                  <Check className="w-4 h-4 text-blue-600 mr-2 mt-0.5 shrink-0" />
                   <span>Transparent pricing with no hidden charges</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">✔</span>
+                  <Check className="w-4 h-4 text-blue-600 mr-2 mt-0.5 shrink-0" />
                   <span>Market-competitive rates</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">✔</span>
+                  <Check className="w-4 h-4 text-blue-600 mr-2 mt-0.5 shrink-0" />
                   <span>Quality over quantity approach</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">✔</span>
+                  <Check className="w-4 h-4 text-blue-600 mr-2 mt-0.5 shrink-0" />
                   <span>Long-term SEO focus for sustainable growth</span>
                 </li>
               </ul>
@@ -799,72 +825,85 @@ const SEOService = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-blue-600 mx-auto mb-4">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-blue-600 mx-auto mb-4 font-bold">
                 VS
               </div>
               <h3 className="text-xl font-bold mb-1">Vivek Singh</h3>
               <p className="text-sm opacity-90 mb-3">SEO General Manager</p>
-              <a href="tel:+919341436937" className="text-white hover:text-blue-200 text-sm block">
-                📞 +91 93414 36937
+              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getPrimaryPhone()}</span>
               </a>
-              <a href="mailto:info@growthservice.in" className="text-white hover:text-blue-200 text-sm block">
-                📧 info@growthservice.in
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
             
             {/* Direct Contact Options */}
             <div className="bg-white/10 backdrop-blur p-4 rounded-xl max-w-xl mx-auto mb-8 text-left">
-              <p className="text-white text-xs font-semibold uppercase tracking-wider mb-2 text-center">📞 Direct Office Lines</p>
+              <p className="text-white text-xs font-semibold uppercase tracking-wider mb-2 text-center flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>Direct Office Lines</span>
+              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 <div>
                   <span className="text-blue-300 font-bold block">🇮🇳 India Office (Jaipur/Vrindavan):</span>
-                  <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block">
-                    📞 {getPrimaryPhone()}
+                  <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>{getPrimaryPhone()}</span>
                   </a>
-                  <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-xs block">
-                    ✉️ {getBusinessEmail()}
+                  <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-xs block inline-flex items-center gap-1">
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>{getBusinessEmail()}</span>
                   </a>
                 </div>
                 <div>
                   <span className="text-purple-300 font-bold block">🇳🇵 Nepal Office (HQ):</span>
-                  <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-purple-200 text-sm block">
-                    📞 {getOfficePhone('nepal')}
+                  <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-purple-200 text-sm block inline-flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>{getOfficePhone('nepal')}</span>
                   </a>
-                  <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-200 text-sm block">
-                    💬 WhatsApp: {getOfficePhone('nepal')}
+                  <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-200 text-sm block inline-flex items-center gap-1">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>WhatsApp: {getOfficePhone('nepal')}</span>
                   </a>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-green-600 mx-auto mb-4">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-green-600 mx-auto mb-4 font-bold">
                 GS
               </div>
               <h3 className="text-xl font-bold mb-1">{getBusinessName()}</h3>
               <p className="text-sm opacity-90 mb-3">SEO Support Team</p>
-              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-green-200 text-sm block">
-                📞 {getPrimaryPhone()}
+              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-green-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getPrimaryPhone()}</span>
               </a>
-              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-green-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-green-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
           </div>
           
           <div className="text-center mt-8">
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg inline-flex items-center justify-center gap-2"
               >
-                🔍 Get Free SEO Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free SEO Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Book Strategy Call
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Call</span>
               </Link>
             </div>
           </div>
@@ -945,7 +984,10 @@ const SEOService = () => {
             </p>
             
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-6">
-              <h4 className="font-bold text-blue-800 mb-2">📞 Ready to Rank Higher on Google?</h4>
+              <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                <Phone className="w-5 h-5 text-blue-800" />
+                <span>Ready to Rank Higher on Google?</span>
+              </h4>
               <p className="text-gray-600 text-sm">
               Questions before booking? 
               Call us at <a href={getTelHref(getPrimaryPhone())} className="font-bold hover:underline">{getPrimaryPhone()}</a> 

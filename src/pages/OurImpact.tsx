@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { ArrowRight, Play, Star, TrendingUp, Users, Target, Award, Globe, Shield, Zap, Clock } from 'lucide-react';
+import { 
+  ArrowRight, Play, Star, TrendingUp, Users, Target, Award, Globe, Shield, Zap, Clock,
+  Factory, HeartPulse, Rocket, ShoppingCart, Briefcase, Cog, Trophy
+} from 'lucide-react';
 
 const OurImpact: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -30,7 +33,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Traditional manufacturing company struggling with digital presence and lead generation",
       solution: "Complete digital marketing strategy + sales automation + CRM integration",
-      image: "🏭",
+      image: <Factory className="w-10 h-10 text-blue-600" />,
       video: "#",
       featured: true
     },
@@ -48,7 +51,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "New healthcare startup needed strong brand identity and market positioning",
       solution: "Strategic branding + digital marketing + content strategy",
-      image: "⚕️",
+      image: <HeartPulse className="w-10 h-10 text-red-500" />,
       video: "#",
       featured: true
     },
@@ -66,7 +69,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "SaaS platform struggling with user acquisition and retention",
       solution: "Growth hacking strategy + content marketing + customer success program",
-      image: "🚀",
+      image: <Rocket className="w-10 h-10 text-purple-600" />,
       video: "#"
     },
     {
@@ -83,7 +86,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Brick-and-mortar retail chain needing online presence and sales",
       solution: "E-commerce platform development + digital marketing + inventory management",
-      image: "🛒",
+      image: <ShoppingCart className="w-10 h-10 text-amber-500" />,
       video: "#"
     },
     {
@@ -100,7 +103,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Outdated website with poor performance and zero lead generation",
       solution: "Modern website development + SEO optimization + lead capture system",
-      image: "💼",
+      image: <Briefcase className="w-10 h-10 text-indigo-600" />,
       video: "#"
     },
     {
@@ -117,7 +120,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Manual processes causing inefficiency and high operational costs",
       solution: "Custom automation solutions + workflow optimization + integration",
-      image: "⚙️",
+      image: <Cog className="w-10 h-10 text-slate-600" />,
       video: "#"
     }
   ];
@@ -130,10 +133,10 @@ const OurImpact: React.FC = () => {
   ];
 
   const awards = [
-    { title: "Best Business Solutions Provider", icon: "🏆", year: "2024" },
-    { title: "Digital Transformation Excellence", icon: "⭐", year: "2024" },
-    { title: "Top Growth Partner Award", icon: "🎯", year: "2023" },
-    { title: "Innovation in Business Automation", icon: "⚡", year: "2023" }
+    { title: "Best Business Solutions Provider", icon: <Trophy className="w-8 h-8 text-yellow-500" />, year: "2024" },
+    { title: "Digital Transformation Excellence", icon: <Star className="w-8 h-8 text-yellow-400 fill-yellow-400" />, year: "2024" },
+    { title: "Top Growth Partner Award", icon: <Target className="w-8 h-8 text-red-500" />, year: "2023" },
+    { title: "Innovation in Business Automation", icon: <Zap className="w-8 h-8 text-amber-500" />, year: "2023" }
   ];
 
   const services = [
@@ -289,7 +292,7 @@ const OurImpact: React.FC = () => {
               <div className="p-8">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
-                  <div className="text-4xl">{story.image}</div>
+                  <div className="p-3 bg-blue-50 rounded-xl inline-flex">{story.image}</div>
                   {story.featured && (
                     <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-sm font-semibold">
                       Featured Transformation
@@ -356,7 +359,7 @@ const OurImpact: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {awards.map((award, index) => (
               <div key={index} className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-md transition-shadow duration-300">
-                <div className="text-4xl mb-4">{award.icon}</div>
+                <div className="mb-4 flex justify-center">{award.icon}</div>
                 <h3 className="font-semibold text-gray-900 mb-2">{award.title}</h3>
                 <div className="text-blue-600 font-medium">{award.year}</div>
               </div>

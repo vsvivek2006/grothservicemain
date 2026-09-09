@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Download, Search, Filter, BookOpen, Video, FileText, Wrench, ArrowRight, ExternalLink, FileCode, Globe, Smartphone, Zap, TrendingUp, Users, MessageSquare, BarChart, Mail } from 'lucide-react';
+import { 
+  Download, Search, Filter, BookOpen, Video, FileText, Wrench, 
+  ArrowRight, ExternalLink, FileCode, Globe, Smartphone, Zap, 
+  TrendingUp, Users, MessageSquare, BarChart, Mail,
+  Layers, CheckSquare, Book, Laptop, Rocket, Gift, MessageCircle 
+} from 'lucide-react';
 import { businessConfig } from '../config/business';
 
 const Resources: React.FC = () => {
@@ -18,12 +23,12 @@ const Resources: React.FC = () => {
   ];
 
   const types = [
-    { id: 'all', name: 'All Types', icon: '📦' },
-    { id: 'guide', name: 'Guides', icon: '📚' },
-    { id: 'template', name: 'Templates', icon: '📋' },
-    { id: 'tool', name: 'Wrenchs', icon: '🛠️' },
-    { id: 'checklist', name: 'Checklists', icon: '✅' },
-    { id: 'ebook', name: 'E-books', icon: '📖' }
+    { id: 'all', name: 'All Types', Icon: Layers },
+    { id: 'guide', name: 'Guides', Icon: BookOpen },
+    { id: 'template', name: 'Templates', Icon: FileText },
+    { id: 'tool', name: 'Wrenchs', Icon: Wrench },
+    { id: 'checklist', name: 'Checklists', Icon: CheckSquare },
+    { id: 'ebook', name: 'E-books', Icon: Book }
   ];
 
   const resources = [
@@ -33,7 +38,7 @@ const Resources: React.FC = () => {
       description: "Complete guide to modern web development with React, Node.js, and best practices for performance.",
       category: 'website',
       type: 'guide',
-      icon: '🌐',
+      icon: 'website',
       downloads: '3.2K',
       format: 'PDF',
       size: '3.5 MB',
@@ -47,7 +52,7 @@ const Resources: React.FC = () => {
       description: "Comprehensive checklist for technical SEO, on-page optimization, and performance analysis.",
       category: 'seo',
       type: 'checklist',
-      icon: '🔍',
+      icon: 'seo',
       downloads: '2.8K',
       format: 'Google Sheets',
       size: '1.2 MB',
@@ -61,7 +66,7 @@ const Resources: React.FC = () => {
       description: "Professional content calendar template with scheduling and performance tracking.",
       category: 'smm',
       type: 'template',
-      icon: '📅',
+      icon: 'calendar',
       downloads: '4.1K',
       format: 'Excel',
       size: '0.9 MB',
@@ -75,7 +80,7 @@ const Resources: React.FC = () => {
       description: "Free tool to analyze website performance, identify bottlenecks, and get optimization suggestions.",
       category: 'website',
       type: 'tool',
-      icon: '⚡',
+      icon: 'performance',
       downloads: '5.6K',
       format: 'Web Wrench',
       size: 'Online',
@@ -89,7 +94,7 @@ const Resources: React.FC = () => {
       description: "Strategic framework for scaling your business with digital marketing and automation.",
       category: 'business',
       type: 'template',
-      icon: '📈',
+      icon: 'growth',
       downloads: '2.3K',
       format: 'PDF',
       size: '2.8 MB',
@@ -103,7 +108,7 @@ const Resources: React.FC = () => {
       description: "Step-by-step guide to optimize your GMB listing for better local visibility and leads.",
       category: 'seo',
       type: 'guide',
-      icon: '📍',
+      icon: 'local',
       downloads: '3.9K',
       format: 'PDF',
       size: '2.1 MB',
@@ -117,7 +122,7 @@ const Resources: React.FC = () => {
       description: "Calculate ROI, budget allocation, and performance metrics for your Meta advertising campaigns.",
       category: 'tools',
       type: 'tool',
-      icon: '🎯',
+      icon: 'target',
       downloads: '3.4K',
       format: 'Web Wrench',
       size: 'Online',
@@ -131,7 +136,7 @@ const Resources: React.FC = () => {
       description: "Comprehensive guide covering SEO, social media, content marketing, and analytics for 2024.",
       category: 'business',
       type: 'ebook',
-      icon: '📖',
+      icon: 'ebook',
       downloads: '4.8K',
       format: 'PDF',
       size: '4.5 MB',
@@ -145,7 +150,7 @@ const Resources: React.FC = () => {
       description: "Professional template for creating accurate website development quotes and proposals.",
       category: 'website',
       type: 'template',
-      icon: '💼',
+      icon: 'proposal',
       downloads: '1.9K',
       format: 'Word',
       size: '0.5 MB',
@@ -159,7 +164,7 @@ const Resources: React.FC = () => {
       description: "Video series on advanced keyword research, competition analysis, and strategy development.",
       category: 'seo',
       type: 'guide',
-      icon: '🎬',
+      icon: 'video',
       downloads: '2.7K',
       format: 'Video Series',
       size: '1.8 GB',
@@ -173,7 +178,7 @@ const Resources: React.FC = () => {
       description: "Google Sheets dashboard template to track and analyze all your social media metrics.",
       category: 'smm',
       type: 'template',
-      icon: '📊',
+      icon: 'analytics',
       downloads: '3.1K',
       format: 'Google Sheets',
       size: '1.5 MB',
@@ -187,7 +192,7 @@ const Resources: React.FC = () => {
       description: "Checklist for automating business processes and improving operational efficiency.",
       category: 'business',
       type: 'checklist',
-      icon: '🤖',
+      icon: 'automation',
       downloads: '2.5K',
       format: 'PDF',
       size: '1.1 MB',
@@ -201,7 +206,7 @@ const Resources: React.FC = () => {
     {
       title: "Website Development Kit",
       description: "Complete toolkit including templates, checklists, and guides for web development projects.",
-      icon: '💻',
+      Icon: Laptop,
       category: 'website',
       items: 12,
       color: 'from-blue-500 to-cyan-500'
@@ -209,7 +214,7 @@ const Resources: React.FC = () => {
     {
       title: "SEO Master Bundle",
       description: "All-in-one SEO resource pack with tools, templates, and comprehensive guides.",
-      icon: '🔍',
+      Icon: Search,
       category: 'seo',
       items: 18,
       color: 'from-green-500 to-emerald-500'
@@ -217,7 +222,7 @@ const Resources: React.FC = () => {
     {
       title: "Business Growth Pack",
       description: "Resources to help scale your business including strategy templates and automation guides.",
-      icon: '🚀',
+      Icon: Rocket,
       category: 'business',
       items: 9,
       color: 'from-purple-500 to-pink-500'
@@ -277,8 +282,9 @@ const Resources: React.FC = () => {
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <span className="text-lg font-semibold">🎁 FREE RESOURCES</span>
+          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
+            <Gift className="w-5 h-5 text-yellow-300" />
+            <span className="text-lg font-semibold">FREE RESOURCES</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -321,8 +327,8 @@ const Resources: React.FC = () => {
                 key={index}
                 className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-blue-200 group"
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${resource.color} rounded-2xl flex items-center justify-center text-white text-2xl mb-6`}>
-                  {resource.icon}
+                <div className={`w-16 h-16 bg-gradient-to-r ${resource.color} rounded-2xl flex items-center justify-center text-white mb-6 shadow-md`}>
+                  <resource.Icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
                   {resource.title}
@@ -392,7 +398,7 @@ const Resources: React.FC = () => {
                       }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-xl">{type.icon}</span>
+                      <type.Icon className="w-5 h-5 text-gray-600" />
                       <span className="font-medium">{type.name}</span>
                     </div>
                     <div className="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
@@ -471,7 +477,7 @@ const Resources: React.FC = () => {
             {/* Resources Grid */}
             {filteredResources.length === 0 ? (
               <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-                <div className="text-6xl mb-4">🔍</div>
+                <Search className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-gray-900 mb-2">No resources found</h3>
                 <p className="text-gray-600 mb-6">Try adjusting your search or filter criteria</p>
                 <button
@@ -496,7 +502,9 @@ const Resources: React.FC = () => {
                       {/* Resource Header */}
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <div className="text-3xl">{resource.icon}</div>
+                          <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                            {getCategoryIcon(resource.category)}
+                          </div>
                           {resource.featured && (
                             <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
                               FEATURED
@@ -639,7 +647,7 @@ const Resources: React.FC = () => {
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
                   >
-                    <span className="text-xl">💬</span>
+                    <MessageCircle className="w-5 h-5 text-white" />
                     Request Custom Resource
                   </a>
                   <a

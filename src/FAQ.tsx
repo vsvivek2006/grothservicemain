@@ -1,7 +1,7 @@
 // src/pages/FAQ.tsx
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { ChevronDown, ChevronUp, MessageCircle, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, MessageCircle, Search, Phone } from "lucide-react";
 import { buildWhatsAppUrl } from "./config";
 import { getTelHref } from "./services";
 import { getPrimaryPhone, getBusinessName } from "./selectors";
@@ -235,7 +235,7 @@ const FAQ: React.FC = () => {
             ))
           ) : (
             <div className="text-center py-16">
-              <div className="text-gray-400 text-6xl mb-4">🔍</div>
+              <Search className="w-16 h-16 mx-auto mb-4 text-gray-400" aria-hidden="true" />
               <h3 className="text-2xl font-semibold text-gray-600 mb-2">No questions found</h3>
               <p className="text-gray-500 text-lg">
                 Try adjusting your search or filter to find what you're looking for.
@@ -279,13 +279,14 @@ const FAQ: React.FC = () => {
               className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-3"
             >
               <MessageCircle className="h-5 w-5" />
-              💬 Chat on WhatsApp
+              Chat on WhatsApp
             </a>
             <a
               href={getTelHref(getPrimaryPhone())}
-              className="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300"
+              className="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex items-center gap-3"
             >
-              📞 Call Us Directly
+              <Phone className="h-5 w-5" />
+              Call Us Directly
             </a>
           </div>
           <p className="mt-6 text-purple-200 text-lg">

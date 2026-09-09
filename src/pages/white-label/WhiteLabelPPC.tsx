@@ -3,6 +3,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaGoogle, FaFacebook, FaLinkedin, FaChartLine, FaUsers, FaDollarSign, FaRocket, FaShieldAlt, FaSync, FaCog, FaBullseye, FaFileAlt } from 'react-icons/fa';
+import {
+  Handshake,
+  ClipboardList,
+  Zap,
+  BarChart3,
+  Tag,
+  FileText,
+  MessageCircle,
+  LayoutDashboard,
+  DollarSign as LucideDollarSign,
+  LifeBuoy,
+  GraduationCap,
+  CheckCircle2,
+  Phone,
+  TrendingUp,
+  Check,
+} from 'lucide-react';
+import { getPrimaryPhone } from '../../selectors';
+import { getTelHref, getNepalWhatsAppUrl } from '../../services';
 
 const WhiteLabelPPC = () => {
   return (
@@ -45,41 +64,41 @@ const WhiteLabelPPC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Scale Your Agency with White Label PPC
+              Why Choose White Label PPC?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Expand your service offerings without increasing overhead or hiring costs
+              Scale your agency revenue without hiring PPC experts or investing in expensive tools
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaChartLine className="text-green-600 text-3xl" />
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaDollarSign className="text-green-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">70% Profit Margin</h3>
+              <h3 className="text-xl font-bold mb-4">High Profit Margins</h3>
               <p className="text-gray-600">
-                White label PPC services typically offer 60-70% profit margins for agencies
+                Resell our services at your own price point and keep 60-70% profit margins on every project.
               </p>
             </div>
             
-            <div className="text-center p-6">
-              <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaRocket className="text-blue-600 text-3xl" />
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaRocket className="text-blue-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">3x Faster Scaling</h3>
+              <h3 className="text-xl font-bold mb-4">Instant Expertise</h3>
               <p className="text-gray-600">
-                Scale your agency 3x faster by adding PPC services without infrastructure costs
+                Offer advanced PPC capabilities immediately backed by our team of certified specialists.
               </p>
             </div>
             
-            <div className="text-center p-6">
-              <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaUsers className="text-purple-600 text-3xl" />
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaShieldAlt className="text-purple-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Zero Client Loss</h3>
+              <h3 className="text-xl font-bold mb-4">100% Confidential</h3>
               <p className="text-gray-600">
-                100% white label - your clients never know we exist. You maintain full client relationships
+                Complete white label delivery under your brand name with strict NDA protection.
               </p>
             </div>
           </div>
@@ -200,20 +219,23 @@ const WhiteLabelPPC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: 1, title: 'Onboarding', desc: 'Client details & access sharing', icon: '🤝' },
-              { step: 2, title: 'Strategy', desc: 'Campaign planning & setup', icon: '📋' },
-              { step: 3, title: 'Execution', desc: 'Campaign management & optimization', icon: '⚡' },
-              { step: 4, title: 'Reporting', desc: 'White label reports delivery', icon: '📊' },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  {item.step}
+              { step: 1, title: 'Onboarding', desc: 'Client details & access sharing', icon: Handshake },
+              { step: 2, title: 'Strategy', desc: 'Campaign planning & setup', icon: ClipboardList },
+              { step: 3, title: 'Execution', desc: 'Campaign management & optimization', icon: Zap },
+              { step: 4, title: 'Reporting', desc: 'White label reports delivery', icon: BarChart3 },
+            ].map((item) => {
+              const StepIcon = item.icon;
+              return (
+                <div key={item.step} className="text-center">
+                  <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                    {item.step}
+                  </div>
+                  <div className="text-green-600 mb-3 flex justify-center"><StepIcon className="w-8 h-8" /></div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
                 </div>
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -227,21 +249,24 @@ const WhiteLabelPPC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { feature: '100% White Label', desc: 'No branding, your agency only', icon: '🏷️' },
-              { feature: 'Custom Reporting', desc: 'Your logo, your branding', icon: '📄' },
-              { feature: 'Direct Communication', desc: 'You maintain client contact', icon: '💬' },
-              { feature: 'Agency Dashboard', desc: 'Track all client campaigns', icon: '📱' },
-              { feature: 'Scalable Pricing', desc: 'Grow with volume discounts', icon: '💰' },
-              { feature: '24/7 Support', desc: 'Technical & strategic support', icon: '🛟' },
-              { feature: 'Training & Resources', desc: 'Agency growth materials', icon: '🎓' },
-              { feature: 'Performance Guarantee', desc: 'Minimum ROI targets', icon: '✅' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              { feature: '100% White Label', desc: 'No branding, your agency only', icon: Tag },
+              { feature: 'Custom Reporting', desc: 'Your logo, your branding', icon: FileText },
+              { feature: 'Direct Communication', desc: 'You maintain client contact', icon: MessageCircle },
+              { feature: 'Agency Dashboard', desc: 'Track all client campaigns', icon: LayoutDashboard },
+              { feature: 'Scalable Pricing', desc: 'Grow with volume discounts', icon: LucideDollarSign },
+              { feature: '24/7 Support', desc: 'Technical & strategic support', icon: LifeBuoy },
+              { feature: 'Training & Resources', desc: 'Agency growth materials', icon: GraduationCap },
+              { feature: 'Performance Guarantee', desc: 'Minimum ROI targets', icon: CheckCircle2 },
+            ].map((item, index) => {
+              const FeatureIcon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="text-green-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
+                  <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -327,7 +352,7 @@ const WhiteLabelPPC = () => {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -377,7 +402,7 @@ const WhiteLabelPPC = () => {
                   'Faster ROI on services'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center">
-                    <span className="text-white mr-3">💰</span>
+                    <LucideDollarSign className="w-4 h-4 text-white mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -398,7 +423,7 @@ const WhiteLabelPPC = () => {
                   'Continuous optimization'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center text-gray-700">
-                    <span className="text-green-500 mr-3">⚡</span>
+                    <Zap className="w-4 h-4 text-green-500 mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -477,31 +502,42 @@ const WhiteLabelPPC = () => {
                 Book White Label Demo
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-green-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(getPrimaryPhone())}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-green-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {getPrimaryPhone()}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-800 hover:bg-green-900 border-2 border-green-800 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-800 hover:bg-green-900 border-2 border-green-800 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                💬 WhatsApp Partnership
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Partnership</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🏷️ 100% White Label</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <Tag className="w-4 h-4" />
+                  <span>100% White Label</span>
+                </div>
                 <div className="text-sm opacity-90">Your brand only</div>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">💰 High Margins</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <LucideDollarSign className="w-4 h-4" />
+                  <span>High Margins</span>
+                </div>
                 <div className="text-sm opacity-90">60-70% profit margins</div>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">📈 Performance Guarantee</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Performance Guarantee</span>
+                </div>
                 <div className="text-sm opacity-90">Minimum ROI targets</div>
               </div>
             </div>
@@ -580,7 +616,7 @@ const WhiteLabelPPC = () => {
                     '3-month minimum commitment'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -601,7 +637,7 @@ const WhiteLabelPPC = () => {
                     'Scalable pricing structure'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center">
-                      <span className="text-white mr-2">⚡</span>
+                      <Zap className="w-4 h-4 text-white mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}

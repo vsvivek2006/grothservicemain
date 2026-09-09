@@ -17,8 +17,12 @@ import {
   Award,
   Shield,
   Zap,
-  ChevronRight
+  ChevronRight,
+  MessageCircle,
+  Mail,
 } from 'lucide-react';
+import { getBusinessEmail } from '../selectors';
+import { getNepalWhatsAppUrl, getMailtoHref } from '../services';
 import { businessConfig } from '../config/business';
 
 const SEOResults: React.FC = () => {
@@ -757,20 +761,20 @@ const SEOResults: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href={businessConfig.whatsapp.defaultUrl}
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
               >
-                <span className="text-2xl">💬</span>
-                Get Free SEO Audit
+                <MessageCircle className="w-5 h-5 text-emerald-600" />
+                <span>Get Free SEO Audit</span>
               </a>
               <a
-                href={`mailto:${businessConfig.emails.primary}`}
+                href={getMailtoHref(getBusinessEmail())}
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3"
               >
-                <span className="text-2xl">📧</span>
-                Email for Proposal
+                <Mail className="w-5 h-5" />
+                <span>Email for Proposal</span>
               </a>
             </div>
             <p className="text-blue-200 text-sm mt-6">

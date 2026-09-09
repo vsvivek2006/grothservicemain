@@ -5,8 +5,12 @@ import {
   MessageCircle, Video, Mail, ShoppingBag, Globe,
   CheckCircle, ArrowRight, Shield, Zap, PieChart,
   Hash, Camera, PenTool, DollarSign, Megaphone,
-  Monitor, Smartphone, Cloud, Headphones
+  Monitor, Smartphone, Cloud, Headphones, RefreshCw, Award, Rocket, Phone
 } from 'lucide-react';
+import { 
+  FaFacebook, FaInstagram, FaGoogle, FaYoutube, 
+  FaLinkedin, FaTwitter, FaPinterest, FaTiktok 
+} from 'react-icons/fa';
 import { getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref } from '../services';
 
@@ -144,7 +148,7 @@ const DigitalMarketing: React.FC = () => {
   // Additional Services
   const additionalServices = [
     {
-      icon: "📹",
+      icon: <Video className="h-8 w-8 text-purple-600" />,
       title: "Video Marketing",
       description: "Professional video production and marketing strategies",
       points: [
@@ -156,7 +160,7 @@ const DigitalMarketing: React.FC = () => {
       ]
     },
     {
-      icon: "📝",
+      icon: <PenTool className="h-8 w-8 text-purple-600" />,
       title: "Content Marketing",
       description: "Strategic content creation for brand authority and engagement",
       points: [
@@ -168,7 +172,7 @@ const DigitalMarketing: React.FC = () => {
       ]
     },
     {
-      icon: "🛒",
+      icon: <ShoppingBag className="h-8 w-8 text-purple-600" />,
       title: "E-commerce Marketing",
       description: "Complete marketing solutions for online stores",
       points: [
@@ -180,7 +184,7 @@ const DigitalMarketing: React.FC = () => {
       ]
     },
     {
-      icon: "📊",
+      icon: <BarChart className="h-8 w-8 text-purple-600" />,
       title: "Analytics & Reporting",
       description: "Data-driven insights and performance tracking",
       points: [
@@ -196,32 +200,32 @@ const DigitalMarketing: React.FC = () => {
   // Why Choose Us
   const benefits = [
     {
-      icon: "🎯",
+      icon: <Target className="h-8 w-8 text-purple-600" />,
       title: "Result-Driven Approach",
       description: "Focus on measurable outcomes and ROI"
     },
     {
-      icon: "⚡",
+      icon: <Zap className="h-8 w-8 text-purple-600" />,
       title: "Quick Implementation",
       description: "Start seeing results within first month"
     },
     {
-      icon: "📈",
+      icon: <TrendingUp className="h-8 w-8 text-purple-600" />,
       title: "Data-Backed Strategies",
       description: "Decisions based on analytics and insights"
     },
     {
-      icon: "🔄",
+      icon: <RefreshCw className="h-8 w-8 text-purple-600" />,
       title: "Continuous Optimization",
       description: "Regular updates and strategy improvements"
     },
     {
-      icon: "🤝",
+      icon: <Users className="h-8 w-8 text-purple-600" />,
       title: "Dedicated Account Manager",
       description: "Single point of contact for all communications"
     },
     {
-      icon: "🏆",
+      icon: <Award className="h-8 w-8 text-purple-600" />,
       title: "Proven Success",
       description: "100+ successful campaigns delivered"
     }
@@ -229,14 +233,14 @@ const DigitalMarketing: React.FC = () => {
 
   // Platforms We Work With
   const platforms = [
-    { name: "Facebook", icon: "📘", color: "bg-blue-100 text-blue-600" },
-    { name: "Instagram", icon: "📸", color: "bg-pink-100 text-pink-600" },
-    { name: "Google", icon: "🔍", color: "bg-blue-100 text-blue-600" },
-    { name: "YouTube", icon: "🎥", color: "bg-red-100 text-red-600" },
-    { name: "LinkedIn", icon: "💼", color: "bg-blue-100 text-blue-600" },
-    { name: "Twitter", icon: "🐦", color: "bg-blue-100 text-blue-600" },
-    { name: "Pinterest", icon: "📌", color: "bg-red-100 text-red-600" },
-    { name: "TikTok", icon: "🎵", color: "bg-black text-white" }
+    { name: "Facebook", icon: <FaFacebook className="w-6 h-6 mx-auto text-blue-600" />, color: "bg-blue-100" },
+    { name: "Instagram", icon: <FaInstagram className="w-6 h-6 mx-auto text-pink-600" />, color: "bg-pink-100" },
+    { name: "Google", icon: <FaGoogle className="w-6 h-6 mx-auto text-blue-600" />, color: "bg-blue-100" },
+    { name: "YouTube", icon: <FaYoutube className="w-6 h-6 mx-auto text-red-600" />, color: "bg-red-100" },
+    { name: "LinkedIn", icon: <FaLinkedin className="w-6 h-6 mx-auto text-blue-700" />, color: "bg-blue-100" },
+    { name: "Twitter", icon: <FaTwitter className="w-6 h-6 mx-auto text-sky-500" />, color: "bg-blue-100" },
+    { name: "Pinterest", icon: <FaPinterest className="w-6 h-6 mx-auto text-red-600" />, color: "bg-red-100" },
+    { name: "TikTok", icon: <FaTiktok className="w-6 h-6 mx-auto text-gray-900" />, color: "bg-gray-100" }
   ];
 
   return (
@@ -377,7 +381,7 @@ const DigitalMarketing: React.FC = () => {
                 key={index}
                 className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="text-3xl mb-3">{service.icon}</div>
+                <div className="mb-3">{service.icon}</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   {service.title}
                 </h3>
@@ -416,8 +420,8 @@ const DigitalMarketing: React.FC = () => {
                 key={index}
                 className={`${platform.color} p-4 rounded-xl text-center transition-all duration-300 hover:scale-105`}
               >
-                <div className="text-2xl mb-2">{platform.icon}</div>
-                <div className="font-medium text-sm">{platform.name}</div>
+                <div className="mb-2 flex justify-center">{platform.icon}</div>
+                <div className="font-medium text-sm text-gray-800">{platform.name}</div>
               </div>
             ))}
           </div>
@@ -442,7 +446,7 @@ const DigitalMarketing: React.FC = () => {
                 key={index}
                 className="bg-white border border-gray-200 p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="text-3xl mb-3">{benefit.icon}</div>
+                <div className="mb-3">{benefit.icon}</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   {benefit.title}
                 </h3>
@@ -473,32 +477,32 @@ const DigitalMarketing: React.FC = () => {
                 step: "01",
                 title: "Strategy & Planning",
                 description: "Understanding your business, goals, and target audience",
-                icon: "🎯"
+                icon: <Target className="w-8 h-8 mx-auto text-purple-600" />
               },
               {
                 step: "02",
                 title: "Implementation",
                 description: "Setting up campaigns, content creation, and platform optimization",
-                icon: "⚡"
+                icon: <Zap className="w-8 h-8 mx-auto text-purple-600" />
               },
               {
                 step: "03",
                 title: "Monitoring & Analysis",
                 description: "Tracking performance, analyzing data, and making adjustments",
-                icon: "📊"
+                icon: <BarChart className="w-8 h-8 mx-auto text-purple-600" />
               },
               {
                 step: "04",
                 title: "Optimization & Growth",
                 description: "Continuous improvement and scaling successful strategies",
-                icon: "🚀"
+                icon: <Rocket className="w-8 h-8 mx-auto text-purple-600" />
               }
             ].map((step, index) => (
               <div 
                 key={index}
                 className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 rounded-2xl p-6 text-center"
               >
-                <div className="text-3xl mb-3">{step.icon}</div>
+                <div className="mb-3 flex justify-center">{step.icon}</div>
                 <div className="text-purple-600 font-bold text-lg mb-1">{step.step}</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   {step.title}
@@ -537,13 +541,13 @@ const DigitalMarketing: React.FC = () => {
               href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-purple-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
             >
-              <span>📞</span>
+              <Phone className="h-5 w-5" />
               <span>Call: {getPrimaryPhone()}</span>
             </a>
           </div>
           
           <p className="mt-6 text-purple-200 text-sm">
-            🔍 SEO • 📱 Social Media • 🎯 Paid Ads • 📧 Email Marketing • 🚀 Lead Generation
+            SEO • Social Media • Paid Ads • Email Marketing • Lead Generation
           </p>
         </div>
       </section>

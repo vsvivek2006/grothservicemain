@@ -27,6 +27,24 @@ import {
   FaTwitter,
   FaYoutube
 } from 'react-icons/fa';
+import {
+  MapPin,
+  Search,
+  Phone,
+  Star,
+  TrendingUp,
+  Globe,
+  Check,
+  Target,
+  ShoppingCart,
+  Smartphone,
+  Users,
+  MessageCircle,
+  Video,
+  Award,
+  Briefcase,
+  Building2,
+} from 'lucide-react';
 import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getBusinessName, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
@@ -74,9 +92,9 @@ const MetaAdsManagement = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap justify-center gap-2 mb-4">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Jaipur</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Vrindavan</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Nepal</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Jaipur</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Vrindavan</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Nepal</span>
             </div>
             <div className="flex justify-center mb-6">
               <div className="flex space-x-4">
@@ -92,24 +110,26 @@ const MetaAdsManagement = () => {
               Maximize ROI from Facebook, Instagram & WhatsApp advertising with our data-driven ad strategies. 
               Trusted by <strong className="text-yellow-300">300+ happy clients</strong> across India and Nepal.
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
               >
-                🔍 Get Free Ads Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free Ads Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Book Strategy Call
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Call</span>
               </Link>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
-              <span className="flex items-center gap-1">⭐ 300+ Happy Clients</span>
-              <span className="flex items-center gap-1">📈 ₹10Cr+ Ad Spend Managed</span>
-              <span className="flex items-center gap-1">🌍 3 Office Locations</span>
+              <span className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-300" /> 300+ Happy Clients</span>
+              <span className="flex items-center gap-1"><TrendingUp className="w-4 h-4 text-yellow-300" /> ₹10Cr+ Ad Spend Managed</span>
+              <span className="flex items-center gap-1"><Globe className="w-4 h-4 text-yellow-300" /> 3 Office Locations</span>
             </div>
           </div>
         </div>
@@ -166,9 +186,9 @@ const MetaAdsManagement = () => {
               End-to-end Facebook, Instagram & WhatsApp advertising solutions from our 3 office locations
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">📍 Jaipur Office</span>
-              <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm">📍 Vrindavan Office</span>
-              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">📍 Nepal Office</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Jaipur Office</span>
+              <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Vrindavan Office</span>
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Nepal Office</span>
             </div>
           </div>
 
@@ -179,11 +199,11 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Audience Targeting</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Custom audience creation</li>
-                <li>✓ Lookalike audience building</li>
-                <li>✓ Interest-based targeting</li>
-                <li>✓ Demographic segmentation</li>
-                <li>✓ Retargeting strategies</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Custom audience creation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Lookalike audience building</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Interest-based targeting</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Demographic segmentation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Retargeting strategies</li>
               </ul>
               <div className="mt-4 text-xs text-blue-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -194,11 +214,11 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Campaign Strategy</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Campaign objective setting</li>
-                <li>✓ Budget optimization</li>
-                <li>✓ Bid strategy development</li>
-                <li>✓ A/B testing setup</li>
-                <li>✓ Multi-platform campaigns</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Campaign objective setting</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Budget optimization</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Bid strategy development</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> A/B testing setup</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Multi-platform campaigns</li>
               </ul>
               <div className="mt-4 text-xs text-purple-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -209,11 +229,11 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Ad Creative Development</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ High-converting ad copy</li>
-                <li>✓ Professional ad design</li>
-                <li>✓ Video ad production</li>
-                <li>✓ Carousel ad creation</li>
-                <li>✓ Story & Reels ads</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> High-converting ad copy</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Professional ad design</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Video ad production</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Carousel ad creation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Story & Reels ads</li>
               </ul>
               <div className="mt-4 text-xs text-green-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -224,11 +244,11 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Conversion Optimization</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Lead generation campaigns</li>
-                <li>✓ Sales conversion tracking</li>
-                <li>✓ Website conversion setup</li>
-                <li>✓ Pixel installation & tracking</li>
-                <li>✓ ROI maximization</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Lead generation campaigns</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Sales conversion tracking</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Website conversion setup</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Pixel installation & tracking</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> ROI maximization</li>
               </ul>
               <div className="mt-4 text-xs text-red-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -239,11 +259,11 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Analytics & Reporting</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Daily performance monitoring</li>
-                <li>✓ Weekly optimization reports</li>
-                <li>✓ Competitor analysis</li>
-                <li>✓ Conversion funnel analysis</li>
-                <li>✓ Monthly strategy reviews</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Daily performance monitoring</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Weekly optimization reports</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Competitor analysis</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Conversion funnel analysis</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Monthly strategy reviews</li>
               </ul>
               <div className="mt-4 text-xs text-yellow-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -254,11 +274,11 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">WhatsApp Business Ads</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ WhatsApp click-to-chat ads</li>
-                <li>✓ Lead generation via WhatsApp</li>
-                <li>✓ Automated messaging setup</li>
-                <li>✓ WhatsApp catalog integration</li>
-                <li>✓ Conversion tracking</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>WhatsApp click-to-chat ads</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Lead generation via WhatsApp</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Automated messaging setup</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>WhatsApp catalog integration</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Conversion tracking</span></li>
               </ul>
               <div className="mt-4 text-xs text-indigo-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -280,21 +300,24 @@ const MetaAdsManagement = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: '💰', title: 'Brand Awareness', desc: 'Increase brand visibility', color: 'bg-blue-100' },
-              { icon: '🎯', title: 'Lead Generation', desc: 'Quality lead collection', color: 'bg-green-100' },
-              { icon: '🛒', title: 'Sales Conversion', desc: 'Direct product sales', color: 'bg-red-100' },
-              { icon: '📱', title: 'App Install', desc: 'Mobile app downloads', color: 'bg-purple-100' },
-              { icon: '👥', title: 'Traffic Generation', desc: 'Website visitors', color: 'bg-yellow-100' },
-              { icon: '💬', title: 'Message Campaigns', desc: 'WhatsApp/Messenger', color: 'bg-green-100' },
-              { icon: '📺', title: 'Video Views', desc: 'Engaging video content', color: 'bg-indigo-100' },
-              { icon: '🏪', title: 'Store Visits', desc: 'Local business traffic', color: 'bg-pink-100' },
-            ].map((campaign, index) => (
-              <div key={index} className={`${campaign.color} p-4 rounded-xl text-center hover:shadow-lg transition-all hover:-translate-y-1`}>
-                <div className="text-2xl mb-2">{campaign.icon}</div>
-                <h3 className="font-semibold text-sm">{campaign.title}</h3>
-                <p className="text-gray-600 text-xs">{campaign.desc}</p>
-              </div>
-            ))}
+              { icon: TrendingUp, title: 'Brand Awareness', desc: 'Increase brand visibility', color: 'bg-blue-100 text-blue-700' },
+              { icon: Target, title: 'Lead Generation', desc: 'Quality lead collection', color: 'bg-green-100 text-green-700' },
+              { icon: ShoppingCart, title: 'Sales Conversion', desc: 'Direct product sales', color: 'bg-red-100 text-red-700' },
+              { icon: Smartphone, title: 'App Install', desc: 'Mobile app downloads', color: 'bg-purple-100 text-purple-700' },
+              { icon: Users, title: 'Traffic Generation', desc: 'Website visitors', color: 'bg-yellow-100 text-yellow-700' },
+              { icon: MessageCircle, title: 'Message Campaigns', desc: 'WhatsApp/Messenger', color: 'bg-green-100 text-green-700' },
+              { icon: Video, title: 'Video Views', desc: 'Engaging video content', color: 'bg-indigo-100 text-indigo-700' },
+              { icon: Store, title: 'Store Visits', desc: 'Local business traffic', color: 'bg-pink-100 text-pink-700' },
+            ].map((campaign, index) => {
+              const Icon = campaign.icon;
+              return (
+                <div key={index} className={`${campaign.color} p-4 rounded-xl text-center hover:shadow-lg transition-all hover:-translate-y-1`}>
+                  <div className="flex justify-center mb-2"><Icon className="w-6 h-6" /></div>
+                  <h3 className="font-semibold text-sm text-gray-800">{campaign.title}</h3>
+                  <p className="text-gray-600 text-xs">{campaign.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -326,18 +349,21 @@ const MetaAdsManagement = () => {
                 <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs">Instagram Expert</span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a href={getTelHref(getPrimaryPhone())} className="text-blue-600 hover:text-blue-800 text-sm block">
-                  📞 {getPrimaryPhone()}
+                <a href={getTelHref(getPrimaryPhone())} className="text-blue-600 hover:text-blue-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{getPrimaryPhone()}</span>
                 </a>
-                <a href={getMailtoHref(getBusinessEmail())} className="text-blue-600 hover:text-blue-800 text-sm block">
-                  📧 {getBusinessEmail()}
+                <a href={getMailtoHref(getBusinessEmail())} className="text-blue-600 hover:text-blue-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{getBusinessEmail()}</span>
                 </a>
               </div>
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 text-center relative">
-              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                ★ HEAD OFFICE
+              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <Star className="w-2.5 h-2.5 fill-gray-900" />
+                <span>HEAD OFFICE</span>
               </div>
               <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
                 VS
@@ -352,11 +378,13 @@ const MetaAdsManagement = () => {
                 <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">Lead Gen Pro</span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a href={getTelHref(getOfficePhone('nepal'))} className="text-purple-600 hover:text-purple-800 text-sm block">
-                  📞 {getOfficePhone('nepal')}
+                <a href={getTelHref(getOfficePhone('nepal'))} className="text-purple-600 hover:text-purple-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{getOfficePhone('nepal')}</span>
                 </a>
-                <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 text-sm block">
-                  💬 WhatsApp: {getOfficePhone('nepal')}
+                <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp: {getOfficePhone('nepal')}</span>
                 </a>
               </div>
             </div>
@@ -375,18 +403,23 @@ const MetaAdsManagement = () => {
                 <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Multi-Location</span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a href={getTelHref(getPrimaryPhone())} className="text-green-600 hover:text-green-800 text-sm block">
-                  📞 {getPrimaryPhone()}
+                <a href={getTelHref(getPrimaryPhone())} className="text-green-600 hover:text-green-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{getPrimaryPhone()}</span>
                 </a>
-                <a href={getMailtoHref(getBusinessEmail())} className="text-green-600 hover:text-green-800 text-sm block">
-                  📧 {getBusinessEmail()}
+                <a href={getMailtoHref(getBusinessEmail())} className="text-green-600 hover:text-green-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{getBusinessEmail()}</span>
                 </a>
               </div>
             </div>
           </div>
 
           <div className="mt-8 text-center bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
-            <h4 className="font-bold text-gray-800 mb-2">🏆 Certified Meta Ads Experts</h4>
+            <h4 className="font-bold text-gray-800 mb-2 inline-flex items-center justify-center gap-2">
+              <Award className="w-5 h-5 text-yellow-600" />
+              <span>Certified Meta Ads Experts</span>
+            </h4>
             <p className="text-gray-600 text-sm">
               Our team has managed over ₹10 Crore in ad spend with proven ROI for 300+ clients across India and Nepal
             </p>
@@ -421,8 +454,9 @@ const MetaAdsManagement = () => {
               return (
                 <div key={office.id} className={`bg-gradient-to-br ${bgGradient} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 relative`}>
                   {office.isHeadOffice && (
-                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
-                      ★ HEAD OFFICE
+                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-gray-900" />
+                      <span>HEAD OFFICE</span>
                     </div>
                   )}
                   <div className="text-4xl mb-4">{office.flag}</div>
@@ -569,21 +603,21 @@ const MetaAdsManagement = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-2">
-              <div className="text-blue-600 text-2xl mb-3">🏪</div>
+              <div className="text-blue-600 mb-3"><ShoppingCart className="w-8 h-8" /></div>
               <h3 className="font-semibold text-lg mb-2">E-commerce Store - Jaipur</h3>
               <p className="text-gray-600 text-sm mb-3">Achieved 8x ROAS with Facebook conversion campaigns from our Jaipur office</p>
               <div className="text-sm text-blue-600 font-semibold">Results: ₹50L+ in sales</div>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-2">
-              <div className="text-green-600 text-2xl mb-3">💼</div>
+              <div className="text-green-600 mb-3"><Briefcase className="w-8 h-8" /></div>
               <h3 className="font-semibold text-lg mb-2">B2B SaaS - Vrindavan</h3>
               <p className="text-gray-600 text-sm mb-3">Generated 200+ qualified leads monthly via LinkedIn & Facebook from Vrindavan</p>
               <div className="text-sm text-green-600 font-semibold">Cost per lead: ₹350</div>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-2">
-              <div className="text-purple-600 text-2xl mb-3">🏥</div>
+              <div className="text-purple-600 mb-3"><Building2 className="w-8 h-8" /></div>
               <h3 className="font-semibold text-lg mb-2">Healthcare - Nepal</h3>
               <p className="text-gray-600 text-sm mb-3">Increased appointments by 300% with local targeting from Nepal office</p>
               <div className="text-sm text-purple-600 font-semibold">50+ new patients monthly</div>
@@ -644,28 +678,33 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-bold mb-1">Vivek Singh</h3>
               <p className="text-sm opacity-90 mb-3">Meta Ads Director</p>
-              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block">
-                📞 {getPrimaryPhone()}
+              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getPrimaryPhone()}</span>
               </a>
-              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all relative">
-              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                ★ HEAD OFFICE
+              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <Star className="w-2.5 h-2.5 fill-gray-900" />
+                <span>HEAD OFFICE</span>
               </div>
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-indigo-600 mx-auto mb-4">
                 VS
               </div>
               <h3 className="text-xl font-bold mb-1">Vikash Singh</h3>
               <p className="text-sm opacity-90 mb-3">Meta Ads Manager - Nepal</p>
-              <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-indigo-200 text-sm block">
-                📞 {getOfficePhone('nepal')}
+              <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-indigo-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getOfficePhone('nepal')}</span>
               </a>
-              <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-indigo-200 text-sm block">
-                💬 WhatsApp: {getOfficePhone('nepal')}
+              <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-indigo-200 text-sm block inline-flex items-center justify-center gap-1">
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>WhatsApp: {getOfficePhone('nepal')}</span>
               </a>
             </div>
 
@@ -675,28 +714,32 @@ const MetaAdsManagement = () => {
               </div>
               <h3 className="text-xl font-bold mb-1">Growth Service</h3>
               <p className="text-sm opacity-90 mb-3">Meta Ads Support Team</p>
-              <a href={getTelHref(getOfficePhone('jaipur'))} className="text-white hover:text-purple-200 text-sm block">
-                📞 {getOfficePhone('jaipur')}
+              <a href={getTelHref(getOfficePhone('jaipur'))} className="text-white hover:text-purple-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getOfficePhone('jaipur')}</span>
               </a>
-              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-purple-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-purple-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
           </div>
           
           <div className="text-center mt-8">
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg inline-flex items-center gap-2"
               >
-                🔍 Get Free Ads Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free Ads Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Book Strategy Call
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Call</span>
               </Link>
             </div>
           </div>

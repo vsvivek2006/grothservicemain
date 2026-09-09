@@ -59,8 +59,9 @@ export const FooterOfficeSection: React.FC = () => {
                   <span>{office.address}</span>
                 </p>
                 {office.landmark && (
-                  <p className="text-purple-300/80 text-[10px] italic mb-2 ml-4">
-                    📍 {office.landmark}
+                  <p className="text-purple-300/80 text-[10px] italic mb-2 ml-4 flex items-center gap-1">
+                    <MapPin className="h-2.5 w-2.5 text-purple-400 shrink-0" />
+                    <span>Near {office.landmark}</span>
                   </p>
                 )}
               </div>

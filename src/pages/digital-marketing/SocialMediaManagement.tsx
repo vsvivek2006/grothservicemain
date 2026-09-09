@@ -4,6 +4,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaChartBar, FaUsers, FaBullhorn, FaVideo, FaHashtag } from 'react-icons/fa';
+import { Check, Phone, MessageCircle } from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const SocialMediaManagement = () => {
   return (
@@ -272,18 +275,20 @@ const SocialMediaManagement = () => {
               Start Your Social Media Journey
             </Link>
             <a
-              href="tel:+919341436937"
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+              href={getTelHref(primaryPhone)}
+              className="bg-transparent border-2 border-white hover:bg-white hover:text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
             >
-              📞 Call: +91 93414 36937
+              <Phone className="w-5 h-5" />
+              <span>Call: {primaryPhone}</span>
             </a>
             <a
-              href="https://wa.me/977977382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+              className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
             >
-              💬 WhatsApp: +977 97738 2481
+              <MessageCircle className="w-5 h-5" />
+              <span>WhatsApp Us</span>
             </a>
           </div>
         </div>
@@ -314,7 +319,7 @@ const SocialMediaManagement = () => {
                   <ul className="space-y-3 mb-6">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-center text-gray-700">
-                        <span className="text-green-500 mr-2">✓</span>
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                         {feature}
                       </li>
                     ))}

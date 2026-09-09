@@ -13,28 +13,28 @@ export const HomeServicesOverview: React.FC = () => {
   const serviceCategories = [
     {
       title: "SEO Services",
-      icon: "🔍",
+      Icon: Search,
       services: ["SEO Optimization", "Local SEO", "Technical SEO", "Content Strategy"],
       color: "from-blue-500 to-cyan-500",
       path: "/seo"
     },
     {
       title: "Web Development",
-      icon: "💻",
+      Icon: Code,
       services: ["Custom Websites", "E-commerce", "React Development", "Node.js Solutions"],
       color: "from-purple-600 to-pink-500",
       path: "/web-development"
     },
     {
       title: "Performance Marketing",
-      icon: "📈",
+      Icon: BarChart3,
       services: ["PPC Campaigns", "Social Media Ads", "Google Ads", "Analytics"],
       color: "from-amber-500 to-yellow-400",
       path: "/paid-marketing"
     },
     {
       title: "Digital Marketing",
-      icon: "📱",
+      Icon: Target,
       services: ["Social Media", "Content Marketing", "Email Marketing", "Brand Strategy"],
       color: "from-emerald-500 to-teal-400",
       path: "/digital-marketing"
@@ -48,7 +48,6 @@ export const HomeServicesOverview: React.FC = () => {
       features: ["Keyword Research & Strategy", "On-Page SEO", "Off-Page SEO", "Technical SEO", "Local SEO", "SEO Analytics & Reporting"],
       path: "/seo",
       color: "from-blue-600 to-cyan-600",
-      icon: "🔍"
     },
     {
       title: "Website Development",
@@ -56,7 +55,6 @@ export const HomeServicesOverview: React.FC = () => {
       features: ["Responsive Web Design", "E-commerce Development", "React & Next.js Development", "Node.js Backend", "CMS Integration", "Web Application Development"],
       path: "/web-development",
       color: "from-purple-600 to-pink-600",
-      icon: "💻"
     },
     {
       title: "Performance Marketing",
@@ -64,7 +62,6 @@ export const HomeServicesOverview: React.FC = () => {
       features: ["Google Ads Management", "Social Media Advertising", "PPC Campaigns", "Display Advertising", "Retargeting", "Conversion Optimization"],
       path: "/paid-marketing",
       color: "from-amber-500 to-orange-500",
-      icon: "📈"
     },
     {
       title: "Social Media Management",
@@ -72,7 +69,6 @@ export const HomeServicesOverview: React.FC = () => {
       features: ["Content Strategy", "Community Management", "Social Media Advertising", "Analytics & Insights", "Brand Storytelling", "Influencer Marketing"],
       path: "/social-media",
       color: "from-indigo-600 to-purple-600",
-      icon: "📱"
     },
     {
       title: "Content Marketing",
@@ -80,7 +76,6 @@ export const HomeServicesOverview: React.FC = () => {
       features: ["Blog Writing", "Video Content", "Infographics", "Case Studies", "Whitepapers", "Content Strategy"],
       path: "/content-marketing",
       color: "from-emerald-600 to-teal-600",
-      icon: "✍️"
     },
     {
       title: "E-commerce Solutions",
@@ -88,7 +83,6 @@ export const HomeServicesOverview: React.FC = () => {
       features: ["Online Store Setup", "Payment Integration", "Product Management", "Inventory Management", "Order Processing", "E-commerce Analytics"],
       path: "/ecommerce",
       color: "from-rose-600 to-pink-600",
-      icon: "🛒"
     }
   ];
 
@@ -112,8 +106,8 @@ export const HomeServicesOverview: React.FC = () => {
                   className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col group h-full relative overflow-hidden"
                 >
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-tr ${category.color} flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-110 group-hover:rotate-2 transition-all duration-300 ease-luxury mb-5`}>
-                    {category.icon}
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-tr ${category.color} flex items-center justify-center text-white shadow-md group-hover:scale-110 group-hover:rotate-2 transition-all duration-300 ease-luxury mb-5`}>
+                    <category.Icon className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-4">
                     {category.title}

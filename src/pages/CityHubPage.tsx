@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
   Building2, Phone, MessageCircle, ArrowRight, 
-  ChevronRight, HelpCircle
+  ChevronRight, HelpCircle, MapPin, CheckCircle
 } from 'lucide-react';
 import { 
   getCityBySlug, 
@@ -23,15 +23,15 @@ import {
   getTelHref 
 } from '../services';
 import { buildCityPath, buildCanonicalUrl } from '../routing';
-import { Container, Section, Button } from '../components/ui';
+import { Container, Section, Button, WhatsAppIcon } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
 import SectionHeader from '../components/ui/SectionHeader';
-import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import NotFound from './NotFound';
+import TeamCard from '../components/ui/TeamCard';
 
 export const CityHubPage: React.FC = () => {
   const { citySlug } = useParams<{ citySlug: string }>();
@@ -42,37 +42,37 @@ export const CityHubPage: React.FC = () => {
 
   const city = getCityBySlug(citySlug);
 
-  // Flat architecture: only approved individual service locations exist as pages.
-  // Invalid locations or state slugs return 404.
   if (!city) {
     return <NotFound />;
   }
 
-  const assignedTeam = getAllTeamMembers().slice(0, 3);
-  const office = getOfficeForCity(city);
-  const cityPhone = getCityPhone(city);
-  const cityEmail = getCityEmail(city);
-  const cityAddress = getCityAddress(city);
-  const relatedCities = getCitiesByRegion(city.regionSlug).filter(c => c.slug !== city.slug);
+  const office = getOfficeForCity(city.id);
+  const cityPhone = getCityPhone(city.id);
+  const cityEmail = getCityEmail(city.id);
+  const cityAddress = getCityAddress(city.id);
+  const businessName = getBusinessName();
+  const canonicalOrigin = getCanonicalOrigin();
 
+  const canonicalUrl = buildCanonicalUrl(buildCityPath(city.slug));
   const whatsappUrl = getWhatsAppUrl(
-    cityPhone,
-    `Hello ${getBusinessName()}, I am looking for digital marketing services in ${city.name}.`
+    city.officeId === 'nepal' ? 'nepal' : 'india',
+    `Hello ${businessName}, I am inquiring about digital marketing and web services in ${city.name}.`
   );
 
-  const pageTitle = `Digital Marketing, SEO & Web Development in ${city.name}, ${city.state} | Growth Service`;
-  const pageDescription = city.isPhysicalOffice 
-    ? `Growth Service has a physical office in ${city.name}. ${city.description} Web development, SEO, and digital marketing services.` 
-    : `Growth Service provides digital marketing, SEO, and web development services to businesses in ${city.name}, ${city.state}.`;
+  const assignedTeam = getAllTeamMembers().filter(
+    (m) => m.officeId.toLowerCase() === (city.officeId || 'jaipur').toLowerCase()
+  );
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={buildCanonicalUrl(buildCityPath(city.slug))} />
-
-        {/* Service Schema - Organization provider (LocalBusiness is reserved only for physical offices) */}
+        <title>{`${city.name} Digital Marketing, SEO & Web Agency | Growth Service`}</title>
+        <meta
+          name="description"
+          content={`Comprehensive digital marketing, SEO, Meta ads, and web development services tailored for businesses and startups in ${city.name}, ${city.state}.`}
+        />
+        <link rel="canonical" href={canonicalUrl} />
+        
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -88,8 +88,8 @@ export const CityHubPage: React.FC = () => {
             },
             "provider": {
               "@type": "Organization",
-              "name": "Growth Service",
-              "url": getCanonicalOrigin(),
+              "name": businessName,
+              "url": canonicalOrigin,
               "telephone": cityPhone,
               "email": cityEmail
             },
@@ -99,22 +99,25 @@ export const CityHubPage: React.FC = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-10 pb-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle" />
+        <div className="absolute bottom-0 left-10 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
         <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
-            <Breadcrumb
-              items={[
-                { label: 'Locations', path: '/locations' },
-                { label: city.name }
-              ]}
-              className="text-purple-300 mb-6"
-            />
+            <div className="flex justify-center">
+              <Breadcrumb
+                items={[
+                  { label: 'Locations', path: '/locations' },
+                  { label: city.name }
+                ]}
+                className="text-purple-300 mb-6"
+              />
+            </div>
 
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
                 <span className="text-3xl" role="img" aria-label="Flag">{city.flag}</span>
                 <div className="inline-flex items-center gap-2 bg-purple-900/70 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full">
                   <span>{city.name}, {city.state}</span>
@@ -134,20 +137,20 @@ export const CityHubPage: React.FC = () => {
                 Digital Marketing, SEO & Web Development in <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">{city.name}</span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed">
+              <p className="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl">
                 {city.isPhysicalOffice 
                   ? `Growth Service has a physical office in ${city.name}. ${city.description}`
                   : `Growth Service provides digital marketing services to businesses in ${city.name}. ${city.description}`
                 }
               </p>
 
-              <div className="flex flex-wrap gap-4 items-center">
+              <div className="flex flex-wrap gap-4 items-center justify-center">
                 <Button
                   href={whatsappUrl}
                   isExternal
                   variant="whatsapp"
                   size="lg"
-                  icon={<MessageCircle className="w-5 h-5" />}
+                  icon={<WhatsAppIcon className="w-5 h-5" />}
                 >
                   Discuss {city.name} Project
                 </Button>
@@ -246,8 +249,9 @@ export const CityHubPage: React.FC = () => {
 
               <div className="flex flex-wrap gap-2.5">
                 {city.localAreas.map((area, idx) => (
-                  <span key={idx} className="bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-slate-200/80 hover:border-purple-200 transition-colors">
-                    📍 {area}
+                  <span key={idx} className="bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-slate-200/80 hover:border-purple-200 transition-colors inline-flex items-center gap-1.5">
+                    <MapPin className="w-3 h-3 text-purple-600 shrink-0" />
+                    <span>{area}</span>
                   </span>
                 ))}
               </div>
@@ -265,8 +269,9 @@ export const CityHubPage: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-2">
                 {city.keyIndustries.map((ind, idx) => (
-                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors">
-                    ✓ {ind}
+                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors inline-flex items-center gap-1.5">
+                    <CheckCircle className="w-3 h-3 text-purple-600 shrink-0" />
+                    <span>{ind}</span>
                   </span>
                 ))}
               </div>

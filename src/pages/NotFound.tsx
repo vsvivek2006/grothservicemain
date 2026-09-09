@@ -205,9 +205,9 @@ const NotFound: React.FC = () => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-3 mt-4 text-sm text-gray-500">
-            <span className="flex items-center gap-1">📍 Jaipur</span>
-            <span className="flex items-center gap-1">📍 Vrindavan</span>
-            <span className="flex items-center gap-1">📍 Nepal (HQ)</span>
+            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-purple-600" /> Jaipur</span>
+            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-purple-600" /> Vrindavan</span>
+            <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-purple-600" /> Nepal (HQ)</span>
           </div>
         </div>
 
@@ -358,8 +358,9 @@ const NotFound: React.FC = () => {
                       )}
                     </div>
                     <p className="text-xs text-gray-600 mt-1">{office.address}</p>
-                    <a href={getTelHref(office.phone)} className="text-xs text-purple-600 hover:underline">
-                      📞 {office.phone}
+                    <a href={getTelHref(office.phone)} className="text-xs text-purple-600 hover:underline flex items-center gap-1 mt-1">
+                      <Phone className="w-3 h-3" />
+                      <span>{office.phone}</span>
                     </a>
                   </div>
                 ))}
@@ -462,8 +463,9 @@ const NotFound: React.FC = () => {
             </Link>
           </div>
           <div className="mt-4 text-sm text-purple-200">
-            <span className="flex items-center justify-center gap-2">
-              📍 Jaipur • Vrindavan • Nepal
+            <span className="flex items-center justify-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5" />
+              <span>Jaipur • Vrindavan • Nepal</span>
             </span>
           </div>
         </div>

@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { 
-  Phone, MessageCircle, Sparkles, Building, Zap, 
+  Phone, Sparkles, Building, Zap, 
   MapPin, ChevronDown, ChevronRight, X 
 } from "lucide-react";
+import { WhatsAppIcon } from "../ui";
 import { navigationConfig } from "../../config";
 import { getPhysicalOffices } from "../../selectors";
 import { getNepalWhatsAppUrl } from "../../services";
@@ -21,6 +22,17 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
   mobileSection,
   toggleMobileSection,
 }) => {
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const digitalMarketingSubmenu = navigationConfig.digitalMarketingSubmenu;
@@ -32,8 +44,8 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="lg:hidden fixed inset-0 top-[72px] bg-white/98 backdrop-blur-md z-40 overflow-y-auto animate-fade-in">
-      <div className="px-4 py-4 space-y-3 pb-24 max-w-lg mx-auto">
+    <div className="lg:hidden fixed inset-x-0 bottom-0 top-[100%] bg-white/98 backdrop-blur-md z-40 overflow-y-auto animate-fade-in shadow-2xl border-t border-slate-200/80">
+      <div className="px-4 py-4 space-y-3 pb-28 max-w-lg mx-auto">
         {/* Quick Action Bar */}
         <div className="grid grid-cols-2 gap-2">
           <Link 
@@ -51,7 +63,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             onClick={closeMenu}
             className="bg-[#25D366] hover:bg-emerald-600 text-white font-bold text-xs py-3 px-3 rounded-xl shadow-sm text-center flex items-center justify-center gap-1.5 min-h-[44px] transition-colors"
           >
-            <MessageCircle className="h-4 w-4" />
+            <WhatsAppIcon className="h-4 w-4" />
             <span>WhatsApp Chat</span>
           </a>
         </div>

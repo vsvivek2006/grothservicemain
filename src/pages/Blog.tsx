@@ -6,13 +6,41 @@ import {
   X, ExternalLink, Share2, Bookmark, ThumbsUp, MessageCircle,
   Target, Shield, Zap, Database, Layout, Smartphone as Mobile,
   BarChart, PieChart, Lock, Users, Building, ShoppingCart,
-  Video, Image, Cloud, Wifi, Cpu, Battery, MapPin
+  Video, Image, Cloud, Wifi, Cpu, Battery, MapPin,
+  Monitor, BarChart3, Server, Megaphone, FileText, Wrench, Rocket, Phone
 } from 'lucide-react';
-import { getNepalWhatsAppUrl } from '../services';
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
+import { getPrimaryPhone, getBusinessEmail } from '../selectors';
 
 const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState('All Posts');
+
+  const getPostIcon = (name: string) => {
+    switch (name) {
+      case 'monitor': return <Monitor className="w-6 h-6 text-purple-600" />;
+      case 'barchart': return <BarChart3 className="w-6 h-6 text-purple-600" />;
+      case 'smartphone':
+      case 'mobile': return <Smartphone className="w-6 h-6 text-purple-600" />;
+      case 'code': return <Code className="w-6 h-6 text-purple-600" />;
+      case 'mappin': return <MapPin className="w-6 h-6 text-purple-600" />;
+      case 'globe': return <Globe className="w-6 h-6 text-purple-600" />;
+      case 'target': return <Target className="w-6 h-6 text-purple-600" />;
+      case 'building': return <Building className="w-6 h-6 text-purple-600" />;
+      case 'server': return <Server className="w-6 h-6 text-purple-600" />;
+      case 'database': return <Database className="w-6 h-6 text-purple-600" />;
+      case 'megaphone': return <Megaphone className="w-6 h-6 text-purple-600" />;
+      case 'cart': return <ShoppingCart className="w-6 h-6 text-purple-600" />;
+      case 'lock': return <Lock className="w-6 h-6 text-purple-600" />;
+      case 'zap': return <Zap className="w-6 h-6 text-purple-600" />;
+      case 'filetext': return <FileText className="w-6 h-6 text-purple-600" />;
+      case 'mail': return <Mail className="w-6 h-6 text-purple-600" />;
+      case 'trendingup': return <TrendingUp className="w-6 h-6 text-purple-600" />;
+      case 'wrench': return <Wrench className="w-6 h-6 text-purple-600" />;
+      case 'rocket': return <Rocket className="w-6 h-6 text-purple-600" />;
+      default: return <FileText className="w-6 h-6 text-purple-600" />;
+    }
+  };
 
   // 20 Blog Posts with SEO Keywords
   const blogPosts = [
@@ -24,7 +52,7 @@ const Blog: React.FC = () => {
       readTime: "8 min read",
       date: "2024-02-20",
       author: "Arjun Patel",
-      image: "💻",
+      image: "monitor",
       keywords: ["website cost", "web development pricing", "React development", "custom web applications"],
       views: "5.2K",
       content: `Professional website development costs vary based on architectural complexity, performance requirements, and third-party integrations. Custom business applications require tailored scoping.
@@ -46,18 +74,18 @@ Our development process ensures high-speed websites in agile sprints with modern
       readTime: "10 min read",
       date: "2024-02-18",
       author: "SEO Expert Team",
-      image: "📊",
+      image: "barchart",
       keywords: ["SEO frameworks", "search engine optimization", "keyword ranking", "organic traffic"],
       views: "4.8K",
       content: `Our comprehensive SEO framework includes strategic services designed for compounding business growth.
 
 Key Deliverables:
-✅ Performance & Core Web Vitals Audits
-✅ SEO-optimized Editorial Articles
-✅ Search Intent Keyword Optimization
-✅ Technical SEO Architecture
-✅ White-Hat Backlink Outreach
-✅ Local Map Optimization
+• Performance & Core Web Vitals Audits
+• SEO-optimized Editorial Articles
+• Search Intent Keyword Optimization
+• Technical SEO Architecture
+• White-Hat Backlink Outreach
+• Local Map Optimization
 
 Average Results in 6 Months:
 • 300% Increase in Organic Traffic
@@ -72,7 +100,7 @@ Average Results in 6 Months:
       readTime: "7 min read",
       date: "2024-02-16",
       author: "Social Media Team",
-      image: "📱",
+      image: "smartphone",
       keywords: ["social media management", "content strategy", "social media marketing", "engagement"],
       views: "3.9K",
       content: `Effective social media management requires consistent strategy, quality creatives, and conversion analysis.
@@ -101,7 +129,7 @@ Average Growth Metrics:
       readTime: "12 min read",
       date: "2024-02-14",
       author: "Tech Team",
-      image: "⚛️",
+      image: "code",
       keywords: ["React vs WordPress", "modern web development", "TypeScript", "performance"],
       views: "6.1K",
       content: `Choosing between React and WordPress depends on your business needs.
@@ -130,7 +158,7 @@ Our Recommendation: React for business websites, WordPress for blogs/content sit
       readTime: "6 min read",
       date: "2024-02-12",
       author: "Local SEO Team",
-      image: "📍",
+      image: "mappin",
       keywords: ["Google My Business", "local SEO", "business listing", "map rankings"],
       views: "3.2K",
       content: `Google My Business is crucial for local business foot traffic and customer inquiries.
@@ -157,7 +185,7 @@ Key Benefits:
       readTime: "15 min read",
       date: "2024-02-10",
       author: "Project Team",
-      image: "✈️",
+      image: "globe",
       keywords: ["travel website", "booking system", "React development", "case study"],
       views: "4.5K",
       content: `Project Overview:
@@ -187,7 +215,7 @@ Results:
       readTime: "9 min read",
       date: "2024-02-08",
       author: "Ads Team",
-      image: "🎯",
+      image: "target",
       keywords: ["Facebook ads", "Instagram advertising", "Meta ads", "social media ads"],
       views: "3.7K",
       content: `Our Meta Ads Performance Framework includes:
@@ -214,7 +242,7 @@ Typical Results:
       readTime: "8 min read",
       date: "2024-02-06",
       author: "Hospitality Team",
-      image: "🏨",
+      image: "building",
       keywords: ["hotel website", "booking system", "guest house website", "hospitality"],
       views: "2.9K",
       content: `Our hospitality development framework includes:
@@ -246,7 +274,7 @@ Average Results:
       readTime: "7 min read",
       date: "2024-02-04",
       author: "Backend Team",
-      image: "🟢",
+      image: "server",
       keywords: ["Node.js", "backend development", "API development", "server-side"],
       views: "3.4K",
       content: `Node.js Advantages for Business:
@@ -277,7 +305,7 @@ Ideal For:
       readTime: "11 min read",
       date: "2024-02-02",
       author: "Database Team",
-      image: "🍃",
+      image: "database",
       keywords: ["MongoDB", "database design", "NoSQL", "data management"],
       views: "2.8K",
       content: `MongoDB Best Practices:
@@ -308,7 +336,7 @@ Security:
       readTime: "9 min read",
       date: "2024-01-30",
       author: "Design Team",
-      image: "📱",
+      image: "mobile",
       keywords: ["mobile-first", "responsive design", "mobile optimization", "user experience"],
       views: "4.2K",
       content: `Mobile-First Design Principles:
@@ -339,7 +367,7 @@ Our Approach:
       readTime: "8 min read",
       date: "2024-01-28",
       author: "Frontend Team",
-      image: "📘",
+      image: "megaphone",
       keywords: ["TypeScript", "JavaScript", "type safety", "web development"],
       views: "3.6K",
       content: `TypeScript Benefits:
@@ -370,7 +398,7 @@ Implementation Strategy:
       readTime: "12 min read",
       date: "2024-01-26",
       author: "E-commerce Team",
-      image: "🛒",
+      image: "cart",
       keywords: ["e-commerce", "online store", "shopping cart", "payment gateway"],
       views: "5.5K",
       content: `E-commerce Engineering Frameworks:
@@ -404,7 +432,7 @@ Enterprise Marketplace:
       readTime: "10 min read",
       date: "2024-01-24",
       author: "Security Team",
-      image: "🔒",
+      image: "lock",
       keywords: ["website security", "SSL", "firewall", "security measures"],
       views: "3.1K",
       content: `Essential Security Measures:
@@ -436,7 +464,7 @@ Our Managed Security SLA:
       readTime: "11 min read",
       date: "2024-01-22",
       author: "Performance Team",
-      image: "⚡",
+      image: "zap",
       keywords: ["website speed", "performance optimization", "page speed", "Core Web Vitals"],
       views: "4.7K",
       content: `Performance Optimization Techniques:
@@ -468,7 +496,7 @@ Our Speed Optimization Deliverables:
       readTime: "9 min read",
       date: "2024-01-20",
       author: "Content Team",
-      image: "📝",
+      image: "filetext",
       keywords: ["content marketing", "blog strategy", "content creation", "content distribution"],
       views: "3.3K",
       content: `Content Marketing Strategy:
@@ -505,7 +533,7 @@ Our Editorial & Content Deliverables:
       readTime: "8 min read",
       date: "2024-01-18",
       author: "Marketing Team",
-      image: "📧",
+      image: "mail",
       keywords: ["email marketing", "newsletter", "email automation", "conversion"],
       views: "2.7K",
       content: `Email Marketing Strategy:
@@ -542,7 +570,7 @@ Our Email Automation Retainer:
       readTime: "7 min read",
       date: "2024-01-16",
       author: "Analytics Team",
-      image: "📈",
+      image: "trendingup",
       keywords: ["analytics", "reporting", "data analysis", "performance tracking"],
       views: "2.5K",
       content: `Analytics Setup:
@@ -573,7 +601,7 @@ Our Analytics & Attribution SLA:
       readTime: "6 min read",
       date: "2024-01-14",
       author: "Support Team",
-      image: "🔧",
+      image: "wrench",
       keywords: ["website maintenance", "updates", "backups", "support"],
       views: "2.4K",
       content: `Website Maintenance Frameworks:
@@ -604,7 +632,7 @@ High-Availability Enterprise SLA:
       readTime: "14 min read",
       date: "2024-01-12",
       author: "Strategy Team",
-      image: "🚀",
+      image: "rocket",
       keywords: ["digital transformation", "business growth", "technology adoption", "digital strategy"],
       views: "4.9K",
       content: `Digital Transformation Strategy:
@@ -693,10 +721,12 @@ Our Transformation Package:
               <p className="text-blue-100">Expert insights on digital growth</p>
             </div>
             <div className="mt-4 md:mt-0">
-              <div className="flex items-center space-x-2 text-sm">
-                <span>💻 High-Performance Web Apps</span>
+              <div className="flex items-center space-x-2 text-sm text-blue-100">
+                <Code className="h-4 w-4" />
+                <span>High-Performance Web Apps</span>
                 <span>•</span>
-                <span>🔍 Organic Search Dominance</span>
+                <Search className="h-4 w-4" />
+                <span>Organic Search Dominance</span>
               </div>
             </div>
           </div>
@@ -745,7 +775,7 @@ Our Transformation Package:
                     <Tag className="h-3 w-3 mr-1" />
                     {post.category}
                   </span>
-                  <span className="text-3xl">{post.image}</span>
+                  <span className="p-2 bg-purple-50 rounded-lg flex items-center justify-center">{getPostIcon(post.image)}</span>
                 </div>
 
                 <h2 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2">
@@ -812,16 +842,18 @@ Our Transformation Package:
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href="tel:+919341436937"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              href={getTelHref(getPrimaryPhone())}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
             >
-              📞 Call for Consultation
+              <Phone className="h-5 w-5" />
+              <span>Call for Consultation</span>
             </a>
             <a
-              href="mailto:info@growthservice.in"
-              className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-lg font-medium transition-colors"
+              href={getMailtoHref(getBusinessEmail())}
+              className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
             >
-              📧 Email Us
+              <Mail className="h-5 w-5" />
+              <span>Email Us</span>
             </a>
           </div>
         </div>
@@ -876,7 +908,7 @@ Our Transformation Package:
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-3xl mr-4">{selectedPost.image}</span>
+                    <span className="p-1.5 bg-purple-50 rounded-lg mr-4 flex items-center justify-center">{getPostIcon(selectedPost.image)}</span>
                     <span>{selectedPost.views} views</span>
                   </div>
                 </div>

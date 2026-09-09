@@ -1,4 +1,18 @@
 import React from "react";
+import {
+  ShoppingCart,
+  Smartphone,
+  Sparkles,
+  Hotel,
+  Globe,
+  Rocket,
+  Building2,
+  Laptop,
+  HeartPulse,
+  GraduationCap,
+  UtensilsCrossed,
+  ShoppingBag,
+} from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
 import SectionHeader from "../ui/SectionHeader";
@@ -6,18 +20,18 @@ import { StaggerContainer, StaggerItem } from "../animations";
 
 export const HomeClientsSection: React.FC = () => {
   const clients = [
-    { name: "Fragsook", industry: "E-commerce", logo: "🛒" },
-    { name: "Digimarcy", industry: "Digital Marketing", logo: "📱" },
-    { name: "pujahelp.in", industry: "Religious Services", logo: "🕉️" },
-    { name: "Radhikasadan Guest House", industry: "Hospitality", logo: "🏨" },
-    { name: "360Egaleweb", industry: "Web Development", logo: "🌐" },
-    { name: "Dizigrow", industry: "Digital Agency", logo: "🚀" },
-    { name: "ceclift", industry: "Construction", logo: "🏗️" },
-    { name: "TechCorp Solutions", industry: "Technology", logo: "💻" },
-    { name: "HealthPlus Clinic", industry: "Healthcare", logo: "🏥" },
-    { name: "EduSmart Academy", industry: "Education", logo: "🎓" },
-    { name: "Foodie's Delight", industry: "Restaurant", logo: "🍽️" },
-    { name: "StyleHub Fashion", industry: "Retail", logo: "👗" }
+    { name: "Fragsook", industry: "E-commerce", Icon: ShoppingCart },
+    { name: "Digimarcy", industry: "Digital Marketing", Icon: Smartphone },
+    { name: "pujahelp.in", industry: "Religious Services", Icon: Sparkles },
+    { name: "Radhikasadan Guest House", industry: "Hospitality", Icon: Hotel },
+    { name: "360Egaleweb", industry: "Web Development", Icon: Globe },
+    { name: "Dizigrow", industry: "Digital Agency", Icon: Rocket },
+    { name: "ceclift", industry: "Construction", Icon: Building2 },
+    { name: "TechCorp Solutions", industry: "Technology", Icon: Laptop },
+    { name: "HealthPlus Clinic", industry: "Healthcare", Icon: HeartPulse },
+    { name: "EduSmart Academy", industry: "Education", Icon: GraduationCap },
+    { name: "Foodie's Delight", industry: "Restaurant", Icon: UtensilsCrossed },
+    { name: "StyleHub Fashion", industry: "Retail", Icon: ShoppingBag },
   ];
 
   return (
@@ -36,8 +50,8 @@ export const HomeClientsSection: React.FC = () => {
               <div 
                 className="bg-white rounded-xl p-5 text-center border border-slate-200/80 hover:border-purple-300 hover:shadow-card card-lift-sm transition-all duration-200 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 ease-luxury">
-                  {client.logo}
+                <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 ease-luxury">
+                  <client.Icon className="w-6 h-6 text-purple-600" />
                 </div>
                 <h3 className="font-bold text-slate-900 text-sm truncate">{client.name}</h3>
                 <p className="text-xs text-slate-500 mt-0.5">{client.industry}</p>

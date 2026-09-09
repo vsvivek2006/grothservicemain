@@ -15,10 +15,14 @@ import {
   Globe,
   Smartphone,
   Search,
-  ShoppingCart
+  ShoppingCart,
+  Phone,
+  Mail,
+  Smile,
+  CheckCircle,
 } from "lucide-react";
-import { getPrimaryPhone } from "../selectors";
-import { getNepalWhatsAppUrl, getTelHref } from "../services";
+import { getPrimaryPhone, getBusinessEmail } from "../selectors";
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
 const Testimonials: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -307,9 +311,9 @@ const Testimonials: React.FC = () => {
                             <h4 className="font-semibold text-gray-900 mb-3">Results Achieved:</h4>
                             <div className="flex flex-wrap gap-3">
                               {testimonial.results.map((result, idx) => (
-                                <div key={idx} className="bg-white px-4 py-2 rounded-lg shadow-sm">
-                                  <span className="text-green-600 font-bold">✓</span>
-                                  <span className="ml-2 text-gray-700 font-medium">{result}</span>
+                                <div key={idx} className="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+                                  <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                                  <span className="text-gray-700 font-medium">{result}</span>
                                 </div>
                               ))}
                             </div>
@@ -469,7 +473,9 @@ const Testimonials: React.FC = () => {
           {/* No Results */}
           {filteredTestimonials.length === 0 && (
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">😊</div>
+              <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Smile className="w-10 h-10" />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">No testimonials found</h3>
               <p className="text-gray-600">Try selecting a different category</p>
             </div>
@@ -542,7 +548,7 @@ const Testimonials: React.FC = () => {
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">💬</div>
+              <div className="text-emerald-600"><MessageCircle className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">WhatsApp</div>
                 <div className="text-sm text-gray-600">Instant Response</div>
@@ -553,21 +559,21 @@ const Testimonials: React.FC = () => {
               href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">📞</div>
+              <div className="text-blue-600"><Phone className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">{businessConfig.phones.indiaPrimary}</div>
+                <div className="text-sm text-gray-600">{getPrimaryPhone()}</div>
               </div>
             </a>
             
             <a
-              href={`mailto:${businessConfig.emails.primary}`}
+              href={getMailtoHref(getBusinessEmail())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">✉️</div>
+              <div className="text-purple-600"><Mail className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">{businessConfig.emails.primary}</div>
+                <div className="text-sm text-gray-600">{getBusinessEmail()}</div>
               </div>
             </a>
           </div>

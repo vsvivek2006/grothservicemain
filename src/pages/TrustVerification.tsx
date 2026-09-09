@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { ShieldCheck, AlertTriangle, CheckCircle, Mail, Phone, ExternalLink, HelpCircle } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, CheckCircle, Mail, Phone, ExternalLink, HelpCircle, XCircle } from 'lucide-react';
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
@@ -24,12 +24,14 @@ const TrustVerification: React.FC = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
         <Container className="relative z-10">
-          <Breadcrumb
-            items={[{ label: 'Security & Verification' }]}
-            className="text-purple-300 mb-6"
-          />
+          <div className="flex justify-center">
+            <Breadcrumb
+              items={[{ label: 'Security & Verification' }]}
+              className="text-purple-300 mb-6"
+            />
+          </div>
 
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 bg-yellow-500/20 border border-yellow-400/40 text-yellow-300 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
               <ShieldCheck className="w-4 h-4 text-yellow-400" />
               <span>Official Verification & Security Center</span>
@@ -39,7 +41,7 @@ const TrustVerification: React.FC = () => {
               Verify Authenticity & <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-300">Scam Alert</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl">
               Protect yourself from impersonators and unauthorized solicitors. Use this official page to confirm representative credentials, official payment gateways, and report suspicious activities.
             </p>
           </div>
@@ -94,14 +96,20 @@ const TrustVerification: React.FC = () => {
             </h2>
             <div className="space-y-4 text-sm">
               <div className="p-4 rounded-xl border border-red-200 bg-red-50/50">
-                <div className="font-bold text-red-900 mb-1">❌ Paid Task / Telegram Part-Time Job Scams</div>
+                <div className="font-bold text-red-900 mb-1 flex items-center gap-2">
+                  <XCircle className="w-4 h-4 text-red-600 shrink-0" />
+                  <span>Paid Task / Telegram Part-Time Job Scams</span>
+                </div>
                 <p className="text-red-800">
                   Scammers frequently impersonate digital agencies offering "daily YouTube like tasks" or "Google review jobs" on Telegram or WhatsApp requiring advance deposits. <strong>Growth Service NEVER operates such schemes or requests money from job applicants.</strong>
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/50">
-                <div className="font-bold text-amber-900 mb-1">⚠️ Personal Bank Account Payment Requests</div>
+                <div className="font-bold text-amber-900 mb-1 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>Personal Bank Account Payment Requests</span>
+                </div>
                 <p className="text-amber-800">
                   All official invoices and payments for Growth Service are issued via official corporate invoices in the registered name of <strong>Growth Service</strong>. Never transfer funds to personal bank accounts or random UPI QR codes claiming to represent us.
                 </p>

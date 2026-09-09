@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
   CheckCircle, ArrowRight, Phone, MessageCircle, 
-  ShieldCheck, Sparkles, ChevronRight
+  ShieldCheck, Sparkles, ChevronRight, MapPin
 } from 'lucide-react';
 import { 
   getCityBySlug, 
@@ -30,7 +30,7 @@ import TeamCard from '../components/ui/TeamCard';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
-import { Container, Section } from '../components/ui';
+import { Container, Section, WhatsAppIcon } from '../components/ui';
 import NotFound from './NotFound';
 
 export const LocationServicePage: React.FC = () => {
@@ -43,69 +43,70 @@ export const LocationServicePage: React.FC = () => {
   const city = getCityBySlug(rawCity);
   const service = getServiceBySlug(rawServiceSlug);
 
-  // Strict Programmatic SEO Safety:
-  // 1. City must exist in data
-  // 2. Service must exist in data
-  // 3. City must explicitly support this service in servicesAvailable
-  const isServiceAvailableInCity = Boolean(
-    city && service && city.servicesAvailable.includes(service.slug)
-  );
-
-  if (!city || !service || !isServiceAvailableInCity) {
+  // Programmatic Matrix Enforcement: 404 if city or service does not exist
+  // or if the service is not marked available for this city in central data
+  if (!city || !service || !city.servicesAvailable.includes(service.slug)) {
     return <NotFound />;
   }
 
-  const office = getOfficeForCity(city);
-  const cityPhone = getCityPhone(city);
-  const cityEmail = getCityEmail(city);
-  const cityAddress = getCityAddress(city);
-  const coreTeam = getAllTeamMembers().slice(0, 3);
-  const otherServicesInCity = getAllServices().filter(s => s.slug !== service.slug && city.servicesAvailable.includes(s.slug));
+  const office = getOfficeForCity(city.id);
+  const cityPhone = getCityPhone(city.id);
+  const cityEmail = getCityEmail(city.id);
+  const cityAddress = getCityAddress(city.id);
+  const businessName = getBusinessName();
 
+  const canonicalUrl = buildCanonicalUrl(buildLocationServicePath(city.slug, service.slug));
   const whatsappUrl = getWhatsAppUrl(
-    cityPhone, 
-    `Hello ${getBusinessName()}, I am looking for ${service.title} in ${city.name}.`
+    city.officeId === 'nepal' ? 'nepal' : 'india',
+    `Hello ${businessName}, I am inquiring about ${service.title} in ${city.name}.`
   );
 
-  const pageTitle = `${service.title} in ${city.name}, ${city.state} | Growth Service`;
-  const pageDescription = `Professional ${service.title.toLowerCase()} in ${city.name}, ${city.state}. Digital growth solutions by Growth Service. Serving ${city.localAreas.slice(0, 3).join(', ')}. Contact: ${cityPhone}.`;
+  const otherServices = getAllServices()
+    .filter((s) => s.slug !== service.slug && city.servicesAvailable.includes(s.slug))
+    .slice(0, 3);
+
+  const locationTeam = getAllTeamMembers().filter(
+    (m) => m.officeId.toLowerCase() === (city.officeId || 'jaipur').toLowerCase()
+  );
+
+  const serviceSchema = buildServiceSchema(service, canonicalUrl, city.name);
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={buildCanonicalUrl(buildLocationServicePath(city.slug, service.slug))} />
+        <title>{`${service.title} in ${city.name}, ${city.state} | Growth Service`}</title>
+        <meta
+          name="description"
+          content={`Professional ${service.title.toLowerCase()} in ${city.name}, ${city.state}. ${service.shortDesc} Scoped transparently by Growth Service.`}
+        />
+        <link rel="canonical" href={canonicalUrl} />
 
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content={buildCanonicalUrl(buildLocationServicePath(city.slug, service.slug))} />
-        <meta property="og:type" content="website" />
-
-        {/* Schema.org Service */}
         <script type="application/ld+json">
-          {JSON.stringify(buildServiceSchema(service, city))}
+          {JSON.stringify(serviceSchema)}
         </script>
       </Helmet>
 
-      {/* Hero Header */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-10 pb-20 overflow-hidden">
+      {/* Hero Header Section */}
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle" />
+        <div className="absolute bottom-0 left-10 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
         <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
-            <Breadcrumb
-              items={[
-                { label: 'Locations', path: '/locations' },
-                { label: city.name, path: `/locations/${city.slug}` },
-                { label: service.title }
-              ]}
-              className="text-purple-300 mb-6"
-            />
+            <div className="flex justify-center">
+              <Breadcrumb
+                items={[
+                  { label: 'Locations', path: '/locations' },
+                  { label: city.name, path: `/locations/${city.slug}` },
+                  { label: service.title }
+                ]}
+                className="text-purple-300 mb-6"
+              />
+            </div>
 
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
                 <span className="text-3xl" role="img" aria-label="Flag">{city.flag}</span>
                 <div className="inline-flex items-center gap-2 bg-purple-900/70 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full">
                   <span>{city.name}, {city.state}</span>
@@ -125,17 +126,17 @@ export const LocationServicePage: React.FC = () => {
                 {service.title} in <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">{city.name}</span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed">
+              <p className="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl">
                 {service.shortDesc} Tailored for businesses and enterprises in {city.name}, {city.state}.
               </p>
 
-              <div className="flex flex-wrap gap-4 items-center">
+              <div className="flex flex-wrap gap-4 items-center justify-center">
                 <Button
                   href={whatsappUrl}
                   isExternal
                   variant="whatsapp"
                   size="lg"
-                  icon={<MessageCircle className="w-5 h-5" />}
+                  icon={<WhatsAppIcon className="w-5 h-5" />}
                 >
                   Discuss {city.name} Project
                 </Button>
@@ -216,8 +217,9 @@ export const LocationServicePage: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-2">
                 {city.localAreas.map((area, idx) => (
-                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors">
-                    📍 {area}
+                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors inline-flex items-center gap-1.5">
+                    <MapPin className="w-3 h-3 text-purple-600 shrink-0" />
+                    <span>{area}</span>
                   </span>
                 ))}
               </div>

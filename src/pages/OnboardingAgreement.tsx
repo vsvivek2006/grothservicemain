@@ -4,7 +4,7 @@ import {
   DollarSign, TrendingUp, MessageCircle, 
   Users, Target, Zap, AlertCircle, Download,
   Building, Globe, Smartphone, CreditCard,
-  Mail, Phone, ExternalLink
+  Mail, Phone, ExternalLink, Calendar
 } from "lucide-react";
 import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../selectors";
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
@@ -38,14 +38,17 @@ const OnboardingAgreement: React.FC = () => {
               Clear guidelines for successful collaboration on your digital projects
             </p>
             <div className="flex flex-wrap justify-center gap-3 text-sm">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                📅 Last Updated: {currentDate}
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-cyan-300" />
+                <span>Last Updated: {currentDate}</span>
               </span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                🏢 Growth Service Agency
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Building className="w-3.5 h-3.5 text-yellow-300" />
+                <span>Growth Service Agency</span>
               </span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                📱 {getPrimaryPhone()}
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Phone className="w-3.5 h-3.5 text-emerald-300" />
+                <span>{getPrimaryPhone()}</span>
               </span>
             </div>
           </div>

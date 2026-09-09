@@ -29,6 +29,21 @@ import {
   FaInstagram,
   FaYoutube
 } from 'react-icons/fa';
+import {
+  MapPin,
+  Search,
+  Phone,
+  Star,
+  TrendingUp,
+  Globe,
+  Check,
+  CheckCircle2,
+  Mail,
+  MessageCircle,
+  Trophy,
+  Award,
+  Users as LucideUsers,
+} from 'lucide-react';
 import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
@@ -76,9 +91,9 @@ const LeadGeneration = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap justify-center gap-2 mb-4">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Jaipur</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Vrindavan</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Nepal</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-yellow-300" /> Jaipur</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-yellow-300" /> Vrindavan</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-yellow-300" /> Nepal</span>
             </div>
             <div className="flex justify-center mb-6">
               <FaMagnet className="text-5xl" />
@@ -93,21 +108,23 @@ const LeadGeneration = () => {
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2"
               >
-                🔍 Get Free Lead Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free Lead Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Book Strategy Session
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Session</span>
               </Link>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
-              <span className="flex items-center gap-1">⭐ 300+ Happy Clients</span>
-              <span className="flex items-center gap-1">📈 10,000+ Leads Generated</span>
-              <span className="flex items-center gap-1">🌍 3 Office Locations</span>
+              <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-300" /> 300+ Happy Clients</span>
+              <span className="flex items-center gap-1.5"><TrendingUp className="w-4 h-4 text-yellow-300" /> 10,000+ Leads Generated</span>
+              <span className="flex items-center gap-1.5"><Globe className="w-4 h-4 text-yellow-300" /> 3 Office Locations</span>
             </div>
           </div>
         </div>
@@ -170,9 +187,9 @@ const LeadGeneration = () => {
               Multi-channel strategies to capture and nurture potential clients from our 3 office locations
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">📍 Jaipur Office</span>
-              <span className="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm">📍 Vrindavan Office</span>
-              <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm">📍 Nepal Office</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Jaipur Office</span>
+              <span className="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Vrindavan Office</span>
+              <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> Nepal Office</span>
             </div>
           </div>
 
@@ -183,11 +200,11 @@ const LeadGeneration = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">B2B Lead Generation</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ LinkedIn outreach automation</li>
-                <li>✓ Decision-maker targeting</li>
-                <li>✓ Account-based marketing (ABM)</li>
-                <li>✓ Cold email campaigns</li>
-                <li>✓ Webinar funnels</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>LinkedIn outreach automation</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Decision-maker targeting</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Account-based marketing (ABM)</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Cold email campaigns</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /><span>Webinar funnels</span></li>
               </ul>
               <div className="mt-4 text-xs text-blue-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -198,11 +215,11 @@ const LeadGeneration = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Inbound Marketing</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Content lead magnets</li>
-                <li>✓ SEO-driven traffic</li>
-                <li>✓ Landing page optimization</li>
-                <li>✓ Chatbot implementation</li>
-                <li>✓ Newsletter growth</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 shrink-0" /><span>Content lead magnets</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 shrink-0" /><span>SEO-driven traffic</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 shrink-0" /><span>Landing page optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 shrink-0" /><span>Chatbot implementation</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 shrink-0" /><span>Newsletter growth</span></li>
               </ul>
               <div className="mt-4 text-xs text-cyan-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -213,11 +230,11 @@ const LeadGeneration = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Lead Enrichment</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Data verification</li>
-                <li>✓ Contact info scraping</li>
-                <li>✓ Intent data analysis</li>
-                <li>✓ CRM integration</li>
-                <li>✓ Prospect segmentation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Data verification</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Contact info scraping</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Intent data analysis</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>CRM integration</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600 shrink-0" /><span>Prospect segmentation</span></li>
               </ul>
               <div className="mt-4 text-xs text-indigo-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -228,11 +245,11 @@ const LeadGeneration = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Email Marketing</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Cold email campaigns</li>
-                <li>✓ Email automation sequences</li>
-                <li>✓ A/B testing & optimization</li>
-                <li>✓ Email list building</li>
-                <li>✓ Lead nurturing workflows</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Cold email campaigns</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Email automation sequences</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>A/B testing & optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Email list building</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-600 shrink-0" /><span>Lead nurturing workflows</span></li>
               </ul>
               <div className="mt-4 text-xs text-green-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -243,11 +260,11 @@ const LeadGeneration = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">LinkedIn Lead Generation</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ LinkedIn profile optimization</li>
-                <li>✓ Connection requests automation</li>
-                <li>✓ InMail campaigns</li>
-                <li>✓ Sales Navigator targeting</li>
-                <li>✓ LinkedIn advertising</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>LinkedIn profile optimization</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Connection requests automation</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>InMail campaigns</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>Sales Navigator targeting</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600 shrink-0" /><span>LinkedIn advertising</span></li>
               </ul>
               <div className="mt-4 text-xs text-purple-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -258,11 +275,11 @@ const LeadGeneration = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Lead Nurturing</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Automated email sequences</li>
-                <li>✓ Retargeting campaigns</li>
-                <li>✓ Personalization strategies</li>
-                <li>✓ Sales enablement content</li>
-                <li>✓ Lead scoring & qualification</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Automated email sequences</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Retargeting campaigns</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Personalization strategies</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Sales enablement content</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-red-600 shrink-0" /><span>Lead scoring & qualification</span></li>
               </ul>
               <div className="mt-4 text-xs text-red-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -297,18 +314,21 @@ const LeadGeneration = () => {
                 <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Email Marketing</span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a href={getTelHref(getPrimaryPhone())} className="text-blue-600 hover:text-blue-800 text-sm block">
-                  📞 {getPrimaryPhone()}
+                <a href={getTelHref(getPrimaryPhone())} className="text-blue-600 hover:text-blue-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{getPrimaryPhone()}</span>
                 </a>
-                <a href={getMailtoHref(getBusinessEmail())} className="text-blue-600 hover:text-blue-800 text-sm block">
-                  📧 {getBusinessEmail()}
+                <a href={getMailtoHref(getBusinessEmail())} className="text-blue-600 hover:text-blue-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{getBusinessEmail()}</span>
                 </a>
               </div>
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 text-center relative">
-              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                ★ HEAD OFFICE
+              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <Star className="w-2.5 h-2.5 fill-gray-900" />
+                <span>HEAD OFFICE</span>
               </div>
               <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
                 VS
@@ -323,11 +343,13 @@ const LeadGeneration = () => {
                 <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">Cold Email</span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a href={getTelHref(getOfficePhone('nepal'))} className="text-cyan-600 hover:text-cyan-800 text-sm block">
-                  📞 {getOfficePhone('nepal')}
+                <a href={getTelHref(getOfficePhone('nepal'))} className="text-cyan-600 hover:text-cyan-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{getOfficePhone('nepal')}</span>
                 </a>
-                <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 text-sm block">
-                  💬 WhatsApp: {getOfficePhone('nepal')}
+                <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp: {getOfficePhone('nepal')}</span>
                 </a>
               </div>
             </div>
@@ -346,18 +368,23 @@ const LeadGeneration = () => {
                 <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Multi-Channel</span>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a href={getTelHref(getPrimaryPhone())} className="text-teal-600 hover:text-teal-800 text-sm block">
-                  📞 {getPrimaryPhone()}
+                <a href={getTelHref(getPrimaryPhone())} className="text-teal-600 hover:text-teal-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{getPrimaryPhone()}</span>
                 </a>
-                <a href={getMailtoHref(getBusinessEmail())} className="text-teal-600 hover:text-teal-800 text-sm block">
-                  📧 {getBusinessEmail()}
+                <a href={getMailtoHref(getBusinessEmail())} className="text-teal-600 hover:text-teal-800 text-sm block inline-flex items-center justify-center gap-1">
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{getBusinessEmail()}</span>
                 </a>
               </div>
             </div>
           </div>
 
           <div className="mt-8 text-center bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6">
-            <h4 className="font-bold text-gray-800 mb-2">🏆 Lead Generation Results</h4>
+            <h4 className="font-bold text-gray-800 mb-2 flex items-center justify-center gap-2">
+              <Trophy className="w-5 h-5 text-yellow-600" />
+              <span>Lead Generation Results</span>
+            </h4>
             <p className="text-gray-600 text-sm">
               Our team has generated 10,000+ qualified leads for 300+ clients across India and Nepal
             </p>
@@ -392,8 +419,9 @@ const LeadGeneration = () => {
               return (
                 <div key={office.id} className={`bg-gradient-to-br ${bgGradient} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 relative`}>
                   {office.isHeadOffice && (
-                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
-                      ★ HEAD OFFICE
+                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-gray-900" />
+                      <span>HEAD OFFICE</span>
                     </div>
                   )}
                   <div className="text-4xl mb-4">{office.flag}</div>
@@ -462,20 +490,23 @@ const LeadGeneration = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { channel: 'LinkedIn', icon: '💼', color: 'bg-blue-100 text-blue-700' },
-              { channel: 'Email', icon: '✉️', color: 'bg-red-100 text-red-700' },
-              { channel: 'Facebook', icon: '📱', color: 'bg-blue-100 text-blue-700' },
-              { channel: 'Instagram', icon: '📸', color: 'bg-pink-100 text-pink-700' },
-              { channel: 'Website', icon: '🌐', color: 'bg-purple-100 text-purple-700' },
-              { channel: 'WhatsApp', icon: '💬', color: 'bg-green-100 text-green-700' },
-              { channel: 'SEO', icon: '🔍', color: 'bg-yellow-100 text-yellow-700' },
-              { channel: 'Referrals', icon: '🤝', color: 'bg-indigo-100 text-indigo-700' },
-            ].map((item, index) => (
-              <div key={index} className={`${item.color} p-4 rounded-xl text-center hover:shadow-lg transition-all hover:-translate-y-1`}>
-                <div className="text-2xl mb-2">{item.icon}</div>
-                <div className="font-semibold text-sm">{item.channel}</div>
-              </div>
-            ))}
+              { channel: 'LinkedIn', icon: FaLinkedin, color: 'bg-blue-100 text-blue-700' },
+              { channel: 'Email', icon: Mail, color: 'bg-red-100 text-red-700' },
+              { channel: 'Facebook', icon: FaFacebook, color: 'bg-blue-100 text-blue-700' },
+              { channel: 'Instagram', icon: FaInstagram, color: 'bg-pink-100 text-pink-700' },
+              { channel: 'Website', icon: Globe, color: 'bg-purple-100 text-purple-700' },
+              { channel: 'WhatsApp', icon: FaWhatsapp, color: 'bg-green-100 text-green-700' },
+              { channel: 'SEO', icon: Search, color: 'bg-yellow-100 text-yellow-700' },
+              { channel: 'Referrals', icon: LucideUsers, color: 'bg-indigo-100 text-indigo-700' },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className={`${item.color} p-4 rounded-xl text-center hover:shadow-lg transition-all hover:-translate-y-1`}>
+                  <div className="text-2xl mb-2 flex justify-center"><Icon className="w-6 h-6" /></div>
+                  <div className="font-semibold text-sm">{item.channel}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -558,8 +589,9 @@ const LeadGeneration = () => {
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative hover:shadow-xl transition-all hover:-translate-y-2 flex flex-col justify-between`}>
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-lg">
-                    ⭐ MOST POPULAR
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-lg flex items-center gap-1">
+                    <FaStar className="text-yellow-300" />
+                    <span>MOST POPULAR</span>
                   </div>
                 )}
                 <div>
@@ -606,64 +638,73 @@ const LeadGeneration = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-blue-600 mx-auto mb-4">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-blue-600 mx-auto mb-4 font-bold">
                 VS
               </div>
               <h3 className="text-xl font-bold mb-1">Vivek Singh</h3>
               <p className="text-sm opacity-90 mb-3">Lead Gen Director</p>
-              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block">
-                📞 {getPrimaryPhone()}
+              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getPrimaryPhone()}</span>
               </a>
-              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-blue-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all relative">
-              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold">
-                ★ HEAD OFFICE
+              <div className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <Star className="w-2.5 h-2.5 fill-gray-900" />
+                <span>HEAD OFFICE</span>
               </div>
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-cyan-600 mx-auto mb-4">
+              <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
                 VS
               </div>
               <h3 className="text-xl font-bold mb-1">Vikash Singh</h3>
               <p className="text-sm opacity-90 mb-3">Lead Gen Manager - Nepal</p>
-              <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-cyan-200 text-sm block">
-                📞 {getOfficePhone('nepal')}
+              <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-cyan-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getOfficePhone('nepal')}</span>
               </a>
-              <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-200 text-sm block">
-                💬 WhatsApp: {getOfficePhone('nepal')}
+              <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-200 text-sm block inline-flex items-center justify-center gap-1">
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>WhatsApp: {getOfficePhone('nepal')}</span>
               </a>
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/20 transition-all">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-teal-600 mx-auto mb-4">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-teal-600 mx-auto mb-4 font-bold">
                 GS
               </div>
               <h3 className="text-xl font-bold mb-1">Growth Service</h3>
               <p className="text-sm opacity-90 mb-3">Lead Gen Support Team</p>
-              <a href={getTelHref(getOfficePhone('jaipur'))} className="text-white hover:text-teal-200 text-sm block">
-                📞 {getOfficePhone('jaipur')}
+              <a href={getTelHref(getOfficePhone('jaipur'))} className="text-white hover:text-teal-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getOfficePhone('jaipur')}</span>
               </a>
-              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-teal-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-teal-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
           </div>
           
           <div className="text-center mt-8">
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg inline-flex items-center justify-center gap-2"
               >
-                🔍 Get Free Lead Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free Lead Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Book Strategy Session
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Session</span>
               </Link>
             </div>
           </div>

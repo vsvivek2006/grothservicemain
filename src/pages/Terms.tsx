@@ -273,19 +273,19 @@ const Terms: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Clear pricing with no hidden fees</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Professional deliverables with ownership transfer</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Timely delivery with progress updates</span>
               </div>
@@ -294,19 +294,19 @@ const Terms: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Data protection and confidentiality</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Ongoing support and maintenance</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Transparent communication channels</span>
               </div>

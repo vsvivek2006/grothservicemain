@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Shield, Clock, MessageCircle, Code, Award, Calendar, Sparkles } from 'lucide-react';
+import { 
+  Check, Shield, Clock, MessageCircle, Code, Award, 
+  Calendar, Sparkles, Globe, Search, Share2, MapPin, Rocket, X 
+} from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { Container, Section } from '../components/ui';
 import { getNepalWhatsAppUrl } from '../services';
@@ -25,12 +28,12 @@ const Pricing: React.FC = () => {
 
   // Tabs for filtering
   const tabs = [
-    { id: 'all', name: 'All Services', icon: '🌟' },
-    { id: 'web', name: 'Website', icon: '🌐' },
-    { id: 'seo', name: 'SEO', icon: '🔍' },
-    { id: 'smm', name: 'Social Media', icon: '📱' },
-    { id: 'gmb', name: 'Google Business', icon: '📍' },
-    { id: 'combo', name: 'Integrated Solutions', icon: '🚀' }
+    { id: 'all', name: 'All Services', Icon: Sparkles },
+    { id: 'web', name: 'Website', Icon: Globe },
+    { id: 'seo', name: 'SEO', Icon: Search },
+    { id: 'smm', name: 'Social Media', Icon: Share2 },
+    { id: 'gmb', name: 'Google Business', Icon: MapPin },
+    { id: 'combo', name: 'Integrated Solutions', Icon: Rocket }
   ];
 
   // Website Development Services
@@ -372,8 +375,8 @@ const Pricing: React.FC = () => {
                     : 'bg-slate-100 text-slate-700 hover:bg-purple-50 hover:text-purple-700'
                 }`}
               >
-                <span>{tab.icon}</span>
-                {tab.name}
+                <tab.Icon className="w-4 h-4" />
+                <span>{tab.name}</span>
               </button>
             ))}
           </div>
@@ -658,10 +661,10 @@ const Pricing: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setSelectedService(null)}
-                  className="text-slate-400 hover:text-slate-700 text-2xl p-1"
+                  className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100"
                   aria-label="Close dialog"
                 >
-                  ✕
+                  <X className="w-6 h-6" />
                 </button>
               </div>
 

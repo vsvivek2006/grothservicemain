@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { 
   ShieldCheck, Award, Star, Share2, Target, 
-  Search, Layout, TrendingUp, ShoppingCart, Palette 
+  Search, Layout, TrendingUp, ShoppingCart, Palette, Heart
 } from "lucide-react";
 import { getBusinessName, getBusinessTagline } from "../../selectors";
 
@@ -100,8 +100,11 @@ export const FooterBottom: React.FC = () => {
         <p className="text-gray-500 text-[10px]">
           {businessName} is a registered digital marketing agency. All trademarks, logos and brand names are the property of their respective owners.
         </p>
-        <p className="text-gray-600 text-[10px] mt-1">
-          Made with ❤️ for growing businesses • <Link to="/contact" className="text-purple-400 hover:text-purple-300 transition-colors">Partner with us</Link>
+        <p className="text-gray-600 text-[10px] mt-1 inline-flex items-center justify-center gap-1">
+          <span>Made with</span>
+          <Heart className="w-3 h-3 text-red-500 fill-red-500 inline" />
+          <span>for growing businesses •</span>
+          <Link to="/contact" className="text-purple-400 hover:text-purple-300 transition-colors ml-1">Partner with us</Link>
         </p>
       </div>
     </div>

@@ -74,16 +74,18 @@ export const OfficeDetailPage: React.FC = () => {
 
         <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
-            <Breadcrumb
-              items={[
-                { label: 'Offices', path: '/offices' },
-                { label: office.name }
-              ]}
-              className="text-purple-300 mb-6"
-            />
+            <div className="flex justify-center">
+              <Breadcrumb
+                items={[
+                  { label: 'Offices', path: '/offices' },
+                  { label: office.name }
+                ]}
+                className="text-purple-300 mb-6"
+              />
+            </div>
 
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
                 <span className="text-3xl" role="img" aria-label="Flag">{office.flag}</span>
                 <div className="inline-flex items-center gap-2 bg-purple-900/70 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full">
                   <Building2 className="w-4 h-4 text-yellow-400" />
@@ -98,21 +100,21 @@ export const OfficeDetailPage: React.FC = () => {
                 {office.name}
               </h1>
 
-              <p className="text-lg sm:text-xl text-purple-200 font-medium mb-6">
+              <p className="text-lg sm:text-xl text-purple-200 font-medium mb-6 max-w-2xl">
                 {office.tagline}
               </p>
 
-              <p className="text-base sm:text-lg text-slate-300 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
                 {office.description}
               </p>
 
-              <div className="flex flex-wrap gap-4 items-center">
+              <div className="flex flex-wrap gap-4 items-center justify-center">
                 <Button
                   href={whatsappUrl}
                   isExternal
                   variant="whatsapp"
                   size="lg"
-                  icon={<Phone className="w-5 h-5" />}
+                  icon={<WhatsAppIcon className="w-5 h-5" />}
                 >
                   Chat on WhatsApp
                 </Button>
@@ -192,8 +194,9 @@ export const OfficeDetailPage: React.FC = () => {
                     {office.email}
                   </a>
                 </p>
-                <span className="inline-flex items-center gap-1 text-xs text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  ✓ Verified Contact Line
+                <span className="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Verified Contact Line</span>
                 </span>
               </Card>
             </StaggerItem>
@@ -292,8 +295,9 @@ export const OfficeDetailPage: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-2">
                 {office.areasServed.map((area, idx) => (
-                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors">
-                    📍 {area}
+                  <span key={idx} className="bg-purple-50 text-purple-800 text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg border border-purple-200 hover:bg-purple-100/80 transition-colors inline-flex items-center gap-1.5">
+                    <MapPin className="w-3 h-3 text-purple-600 shrink-0" />
+                    <span>{area}</span>
                   </span>
                 ))}
               </div>

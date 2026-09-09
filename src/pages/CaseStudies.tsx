@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { ExternalLink, Calendar, Users, Target, Globe, CheckCircle, ArrowRight, X } from 'lucide-react';
+import { 
+  ExternalLink, Calendar, Users, Target, Globe, CheckCircle, ArrowRight, X,
+  MapPin, Compass, Landmark, Building2, TrendingUp, Award,
+  ShoppingBag, Palette, Package, Utensils, Smartphone, BarChart3,
+  GraduationCap, BookOpen, School, Sparkles, Megaphone, DollarSign
+} from 'lucide-react';
 import { Container, Section } from '../components/ui';
 import { getNepalWhatsAppUrl } from '../services';
 
@@ -38,7 +43,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Website delivered in just 10 days! Online bookings increased by 200% in first month. Highly professional team.",
       testimonialAuthor: "Rajesh Kumar",
       testimonialRole: "Owner, Braj Darshan Tours",
-      images: ["🏞️", "🗺️", "🏛️"]
+      images: [
+        { label: "Destinations", icon: Compass },
+        { label: "Tour Packages", icon: MapPin },
+        { label: "Heritage Sites", icon: Landmark }
+      ]
     },
     {
       id: 2,
@@ -69,7 +78,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "SEO campaign brought 300% more organic traffic and direct bookings increased significantly. Excellent results!",
       testimonialAuthor: "Priya Sharma",
       testimonialRole: "Manager, Radhe Krishna Guest House",
-      images: ["🏨", "📈", "🌟"]
+      images: [
+        { label: "Guest Rooms", icon: Building2 },
+        { label: "Organic Reach", icon: TrendingUp },
+        { label: "Top Rated", icon: Award }
+      ]
     },
     {
       id: 3,
@@ -100,7 +113,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Our handicrafts now reach customers across India. The website is user-friendly and sales have increased dramatically.",
       testimonialAuthor: "Amit Patel",
       testimonialRole: "Owner, Vrindavan Handicrafts",
-      images: ["🛍️", "🎨", "📦"]
+      images: [
+        { label: "Online Store", icon: ShoppingBag },
+        { label: "Brand Design", icon: Palette },
+        { label: "Packaging", icon: Package }
+      ]
     },
     {
       id: 4,
@@ -131,7 +148,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Social media management increased our restaurant's popularity significantly. More tourists now visit us based on online reviews.",
       testimonialAuthor: "Rohit Singh",
       testimonialRole: "Manager, Govinda's Restaurant",
-      images: ["🍽️", "📱", "📊"]
+      images: [
+        { label: "Digital Menu", icon: Utensils },
+        { label: "Mobile Orders", icon: Smartphone },
+        { label: "Performance", icon: BarChart3 }
+      ]
     },
     {
       id: 5,
@@ -162,7 +183,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Professional website helped us attract more students and streamline admission process. Great work!",
       testimonialAuthor: "Dr. Meera Sharma",
       testimonialRole: "Principal, Braj Education Academy",
-      images: ["🎓", "📚", "🏫"]
+      images: [
+        { label: "Campus Portal", icon: School },
+        { label: "Course Library", icon: BookOpen },
+        { label: "Admissions", icon: GraduationCap }
+      ]
     },
     {
       id: 6,
@@ -193,7 +218,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Facebook ads brought amazing results! Our online orders increased by 300% in just 2 months.",
       testimonialAuthor: "Sanjay Gupta",
       testimonialRole: "Owner, Mathura Sweets",
-      images: ["🍬", "📢", "💰"]
+      images: [
+        { label: "Specialty Sweets", icon: Sparkles },
+        { label: "Ad Campaigns", icon: Megaphone },
+        { label: "Revenue Surge", icon: DollarSign }
+      ]
     }
   ];
 
@@ -475,13 +504,17 @@ const CaseStudies: React.FC = () => {
 
               {/* Modal Content */}
               <div className="p-6">
-                {/* Images Preview */}
-                <div className="flex gap-3 mb-8">
-                  {selectedStudy.images.map((image, index) => (
-                    <div key={index} className="text-4xl bg-gray-100 p-6 rounded-xl">
-                      {image}
-                    </div>
-                  ))}
+                {/* Highlights Preview */}
+                <div className="grid grid-cols-3 gap-3 mb-8">
+                  {selectedStudy.images.map((item, index) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <div key={index} className="flex flex-col items-center justify-center bg-gray-50 border border-gray-100 p-4 rounded-xl text-center">
+                        <IconComponent className="h-8 w-8 text-purple-600 mb-2" />
+                        <span className="text-xs font-semibold text-gray-700">{item.label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Key Metrics */}

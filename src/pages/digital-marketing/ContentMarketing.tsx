@@ -25,6 +25,30 @@ import {
   FaGem,
   FaCrown
 } from 'react-icons/fa';
+import {
+  MapPin,
+  Search,
+  Phone,
+  Star,
+  FileText,
+  Globe,
+  Check,
+  Video,
+  BarChart3,
+  ClipboardList,
+  BookOpen,
+  Mail,
+  Smartphone,
+  Mic,
+  Radio,
+  CheckSquare,
+  Layers,
+  MessageCircle,
+  Sparkles,
+  Edit3,
+  Zap,
+  Share2
+} from 'lucide-react';
 import { getPhysicalOffices, getPrimaryPhone, getOfficePhone, getBusinessEmail, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../../services';
 
@@ -54,9 +78,9 @@ const ContentMarketing = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex flex-wrap justify-center gap-2 mb-4">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Jaipur</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Vrindavan</span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">📍 Nepal</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Jaipur</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Vrindavan</span>
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Nepal</span>
             </div>
             <div className="flex justify-center mb-6">
               <FaPenAlt className="text-5xl" />
@@ -68,24 +92,26 @@ const ContentMarketing = () => {
               Create compelling content that attracts, engages, and converts your target audience. 
               Trusted by <strong className="text-yellow-300">300+ happy clients</strong> across India and Nepal.
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-teal-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl"
+                className="bg-white text-teal-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
               >
-                🔍 Get Free Content Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free Content Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-teal-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-teal-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Book Strategy Session
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Session</span>
               </Link>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
-              <span className="flex items-center gap-1">⭐ 300+ Happy Clients</span>
-              <span className="flex items-center gap-1">📝 5000+ Content Pieces</span>
-              <span className="flex items-center gap-1">🌍 3 Office Locations</span>
+              <span className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-300" /> 300+ Happy Clients</span>
+              <span className="flex items-center gap-1"><FileText className="w-4 h-4 text-yellow-300" /> 5000+ Content Pieces</span>
+              <span className="flex items-center gap-1"><Globe className="w-4 h-4 text-yellow-300" /> 3 Office Locations</span>
             </div>
           </div>
         </div>
@@ -148,9 +174,9 @@ const ContentMarketing = () => {
               Comprehensive content solutions for every stage of the customer journey from our 3 office locations
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm">📍 Jaipur Office</span>
-              <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm">📍 Vrindavan Office</span>
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">📍 Nepal Office</span>
+              <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Jaipur Office</span>
+              <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Vrindavan Office</span>
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm inline-flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Nepal Office</span>
             </div>
           </div>
 
@@ -161,11 +187,11 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Blog Content Creation</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ SEO-optimized blog posts</li>
-                <li>✓ Industry research articles</li>
-                <li>✓ How-to guides & tutorials</li>
-                <li>✓ Thought leadership pieces</li>
-                <li>✓ Content calendar management</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> SEO-optimized blog posts</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Industry research articles</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> How-to guides & tutorials</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Thought leadership pieces</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Content calendar management</li>
               </ul>
               <div className="mt-4 text-xs text-teal-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -176,11 +202,11 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Video Content Production</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Explainer videos</li>
-                <li>✓ Product demonstrations</li>
-                <li>✓ Customer testimonials</li>
-                <li>✓ Social media shorts</li>
-                <li>✓ YouTube channel management</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Explainer videos</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Product demonstrations</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Customer testimonials</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Social media shorts</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> YouTube channel management</li>
               </ul>
               <div className="mt-4 text-xs text-blue-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -191,11 +217,11 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Copywriting Services</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Website copywriting</li>
-                <li>✓ Email marketing campaigns</li>
-                <li>✓ Social media captions</li>
-                <li>✓ Sales pages & landing pages</li>
-                <li>✓ Ad copy creation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Website copywriting</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Email marketing campaigns</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Social media captions</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Sales pages & landing pages</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Ad copy creation</li>
               </ul>
               <div className="mt-4 text-xs text-purple-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -206,11 +232,11 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Content Strategy</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Content audit & analysis</li>
-                <li>✓ Buyer persona development</li>
-                <li>✓ Content funnel mapping</li>
-                <li>✓ Editorial calendar creation</li>
-                <li>✓ Performance measurement</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Content audit & analysis</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Buyer persona development</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Content funnel mapping</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Editorial calendar creation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Performance measurement</li>
               </ul>
               <div className="mt-4 text-xs text-red-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -221,11 +247,11 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Social Media Content</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Platform-specific content</li>
-                <li>✓ Visual content creation</li>
-                <li>✓ Carousel posts & infographics</li>
-                <li>✓ Story/Reels content</li>
-                <li>✓ Content repurposing</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Platform-specific content</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Visual content creation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Carousel posts & infographics</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Story/Reels content</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Content repurposing</li>
               </ul>
               <div className="mt-4 text-xs text-yellow-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -236,11 +262,11 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Content Distribution</h3>
               <ul className="text-gray-600 space-y-2 text-sm">
-                <li>✓ Content syndication</li>
-                <li>✓ Guest posting outreach</li>
-                <li>✓ Email newsletter creation</li>
-                <li>✓ Content promotion strategy</li>
-                <li>✓ Influencer collaboration</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Content syndication</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Guest posting outreach</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Email newsletter creation</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Content promotion strategy</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-teal-600 shrink-0" /> Influencer collaboration</li>
               </ul>
               <div className="mt-4 text-xs text-indigo-600">Available in Jaipur • Vrindavan • Nepal</div>
             </div>
@@ -262,24 +288,27 @@ const ContentMarketing = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
-              { type: 'Blog Posts', icon: '📝' },
-              { type: 'Video Content', icon: '🎥' },
-              { type: 'Infographics', icon: '📊' },
-              { type: 'Case Studies', icon: '📋' },
-              { type: 'E-books', icon: '📚' },
-              { type: 'Whitepapers', icon: '📄' },
-              { type: 'Email Newsletters', icon: '✉️' },
-              { type: 'Social Posts', icon: '📱' },
-              { type: 'Webinars', icon: '🎤' },
-              { type: 'Podcasts', icon: '🎙️' },
-              { type: 'Checklists', icon: '✅' },
-              { type: 'Templates', icon: '📑' },
-            ].map((content, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-teal-300 transition-colors hover:shadow-lg hover:-translate-y-1">
-                <div className="text-2xl mb-2">{content.icon}</div>
-                <div className="text-gray-700 font-medium text-sm">{content.type}</div>
-              </div>
-            ))}
+              { type: 'Blog Posts', icon: FileText },
+              { type: 'Video Content', icon: Video },
+              { type: 'Infographics', icon: BarChart3 },
+              { type: 'Case Studies', icon: ClipboardList },
+              { type: 'E-books', icon: BookOpen },
+              { type: 'Whitepapers', icon: FileText },
+              { type: 'Email Newsletters', icon: Mail },
+              { type: 'Social Posts', icon: Smartphone },
+              { type: 'Webinars', icon: Mic },
+              { type: 'Podcasts', icon: Radio },
+              { type: 'Checklists', icon: CheckSquare },
+              { type: 'Templates', icon: Layers },
+            ].map((content, index) => {
+              const Icon = content.icon;
+              return (
+                <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-teal-300 transition-colors hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex justify-center text-teal-600 mb-2"><Icon className="w-6 h-6" /></div>
+                  <div className="text-gray-700 font-medium text-sm">{content.type}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -447,8 +476,9 @@ const ContentMarketing = () => {
               return (
                 <div key={office.id} className={`bg-gradient-to-br ${bgGradient} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 relative`}>
                   {office.isHeadOffice && (
-                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold">
-                      ★ HEAD OFFICE
+                    <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs px-2 py-1 rounded-full font-bold flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-gray-900" />
+                      <span>HEAD OFFICE</span>
                     </div>
                   )}
                   <div className="text-4xl mb-4">{office.flag}</div>
@@ -486,21 +516,24 @@ const ContentMarketing = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {[
-              { step: 1, title: 'Research', desc: 'Audience & topic research', icon: '🔍' },
-              { step: 2, title: 'Strategy', desc: 'Content plan & calendar', icon: '📋' },
-              { step: 3, title: 'Creation', desc: 'Content writing & production', icon: '✍️' },
-              { step: 4, title: 'Optimization', desc: 'SEO & performance tuning', icon: '⚡' },
-              { step: 5, title: 'Distribution', desc: 'Promotion & sharing', icon: '📢' },
-            ].map((item) => (
-              <div key={item.step} className="text-center hover:scale-105 transition-all">
-                <div className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
-                  {item.step}
+              { step: 1, title: 'Research', desc: 'Audience & topic research', icon: Search },
+              { step: 2, title: 'Strategy', desc: 'Content plan & calendar', icon: ClipboardList },
+              { step: 3, title: 'Creation', desc: 'Content writing & production', icon: Edit3 },
+              { step: 4, title: 'Optimization', desc: 'SEO & performance tuning', icon: Zap },
+              { step: 5, title: 'Distribution', desc: 'Promotion & sharing', icon: Share2 },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.step} className="text-center hover:scale-105 transition-all">
+                  <div className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                    {item.step}
+                  </div>
+                  <div className="flex justify-center text-teal-600 mb-2"><Icon className="w-6 h-6" /></div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
-                <div className="text-2xl mb-2">{item.icon}</div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -554,11 +587,13 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-bold mb-1">Vivek Singh</h3>
               <p className="text-sm opacity-90 mb-3">Content Strategy Manager</p>
-              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-teal-200 text-sm block">
-                📞 {getPrimaryPhone()}
+              <a href={getTelHref(getPrimaryPhone())} className="text-white hover:text-teal-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getPrimaryPhone()}</span>
               </a>
-              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-teal-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-teal-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
             
@@ -571,11 +606,13 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-bold mb-1">Vikash Singh</h3>
               <p className="text-sm opacity-90 mb-3">Content Lead - Nepal</p>
-              <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-emerald-200 text-sm block">
-                📞 {getOfficePhone('nepal')}
+              <a href={getTelHref(getOfficePhone('nepal'))} className="text-white hover:text-emerald-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getOfficePhone('nepal')}</span>
               </a>
-              <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-emerald-200 text-sm block">
-                💬 WhatsApp: {getOfficePhone('nepal')}
+              <a href={getNepalWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-white hover:text-emerald-200 text-sm block inline-flex items-center justify-center gap-1">
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>WhatsApp: {getOfficePhone('nepal')}</span>
               </a>
             </div>
 
@@ -585,28 +622,32 @@ const ContentMarketing = () => {
               </div>
               <h3 className="text-xl font-bold mb-1">Growth Service</h3>
               <p className="text-sm opacity-90 mb-3">Content Support Team</p>
-              <a href={getTelHref(getOfficePhone('jaipur'))} className="text-white hover:text-green-200 text-sm block">
-                📞 {getOfficePhone('jaipur')}
+              <a href={getTelHref(getOfficePhone('jaipur'))} className="text-white hover:text-green-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Phone className="w-3.5 h-3.5" />
+                <span>{getOfficePhone('jaipur')}</span>
               </a>
-              <a href={getMailtoHref(getOfficePhone('jaipur'))} className="text-white hover:text-green-200 text-sm block">
-                📧 {getBusinessEmail()}
+              <a href={getMailtoHref(getBusinessEmail())} className="text-white hover:text-green-200 text-sm block inline-flex items-center justify-center gap-1">
+                <Mail className="w-3.5 h-3.5" />
+                <span>{getBusinessEmail()}</span>
               </a>
             </div>
           </div>
           
           <div className="text-center mt-8">
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/free-audit"
-                className="bg-white text-teal-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg"
+                className="bg-white text-teal-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg inline-flex items-center gap-2"
               >
-                🔍 Get Free Content Audit
+                <Search className="w-5 h-5" />
+                <span>Get Free Content Audit</span>
               </Link>
               <Link
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-teal-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-teal-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Book Strategy Session
+                <Phone className="w-5 h-5" />
+                <span>Book Strategy Session</span>
               </Link>
             </div>
           </div>
@@ -623,31 +664,35 @@ const ContentMarketing = () => {
             <p className="text-xl text-gray-600 mb-8">
               Let's create content that drives traffic, generates leads, and grows your business across Jaipur, Vrindavan, and Nepal
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
-                className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white hover:opacity-90 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg"
+                className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white hover:opacity-90 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg inline-flex items-center gap-2"
               >
-                📝 Book Free Content Audit
+                <FileText className="w-5 h-5" />
+                <span>Book Free Content Audit</span>
               </Link>
               <a
                 href={getTelHref(getPrimaryPhone())}
-                className="bg-gray-100 text-gray-800 hover:bg-gray-200 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-gray-100 text-gray-800 hover:bg-gray-200 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: {getPrimaryPhone()}
+                <Phone className="w-5 h-5" />
+                <span>Call: {getPrimaryPhone()}</span>
               </a>
               <a
                 href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Strategy Call
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Strategy Call</span>
               </a>
             </div>
             <div className="mt-8 bg-gradient-to-r from-teal-50 to-emerald-50 p-4 rounded-lg inline-block border border-teal-200">
-              <p className="text-teal-800">
-                <span className="font-semibold">🎉 Special Offer:</span> Get 2 free blog posts with 3-month commitment
+              <p className="text-teal-800 inline-flex items-center gap-2">
+                <span className="font-semibold inline-flex items-center gap-1.5"><Sparkles className="w-4 h-4 text-teal-600" /> Special Offer:</span>
+                <span>Get 2 free blog posts with 3-month commitment</span>
               </p>
             </div>
           </div>

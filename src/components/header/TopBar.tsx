@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Phone, MessageCircle, Mail, MapPin, Building, Zap } from "lucide-react";
-import { Container } from "../ui";
+import { Phone, Mail, MapPin, Building, Zap } from "lucide-react";
+import { Container, WhatsAppIcon } from "../ui";
 import { getPhysicalOffices, getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../../selectors";
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from "../../services";
 
@@ -44,20 +44,20 @@ export const TopBar: React.FC = () => {
     { 
       name: `India: ${primaryPhone}`, 
       href: getTelHref(primaryPhone), 
-      icon: <Phone className="h-4 w-4" />,
+      icon: <Phone className="h-3.5 w-3.5" />,
       location: "🇮🇳 Jaipur & Vrindavan Offices"
     },
     { 
       name: `Nepal: ${nepalPhone}`, 
       href: getNepalWhatsAppUrl(), 
-      icon: <MessageCircle className="h-4 w-4" />,
-      location: "🇳🇵 Nepal Office"
+      icon: <WhatsAppIcon className="h-3.5 w-3.5 text-emerald-300" />,
+      location: "🇳🇵 Nepal Office (WhatsApp)"
     },
     { 
       name: `Email: ${businessEmail}`, 
       href: getMailtoHref(businessEmail), 
-      icon: <Mail className="h-4 w-4" />,
-      location: "🌐 Global Support"
+      icon: <Mail className="h-3.5 w-3.5" />,
+      location: "Global Support"
     }
   ];
 
@@ -84,11 +84,11 @@ export const TopBar: React.FC = () => {
           </div>
 
           {/* Center - Animated Text */}
-          <div className="flex items-center justify-center flex-1">
-            <div className="bg-white/10 backdrop-blur-sm px-3 py-0.5 rounded-full border border-white/15">
-              <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center flex-1 min-w-0">
+            <div className="bg-white/10 backdrop-blur-sm px-2.5 sm:px-3 py-0.5 rounded-full border border-white/15 max-w-[220px] sm:max-w-none">
+              <div className="flex items-center space-x-1.5 sm:space-x-2 overflow-hidden">
                 <Zap className="h-3 w-3 text-yellow-300 animate-pulse shrink-0" />
-                <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent font-bold text-xs whitespace-nowrap">
+                <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent font-bold text-[11px] sm:text-xs truncate">
                   {animatedText}
                 </span>
                 <Zap className="h-3 w-3 text-yellow-300 animate-pulse shrink-0" />

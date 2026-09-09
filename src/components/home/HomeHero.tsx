@@ -120,8 +120,12 @@ export const HomeHero: React.FC = () => {
           <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
             Client Rating
           </div>
-          <div className="text-[11px] text-amber-300/80 mt-1 flex items-center gap-1">
-            <span>★★★★★</span>
+          <div className="text-[11px] text-amber-300/80 mt-1 flex items-center gap-1.5">
+            <span className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+              ))}
+            </span>
             <span>Verified Feedback</span>
           </div>
         </div>

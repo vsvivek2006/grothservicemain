@@ -128,7 +128,7 @@ function App() {
     <Router>
       <ScrollToTop />
 
-      <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+      <div className="min-h-screen bg-slate-50 flex flex-col justify-between overflow-x-hidden w-full max-w-[100vw]">
         <Header />
         <main className="flex-grow">
           <Suspense fallback={<LoadingFallback />}>

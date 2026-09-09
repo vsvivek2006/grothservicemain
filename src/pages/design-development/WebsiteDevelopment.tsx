@@ -4,6 +4,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaCode, FaMobileAlt, FaShoppingCart, FaRocket, FaShieldAlt, FaSearch, FaPalette, FaServer, FaChartLine, FaLaptopCode } from 'react-icons/fa';
+import {
+  Check,
+  Search,
+  Palette,
+  Code,
+  TestTube,
+  Rocket,
+  Shield,
+  Phone,
+  MessageCircle,
+  Clock,
+  CheckCircle2,
+  RefreshCw
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const WebsiteDevelopment = () => {
   return (
@@ -223,22 +239,25 @@ const WebsiteDevelopment = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { step: 1, title: 'Discovery & Planning', desc: 'Requirements gathering & strategy', icon: '🔍' },
-              { step: 2, title: 'UI/UX Design', desc: 'Wireframes & prototypes', icon: '🎨' },
-              { step: 3, title: 'Development', desc: 'Coding & implementation', icon: '💻' },
-              { step: 4, title: 'Testing', desc: 'Quality assurance & bug fixes', icon: '🧪' },
-              { step: 5, title: 'Launch', desc: 'Deployment & go-live', icon: '🚀' },
-              { step: 6, title: 'Maintenance', desc: 'Support & updates', icon: '🛡️' },
-            ].map((item) => (
-              <div key={item.step} className="bg-white p-8 rounded-xl text-center">
-                <div className="text-3xl mb-4">{item.icon}</div>
-                <div className="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
-                  {item.step}
+              { step: 1, title: 'Discovery & Planning', desc: 'Requirements gathering & strategy', icon: Search },
+              { step: 2, title: 'UI/UX Design', desc: 'Wireframes & prototypes', icon: Palette },
+              { step: 3, title: 'Development', desc: 'Coding & implementation', icon: Code },
+              { step: 4, title: 'Testing', desc: 'Quality assurance & bug fixes', icon: TestTube },
+              { step: 5, title: 'Launch', desc: 'Deployment & go-live', icon: Rocket },
+              { step: 6, title: 'Maintenance', desc: 'Support & updates', icon: Shield },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.step} className="bg-white p-8 rounded-xl text-center">
+                  <div className="flex justify-center text-indigo-600 mb-4"><Icon className="w-8 h-8" /></div>
+                  <div className="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                    {item.step}
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -351,7 +370,7 @@ const WebsiteDevelopment = () => {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -384,7 +403,7 @@ const WebsiteDevelopment = () => {
             <p className="text-xl mb-8 opacity-90">
               Let's discuss your project and create a website that drives results
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -392,31 +411,42 @@ const WebsiteDevelopment = () => {
                 Book Free Consultation
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Quote
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Quote</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">⏰ Fast Delivery</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Clock className="w-4 h-4 text-indigo-200" />
+                  <span>Fast Delivery</span>
+                </div>
                 <div className="text-sm opacity-90">2-4 weeks typical timeline</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">✅ Satisfaction Guarantee</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <CheckCircle2 className="w-4 h-4 text-indigo-200" />
+                  <span>Satisfaction Guarantee</span>
+                </div>
                 <div className="text-sm opacity-90">30-day post-launch support</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🔄 Free Revisions</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <RefreshCw className="w-4 h-4 text-indigo-200" />
+                  <span>Free Revisions</span>
+                </div>
                 <div className="text-sm opacity-90">Unlimited revisions during development</div>
               </div>
             </div>

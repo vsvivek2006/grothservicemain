@@ -4,6 +4,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaPaintBrush, FaDesktop, FaMobileAlt, FaUsers, FaRocket, FaPalette, FaLightbulb, FaChartLine, FaEye, FaMagic, FaPenAlt, FaCheckCircle } from 'react-icons/fa';
+import {
+  Check,
+  Laptop,
+  Smartphone,
+  ShoppingCart,
+  BarChart3,
+  Rocket,
+  Zap,
+  Building2,
+  Watch,
+  Search,
+  ClipboardList,
+  Palette,
+  RefreshCw,
+  TestTube,
+  Truck,
+  Users,
+  Sparkles,
+  Eye,
+  MessageSquare,
+  Lightbulb,
+  MousePointer,
+  Code,
+  Phone,
+  MessageCircle,
+  CheckCircle2
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const UIUXDesign = () => {
   return (
@@ -193,21 +222,24 @@ const UIUXDesign = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { platform: 'Web Applications', icon: '💻', desc: 'SaaS platforms & web apps' },
-              { platform: 'Mobile Apps', icon: '📱', desc: 'iOS & Android applications' },
-              { platform: 'E-commerce', icon: '🛒', desc: 'Online stores & marketplaces' },
-              { platform: 'Dashboards', icon: '📊', desc: 'Admin panels & analytics' },
-              { platform: 'Landing Pages', icon: '🚀', desc: 'High-converting pages' },
-              { platform: 'Progressive Web Apps', icon: '⚡', desc: 'Fast web experiences' },
-              { platform: 'Enterprise Software', icon: '🏢', desc: 'Business applications' },
-              { platform: 'Wearables', icon: '⌚', desc: 'Smartwatch & IoT interfaces' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200 hover:border-purple-300 transition-colors">
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <h3 className="font-semibold text-gray-800 mb-2">{item.platform}</h3>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
-              </div>
-            ))}
+              { platform: 'Web Applications', icon: Laptop, desc: 'SaaS platforms & web apps' },
+              { platform: 'Mobile Apps', icon: Smartphone, desc: 'iOS & Android applications' },
+              { platform: 'E-commerce', icon: ShoppingCart, desc: 'Online stores & marketplaces' },
+              { platform: 'Dashboards', icon: BarChart3, desc: 'Admin panels & analytics' },
+              { platform: 'Landing Pages', icon: Rocket, desc: 'High-converting pages' },
+              { platform: 'Progressive Web Apps', icon: Zap, desc: 'Fast web experiences' },
+              { platform: 'Enterprise Software', icon: Building2, desc: 'Business applications' },
+              { platform: 'Wearables', icon: Watch, desc: 'Smartwatch & IoT interfaces' },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200 hover:border-purple-300 transition-colors">
+                  <div className="text-purple-600 mb-3"><Icon className="w-8 h-8" /></div>
+                  <h3 className="font-semibold text-gray-800 mb-2">{item.platform}</h3>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -222,27 +254,30 @@ const UIUXDesign = () => {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
               {[
-                { step: 1, title: 'Discover', desc: 'Research & analysis', icon: '🔍' },
-                { step: 2, title: 'Define', desc: 'Strategy & planning', icon: '📋' },
-                { step: 3, title: 'Design', desc: 'Wireframes & visuals', icon: '🎨' },
-                { step: 4, title: 'Prototype', desc: 'Interactive models', icon: '🔄' },
-                { step: 5, title: 'Test', desc: 'User feedback & testing', icon: '🧪' },
-                { step: 6, title: 'Deliver', desc: 'Final assets & handoff', icon: '🚚' },
-              ].map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="relative mb-4">
-                    <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
-                      {item.step}
+                { step: 1, title: 'Discover', desc: 'Research & analysis', icon: Search },
+                { step: 2, title: 'Define', desc: 'Strategy & planning', icon: ClipboardList },
+                { step: 3, title: 'Design', desc: 'Wireframes & visuals', icon: Palette },
+                { step: 4, title: 'Prototype', desc: 'Interactive models', icon: RefreshCw },
+                { step: 5, title: 'Test', desc: 'User feedback & testing', icon: TestTube },
+                { step: 6, title: 'Deliver', desc: 'Final assets & handoff', icon: Truck },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.step} className="text-center">
+                    <div className="relative mb-4">
+                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
+                        {item.step}
+                      </div>
+                      {item.step < 6 && (
+                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-purple-200 transform -translate-y-1/2"></div>
+                      )}
                     </div>
-                    {item.step < 6 && (
-                      <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-purple-200 transform -translate-y-1/2"></div>
-                    )}
+                    <div className="flex justify-center text-purple-600 mb-2"><Icon className="w-6 h-6" /></div>
+                    <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-sm">{item.desc}</p>
                   </div>
-                  <div className="text-2xl mb-2">{item.icon}</div>
-                  <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -262,21 +297,24 @@ const UIUXDesign = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { principle: 'User-Centered', desc: 'Design for real user needs', icon: '👤' },
-              { principle: 'Simplicity', desc: 'Less is more in design', icon: '✨' },
-              { principle: 'Consistency', desc: 'Uniform patterns & behaviors', icon: '🔄' },
-              { principle: 'Accessibility', desc: 'Design for everyone', icon: '♿' },
-              { principle: 'Feedback', desc: 'Clear system responses', icon: '💬' },
-              { principle: 'Efficiency', desc: 'Minimize user effort', icon: '⚡' },
-              { principle: 'Aesthetics', desc: 'Beautiful visual experiences', icon: '🎨' },
-              { principle: 'Innovation', desc: 'Push creative boundaries', icon: '💡' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">{item.principle}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              { principle: 'User-Centered', desc: 'Design for real user needs', icon: Users },
+              { principle: 'Simplicity', desc: 'Less is more in design', icon: Sparkles },
+              { principle: 'Consistency', desc: 'Uniform patterns & behaviors', icon: RefreshCw },
+              { principle: 'Accessibility', desc: 'Design for everyone', icon: Eye },
+              { principle: 'Feedback', desc: 'Clear system responses', icon: MessageSquare },
+              { principle: 'Efficiency', desc: 'Minimize user effort', icon: Zap },
+              { principle: 'Aesthetics', desc: 'Beautiful visual experiences', icon: Palette },
+              { principle: 'Innovation', desc: 'Push creative boundaries', icon: Lightbulb },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="text-purple-600 mb-3"><Icon className="w-6 h-6" /></div>
+                  <h3 className="font-bold text-lg mb-2 text-gray-800">{item.principle}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -298,47 +336,50 @@ const UIUXDesign = () => {
               {
                 deliverable: 'Design System',
                 items: ['Color palette', 'Typography scale', 'Component library', 'Icon set'],
-                icon: '🎨'
+                icon: Palette
               },
               {
                 deliverable: 'Interactive Prototypes',
                 items: ['Clickable prototypes', 'User flow animations', 'Micro-interactions', 'Mobile gestures'],
-                icon: '🖱️'
+                icon: MousePointer
               },
               {
                 deliverable: 'Developer Handoff',
                 items: ['Design specs', 'Assets export', 'Style guides', 'Responsive guidelines'],
-                icon: '💻'
+                icon: Code
               },
               {
                 deliverable: 'Research Documentation',
                 items: ['User personas', 'Journey maps', 'Usability reports', 'Competitor analysis'],
-                icon: '📊'
+                icon: BarChart3
               },
               {
                 deliverable: 'Responsive Designs',
                 items: ['Mobile designs', 'Tablet layouts', 'Desktop views', 'Breakpoint specs'],
-                icon: '📱'
+                icon: Smartphone
               },
               {
                 deliverable: 'Accessibility Report',
                 items: ['WCAG compliance', 'Color contrast', 'Keyboard navigation', 'Screen reader support'],
-                icon: '♿'
+                icon: Eye
               },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-sm">
-                <div className="text-3xl mb-4">{item.icon}</div>
-                <h3 className="font-bold text-xl mb-4 text-gray-800">{item.deliverable}</h3>
-                <ul className="space-y-2">
-                  {item.items.map((subItem, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600">
-                      <span className="text-purple-500 mr-2">•</span>
-                      {subItem}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="text-purple-600 mb-4"><Icon className="w-8 h-8" /></div>
+                  <h3 className="font-bold text-xl mb-4 text-gray-800">{item.deliverable}</h3>
+                  <ul className="space-y-2">
+                    {item.items.map((subItem, idx) => (
+                      <li key={idx} className="flex items-center text-gray-600">
+                        <span className="text-purple-500 mr-2">•</span>
+                        {subItem}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -427,7 +468,7 @@ const UIUXDesign = () => {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -477,7 +518,7 @@ const UIUXDesign = () => {
                   'Improved customer satisfaction'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center">
-                    <span className="text-white mr-3">✓</span>
+                    <Check className="w-4 h-4 text-white mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -518,7 +559,7 @@ const UIUXDesign = () => {
             <p className="text-xl mb-8 opacity-90">
               Let's create beautiful, functional designs that users love and businesses thrive on
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -526,31 +567,42 @@ const UIUXDesign = () => {
                 Book Free Design Consultation
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Design Expert
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Design Expert</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🎨 Award-Winning Designers</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Palette className="w-4 h-4 text-pink-300" />
+                  <span>Award-Winning Designers</span>
+                </div>
                 <div className="text-sm opacity-90">Creative professionals</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🚀 Fast Turnaround</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Rocket className="w-4 h-4 text-pink-300" />
+                  <span>Fast Turnaround</span>
+                </div>
                 <div className="text-sm opacity-90">2-4 weeks delivery</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">💯 Satisfaction Guarantee</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <CheckCircle2 className="w-4 h-4 text-pink-300" />
+                  <span>Satisfaction Guarantee</span>
+                </div>
                 <div className="text-sm opacity-90">Unlimited revisions</div>
               </div>
             </div>

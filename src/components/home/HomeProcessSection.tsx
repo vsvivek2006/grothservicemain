@@ -11,25 +11,25 @@ export const HomeProcessSection: React.FC = () => {
       step: "01",
       title: "Discovery & Consultation",
       description: "We understand your business goals, target audience, and market landscape.",
-      icon: "🔍"
+      icon: "search"
     },
     {
       step: "02",
       title: "Strategy & Planning",
       description: "Create customized digital strategies with clear objectives and timelines.",
-      icon: "📋"
+      icon: "strategy"
     },
     {
       step: "03",
       title: "Execution & Development",
       description: "Our expert team implements solutions with precision and quality.",
-      icon: "🚀"
+      icon: "development"
     },
     {
       step: "04",
       title: "Optimization & Growth",
       description: "Continuous monitoring, analysis, and optimization for maximum results.",
-      icon: "📊"
+      icon: "growth"
     }
   ];
 

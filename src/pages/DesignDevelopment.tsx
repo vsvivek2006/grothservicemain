@@ -3,12 +3,14 @@ import { Helmet } from 'react-helmet';
 import { 
   Monitor, Smartphone, Palette, Code, Database, 
   Layers, Shield, Zap, Globe, Users, BarChart,
-  CheckCircle, ArrowRight, Cpu, Cloud, Smartphone as Mobile,
-  ShoppingCart, Briefcase, Home, Calendar, Camera
+  CheckCircle, ArrowRight, Cpu, Cloud,
+  ShoppingCart, Briefcase, Home, Calendar, Camera,
+  Search, Rocket, Wrench, MessageCircle, Phone
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref } from '../services';
+import { getTechnologyByName } from '../data/technologies';
 
 const DesignDevelopment: React.FC = () => {
   // Services we offer
@@ -95,18 +97,18 @@ const DesignDevelopment: React.FC = () => {
 
   // Technology Stack
   const technologies = [
-    { name: "React.js", icon: "⚛️", category: "Frontend" },
-    { name: "TypeScript", icon: "📘", category: "Development" },
-    { name: "Node.js", icon: "🟢", category: "Backend" },
-    { name: "MongoDB", icon: "🍃", category: "Database" },
-    { name: "Next.js", icon: "🚀", category: "Framework" },
-    { name: "Tailwind CSS", icon: "🎨", category: "Styling" },
-    { name: "Express.js", icon: "⚡", category: "Backend" },
-    { name: "Firebase", icon: "🔥", category: "Backend" },
-    { name: "React Native", icon: "📱", category: "Mobile" },
-    { name: "Figma", icon: "🎯", category: "Design" },
-    { name: "Git", icon: "📦", category: "Version Control" },
-    { name: "AWS", icon: "☁️", category: "Hosting" }
+    { name: "React.js", Icon: getTechnologyByName("react")?.Icon || Code, category: "Frontend" },
+    { name: "TypeScript", Icon: getTechnologyByName("typescript")?.Icon || Code, category: "Language" },
+    { name: "Node.js", Icon: getTechnologyByName("nodejs")?.Icon || Code, category: "Backend" },
+    { name: "MongoDB", Icon: getTechnologyByName("mongodb")?.Icon || Code, category: "Database" },
+    { name: "Next.js", Icon: getTechnologyByName("nextjs")?.Icon || Code, category: "Framework" },
+    { name: "Tailwind CSS", Icon: getTechnologyByName("tailwindcss")?.Icon || Code, category: "Styling" },
+    { name: "Express.js", Icon: getTechnologyByName("express")?.Icon || Code, category: "Backend" },
+    { name: "Firebase", Icon: getTechnologyByName("firebase")?.Icon || Code, category: "Database" },
+    { name: "React Native", Icon: getTechnologyByName("react-native")?.Icon || Smartphone, category: "Mobile" },
+    { name: "Figma", Icon: getTechnologyByName("figma")?.Icon || Palette, category: "Design" },
+    { name: "PostgreSQL", Icon: getTechnologyByName("postgresql")?.Icon || Database, category: "Database" },
+    { name: "Vercel", Icon: getTechnologyByName("vercel")?.Icon || Cloud, category: "Cloud" }
   ];
 
   // Development Process
@@ -115,37 +117,37 @@ const DesignDevelopment: React.FC = () => {
       step: "01",
       title: "Discovery & Planning",
       description: "We understand your requirements, target audience, and business goals",
-      icon: "🔍"
+      Icon: Search
     },
     {
       step: "02",
       title: "UI/UX Design",
       description: "Creating wireframes, prototypes, and visual designs for user experience",
-      icon: "🎨"
+      Icon: Palette
     },
     {
       step: "03",
       title: "Development",
       description: "Building the application with modern technologies and best practices",
-      icon: "💻"
+      Icon: Code
     },
     {
       step: "04",
       title: "Testing & Quality",
       description: "Rigorous testing across devices and browsers for flawless performance",
-      icon: "🧪"
+      Icon: CheckCircle
     },
     {
       step: "05",
       title: "Deployment",
       description: "Launching the project on secure servers with proper configuration",
-      icon: "🚀"
+      Icon: Rocket
     },
     {
       step: "06",
       title: "Support & Maintenance",
       description: "Ongoing support, updates, and maintenance for long-term success",
-      icon: "🛡️"
+      Icon: Shield
     }
   ];
 
@@ -206,7 +208,7 @@ const DesignDevelopment: React.FC = () => {
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
               >
-                <span>💬</span>
+                <MessageCircle className="w-5 h-5" />
                 <span>Discuss Your Project</span>
               </a>
               <a
@@ -285,15 +287,15 @@ const DesignDevelopment: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {technologies.map((tech, index) => (
+            {technologies.map((tech) => (
               <div 
-                key={index}
-                className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-center group hover:-translate-y-1"
+                key={tech.name}
+                className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-center group hover:-translate-y-1 border border-slate-100"
               >
-                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">
-                  {tech.icon}
+                <div className="w-10 h-10 mx-auto rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-2 group-hover:scale-110 transition-transform">
+                  <tech.Icon className="w-6 h-6" />
                 </div>
-                <div className="font-semibold text-gray-900">{tech.name}</div>
+                <div className="font-semibold text-gray-900 text-sm">{tech.name}</div>
                 <div className="text-xs text-gray-500 mt-1">{tech.category}</div>
               </div>
             ))}
@@ -314,15 +316,17 @@ const DesignDevelopment: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {processSteps.map((step, index) => (
+            {processSteps.map((step) => (
               <div 
-                key={index}
+                key={step.step}
                 className="relative bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100 rounded-2xl p-6"
               >
-                <div className="absolute -top-4 -left-4 bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">
+                <div className="absolute -top-4 -left-4 bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-sm">
                   {step.step}
                 </div>
-                <div className="text-3xl mb-4">{step.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-blue-100/60 flex items-center justify-center text-blue-600 mb-4 mt-2">
+                  <step.Icon className="w-6 h-6" />
+                </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   {step.title}
                 </h3>
@@ -404,32 +408,32 @@ const DesignDevelopment: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                icon: "⚡",
+                Icon: Zap,
                 title: "Fast Development",
                 description: "Quick turnaround time without compromising on quality or performance"
               },
               {
-                icon: "🎯",
+                Icon: Cpu,
                 title: "Modern Technologies",
                 description: "Using React, TypeScript, Node.js and latest frameworks for best results"
               },
               {
-                icon: "🛡️",
+                Icon: Shield,
                 title: "Quality Assurance",
                 description: "Rigorous testing across devices and browsers for flawless performance"
               },
               {
-                icon: "📱",
+                Icon: Smartphone,
                 title: "Mobile Responsive",
                 description: "All websites optimized for mobile, tablet, and desktop devices"
               },
               {
-                icon: "🔧",
+                Icon: Wrench,
                 title: "Ongoing Support",
                 description: "Post-development support and maintenance for long-term success"
               },
               {
-                icon: "🚀",
+                Icon: Rocket,
                 title: "SEO Optimized",
                 description: "Built with SEO best practices for better search engine visibility"
               }
@@ -438,7 +442,9 @@ const DesignDevelopment: React.FC = () => {
                 key={index}
                 className="bg-gradient-to-br from-blue-50 to-white border border-blue-100 p-6 rounded-xl"
               >
-                <div className="text-3xl mb-3">{benefit.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-blue-100/60 flex items-center justify-center text-blue-600 mb-3">
+                  <benefit.Icon className="w-6 h-6" />
+                </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   {benefit.title}
                 </h3>
@@ -468,7 +474,7 @@ const DesignDevelopment: React.FC = () => {
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
             >
-              <span>💬</span>
+              <MessageCircle className="w-5 h-5" />
               <span>Get Custom Quote on WhatsApp</span>
             </a>
             
@@ -476,13 +482,13 @@ const DesignDevelopment: React.FC = () => {
               href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
             >
-              <span>📞</span>
+              <Phone className="w-5 h-5" />
               <span>Call: {getPrimaryPhone()}</span>
             </a>
           </div>
           
           <p className="mt-6 text-blue-200 text-sm">
-            💻 Custom Development • 📱 Mobile Apps • 🎨 UI/UX Design • 🚀 Web Applications
+            Custom Development • Mobile Apps • UI/UX Design • Web Applications
           </p>
         </div>
       </section>

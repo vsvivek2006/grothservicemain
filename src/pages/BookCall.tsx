@@ -182,7 +182,10 @@ I have booked a free consultation call. Please confirm the schedule.`;
 
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
               <div className="text-center">
-                <div className="text-xl font-bold text-blue-700 mb-2">✅ Consultation Confirmed</div>
+                <div className="text-xl font-bold text-blue-700 mb-2 flex items-center justify-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>Consultation Confirmed</span>
+                </div>
                 <div className="text-sm text-blue-600">No payment required - Professional strategy session</div>
               </div>
             </div>
@@ -603,7 +606,10 @@ I have booked a free consultation call. Please confirm the schedule.`;
 
             {/* Office Locations Quick View */}
             <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-3 md:mb-4">📍 Our Offices</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
+                <Building className="w-5 h-5 text-purple-600" />
+                <span>Our Offices</span>
+              </h3>
               <div className="space-y-3">
                 {offices.map((office) => (
                   <div key={office.id} className="flex items-start space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-all">

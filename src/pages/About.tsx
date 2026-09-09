@@ -3,10 +3,24 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   Users, Clock, Building2, Globe, Laptop, Lock, MessageCircle, Phone,
-  MapPin, Smile, Rocket, TrendingUp, Star, Mail, ArrowRight
+  MapPin, Smile, Rocket, TrendingUp, Star, Mail, ArrowRight,
+  Search, Smartphone, ShoppingCart, BarChart3, Cloud, Check, Award
 } from 'lucide-react';
+import {
+  SiReact,
+  SiTypescript,
+  SiNodedotjs,
+  SiMongodb,
+  SiNextdotjs,
+  SiExpress,
+  SiTailwindcss,
+  SiGraphql,
+  SiPostgresql,
+  SiFirebase,
+} from 'react-icons/si';
+import { FaAws } from 'react-icons/fa';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
-import { Container, Section } from '../components/ui';
+import { Container, Section, WhatsAppIcon } from '../components/ui';
 import { getPhysicalOffices, getPrimaryPhone, getCanonicalOrigin } from '../selectors';
 import { getTelHref, getNepalWhatsAppUrl } from '../services';
 
@@ -66,7 +80,7 @@ interface Value {
 }
 
 interface Service {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   description: string;
   features: string[];
@@ -84,7 +98,7 @@ interface Certificate {
 }
 
 interface TechStack {
-  icon: string;
+  icon: React.ReactNode;
   name: string;
   description: string;
 }
@@ -156,7 +170,7 @@ const About: React.FC = () => {
       description: "Our Jaipur office specializes in web development, SEO, and digital marketing services. Serving clients across Jaipur, Rajasthan, and beyond with world-class digital solutions.",
       cta: "Contact Jaipur Office",
       ctaLink: "/contact",
-      location: "📍 Jaipur, Rajasthan"
+      location: "🇮🇳 Jaipur, Rajasthan"
     },
     {
       title: "Innovative Solutions from Vrindavan Office",
@@ -164,7 +178,7 @@ const About: React.FC = () => {
       description: "Our Vrindavan head office delivers comprehensive digital solutions including web development, SEO, and performance marketing to clients worldwide.",
       cta: "Visit Vrindavan Office",
       ctaLink: "/contact",
-      location: "📍 Vrindavan, Uttar Pradesh"
+      location: "🇮🇳 Vrindavan, Uttar Pradesh"
     }
   ];
 
@@ -280,34 +294,34 @@ const About: React.FC = () => {
 
   // Company stats
   const stats: Stat[] = [
-    { number: "300+", label: "Happy Clients", icon: "😊", delay: "0s" },
-    { number: "500+", label: "Projects Completed", icon: "🚀", delay: "0.1s" },
-    { number: "3", label: "Office Locations", icon: "🏢", delay: "0.2s" },
-    { number: "24/7", label: "Global Support", icon: "⏰", delay: "0.3s" },
+    { number: "300+", label: "Happy Clients", icon: "Smile", delay: "0s" },
+    { number: "500+", label: "Projects Completed", icon: "Rocket", delay: "0.1s" },
+    { number: "3", label: "Office Locations", icon: "Building2", delay: "0.2s" },
+    { number: "24/7", label: "Global Support", icon: "Clock", delay: "0.3s" },
   ];
 
   // Core values
   const values: Value[] = [
     {
-      icon: "🏢",
+      icon: "Building2",
       title: "3 Strategic Locations",
       description: "Operating from Jaipur, Vrindavan, and Nepal to serve clients across India and globally with localized expertise.",
       delay: "0s"
     },
     {
-      icon: "⏰",
+      icon: "Clock",
       title: "24/7 Availability",
       description: "Round-the-clock services from our India and Nepal offices to accommodate different timezones across the globe.",
       delay: "0.1s"
     },
     {
-      icon: "💡",
+      icon: "Lightbulb",
       title: "Technology Excellence",
       description: "Expertise in all modern web technologies and frameworks for cutting-edge solutions from all our locations.",
       delay: "0.2s"
     },
     {
-      icon: "🤝",
+      icon: "Handshake",
       title: "Reliable Partnership",
       description: "Building long-term relationships with clients across India, Nepal, and international markets.",
       delay: "0.3s"
@@ -317,7 +331,7 @@ const About: React.FC = () => {
   // Our Services with Location Tags
   const services: Service[] = [
     {
-      icon: "🌐",
+      icon: <Globe className="w-8 h-8 text-blue-600" />,
       title: "Web Development",
       description: "Custom website development from our Jaipur, Vrindavan, and Nepal offices using modern technologies.",
       features: [
@@ -327,10 +341,10 @@ const About: React.FC = () => {
         "CMS Integration"
       ],
       delay: "0s",
-      location: "📍 Jaipur • Vrindavan • Nepal"
+      location: "Jaipur • Vrindavan • Nepal"
     },
     {
-      icon: "🔍",
+      icon: <Search className="w-8 h-8 text-purple-600" />,
       title: "SEO Services",
       description: "Comprehensive SEO services from all our locations to improve your search rankings and drive organic traffic.",
       features: [
@@ -340,10 +354,10 @@ const About: React.FC = () => {
         "Local SEO"
       ],
       delay: "0.1s",
-      location: "📍 Jaipur • Vrindavan • Nepal"
+      location: "Jaipur • Vrindavan • Nepal"
     },
     {
-      icon: "📱",
+      icon: <Smartphone className="w-8 h-8 text-indigo-600" />,
       title: "Digital Marketing",
       description: "Strategic digital marketing campaigns from our India and Nepal offices to grow your business online.",
       features: [
@@ -353,10 +367,10 @@ const About: React.FC = () => {
         "Email Marketing"
       ],
       delay: "0.2s",
-      location: "📍 Jaipur • Vrindavan • Nepal"
+      location: "Jaipur • Vrindavan • Nepal"
     },
     {
-      icon: "🛒",
+      icon: <ShoppingCart className="w-8 h-8 text-amber-600" />,
       title: "E-commerce Solutions",
       description: "Complete e-commerce solutions from our offices with multi-currency and global payment gateways.",
       features: [
@@ -366,10 +380,10 @@ const About: React.FC = () => {
         "Order Processing"
       ],
       delay: "0.3s",
-      location: "📍 Jaipur • Vrindavan • Nepal"
+      location: "Jaipur • Vrindavan • Nepal"
     },
     {
-      icon: "📊",
+      icon: <BarChart3 className="w-8 h-8 text-emerald-600" />,
       title: "Performance Marketing",
       description: "Data-driven performance marketing from our locations to maximize ROI and drive conversions.",
       features: [
@@ -379,10 +393,10 @@ const About: React.FC = () => {
         "Retargeting"
       ],
       delay: "0.4s",
-      location: "📍 Jaipur • Vrindavan • Nepal"
+      location: "Jaipur • Vrindavan • Nepal"
     },
     {
-      icon: "☁️",
+      icon: <Cloud className="w-8 h-8 text-cyan-600" />,
       title: "Cloud Solutions",
       description: "Scalable cloud infrastructure from our offices for global applications and websites.",
       features: [
@@ -392,7 +406,7 @@ const About: React.FC = () => {
         "Scalable Architecture"
       ],
       delay: "0.5s",
-      location: "📍 Jaipur • Vrindavan • Nepal"
+      location: "Jaipur • Vrindavan • Nepal"
     }
   ];
 
@@ -434,18 +448,18 @@ const About: React.FC = () => {
 
   // Technology Stack
   const techStack: TechStack[] = [
-    { icon: "⚛️", name: "React", description: "Frontend framework" },
-    { icon: "📘", name: "TypeScript", description: "Type-safe JavaScript" },
-    { icon: "🟢", name: "Node.js", description: "Backend runtime" },
-    { icon: "🍃", name: "MongoDB", description: "NoSQL database" },
-    { icon: "▲", name: "Next.js", description: "React framework" },
-    { icon: "🚂", name: "Express.js", description: "Node.js framework" },
-    { icon: "🎨", name: "Tailwind CSS", description: "Utility-first CSS" },
-    { icon: "📊", name: "GraphQL", description: "API query language" },
-    { icon: "🐘", name: "PostgreSQL", description: "SQL database" },
-    { icon: "🔥", name: "Firebase", description: "Google platform" },
-    { icon: "☁️", name: "AWS", description: "Cloud services" },
-    { icon: "📱", name: "React Native", description: "Mobile apps" }
+    { icon: <SiReact className="w-8 h-8 text-cyan-500 mx-auto" />, name: "React", description: "Frontend framework" },
+    { icon: <SiTypescript className="w-8 h-8 text-blue-500 mx-auto" />, name: "TypeScript", description: "Type-safe JavaScript" },
+    { icon: <SiNodedotjs className="w-8 h-8 text-green-600 mx-auto" />, name: "Node.js", description: "Backend runtime" },
+    { icon: <SiMongodb className="w-8 h-8 text-green-500 mx-auto" />, name: "MongoDB", description: "NoSQL database" },
+    { icon: <SiNextdotjs className="w-8 h-8 text-black mx-auto" />, name: "Next.js", description: "React framework" },
+    { icon: <SiExpress className="w-8 h-8 text-gray-700 mx-auto" />, name: "Express.js", description: "Node.js framework" },
+    { icon: <SiTailwindcss className="w-8 h-8 text-teal-400 mx-auto" />, name: "Tailwind CSS", description: "Utility-first CSS" },
+    { icon: <SiGraphql className="w-8 h-8 text-pink-600 mx-auto" />, name: "GraphQL", description: "API query language" },
+    { icon: <SiPostgresql className="w-8 h-8 text-blue-600 mx-auto" />, name: "PostgreSQL", description: "SQL database" },
+    { icon: <SiFirebase className="w-8 h-8 text-amber-500 mx-auto" />, name: "Firebase", description: "Google platform" },
+    { icon: <FaAws className="w-8 h-8 text-orange-500 mx-auto" />, name: "AWS", description: "Cloud services" },
+    { icon: <Smartphone className="w-8 h-8 text-indigo-600 mx-auto" />, name: "React Native", description: "Mobile apps" }
   ];
 
   // Work process
@@ -454,36 +468,36 @@ const About: React.FC = () => {
       step: "01",
       title: "Discovery & Consultation",
       description: "Understanding your business needs across our offices in Jaipur, Vrindavan, and Nepal.",
-      icon: "🔍",
+      icon: "Search",
       delay: "0s"
     },
     {
       step: "02",
       title: "Strategy & Planning",
       description: "Creating customized digital strategies with clear objectives and timelines from all locations.",
-      icon: "📋",
+      icon: "ClipboardList",
       delay: "0.2s"
     },
     {
       step: "03",
       title: "Development & Execution",
       description: "Our expert teams in India and Nepal implement solutions with precision and quality.",
-      icon: "🚀",
+      icon: "Rocket",
       delay: "0.4s"
     },
     {
       step: "04",
       title: "Optimization & Growth",
       description: "Continuous monitoring and optimization from all our offices for maximum results.",
-      icon: "📊",
+      icon: "BarChart3",
       delay: "0.6s"
     }
   ];
 
   // Global Reach with Office Locations
   const globalReach: Region[] = [
-    { region: "Jaipur", icon: "🏛️", clients: "120+" },
-    { region: "Vrindavan", icon: "🕉️", clients: "100+" },
+    { region: "Jaipur", icon: "🇮🇳", clients: "120+" },
+    { region: "Vrindavan", icon: "🇮🇳", clients: "100+" },
     { region: "Nepal", icon: "🇳🇵", clients: "80+" },
     { region: "USA", icon: "🇺🇸", clients: "25+" },
     { region: "UK", icon: "🇬🇧", clients: "15+" },
@@ -521,37 +535,37 @@ const About: React.FC = () => {
   // Why choose us
   const whyChooseUs: WhyChooseUs[] = [
     {
-      icon: "🏢",
+      icon: "Building2",
       title: "3 Office Locations",
       description: "Operating from Jaipur, Vrindavan, and Nepal to serve you better with localized expertise.",
       delay: "0s"
     },
     {
-      icon: "⏰",
+      icon: "Clock",
       title: "24/7 Service",
       description: "Round-the-clock support from our India and Nepal offices across all timezones.",
       delay: "0.1s"
     },
     {
-      icon: "🌍",
+      icon: "Globe",
       title: "Global Experience",
       description: "Experience working with clients from 20+ countries from our offices in India and Nepal.",
       delay: "0.2s"
     },
     {
-      icon: "💻",
+      icon: "Laptop",
       title: "Full Tech Stack",
       description: "Expertise in all modern technologies - from React to AWS, available across all locations.",
       delay: "0.3s"
     },
     {
-      icon: "🏢",
+      icon: "Building2",
       title: "Registered Company",
       description: "Fully registered and compliant with all necessary certifications across India and Nepal.",
       delay: "0.4s"
     },
     {
-      icon: "🔒",
+      icon: "Lock",
       title: "Secure & Compliant",
       description: "GDPR compliant solutions with international security standards from all offices.",
       delay: "0.5s"
@@ -629,26 +643,26 @@ const About: React.FC = () => {
                     : 'absolute inset-0 opacity-0 translate-x-full'
                 }`}
               >
-                <div className="p-8 md:p-12 lg:p-16">
-                  <div className="max-w-2xl">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="bg-blue-500/30 px-3 py-1 rounded-full text-sm">
+                <div className="p-6 sm:p-10 md:p-14 lg:p-16">
+                  <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+                    <div className="flex items-center justify-center gap-2 mb-4">
+                      <span className="bg-blue-500/30 border border-blue-400/30 px-3.5 py-1 rounded-full text-xs sm:text-sm font-semibold text-blue-200">
                         {slide.location}
                       </span>
                     </div>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight text-white">
                       {slide.title}
                     </h1>
-                    <div className="text-lg sm:text-xl md:text-2xl text-cyan-300 font-semibold mb-4">
+                    <div className="text-base sm:text-xl md:text-2xl text-cyan-300 font-semibold mb-4">
                       {slide.subtitle}
                     </div>
-                    <p className="text-base sm:text-lg text-blue-100 mb-6 md:mb-8 leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-blue-100 mb-6 md:mb-8 leading-relaxed max-w-2xl">
                       {slide.description}
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full sm:w-auto">
                       <Link
                         to={slide.ctaLink}
-                        className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg text-center"
+                        className="w-full sm:w-auto bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg text-center"
                       >
                         {slide.cta}
                       </Link>
@@ -656,9 +670,9 @@ const About: React.FC = () => {
                         href={getNepalWhatsAppUrl()}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto border-2 border-white hover:bg-white hover:text-blue-900 text-white px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2"
                       >
-                        <span className="text-lg">💬</span>
+                        <WhatsAppIcon className="w-5 h-5 text-emerald-400" />
                         <span>WhatsApp Now</span>
                       </a>
                     </div>
@@ -709,8 +723,9 @@ const About: React.FC = () => {
                 {/* Office Image */}
                 <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
                   {office.isHeadOffice && (
-                    <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
-                      ⭐ HEAD OFFICE
+                    <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-gray-900" />
+                      <span>HEAD OFFICE</span>
                     </div>
                   )}
                   <div className="text-6xl">{office.flag}</div>
@@ -1036,21 +1051,24 @@ const About: React.FC = () => {
                 className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 group"
                 style={{animationDelay: service.delay}}
               >
-                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{service.icon}</div>
+                <div className="mb-4 group-hover:scale-110 transition-transform">{service.icon}</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{service.title}</h3>
                 <p className="text-gray-600 text-sm mb-4 leading-relaxed">{service.description}</p>
                 
                 <div className="space-y-2">
                   {service.features.map((feature, idx) => (
                     <div key={idx} className="flex items-center text-gray-700 text-sm">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       <span>{feature}</span>
                     </div>
                   ))}
                 </div>
                 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                  <p className="text-xs text-blue-600 font-medium">{service.location}</p>
+                  <p className="text-xs text-blue-600 font-medium flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>{service.location}</span>
+                  </p>
                 </div>
               </div>
             ))}
@@ -1077,8 +1095,8 @@ const About: React.FC = () => {
                 className={`bg-gradient-to-br ${cert.bgColor} border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300`}
               >
                 <div className="flex items-start gap-4">
-                  <div className="bg-white p-3 rounded-lg shadow-sm">
-                    <div className="text-2xl">📜</div>
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-purple-600">
+                    <Award className="w-7 h-7" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-gray-900 mb-2">{cert.title}</h3>
@@ -1119,7 +1137,7 @@ const About: React.FC = () => {
                 key={index}
                 className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 text-center group hover:bg-blue-50"
               >
-                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">{tech.icon}</div>
+                <div className="mb-2 flex items-center justify-center group-hover:scale-110 transition-transform">{tech.icon}</div>
                 <div className="font-semibold text-gray-900 text-sm">{tech.name}</div>
                 <div className="text-gray-500 text-xs mt-1">{tech.description}</div>
               </div>
@@ -1208,9 +1226,9 @@ const About: React.FC = () => {
                 className="bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
                 style={{animationDelay: testimonial.delay}}
               >
-                <div className="flex mb-4">
+                <div className="flex gap-0.5 mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">⭐</span>
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
                 <p className="text-gray-700 mb-6 italic leading-relaxed">"{testimonial.text}"</p>
@@ -1218,7 +1236,7 @@ const About: React.FC = () => {
                   <p className="font-bold text-gray-900">{testimonial.author}</p>
                   <p className="text-blue-600 text-sm">{testimonial.role}</p>
                   <div className="flex items-center text-gray-500 text-sm mt-1">
-                    <span className="mr-1">📍</span>
+                    <MapPin className="w-3.5 h-3.5 text-purple-600 mr-1 shrink-0" />
                     <span>{testimonial.location}</span>
                   </div>
                 </div>

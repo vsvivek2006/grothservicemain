@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Zap } from 'lucide-react';
 import Card from './Card';
 
 export interface ServiceCardProps {
@@ -34,7 +34,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
         <div
           className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${highlightColor} flex items-center justify-center text-white shadow-card group-hover:scale-110 group-hover:rotate-2 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shrink-0`}
         >
-          {icon ? icon : <span className="text-xl">{iconEmoji || '⚡'}</span>}
+          {icon ? icon : <Zap className="w-5 h-5 text-white" />}
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors leading-snug">

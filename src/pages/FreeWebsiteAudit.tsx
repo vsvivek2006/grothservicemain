@@ -4,7 +4,8 @@ import {
   CheckCircle, AlertTriangle, ArrowRight, Download, 
   Search, Globe, Clock, Shield, Zap, Smartphone, 
   ShoppingBag, FileText, ExternalLink, TrendingUp, 
-  Target, Monitor, BarChart, Lock, Users, MessageCircle
+  Target, Monitor, BarChart, Lock, Users, MessageCircle,
+  DollarSign, Phone, Mail
 } from 'lucide-react';
 import { getOfficePhone, getBusinessEmail, getBusinessDomain } from '../selectors';
 import { getNepalWhatsAppUrl } from '../services';
@@ -12,7 +13,7 @@ import { getNepalWhatsAppUrl } from '../services';
 interface AuditOption {
   id: string;
   name: string;
-  icon: string;
+  Icon: React.ComponentType<{ className?: string }>;
   description: string;
   tier: string;
   color: string;
@@ -32,7 +33,7 @@ const FreeWebsiteAudit: React.FC = () => {
     {
       id: 'basic',
       name: 'Basic SEO Audit',
-      icon: '🔍',
+      Icon: Search,
       description: 'Essential SEO analysis',
       price: 'FREE',
       color: 'from-blue-50 to-blue-100',
@@ -53,12 +54,12 @@ const FreeWebsiteAudit: React.FC = () => {
     }
   ];
 
-  // Advanced audit types
-  const advancedAuditTypes = [
+  // Advanced audit types: AuditOption[]
+  const advancedAuditTypes: AuditOption[] = [
     {
       id: 'pro',
       name: 'Professional Audit',
-      icon: '📊',
+      Icon: BarChart,
       description: 'Complete website & technical analysis',
       tier: 'Technical Architecture',
       color: 'from-purple-50 to-purple-100',
@@ -75,7 +76,7 @@ const FreeWebsiteAudit: React.FC = () => {
     {
       id: 'ecommerce',
       name: 'E-commerce Pro Audit',
-      icon: '🛒',
+      Icon: ShoppingBag,
       description: 'Online store optimization & conversion analysis',
       tier: 'Funnel & CRO Analysis',
       color: 'from-green-50 to-green-100',
@@ -92,7 +93,7 @@ const FreeWebsiteAudit: React.FC = () => {
     {
       id: 'enterprise',
       name: 'Enterprise Audit',
-      icon: '🏢',
+      Icon: Monitor,
       description: 'Business website comprehensive review',
       tier: 'Enterprise Scale',
       color: 'from-orange-50 to-orange-100',
@@ -103,7 +104,7 @@ const FreeWebsiteAudit: React.FC = () => {
         'Performance optimization',
         'Security penetration testing',
         'Detailed action plan',
-        '90-minute strategy session'
+        '90-minute consultation'
       ]
     }
   ];
@@ -347,13 +348,16 @@ I would like to schedule an audit strategy session with your digital growth team
               <CheckCircle className="h-10 w-10 text-green-600" />
             </div>
             
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Successful! 🎉</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
             <p className="text-xl text-gray-600 mb-6">
               Professional Audit Payment Confirmed
             </p>
             
             <div className="bg-green-100 border border-green-200 rounded-xl p-6 mb-8 max-w-lg mx-auto">
-              <h3 className="font-semibold text-green-900 mb-3">✅ Payment Received</h3>
+              <h3 className="font-semibold text-green-900 mb-3 flex items-center justify-center gap-1.5">
+                <CheckCircle className="w-4 h-4 text-green-700" />
+                <span>Payment Received</span>
+              </h3>
               <p className="text-green-700 mb-2">WhatsApp confirmation has been sent</p>
               <p className="text-sm text-green-600">
                 Our team will start your audit within 2 hours
@@ -361,18 +365,18 @@ I would like to schedule an audit strategy session with your digital growth team
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <div className="text-2xl mb-2">⏱️</div>
+              <div className="bg-gray-50 p-6 rounded-xl flex flex-col items-center text-center">
+                <Clock className="w-6 h-6 text-purple-600 mb-2" />
                 <h4 className="font-semibold text-gray-900 mb-1">Timeline</h4>
                 <p className="text-sm text-gray-600">Report in 24-48 hours</p>
               </div>
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <div className="text-2xl mb-2">📧</div>
+              <div className="bg-gray-50 p-6 rounded-xl flex flex-col items-center text-center">
+                <Mail className="w-6 h-6 text-blue-600 mb-2" />
                 <h4 className="font-semibold text-gray-900 mb-1">Delivery</h4>
                 <p className="text-sm text-gray-600">PDF report to your email</p>
               </div>
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <div className="text-2xl mb-2">💬</div>
+              <div className="bg-gray-50 p-6 rounded-xl flex flex-col items-center text-center">
+                <MessageCircle className="w-6 h-6 text-emerald-600 mb-2" />
                 <h4 className="font-semibold text-gray-900 mb-1">Support</h4>
                 <p className="text-sm text-gray-600">Consultation call included</p>
               </div>
@@ -426,23 +430,23 @@ I would like to schedule an audit strategy session with your digital growth team
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-2xl mb-2">🎯</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+              <Target className="w-6 h-6 text-yellow-300 mb-2" />
               <h3 className="font-semibold text-sm">Basic Audit</h3>
               <p className="text-blue-200 text-xs">Instant Review</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-2xl mb-2">📊</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+              <BarChart className="w-6 h-6 text-yellow-300 mb-2" />
               <h3 className="font-semibold text-sm">Professional</h3>
               <p className="text-blue-200 text-xs">Deep Technical</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-2xl mb-2">🛒</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+              <ShoppingBag className="w-6 h-6 text-yellow-300 mb-2" />
               <h3 className="font-semibold text-sm">E-commerce</h3>
               <p className="text-blue-200 text-xs">CRO & Funnel</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-2xl mb-2">🏢</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+              <Monitor className="w-6 h-6 text-yellow-300 mb-2" />
               <h3 className="font-semibold text-sm">Enterprise</h3>
               <p className="text-blue-200 text-xs">Full Architecture</p>
             </div>
@@ -549,9 +553,11 @@ I would like to schedule an audit strategy session with your digital growth team
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {advancedAuditTypes.map((audit) => (
-                    <div key={audit.id} className={`bg-gradient-to-br ${audit.color} border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300`}>
+                    <div key={audit.id} className={`bg-gradient-to-br ${audit.color} border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between`}>
                       <div className="text-center mb-4">
-                        <div className="text-3xl mb-2">{audit.icon}</div>
+                        <div className="w-12 h-12 mx-auto rounded-xl bg-white shadow-sm flex items-center justify-center text-purple-600 mb-3">
+                          <audit.Icon className="w-6 h-6" />
+                        </div>
                         <h4 className="font-bold text-gray-900 text-lg mb-1">{audit.name}</h4>
                         <div className="text-sm font-semibold text-purple-700 bg-purple-100 px-3 py-1 rounded-full inline-block mb-2">{audit.tier}</div>
                         <p className="text-gray-600 text-sm">{audit.description}</p>
@@ -577,8 +583,10 @@ I would like to schedule an audit strategy session with your digital growth team
                 </div>
 
                 <div className="mt-6 bg-white rounded-xl p-4 text-center">
-                  <p className="text-sm text-gray-600">
-                    ✅ Custom PDF audit report • 📞 1-on-1 strategy walkthrough • 🔒 Confidential analysis
+                  <p className="text-sm text-gray-600 flex items-center justify-center gap-4 flex-wrap">
+                    <span className="inline-flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" /> Custom PDF audit report</span>
+                    <span className="inline-flex items-center gap-1.5"><Phone className="w-4 h-4 text-purple-500 shrink-0" /> 1-on-1 strategy walkthrough</span>
+                    <span className="inline-flex items-center gap-1.5"><Lock className="w-4 h-4 text-blue-500 shrink-0" /> Confidential analysis</span>
                   </p>
                 </div>
               </div>
@@ -610,45 +618,45 @@ I would like to schedule an audit strategy session with your digital growth team
               <div className="space-y-6">
                 {[
                   {
-                    icon: '💰',
+                    Icon: DollarSign,
                     title: 'ROI Focused',
                     description: 'Identify issues affecting your revenue and conversions',
-                    color: 'text-green-600'
+                    color: 'text-green-600 bg-green-50'
                   },
                   {
-                    icon: '📈',
+                    Icon: TrendingUp,
                     title: 'Competitive Edge',
                     description: 'See how you compare against competitors and industry benchmarks',
-                    color: 'text-blue-600'
+                    color: 'text-blue-600 bg-blue-50'
                   },
                   {
-                    icon: '⚡',
+                    Icon: Zap,
                     title: 'Performance Boost',
                     description: 'Fix speed and performance issues affecting user experience',
-                    color: 'text-purple-600'
+                    color: 'text-purple-600 bg-purple-50'
                   },
                   {
-                    icon: '🔒',
+                    Icon: Shield,
                     title: 'Security Check',
                     description: 'Identify vulnerabilities and protect your website',
-                    color: 'text-red-600'
+                    color: 'text-red-600 bg-red-50'
                   },
                   {
-                    icon: '📱',
+                    Icon: Smartphone,
                     title: 'Mobile Optimization',
                     description: 'Ensure perfect experience on all mobile devices',
-                    color: 'text-indigo-600'
+                    color: 'text-indigo-600 bg-indigo-50'
                   },
                   {
-                    icon: '🎯',
+                    Icon: Target,
                     title: 'Actionable Plan',
                     description: 'Get step-by-step implementation guide',
-                    color: 'text-orange-600'
+                    color: 'text-orange-600 bg-orange-50'
                   }
                 ].map((item, index) => (
                   <div key={index} className="flex items-start space-x-4">
-                    <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${item.color} bg-opacity-10`}>
-                      {item.icon}
+                    <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${item.color}`}>
+                      <item.Icon className="w-6 h-6" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.title}</h3>
@@ -660,37 +668,39 @@ I would like to schedule an audit strategy session with your digital growth team
             </div>
 
             {/* Free vs Professional Comparison */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-lg p-8 text-white">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-lg p-5 sm:p-8 text-white">
               <h3 className="text-xl font-bold mb-6 text-center">Free vs Professional Audit</h3>
               
-              <div className="space-y-4">
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div className="font-medium">Feature</div>
-                  <div className="font-medium text-center">Free</div>
-                  <div className="font-medium text-center">Professional</div>
-                </div>
-                
-                {[
-                  ['SEO Score', '✅', '✅'],
-                  ['50+ Metrics Analysis', '❌', '✅'],
-                  ['Competitor Analysis', '❌', '✅ (3 competitors)'],
-                  ['PDF Report', 'Basic', 'Detailed (15+ pages)'],
-                  ['Consultation Call', '❌', '✅ 30-90 minutes'],
-                  ['Priority Support', '❌', '✅'],
-                  ['Implementation Plan', '❌', '✅ Step-by-step'],
-                  ['Security Audit', '❌', '✅ Complete']
-                ].map(([feature, free, pro], index) => (
-                  <div key={index} className="grid grid-cols-3 gap-4 text-sm items-center border-b border-white/20 pb-2">
-                    <div>{feature}</div>
-                    <div className="text-center">{free}</div>
-                    <div className="text-center">{pro}</div>
+              <div className="overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0">
+                <div className="min-w-[380px] space-y-4">
+                  <div className="grid grid-cols-3 gap-4 text-sm font-semibold border-b border-white/20 pb-3">
+                    <div>Feature</div>
+                    <div className="text-center">Free</div>
+                    <div className="text-center">Professional</div>
                   </div>
-                ))}
-                
-                <div className="grid grid-cols-3 gap-4 text-sm font-medium pt-4">
-                  <div>Access</div>
-                  <div className="text-center">Complimentary</div>
-                  <div className="text-center">Strategy Session</div>
+                  
+                  {[
+                    ['SEO Score', 'Included', 'Included'],
+                    ['50+ Metrics Analysis', '—', 'Included'],
+                    ['Competitor Analysis', '—', '3 Competitors'],
+                    ['PDF Report', 'Basic', 'Detailed (15+ pages)'],
+                    ['Consultation Call', '—', '30-90 minutes'],
+                    ['Priority Support', '—', 'Included'],
+                    ['Implementation Plan', '—', 'Step-by-step'],
+                    ['Security Audit', '—', 'Complete']
+                  ].map(([feature, free, pro], index) => (
+                    <div key={index} className="grid grid-cols-3 gap-4 text-sm items-center border-b border-white/20 pb-2">
+                      <div>{feature}</div>
+                      <div className="text-center font-medium text-blue-100">{free}</div>
+                      <div className="text-center font-semibold text-white">{pro}</div>
+                    </div>
+                  ))}
+                  
+                  <div className="grid grid-cols-3 gap-4 text-sm font-medium pt-3">
+                    <div>Access</div>
+                    <div className="text-center">Complimentary</div>
+                    <div className="text-center">Strategy Session</div>
+                  </div>
                 </div>
               </div>
             </div>

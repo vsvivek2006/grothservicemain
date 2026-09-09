@@ -150,14 +150,14 @@ const Contact: React.FC = () => {
       title: 'Email',
       content: businessEmail,
       link: getMailtoHref(businessEmail),
-      location: '🌐 Global'
+      location: 'Global'
     },
     {
       icon: <MessageCircle className="h-6 w-6" />,
       title: 'WhatsApp - 24/7 Support',
       content: getOfficePhone('nepal'),
       link: getNepalWhatsAppUrl(),
-      location: '💬 Instant'
+      location: 'Instant'
     },
     {
       icon: <Clock className="h-6 w-6" />,
@@ -218,7 +218,7 @@ const Contact: React.FC = () => {
     
     const whatsappMessage = `Hello Growth Service Team! (Nepal Office)
 
-*📋 New Contact Form Submission*
+*New Contact Form Submission*
 
 *Name:* ${formData.fullName}
 *Email:* ${formData.email}
@@ -365,7 +365,10 @@ I would like to discuss my project with you. Please provide more details.`;
                       <div>
                         <p className="text-gray-700">{office.address}</p>
                         {office.landmark && (
-                          <p className="text-gray-500 text-xs">📌 {office.landmark}</p>
+                          <p className="text-gray-500 text-xs flex items-center gap-1 mt-0.5">
+                            <MapPin className="h-3 w-3 text-purple-500 shrink-0" />
+                            <span>{office.landmark}</span>
+                          </p>
                         )}
                       </div>
                     </div>
@@ -443,8 +446,10 @@ I would like to discuss my project with you. Please provide more details.`;
                 <div className="text-sm text-blue-200">Uttar Pradesh, India</div>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-white/20 text-sm text-blue-200">
-              ⏰ 24/7 Support Available • 🌍 Serving Clients Worldwide
+            <div className="mt-4 pt-4 border-t border-white/20 text-sm text-blue-200 flex flex-wrap items-center justify-center gap-4">
+              <span className="inline-flex items-center gap-1.5"><Clock className="w-4 h-4" /> 24/7 Support Available</span>
+              <span>•</span>
+              <span className="inline-flex items-center gap-1.5"><Globe className="w-4 h-4" /> Serving Clients Worldwide</span>
             </div>
           </div>
         </Container>
@@ -611,7 +616,7 @@ I would like to discuss my project with you. Please provide more details.`;
               {/* Social Media */}
               <div className="mb-6 bg-gray-50 p-4 rounded-xl">
                 <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <span>🌐</span> Follow Our Work
+                  <Globe className="h-5 w-5 text-blue-600" /> Follow Our Work
                 </h3>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -784,10 +789,10 @@ I would like to discuss my project with you. Please provide more details.`;
           </div>
           
           <p className="text-purple-200 text-sm">
-            🇳🇵 Nepal: {getOfficePhone('nepal')} • 🇮🇳 India: {primaryPhone} • 💻 {businessEmail}
+            🇳🇵 Nepal: {getOfficePhone('nepal')} • 🇮🇳 India: {primaryPhone} • {businessEmail}
           </p>
           <p className="text-purple-300 text-xs mt-2">
-            💻 Web Development • 🔍 SEO • 📱 Digital Marketing • 🚀 Growth Solutions • 🌍 Global Reach
+            Web Development • SEO • Digital Marketing • Growth Solutions • Global Reach
           </p>
         </Container>
       </Section>

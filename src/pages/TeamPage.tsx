@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
-  Users, ShieldCheck, ArrowRight, Building2, Sparkles 
+  Users, ShieldCheck, ArrowRight, Building2, Sparkles, Rocket 
 } from 'lucide-react';
 import { 
   getAllTeamMembers, 
@@ -86,12 +86,14 @@ export const TeamPage: React.FC = () => {
 
         <Container className="relative z-10">
           <FadeIn direction="up" delay={50}>
-            <Breadcrumb
-              items={[{ label: 'Our Team' }]}
-              className="text-purple-300 mb-6"
-            />
+            <div className="flex justify-center">
+              <Breadcrumb
+                items={[{ label: 'Our Team' }]}
+                className="text-purple-300 mb-6"
+              />
+            </div>
 
-            <div className="max-w-3xl">
+            <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
               <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
                 <Users className="w-4 h-4 text-yellow-400" />
                 <span>Verified Corporate Directory</span>
@@ -103,12 +105,12 @@ export const TeamPage: React.FC = () => {
                 Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Team</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-6 max-w-2xl">
                 Our multidisciplinary team collaborates across our company offices in Jaipur, Vrindavan, and Nepal to deliver transparent, results-driven digital marketing and web development.
               </p>
 
               {/* Quick Office Anchors / Status */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                 {physicalOfficesList.map((office) => {
                   const count = allEmployees.filter(m => m.officeId.toLowerCase() === office.id.toLowerCase()).length;
                   return (
@@ -213,7 +215,8 @@ export const TeamPage: React.FC = () => {
             <div id="careers" className="mt-8 bg-gradient-to-r from-purple-900 via-indigo-950 to-blue-900 rounded-2xl p-8 text-white relative overflow-hidden">
               <div className="relative z-10">
                 <div className="inline-flex items-center gap-2 bg-yellow-400/20 text-yellow-300 text-xs font-bold px-3 py-1 rounded-full mb-3">
-                  🚀 Join Growth Service
+                  <Rocket className="w-3.5 h-3.5 text-yellow-300" />
+                  <span>Join Growth Service</span>
                 </div>
                 <h3 className="text-2xl font-bold mb-2">Build the Future of Digital Growth With Us</h3>
                 <p className="text-sm text-purple-200 leading-relaxed mb-6 max-w-2xl">

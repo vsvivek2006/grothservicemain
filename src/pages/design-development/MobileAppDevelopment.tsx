@@ -3,6 +3,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaMobileAlt, FaApple, FaAndroid, FaCode, FaRocket, FaShieldAlt, FaCloud, FaSync, FaChartLine, FaCog, FaServer, FaPaintBrush } from 'react-icons/fa';
+import {
+  Check,
+  ShoppingCart,
+  Share2,
+  Car,
+  Wallet,
+  HeartPulse,
+  GraduationCap,
+  Plane,
+  Building2,
+  Gamepad2,
+  Activity,
+  Utensils,
+  Home,
+  Lightbulb,
+  Palette,
+  Code,
+  CheckCircle2,
+  Rocket,
+  Wrench,
+  Bell,
+  CreditCard,
+  Lock,
+  MapPin,
+  Camera,
+  WifiOff,
+  Fingerprint,
+  Glasses,
+  MessageCircle,
+  BarChart3,
+  Globe,
+  Moon,
+  Mic,
+  Cpu,
+  Sparkles,
+  Phone,
+  Smartphone,
+  Shirt
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const MobileAppDevelopment = () => {
   return (
@@ -194,25 +235,28 @@ const MobileAppDevelopment = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { type: 'E-commerce Apps', icon: '🛒', desc: 'Online shopping experiences' },
-              { type: 'Social Media Apps', icon: '📱', desc: 'Community platforms' },
-              { type: 'On-demand Apps', icon: '🚗', desc: 'Service delivery apps' },
-              { type: 'FinTech Apps', icon: '💰', desc: 'Financial solutions' },
-              { type: 'Healthcare Apps', icon: '🏥', desc: 'Medical & wellness' },
-              { type: 'Education Apps', icon: '🎓', desc: 'Learning platforms' },
-              { type: 'Travel Apps', icon: '✈️', desc: 'Booking & planning' },
-              { type: 'Enterprise Apps', icon: '💼', desc: 'Business solutions' },
-              { type: 'Gaming Apps', icon: '🎮', desc: 'Mobile games' },
-              { type: 'Fitness Apps', icon: '💪', desc: 'Health & workout' },
-              { type: 'Food Delivery Apps', icon: '🍕', desc: 'Restaurant ordering' },
-              { type: 'Real Estate Apps', icon: '🏠', desc: 'Property platforms' },
-            ].map((app, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 transition-colors">
-                <div className="text-3xl mb-3">{app.icon}</div>
-                <h3 className="font-semibold text-gray-800 mb-2">{app.type}</h3>
-                <p className="text-gray-600 text-sm">{app.desc}</p>
-              </div>
-            ))}
+              { type: 'E-commerce Apps', icon: ShoppingCart, desc: 'Online shopping experiences' },
+              { type: 'Social Media Apps', icon: Share2, desc: 'Community platforms' },
+              { type: 'On-demand Apps', icon: Car, desc: 'Service delivery apps' },
+              { type: 'FinTech Apps', icon: Wallet, desc: 'Financial solutions' },
+              { type: 'Healthcare Apps', icon: HeartPulse, desc: 'Medical & wellness' },
+              { type: 'Education Apps', icon: GraduationCap, desc: 'Learning platforms' },
+              { type: 'Travel Apps', icon: Plane, desc: 'Booking & planning' },
+              { type: 'Enterprise Apps', icon: Building2, desc: 'Business solutions' },
+              { type: 'Gaming Apps', icon: Gamepad2, desc: 'Mobile games' },
+              { type: 'Fitness Apps', icon: Activity, desc: 'Health & workout' },
+              { type: 'Food Delivery Apps', icon: Utensils, desc: 'Restaurant ordering' },
+              { type: 'Real Estate Apps', icon: Home, desc: 'Property platforms' },
+            ].map((app, index) => {
+              const Icon = app.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 transition-colors">
+                  <div className="text-blue-600 mb-3"><Icon className="w-8 h-8" /></div>
+                  <h3 className="font-semibold text-gray-800 mb-2">{app.type}</h3>
+                  <p className="text-gray-600 text-sm">{app.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -257,27 +301,30 @@ const MobileAppDevelopment = () => {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
               {[
-                { step: 1, title: 'Discovery', desc: 'Idea validation & planning', icon: '💡' },
-                { step: 2, title: 'Design', desc: 'UI/UX & prototypes', icon: '🎨' },
-                { step: 3, title: 'Development', desc: 'Coding & integration', icon: '💻' },
-                { step: 4, title: 'Testing', desc: 'QA & optimization', icon: '🧪' },
-                { step: 5, title: 'Deployment', desc: 'App store launch', icon: '🚀' },
-                { step: 6, title: 'Maintenance', desc: 'Support & updates', icon: '🔧' },
-              ].map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="relative mb-4">
-                    <div className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
-                      {item.step}
+                { step: 1, title: 'Discovery', desc: 'Idea validation & planning', icon: Lightbulb },
+                { step: 2, title: 'Design', desc: 'UI/UX & prototypes', icon: Palette },
+                { step: 3, title: 'Development', desc: 'Coding & integration', icon: Code },
+                { step: 4, title: 'Testing', desc: 'QA & optimization', icon: CheckCircle2 },
+                { step: 5, title: 'Deployment', desc: 'App store launch', icon: Rocket },
+                { step: 6, title: 'Maintenance', desc: 'Support & updates', icon: Wrench },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.step} className="text-center">
+                    <div className="relative mb-4">
+                      <div className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
+                        {item.step}
+                      </div>
+                      {item.step < 6 && (
+                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-blue-200 transform -translate-y-1/2"></div>
+                      )}
                     </div>
-                    {item.step < 6 && (
-                      <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-blue-200 transform -translate-y-1/2"></div>
-                    )}
+                    <div className="flex justify-center text-blue-600 mb-2"><Icon className="w-6 h-6" /></div>
+                    <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-sm">{item.desc}</p>
                   </div>
-                  <div className="text-2xl mb-2">{item.icon}</div>
-                  <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -297,28 +344,31 @@ const MobileAppDevelopment = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { feature: 'Push Notifications', icon: '📢' },
-              { feature: 'In-App Purchases', icon: '💰' },
-              { feature: 'Social Login', icon: '🔐' },
-              { feature: 'GPS & Location', icon: '📍' },
-              { feature: 'Camera Integration', icon: '📸' },
-              { feature: 'Offline Mode', icon: '📶' },
-              { feature: 'Biometric Auth', icon: '👆' },
-              { feature: 'AR/VR Features', icon: '👓' },
-              { feature: 'Chat/Messaging', icon: '💬' },
-              { feature: 'Payment Gateway', icon: '💳' },
-              { feature: 'Analytics Dashboard', icon: '📊' },
-              { feature: 'Multi-language', icon: '🌐' },
-              { feature: 'Dark Mode', icon: '🌙' },
-              { feature: 'Voice Commands', icon: '🎤' },
-              { feature: 'IoT Integration', icon: '🔌' },
-              { feature: 'Machine Learning', icon: '🤖' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-semibold text-gray-800">{item.feature}</h3>
-              </div>
-            ))}
+              { feature: 'Push Notifications', icon: Bell },
+              { feature: 'In-App Purchases', icon: CreditCard },
+              { feature: 'Social Login', icon: Lock },
+              { feature: 'GPS & Location', icon: MapPin },
+              { feature: 'Camera Integration', icon: Camera },
+              { feature: 'Offline Mode', icon: WifiOff },
+              { feature: 'Biometric Auth', icon: Fingerprint },
+              { feature: 'AR/VR Features', icon: Glasses },
+              { feature: 'Chat/Messaging', icon: MessageCircle },
+              { feature: 'Payment Gateway', icon: CreditCard },
+              { feature: 'Analytics Dashboard', icon: BarChart3 },
+              { feature: 'Multi-language', icon: Globe },
+              { feature: 'Dark Mode', icon: Moon },
+              { feature: 'Voice Commands', icon: Mic },
+              { feature: 'IoT Integration', icon: Cpu },
+              { feature: 'Machine Learning', icon: Sparkles },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="text-blue-600 mb-3"><Icon className="w-6 h-6" /></div>
+                  <h3 className="font-semibold text-gray-800">{item.feature}</h3>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -372,7 +422,7 @@ const MobileAppDevelopment = () => {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -424,7 +474,7 @@ const MobileAppDevelopment = () => {
                   'Performance tracking & reporting'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center text-gray-700">
-                    <span className="text-blue-500 mr-2">✓</span>
+                    <Check className="w-4 h-4 text-blue-500 mr-2 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -445,7 +495,7 @@ const MobileAppDevelopment = () => {
                   'Long-term sustainable growth'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center">
-                    <span className="text-white mr-2">✓</span>
+                    <Check className="w-4 h-4 text-white mr-2 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -465,7 +515,7 @@ const MobileAppDevelopment = () => {
             <p className="text-xl mb-8 opacity-90">
               Let's transform your idea into a successful mobile application
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -473,31 +523,42 @@ const MobileAppDevelopment = () => {
                 Book Free Consultation
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp App Expert
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp App Expert</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🚀 Fast Development</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Rocket className="w-4 h-4 text-cyan-300" />
+                  <span>Fast Development</span>
+                </div>
                 <div className="text-sm opacity-90">8-12 weeks delivery</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">📱 Multi-Platform</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Smartphone className="w-4 h-4 text-cyan-300" />
+                  <span>Multi-Platform</span>
+                </div>
                 <div className="text-sm opacity-90">iOS, Android, Cross-platform</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🎯 App Store Ready</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-300" />
+                  <span>App Store Ready</span>
+                </div>
                 <div className="text-sm opacity-90">ASO & deployment included</div>
               </div>
             </div>
@@ -528,7 +589,7 @@ const MobileAppDevelopment = () => {
                     'Memory management'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -549,7 +610,7 @@ const MobileAppDevelopment = () => {
                     'Feedback mechanism'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -590,42 +651,45 @@ const MobileAppDevelopment = () => {
               {
                 category: 'E-commerce',
                 name: 'Fashion Retail App',
-                stats: ['500K+ downloads', '4.8★ rating', '40% increase in sales'],
-                icon: '👕'
+                stats: ['500K+ downloads', '4.8/5 rating', '40% increase in sales'],
+                icon: Shirt
               },
               {
                 category: 'Healthcare',
                 name: 'Doctor Consultation App',
                 stats: ['200K+ users', '95% satisfaction', '24/7 availability'],
-                icon: '🏥'
+                icon: HeartPulse
               },
               {
                 category: 'Education',
                 name: 'Online Learning App',
-                stats: ['1M+ students', '4.7★ rating', '30% completion rate'],
-                icon: '🎓'
+                stats: ['1M+ students', '4.7/5 rating', '30% completion rate'],
+                icon: GraduationCap
               },
-            ].map((app, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-sm">
-                <div className="text-4xl mb-4">{app.icon}</div>
-                <div className="text-sm font-semibold text-blue-600 mb-2">{app.category}</div>
-                <h3 className="font-bold text-xl mb-4 text-gray-800">{app.name}</h3>
-                <ul className="space-y-2">
-                  {app.stats.map((stat, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600">
-                      <span className="text-green-500 mr-2">✓</span>
-                      {stat}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/case-studies"
-                  className="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold"
-                >
-                  View Case Study →
-                </Link>
-              </div>
-            ))}
+            ].map((app, index) => {
+              const Icon = app.icon;
+              return (
+                <div key={index} className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="text-blue-600 mb-4"><Icon className="w-10 h-10" /></div>
+                  <div className="text-sm font-semibold text-blue-600 mb-2">{app.category}</div>
+                  <h3 className="font-bold text-xl mb-4 text-gray-800">{app.name}</h3>
+                  <ul className="space-y-2">
+                    {app.stats.map((stat, idx) => (
+                      <li key={idx} className="flex items-center text-gray-600">
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        {stat}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/case-studies"
+                    className="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold"
+                  >
+                    View Case Study →
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

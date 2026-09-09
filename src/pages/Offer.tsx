@@ -287,8 +287,9 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
                   <div>
                     <div className="flex flex-wrap gap-1.5 mb-6">
                       {service.locations.map((loc) => (
-                        <span key={loc} className="bg-purple-50 text-purple-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                          📍 {loc}
+                        <span key={loc} className="bg-purple-50 text-purple-700 text-xs font-semibold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-purple-600 shrink-0" />
+                          <span>{loc}</span>
                         </span>
                       ))}
                     </div>
