@@ -10,7 +10,7 @@ const Portfolio = () => {
 
   const filters = ['All', 'Website Development', 'SEO Services', 'SMM Campaigns', 'Business Setup', 'GMB Optimization'];
 
-  const projects = [
+  const projects = useMemo(() => [
     {
       id: 1,
       title: 'Tour & Travel Portal',
@@ -107,13 +107,13 @@ const Portfolio = () => {
       metrics: ['+200% Calls', '+150% Website Visits', '+180% Reviews'],
       caseStudy: true
     }
-  ];
+  ], []);
 
   const filteredProjects = useMemo(() => 
     activeFilter === 'All' 
       ? projects 
       : projects.filter(project => project.category === activeFilter),
-    [activeFilter]
+    [activeFilter, projects]
   );
 
   const stats = [

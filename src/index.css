@@ -50,6 +50,34 @@
   .hero-mesh {
     background: radial-gradient(circle at 50% 20%, rgba(106, 13, 173, 0.45) 0%, rgba(15, 23, 42, 0.95) 75%);
   }
+
+  /* === Design System Surface Tokens === */
+  .surface-base {
+    @apply bg-white border border-slate-200/80;
+  }
+  .surface-subtle {
+    @apply bg-slate-50/80 border border-slate-200/60;
+  }
+  .surface-elevated {
+    @apply bg-white border border-slate-200/80 shadow-card;
+  }
+  .surface-dark {
+    @apply bg-slate-900 border border-slate-800 text-white;
+  }
+
+  /* === Typography System Tokens === */
+  .typography-hero {
+    @apply text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1];
+  }
+  .typography-section {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight;
+  }
+  .typography-body {
+    @apply text-base sm:text-lg leading-relaxed;
+  }
+  .typography-eyebrow {
+    @apply text-xs font-bold uppercase tracking-widest;
+  }
 }
 
 @layer utilities {
