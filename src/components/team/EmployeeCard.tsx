@@ -92,31 +92,9 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
           {member.bio}
         </p>
 
-        {/* Structured Metadata / Key Focus */}
-        <div className="pt-3 border-t border-slate-100 mt-auto space-y-3">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5 text-center">
-              Core Focus
-            </span>
-            <div className="flex flex-wrap justify-center gap-1">
-              {member.expertise.slice(0, 3).map((item, idx) => (
-                <span
-                  key={idx}
-                  className="text-[10px] bg-slate-50 text-slate-700 border border-slate-200/80 px-2 py-0.5 rounded-md font-medium"
-                >
-                  {item}
-                </span>
-              ))}
-              {member.expertise.length > 3 && (
-                <span className="text-[10px] bg-purple-50 text-purple-700 border border-purple-100 px-1.5 py-0.5 rounded-md font-semibold">
-                  +{member.expertise.length - 3}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Verification & Action Bar */}
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+        {/* Verification & Action Bar */}
+        <div className="pt-3 border-t border-slate-100 mt-auto">
+          <div className="flex items-center justify-between text-xs">
             <Link
               to="/verify"
               className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
