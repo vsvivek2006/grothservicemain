@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight, Zap } from "lucide-react";
 
 const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
@@ -158,11 +158,11 @@ const Header: React.FC = () => {
             <div className="flex items-center justify-center flex-1">
               <div className="bg-white/10 backdrop-blur-sm px-3 py-0.5 rounded-full border border-white/15">
                 <div className="flex items-center space-x-2">
-                  <span className="text-yellow-300 animate-pulse text-xs">⚡</span>
+                  <Zap className="h-3 w-3 text-yellow-300 animate-pulse shrink-0" />
                   <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent font-bold text-xs whitespace-nowrap">
                     {animatedText}
                   </span>
-                  <span className="text-yellow-300 animate-pulse text-xs">⚡</span>
+                  <Zap className="h-3 w-3 text-yellow-300 animate-pulse shrink-0" />
                 </div>
               </div>
             </div>
@@ -724,8 +724,10 @@ const Header: React.FC = () => {
 
             {/* Banner */}
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl mt-4 p-4 text-center shadow-lg">
-              <p className="text-white font-bold text-sm">
-                🚀 YOUR DIGITAL GROWTH PARTNER 🚀
+              <p className="text-white font-bold text-sm flex items-center justify-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-yellow-300" />
+                <span>YOUR DIGITAL GROWTH PARTNER</span>
+                <Sparkles className="w-4 h-4 text-yellow-300" />
               </p>
               <p className="text-white/80 text-[10px] mt-1">
                 Jaipur • Vrindavan • Nepal
@@ -735,9 +737,10 @@ const Header: React.FC = () => {
             {/* Close Menu Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="w-full mt-3 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3.5 rounded-lg font-semibold text-sm transition-all"
+              className="w-full mt-3 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3.5 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-1.5"
             >
-              Close Menu ✕
+              <span>Close Menu</span>
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>

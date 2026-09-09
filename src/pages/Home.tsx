@@ -5,7 +5,8 @@ import {
   ArrowRight, CheckCircle, Phone,
   MessageCircle, Star, Sparkles, MapPin,
   ExternalLink, Globe, Users, TrendingUp,
-  Target, Headphones, Quote
+  Target, Headphones, Quote, Search,
+  Code, BarChart3, ShoppingBag, Clock
 } from "lucide-react";
 import {
   SiReact, SiNextdotjs, SiNodedotjs, SiExpress,
@@ -364,7 +365,7 @@ const Home: React.FC = () => {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hello%20Growth%20Service,%20I%20want%20to%20discuss%20my%20digital%20marketing%20project.`;
   const phoneNumber = "+91 93414 36937";
 
-  // Hero Bento Grid Metric Showcase Items
+  // Hero Bento Grid Metric Showcase Items (Exclusively Verified Facts)
   const heroBentoItems: BentoItem[] = [
     {
       colSpan: 2,
@@ -374,24 +375,24 @@ const Home: React.FC = () => {
           <div className="flex items-center justify-between mb-3">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Verified Impact
+              Verified Track Record
             </div>
             <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-300 group-hover:scale-110 transition-transform">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
           <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 tracking-tight">
-            ₹25Cr+
+            500+
           </div>
           <div className="text-sm font-semibold text-white mt-1">
-            Revenue Generated for Clients
+            Projects Completed & Businesses Scaled
           </div>
           <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
             <span className="flex items-center gap-1.5 text-yellow-300 font-medium">
               <Sparkles className="w-3.5 h-3.5" />
-              Across SEO, Web & Ads
+              Across India, Nepal & International
             </span>
-            <span className="text-purple-200 font-medium">300%+ Avg ROI</span>
+            <span className="text-purple-200 font-medium">Jaipur • Vrindavan • Nepal</span>
           </div>
         </div>
       )
@@ -405,13 +406,13 @@ const Home: React.FC = () => {
             <Users className="w-4 h-4" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            500+
+            300+
           </div>
           <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
-            Businesses Scaled
+            Happy Clients
           </div>
           <div className="text-[11px] text-purple-300/80 mt-1">
-            India & International
+            Multi-Industry Growth
           </div>
         </div>
       )
@@ -425,14 +426,14 @@ const Home: React.FC = () => {
             <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            98%
+            4.9 / 5
           </div>
           <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
-            Client Retention
+            Client Rating
           </div>
           <div className="text-[11px] text-amber-300/80 mt-1 flex items-center gap-1">
             <span>★★★★★</span>
-            <span>4.9/5 Rating</span>
+            <span>Verified Feedback</span>
           </div>
         </div>
       )
@@ -478,7 +479,7 @@ const Home: React.FC = () => {
             Company Locations
           </div>
           <div className="text-[11px] text-purple-300/80 mt-1 truncate">
-            🇮🇳 Jaipur • Vrindavan • 🇳🇵 Nepal
+            Jaipur • Vrindavan • Nepal
           </div>
         </div>
       )
@@ -626,7 +627,7 @@ const Home: React.FC = () => {
                         size="lg"
                         icon={<MessageCircle className="w-5 h-5 text-emerald-600" />}
                       >
-                        💬 Free Consultation
+                        Free Consultation
                       </AnimatedButton>
                     </div>
                   </div>
@@ -664,12 +665,12 @@ const Home: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. OFFICE LOCATIONS INTERACTIVE RIBBON (Jaipur, Vrindavan, Nepal HQ)      */}
       {/* ========================================================================= */}
-      <section className="bg-gradient-to-r from-purple-800 via-indigo-900 to-purple-900 border-y border-purple-700/50 py-4 text-white shadow-md relative z-20">
+      <section className="bg-gradient-to-r from-purple-800 via-indigo-900 to-purple-900 border-y border-purple-700/50 py-3.5 text-white shadow-md relative z-20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 text-xs sm:text-sm">
+          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs sm:text-sm">
             <span className="font-bold uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-yellow-400" />
-              <span>📍 Our Offices:</span>
+              <span>Our Offices:</span>
             </span>
             {offices.map((office, index) => (
               <a 
@@ -692,33 +693,45 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. TRUST & SOCIAL PROOF STRIP (500+ Clients, Verified Agency)            */}
+      {/* 3. TRUST & SOCIAL PROOF STRIP (500+ Projects, 300+ Clients, Verified)    */}
       {/* ========================================================================= */}
-      <section className="py-12 bg-white border-b border-slate-200/80">
+      <section className="py-10 md:py-12 bg-white border-b border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center" staggerDelay={80}>
-            <StaggerItem index={0}>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
-                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">500+</div>
-                <div className="text-xs sm:text-sm font-semibold text-slate-700">Businesses Scaled</div>
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 md:divide-x md:divide-slate-200/80 gap-6 md:gap-0 text-center" staggerDelay={70}>
+            <StaggerItem index={0} className="px-4">
+              <div className="group">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 mb-1 group-hover:scale-105 transition-transform duration-200">
+                  500+
+                </div>
+                <div className="text-sm font-bold text-slate-900">Businesses Scaled</div>
+                <div className="text-xs text-slate-500 mt-0.5">India & Global Delivery</div>
               </div>
             </StaggerItem>
-            <StaggerItem index={1}>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
-                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">3</div>
-                <div className="text-xs sm:text-sm font-semibold text-slate-700">Company Offices (IN & NP)</div>
+            <StaggerItem index={1} className="px-4">
+              <div className="group">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 mb-1 group-hover:scale-105 transition-transform duration-200">
+                  300+
+                </div>
+                <div className="text-sm font-bold text-slate-900">Happy Clients</div>
+                <div className="text-xs text-slate-500 mt-0.5">Across Diverse Sectors</div>
               </div>
             </StaggerItem>
-            <StaggerItem index={2}>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
-                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">98%</div>
-                <div className="text-xs sm:text-sm font-semibold text-slate-700">Client Retention</div>
+            <StaggerItem index={2} className="px-4">
+              <div className="group">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 mb-1 group-hover:scale-105 transition-transform duration-200">
+                  3 Offices
+                </div>
+                <div className="text-sm font-bold text-slate-900">Physical Facilities</div>
+                <div className="text-xs text-slate-500 mt-0.5">Jaipur • Vrindavan • Nepal</div>
               </div>
             </StaggerItem>
-            <StaggerItem index={3}>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 card-lift-sm hover:border-purple-300/80 transition-all duration-300">
-                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600 mb-1">24/7</div>
-                <div className="text-xs sm:text-sm font-semibold text-slate-700">Dedicated Support</div>
+            <StaggerItem index={3} className="px-4">
+              <div className="group">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 mb-1 group-hover:scale-105 transition-transform duration-200">
+                  24/7
+                </div>
+                <div className="text-sm font-bold text-slate-900">Dedicated Support</div>
+                <div className="text-xs text-slate-500 mt-0.5">Direct WhatsApp Helpline</div>
               </div>
             </StaggerItem>
           </StaggerContainer>
@@ -801,20 +814,208 @@ const Home: React.FC = () => {
             description="Everything you need to succeed in the digital landscape"
           />
 
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" staggerDelay={90}>
-            {ourServices.map((service, index) => (
-              <StaggerItem key={index} index={index} className="h-full">
-                <ServiceCard
-                  title={service.title}
-                  description={service.description}
-                  features={service.features}
-                  path={service.path}
-                  iconEmoji={service.icon}
-                  highlightColor={service.color}
-                />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+          {/* Bento Architecture: Featured Anchor + Supporting Grid + Full-Width E-commerce */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8">
+            {/* 1. Anchor Service: SEO (Large 7-col Bento Card) */}
+            <div className="lg:col-span-7 h-full">
+              <Link
+                to={ourServices[0].path}
+                className="group h-full bg-white rounded-2xl p-7 sm:p-9 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600" />
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:scale-110 group-hover:rotate-2 transition-all duration-300 ease-luxury shadow-sm">
+                    <Search className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/70 px-3 py-1 rounded-full border border-purple-200/50">
+                    Core Growth Engine
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-3">
+                  {ourServices[0].title}
+                </h3>
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+                  {ourServices[0].description}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8 flex-grow">
+                  {ourServices[0].features.map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-2 font-bold text-sm text-purple-600 group-hover:translate-x-1.5 transition-transform duration-200 mt-auto">
+                  <span>Explore SEO Solutions</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </Link>
+            </div>
+
+            {/* 2. Service 2: Website Development (5-col Bento Card) */}
+            <div className="lg:col-span-5 h-full">
+              <Link
+                to={ourServices[1].path}
+                className="group h-full bg-white rounded-2xl p-7 sm:p-9 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-purple-600 to-pink-600" />
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="w-14 h-14 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 group-hover:scale-110 group-hover:rotate-2 transition-all duration-300 ease-luxury shadow-sm">
+                    <Code className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/70 px-3 py-1 rounded-full border border-purple-200/50">
+                    Full-Stack
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-3">
+                  {ourServices[1].title}
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed mb-5">
+                  {ourServices[1].description}
+                </p>
+                <div className="space-y-2 mb-6 flex-grow">
+                  {ourServices[1].features.slice(0, 4).map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-2 font-bold text-sm text-purple-600 group-hover:translate-x-1.5 transition-transform duration-200 mt-auto">
+                  <span>View Development Capabilities</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </Link>
+            </div>
+
+            {/* 3. Performance Marketing (4-col) */}
+            <div className="lg:col-span-4 h-full">
+              <Link
+                to={ourServices[2].path}
+                className="group h-full bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500" />
+                <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 group-hover:scale-110 transition-transform mb-4 shadow-sm">
+                  <BarChart3 className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">
+                  {ourServices[2].title}
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                  {ourServices[2].description}
+                </p>
+                <div className="space-y-2 mb-5 flex-grow">
+                  {ourServices[2].features.slice(0, 4).map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-700">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 font-bold text-xs text-purple-600 group-hover:translate-x-1 transition-transform mt-auto">
+                  <span>Learn More</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
+            </div>
+
+            {/* 4. Social Media Management (4-col) */}
+            <div className="lg:col-span-4 h-full">
+              <Link
+                to={ourServices[3].path}
+                className="group h-full bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600" />
+                <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform mb-4 shadow-sm">
+                  <Users className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">
+                  {ourServices[3].title}
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                  {ourServices[3].description}
+                </p>
+                <div className="space-y-2 mb-5 flex-grow">
+                  {ourServices[3].features.slice(0, 4).map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-700">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 font-bold text-xs text-purple-600 group-hover:translate-x-1 transition-transform mt-auto">
+                  <span>Learn More</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
+            </div>
+
+            {/* 5. Content Marketing (4-col) */}
+            <div className="lg:col-span-4 h-full">
+              <Link
+                to={ourServices[4].path}
+                className="group h-full bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-600 to-teal-600" />
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform mb-4 shadow-sm">
+                  <Target className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">
+                  {ourServices[4].title}
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                  {ourServices[4].description}
+                </p>
+                <div className="space-y-2 mb-5 flex-grow">
+                  {ourServices[4].features.slice(0, 4).map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-700">
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 font-bold text-xs text-purple-600 group-hover:translate-x-1 transition-transform mt-auto">
+                  <span>Learn More</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
+            </div>
+
+            {/* 6. Service 6: E-commerce Solutions (Full-Width 12-col Bento Banner) */}
+            <div className="lg:col-span-12">
+              <div className="bg-white rounded-2xl p-7 sm:p-9 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600" />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                  <div className="lg:col-span-5">
+                    <div className="w-12 h-12 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 mb-4 shadow-sm">
+                      <ShoppingBag className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                      {ourServices[5].title}
+                    </h3>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                      {ourServices[5].description}
+                    </p>
+                    <Link
+                      to={ourServices[5].path}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all shadow-sm hover:shadow-md group/btn"
+                    >
+                      <span>Explore E-commerce Solutions</span>
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                    </Link>
+                  </div>
+                  <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50/80 p-5 sm:p-6 rounded-xl border border-slate-100">
+                    {ourServices[5].features.map((feature, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-700 font-medium">
+                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1241,7 +1442,7 @@ const Home: React.FC = () => {
             <div className="mt-14 pt-8 border-t border-white/10">
               <p className="text-purple-300 text-sm font-medium mb-4 flex items-center justify-center gap-1.5">
                 <MapPin className="w-4 h-4 text-purple-400" />
-                <span>📍 Our Office Locations</span>
+                <span>Our Office Locations</span>
               </p>
               <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-xs sm:text-sm text-purple-200">
                 {offices.map((office, index) => (
@@ -1258,7 +1459,7 @@ const Home: React.FC = () => {
                 ))}
                 <span className="text-purple-500 hidden sm:inline">|</span>
                 <span className="flex items-center gap-1.5 text-emerald-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
-                  <span>⏰</span>
+                  <Clock className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="font-semibold text-white">24/7 Support</span>
                 </span>
               </div>

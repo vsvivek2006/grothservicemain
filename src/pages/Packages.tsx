@@ -424,8 +424,8 @@ const Packages: React.FC = () => {
                   <ul className="space-y-3">
                     {gmbPackage.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
-                          ✓
+                        <div className="w-7 h-7 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+                          <Check className="h-4 w-4 text-blue-600" />
                         </div>
                         <span className="text-gray-700 font-medium">{benefit}</span>
                       </li>

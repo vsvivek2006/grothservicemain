@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   Users, Clock, Building2, Globe, Laptop, Lock, MessageCircle, Phone,
-  MapPin, Smile, Rocket, TrendingUp, Star
+  MapPin, Smile, Rocket, TrendingUp, Star, Mail, ArrowRight
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 
@@ -752,30 +752,30 @@ const About: React.FC = () => {
 
                 <div className="p-6">
                   <div className="flex items-start gap-3 mb-4">
-                    <div className="text-blue-600 mt-1">📍</div>
+                    <MapPin className="w-4 h-4 text-purple-600 mt-1 shrink-0" />
                     <div>
                       <p className="text-gray-700 text-sm leading-relaxed">{office.address}</p>
                       {office.landmark && (
-                        <p className="text-gray-500 text-xs mt-1">📌 {office.landmark}</p>
+                        <p className="text-gray-500 text-xs mt-1">{office.landmark}</p>
                       )}
                     </div>
                   </div>
 
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="text-blue-600">📞</span>
-                      <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-gray-700 hover:text-blue-600">
+                      <Phone className="w-4 h-4 text-purple-600 shrink-0" />
+                      <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-gray-700 hover:text-purple-600">
                         {office.phone}
                       </a>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="text-blue-600">✉️</span>
-                      <a href={`mailto:${office.email}`} className="text-gray-700 hover:text-blue-600">
+                      <Mail className="w-4 h-4 text-purple-600 shrink-0" />
+                      <a href={`mailto:${office.email}`} className="text-gray-700 hover:text-purple-600">
                         {office.email}
                       </a>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="text-blue-600">⏰</span>
+                      <Clock className="w-4 h-4 text-purple-600 shrink-0" />
                       <span className="text-gray-700">{office.timings}</span>
                     </div>
                   </div>
@@ -784,7 +784,7 @@ const About: React.FC = () => {
                     <p className="text-xs font-semibold text-gray-500 mb-2">Services at this location:</p>
                     <div className="flex flex-wrap gap-1">
                       {office.services.map((service, idx) => (
-                        <span key={idx} className="bg-blue-50 text-blue-700 text-[10px] px-2 py-1 rounded-full">
+                        <span key={idx} className="bg-purple-50 text-purple-700 text-[10px] px-2 py-1 rounded-full">
                           {service}
                         </span>
                       ))}
@@ -795,9 +795,9 @@ const About: React.FC = () => {
                     href={office.mapLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-semibold text-sm hover:from-blue-600 hover:to-purple-700 transition-all"
+                    className="block w-full text-center bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2 rounded-lg font-semibold text-sm hover:from-blue-600 hover:to-indigo-800 transition-all shadow-sm"
                   >
-                    🗺️ Get Directions
+                    Get Directions
                   </a>
                 </div>
               </div>
@@ -806,7 +806,7 @@ const About: React.FC = () => {
 
           {/* Office Locations Map Section */}
           <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
-            <h3 className="text-2xl font-bold mb-4">📍 Service Areas</h3>
+            <h3 className="text-2xl font-bold mb-4">Service Areas</h3>
             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
               We serve clients from our offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Nepal, 
               providing digital solutions across India and globally.
