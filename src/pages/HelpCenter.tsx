@@ -229,7 +229,7 @@ const HelpCenter: React.FC = () => {
       <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-8">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div>
+            <div className="text-center md:text-left">
               <h1 className="text-3xl font-bold mb-2">Help Center</h1>
               <p className="text-blue-100">Get answers to common questions and contact support</p>
             </div>

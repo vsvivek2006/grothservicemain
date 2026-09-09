@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
+import { WhatsAppIcon } from '../components/ui';
 
 const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -713,22 +714,27 @@ Our Transformation Package:
       </Helmet>
 
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-6">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold mb-2">Growth Service Blog</h1>
-              <p className="text-blue-100">Expert insights on digital growth</p>
-            </div>
-            <div className="mt-4 md:mt-0">
-              <div className="flex items-center space-x-2 text-sm text-blue-100">
-                <Code className="h-4 w-4" />
-                <span>High-Performance Web Apps</span>
-                <span>•</span>
-                <Search className="h-4 w-4" />
-                <span>Organic Search Dominance</span>
-              </div>
-            </div>
+      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 tracking-tight">
+            Growth Service Blog
+          </h1>
+          <p className="text-blue-100 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-6">
+            Expert insights, architectural guides, and digital growth strategies from our engineering and marketing team.
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-3 text-xs sm:text-sm text-blue-100">
+            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+              <Code className="h-3.5 w-3.5 text-cyan-300" />
+              <span>High-Performance Web Apps</span>
+            </span>
+            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+              <Search className="h-3.5 w-3.5 text-yellow-300" />
+              <span>Organic Search Dominance</span>
+            </span>
+            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+              <TrendingUp className="h-3.5 w-3.5 text-emerald-300" />
+              <span>Paid Growth & ROI</span>
+            </span>
           </div>
         </div>
       </header>
@@ -963,9 +969,10 @@ Our Transformation Package:
                     href={getNepalWhatsAppUrl(`I read your article: ${selectedPost.title}`)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition-colors text-center"
+                    className="flex-1 bg-[#25D366] hover:bg-emerald-600 text-white py-3 px-6 rounded-lg font-medium transition-colors text-center inline-flex items-center justify-center gap-2"
                   >
-                    Discuss This Topic
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
+                    <span>Discuss This Topic</span>
                   </a>
                 </div>
               </div>
@@ -973,30 +980,6 @@ Our Transformation Package:
           </div>
         </div>
       )}
-
-      {/* Mobile-friendly touch improvements */}
-      <style jsx>{`
-        .line-clamp-2 {
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-        }
-        
-        .line-clamp-3 {
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 3;
-        }
-        
-        @media (max-width: 640px) {
-          button, a {
-            min-height: 44px;
-            min-width: 44px;
-          }
-        }
-      `}</style>
     </div>
   );
 };
