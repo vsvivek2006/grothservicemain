@@ -63,7 +63,7 @@ const Packages: React.FC = () => {
         "Amenities & Facility Breakdown",
         "Location Directions & Map Integration"
       ],
-      technologies: ["MERN Stack", "Razorpay/Stripe", "JWT Auth"],
+      technologies: ["MERN Stack", "Payment Gateway / Stripe", "JWT Auth"],
       color: "from-purple-600 to-pink-600"
     }
   ];
@@ -180,7 +180,9 @@ const Packages: React.FC = () => {
     color: "from-emerald-600 to-teal-700"
   };
 
-  const allServices = [
+  type ServiceTab = 'web' | 'seo' | 'smm' | 'gmb' | 'business';
+
+  const allServices: { id: ServiceTab; name: string; icon: React.ReactNode }[] = [
     { id: 'web', name: 'Website Development', icon: <Code className="h-5 w-5" /> },
     { id: 'seo', name: 'SEO Services', icon: <Search className="h-5 w-5" /> },
     { id: 'gmb', name: 'GMB Optimization', icon: <MapPin className="h-5 w-5" /> },
@@ -647,7 +649,7 @@ const Packages: React.FC = () => {
             {allServices.map((service) => (
               <button
                 key={service.id}
-                onClick={() => setActiveTab(service.id as any)}
+                onClick={() => setActiveTab(service.id)}
                 className={`px-5 py-2.5 rounded-full font-semibold text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                   activeTab === service.id
                     ? 'bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white shadow-md'

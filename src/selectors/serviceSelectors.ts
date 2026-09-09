@@ -1,4 +1,4 @@
-import { servicesData, ServiceData, ServiceSlug, ServiceCategory } from '../data/services';
+import { servicesData, ServiceData, ServiceCategory } from '../data/services';
 import { citiesData, CityData } from '../data/locations';
 
 /**

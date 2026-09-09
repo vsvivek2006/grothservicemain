@@ -55,7 +55,7 @@ const HelpCenter: React.FC = () => {
     {
       id: 4,
       question: "What payment methods do you accept?",
-      answer: "We accept UPI, credit/debit cards, net banking, and bank transfers. For international clients, we accept PayPal and wire transfers. All payments are processed securely through Razorpay, India's leading payment gateway.",
+      answer: "We accept UPI, credit/debit cards, net banking, and direct bank transfers. For international clients, we accept wire transfers and standard commercial remittance channels.",
       category: 'billing',
       views: 650
     },

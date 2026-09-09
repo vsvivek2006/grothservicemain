@@ -164,7 +164,7 @@ Key Benefits:
 Client: Travel Agency in Vrindavan
 Scope: Custom Booking Engine & Itinerary Architecture
 Timeline: 10 Days
-Tech Stack: React, Node.js, MongoDB, Razorpay
+Tech Stack: React, Node.js, MongoDB, Payment Gateway
 
 Features Delivered:
 • Tour Package Booking System
@@ -660,7 +660,7 @@ Our Transformation Package:
     ? blogPosts 
     : blogPosts.filter(post => post.category === selectedCategory);
 
-  const openPostModal = (post: any) => {
+  const openPostModal = (post: typeof blogPosts[0]) => {
     setSelectedPost(post);
     document.body.style.overflow = 'hidden';
   };

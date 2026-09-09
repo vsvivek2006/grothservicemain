@@ -494,24 +494,6 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     changefreq: "yearly",
     kind: "static",
   },
-
-  // Non-Indexable Utility & Checkout Flow Pages
-  paymentSuccess: {
-    path: "/payment/success",
-    canonical: "/payment/success",
-    label: "Payment Successful",
-    category: "hidden",
-    includeInSitemap: false,
-    kind: "hidden",
-  },
-  paymentFailed: {
-    path: "/payment/failed",
-    canonical: "/payment/failed",
-    label: "Payment Failed",
-    category: "hidden",
-    includeInSitemap: false,
-    kind: "hidden",
-  },
 };
 
 /**

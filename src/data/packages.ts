@@ -69,7 +69,7 @@ export const commercialPackages: readonly CommercialPackage[] = [
       'Departure Calendar Integration',
       'Performance Optimization'
     ],
-    technologies: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Stripe/Razorpay'],
+    technologies: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Stripe / Payment Gateway'],
     useCases: ['Travel Agencies', 'Tour Operators', 'Hotel Chains', 'Adventure Companies'],
     color: 'green',
     serviceSlugs: ['web-development']
@@ -121,7 +121,7 @@ export const commercialPackages: readonly CommercialPackage[] = [
       'Mobile Responsive Design',
       'SEO Optimized Architecture'
     ],
-    technologies: ['MERN Stack', 'Razorpay/Stripe', 'JWT Auth', 'Cloudinary'],
+    technologies: ['MERN Stack', 'Payment Gateway / Stripe', 'JWT Auth', 'Cloudinary'],
     useCases: ['Hotels', 'Guest Houses', 'Resorts', 'Vacation Rentals'],
     color: 'indigo',
     serviceSlugs: ['web-development']

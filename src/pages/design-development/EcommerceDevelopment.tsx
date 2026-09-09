@@ -125,7 +125,7 @@ const EcommerceDevelopment = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Payment Integration</h3>
               <ul className="text-gray-600 space-y-2">
-                <li>• Razorpay Integration</li>
+                <li>• Global Payment Gateway Integration</li>
                 <li>• Stripe Integration</li>
                 <li>• PayPal Integration</li>
                 <li>• UPI & Digital Wallets</li>

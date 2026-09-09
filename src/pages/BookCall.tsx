@@ -115,8 +115,6 @@ const BookCall: React.FC = () => {
       selectedOffice,
       ...formData 
     };
-    console.log('Booking details:', bookingDetails);
-    
     setIsSubmitted(true);
   };
 

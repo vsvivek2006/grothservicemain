@@ -30,7 +30,7 @@ export const HomeCaseStudiesSection: React.FC = () => {
       category: "Website Development",
       result: "300% sales growth in 3 months",
       client: "Fashion Brand",
-      tags: ["MERN Stack", "Razorpay", "Inventory"],
+      tags: ["MERN Stack", "Payment Gateway", "Inventory"],
       path: "/case-studies"
     }
   ];

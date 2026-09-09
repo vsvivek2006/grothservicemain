@@ -9,10 +9,14 @@ import {
 import { getOfficePhone, getBusinessEmail, getBusinessDomain } from '../selectors';
 import { getNepalWhatsAppUrl } from '../services';
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
+interface AuditOption {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+  tier: string;
+  color: string;
+  features: string[];
 }
 
 const FreeWebsiteAudit: React.FC = () => {
@@ -22,7 +26,6 @@ const FreeWebsiteAudit: React.FC = () => {
   const [auditType, setAuditType] = useState('basic');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
-  const [paymentComplete, setPaymentComplete] = useState(false);
 
   // Free audit types
   const freeAuditTypes = [
@@ -105,18 +108,6 @@ const FreeWebsiteAudit: React.FC = () => {
     }
   ];
 
-  // Initialize Razorpay
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   const handleFreeAuditSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -141,7 +132,7 @@ Looking forward to the free audit report!`;
     setIsSubmitted(true);
   };
 
-  const handlePayment = (audit: any) => {
+  const handleAuditInquiry = (audit: AuditOption) => {
     const whatsappMessage = `*${audit.name} Inquiry - Growth Service*
 
 🌐 Website URL: ${websiteUrl || 'Not provided'}
@@ -576,7 +567,7 @@ I would like to schedule an audit strategy session with your digital growth team
                       </ul>
                       
                       <button
-                        onClick={() => handlePayment(audit)}
+                        onClick={() => handleAuditInquiry(audit)}
                         className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 hover:scale-105"
                       >
                         Inquire About {audit.name}

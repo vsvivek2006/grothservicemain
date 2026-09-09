@@ -35,7 +35,7 @@ const Portfolio = () => {
       category: 'Website Development',
       description: 'Custom e-commerce solution with admin panel and inventory management',
       image: 'https://images.pexels.com/photos/336372/pexels-photo-336372.jpeg?auto=compress&cs=tinysrgb&w=600',
-      tags: ['MERN Stack', 'Razorpay', 'JWT Auth', 'Cloudinary'],
+      tags: ['MERN Stack', 'Payment Gateway', 'JWT Auth', 'Cloudinary'],
       results: '300% sales growth in 3 months',
       duration: '20 Days',
       client: 'Fashion Brand',

@@ -84,11 +84,6 @@ const SEOResults: React.FC = () => {
     { date: 'Current', title: 'Continuous Monitoring', description: 'Weekly performance tracking' }
   ];
 
-  // Time range filter for demo
-  useEffect(() => {
-    // Simulate data change based on time range
-    console.log(`Time range changed to: ${timeRange}`);
-  }, [timeRange]);
 
   const renderMetricCard = (title: string, value: string | number, change: string, icon: React.ReactNode, color: string) => (
     <div className={`bg-white rounded-2xl shadow-lg p-6 border-l-4 ${color}`}>
@@ -240,7 +235,7 @@ const SEOResults: React.FC = () => {
                 <Calendar className="h-4 w-4 text-gray-500" />
                 <select 
                   value={timeRange}
-                  onChange={(e) => setTimeRange(e.target.value as any)}
+                  onChange={(e) => setTimeRange(e.target.value as '7d' | '30d' | '90d' | '1y')}
                   className="bg-transparent border-0 focus:ring-0 text-gray-700"
                 >
                   <option value="7d">Last 7 Days</option>

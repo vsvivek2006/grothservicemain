@@ -69,7 +69,7 @@ export const servicesData: readonly ServiceData[] = [
     deliverables: [
       "Mobile-First Responsive Layouts",
       "Blazing Fast Page Speeds (Sub-2s Load Time)",
-      "Secure Payment Gateway Integrations (Razorpay/Stripe)",
+      "Secure Payment Gateway Integrations (Stripe / UPI / Cards)",
       "Clean TypeScript & React Architecture"
     ],
     technologies: ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", "MongoDB"]
@@ -160,11 +160,11 @@ export const servicesData: readonly ServiceData[] = [
     ],
     deliverables: [
       "Complete Store Setup & Design",
-      "Razorpay/Stripe/UPI Gateway Integration",
+      "Stripe / UPI / Net Banking Gateway Integration",
       "Cart Abandonment Recovery Workflows",
       "Mobile-Optimized Checkout Flow"
     ],
-    technologies: ["Shopify", "WooCommerce", "Razorpay", "Stripe", "Next.js"]
+    technologies: ["Shopify", "WooCommerce", "Stripe", "Next.js"]
   },
   {
     slug: "digital-marketing",

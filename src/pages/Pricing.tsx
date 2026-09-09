@@ -95,7 +95,7 @@ const Pricing: React.FC = () => {
         'Booking Calendar Sync',
         'Email Notifications'
       ],
-      technologies: ['MERN Stack', 'Razorpay/Stripe', 'JWT Auth'],
+      technologies: ['MERN Stack', 'Payment Gateway / Stripe', 'JWT Auth'],
       color: 'purple'
     },
     { 

@@ -1,14 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import LoadingFallback from './components/ui/LoadingFallback';
 import ScrollToTop from './components/ScrollToTop';
 import { APP_ROUTES, getRouteAliases } from './routing';
-import { getPrimaryWhatsAppUrl, getTelHref } from './services/communication';
-import { getSupportPhone } from './selectors/businessSelectors';
 
 // Core Pages (Route-level Code Splitting for optimal Core Web Vitals)
 const Home = lazy(() => import('./pages/Home'));
@@ -126,7 +123,6 @@ const ROUTE_COMPONENTS: Record<string, React.ComponentType> = {
 
 function App() {
   const routeAliases = getRouteAliases();
-  const supportPhone = getSupportPhone();
 
   return (
     <Router>
@@ -164,84 +160,6 @@ function App() {
               <Route
                 path="/locations/:city/:serviceSlug"
                 element={<Navigate to="/:city/:serviceSlug" replace />}
-              />
-
-              {/* Non-Indexable Utility: Payment Success Page */}
-              <Route
-                path={APP_ROUTES.paymentSuccess.path}
-                element={
-                  <div className="min-h-screen flex items-center justify-center bg-green-50 py-12">
-                    <Helmet>
-                      <title>Payment Successful | Growth Service</title>
-                      <meta name="robots" content="noindex, nofollow" />
-                    </Helmet>
-                    <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md mx-4 border border-green-100">
-                      <div className="text-green-500 text-6xl mb-4">✅</div>
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
-                      <p className="text-gray-600 mb-6 leading-relaxed">
-                        Thank you for your payment. We've received your order and our account manager will contact you within 24 hours.
-                      </p>
-                      <div className="space-y-3">
-                        <a
-                          href="/"
-                          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
-                        >
-                          Return to Home
-                        </a>
-                        <a
-                          href={getPrimaryWhatsAppUrl()}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-[#25D366] hover:bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
-                        >
-                          💬 WhatsApp Support
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                }
-              />
-
-              {/* Non-Indexable Utility: Payment Failed Page */}
-              <Route
-                path={APP_ROUTES.paymentFailed.path}
-                element={
-                  <div className="min-h-screen flex items-center justify-center bg-red-50 py-12">
-                    <Helmet>
-                      <title>Payment Failed | Growth Service</title>
-                      <meta name="robots" content="noindex, nofollow" />
-                    </Helmet>
-                    <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md mx-4 border border-red-100">
-                      <div className="text-red-500 text-6xl mb-4">❌</div>
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Failed</h1>
-                      <p className="text-gray-600 mb-6 leading-relaxed">
-                        Your payment could not be processed. Please try again or contact our support team.
-                      </p>
-                      <div className="space-y-3">
-                        <a
-                          href="/pricing"
-                          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
-                        >
-                          Try Again
-                        </a>
-                        <a
-                          href={getPrimaryWhatsAppUrl()}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-[#25D366] hover:bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
-                        >
-                          💬 WhatsApp Support
-                        </a>
-                        <a
-                          href={getTelHref(supportPhone)}
-                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors block shadow-md"
-                        >
-                          📞 Call Support
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                }
               />
 
               {/* 404 Fallback */}

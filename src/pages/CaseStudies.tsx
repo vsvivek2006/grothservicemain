@@ -26,7 +26,7 @@ const CaseStudies: React.FC = () => {
       overview: "Complete travel website development with booking system, tour packages, and payment gateway integration.",
       challenge: "Client needed a professional website to showcase tour packages and accept online bookings for pilgrimage tours in Vrindavan-Mathura region.",
       solution: "Developed a responsive website with booking system, integrated payment gateway, and multi-language support for international pilgrims.",
-      technologies: ["React", "Node.js", "MongoDB", "Razorpay", "Tailwind CSS"],
+      technologies: ["React", "Node.js", "MongoDB", "Payment Gateway", "Tailwind CSS"],
       features: [
         "Tour package booking system",
         "Online payment integration",

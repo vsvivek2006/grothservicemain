@@ -103,7 +103,7 @@ const TrustVerification: React.FC = () => {
               <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/50">
                 <div className="font-bold text-amber-900 mb-1">⚠️ Personal Bank Account Payment Requests</div>
                 <p className="text-amber-800">
-                  All official invoices and payments for Growth Service are issued via corporate invoices or our verified Razorpay checkout with merchant name <strong>Growth Service</strong>. Never transfer funds to personal bank accounts or random UPI QR codes claiming to represent us.
+                  All official invoices and payments for Growth Service are issued via official corporate invoices in the registered name of <strong>Growth Service</strong>. Never transfer funds to personal bank accounts or random UPI QR codes claiming to represent us.
                 </p>
               </div>
             </div>

@@ -50,7 +50,7 @@ export const RefundPolicy: React.FC = () => {
       content: `To request a refund or review of account billing:
 1. Submit a formal request in writing to info@growthservice.in with your invoice number, project title, and detailed reason for the request.
 2. Our finance and project management teams will review the delivered milestones, timesheets, and signed agreements within 5 business days.
-3. If approved, refunds are processed back to the original method of payment (bank transfer or Razorpay) within 7 to 10 business days.`
+3. If approved, refunds are processed back to the original method of payment (official bank transfer) within 7 to 10 business days.`
     }
   ];
 
