@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import ProcessTimeline from '../components/ui/ProcessTimeline';
 import { Container, Section } from '../components/ui';
+import { businessConfig } from '../config';
 
 // Types
 interface TeamMember {
@@ -120,57 +121,23 @@ interface WhyChooseUs {
 const About: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Office Locations with Images from Public Folder
-  const offices: OfficeLocation[] = [
-    {
-      id: 1,
-      name: "Jaipur Office - Rajasthan",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553",
-      email: "jaipur@growthservice.in",
-      flag: "🇮🇳",
-      mapLink: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
-      image: "/images/jaipur-office.jpg",
-      city: "Jaipur",
-      country: "India",
-      landmark: "Near Jagatpura Flyover",
-      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
-      isHeadOffice: false,
-      services: ["Web Development", "SEO Services", "Digital Marketing", "Social Media Management"]
-    },
-    {
-      id: 2,
-      name: "Vrindavan Office - Uttar Pradesh",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
-      phone: "+91 93414 36937",
-      email: "info@growthservice.in",
-      flag: "🇮🇳",
-      mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
-      image: "/images/vrindavan-office.jpg",
-      city: "Vrindavan",
-      country: "India",
-      landmark: "Radhika Sadan ki Bassinet me",
-      timings: "Mon-Sat: 9:00 AM - 7:00 PM",
-      isHeadOffice: true,
-      services: ["Web Development", "SEO Services", "Digital Marketing", "Content Creation"]
-    },
-    {
-      id: 3,
-      name: "Nepal Office - Bariyarpatti",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      email: "nepal@growthservice.in",
-      flag: "🇳🇵",
-      mapLink: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal",
-      image: "/images/nepal-office.jpg",
-      city: "Bariyarpatti",
-      country: "Nepal",
-      landmark: "Near Bariyarpatti Main Road",
-      timings: "Sun-Fri: 10:00 AM - 6:00 PM",
-      isHeadOffice: false,
-      services: ["Web Development", "SEO Services", "Digital Marketing", "E-commerce Solutions"]
-    }
-  ];
+  // Office Locations with Images derived from central businessConfig
+  const offices: OfficeLocation[] = businessConfig.offices.map((o, idx) => ({
+    id: idx + 1,
+    name: `${o.name} - ${o.state}`,
+    address: o.address,
+    phone: o.phone,
+    email: o.email,
+    flag: o.flag,
+    mapLink: o.mapLink,
+    image: idx === 0 ? "/images/jaipur-office.jpg" : idx === 1 ? "/images/vrindavan-office.jpg" : "/images/nepal-office.jpg",
+    city: o.city,
+    country: o.country,
+    landmark: o.landmark || '',
+    timings: o.timings,
+    isHeadOffice: o.isHeadOffice,
+    services: o.servicesOffered
+  }));
 
   // Hero Slides with Office Locations
   const heroSlides: HeroSlide[] = [

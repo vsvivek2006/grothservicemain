@@ -18,6 +18,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Container, Section, Input, Textarea } from '../components/ui';
+import { businessConfig } from '../config';
 
 // Types
 interface OfficeLocation {
@@ -60,54 +61,22 @@ const Contact: React.FC = () => {
     location: ''
   });
 
-  // Office Locations
-  const offices: OfficeLocation[] = [
-    {
-      id: 1,
-      name: "Jaipur Office",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553",
-      email: "jaipur@growthservice.in",
-      flag: "🇮🇳",
-      mapLink: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
-      city: "Jaipur",
-      country: "India",
-      landmark: "Near Jagatpura Flyover",
-      timings: "Mon-Sat: 9:00 AM - 7:00 PM IST",
-      isHeadOffice: false,
-      services: ["Web Development", "SEO Services", "Digital Marketing", "Social Media Management", "Graphic Design"]
-    },
-    {
-      id: 2,
-      name: "Vrindavan Office",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121",
-      phone: "+91 93414 36937",
-      email: "info@growthservice.in",
-      flag: "🇮🇳",
-      mapLink: "https://maps.google.com/?q=Radhika+Sadan+Pushpa+Garden+Kailash+Nagar+Vrindavan",
-      city: "Vrindavan",
-      country: "India",
-      landmark: "Radhika Sadan ki Bassinet me",
-      timings: "Mon-Sat: 9:00 AM - 7:00 PM IST",
-      isHeadOffice: false,
-      services: ["Web Development", "SEO Services", "Content Marketing", "Brand Strategy", "E-commerce Solutions"]
-    },
-    {
-      id: 3,
-      name: "Nepal Office",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      email: "nepal@growthservice.in",
-      flag: "🇳🇵",
-      mapLink: "https://maps.google.com/?q=Bariyarpatti+Rd+Bariyarpatti+56500+Nepal",
-      city: "Bariyarpatti",
-      country: "Nepal",
-      landmark: "Near Bariyarpatti Main Road",
-      timings: "Sun-Fri: 10:00 AM - 6:00 PM NPT",
-      isHeadOffice: false,
-      services: ["Web Development", "SEO Services", "Digital Marketing", "E-commerce Solutions", "Performance Marketing"]
-    }
-  ];
+  // Office Locations from single source of truth
+  const offices: OfficeLocation[] = businessConfig.offices.map((o, idx) => ({
+    id: idx + 1,
+    name: o.name,
+    address: o.address,
+    phone: o.phone,
+    email: o.email,
+    flag: o.flag,
+    mapLink: o.mapLink,
+    city: o.city,
+    country: o.country,
+    landmark: o.landmark || '',
+    timings: o.timings,
+    isHeadOffice: o.isHeadOffice,
+    services: o.servicesOffered
+  }));
 
   // Services list for dropdown
   const services = [

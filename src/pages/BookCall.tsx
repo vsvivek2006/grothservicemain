@@ -15,6 +15,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { Container, Input, Textarea } from '../components/ui';
+import { businessConfig } from '../config';
 
 // Types
 interface OfficeLocation {
@@ -43,39 +44,17 @@ const BookCall: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [bookingId, setBookingId] = useState('');
 
-  // Office Locations
-  const offices: OfficeLocation[] = [
-    {
-      id: 1,
-      name: "Jaipur Office",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553",
-      flag: "🇮🇳",
-      city: "Jaipur",
-      country: "India",
-      isHeadOffice: false
-    },
-    {
-      id: 2,
-      name: "Vrindavan Office",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121",
-      phone: "+91 93414 36937",
-      flag: "🇮🇳",
-      city: "Vrindavan",
-      country: "India",
-      isHeadOffice: false
-    },
-    {
-      id: 3,
-      name: "Nepal Office",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      flag: "🇳🇵",
-      city: "Bariyarpatti",
-      country: "Nepal",
-      isHeadOffice: false
-    }
-  ];
+  // Office Locations derived from central businessConfig
+  const offices: OfficeLocation[] = businessConfig.offices.map((o, idx) => ({
+    id: idx + 1,
+    name: o.name,
+    address: o.address,
+    phone: o.phone,
+    flag: o.flag,
+    city: o.city,
+    country: o.country,
+    isHeadOffice: o.isHeadOffice
+  }));
 
   const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', 

@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Container } from "../components/ui";
-import { businessConfig } from "../config/business";
+import { businessConfig, buildWhatsAppUrl, formatTelHref } from "../config";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
@@ -143,10 +143,6 @@ const NotFound: React.FC = () => {
     "MongoDB", "Next.js", "Tailwind CSS",
     "Express.js", "GraphQL", "PostgreSQL"
   ];
-
-  // WhatsApp Number (Nepal Head Office)
-  const whatsappNumber = "9779707382481";
-  const indiaPhone = "919341436937";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -367,35 +363,35 @@ const NotFound: React.FC = () => {
               </h2>
               <div className="space-y-3">
                 <a
-                  href={`https://wa.me/${whatsappNumber}`}
+                  href={buildWhatsAppUrl('nepal')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors group"
                 >
                   <MessageCircle className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
-                    <div className="font-semibold text-sm">WhatsApp (Nepal HQ)</div>
-                    <div className="text-xs opacity-90">+977 {whatsappNumber}</div>
+                    <div className="font-semibold text-sm">WhatsApp (Nepal Office)</div>
+                    <div className="text-xs opacity-90">{businessConfig.phones.nepalPrimary}</div>
                   </div>
                 </a>
                 <a
-                  href={`tel:${indiaPhone}`}
+                  href={formatTelHref(businessConfig.phones.indiaPrimary)}
                   className="flex items-center gap-3 p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors group"
                 >
                   <Phone className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="font-semibold text-sm">India Office</div>
-                    <div className="text-xs opacity-90">+91 {indiaPhone}</div>
+                    <div className="text-xs opacity-90">{businessConfig.phones.indiaPrimary}</div>
                   </div>
                 </a>
                 <a
-                  href="mailto:info@growthservice.in"
+                  href={`mailto:${businessConfig.emails.primary}`}
                   className="flex items-center gap-3 p-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors group"
                 >
                   <Mail className="h-5 w-5 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="font-semibold text-sm">Email Support</div>
-                    <div className="text-xs opacity-90">info@growthservice.in</div>
+                    <div className="text-xs opacity-90">{businessConfig.emails.primary}</div>
                   </div>
                 </a>
               </div>

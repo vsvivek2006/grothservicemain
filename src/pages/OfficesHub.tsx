@@ -5,7 +5,7 @@ import {
   Building2, MapPin, Phone, Clock, 
   ArrowRight, ShieldCheck, CheckCircle 
 } from 'lucide-react';
-import { physicalOffices } from '../data/offices';
+import { physicalOffices, businessConfig, buildWhatsAppUrl } from '../config';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
@@ -209,8 +209,8 @@ export const OfficesHub: React.FC = () => {
       <CTABanner
         title="Schedule a Visit or Consultation at Any Office"
         description="Connect directly with our team in Jaipur, Vrindavan, or Nepal to discuss your next web application or search marketing campaign."
-        whatsappUrl="https://wa.me/9779707382481?text=Hello%20Growth%20Service,%20I%20would%20like%20to%20schedule%20an%20office%20consultation."
-        phoneNumber="+91 93414 36937"
+        whatsappUrl={buildWhatsAppUrl('nepal', 'Hello Growth Service, I would like to schedule an office consultation.')}
+        phoneNumber={businessConfig.phones.indiaPrimary}
       />
     </div>
   );

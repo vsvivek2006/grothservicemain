@@ -69,7 +69,7 @@ interface SocialLink {
   handle: string;
 }
 
-import { businessConfig } from "../config/business";
+import { businessConfig } from "../config";
 
 interface TrustBadge {
   text: string;
@@ -80,42 +80,18 @@ interface TrustBadge {
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
-  // Office Locations Data - 3 factual company offices from businessConfig
-  const offices: OfficeLocation[] = [
-    {
-      id: "india-jaipur",
-      name: "Jaipur Office (Rajasthan)",
-      address: businessConfig.offices[0].address,
-      phone: businessConfig.offices[0].phone,
-      country: businessConfig.offices[0].country,
-      flag: businessConfig.offices[0].flag,
-      timings: businessConfig.offices[0].timings,
-      googleMaps: businessConfig.offices[0].mapLink,
-      landmark: businessConfig.offices[0].landmark
-    },
-    {
-      id: "india-vrindavan",
-      name: "Vrindavan Office (Uttar Pradesh)",
-      address: businessConfig.offices[1].address,
-      phone: businessConfig.offices[1].phone,
-      country: businessConfig.offices[1].country,
-      flag: businessConfig.offices[1].flag,
-      timings: businessConfig.offices[1].timings,
-      googleMaps: businessConfig.offices[1].mapLink,
-      landmark: businessConfig.offices[1].landmark
-    },
-    {
-      id: "nepal",
-      name: "Nepal Office (Siraha)",
-      address: businessConfig.offices[2].address,
-      phone: businessConfig.offices[2].phone,
-      country: businessConfig.offices[2].country,
-      flag: businessConfig.offices[2].flag,
-      timings: businessConfig.offices[2].timings,
-      googleMaps: businessConfig.offices[2].mapLink,
-      landmark: businessConfig.offices[2].landmark
-    }
-  ];
+  // Office Locations Data - dynamically mapped from single source of truth
+  const offices: OfficeLocation[] = businessConfig.offices.map((o) => ({
+    id: o.id,
+    name: `${o.name} (${o.state})`,
+    address: o.address,
+    phone: o.phone,
+    country: o.country,
+    flag: o.flag,
+    timings: o.timings,
+    googleMaps: o.mapLink,
+    landmark: o.landmark
+  }));
 
   const companyLinks: FooterLink[] = [
     { name: "About Growth Service", path: "/about", icon: Building2 },

@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone, MessageCircle, Mail, Info, BookOpen, FileText, Sparkles, MapPin, Building, ArrowRight, Zap, Shield, ShieldCheck, ChevronRight } from "lucide-react";
 import { Container } from "./ui";
 
-import { businessConfig } from "../config/business";
+import { businessConfig, navigationConfig, buildWhatsAppUrl, formatTelHref } from "../config";
 
 const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
@@ -83,13 +83,13 @@ const Header: React.FC = () => {
   const topNavItems = [
     { 
       name: `India: ${businessConfig.phones.indiaPrimary}`, 
-      href: `tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`, 
+      href: formatTelHref(businessConfig.phones.indiaPrimary), 
       icon: <Phone className="h-4 w-4" />,
       location: "🇮🇳 Jaipur & Vrindavan Offices"
     },
     { 
       name: `Nepal: ${businessConfig.phones.nepalPrimary}`, 
-      href: `https://wa.me/${businessConfig.whatsapp.nepalNumber}`, 
+      href: buildWhatsAppUrl('nepal'), 
       icon: <MessageCircle className="h-4 w-4" />,
       location: "🇳🇵 Nepal Office"
     },
@@ -109,44 +109,11 @@ const Header: React.FC = () => {
     { name: "FREE AUDIT", href: "/free-audit", highlight: true, icon: <Sparkles className="h-3.5 w-3.5" /> }
   ];
 
-  // Digital Marketing Submenu
-  const digitalMarketingSubmenu = [
-    { name: "SEO Services", href: "/seo" },
-    { name: "Social Media Management", href: "/social-media" },
-    { name: "Meta Ads Management", href: "/paid-marketing" },
-    { name: "Google Business Profile", href: "/local-seo" },
-    { name: "Content Marketing", href: "/content-marketing" },
-    { name: "Lead Generation", href: "/lead-generation" },
-    { name: "Brand Strategy", href: "/branding" }
-  ];
-
-  // Design & Development Submenu
-  const designDevelopmentSubmenu = [
-    { name: "Website Development", href: "/web-development" },
-    { name: "UI/UX Design", href: "/ui-ux-design" },
-    { name: "WordPress Development", href: "/wordpress-development" },
-    { name: "E-commerce Solutions", href: "/ecommerce" },
-    { name: "Mobile App Development", href: "/app-development" }
-  ];
-
-  // White Label Submenu
-  const whiteLabelSubmenu = [
-    { name: "White Label Hub", href: "/white-label" },
-    { name: "White Label SEO", href: "/white-label-seo" },
-    { name: "White Label PPC", href: "/white-label-ppc" },
-    { name: "White Label Social Media", href: "/white-label-smo" },
-    { name: "White Label Web Dev", href: "/white-label-web" }
-  ];
-
-  // Trust & Company Links
-  const trustAndLegalLinks = [
-    { name: "Careers", href: "/careers" },
-    { name: "Terms & Conditions", href: "/terms" },
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Refund Policy", href: "/refund" },
-    { name: "Accessibility", href: "/accessibility" },
-    { name: "Verify Authenticity", href: "/verify" }
-  ];
+  // Service submenus sourced directly from central navigationConfig
+  const digitalMarketingSubmenu = navigationConfig.digitalMarketingSubmenu;
+  const designDevelopmentSubmenu = navigationConfig.designDevelopmentSubmenu;
+  const whiteLabelSubmenu = navigationConfig.whiteLabelSubmenu;
+  const trustAndLegalLinks = navigationConfig.trustAndLegalLinks;
 
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200/80' : 'bg-white shadow-sm'}`}>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Container, Section } from "../components/ui";
+import { businessConfig } from "../config";
 import { 
   Check, 
   MessageCircle, 
@@ -126,30 +127,14 @@ const Offer: React.FC = () => {
     }
   ];
 
-  // 3 Factual Physical Office Locations
-  const offices = [
-    {
-      name: "Jaipur Office (Rajasthan)",
-      address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
-      phone: "+91 62073 00553",
-      flag: "🇮🇳",
-      city: "Jaipur"
-    },
-    {
-      name: "Vrindavan Office (Uttar Pradesh)",
-      address: "Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, UP 281121",
-      phone: "+91 93414 36937",
-      flag: "🇮🇳",
-      city: "Vrindavan"
-    },
-    {
-      name: "Nepal Office (Siraha)",
-      address: "Near Bariyarpatti Rd, Bariyarpatti 56500, Nepal",
-      phone: "+977 970-7382481",
-      flag: "🇳🇵",
-      city: "Nepal"
-    }
-  ];
+  // 3 Factual Physical Office Locations derived from central businessConfig
+  const offices = businessConfig.offices.map((o) => ({
+    name: `${o.name} (${o.state})`,
+    address: o.address,
+    phone: o.phone,
+    flag: o.flag,
+    city: o.city
+  }));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({

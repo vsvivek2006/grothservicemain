@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { ChevronDown, ChevronUp, MessageCircle, Search } from "lucide-react";
+import { businessConfig, buildWhatsAppUrl, formatTelHref } from "./config";
 
 type QA = { q: string; a: string; category: string };
 
@@ -216,7 +217,7 @@ const FAQ: React.FC = () => {
                     {openIndex === index && (
                       <div className="mt-4 pt-4 border-t border-gray-100">
                         <a
-                          href={`https://wa.me/919521281509?text=I have a question about: ${encodeURIComponent(item.q)}`}
+                          href={buildWhatsAppUrl('india', `I have a question about: ${item.q}`)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-semibold transition-colors"
@@ -270,7 +271,7 @@ const FAQ: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="https://wa.me/919521281509?text=Hello%20Growth%20Service,%20I%20have%20a%20question%20about%20your%20services"
+              href={buildWhatsAppUrl('india', 'Hello Growth Service, I have a question about your services')}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-3"
@@ -279,7 +280,7 @@ const FAQ: React.FC = () => {
               💬 Chat on WhatsApp
             </a>
             <a
-              href="tel:+919521281509"
+              href={formatTelHref(businessConfig.phones.indiaPrimary)}
               className="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300"
             >
               📞 Call Us Directly

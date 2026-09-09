@@ -8,8 +8,8 @@ import Badge from '../components/ui/Badge';
 import Card from '../components/ui/Card';
 import CTABanner from '../components/ui/CTABanner';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
-import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
+import { businessConfig, buildWhatsAppUrl } from '../config';
 
 export const LocationsHub: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
@@ -324,8 +324,8 @@ export const LocationsHub: React.FC = () => {
       <CTABanner
         title="Start Your Digital Growth Project Anywhere in India or Nepal"
         description="Whether you're based in Delhi NCR, Rajasthan, Bihar, or internationally, our specialized digital teams are ready to scale your business."
-        whatsappUrl="https://wa.me/9779707382481?text=Hello%20Growth%20Service,%20I%20would%20like%20to%20discuss%20services%20in%20my%20city."
-        phoneNumber="+91 93414 36937"
+        whatsappUrl={buildWhatsAppUrl('nepal', 'Hello Growth Service, I would like to discuss services in my city.')}
+        phoneNumber={businessConfig.phones.indiaPrimary}
       />
     </div>
   );
