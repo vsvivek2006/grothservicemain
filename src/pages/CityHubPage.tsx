@@ -31,7 +31,7 @@ import SectionHeader from '../components/ui/SectionHeader';
 import { FadeIn, StaggerContainer, StaggerItem } from '../components/animations';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import NotFound from './NotFound';
-import TeamCard from '../components/ui/TeamCard';
+import EmployeeCard from '../components/team/EmployeeCard';
 
 export const CityHubPage: React.FC = () => {
   const { citySlug } = useParams<{ citySlug: string }>();
@@ -335,19 +335,64 @@ export const CityHubPage: React.FC = () => {
             <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={100}>
               {assignedTeam.slice(0, 3).map((member, idx) => (
                 <StaggerItem key={member.id} index={idx}>
-                  <TeamCard
-                    name={member.name}
-                    role={member.role}
-                    department={member.department}
-                    image={member.image}
-                    bio={member.bio}
-                    expertise={[...member.expertise]}
-                    linkedinUrl={member.socialLinks?.linkedin}
-                  />
+                  <EmployeeCard member={member} />
                 </StaggerItem>
               ))}
             </StaggerContainer>
           </div>
+
+          {/* SEO Content Block */}
+          <FadeIn direction="up" delay={100}>
+            <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">
+                Digital Marketing &amp; SEO Agency in {city.name} — Growth Service
+              </h2>
+              <div className="prose prose-sm max-w-none text-slate-600 space-y-4 leading-relaxed">
+                <p>
+                  Growth Service is a results-driven digital marketing agency providing professional SEO, web development, social media marketing, Google Ads, and e-commerce solutions to businesses in {city.name}, {city.state}. Our team combines deep technical expertise with a thorough understanding of the {city.name} market to deliver campaigns that generate real, measurable business growth.
+                </p>
+                <p>
+                  Whether you run a retail business, a professional services firm, a hospitality brand, or a B2B company in {city.name}, the digital landscape has fundamentally changed how customers find and choose service providers. Ranking on Google for key service terms in {city.name} is no longer optional — it's the single most important source of inbound leads for businesses operating in the {city.state} region.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  SEO Services in {city.name}
+                </h3>
+                <p>
+                  Our {city.name} SEO specialists focus on getting your website to rank for high-commercial-intent search queries that bring paying customers to your business. We handle everything from technical SEO audits and on-page content optimisation to local citation building, Google Business Profile management, and authority backlink acquisition — all targeted at {city.name} and the broader {city.state} market.
+                </p>
+                <p>
+                  Local SEO is particularly powerful for {city.name} businesses that rely on customers from specific areas and neighbourhoods. We build geo-targeted SEO strategies that help you dominate local search results for your industry in {city.name}.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  Web Development for {city.name} Businesses
+                </h3>
+                <p>
+                  A fast, mobile-first website is the foundation of all digital marketing success in {city.name}. Our web development team builds conversion-optimised websites on React, Next.js, and WordPress — designed to rank on Google, load in under two seconds, and turn visitors into leads. We follow Google's Core Web Vitals standards and ensure full mobile responsiveness and accessibility compliance.
+                </p>
+                <p>
+                  E-commerce businesses in {city.name} also benefit from our Shopify, WooCommerce, and custom-built online store solutions, complete with SEO-optimised product pages, seamless payment integration, and inventory management.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  Paid Marketing &amp; Social Media in {city.name}
+                </h3>
+                <p>
+                  For {city.name} businesses that need faster results, our Google Ads and Meta Ads specialists build precision-targeted paid campaigns. We focus on minimising cost-per-lead while maximising return on ad spend, with A/B tested creatives, landing pages, and audience segments specific to {city.name} and the surrounding {city.state} areas.
+                </p>
+                <p>
+                  Our social media marketing team manages Instagram, Facebook, LinkedIn, and YouTube accounts for {city.name} brands — building organic reach, engagement, and brand authority alongside your paid advertising efforts.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  Why {city.name} Businesses Choose Growth Service
+                </h3>
+                <p>
+                  Growth Service stands out in {city.name} because of our transparent, accountable approach to digital marketing. Every client receives a dedicated account manager, monthly performance reports mapped to business KPIs, and direct WhatsApp access to the campaign team. We don't outsource work to third parties — all SEO, web development, and marketing activities are executed by our in-house team.
+                </p>
+                <p>
+                  Contact Growth Service today to book a free 30-minute strategy call for your {city.name} business. We'll audit your current digital presence, identify the biggest growth opportunities, and present a clear roadmap for results.
+                </p>
+              </div>
+            </div>
+          </FadeIn>
 
           {/* Localized FAQs */}
           {city.faqs && city.faqs.length > 0 && (

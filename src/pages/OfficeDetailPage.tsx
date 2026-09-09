@@ -3,13 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
   Building2, MapPin, Phone, Clock, ExternalLink, 
-  CheckCircle, ArrowRight, Navigation 
+  CheckCircle, ArrowRight, Navigation, Trophy
 } from 'lucide-react';
 import { 
   getOfficeBySlug, 
   getPhysicalOffices, 
   getTeamMembersByOffice, 
-  getAllTeamMembers, 
   getBusinessName, 
   getCanonicalOrigin 
 } from '../selectors';
@@ -46,7 +45,6 @@ export const OfficeDetailPage: React.FC = () => {
   }
 
   const officeTeam = getTeamMembersByOffice(office.id);
-  const coreTeam = officeTeam.length > 0 ? officeTeam : getAllTeamMembers().slice(0, 3);
   const whatsappUrl = getOfficeWhatsAppUrl(
     office.id,
     `Hello ${getBusinessName()}, I am inquiring about your services from the ${office.name}.`
@@ -90,9 +88,16 @@ export const OfficeDetailPage: React.FC = () => {
                   <Building2 className="w-4 h-4 text-yellow-400" />
                   <span>{office.city}, {office.state} • {office.country}</span>
                 </div>
-                <Badge variant="purple" size="sm">
-                  Company Office
-                </Badge>
+                {office.isHeadOffice ? (
+                  <Badge variant="gold" size="sm">
+                    <Trophy className="w-3 h-3 mr-1 inline" />
+                    🏆 International Head Office
+                  </Badge>
+                ) : (
+                  <Badge variant="purple" size="sm">
+                    Company Office
+                  </Badge>
+                )}
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
@@ -242,38 +247,93 @@ export const OfficeDetailPage: React.FC = () => {
             </div>
           </FadeIn>
 
-          {/* Team Section */}
-          <div className="mb-16">
-            <FadeIn direction="up">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
-                <div>
-                  <div className="mb-2">
-                    <Badge variant="purple" size="sm">
-                      Company Team
-                    </Badge>
-                  </div>
-                  <h2 className="text-3xl font-bold text-slate-900">
-                    Growth Service <span className="text-purple-600">Team</span>
-                  </h2>
-                  <p className="text-slate-600 text-sm mt-1">
-                    Our core multidisciplinary team supporting our clients and digital campaigns.
-                  </p>
-                </div>
-                <Link to="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group">
-                  <span>View All Team Members</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+          {/* SEO Content Block */}
+          <FadeIn direction="up" delay={100}>
+            <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-card mb-16">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">
+                Why Choose Growth Service in {office.city}?
+              </h2>
+              <div className="prose prose-sm max-w-none text-slate-600 space-y-4 leading-relaxed">
+                <p>
+                  Growth Service's {office.name} is a full-service digital marketing and web development agency serving businesses across {office.city}, {office.state}, and {office.country}. Whether you're a startup looking to establish an online presence or an established brand aiming for aggressive digital growth, our {office.city} team delivers measurable results through a data-driven approach tailored to your local market.
+                </p>
+                <p>
+                  Located at {office.address}, our {office.city} office operates as a dedicated hub for strategic planning, client servicing, and campaign execution. We serve clients across {office.areasServed.slice(0, 5).join(', ')}, and beyond — giving your business hyper-local authority while also building broader regional visibility.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  Digital Marketing Services in {office.city}
+                </h3>
+                <p>
+                  Our {office.city} team specialises in {office.servicesOffered.join(', ')}. Every campaign is built from scratch around your specific business goals, target audience, and competitive landscape in {office.city} and the {office.state} region.
+                </p>
+                <p>
+                  We conduct a comprehensive digital audit before any engagement. This covers your website's technical health, existing Google rankings for key terms in {office.city}, competitor benchmarking, and current social media performance. This audit-first model ensures our interventions are targeted, efficient, and directly tied to business outcomes.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  SEO &amp; Search Visibility for {office.city} Businesses
+                </h3>
+                <p>
+                  Search engine optimisation remains the most sustainable channel for organic lead generation in {office.city}. Our SEO team at the {office.name} works on on-page optimisation, local citation building, Google Business Profile management, structured data markup, and authority link acquisition — all calibrated to how businesses are searched in {office.city} and {office.state}.
+                </p>
+                <p>
+                  Businesses in {office.city} that rank on the first page of Google for their primary service keywords see dramatically higher inquiries without spending on paid ads. Our SEO strategies are built for longevity — not short-term tricks — so your rankings compound over time.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  Web Development from Our {office.city} Office
+                </h3>
+                <p>
+                  Our {office.city} development team builds fast, conversion-optimised websites using modern technologies including React, Next.js, WordPress, and custom CMS platforms. We prioritise Core Web Vitals scores, mobile responsiveness, and accessibility — all critical ranking signals for Google Search in {office.state} and nationally.
+                </p>
+                <p>
+                  Whether you need a new business website, an e-commerce store, a landing page, or a complete web application, our {office.city} developers deliver production-grade code with ongoing support and maintenance.
+                </p>
+                <h3 className="text-lg font-bold text-slate-800 mt-6 mb-2">
+                  Transparent Reporting &amp; Direct Communication
+                </h3>
+                <p>
+                  Every client at Growth Service {office.city} receives a dedicated point of contact, monthly performance reports with clear KPIs, and direct WhatsApp access to the team. We believe digital marketing must be accountable — you should always know exactly what work was done, what results it generated, and what is planned next.
+                </p>
+                <p>
+                  Reach our {office.city} office at {office.phone} or {office.email}. We're available {office.timings} and respond to WhatsApp inquiries within a few hours. Schedule a free consultation to understand how Growth Service can accelerate your business growth in {office.city} and across {office.state}.
+                </p>
               </div>
-            </FadeIn>
+            </div>
+          </FadeIn>
 
-            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={120}>
-              {coreTeam.map((member, idx) => (
-                <StaggerItem key={member.id} index={idx}>
-                  <EmployeeCard member={member} />
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
+          {/* Team Section */}
+          {officeTeam.length > 0 && (
+            <div className="mb-16">
+              <FadeIn direction="up">
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
+                  <div>
+                    <div className="mb-2">
+                      <Badge variant="purple" size="sm">
+                        {office.name} Team
+                      </Badge>
+                    </div>
+                    <h2 className="text-3xl font-bold text-slate-900">
+                      {office.city} <span className="text-purple-600">Office Team</span>
+                    </h2>
+                    <p className="text-slate-600 text-sm mt-1">
+                      Meet the team based at our {office.city} office who serve clients in {office.state} and the region.
+                    </p>
+                  </div>
+                  <Link to="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group">
+                    <span>View Full Team Directory</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </FadeIn>
+
+              <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={120}>
+                {officeTeam.map((member, idx) => (
+                  <StaggerItem key={member.id} index={idx}>
+                    <EmployeeCard member={member} />
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          )}
 
           {/* Areas & Cities Served */}
           <FadeIn direction="up" delay={100}>
