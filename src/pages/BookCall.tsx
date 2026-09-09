@@ -1,10 +1,40 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Calendar, Clock, User, Phone, Mail, MessageCircle, CheckCircle, ExternalLink, Building, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { getPhysicalOffices, getOfficePhone, getPrimaryPhone, getBusinessEmail, getCanonicalOrigin } from '../selectors';
+import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../services';
+import { 
+  Calendar, 
+  Clock, 
+  User, 
+  Phone, 
+  Mail, 
+  MessageCircle, 
+  CheckCircle, 
+  Building, 
+  Target,
+  Globe,
+  ChevronRight
+} from 'lucide-react';
+import { Container, Input, Textarea } from '../components/ui';
+import { businessConfig } from '../config';
+
+// Types
+interface OfficeLocation {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  flag: string;
+  city: string;
+  country: string;
+  isHeadOffice?: boolean;
+}
 
 const BookCall: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
+  const [selectedOffice, setSelectedOffice] = useState<number>(3); // Nepal as default
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +46,22 @@ const BookCall: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [bookingId, setBookingId] = useState('');
 
+  // Office Locations derived from single source of truth
+  const offices: OfficeLocation[] = getPhysicalOffices().map((o, idx) => ({
+    id: idx + 1,
+    name: o.name,
+    address: o.address,
+    phone: o.phone,
+    flag: o.flag,
+    city: o.city,
+    country: o.country,
+    isHeadOffice: o.isHeadOffice
+  }));
+
+  const primaryPhone = getPrimaryPhone();
+  const nepalPhone = getOfficePhone('nepal');
+  const businessEmail = getBusinessEmail();
+
   const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', 
     '11:00 AM', '11:30 AM', '02:00 PM', '02:30 PM', 
@@ -26,13 +72,17 @@ const BookCall: React.FC = () => {
     'Website Development',
     'SEO Services',
     'Social Media Management',
-    'Google My Business Setup',
+    'Google Business Profile',
     'Meta Ads Management',
-    'Tour & Travel Website',
-    'Guest House Website',
-    'B2B Business Setup',
+    'Lead Generation',
+    'App Development',
+    'Brand Strategy',
+    'Digital Marketing',
+    'E-commerce Solutions',
+    'Performance Marketing',
+    'Content Marketing',
     'Custom Project',
-    'Other Service'
+    'Other'
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -55,29 +105,29 @@ const BookCall: React.FC = () => {
       return;
     }
     
-    // Generate booking ID
     const newBookingId = generateBookingId();
     setBookingId(newBookingId);
     
-    // Store booking data
     const bookingDetails = { 
       bookingId: newBookingId, 
       selectedDate, 
       selectedTime, 
+      selectedOffice,
       ...formData 
     };
-    console.log('Booking details:', bookingDetails);
-    
-    // Show success message
     setIsSubmitted(true);
   };
 
   const handleWhatsAppConfirmation = () => {
+    const selectedOfficeData = offices.find(o => o.id === selectedOffice);
+    
     const confirmationMessage = `*Free Consultation Booking - Growth Service*
 
 Booking ID: ${bookingId}
 Date: ${new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-Time: ${selectedTime}
+Time: ${selectedTime} IST
+
+Office Location: ${selectedOfficeData?.name} ${selectedOfficeData?.flag}
 
 Client Details:
 Name: ${formData.name}
@@ -91,9 +141,8 @@ Project Requirements: ${formData.message || 'No additional information'}
 
 I have booked a free consultation call. Please confirm the schedule.`;
 
-    const encodedMessage = encodeURIComponent(confirmationMessage);
-    // ✅ FIXED: WhatsApp number corrected
-    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+    // Send to Nepal WhatsApp (Head Office)
+    window.open(getNepalWhatsAppUrl(confirmationMessage), '_blank');
   };
 
   const getNextWeekdays = () => {
@@ -104,7 +153,6 @@ I have booked a free consultation call. Please confirm the schedule.`;
       const nextDay = new Date(today);
       nextDay.setDate(today.getDate() + i);
       
-      // Skip weekends (0 = Sunday, 6 = Saturday)
       if (nextDay.getDay() !== 0 && nextDay.getDay() !== 6) {
         days.push(nextDay.toISOString().split('T')[0]);
       }
@@ -118,7 +166,8 @@ I have booked a free consultation call. Please confirm the schedule.`;
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8 md:py-12">
         <Helmet>
-          <title>Booking Confirmed - Growth Service</title>
+          <title>Booking Confirmed - Growth Service | Free Consultation</title>
+          <meta name="description" content="Your free consultation with Growth Service has been confirmed. Our team will contact you shortly." />
         </Helmet>
         
         <div className="max-w-2xl mx-auto px-4">
@@ -133,7 +182,10 @@ I have booked a free consultation call. Please confirm the schedule.`;
 
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
               <div className="text-center">
-                <div className="text-xl font-bold text-blue-700 mb-2">Free Consultation Confirmed</div>
+                <div className="text-xl font-bold text-blue-700 mb-2 flex items-center justify-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>Consultation Confirmed</span>
+                </div>
                 <div className="text-sm text-blue-600">No payment required - Professional strategy session</div>
               </div>
             </div>
@@ -154,6 +206,17 @@ I have booked a free consultation call. Please confirm the schedule.`;
                         day: 'numeric' 
                       })} at {selectedTime} IST
                     </div>
+                  </div>
+                </div>
+
+                <div className="border-t pt-4">
+                  <div className="text-sm text-gray-500 mb-2">Office Location</div>
+                  <div className="font-semibold flex items-center gap-2">
+                    <span>{offices.find(o => o.id === selectedOffice)?.flag}</span>
+                    <span>{offices.find(o => o.id === selectedOffice)?.name}</span>
+                    {offices.find(o => o.id === selectedOffice)?.isHeadOffice && (
+                      <span className="bg-yellow-400 text-gray-900 text-[8px] px-2 py-0.5 rounded-full font-bold">HEAD</span>
+                    )}
                   </div>
                 </div>
                 
@@ -204,23 +267,32 @@ I have booked a free consultation call. Please confirm the schedule.`;
                 className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <MessageCircle className="h-5 w-5" />
-                Confirm on WhatsApp
+                Confirm on WhatsApp (Nepal HQ)
               </button>
               
-              <a
-                href="tel:+919341436937"
-                className="block w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                <Phone className="h-5 w-5" />
-                Call Support: +91 93414 36937
-              </a>
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={getTelHref(primaryPhone)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                >
+                  <Phone className="h-4 w-4" />
+                  Call India
+                </a>
+                <a
+                  href={getTelHref(nepalPhone)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                >
+                  <Phone className="h-4 w-4" />
+                  Call Nepal
+                </a>
+              </div>
               
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="block w-full border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-lg font-semibold transition-all duration-200 text-center"
               >
                 Return to Homepage
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -231,23 +303,57 @@ I have booked a free consultation call. Please confirm the schedule.`;
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       <Helmet>
-        <title>Book Free Consultation | Professional Digital Services - Growth Service</title>
+        <title>Book Free Consultation | Digital Experts in Nepal, Jaipur & Vrindavan - Growth Service</title>
         <meta 
           name="description" 
-          content="Schedule a free 30-minute consultation with our digital experts. Discuss your website development, SEO, and digital marketing needs." 
+          content="Schedule a free 30-minute consultation with our digital experts at our Nepal Office, Jaipur Office, or Vrindavan Office. Discuss web development, SEO, and digital marketing." 
         />
+        <meta 
+          name="keywords" 
+          content="free consultation, digital marketing consultation, web development consultation, SEO consultation, book call, growth service, Nepal consultation, Jaipur digital marketing, Vrindavan web development" 
+        />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/book-call`} />
+        
+        <meta property="og:title" content="Book Free Consultation - Growth Service Digital Agency" />
+        <meta property="og:description" content="Free 30-minute strategy session with our digital experts. Offices in Nepal, Jaipur, and Vrindavan." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${getCanonicalOrigin()}/book-call`} />
       </Helmet>
 
-      {/* Hero Section - Mobile Optimized */}
-      <section className="bg-gradient-to-r from-blue-900 to-indigo-800 text-white py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white py-12 md:py-16 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-48 h-48 bg-purple-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        <Container className="relative z-10">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">Free Strategy Consultation</h1>
-            <p className="text-lg md:text-xl text-blue-100 mb-6 md:mb-8 max-w-3xl mx-auto px-2">
-              Schedule a 30-minute call with our digital experts
+            {/* Office Location Badges */}
+            <div className="flex flex-wrap justify-center gap-3 mb-6">
+              {offices.map((office) => (
+                <div 
+                  key={office.id}
+                  className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-sm cursor-pointer hover:bg-white/30 transition-all"
+                  onClick={() => setSelectedOffice(office.id)}
+                >
+                  <span>{office.flag}</span>
+                  <span>{office.city}</span>
+                </div>
+              ))}
+            </div>
+
+            <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              Free <span className="text-cyan-300">Strategy</span> Consultation
+            </h1>
+            <p className="text-lg md:text-xl text-blue-100 mb-6 max-w-3xl mx-auto">
+              Schedule a 30-minute call with our digital experts at your preferred office location in 
+              <span className="text-yellow-300 font-semibold"> Nepal</span>, 
+              <span className="text-cyan-300 font-semibold"> Jaipur</span>, or 
+              <span className="text-purple-300 font-semibold"> Vrindavan</span>
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6">
                 <Clock className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-3 text-white" />
                 <h3 className="text-base md:text-lg font-semibold mb-1 md:mb-2">30-Minute Call</h3>
@@ -265,20 +371,50 @@ I have booked a free consultation call. Please confirm the schedule.`;
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <Container className="py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Booking Form - Main Content */}
+          {/* Booking Form */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
               <div className="mb-6 md:mb-8">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Schedule Your Free Consultation</h2>
-                <p className="text-gray-600 text-sm md:text-base">Select your preferred time and share project details</p>
+                <p className="text-gray-600 text-sm md:text-base">Select your preferred office location, date, and time</p>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+                {/* Office Location Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    <Building className="h-4 w-4 inline mr-2" />
+                    Select Office Location *
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {offices.map((office) => (
+                      <button
+                        key={office.id}
+                        type="button"
+                        onClick={() => setSelectedOffice(office.id)}
+                        className={`p-4 rounded-lg border-2 text-sm font-medium transition-all duration-200 text-left ${
+                          selectedOffice === office.id
+                            ? 'border-blue-600 bg-blue-50 text-blue-700'
+                            : 'border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-25'
+                        } ${office.isHeadOffice ? 'ring-2 ring-yellow-200' : ''}`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">{office.flag}</span>
+                          <div>
+                            <div className="font-semibold">{office.name}</div>
+                            <div className="text-xs text-gray-500">{office.city}, {office.country}</div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Date Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -330,76 +466,55 @@ I have booked a free consultation call. Please confirm the schedule.`;
                         </button>
                       ))}
                     </div>
+                    <p className="text-xs text-gray-500 mt-2">⏰ All times are in IST (UTC+5:30)</p>
                   </div>
                 )}
 
                 {/* Personal Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
+                  <Input
+                    label="Full Name *"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter your full name"
+                  />
                   
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Mobile Number *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="+91 98765 43210"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">For booking confirmation</p>
-                  </div>
+                  <Input
+                    label="Mobile Number *"
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    required
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="+91 98765 43210"
+                    helperText="For booking confirmation"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="email@example.com"
-                    />
-                  </div>
+                  <Input
+                    label="Email Address *"
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="email@example.com"
+                  />
                   
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                      Company / Business
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                      placeholder="Your business name"
-                    />
-                  </div>
+                  <Input
+                    label="Company / Business"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    placeholder="Your business name"
+                  />
                 </div>
 
                 {/* Service Selection */}
@@ -413,7 +528,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
                     required
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-subtle min-h-[44px] text-sm md:text-base"
                   >
                     <option value="">Select a service</option>
                     {services.map((service) => (
@@ -425,27 +540,23 @@ I have booked a free consultation call. Please confirm the schedule.`;
                 </div>
 
                 {/* Additional Message */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Project Requirements
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={3}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm md:text-base"
-                    placeholder="Briefly describe your project requirements, timeline, and specific needs..."
-                  />
-                </div>
+                <Textarea
+                  label="Project Requirements"
+                  id="message"
+                  name="message"
+                  rows={3}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Briefly describe your project requirements, timeline, and specific needs..."
+                />
 
                 {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={!selectedDate || !selectedTime || !formData.name || !formData.email || !formData.service || !formData.phone}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 md:py-4 px-6 rounded-lg font-semibold text-sm md:text-lg transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 md:py-4 px-6 rounded-lg font-semibold text-sm md:text-lg transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
+                  <Calendar className="h-5 w-5" />
                   Book Free Consultation
                 </button>
 
@@ -456,7 +567,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
             </div>
           </div>
 
-          {/* Sidebar - Mobile Optimized */}
+          {/* Sidebar */}
           <div className="lg:col-span-1 space-y-4 md:space-y-6">
             {/* Consultation Benefits */}
             <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 md:p-6">
@@ -483,6 +594,40 @@ I have booked a free consultation call. Please confirm the schedule.`;
                     <p className="text-xs text-gray-600">Professional recommendations</p>
                   </div>
                 </div>
+                <div className="flex items-start space-x-3">
+                  <Globe className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">3 Office Locations</p>
+                    <p className="text-xs text-gray-600">Nepal • Jaipur • Vrindavan</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Office Locations Quick View */}
+            <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
+                <Building className="w-5 h-5 text-purple-600" />
+                <span>Our Offices</span>
+              </h3>
+              <div className="space-y-3">
+                {offices.map((office) => (
+                  <div key={office.id} className="flex items-start space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-all">
+                    <span className="text-xl">{office.flag}</span>
+                    <div>
+                      <div className="font-medium text-sm flex items-center gap-2">
+                        {office.name}
+                        {office.isHeadOffice && (
+                          <span className="bg-yellow-400 text-gray-900 text-[8px] px-2 py-0.5 rounded-full font-bold">HQ</span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500">{office.address}</p>
+                      <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-xs text-blue-600 hover:text-blue-800">
+                        {office.phone}
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -493,9 +638,18 @@ I have booked a free consultation call. Please confirm the schedule.`;
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-gray-600">Phone Support</p>
-                    <a href="tel:+919341436937" className="text-sm font-medium text-gray-900 hover:text-blue-600">
-                      +91 93414 36937
+                    <p className="text-xs text-gray-600">Nepal Office</p>
+                    <a href={getTelHref(nepalPhone)} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                      {nepalPhone}
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Phone className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs text-gray-600">India Office</p>
+                    <a href={getTelHref(primaryPhone)} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                      {primaryPhone}
                     </a>
                   </div>
                 </div>
@@ -503,8 +657,8 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <Mail className="h-5 w-5 text-blue-600 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-gray-600">Email</p>
-                    <a href="mailto:info@growthservice.in" className="text-sm font-medium text-gray-900 hover:text-blue-600">
-                      info@growthservice.in
+                    <a href={getMailtoHref(businessEmail)} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                      {businessEmail}
                     </a>
                   </div>
                 </div>
@@ -512,93 +666,91 @@ I have booked a free consultation call. Please confirm the schedule.`;
                   <MessageCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-gray-600">WhatsApp Business</p>
-                    {/* ✅ FIXED: WhatsApp number corrected */}
                     <a 
-                      href="https://wa.me/9779707382481" 
+                      href={getNepalWhatsAppUrl()} 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium text-gray-900 hover:text-green-600"
                     >
-                      +977 9707382481
+                      {nepalPhone}
                     </a>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* What We'll Discuss */}
+            {/* Internal Links */}
             <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-3 md:mb-4">What We'll Discuss</h3>
-              <ul className="space-y-2 text-sm text-gray-700">
-                <li className="flex items-start space-x-2">
-                  <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Project requirements and goals</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Technology recommendations</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Timeline and milestones</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Budget and pricing options</span>
-                </li>
-                <li className="flex items-start space-x-2">
-                  <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Implementation strategy</span>
-                </li>
-              </ul>
+              <h3 className="text-lg font-bold text-gray-900 mb-3">Explore More</h3>
+              <div className="space-y-2">
+                <Link to="/about" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <Building className="h-4 w-4" />
+                  About Our Offices
+                  <ChevronRight className="h-4 w-4 ml-auto" />
+                </Link>
+                <Link to="/services" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <Target className="h-4 w-4" />
+                  Our Services
+                  <ChevronRight className="h-4 w-4 ml-auto" />
+                </Link>
+                <Link to="/contact" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <MessageCircle className="h-4 w-4" />
+                  Contact Us
+                  <ChevronRight className="h-4 w-4 ml-auto" />
+                </Link>
+                <Link to="/free-audit" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                  <CheckCircle className="h-4 w-4" />
+                  Free Website Audit
+                  <ChevronRight className="h-4 w-4 ml-auto" />
+                </Link>
+              </div>
             </div>
 
             {/* Quick Contact */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 md:p-6 text-white">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-4 md:p-6 text-white">
               <h3 className="text-lg font-bold mb-2">Need Immediate Help?</h3>
               <p className="text-blue-100 text-sm mb-3">Chat with us on WhatsApp for quick queries</p>
-              {/* ✅ FIXED: WhatsApp number corrected */}
               <a
-                href="https://wa.me/9779707382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-white text-blue-600 py-2 px-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 text-center text-sm"
               >
-                Chat on WhatsApp
+                <MessageCircle className="h-4 w-4 inline mr-2" />
+                Chat on WhatsApp (Nepal HQ)
               </a>
             </div>
           </div>
         </div>
 
-        {/* Trust Indicators - Mobile Optimized */}
+        {/* Trust Indicators */}
         <div className="mt-8 md:mt-12">
           <div className="bg-white rounded-2xl p-4 md:p-6 shadow-lg">
             <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Why Choose Growth Service</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
               <div className="text-center p-3 md:p-4 bg-gray-50 rounded-lg">
-                <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">100+</div>
-                <div className="text-xs md:text-sm text-gray-600">Projects Delivered</div>
+                <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">300+</div>
+                <div className="text-xs md:text-sm text-gray-600">Happy Clients</div>
               </div>
               <div className="text-center p-3 md:p-4 bg-gray-50 rounded-lg">
-                <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">98%</div>
-                <div className="text-xs md:text-sm text-gray-600">Client Satisfaction</div>
+                <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">500+</div>
+                <div className="text-xs md:text-sm text-gray-600">Projects Done</div>
+              </div>
+              <div className="text-center p-3 md:p-4 bg-gray-50 rounded-lg">
+                <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">3</div>
+                <div className="text-xs md:text-sm text-gray-600">Office Locations</div>
               </div>
               <div className="text-center p-3 md:p-4 bg-gray-50 rounded-lg">
                 <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">24/7</div>
-                <div className="text-xs md:text-sm text-gray-600">Support</div>
-              </div>
-              <div className="text-center p-3 md:p-4 bg-gray-50 rounded-lg">
-                <div className="text-lg md:text-xl font-bold text-blue-600 mb-1">3+</div>
-                <div className="text-xs md:text-sm text-gray-600">Years Experience</div>
+                <div className="text-xs md:text-sm text-gray-600">Support Available</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile-friendly touch improvements */}
-      <style jsx>{`
-        /* Improve touch targets on mobile */
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 640px) {
           button, a {
             min-height: 44px;
@@ -606,22 +758,16 @@ I have booked a free consultation call. Please confirm the schedule.`;
           }
           
           input, select, textarea {
-            font-size: 16px; /* Prevents zoom on iOS */
-          }
-          
-          .grid-cols-2 > * {
-            font-size: 11px;
-            padding: 8px;
+            font-size: 16px;
           }
         }
         
-        /* Better hover states for mobile */
         @media (hover: hover) {
           button:hover, a:hover {
             transform: translateY(-1px);
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 };

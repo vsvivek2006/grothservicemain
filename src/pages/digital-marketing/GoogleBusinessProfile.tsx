@@ -4,6 +4,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaGoogle, FaMapMarkerAlt, FaStar, FaSearch, FaPhone, FaGlobe, FaImages, FaChartBar, FaCalendarAlt, FaComment } from 'react-icons/fa';
+import { 
+  Check,
+  Utensils,
+  ShoppingBag,
+  HeartPulse,
+  Home,
+  Car,
+  Scale,
+  GraduationCap,
+  Sparkles,
+  Wrench,
+  Hotel,
+  Activity,
+  Briefcase,
+  Phone,
+  MessageCircle
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const GoogleBusinessProfile = () => {
   return (
@@ -201,7 +220,7 @@ const GoogleBusinessProfile = () => {
             {[
               { value: '200%', label: 'More Profile Views', color: 'bg-blue-100 text-blue-600' },
               { value: '150%', label: 'Increase in Calls', color: 'bg-green-100 text-green-600' },
-              { value: '4.8★', label: 'Average Rating', color: 'bg-yellow-100 text-yellow-600' },
+              { value: '4.8 / 5', label: 'Average Rating', color: 'bg-yellow-100 text-yellow-600' },
               { value: '300%', label: 'Direction Requests', color: 'bg-red-100 text-red-600' },
               { value: '80%', label: 'Search Appearance', color: 'bg-purple-100 text-purple-600' },
               { value: '250%', label: 'Website Clicks', color: 'bg-indigo-100 text-indigo-600' },
@@ -247,8 +266,8 @@ const GoogleBusinessProfile = () => {
                 'Competitor Benchmarking'
               ].map((item, index) => (
                 <div key={index} className="flex items-center bg-white p-4 rounded-lg shadow-sm">
-                  <div className="bg-green-100 text-green-600 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                    ✓
+                  <div className="bg-green-100 text-green-600 w-8 h-8 rounded-full flex items-center justify-center mr-3 shrink-0">
+                    <Check className="w-4 h-4" />
                   </div>
                   <span className="text-gray-700">{item}</span>
                 </div>
@@ -272,24 +291,27 @@ const GoogleBusinessProfile = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
-              { name: 'Restaurants', emoji: '🍽️' },
-              { name: 'Retail Stores', emoji: '🛍️' },
-              { name: 'Healthcare', emoji: '🏥' },
-              { name: 'Real Estate', emoji: '🏠' },
-              { name: 'Automotive', emoji: '🚗' },
-              { name: 'Legal Services', emoji: '⚖️' },
-              { name: 'Education', emoji: '🎓' },
-              { name: 'Beauty Salons', emoji: '💇' },
-              { name: 'Home Services', emoji: '🔧' },
-              { name: 'Hotels', emoji: '🏨' },
-              { name: 'Fitness Centers', emoji: '💪' },
-              { name: 'Consulting', emoji: '💼' },
-            ].map((industry, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-blue-300 transition-colors">
-                <div className="text-2xl mb-2">{industry.emoji}</div>
-                <div className="text-gray-700 font-medium">{industry.name}</div>
-              </div>
-            ))}
+              { name: 'Restaurants', icon: Utensils },
+              { name: 'Retail Stores', icon: ShoppingBag },
+              { name: 'Healthcare', icon: HeartPulse },
+              { name: 'Real Estate', icon: Home },
+              { name: 'Automotive', icon: Car },
+              { name: 'Legal Services', icon: Scale },
+              { name: 'Education', icon: GraduationCap },
+              { name: 'Beauty Salons', icon: Sparkles },
+              { name: 'Home Services', icon: Wrench },
+              { name: 'Hotels', icon: Hotel },
+              { name: 'Fitness Centers', icon: Activity },
+              { name: 'Consulting', icon: Briefcase },
+            ].map((industry, index) => {
+              const Icon = industry.icon;
+              return (
+                <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-blue-300 transition-colors">
+                  <div className="flex justify-center text-blue-600 mb-2"><Icon className="w-6 h-6" /></div>
+                  <div className="text-gray-700 font-medium">{industry.name}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -299,67 +321,69 @@ const GoogleBusinessProfile = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Google Business Profile Packages
+              Google Business Profile Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose the right level of management for your business
+              Structured local map management tiers to capture nearby customer searches
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { 
-                name: 'Basic', 
-                price: '₹4,999', 
-                bestFor: 'New Businesses',
+                name: 'Basic Scope', 
+                tier: 'Foundation Setup',
+                bestFor: 'Single Location & New Businesses',
                 features: ['Profile Setup', 'Basic Optimization', 'Monthly Updates', 'Review Monitoring'],
                 color: 'border-blue-200'
               },
               { 
-                name: 'Professional', 
-                price: '₹9,999', 
-                bestFor: 'Growing Businesses',
+                name: 'Professional Scope', 
+                tier: 'Active Growth Retainer',
+                bestFor: 'Growing Local Businesses',
                 features: ['Complete Optimization', 'Weekly Google Posts', 'Review Management', 'Photo Updates', 'Monthly Reports'],
                 color: 'border-red-300',
                 popular: true
               },
               { 
-                name: 'Enterprise', 
-                price: '₹19,999', 
-                bestFor: 'Multiple Locations',
+                name: 'Enterprise Scope', 
+                tier: 'Multi-Location Network',
+                bestFor: 'Regional Chains & Franchises',
                 features: ['Multi-Location Management', 'Daily Monitoring', 'Competitor Analysis', 'Advanced Analytics', 'Local SEO Integration', 'Priority Support'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
+              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative flex flex-col justify-between`}>
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    RECOMMENDED
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-md">
+                    POPULAR SCOPE
                   </div>
                 )}
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-4">Best for: <span className="font-semibold">{plan.bestFor}</span></p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-1">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-red-600 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-xs mb-4">Best for: <span className="font-semibold text-gray-800">{plan.bestFor}</span></p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700 text-sm">
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-500 to-red-500 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Get Started Now
+                  Discuss GMB Scope
                 </Link>
               </div>
             ))}
           </div>
           
-          <div className="text-center mt-8 text-gray-600">
-            *All packages include Google Business Profile verification assistance
+          <div className="text-center mt-8 text-gray-600 text-sm">
+            *All engagements include Google Business Profile verification guidance
           </div>
         </div>
       </section>
@@ -374,7 +398,7 @@ const GoogleBusinessProfile = () => {
             <p className="text-xl mb-8 opacity-90">
               Don't let competitors get the local search advantage. Optimize your Google Business Profile today!
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -382,18 +406,20 @@ const GoogleBusinessProfile = () => {
                 Book Free GBP Audit
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Consultation
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Consultation</span>
               </a>
             </div>
             <div className="mt-8 bg-white/10 p-4 rounded-lg inline-block">

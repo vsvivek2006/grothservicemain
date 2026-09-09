@@ -1,22 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Container } from "../components/ui";
+import { CheckCircle, XCircle } from "lucide-react";
+import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
+import { getPrimaryWhatsAppUrl, getMailtoHref } from "../services";
+import { businessConfig } from "../config/business";
 
 const Privacy: React.FC = () => {
+  const primaryEmail = getBusinessEmail();
+  const primaryWhatsApp = getPrimaryWhatsAppUrl();
+  const canonicalOrigin = getCanonicalOrigin();
+  const location = useLocation();
+  const getInitialTab = () => {
+    if (location.pathname.includes("refund")) return "refund";
+    if (location.pathname.includes("cancellation")) return "cancellation";
+    return "privacy";
+  };
+
   const lastUpdated = new Date().toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
     day: "2-digit",
   });
 
-  const [activeTab, setActiveTab] = useState("privacy");
+  const [activeTab, setActiveTab] = useState(getInitialTab);
+
+  useEffect(() => {
+    if (location.pathname.includes("refund")) {
+      setActiveTab("refund");
+    } else if (location.pathname.includes("cancellation")) {
+      setActiveTab("cancellation");
+    }
+  }, [location.pathname]);
+
+  const pageTitle = activeTab === "refund"
+    ? "Refund Policy | Growth Service"
+    : activeTab === "cancellation"
+      ? "Cancellation Policy | Growth Service"
+      : "Privacy Policy | Growth Service";
+
+  const canonicalUrl = activeTab === "refund"
+    ? `${canonicalOrigin}/refund`
+    : `${canonicalOrigin}/privacy`;
 
   return (
     <div>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta 
+          name="description" 
+          content={
+            activeTab === "refund"
+              ? "Read Growth Service's official refund policy, criteria, and payment protection guidelines."
+              : "Read Growth Service's privacy policy and data governance practices compliant with India's DPDP Act."
+          }
+        />
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
+
       {/* Hero */}
       <section className="bg-gradient-to-br from-pink-500 via-purple-500 to-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">Privacy Policy & Terms</h1>
+        <Container className="text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+            {activeTab === "refund" ? "Refund Policy" : activeTab === "cancellation" ? "Cancellation Policy" : "Privacy Policy"}
+          </h1>
           <p className="text-pink-100 text-lg md:text-xl">
-            How Social Lift protects your information and our service policies.
+            How Growth Service protects your information and service satisfaction.
           </p>
           <p className="text-sm text-blue-200 mt-2">Last updated: {lastUpdated}</p>
           
@@ -53,17 +103,17 @@ const Privacy: React.FC = () => {
               Cancellation Policy
             </button>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Privacy Policy Content */}
       {activeTab === "privacy" && (
         <section className="py-14 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700 space-y-10">
+          <Container variant="narrow" className="text-gray-700 space-y-10">
             {/* Intro */}
             <div>
               <p>
-                This Privacy Policy explains how <strong>Social Lift Digital Marketing Agency</strong> ("we", "us", "our") collects,
+                This Privacy Policy explains how <strong>Growth Service</strong> ("we", "us", "our") collects,
                 uses, discloses, and safeguards personal information when you visit our website, engage
                 with our digital marketing campaigns, or use our services. By using our website/services,
                 you agree to this Policy. If you do not agree, please discontinue use.
@@ -219,11 +269,11 @@ const Privacy: React.FC = () => {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-3">12) How to Contact / Exercise Rights</h2>
               <p>
-                Email <a className="text-pink-700 underline" href="mailto:Sociallift91@Gmail.com">Sociallift91@Gmail.com</a> or call{" "}
-                <a className="text-pink-700 underline" href="tel:+917428606849">+91 7428606849</a>. We aim to respond within 7 business days.
+                Email <a className="text-pink-700 underline" href={`mailto:${businessConfig.emails.primary}`}>{businessConfig.emails.primary}</a> or call{" "}
+                <a className="text-pink-700 underline" href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}>{businessConfig.phones.indiaPrimary}</a>. We aim to respond within 7 business days.
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                Address: Social Lift Digital Marketing Agency, Professional Services Across India
+                Address: Growth Service, Offices in Jaipur, Vrindavan, and Nepal.
               </p>
             </div>
 
@@ -268,14 +318,14 @@ const Privacy: React.FC = () => {
             <p className="text-xs text-gray-500">
               Disclaimer: This template is for general guidance and not legal advice. Please review with legal counsel.
             </p>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* Refund Policy Content */}
       {activeTab === "refund" && (
         <section className="py-14 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700 space-y-10">
+          <Container variant="narrow" className="text-gray-700 space-y-10">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Refund Policy</h2>
               <p className="text-lg text-gray-600">Our transparent refund policy for digital marketing services</p>
@@ -285,7 +335,7 @@ const Privacy: React.FC = () => {
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
               <h3 className="text-xl font-bold text-blue-900 mb-3">General Refund Policy</h3>
               <p className="text-blue-800">
-                At Social Lift Digital Marketing Agency, we strive to deliver exceptional results. However, 
+                At Growth Service, we strive to deliver exceptional results. However, 
                 we understand that circumstances may require refund considerations under specific conditions.
               </p>
             </div>
@@ -295,21 +345,30 @@ const Privacy: React.FC = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">When Refunds Are Considered</h3>
               <div className="space-y-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2">✅ Service Not Initiated</h4>
+                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                    <span>Service Not Initiated</span>
+                  </h4>
                   <p className="text-green-700">
                     Full refund if payment is made but services haven't started and no resources have been allocated.
                   </p>
                 </div>
                 
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2">✅ Technical Failure</h4>
+                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                    <span>Technical Failure</span>
+                  </h4>
                   <p className="text-green-700">
                     Partial or full refund if we're unable to deliver due to technical limitations on our end.
                   </p>
                 </div>
                 
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2">✅ Service Cancellation Before Delivery</h4>
+                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                    <span>Service Cancellation Before Delivery</span>
+                  </h4>
                   <p className="text-green-700">
                     Pro-rated refund based on work completed if cancellation occurs before project completion.
                   </p>
@@ -322,7 +381,10 @@ const Privacy: React.FC = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">When Refunds Are Not Provided</h3>
               <div className="space-y-4">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2">❌ Services Already Rendered</h4>
+                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
+                    <span>Services Already Rendered</span>
+                  </h4>
                   <p className="text-red-700">
                     No refund for work already completed, including strategy sessions, content creation, 
                     or campaign setup.
@@ -330,14 +392,20 @@ const Privacy: React.FC = () => {
                 </div>
                 
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2">❌ Change of Mind</h4>
+                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
+                    <span>Change of Mind</span>
+                  </h4>
                   <p className="text-red-700">
                     Refunds aren't provided simply because you changed your mind after services have commenced.
                   </p>
                 </div>
                 
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2">❌ Third-Party Costs</h4>
+                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
+                    <span>Third-Party Costs</span>
+                  </h4>
                   <p className="text-red-700">
                     Costs incurred for third-party services (ads spend, software subscriptions, stock assets) 
                     are non-refundable.
@@ -345,7 +413,10 @@ const Privacy: React.FC = () => {
                 </div>
                 
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2">❌ Results-Based Expectations</h4>
+                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
+                    <span>Results-Based Expectations</span>
+                  </h4>
                   <p className="text-red-700">
                     Digital marketing results vary. Refunds aren't guaranteed based on specific ROI or 
                     performance metrics.
@@ -362,7 +433,7 @@ const Privacy: React.FC = () => {
                   <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
                   <div>
                     <p className="font-semibold">Submit Refund Request</p>
-                    <p className="text-gray-600">Email Sociallift91@Gmail.com with your request and reason</p>
+                    <p className="text-gray-600">Email {businessConfig.emails.primary} with your request and project reference</p>
                   </div>
                 </div>
                 
@@ -422,27 +493,29 @@ const Privacy: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="mailto:Sociallift91@Gmail.com" 
+                  href={`mailto:${businessConfig.emails.primary}`} 
                   className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
                 >
                   Email Us
                 </a>
                 <a 
-                  href="https://wa.me/917428606849" 
+                  href={businessConfig.whatsapp.defaultUrl} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
                 >
                   WhatsApp
                 </a>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* Cancellation Policy Content */}
       {activeTab === "cancellation" && (
         <section className="py-14 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-700 space-y-10">
+          <Container variant="narrow" className="text-gray-700 space-y-10">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Cancellation Policy</h2>
               <p className="text-lg text-gray-600">Our transparent service cancellation and modification policies</p>
@@ -531,7 +604,7 @@ const Privacy: React.FC = () => {
                   <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
                   <div>
                     <p className="font-semibold">Written Notice</p>
-                    <p className="text-gray-600">Send cancellation request via email to Sociallift91@Gmail.com</p>
+                    <p className="text-gray-600">Send cancellation request via email to {businessConfig.emails.primary}</p>
                   </div>
                 </div>
                 
@@ -599,20 +672,22 @@ const Privacy: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
-                  href="mailto:Sociallift91@Gmail.com" 
+                  href={getMailtoHref(primaryEmail)} 
                   className="bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors"
                 >
                   Email Cancellation Request
                 </a>
                 <a 
-                  href="https://wa.me/917428606849" 
+                  href={primaryWhatsApp} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
                 >
                   Discuss on WhatsApp
                 </a>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
       )}
     </div>

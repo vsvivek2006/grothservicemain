@@ -1,37 +1,47 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { 
-  TrendingUp, 
-  Code, 
+import {
+  Code,
   Globe,
-  Smartphone,
   Search,
-  Facebook,
   Instagram,
-  Youtube,
   MessageCircle,
   MapPin,
-  Mail,
   Users,
   Zap,
-  ArrowRight,
-  Star,
   Shield,
   Check,
   ChevronDown,
   ChevronUp,
-  Monitor,
   ShoppingCart,
-  Target,
-  BarChart,
   Headphones,
-  Video,
-  Brush,
-  CreditCard,
-  FileText,
-  Clock
+  Clock,
+  Calendar,
+  Sparkles,
+  Share2,
+  Building2,
+  CheckCircle2,
+  Star
 } from 'lucide-react';
+import ProcessTimeline from '../components/ui/ProcessTimeline';
+import { Container, Section, WhatsAppIcon } from '../components/ui';
+import { getAllPackages } from '../selectors';
+import { getNepalWhatsAppUrl } from '../services';
+
+interface ServiceData {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  delivery?: string;
+  duration?: string;
+  icon: JSX.Element;
+  features: string[];
+  technologies: string[];
+  useCases: string[];
+  color: string;
+}
 
 const Services = () => {
   const [expandedService, setExpandedService] = useState<number | null>(null);
@@ -39,306 +49,42 @@ const Services = () => {
 
   // Service Categories
   const serviceCategories = [
-    { id: 'all', name: 'All Services', icon: '🌟', count: 15 },
-    { id: 'web', name: 'Website Development', icon: '🌐', count: 4 },
-    { id: 'seo', name: 'SEO & Marketing', icon: '🔍', count: 4 },
-    { id: 'smm', name: 'Social Media', icon: '📱', count: 3 },
-    { id: 'business', name: 'Business Setup', icon: '🏢', count: 4 }
+    { id: 'all', name: 'All Services', Icon: Sparkles, count: 10 },
+    { id: 'web', name: 'Website Development', Icon: Globe, count: 4 },
+    { id: 'seo', name: 'SEO & Marketing', Icon: Search, count: 2 },
+    { id: 'smm', name: 'Social Media', Icon: Share2, count: 2 },
+    { id: 'business', name: 'Business Setup', Icon: Building2, count: 2 }
   ];
 
-  // All Services with Detailed Information
-  const allServices = [
-    {
-      id: 1,
-      title: 'Website Development (5 Pages)',
-      category: 'web',
-      description: 'Professional 5-page responsive website with modern design and SEO optimization',
-      price: '₹9,999',
-      originalPrice: '₹29,999',
-      delivery: '7-10 Days',
-      icon: <Globe className="h-10 w-10" />,
-      features: [
-        'Home Page with Hero Section',
-        'About Us Page',
-        'Services/Products Page',
-        'Contact Us with Form',
-        'WhatsApp Integration',
-        'Mobile Responsive Design',
-        'Basic SEO Setup',
-        '1 Year Free Hosting',
-        'Free SSL Certificate',
-        'Social Media Integration',
-        '6 Months Technical Support',
-        'Google Analytics Setup'
-      ],
-      technologies: ['React.js', 'TypeScript', 'Tailwind CSS', 'Node.js'],
-      useCases: ['Startups', 'Small Businesses', 'Portfolio Sites', 'Service Providers'],
-      color: 'blue',
-      popular: true,
-      badge: 'BEST SELLER'
-    },
-    {
-      id: 2,
-      title: 'Tour & Travel Website',
-      category: 'web',
-      description: 'Complete travel booking platform with dynamic content and booking system',
-      price: '₹14,999',
-      originalPrice: '₹24,999',
-      delivery: '10-15 Days',
-      icon: <Globe className="h-10 w-10" />,
-      features: [
-        'Dynamic Home Page',
-        'Tour Packages Pages',
-        'Booking Inquiry System',
-        'Payment Gateway Ready',
-        'Admin Dashboard',
-        'Gallery Section',
-        'Customer Reviews',
-        'SEO Optimized',
-        'Mobile App Ready',
-        'Email Notifications',
-        'Calendar Integration',
-        'Performance Optimization'
-      ],
-      technologies: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Stripe/Razorpay'],
-      useCases: ['Travel Agencies', 'Tour Operators', 'Hotel Chains', 'Adventure Companies'],
-      color: 'green',
-      popular: true,
-      badge: 'HOT'
-    },
-    {
-      id: 3,
-      title: 'E-commerce Store',
-      category: 'web',
-      description: 'Complete e-commerce solution with admin panel, inventory, and payment gateway',
-      price: '₹24,999',
-      originalPrice: '₹49,999',
-      delivery: '20-25 Days',
-      icon: <ShoppingCart className="h-10 w-10" />,
-      features: [
-        'Product Catalog Management',
-        'Shopping Cart System',
-        'Secure Payment Gateway',
-        'User Authentication',
-        'Admin Dashboard',
-        'Order Management',
-        'Inventory Tracking',
-        'Customer Reviews',
-        'Discount Coupons',
-        'Analytics Dashboard',
-        'Mobile Responsive',
-        '1 Year Support'
-      ],
-      technologies: ['MERN Stack', 'Redux', 'Stripe', 'AWS S3'],
-      useCases: ['Retail Stores', 'Brand Outlets', 'Dropshipping', 'Product Businesses'],
-      color: 'purple',
-      popular: false,
-      badge: 'PREMIUM'
-    },
-    {
-      id: 4,
-      title: 'Professional SEO Service',
-      category: 'seo',
-      description: 'Complete SEO optimization for better Google rankings and organic traffic',
-      price: '₹7,779/month',
-      originalPrice: '₹24,999',
-      duration: '3-6 Months',
-      icon: <Search className="h-10 w-10" />,
-      features: [
-        'Monthly 4 Performance Reports',
-        '4 Blog Posts (500+ words)',
-        '5-10 Keyword Optimization',
-        'On-Page SEO Optimization',
-        'Off-Page SEO Activities',
-        'Technical SEO Audit',
-        'Competitor Analysis',
-        'Traffic Growth Strategy',
-        'Backlink Building',
-        'Content Strategy',
-        'Local SEO Optimization',
-        'Mobile SEO'
-      ],
-      technologies: ['Google Analytics', 'Search Console', 'Ahrefs/SEMrush', 'Screaming Frog'],
-      useCases: ['Local Businesses', 'E-commerce Sites', 'Service Providers', 'Blogs'],
-      color: 'orange',
-      popular: true,
-      badge: 'LIMITED OFFER'
-    },
-    {
-      id: 5,
-      title: 'Social Media Management',
-      category: 'smm',
-      description: 'Complete social media marketing solution across all platforms',
-      price: '₹4,449/month',
-      originalPrice: '₹24,999',
-      duration: 'Minimum 3 Months',
-      icon: <Instagram className="h-10 w-10" />,
-      features: [
-        'Content Calendar Planning',
-        'Daily Post Creation',
-        'Community Management',
-        'Brand Storytelling',
-        'Visual Content Creation',
-        'Audience Engagement',
-        'Hashtag Strategy',
-        'Performance Analytics',
-        'Instagram Management',
-        'Facebook Management',
-        'LinkedIn Optimization',
-        'Twitter Management'
-      ],
-      technologies: ['Meta Business Suite', 'Hootsuite/Buffer', 'Canva', 'Analytics Tools'],
-      useCases: ['Brands', 'Influencers', 'Local Businesses', 'Startups'],
-      color: 'pink',
-      popular: true,
-      badge: 'MOST POPULAR'
-    },
-    {
-      id: 6,
-      title: 'Google My Business Optimization',
-      category: 'business',
-      description: 'Complete local business presence setup with review management',
-      price: '₹2,499/month',
-      originalPrice: '₹12,499',
-      duration: 'Ongoing',
-      icon: <MapPin className="h-10 w-10" />,
-      features: [
-        'GMB Profile Complete Setup',
-        'Weekly 4-5 Posts',
-        'Review Management System',
-        'Local SEO Optimization',
-        'Photo & Video Posts',
-        'Performance Tracking',
-        'Q&A Management',
-        'Insights & Analytics',
-        'Google Map Ranking',
-        'Local Citations',
-        'Business Description',
-        'Service Area Setup'
-      ],
-      technologies: ['Google My Business', 'Local SEO Tools', 'Review Management', 'Analytics'],
-      useCases: ['Local Services', 'Restaurants', 'Retail Stores', 'Professional Services'],
-      color: 'green',
-      popular: true,
-      badge: 'BEST VALUE'
-    },
-    {
-      id: 7,
-      title: 'Business Digital Setup',
-      category: 'business',
-      description: 'End-to-end business digital presence with complete online setup',
-      price: '₹24,999',
-      originalPrice: '₹39,999',
-      delivery: '45-60 Days',
-      icon: <Users className="h-10 w-10" />,
-      features: [
-        'Professional Business Website',
-        'Complete Social Media Setup',
-        'Market Strategy Guidance',
-        'Assigned Industry Expert',
-        'Brand Identity Development',
-        'Lead Generation System',
-        'CRM Setup Consultation',
-        '3 Months Free Support',
-        'Google Business Profile',
-        'Email Marketing Setup',
-        'Basic SEO Setup',
-        'Analytics Dashboard'
-      ],
-      technologies: ['Website', 'Social Media', 'CRM', 'Email Marketing', 'Analytics'],
-      useCases: ['New Businesses', 'Business Expansion', 'Digital Transformation', 'Startups'],
-      color: 'purple',
-      popular: false,
-      badge: 'COMPLETE SOLUTION'
-    },
-    {
-      id: 8,
-      title: 'Meta Ads Management',
-      category: 'seo',
-      description: 'Professional Facebook & Instagram advertising for maximum ROI',
-      price: '₹9,999/month',
-      originalPrice: '₹19,999',
-      duration: 'Minimum 3 Months',
-      icon: <Facebook className="h-10 w-10" />,
-      features: [
-        'Ad Account Setup',
-        'Audience Targeting',
-        'Ad Creative Development',
-        'A/B Testing Setup',
-        'Conversion Tracking',
-        'ROI Optimization',
-        'Monthly Reports',
-        'Budget Management',
-        'Remarketing Campaigns',
-        'Lead Generation',
-        'Brand Awareness',
-        'Sales Conversions'
-      ],
-      technologies: ['Meta Ads Manager', 'Pixel Setup', 'Audience Insights', 'Analytics'],
-      useCases: ['E-commerce', 'Service Providers', 'Event Promotion', 'Brand Launch'],
-      color: 'blue',
-      popular: false,
-      badge: 'HIGH ROI'
-    },
-    {
-      id: 9,
-      title: 'Business WhatsApp Setup',
-      category: 'business',
-      description: 'Professional Business WhatsApp with product catalog and automated responses',
-      price: '₹1,499',
-      originalPrice: '₹2,999',
-      delivery: '2-3 Days',
-      icon: <MessageCircle className="h-10 w-10" />,
-      features: [
-        'Business WhatsApp API Setup',
-        'Complete Business Profile',
-        '10 Product Catalog Listings',
-        'Quick Reply Messages Setup',
-        'Away Message Configuration',
-        'Business Hours Setup',
-        'Greeting Message Setup',
-        'Customer Support System',
-        'Label Organization',
-        'Template Messages',
-        'Analytics Integration',
-        'Team Collaboration'
-      ],
-      technologies: ['WhatsApp Business API', 'Catalog Management', 'Automation Tools'],
-      useCases: ['Customer Support', 'Sales Teams', 'Service Businesses', 'E-commerce'],
-      color: 'green',
-      popular: true,
-      badge: 'QUICK SETUP'
-    },
-    {
-      id: 10,
-      title: 'Guest House Website',
-      category: 'web',
-      description: 'Hotel/Guest house website with booking system and payment gateway',
-      price: '₹12,999',
-      originalPrice: '₹19,999',
-      delivery: '12-18 Days',
-      icon: <Headphones className="h-10 w-10" />,
-      features: [
-        'Homepage with Hero Slider',
-        'Room Listings & Booking',
-        'Payment Gateway Integration',
-        'Admin Control Panel',
-        'Customer Review System',
-        'Amenities Showcase',
-        'Location Map',
-        'Photo Gallery',
-        'Booking Calendar',
-        'Email Notifications',
-        'Mobile Responsive',
-        'SEO Optimized'
-      ],
-      technologies: ['MERN Stack', 'Razorpay/Stripe', 'JWT Auth', 'Cloudinary'],
-      useCases: ['Hotels', 'Guest Houses', 'Resorts', 'Vacation Rentals'],
-      color: 'indigo',
-      popular: false,
-      badge: 'SPECIALIZED'
+  const getPackageIcon = (iconName: string): JSX.Element => {
+    switch (iconName) {
+      case 'Globe': return <Globe className="h-10 w-10" />;
+      case 'ShoppingCart': return <ShoppingCart className="h-10 w-10" />;
+      case 'Headphones': return <Headphones className="h-10 w-10" />;
+      case 'Search': return <Search className="h-10 w-10" />;
+      case 'Instagram': return <Instagram className="h-10 w-10" />;
+      case 'MapPin': return <MapPin className="h-10 w-10" />;
+      case 'Users': return <Users className="h-10 w-10" />;
+      case 'Zap': return <Zap className="h-10 w-10" />;
+      case 'MessageCircle': return <MessageCircle className="h-10 w-10" />;
+      default: return <Globe className="h-10 w-10" />;
     }
-  ];
+  };
+
+  // All Services dynamically derived from canonical commercialPackages
+  const allServices: ServiceData[] = getAllPackages().map(pkg => ({
+    id: pkg.id,
+    title: pkg.title,
+    category: pkg.category,
+    description: pkg.description,
+    delivery: pkg.delivery,
+    duration: pkg.duration,
+    icon: getPackageIcon(pkg.iconName),
+    features: [...pkg.features],
+    technologies: [...pkg.technologies],
+    useCases: [...pkg.useCases],
+    color: pkg.color
+  }));
 
   const filteredServices = activeTab === 'all' 
     ? allServices 
@@ -347,46 +93,40 @@ const Services = () => {
   const getColorClasses = (color: string) => {
     const colors = {
       blue: {
-        gradient: 'from-blue-500 to-cyan-500',
+        gradient: 'from-blue-600 to-indigo-600',
         light: 'bg-blue-50 border-blue-200',
         text: 'text-blue-600',
-        border: 'border-blue-300',
-        bg: 'bg-blue-500'
+        border: 'border-blue-300'
       },
       green: {
-        gradient: 'from-green-500 to-emerald-500',
-        light: 'bg-green-50 border-green-200',
-        text: 'text-green-600',
-        border: 'border-green-300',
-        bg: 'bg-green-500'
+        gradient: 'from-emerald-600 to-teal-600',
+        light: 'bg-emerald-50 border-emerald-200',
+        text: 'text-emerald-600',
+        border: 'border-emerald-300'
       },
       purple: {
-        gradient: 'from-purple-500 to-indigo-500',
+        gradient: 'from-purple-600 to-indigo-700',
         light: 'bg-purple-50 border-purple-200',
         text: 'text-purple-600',
-        border: 'border-purple-300',
-        bg: 'bg-purple-500'
+        border: 'border-purple-300'
       },
       pink: {
-        gradient: 'from-pink-500 to-rose-500',
+        gradient: 'from-pink-600 to-rose-600',
         light: 'bg-pink-50 border-pink-200',
         text: 'text-pink-600',
-        border: 'border-pink-300',
-        bg: 'bg-pink-500'
+        border: 'border-pink-300'
       },
       orange: {
-        gradient: 'from-orange-500 to-yellow-500',
+        gradient: 'from-amber-500 to-orange-600',
         light: 'bg-orange-50 border-orange-200',
         text: 'text-orange-600',
-        border: 'border-orange-300',
-        bg: 'bg-orange-500'
+        border: 'border-orange-300'
       },
       indigo: {
-        gradient: 'from-indigo-500 to-blue-500',
+        gradient: 'from-indigo-600 to-blue-700',
         light: 'bg-indigo-50 border-indigo-200',
         text: 'text-indigo-600',
-        border: 'border-indigo-300',
-        bg: 'bg-indigo-500'
+        border: 'border-indigo-300'
       }
     };
     return colors[color as keyof typeof colors] || colors.blue;
@@ -396,177 +136,135 @@ const Services = () => {
     setExpandedService(expandedService === id ? null : id);
   };
 
-  const calculateDiscount = (currentPrice: string, originalPrice: string) => {
-    const current = parseInt(currentPrice.replace(/[^0-9]/g, ''));
-    const original = parseInt(originalPrice.replace(/[^0-9]/g, ''));
-    return Math.round((1 - current / original) * 100);
-  };
-
-  const handleWhatsAppClick = (serviceName: string, price: string) => {
-    const message = `🚀 *Grworth Services - Service Inquiry*\n\n*Service:* ${serviceName}\n*Price:* ${price}\n\nHi, I'm interested in this service. Please share more details and the next steps.`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/9779707382481?text=${encodedMessage}`, '_blank');
+  const handleWhatsAppClick = (serviceName: string) => {
+    const message = `🚀 *Growth Service - Service Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to request a consultation and discuss our requirements for this service.`;
+    window.open(getNepalWhatsAppUrl(message), '_blank');
   };
 
   const stats = [
-    { number: '500+', label: 'Projects Completed', icon: '✅' },
-    { number: '98%', label: 'Client Satisfaction', icon: '⭐' },
-    { number: '7-15 Days', label: 'Avg. Delivery Time', icon: '⚡' },
-    { number: '₹25Cr+', label: 'Revenue Generated', icon: '💰' }
+    { number: '300+', label: 'Projects Completed', Icon: CheckCircle2 },
+    { number: '98%', label: 'Client Satisfaction', Icon: Star },
+    { number: '7-15 Days', label: 'Avg. Sprint Delivery', Icon: Zap },
+    { number: '3 Offices', label: 'Jaipur • Vrindavan • Nepal', Icon: MapPin }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-slate-50">
       <Helmet>
-        <title>Professional Services - Website, SEO, Social Media | Grworth Services</title>
+        <title>Professional Digital Services | Growth Service</title>
         <meta
           name="description"
-          content="Professional digital services: Website Development from ₹9,999, SEO from ₹7,779/month, Social Media Management ₹4,449/month. Complete business solutions for growth."
+          content="Explore professional digital services: Custom Website Development, SEO, Social Media Management, and Strategic Business Setup tailored to your growth goals."
         />
         <meta 
           name="keywords" 
-          content="website development services, SEO services India, social media management, business setup services, digital marketing solutions, professional services"
+          content="website development services, SEO agency India, social media management, business setup services, digital marketing solutions"
         />
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" aria-hidden="true">
+          <div style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '28px 28px' }} className="w-full h-full" />
         </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <span className="text-lg font-semibold">🚀 PROFESSIONAL SERVICES</span>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[100px] pointer-events-none" />
+
+        <Container className="relative text-center z-10">
+          <div className="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/15 px-5 py-2 rounded-full mb-6 text-sm font-semibold">
+            <Zap className="w-4 h-4 text-yellow-400 mr-2" />
+            PROFESSIONAL AGENCY SERVICES
           </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Transform Your Business<br />With Our <span className="text-cyan-300">Expert Services</span>
+
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
+            Transform Your Business <br />
+            With Our <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">Expert Capabilities</span>
           </h1>
-          <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-blue-100 leading-relaxed">
-            Professional digital solutions tailored to your business needs. From website development 
-            to complete digital marketing – we have everything you need to grow online.
+
+          <p className="text-base md:text-xl text-slate-200 mb-10 max-w-3xl mx-auto leading-relaxed">
+            From modern responsive web applications to search engine optimization and multi-channel marketing, we deliver end-to-end digital solutions that drive measurable business outcomes.
           </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <div className="text-3xl font-bold mb-2">{stat.number}</div>
-                <div className="text-blue-200 text-sm">{stat.label}</div>
+              <div key={index} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 text-center">
+                <stat.Icon className="w-5 h-5 text-yellow-300 mx-auto mb-2" />
+                <div className="text-xl md:text-2xl font-bold text-white mb-1">{stat.number}</div>
+                <div className="text-purple-200 text-xs md:text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Services Navigation */}
-      <section className="py-8 bg-white border-b sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Browse by Category</h2>
-            <div className="flex flex-wrap justify-center gap-2">
-              {serviceCategories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveTab(category.id)}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
-                    activeTab === category.id
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
-                  }`}
-                >
-                  <span className="text-lg">{category.icon}</span>
-                  {category.name}
-                  <span className="bg-white/20 px-2 py-1 rounded text-xs">
-                    {category.count}
-                  </span>
-                </button>
-              ))}
-            </div>
+      {/* Services Section */}
+      <Section className="py-16">
+        <Container>
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {serviceCategories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveTab(category.id)}
+                className={`px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-200 flex items-center gap-2 ${
+                  activeTab === category.id
+                    ? 'bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white shadow-md'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                <category.Icon className="w-4 h-4" />
+                <span>{category.name}</span>
+              </button>
+            ))}
           </div>
-        </div>
-      </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-blue-600">Professional Services</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Our <span className="text-purple-600">Professional Services</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Choose from our comprehensive range of digital solutions designed for business success
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+              Choose from our comprehensive range of digital solutions designed for business success.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {filteredServices.map((service) => {
               const color = getColorClasses(service.color);
-              const discount = calculateDiscount(service.price, service.originalPrice);
               
               return (
-                <div 
+                <div
                   key={service.id}
-                  className={`bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border ${
-                    service.popular ? 'border-blue-300 transform hover:-translate-y-2' : 'border-gray-200'
-                  }`}
+                  className="bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden border border-slate-200/80 flex flex-col justify-between"
                 >
                   {/* Service Header */}
-                  <div className="p-8">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-16 h-16 ${color.light} rounded-2xl flex items-center justify-center ${color.text}`}>
-                          {service.icon}
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
-                          <p className="text-gray-600 text-sm mt-1">{service.description}</p>
-                        </div>
+                  <div className="p-6 md:p-8">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className={`w-14 h-14 ${color.light} rounded-2xl flex items-center justify-center ${color.text} shrink-0`}>
+                        {service.icon}
                       </div>
-                      
-                      {service.popular && (
-                        <div className={`${color.bg} text-white px-3 py-1 rounded-full text-xs font-bold`}>
-                          {service.badge}
-                        </div>
-                      )}
+                      <div>
+                        <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded-full">
+                          {service.category.toUpperCase()}
+                        </span>
+                        <h3 className="text-xl font-bold text-slate-900 mt-1">{service.title}</h3>
+                        <p className="text-slate-600 text-sm mt-1 leading-relaxed">{service.description}</p>
+                      </div>
                     </div>
 
-                    {/* Pricing & Delivery */}
-                    <div className="mb-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-baseline gap-3">
-                          <span className="text-3xl font-bold text-gray-900">{service.price}</span>
-                          <span className="text-gray-400 line-through text-xl">{service.originalPrice}</span>
-                        </div>
-                        <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                          {discount}% OFF
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
-                        {service.delivery ? (
-                          <>
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
-                              Delivery: {service.delivery}
-                            </span>
-                            <span>•</span>
-                            <span>Free Support Included</span>
-                          </>
-                        ) : (
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            Duration: {service.duration}
-                          </span>
-                        )}
-                      </div>
+                    {/* Timeline & Scope Bar */}
+                    <div className="mb-6 bg-slate-50 border border-slate-200/60 rounded-xl p-3 flex items-center justify-between text-xs text-slate-600">
+                      <span className="flex items-center gap-1.5 font-medium text-slate-800">
+                        <Clock className="h-4 w-4 text-purple-600" />
+                        {service.delivery ? `Estimated Delivery: ${service.delivery}` : `Engagement Scope: ${service.duration}`}
+                      </span>
+                      <span className="text-slate-500 font-medium hidden sm:inline">Technical Support Included</span>
                     </div>
 
                     {/* Technologies */}
                     <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-2">Technologies Used:</h4>
-                      <div className="flex flex-wrap gap-2">
+                      <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-2">Technologies Used:</h4>
+                      <div className="flex flex-wrap gap-1.5">
                         {service.technologies.map((tech, idx) => (
-                          <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">
+                          <span key={idx} className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded text-xs font-medium">
                             {tech}
                           </span>
                         ))}
@@ -577,26 +275,26 @@ const Services = () => {
                     <div className="mb-6">
                       <button
                         onClick={() => toggleService(service.id)}
-                        className="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="w-full flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors border border-slate-200/60 text-xs font-semibold text-slate-800"
                       >
-                        <span className="font-semibold text-gray-900">
-                          {expandedService === service.id ? 'Hide Features' : 'View All Features'}
+                        <span>
+                          {expandedService === service.id ? 'Hide Detailed Inclusions' : 'View Full Feature Inclusions'}
                         </span>
                         {expandedService === service.id ? (
-                          <ChevronUp className="h-5 w-5 text-gray-600" />
+                          <ChevronUp className="h-4 w-4 text-slate-600" />
                         ) : (
-                          <ChevronDown className="h-5 w-5 text-gray-600" />
+                          <ChevronDown className="h-4 w-4 text-slate-600" />
                         )}
                       </button>
                       
                       {expandedService === service.id && (
-                        <div className="mt-4 p-4 bg-blue-50 rounded-xl">
-                          <h4 className="font-semibold text-gray-900 mb-3">Complete Features:</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="mt-3 p-4 bg-purple-50/50 border border-purple-100 rounded-xl">
+                          <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-3">Complete Deliverables:</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {service.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start gap-2">
-                                <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-1" />
-                                <span className="text-sm text-gray-700">{feature}</span>
+                              <div key={idx} className="flex items-start gap-2 text-xs text-slate-700">
+                                <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                                <span>{feature}</span>
                               </div>
                             ))}
                           </div>
@@ -605,210 +303,123 @@ const Services = () => {
                     </div>
 
                     {/* Use Cases */}
-                    <div className="mb-8">
-                      <h4 className="font-semibold text-gray-900 mb-2">Ideal For:</h4>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="mb-2">
+                      <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider mb-2">Ideal For:</h4>
+                      <div className="flex flex-wrap gap-1.5">
                         {service.useCases.map((useCase, idx) => (
-                          <span key={idx} className={`${color.light} ${color.text} px-3 py-1 rounded-full text-xs`}>
+                          <span key={idx} className={`${color.light} ${color.text} px-2.5 py-0.5 rounded-full text-xs font-medium`}>
                             {useCase}
                           </span>
                         ))}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-3">
+                  {/* Action Buttons */}
+                  <div className="p-6 md:p-8 pt-0 border-t border-slate-100">
+                    <div className="grid grid-cols-2 gap-3 pt-4">
                       <button
-                        onClick={() => handleWhatsAppClick(service.title, service.price)}
-                        className={`bg-gradient-to-r ${color.gradient} hover:shadow-xl text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2`}
+                        onClick={() => handleWhatsAppClick(service.title)}
+                        className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:opacity-95 flex items-center justify-center gap-1.5 shadow-sm"
                       >
-                        <MessageCircle className="h-4 w-4" />
+                        <WhatsAppIcon className="h-4 w-4" />
                         Get Quote
                       </button>
                       
-                      <button
-                        onClick={() => toggleService(service.id)}
-                        className="border border-gray-300 text-gray-600 hover:border-blue-300 hover:text-blue-600 py-3 px-4 rounded-xl font-semibold transition-colors duration-200 hover:bg-blue-50"
+                      <Link
+                        to="/book-call"
+                        className="border border-slate-300 text-slate-700 hover:border-purple-600 hover:text-purple-600 py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:bg-purple-50 flex items-center justify-center gap-1.5"
                       >
-                        More Details
-                      </button>
+                        <Calendar className="h-4 w-4" />
+                        Book a Call
+                      </Link>
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose <span className="text-blue-600">Grworth Services</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We deliver exceptional results through our proven approach and expert team
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-                <Code className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">100% Custom Code</h3>
-              <p className="text-gray-600">
-                No WordPress templates. We write clean, scalable code using React, Node.js, and MongoDB.
-              </p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-                <Shield className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Free Support</h3>
-              <p className="text-gray-600">
-                30 days free support on all projects. Ongoing maintenance packages available at affordable rates.
-              </p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-                <Zap className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Fast Delivery</h3>
-              <p className="text-gray-600">
-                Basic websites in 7-10 days, complex projects in 15-20 days. We respect deadlines and deliver quality.
-              </p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-                <Users className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Expert Team</h3>
-              <p className="text-gray-600">
-                Certified professionals with 5+ years experience in digital marketing and web development.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Process Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ProcessTimeline />
+
+      {/* Why Choose Us */}
+      <Section className="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white">
+        <Container>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our <span className="text-blue-600">Process</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Why Choose Growth Service
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              A systematic approach that ensures project success and client satisfaction
+            <p className="text-base md:text-lg text-purple-200 max-w-2xl mx-auto">
+              We deliver exceptional results through our proven engineering approach and senior strategist team.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {/* Connecting Line */}
-            <div className="hidden md:block absolute top-12 left-10 right-10 h-0.5 bg-blue-200 z-0"></div>
-            
-            {[
-              { step: 1, title: 'Consultation', desc: 'Understand your requirements', icon: '🎯' },
-              { step: 2, title: 'Planning', desc: 'Create detailed project roadmap', icon: '📋' },
-              { step: 3, title: 'Development', desc: 'Build with modern technologies', icon: '💻' },
-              { step: 4, title: 'Delivery', desc: 'Launch with full support', icon: '🚀' }
-            ].map((step, index) => (
-              <div key={step.step} className="relative z-10 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg border-4 border-white">
-                  {step.icon}
-                </div>
-                <div className="bg-gray-50 rounded-xl p-6">
-                  <div className="text-lg font-bold text-gray-900 mb-2">Step {step.step}</div>
-                  <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.desc}</p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center">
+              <div className="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center text-yellow-300 mx-auto mb-4">
+                <Code className="h-6 w-6" />
               </div>
-            ))}
+              <h3 className="text-lg font-bold mb-2">100% Custom Code</h3>
+              <p className="text-slate-200 text-xs leading-relaxed">
+                No fragile WordPress templates. We write clean, scalable code using React, TypeScript, Node.js, and MongoDB.
+              </p>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center">
+              <div className="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center text-yellow-300 mx-auto mb-4">
+                <Shield className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Dedicated Post-Launch Support</h3>
+              <p className="text-slate-200 text-xs leading-relaxed">
+                Complimentary warranty support on all projects with ongoing retainer maintenance and SLA options.
+              </p>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center">
+              <div className="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center text-yellow-300 mx-auto mb-4">
+                <Clock className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Predictable Sprint Delivery</h3>
+              <p className="text-slate-200 text-xs leading-relaxed">
+                Transparent milestones with weekly updates and direct access to your assigned engineering team.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* Final CTA */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        
-        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <Star className="h-5 w-5 text-yellow-300 mr-2" />
-            <span className="text-white font-semibold">READY TO GET STARTED?</span>
-          </div>
-          
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Let's Build Something Amazing Together
+      {/* CTA Section */}
+      <Section className="bg-white">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            Ready to Build Your Digital Solution?
           </h2>
-          <p className="text-xl mb-10 text-blue-100 leading-relaxed max-w-2xl mx-auto">
-            Share your vision with us. We'll provide a custom solution and quote within 24 hours.
+          <p className="text-base text-slate-600 mb-8 max-w-2xl mx-auto">
+            Contact our senior consultants today to discuss your project requirements, scope of work, and delivery timeline.
           </p>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              to="/book-call"
+              className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-all shadow-lg flex items-center gap-2"
+            >
+              <Calendar className="h-4 w-4" />
+              Book a Consultation
+            </Link>
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
+              className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-all shadow-lg flex items-center gap-2"
             >
-              <div className="text-2xl">💬</div>
-              <div>
-                <div className="font-bold">WhatsApp</div>
-                <div className="text-sm text-gray-600">Instant Response</div>
-              </div>
-            </a>
-            
-            <a
-              href="tel:+9779707382481"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
-            >
-              <div className="text-2xl">📞</div>
-              <div>
-                <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">+9779707382481</div>
-              </div>
-            </a>
-            
-            <a
-              href="mailto:contact@grworth.com"
-              className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
-            >
-              <div className="text-2xl">✉️</div>
-              <div>
-                <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">contact@grworth.com</div>
-              </div>
+              <WhatsAppIcon className="h-4 w-4" />
+              WhatsApp Us
             </a>
           </div>
-          
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">24/7</div>
-              <div className="text-blue-200">Support</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">100%</div>
-              <div className="text-blue-200">Custom Code</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">30 Days</div>
-              <div className="text-blue-200">Free Support</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">7-15 Days</div>
-              <div className="text-blue-200">Delivery Time</div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

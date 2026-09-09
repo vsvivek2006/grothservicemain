@@ -4,8 +4,11 @@ import {
   DollarSign, TrendingUp, MessageCircle, 
   Users, Target, Zap, AlertCircle, Download,
   Building, Globe, Smartphone, CreditCard,
-  Mail, Phone, ExternalLink
+  Mail, Phone, ExternalLink, Calendar
 } from "lucide-react";
+import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../selectors";
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
+import { WhatsAppIcon } from "../components/ui";
 
 const OnboardingAgreement: React.FC = () => {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -36,14 +39,17 @@ const OnboardingAgreement: React.FC = () => {
               Clear guidelines for successful collaboration on your digital projects
             </p>
             <div className="flex flex-wrap justify-center gap-3 text-sm">
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                📅 Last Updated: {currentDate}
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-cyan-300" />
+                <span>Last Updated: {currentDate}</span>
               </span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                🏢 Growth Service Agency
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Building className="w-3.5 h-3.5 text-yellow-300" />
+                <span>Growth Service Agency</span>
               </span>
-              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                📱 +91 93414 36937
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Phone className="w-3.5 h-3.5 text-emerald-300" />
+                <span>{getPrimaryPhone()}</span>
               </span>
             </div>
           </div>
@@ -61,14 +67,14 @@ const OnboardingAgreement: React.FC = () => {
             Download PDF Version
           </button>
           <a
-            href="tel:+919341436937"
+            href={getTelHref(getPrimaryPhone())}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
           >
             <Phone className="h-4 w-4" />
             Call for Questions
           </a>
           <a
-            href="mailto:info@growthservice.in"
+            href={getMailtoHref(getBusinessEmail())}
             className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-medium flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
@@ -111,40 +117,40 @@ const OnboardingAgreement: React.FC = () => {
             {[
               {
                 title: "Website Development",
-                price: "₹9,999+",
+                scope: "Custom Milestone",
                 features: ["7-10 days delivery", "React/TypeScript", "Mobile responsive", "SEO optimized"]
               },
               {
                 title: "SEO Services",
-                price: "₹7,779/month",
+                scope: "Monthly Retainer",
                 features: ["4 monthly reports", "4 blog articles", "Keyword optimization", "Performance tracking"]
               },
               {
                 title: "Social Media Management",
-                price: "₹4,449/month",
+                scope: "Monthly Retainer",
                 features: ["Content calendar", "Daily posts", "Engagement management", "Analytics reports"]
               },
               {
                 title: "Google Business Profile",
-                price: "₹2,499",
+                scope: "Local Authority",
                 features: ["Profile setup", "Review management", "Local SEO", "Photo optimization"]
               },
               {
                 title: "Meta Ads Management",
-                price: "₹9,999/month",
+                scope: "Performance Retainer",
                 features: ["Campaign strategy", "Ad creative", "Audience targeting", "ROI tracking"]
               },
               {
                 title: "Lead Generation",
-                price: "₹6,000/month",
+                scope: "Growth Retainer",
                 features: ["Lead strategy", "Campaign setup", "CRM integration", "Conversion tracking"]
               }
             ].map((service, index) => (
               <div key={index} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-semibold text-gray-900">{service.title}</h3>
-                  <span className="bg-blue-100 text-blue-700 text-sm font-semibold px-2 py-1 rounded">
-                    {service.price}
+                  <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded">
+                    {service.scope}
                   </span>
                 </div>
                 <ul className="space-y-2">
@@ -287,16 +293,16 @@ const OnboardingAgreement: React.FC = () => {
                   <h3 className="font-semibold text-gray-900 mb-2">Primary Channels</h3>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center">
-                      <MessageCircle className="h-4 w-4 text-green-500 mr-2" />
-                      WhatsApp: +977 97073824881
+                      <WhatsAppIcon className="h-4 w-4 text-emerald-500 mr-2" />
+                      WhatsApp: {getOfficePhone('nepal')}
                     </li>
                     <li className="flex items-center">
                       <Mail className="h-4 w-4 text-blue-500 mr-2" />
-                      Email: info@growthservice.in
+                      Email: {getBusinessEmail()}
                     </li>
                     <li className="flex items-center">
                       <Phone className="h-4 w-4 text-purple-500 mr-2" />
-                      Phone: +91 93414 36937
+                      Phone: {getPrimaryPhone()}
                     </li>
                   </ul>
                 </div>
@@ -424,18 +430,18 @@ const OnboardingAgreement: React.FC = () => {
               </button>
               
               <a
-                href="https://wa.me/97797073824881"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
               >
-                <MessageCircle className="h-5 w-5" />
+                <WhatsAppIcon className="h-5 w-5" />
                 WhatsApp for Questions
               </a>
             </div>
             
             <p className="text-sm text-gray-500 mt-6">
-              Need clarification? Contact us at <a href="tel:+919341436937" className="text-blue-600">+91 93414 36937</a> or <a href="mailto:info@growthservice.in" className="text-blue-600">info@growthservice.in</a>
+              Need clarification? Contact us at <a href={getTelHref(getPrimaryPhone())} className="text-blue-600">{getPrimaryPhone()}</a> or <a href={getMailtoHref(getBusinessEmail())} className="text-blue-600">{getBusinessEmail()}</a>
             </p>
           </div>
         </div>
@@ -453,7 +459,7 @@ const OnboardingAgreement: React.FC = () => {
       </div>
 
       {/* Mobile Optimizations */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 640px) {
           button, a {
             min-height: 44px;
@@ -463,7 +469,7 @@ const OnboardingAgreement: React.FC = () => {
             grid-template-columns: repeat(2, 1fr);
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 };

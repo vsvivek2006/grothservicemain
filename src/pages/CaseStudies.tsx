@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { ExternalLink, Calendar, Users, TrendingUp, Target, Globe, CheckCircle, ArrowRight, X } from 'lucide-react';
+import { 
+  ExternalLink, Calendar, Users, Target, Globe, CheckCircle, ArrowRight, X,
+  MapPin, Compass, Landmark, Building2, TrendingUp, Award,
+  ShoppingBag, Palette, Package, Utensils, Smartphone, BarChart3,
+  GraduationCap, BookOpen, School, Sparkles, Megaphone, DollarSign
+} from 'lucide-react';
+import { Container, Section } from '../components/ui';
+import { getNepalWhatsAppUrl } from '../services';
 
 const CaseStudies: React.FC = () => {
   const [selectedCase, setSelectedCase] = useState<number | null>(null);
@@ -15,7 +22,7 @@ const CaseStudies: React.FC = () => {
       industry: "Travel & Tourism",
       duration: "10 Days",
       teamSize: "3 Members",
-      budget: "₹14,999",
+      scope: "Full-Stack Custom Web Architecture",
       results: {
         metric1: { label: "Online Bookings", value: "150+" },
         metric2: { label: "Revenue Increase", value: "200%" },
@@ -24,7 +31,7 @@ const CaseStudies: React.FC = () => {
       overview: "Complete travel website development with booking system, tour packages, and payment gateway integration.",
       challenge: "Client needed a professional website to showcase tour packages and accept online bookings for pilgrimage tours in Vrindavan-Mathura region.",
       solution: "Developed a responsive website with booking system, integrated payment gateway, and multi-language support for international pilgrims.",
-      technologies: ["React", "Node.js", "MongoDB", "Razorpay", "Tailwind CSS"],
+      technologies: ["React", "Node.js", "MongoDB", "Payment Gateway", "Tailwind CSS"],
       features: [
         "Tour package booking system",
         "Online payment integration",
@@ -36,7 +43,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Website delivered in just 10 days! Online bookings increased by 200% in first month. Highly professional team.",
       testimonialAuthor: "Rajesh Kumar",
       testimonialRole: "Owner, Braj Darshan Tours",
-      images: ["🏞️", "🗺️", "🏛️"]
+      images: [
+        { label: "Destinations", icon: Compass },
+        { label: "Tour Packages", icon: MapPin },
+        { label: "Heritage Sites", icon: Landmark }
+      ]
     },
     {
       id: 2,
@@ -46,7 +57,7 @@ const CaseStudies: React.FC = () => {
       industry: "Hospitality",
       duration: "6 Months",
       teamSize: "2 Members",
-      budget: "₹7,779/month",
+      scope: "Enterprise Local SEO & Authority Growth",
       results: {
         metric1: { label: "Organic Traffic", value: "300%" },
         metric2: { label: "Direct Bookings", value: "180+" },
@@ -67,7 +78,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "SEO campaign brought 300% more organic traffic and direct bookings increased significantly. Excellent results!",
       testimonialAuthor: "Priya Sharma",
       testimonialRole: "Manager, Radhe Krishna Guest House",
-      images: ["🏨", "📈", "🌟"]
+      images: [
+        { label: "Guest Rooms", icon: Building2 },
+        { label: "Organic Reach", icon: TrendingUp },
+        { label: "Top Rated", icon: Award }
+      ]
     },
     {
       id: 3,
@@ -77,7 +92,7 @@ const CaseStudies: React.FC = () => {
       industry: "Retail & E-commerce",
       duration: "15 Days",
       teamSize: "4 Members",
-      budget: "₹24,999",
+      scope: "Full-Stack Custom Commerce & Inventory Engine",
       results: {
         metric1: { label: "Online Sales", value: "₹5L+" },
         metric2: { label: "Products Listed", value: "500+" },
@@ -98,7 +113,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Our handicrafts now reach customers across India. The website is user-friendly and sales have increased dramatically.",
       testimonialAuthor: "Amit Patel",
       testimonialRole: "Owner, Vrindavan Handicrafts",
-      images: ["🛍️", "🎨", "📦"]
+      images: [
+        { label: "Online Store", icon: ShoppingBag },
+        { label: "Brand Design", icon: Palette },
+        { label: "Packaging", icon: Package }
+      ]
     },
     {
       id: 4,
@@ -108,7 +127,7 @@ const CaseStudies: React.FC = () => {
       industry: "Food & Beverage",
       duration: "3 Months",
       teamSize: "2 Members",
-      budget: "₹4,449/month",
+      scope: "Multi-Channel Social Growth & Content Strategy",
       results: {
         metric1: { label: "Social Engagement", value: "250%" },
         metric2: { label: "Customer Reach", value: "10K+" },
@@ -129,7 +148,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Social media management increased our restaurant's popularity significantly. More tourists now visit us based on online reviews.",
       testimonialAuthor: "Rohit Singh",
       testimonialRole: "Manager, Govinda's Restaurant",
-      images: ["🍽️", "📱", "📊"]
+      images: [
+        { label: "Digital Menu", icon: Utensils },
+        { label: "Mobile Orders", icon: Smartphone },
+        { label: "Performance", icon: BarChart3 }
+      ]
     },
     {
       id: 5,
@@ -139,7 +162,7 @@ const CaseStudies: React.FC = () => {
       industry: "Education",
       duration: "12 Days",
       teamSize: "3 Members",
-      budget: "₹12,999",
+      scope: "Custom Institutional Web & Student Portal",
       results: {
         metric1: { label: "Student Inquiries", value: "200+" },
         metric2: { label: "Course Enrollment", value: "85%" },
@@ -160,7 +183,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Professional website helped us attract more students and streamline admission process. Great work!",
       testimonialAuthor: "Dr. Meera Sharma",
       testimonialRole: "Principal, Braj Education Academy",
-      images: ["🎓", "📚", "🏫"]
+      images: [
+        { label: "Campus Portal", icon: School },
+        { label: "Course Library", icon: BookOpen },
+        { label: "Admissions", icon: GraduationCap }
+      ]
     },
     {
       id: 6,
@@ -170,7 +197,7 @@ const CaseStudies: React.FC = () => {
       industry: "Food & Retail",
       duration: "2 Months",
       teamSize: "2 Members",
-      budget: "₹9,999/month",
+      scope: "Targeted Performance Ads & Funnel Optimization",
       results: {
         metric1: { label: "Ad Reach", value: "50K+" },
         metric2: { label: "Conversion Rate", value: "15%" },
@@ -191,7 +218,11 @@ const CaseStudies: React.FC = () => {
       testimonial: "Facebook ads brought amazing results! Our online orders increased by 300% in just 2 months.",
       testimonialAuthor: "Sanjay Gupta",
       testimonialRole: "Owner, Mathura Sweets",
-      images: ["🍬", "📢", "💰"]
+      images: [
+        { label: "Specialty Sweets", icon: Sparkles },
+        { label: "Ad Campaigns", icon: Megaphone },
+        { label: "Revenue Surge", icon: DollarSign }
+      ]
     }
   ];
 
@@ -238,7 +269,7 @@ const CaseStudies: React.FC = () => {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-indigo-800 text-white py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Case Studies</h1>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
@@ -256,12 +287,12 @@ const CaseStudies: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Filter Section */}
-      <section className="py-8 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default" padding="sm">
+        <Container>
           <div className="text-center mb-6">
             <h2 className="text-lg font-semibold text-gray-700 mb-3">Filter by Industry</h2>
             <div className="flex flex-wrap justify-center gap-2">
@@ -280,12 +311,12 @@ const CaseStudies: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Case Studies Grid */}
-      <section className="py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle">
+        <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCaseStudies.map((study) => (
               <div 
@@ -323,13 +354,13 @@ const CaseStudies: React.FC = () => {
                     ))}
                   </div>
 
-                  {/* Duration and Budget */}
+                  {/* Duration and Scope */}
                   <div className="flex justify-between items-center text-sm text-gray-500 mb-6">
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2" />
                       <span>{study.duration}</span>
                     </div>
-                    <div className="font-semibold text-gray-700">{study.budget}</div>
+                    <div className="font-semibold text-gray-700 text-xs text-right max-w-[55%]">{study.scope}</div>
                   </div>
 
                   {/* Technologies */}
@@ -374,12 +405,12 @@ const CaseStudies: React.FC = () => {
               </button>
             </div>
           )}
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Stats Section */}
       <section className="py-16 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Impact in Numbers</h2>
             <p className="text-blue-200 max-w-2xl mx-auto">
@@ -405,19 +436,19 @@ const CaseStudies: React.FC = () => {
               <div className="text-blue-200">Revenue Generated</div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <Section variant="default">
+        <Container variant="narrow" className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Ready to Start Your Success Story?</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Let's discuss how we can help your business achieve similar results with our proven strategies.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/97797073824881"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
@@ -433,8 +464,8 @@ const CaseStudies: React.FC = () => {
               Book Strategy Call
             </a>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Modal for Detailed View */}
       {selectedStudy && (
@@ -473,13 +504,17 @@ const CaseStudies: React.FC = () => {
 
               {/* Modal Content */}
               <div className="p-6">
-                {/* Images Preview */}
-                <div className="flex gap-3 mb-8">
-                  {selectedStudy.images.map((image, index) => (
-                    <div key={index} className="text-4xl bg-gray-100 p-6 rounded-xl">
-                      {image}
-                    </div>
-                  ))}
+                {/* Highlights Preview */}
+                <div className="grid grid-cols-3 gap-3 mb-8">
+                  {selectedStudy.images.map((item, index) => {
+                    const IconComponent = item.icon;
+                    return (
+                      <div key={index} className="flex flex-col items-center justify-center bg-gray-50 border border-gray-100 p-4 rounded-xl text-center">
+                        <IconComponent className="h-8 w-8 text-purple-600 mb-2" />
+                        <span className="text-xs font-semibold text-gray-700">{item.label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Key Metrics */}
@@ -547,7 +582,7 @@ const CaseStudies: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Budget & Team */}
+                {/* Scope & Team */}
                 <div className="grid grid-cols-3 gap-6 text-center">
                   <div className="bg-gray-50 p-4 rounded-xl">
                     <div className="text-sm text-gray-500 mb-1">Project Duration</div>
@@ -558,8 +593,8 @@ const CaseStudies: React.FC = () => {
                     <div className="font-semibold text-gray-900">{selectedStudy.teamSize}</div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl">
-                    <div className="text-sm text-gray-500 mb-1">Project Budget</div>
-                    <div className="font-semibold text-gray-900">{selectedStudy.budget}</div>
+                    <div className="text-sm text-gray-500 mb-1">Engagement Scope</div>
+                    <div className="font-semibold text-gray-900 text-sm">{selectedStudy.scope}</div>
                   </div>
                 </div>
               </div>
@@ -568,7 +603,7 @@ const CaseStudies: React.FC = () => {
               <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href="https://wa.me/97797073824881"
+                    href={getNepalWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 text-center"

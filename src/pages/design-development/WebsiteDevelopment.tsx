@@ -4,6 +4,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaCode, FaMobileAlt, FaShoppingCart, FaRocket, FaShieldAlt, FaSearch, FaPalette, FaServer, FaChartLine, FaLaptopCode } from 'react-icons/fa';
+import {
+  Check,
+  Search,
+  Palette,
+  Code,
+  TestTube,
+  Rocket,
+  Shield,
+  Phone,
+  MessageCircle,
+  Clock,
+  CheckCircle2,
+  RefreshCw
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const WebsiteDevelopment = () => {
   return (
@@ -223,22 +239,25 @@ const WebsiteDevelopment = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { step: 1, title: 'Discovery & Planning', desc: 'Requirements gathering & strategy', icon: '🔍' },
-              { step: 2, title: 'UI/UX Design', desc: 'Wireframes & prototypes', icon: '🎨' },
-              { step: 3, title: 'Development', desc: 'Coding & implementation', icon: '💻' },
-              { step: 4, title: 'Testing', desc: 'Quality assurance & bug fixes', icon: '🧪' },
-              { step: 5, title: 'Launch', desc: 'Deployment & go-live', icon: '🚀' },
-              { step: 6, title: 'Maintenance', desc: 'Support & updates', icon: '🛡️' },
-            ].map((item) => (
-              <div key={item.step} className="bg-white p-8 rounded-xl text-center">
-                <div className="text-3xl mb-4">{item.icon}</div>
-                <div className="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
-                  {item.step}
+              { step: 1, title: 'Discovery & Planning', desc: 'Requirements gathering & strategy', icon: Search },
+              { step: 2, title: 'UI/UX Design', desc: 'Wireframes & prototypes', icon: Palette },
+              { step: 3, title: 'Development', desc: 'Coding & implementation', icon: Code },
+              { step: 4, title: 'Testing', desc: 'Quality assurance & bug fixes', icon: TestTube },
+              { step: 5, title: 'Launch', desc: 'Deployment & go-live', icon: Rocket },
+              { step: 6, title: 'Maintenance', desc: 'Support & updates', icon: Shield },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.step} className="bg-white p-8 rounded-xl text-center">
+                  <div className="flex justify-center text-indigo-600 mb-4"><Icon className="w-8 h-8" /></div>
+                  <div className="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                    {item.step}
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -307,10 +326,10 @@ const WebsiteDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Website Development Packages
+              Website Development Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Transparent pricing for different business needs
+              Engineered web architectures structured for scalability, user conversion, and search authority
             </p>
           </div>
 
@@ -318,40 +337,40 @@ const WebsiteDevelopment = () => {
             {[
               {
                 name: 'Basic Website',
-                price: '₹24,999',
-                type: 'Informational Website',
-                features: ['5-7 Pages', 'Responsive Design', 'Contact Form', 'Basic SEO', '6 Months Support'],
+                tier: 'High-Performance Brand Site',
+                type: 'Informational & Corporate Website',
+                features: ['5-7 Pages', 'Responsive Design', 'Contact Form & Lead Capture', 'On-Page SEO Optimization', '6 Months Post-Launch Support'],
                 color: 'border-blue-200'
               },
               {
                 name: 'Business Website',
-                price: '₹49,999',
-                type: 'Small Business Website',
-                features: ['10-15 Pages', 'CMS Integration', 'Blog Setup', 'Advanced SEO', 'Contact Management', '1 Year Support'],
+                tier: 'Dynamic CMS & Content Hub',
+                type: 'Growth-Stage Business Website',
+                features: ['10-15 Pages', 'Headless / CMS Integration', 'Integrated Blog Architecture', 'Advanced Technical SEO', 'Lead Management & CRM Sync', '1 Year Dedicated Support'],
                 color: 'border-indigo-300',
                 popular: true
               },
               {
                 name: 'E-commerce Store',
-                price: '₹99,999',
-                type: 'Online Store',
-                features: ['Full E-commerce', 'Payment Gateway', 'Product Management', 'Inventory System', 'Mobile App', '2 Years Support'],
+                tier: 'Enterprise Commerce Architecture',
+                type: 'High-Volume Transactional Store',
+                features: ['Custom Commerce Architecture', 'Secure Payment Gateway Integration', 'Catalog & Inventory Management', 'ERP / CRM Integration', 'Mobile-First PWA Experience', '2 Years Extended Engineering SLA'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    RECOMMENDED FRAMEWORK
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-indigo-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">{plan.type}</p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -360,7 +379,7 @@ const WebsiteDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Project
+                  Discuss Web Scope
                 </Link>
               </div>
             ))}
@@ -368,7 +387,7 @@ const WebsiteDevelopment = () => {
 
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Custom development projects are quoted individually based on requirements
+              *Enterprise custom web applications, SaaS portals, and custom API architectures scoped individually
             </p>
           </div>
         </div>
@@ -384,7 +403,7 @@ const WebsiteDevelopment = () => {
             <p className="text-xl mb-8 opacity-90">
               Let's discuss your project and create a website that drives results
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -392,31 +411,42 @@ const WebsiteDevelopment = () => {
                 Book Free Consultation
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Quote
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Quote</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">⏰ Fast Delivery</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Clock className="w-4 h-4 text-indigo-200" />
+                  <span>Fast Delivery</span>
+                </div>
                 <div className="text-sm opacity-90">2-4 weeks typical timeline</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">✅ Satisfaction Guarantee</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <CheckCircle2 className="w-4 h-4 text-indigo-200" />
+                  <span>Satisfaction Guarantee</span>
+                </div>
                 <div className="text-sm opacity-90">30-day post-launch support</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🔄 Free Revisions</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <RefreshCw className="w-4 h-4 text-indigo-200" />
+                  <span>Free Revisions</span>
+                </div>
                 <div className="text-sm opacity-90">Unlimited revisions during development</div>
               </div>
             </div>
@@ -471,7 +501,7 @@ const WebsiteDevelopment = () => {
 };
 
 // Note: FaWordpress icon import (you'll need to add this to your imports)
-const FaWordpress = ({ className }) => (
+const FaWordpress = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 496 512">
     <path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zM33 256c0-32.3 6.9-63 19.3-90.7l106.4 291.4C84.3 420.5 33 344.2 33 256zm223 223c-21.9 0-43-3.2-63-9.1l66.9-194.4 68.5 187.8c.5 1.1 1 2.1 1.6 3.1-23.1 8.1-48 12.6-74 12.6zm30.7-327.5c13.4-.7 25.5-2.1 25.5-2.1 11.7-1.7 10.7-15.7-1-14.7 0 0-36.1 2.8-59.4 2.8-21.9 0-58.7-2.8-58.7-2.8-11.7-.7-12.7 13.1-1 14.7 0 0 11.4 1.4 24.9 2.1l34.5 94.5-48.7 141.9-86.3-236.5c13.4-.7 25.5-2.1 25.5-2.1 11.7-1.7 10.7-15.7-1-14.7 0 0-36.1 2.8-59.4 2.8-4.2 0-9.1-.1-14.4-.3C109.6 33 171.8 8 248 8c66.8 0 127.7 25.5 173.8 67.2-5.3.2-10.4.3-15.5.3-21.9 0-58.7-2.8-58.7-2.8-11.7-.7-12.7 13.1-1 14.7 0 0 11.4 1.4 24.9 2.1l25.2 71.3c1.7 4.9 3.5 9.8 5.5 14.5L275.6 387c-2.3 6.4-4.5 12.8-6.7 19.2-10.3-29.9-18.5-54.9-18.5-54.9-8.8-25.2-33.4-91.9-33.4-91.9-17.7-52.2 10.6-52.7 27.3-52.7 17.4 0 26.5 17.4 26.5 17.4l10.2 28.7c26.7 77.3 44.6 125 44.6 125s20.3 60.1 49.2 138.1c-14.8 11.1-31.5 20.5-49.7 27.3l68.9-200.9c1.2-3.4 2.4-6.8 3.5-10.2 13.4-39.2 20.3-67.7 20.3-103.1C463 119 385.8 33 295.7 33c-44.3 0-84.9 16.1-116.3 42.8 7.7 1.1 15.3 2.3 22.8 3.7l41.2 113.7 33.2-91.6z" />
   </svg>

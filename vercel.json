@@ -1,3 +1,81 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(llms\\.txt|llm\\.txt|robots\\.txt)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.pexels.com https://www.growthservice.in; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com; frame-ancestors 'self';"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/consultation", "destination": "/book-call", "permanent": true },
+    { "source": "/email-marketing", "destination": "/digital-marketing", "permanent": true },
+    { "source": "/website-development", "destination": "/web-development", "permanent": true },
+    { "source": "/ui-ux", "destination": "/ui-ux-design", "permanent": true },
+    { "source": "/ecommerce-development", "destination": "/ecommerce", "permanent": true },
+    { "source": "/whitelabel", "destination": "/white-label", "permanent": true },
+    { "source": "/sitemap", "destination": "/locations", "permanent": true },
+    { "source": "/careers", "destination": "/team", "permanent": true },
+    { "source": "/about/team", "destination": "/team", "permanent": true },
+    { "source": "/webinars", "destination": "/resources", "permanent": true },
+    { "source": "/success-stories", "destination": "/case-studies", "permanent": true },
+    { "source": "/scam-alert", "destination": "/verify", "permanent": true },
+    { "source": "/report-scam", "destination": "/verify", "permanent": true },
+    { "source": "/locations/:city/:serviceSlug", "destination": "/:city/:serviceSlug", "permanent": true }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!assets/|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
 }

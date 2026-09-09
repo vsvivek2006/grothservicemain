@@ -8,10 +8,16 @@ import {
   ChevronDown, ChevronUp, Headphones, Award, Building
 } from 'lucide-react';
 
+import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from '../selectors';
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
+
 const HelpCenter: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedFaqs, setExpandedFaqs] = useState<number[]>([]);
+  const primaryPhone = getPrimaryPhone();
+  const businessEmail = getBusinessEmail();
+  const nepalPhone = getOfficePhone('nepal');
 
   const categories = [
     { id: 'all', name: 'All Topics', icon: <BookOpen className="h-5 w-5" /> },
@@ -28,14 +34,14 @@ const HelpCenter: React.FC = () => {
     {
       id: 1,
       question: "How much does website development cost?",
-      answer: "Website development starts at ₹9,999 for basic business websites. Custom solutions range from ₹14,999 to ₹50,000+ depending on complexity. We provide transparent pricing with detailed quotes before starting any project.",
+      answer: "Website development is scoped individually based on business goals, features, and technical architecture. We provide comprehensive, itemized proposals with clear milestone deliverables before initiating any build.",
       category: 'webdev',
       views: 1250
     },
     {
       id: 2,
-      question: "What's included in the ₹7,779/month SEO package?",
-      answer: "Our ₹7,779/month SEO package includes: 4 detailed performance reports, 4 SEO-optimized blog articles, optimization for 5-10 keywords, technical SEO audit, backlink building strategy, and local SEO optimization. Results typically show within 3-6 months.",
+      question: "What is included in an SEO engagement framework?",
+      answer: "Our SEO engagements include: detailed performance audits, SEO-optimized content production, search intent keyword research, technical SEO optimization, white-hat backlink outreach, and local map rankings. Results typically show within 3-6 months.",
       category: 'seo',
       views: 980
     },
@@ -49,21 +55,21 @@ const HelpCenter: React.FC = () => {
     {
       id: 4,
       question: "What payment methods do you accept?",
-      answer: "We accept UPI, credit/debit cards, net banking, and bank transfers. For international clients, we accept PayPal and wire transfers. All payments are processed securely through Razorpay, India's leading payment gateway.",
+      answer: "We accept UPI, credit/debit cards, net banking, and direct bank transfers. For international clients, we accept wire transfers and standard commercial remittance channels.",
       category: 'billing',
       views: 650
     },
     {
       id: 5,
       question: "Do you provide ongoing website maintenance?",
-      answer: "Yes, we offer maintenance packages starting at ₹999/month. This includes regular updates, security monitoring, backups, and basic support. Professional packages (₹2,999/month) include performance optimization and priority support.",
+      answer: "Yes, we offer ongoing maintenance and support retainers. This includes regular CMS updates, security monitoring, automated backups, performance optimization, and SLA response support.",
       category: 'support',
       views: 720
     },
     {
       id: 6,
       question: "Can you help with Google My Business setup?",
-      answer: "Absolutely! Our ₹2,499 GMB setup package includes: Complete profile setup and verification, category optimization, professional photos, review management setup, weekly posts, and performance tracking. This service helps improve local search visibility significantly.",
+      answer: "Absolutely! Our GMB optimization service includes: Complete profile setup and verification, category optimization, geotagged photos, review management framework, weekly local updates, and performance tracking to drive foot traffic and inquiries.",
       category: 'seo',
       views: 550
     },
@@ -91,7 +97,7 @@ const HelpCenter: React.FC = () => {
     {
       id: 10,
       question: "Do you provide social media management?",
-      answer: "Yes, our social media management starts at ₹4,449/month. This includes content calendar planning, daily posts creation, community management, performance analytics, and monthly strategy reports for Facebook, Instagram, LinkedIn, and Twitter.",
+      answer: "Yes, we provide full-service social media management. This includes content calendar architecture, multi-format creative production, community management, conversion tracking, and monthly strategic executive reports for Facebook, Instagram, LinkedIn, and Twitter.",
       category: 'social',
       views: 510
     },
@@ -112,21 +118,21 @@ const HelpCenter: React.FC = () => {
     {
       id: 13,
       question: "How do I improve my website speed?",
-      answer: "We offer website speed optimization starting at ₹3,999. This includes image optimization, code minification, caching setup, CDN implementation, and performance monitoring. Typically improves loading speed by 60-80%.",
+      answer: "We offer end-to-end Core Web Vitals and speed optimization. This includes image compression, code minification, server caching, CDN routing, and database query optimization, typically improving load speed by 60-80%.",
       category: 'webdev',
       views: 590
     },
     {
       id: 14,
       question: "Do you provide hosting services?",
-      answer: "Yes, we offer managed hosting starting at ₹499/month. This includes SSL certificate, daily backups, security monitoring, and 99.9% uptime guarantee. We recommend hosting with us for optimal performance and support.",
+      answer: "Yes, we provide enterprise managed cloud hosting. This includes SSL certificates, automated daily backups, proactive firewall security, and 99.9% uptime SLAs.",
       category: 'support',
       views: 480
     },
     {
       id: 15,
       question: "Can you migrate my existing website?",
-      answer: "Yes, we offer website migration services starting at ₹2,999. We ensure zero downtime, data integrity, and post-migration testing. This includes SEO preservation, URL redirection setup, and complete backup.",
+      answer: "Yes, we offer zero-downtime website migrations. We ensure data integrity, 301 SEO redirection mappings, database transfers, and rigorous post-migration QA testing.",
       category: 'webdev',
       views: 320
     }
@@ -136,28 +142,28 @@ const HelpCenter: React.FC = () => {
     {
       title: "Website Development Guide",
       description: "Complete guide to planning, developing, and launching your website",
-      icon: "🌐",
+      Icon: Globe,
       download: "PDF Guide",
       pages: "15 pages"
     },
     {
       title: "SEO Starter Kit",
       description: "Beginner's guide to SEO optimization for small businesses",
-      icon: "🔍",
+      Icon: Search,
       download: "PDF Guide",
       pages: "12 pages"
     },
     {
       title: "Social Media Calendar",
       description: "Free template for planning your social media content",
-      icon: "📅",
+      Icon: Calendar,
       download: "Excel Template",
       pages: "Template"
     },
     {
       title: "Website Security Checklist",
       description: "Essential security measures for your website",
-      icon: "🔒",
+      Icon: Shield,
       download: "Checklist PDF",
       pages: "8 pages"
     }
@@ -168,28 +174,28 @@ const HelpCenter: React.FC = () => {
       title: "WhatsApp Support",
       description: "Fastest response (24/7)",
       icon: <MessageCircle className="h-6 w-6" />,
-      contact: "+977 97073824881",
+      contact: nepalPhone,
       action: "Chat Now",
       color: "bg-green-500",
-      href: "https://wa.me/97797073824881"
+      href: getNepalWhatsAppUrl()
     },
     {
       title: "Phone Support",
       description: "Mon-Sat, 9 AM - 7 PM",
       icon: <Phone className="h-6 w-6" />,
-      contact: "+91 93414 36937",
+      contact: primaryPhone,
       action: "Call Now",
       color: "bg-blue-500",
-      href: "tel:+919341436937"
+      href: getTelHref(primaryPhone)
     },
     {
       title: "Email Support",
       description: "Response within 4 hours",
       icon: <Mail className="h-6 w-6" />,
-      contact: "info@growthservice.in",
+      contact: businessEmail,
       action: "Send Email",
       color: "bg-purple-500",
-      href: "mailto:info@growthservice.in"
+      href: getMailtoHref(businessEmail)
     }
   ];
 
@@ -223,7 +229,7 @@ const HelpCenter: React.FC = () => {
       <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-8">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div>
+            <div className="text-center md:text-left">
               <h1 className="text-3xl font-bold mb-2">Help Center</h1>
               <p className="text-blue-100">Get answers to common questions and contact support</p>
             </div>
@@ -349,12 +355,13 @@ const HelpCenter: React.FC = () => {
                     <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                     <div className="mt-4 flex space-x-3">
                       <a
-                        href={`https://wa.me/97797073824881?text=I%20have%20a%20question%20about:%20${encodeURIComponent(faq.question)}`}
+                        href={getNepalWhatsAppUrl(`I have a question about: ${faq.question}`)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                        className="text-sm text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1.5"
                       >
-                        💬 Ask more about this
+                        <MessageCircle className="w-4 h-4 text-emerald-500" />
+                        <span>Ask more about this</span>
                       </a>
                     </div>
                   </div>
@@ -379,7 +386,9 @@ const HelpCenter: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {guides.map((guide, index) => (
               <div key={index} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
-                <div className="text-3xl mb-4">{guide.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                  <guide.Icon className="w-6 h-6" />
+                </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{guide.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{guide.description}</p>
                 <div className="flex items-center justify-between">
@@ -466,10 +475,11 @@ const HelpCenter: React.FC = () => {
               Send Message
             </button>
             <a
-              href="tel:+919341436937"
-              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-lg font-medium transition-colors text-center"
+              href={getTelHref(primaryPhone)}
+              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-lg font-medium transition-colors text-center inline-flex items-center justify-center gap-2"
             >
-              📞 Call Instead
+              <Phone className="w-4 h-4 text-blue-600" />
+              <span>Call Instead</span>
             </a>
           </div>
         </div>
@@ -493,7 +503,7 @@ const HelpCenter: React.FC = () => {
       </div>
 
       {/* Mobile-friendly styles */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 640px) {
           button, a {
             min-height: 44px;
@@ -510,7 +520,7 @@ const HelpCenter: React.FC = () => {
             grid-template-columns: repeat(2, 1fr);
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 };

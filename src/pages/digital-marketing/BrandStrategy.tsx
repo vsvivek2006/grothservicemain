@@ -3,6 +3,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaChessKing, FaBullseye, FaUsers, FaPalette, FaChartLine, FaRocket, FaLightbulb, FaGlobe, FaHeart, FaCrown } from 'react-icons/fa';
+import {
+  Check,
+  Landmark,
+  Search,
+  Brain,
+  Palette,
+  Rocket,
+  RefreshCw,
+  Award,
+  Phone,
+  MessageCircle,
+  TrendingUp,
+  Globe
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const BrandStrategy = () => {
   return (
@@ -208,7 +224,7 @@ const BrandStrategy = () => {
               { pillar: 'Perception', desc: 'How customers see you', color: 'bg-teal-100' },
             ].map((item, index) => (
               <div key={index} className={`${item.color} p-6 rounded-xl`}>
-                <div className="text-2xl mb-3">🏛️</div>
+                <div className="text-purple-700 mb-3"><Landmark className="w-6 h-6" /></div>
                 <h3 className="font-bold text-lg mb-1 text-gray-800">{item.pillar}</h3>
                 <p className="text-gray-600">{item.desc}</p>
               </div>
@@ -227,30 +243,33 @@ const BrandStrategy = () => {
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {[
-                { step: 1, title: 'Discovery', desc: 'Research & analysis', icon: '🔍' },
-                { step: 2, title: 'Strategy', desc: 'Framework development', icon: '🧠' },
-                { step: 3, title: 'Creation', desc: 'Brand identity design', icon: '🎨' },
-                { step: 4, title: 'Implementation', desc: 'Launch & activation', icon: '🚀' },
-              ].map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="relative mb-8">
-                    <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto">
-                      {item.step}
+                { step: 1, title: 'Discovery', desc: 'Research & analysis', icon: Search },
+                { step: 2, title: 'Strategy', desc: 'Framework development', icon: Brain },
+                { step: 3, title: 'Creation', desc: 'Brand identity design', icon: Palette },
+                { step: 4, title: 'Implementation', desc: 'Launch & activation', icon: Rocket },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.step} className="text-center">
+                    <div className="relative mb-8">
+                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto">
+                        {item.step}
+                      </div>
+                      {item.step < 4 && (
+                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-purple-200 transform -translate-y-1/2"></div>
+                      )}
                     </div>
-                    {item.step < 4 && (
-                      <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-purple-200 transform -translate-y-1/2"></div>
-                    )}
+                    <div className="flex justify-center text-purple-600 mb-3"><Icon className="w-8 h-8" /></div>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                    <p className="text-gray-600">{item.desc}</p>
                   </div>
-                  <div className="text-3xl mb-3">{item.icon}</div>
-                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
             
             <div className="mt-12 text-center">
               <div className="inline-block bg-white p-6 rounded-xl shadow-sm">
-                <div className="text-2xl mb-2">🔄</div>
+                <div className="flex justify-center text-purple-600 mb-2"><RefreshCw className="w-6 h-6" /></div>
                 <h3 className="font-semibold text-gray-800">Phase 5: Growth & Evolution</h3>
                 <p className="text-gray-600">Ongoing brand management and optimization</p>
               </div>
@@ -326,7 +345,7 @@ const BrandStrategy = () => {
               },
             ].map((caseStudy, index) => (
               <div key={index} className="bg-white p-8 rounded-xl shadow-sm">
-                <div className="text-purple-600 text-2xl mb-3">🏆</div>
+                <div className="text-purple-600 mb-3"><Award className="w-8 h-8" /></div>
                 <h3 className="font-bold text-xl mb-3 text-gray-800">{caseStudy.industry}</h3>
                 <div className="mb-4">
                   <h4 className="font-semibold text-gray-700 mb-1">Challenge:</h4>
@@ -341,7 +360,7 @@ const BrandStrategy = () => {
                   <ul className="space-y-1">
                     {caseStudy.results.map((result, idx) => (
                       <li key={idx} className="flex items-center text-gray-600">
-                        <span className="text-green-500 mr-2">✓</span>
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                         {result}
                       </li>
                     ))}
@@ -358,10 +377,10 @@ const BrandStrategy = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Brand Strategy Packages
+              Brand Strategy Engagement Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Strategic brand development for businesses at every stage
+              Strategic brand architecture and identity systems designed for businesses at every milestone
             </p>
           </div>
           
@@ -369,40 +388,40 @@ const BrandStrategy = () => {
             {[
               { 
                 name: 'Brand Foundation', 
-                price: '₹99,999', 
-                idealFor: 'Startups & New Businesses',
-                features: ['Brand Discovery Workshop', 'Brand Positioning Strategy', 'Logo & Basic Visual Identity', 'Brand Voice Guidelines', '3-Month Support'],
+                tier: 'Identity & Core Positioning', 
+                idealFor: 'Startups & Emerging Ventures',
+                features: ['Brand Discovery Workshop', 'Brand Positioning Strategy', 'Logo & Basic Visual Identity', 'Brand Voice Guidelines', '3-Month Advisory Support'],
                 color: 'border-purple-200'
               },
               { 
                 name: 'Brand Growth', 
-                price: '₹2,49,999', 
-                idealFor: 'Growing Businesses',
-                features: ['Complete Brand Strategy', 'Full Visual Identity System', 'Brand Guidelines Manual', 'Launch Strategy', 'Employee Brand Training', '6-Month Support'],
+                tier: 'Complete Market Identity', 
+                idealFor: 'Scaling Businesses & Scale-ups',
+                features: ['Complete Brand Strategy', 'Full Visual Identity System', 'Brand Guidelines Manual', 'Launch Strategy', 'Employee Brand Training', '6-Month Partnership Support'],
                 color: 'border-indigo-300',
                 popular: true
               },
               { 
                 name: 'Brand Transformation', 
-                price: '₹4,99,999', 
-                idealFor: 'Established Companies',
-                features: ['Enterprise Brand Audit', 'Complete Rebranding', 'Multi-channel Implementation', 'Internal Comms Strategy', 'Brand Performance Tracking', '12-Month Partnership'],
+                tier: 'Full Enterprise Rebranding', 
+                idealFor: 'Established Companies & Conglomerates',
+                features: ['Enterprise Brand Audit', 'Complete Rebranding', 'Multi-channel Implementation', 'Internal Comms Strategy', 'Brand Performance Tracking', '12-Month Advisory Partnership'],
                 color: 'border-purple-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST COMPREHENSIVE
+                    RECOMMENDED SCOPE
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-purple-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Ideal for: <span className="font-semibold">{plan.idealFor}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -411,7 +430,7 @@ const BrandStrategy = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-purple-600 to-indigo-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start Brand Journey
+                  Discuss Brand Strategy
                 </Link>
               </div>
             ))}
@@ -419,7 +438,7 @@ const BrandStrategy = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Custom enterprise brand strategy projects quoted individually
+              *Enterprise brand transformations and multi-brand architectures scoped individually
             </p>
           </div>
         </div>
@@ -435,7 +454,7 @@ const BrandStrategy = () => {
             <p className="text-xl mb-8 opacity-90">
               Your brand is your most valuable asset. Let's build it together.
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -443,31 +462,42 @@ const BrandStrategy = () => {
                 Book Free Brand Audit
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Consultation
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Us</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🏆 Award-Winning Team</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Award className="w-4 h-4 text-purple-200" />
+                  <span>Award-Winning Team</span>
+                </div>
                 <div className="text-sm opacity-90">Brand strategy experts</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">📈 Proven Results</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <TrendingUp className="w-4 h-4 text-purple-200" />
+                  <span>Proven Results</span>
+                </div>
                 <div className="text-sm opacity-90">200+ successful brand projects</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🌍 Global Perspective</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Globe className="w-4 h-4 text-purple-200" />
+                  <span>Global Perspective</span>
+                </div>
                 <div className="text-sm opacity-90">Local insights, global standards</div>
               </div>
             </div>
@@ -503,7 +533,7 @@ const BrandStrategy = () => {
               ].map((item, index) => (
                 <div key={index} className="flex items-center">
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center mr-3 ${index < 5 ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
-                    {index < 5 ? '✓' : index + 1}
+                    {index < 5 ? <Check className="w-3.5 h-3.5" /> : index + 1}
                   </div>
                   <span className={`${index < 5 ? 'text-gray-700' : 'text-gray-500'}`}>
                     {item}

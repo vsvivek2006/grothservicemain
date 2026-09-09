@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { ArrowRight, Play, Star, TrendingUp, Users, Target, Award, Globe, Shield, Zap, Clock } from 'lucide-react';
+import { 
+  ArrowRight, Play, Star, TrendingUp, Users, Target, Award, Globe, Shield, Zap, Clock,
+  Factory, HeartPulse, Rocket, ShoppingCart, Briefcase, Cog, Trophy
+} from 'lucide-react';
 
 const OurImpact: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -29,7 +33,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Traditional manufacturing company struggling with digital presence and lead generation",
       solution: "Complete digital marketing strategy + sales automation + CRM integration",
-      image: "🏭",
+      image: <Factory className="w-10 h-10 text-blue-600" />,
       video: "#",
       featured: true
     },
@@ -47,7 +51,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "New healthcare startup needed strong brand identity and market positioning",
       solution: "Strategic branding + digital marketing + content strategy",
-      image: "⚕️",
+      image: <HeartPulse className="w-10 h-10 text-red-500" />,
       video: "#",
       featured: true
     },
@@ -65,7 +69,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "SaaS platform struggling with user acquisition and retention",
       solution: "Growth hacking strategy + content marketing + customer success program",
-      image: "🚀",
+      image: <Rocket className="w-10 h-10 text-purple-600" />,
       video: "#"
     },
     {
@@ -82,7 +86,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Brick-and-mortar retail chain needing online presence and sales",
       solution: "E-commerce platform development + digital marketing + inventory management",
-      image: "🛒",
+      image: <ShoppingCart className="w-10 h-10 text-amber-500" />,
       video: "#"
     },
     {
@@ -99,7 +103,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Outdated website with poor performance and zero lead generation",
       solution: "Modern website development + SEO optimization + lead capture system",
-      image: "💼",
+      image: <Briefcase className="w-10 h-10 text-indigo-600" />,
       video: "#"
     },
     {
@@ -116,7 +120,7 @@ const OurImpact: React.FC = () => {
       },
       challenge: "Manual processes causing inefficiency and high operational costs",
       solution: "Custom automation solutions + workflow optimization + integration",
-      image: "⚙️",
+      image: <Cog className="w-10 h-10 text-slate-600" />,
       video: "#"
     }
   ];
@@ -129,10 +133,10 @@ const OurImpact: React.FC = () => {
   ];
 
   const awards = [
-    { title: "Best Business Solutions Provider", icon: "🏆", year: "2024" },
-    { title: "Digital Transformation Excellence", icon: "⭐", year: "2024" },
-    { title: "Top Growth Partner Award", icon: "🎯", year: "2023" },
-    { title: "Innovation in Business Automation", icon: "⚡", year: "2023" }
+    { title: "Best Business Solutions Provider", icon: <Trophy className="w-8 h-8 text-yellow-500" />, year: "2024" },
+    { title: "Digital Transformation Excellence", icon: <Star className="w-8 h-8 text-yellow-400 fill-yellow-400" />, year: "2024" },
+    { title: "Top Growth Partner Award", icon: <Target className="w-8 h-8 text-red-500" />, year: "2023" },
+    { title: "Innovation in Business Automation", icon: <Zap className="w-8 h-8 text-amber-500" />, year: "2023" }
   ];
 
   const services = [
@@ -169,15 +173,16 @@ const OurImpact: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       <Helmet>
-        <title>Our Impact - Business Transformation Stories | Grworth Services</title>
+        <title>Our Impact - Business Transformation Stories | Growth Service</title>
         <meta 
           name="description" 
-          content="See how Grworth Services transforms businesses with digital solutions, automation, and growth strategies. Real results and success stories." 
+          content="See how Growth Service transforms businesses with digital solutions, automation, and growth strategies. Real results and success stories." 
         />
         <meta 
           name="keywords" 
           content="business transformation, digital marketing, business automation, branding, web development, growth strategy" 
         />
+        <link rel="canonical" href="https://www.growthservice.in/impact" />
       </Helmet>
 
       {/* Hero Section */}
@@ -185,7 +190,7 @@ const OurImpact: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Transforming Businesses, Driving Growth</h1>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            At Grworth Services, we don't just deliver services - we deliver results that transform businesses and drive sustainable growth.
+            At Growth Service, we don't just deliver services - we deliver results that transform businesses and drive sustainable growth.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <span className="bg-white/20 px-4 py-2 rounded-full">Digital Marketing</span>
@@ -287,7 +292,7 @@ const OurImpact: React.FC = () => {
               <div className="p-8">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
-                  <div className="text-4xl">{story.image}</div>
+                  <div className="p-3 bg-blue-50 rounded-xl inline-flex">{story.image}</div>
                   {story.featured && (
                     <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-sm font-semibold">
                       Featured Transformation
@@ -354,7 +359,7 @@ const OurImpact: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {awards.map((award, index) => (
               <div key={index} className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-md transition-shadow duration-300">
-                <div className="text-4xl mb-4">{award.icon}</div>
+                <div className="mb-4 flex justify-center">{award.icon}</div>
                 <h3 className="font-semibold text-gray-900 mb-2">{award.title}</h3>
                 <div className="text-blue-600 font-medium">{award.year}</div>
               </div>
@@ -377,7 +382,7 @@ const OurImpact: React.FC = () => {
                 ))}
               </div>
               <p className="text-blue-100 mb-4">
-                "Grworth transformed our manufacturing business from traditional to digital-first. 185% revenue growth in 8 months!"
+                "Growth Service transformed our manufacturing business from traditional to digital-first. 185% revenue growth in 8 months!"
               </p>
               <div className="font-semibold">- Manufacturing Company CEO</div>
             </div>
@@ -401,7 +406,7 @@ const OurImpact: React.FC = () => {
                 ))}
               </div>
               <p className="text-blue-100 mb-4">
-                "Our brand identity and digital strategy by Grworth made us industry leaders within a year."
+                "Our brand identity and digital strategy by Growth Service made us industry leaders within a year."
               </p>
               <div className="font-semibold">- Healthcare Startup Founder</div>
             </div>
@@ -454,22 +459,22 @@ const OurImpact: React.FC = () => {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Business?</h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Let's create your success story. Partner with Grworth Services for sustainable growth and business excellence.
+            Let's create your success story. Partner with Growth Service for sustainable growth and business excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/consultation"
+            <Link
+              to="/book-call"
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
             >
               Book Free Consultation
               <ArrowRight className="h-5 w-5" />
-            </a>
-            <a
-              href="/services"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200"
+            </Link>
+            <Link
+              to="/services"
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 flex items-center justify-center"
             >
               Explore Our Services
-            </a>
+            </Link>
           </div>
         </div>
       </div>

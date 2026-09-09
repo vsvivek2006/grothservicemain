@@ -3,6 +3,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaMobileAlt, FaCreditCard, FaTruck, FaChartLine, FaShieldAlt, FaSearch, FaCog, FaSync, FaRocket } from 'react-icons/fa';
+import { 
+  Check,
+  Cpu, 
+  Zap, 
+  Search, 
+  Heart, 
+  Star, 
+  ShoppingCart, 
+  Store, 
+  RefreshCw, 
+  Package, 
+  BarChart3, 
+  Award, 
+  TrendingUp,
+  Palette,
+  Code,
+  CheckCircle2,
+  Rocket,
+  CreditCard,
+  Smartphone,
+  Phone,
+  MessageCircle,
+  Shirt,
+  Utensils,
+  Sparkles,
+  Home,
+  Trophy,
+  BookOpen,
+  Gem,
+  HeartPulse,
+  Car,
+  Monitor
+} from 'lucide-react';
+import { primaryPhone } from '../../data/centralizedData';
+import { getNepalWhatsAppUrl, getTelHref } from '../../services';
 
 const EcommerceDevelopment = () => {
   return (
@@ -125,7 +160,7 @@ const EcommerceDevelopment = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Payment Integration</h3>
               <ul className="text-gray-600 space-y-2">
-                <li>• Razorpay Integration</li>
+                <li>• Global Payment Gateway Integration</li>
                 <li>• Stripe Integration</li>
                 <li>• PayPal Integration</li>
                 <li>• UPI & Digital Wallets</li>
@@ -219,24 +254,27 @@ const EcommerceDevelopment = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { feature: 'AI Product Recommendations', icon: '🤖' },
-              { feature: 'One-Click Checkout', icon: '⚡' },
-              { feature: 'Advanced Search & Filter', icon: '🔍' },
-              { feature: 'Wishlist & Save for Later', icon: '❤️' },
-              { feature: 'Customer Reviews & Ratings', icon: '⭐' },
-              { feature: 'Abandoned Cart Recovery', icon: '🛒' },
-              { feature: 'Multi-vendor Marketplace', icon: '🏪' },
-              { feature: 'Subscription Management', icon: '🔄' },
-              { feature: 'Bulk Order Processing', icon: '📦' },
-              { feature: 'Real-time Inventory Sync', icon: '📊' },
-              { feature: 'Customer Loyalty Program', icon: '🏆' },
-              { feature: 'Advanced Analytics Dashboard', icon: '📈' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-semibold text-gray-800">{item.feature}</h3>
-              </div>
-            ))}
+              { feature: 'AI Product Recommendations', icon: Cpu },
+              { feature: 'One-Click Checkout', icon: Zap },
+              { feature: 'Advanced Search & Filter', icon: Search },
+              { feature: 'Wishlist & Save for Later', icon: Heart },
+              { feature: 'Customer Reviews & Ratings', icon: Star },
+              { feature: 'Abandoned Cart Recovery', icon: ShoppingCart },
+              { feature: 'Multi-vendor Marketplace', icon: Store },
+              { feature: 'Subscription Management', icon: RefreshCw },
+              { feature: 'Bulk Order Processing', icon: Package },
+              { feature: 'Real-time Inventory Sync', icon: BarChart3 },
+              { feature: 'Customer Loyalty Program', icon: Award },
+              { feature: 'Advanced Analytics Dashboard', icon: TrendingUp },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="text-orange-600 mb-3"><Icon className="w-6 h-6" /></div>
+                  <h3 className="font-semibold text-gray-800">{item.feature}</h3>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -251,31 +289,34 @@ const EcommerceDevelopment = () => {
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
               {[
-                { step: 1, title: 'Discovery', desc: 'Requirements & planning', icon: '🔍' },
-                { step: 2, title: 'Design', desc: 'UI/UX & wireframes', icon: '🎨' },
-                { step: 3, title: 'Development', desc: 'Coding & integration', icon: '💻' },
-                { step: 4, title: 'Testing', desc: 'QA & optimization', icon: '🧪' },
-                { step: 5, title: 'Launch', desc: 'Deployment & training', icon: '🚀' },
-              ].map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="relative mb-4">
-                    <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
-                      {item.step}
+                { step: 1, title: 'Discovery', desc: 'Requirements & planning', icon: Search },
+                { step: 2, title: 'Design', desc: 'UI/UX & wireframes', icon: Palette },
+                { step: 3, title: 'Development', desc: 'Coding & integration', icon: Code },
+                { step: 4, title: 'Testing', desc: 'QA & optimization', icon: CheckCircle2 },
+                { step: 5, title: 'Launch', desc: 'Deployment & training', icon: Rocket },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.step} className="text-center">
+                    <div className="relative mb-4">
+                      <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
+                        {item.step}
+                      </div>
+                      {item.step < 5 && (
+                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-orange-200 transform -translate-y-1/2"></div>
+                      )}
                     </div>
-                    {item.step < 5 && (
-                      <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-orange-200 transform -translate-y-1/2"></div>
-                    )}
+                    <div className="flex justify-center text-orange-600 mb-2"><Icon className="w-6 h-6" /></div>
+                    <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-sm">{item.desc}</p>
                   </div>
-                  <div className="text-2xl mb-2">{item.icon}</div>
-                  <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
             
             <div className="mt-12 text-center">
               <div className="inline-block bg-white p-6 rounded-xl shadow-sm border border-orange-200">
-                <div className="text-2xl mb-2">📈</div>
+                <div className="flex justify-center text-orange-600 mb-2"><TrendingUp className="w-6 h-6" /></div>
                 <h3 className="font-semibold text-gray-800">Phase 6: Growth & Marketing</h3>
                 <p className="text-gray-600">Post-launch optimization and marketing support</p>
               </div>
@@ -322,10 +363,10 @@ const EcommerceDevelopment = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              E-commerce Development Packages
+              E-commerce Engineering Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose the perfect solution for your business needs
+              Custom digital storefronts, multi-vendor marketplaces, and headless commerce platforms tailored to high-conversion transactional journeys
             </p>
           </div>
           
@@ -333,40 +374,40 @@ const EcommerceDevelopment = () => {
             {[
               { 
                 name: 'Starter Store', 
-                price: '₹49,999', 
-                platform: 'Shopify/WooCommerce',
-                features: ['Up to 50 Products', 'Mobile-Responsive Design', 'Basic Payment Gateway', 'Contact Form', 'Social Media Integration', '1 Month Support'],
+                tier: 'Direct-to-Consumer Storefront', 
+                platform: 'Shopify / Modern WooCommerce',
+                features: ['Up to 50 Products', 'Mobile-Responsive High-Speed UI', 'Secure Payment Gateway & Checkout', 'Lead & Abandoned Cart Recovery', 'Social Shopping Integration', '1 Month Support & Optimization'],
                 color: 'border-orange-200'
               },
               { 
                 name: 'Business Store', 
-                price: '₹1,49,999', 
-                platform: 'Custom WooCommerce/Magento',
-                features: ['Up to 500 Products', 'Advanced Design', 'Multiple Payment Gateways', 'Inventory Management', 'SEO Optimization', 'Marketing Integration', '3 Months Support'],
+                tier: 'Scalable Brand Commerce', 
+                platform: 'Custom WooCommerce / Shopify Plus',
+                features: ['Up to 500 Products', 'Custom Checkout & Subscription Flows', 'Multi-Currency Payment Gateways', 'Automated Inventory & Warehouse Sync', 'E-commerce Schema & SEO Optimization', 'Marketing & CRM Automation', '3 Months Dedicated Engineering Support'],
                 color: 'border-red-300',
                 popular: true
               },
               { 
                 name: 'Enterprise Store', 
-                price: '₹4,99,999', 
-                platform: 'Custom/Magento Enterprise',
-                features: ['Unlimited Products', 'Custom UI/UX Design', 'Multi-vendor Marketplace', 'Advanced Analytics', 'ERP Integration', 'Mobile App', '6 Months Support', 'Priority Support'],
+                tier: 'Enterprise & Multi-Vendor Hub', 
+                platform: 'Headless Commerce / Magento / Custom',
+                features: ['High-Volume Catalog Architecture', 'Custom Headless Frontend Experience', 'Multi-Vendor Marketplace Infrastructure', 'Real-Time ERP / Logistics Integration', 'B2B Wholesale / Tiered Pricing Engine', 'PWA & Native App Integration', '6 Months Priority SLA Support'],
                 color: 'border-orange-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    RECOMMENDED FRAMEWORK
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600"> one-time</span></div>
+                <div className="text-2xl font-bold text-orange-900 mb-2">{plan.tier}</div>
                 <p className="text-gray-600 mb-4">Platform: <span className="font-semibold">{plan.platform}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -375,7 +416,7 @@ const EcommerceDevelopment = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-orange-600 to-red-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Build My Store
+                  Discuss Commerce Scope
                 </Link>
               </div>
             ))}
@@ -399,7 +440,7 @@ const EcommerceDevelopment = () => {
             <p className="text-xl mb-8 opacity-90">
               Let's build an e-commerce platform that drives sales and grows your business
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Link
                 to="/book-call"
                 className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
@@ -407,31 +448,42 @@ const EcommerceDevelopment = () => {
                 Get Free Consultation
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-orange-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(primaryPhone)}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-orange-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {primaryPhone}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
               >
-                💬 WhatsApp Quote
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp Quote</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🚀 Fast Development</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Rocket className="w-4 h-4 text-orange-300" />
+                  <span>Fast Development</span>
+                </div>
                 <div className="text-sm opacity-90">4-8 weeks delivery</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">💳 Payment Ready</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <CreditCard className="w-4 h-4 text-orange-300" />
+                  <span>Payment Ready</span>
+                </div>
                 <div className="text-sm opacity-90">Multiple gateway options</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">📱 Mobile Optimized</div>
+              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+                <div className="font-semibold inline-flex items-center gap-2 mb-1">
+                  <Smartphone className="w-4 h-4 text-orange-300" />
+                  <span>Mobile Optimized</span>
+                </div>
                 <div className="text-sm opacity-90">Perfect shopping experience</div>
               </div>
             </div>
@@ -462,7 +514,7 @@ const EcommerceDevelopment = () => {
                     'Shipping integration'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -483,7 +535,7 @@ const EcommerceDevelopment = () => {
                     'Order tracking system'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -516,24 +568,27 @@ const EcommerceDevelopment = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
-              { industry: 'Fashion', icon: '👕' },
-              { industry: 'Electronics', icon: '📱' },
-              { industry: 'Food & Grocery', icon: '🍎' },
-              { industry: 'Beauty', icon: '💄' },
-              { industry: 'Home Decor', icon: '🏠' },
-              { industry: 'Sports', icon: '⚽' },
-              { industry: 'Books', icon: '📚' },
-              { industry: 'Jewelry', icon: '💎' },
-              { industry: 'Health', icon: '💊' },
-              { industry: 'Automotive', icon: '🚗' },
-              { industry: 'B2B Wholesale', icon: '📦' },
-              { industry: 'Digital Products', icon: '🖥️' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-orange-300 transition-colors">
-                <div className="text-2xl mb-2">{item.icon}</div>
-                <div className="text-gray-700 font-medium">{item.industry}</div>
-              </div>
-            ))}
+              { industry: 'Fashion', icon: Shirt },
+              { industry: 'Electronics', icon: Smartphone },
+              { industry: 'Food & Grocery', icon: Utensils },
+              { industry: 'Beauty', icon: Sparkles },
+              { industry: 'Home Decor', icon: Home },
+              { industry: 'Sports', icon: Trophy },
+              { industry: 'Books', icon: BookOpen },
+              { industry: 'Jewelry', icon: Gem },
+              { industry: 'Health', icon: HeartPulse },
+              { industry: 'Automotive', icon: Car },
+              { industry: 'B2B Wholesale', icon: Package },
+              { industry: 'Digital Products', icon: Monitor },
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-orange-300 transition-colors">
+                  <div className="flex justify-center text-orange-600 mb-2"><Icon className="w-6 h-6" /></div>
+                  <div className="text-gray-700 font-medium">{item.industry}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

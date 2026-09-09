@@ -17,8 +17,14 @@ import {
   Award,
   Shield,
   Zap,
-  ChevronRight
+  ChevronRight,
+  MessageCircle,
+  Mail,
 } from 'lucide-react';
+import { getBusinessEmail } from '../selectors';
+import { getNepalWhatsAppUrl, getMailtoHref } from '../services';
+import { businessConfig } from '../config/business';
+import { WhatsAppIcon } from '../components/ui';
 
 const SEOResults: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -83,11 +89,6 @@ const SEOResults: React.FC = () => {
     { date: 'Current', title: 'Continuous Monitoring', description: 'Weekly performance tracking' }
   ];
 
-  // Time range filter for demo
-  useEffect(() => {
-    // Simulate data change based on time range
-    console.log(`Time range changed to: ${timeRange}`);
-  }, [timeRange]);
 
   const renderMetricCard = (title: string, value: string | number, change: string, icon: React.ReactNode, color: string) => (
     <div className={`bg-white rounded-2xl shadow-lg p-6 border-l-4 ${color}`}>
@@ -107,15 +108,16 @@ const SEOResults: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>SEO Results & Analytics Dashboard | Grworth Services</title>
+        <title>SEO Results & Analytics Dashboard | Growth Service</title>
         <meta 
           name="description" 
           content="Track SEO performance, keyword rankings, traffic growth, and competitor analysis with our comprehensive SEO results dashboard." 
         />
         <meta 
           name="keywords" 
-          content="SEO results, keyword rankings, organic traffic analytics, SEO performance, competitor analysis, Google ranking"
+          content="SEO results, keyword rankings, organic traffic analytics, SEO performance, competitor analysis, Google ranking" 
         />
+        <link rel="canonical" href="https://www.growthservice.in/seo-results" />
       </Helmet>
 
       {/* Hero Section */}
@@ -238,7 +240,7 @@ const SEOResults: React.FC = () => {
                 <Calendar className="h-4 w-4 text-gray-500" />
                 <select 
                   value={timeRange}
-                  onChange={(e) => setTimeRange(e.target.value as any)}
+                  onChange={(e) => setTimeRange(e.target.value as '7d' | '30d' | '90d' | '1y')}
                   className="bg-transparent border-0 focus:ring-0 text-gray-700"
                 >
                   <option value="7d">Last 7 Days</option>
@@ -760,20 +762,20 @@ const SEOResults: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/9779707382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
               >
-                <span className="text-2xl">💬</span>
-                Get Free SEO Audit
+                <WhatsAppIcon className="w-5 h-5 text-emerald-600" />
+                <span>Get Free SEO Audit</span>
               </a>
               <a
-                href="mailto:contact@grworth.com"
+                href={getMailtoHref(getBusinessEmail())}
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3"
               >
-                <span className="text-2xl">📧</span>
-                Email for Proposal
+                <Mail className="w-5 h-5" />
+                <span>Email for Proposal</span>
               </a>
             </div>
             <p className="text-blue-200 text-sm mt-6">

@@ -1,0 +1,53 @@
+name: Staging CI & Architecture Gate
+
+on:
+  push:
+    branches:
+      - staging
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run TypeScript Typecheck
+        run: npm run typecheck
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Validate Data Architecture
+        run: npm run data:validate
+
+      - name: Audit Centralization Violations
+        run: npm run centralization:audit
+
+      - name: Validate Route Registry
+        run: npm run routes:validate
+
+      - name: Run Route Resolution Test Matrix
+        run: npm run routes:test
+
+      - name: Validate Sitemap Correctness
+        run: npm run sitemap:validate
+
+      - name: Validate SEO Architecture
+        run: npm run seo:validate
+
+      - name: Production Vite Build
+        run: npm run build

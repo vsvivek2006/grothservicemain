@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Shield, FileText, Check, AlertTriangle, Mail, Phone, MessageCircle, Download } from "lucide-react";
+import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";
+import { Container, WhatsAppIcon } from "../components/ui";
+import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
+import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
 const Terms: React.FC = () => {
+  const primaryEmail = getBusinessEmail();
+  const primaryPhone = getPrimaryPhone();
+  const primaryWhatsApp = getPrimaryWhatsAppUrl();
   const [expandedSections, setExpandedSections] = useState<number[]>([0, 1, 2]);
 
   const toggleSection = (index: number) => {
@@ -17,7 +23,7 @@ const Terms: React.FC = () => {
     {
       id: 1,
       title: "Acceptance & Scope of Services",
-      content: `By engaging with Grworth Services, you agree to be bound by these Terms of Service. We provide comprehensive digital solutions including Website Development, SEO Services, Social Media Management, Business Setup, and Google Business Profile Optimization. Exact project scope is defined in the individual proposal or Statement of Work (SOW).`
+      content: `By engaging with Growth Service, you agree to be bound by these Terms of Service. We provide comprehensive digital solutions including Website Development, SEO Services, Social Media Management, Business Setup, and Google Business Profile Optimization. Exact project scope is defined in the individual proposal or Statement of Work (SOW).`
     },
     {
       id: 2,
@@ -27,7 +33,7 @@ const Terms: React.FC = () => {
     {
       id: 3,
       title: "Payment Terms & Pricing",
-      content: `All prices are in Indian Rupees (₹). Website Development: 50% advance, 50% on delivery. Monthly Services: Pre-paid, auto-renew unless cancelled with 30-day notice. Advertising spend billed directly by platforms. Late payments may incur 2% monthly interest. Advance payments receive special discounts as per our pricing page.`
+      content: `All quotes are provided in Indian Rupees (₹) or agreed local currency based on project scope. Website Development: 50% advance, 50% on delivery. Monthly Retainers: Pre-paid, auto-renew unless cancelled with 30-day written notice. Advertising spend billed directly by advertising platforms. Late payments may incur 2% monthly interest.`
     },
     {
       id: 4,
@@ -42,7 +48,7 @@ const Terms: React.FC = () => {
     {
       id: 6,
       title: "Revisions & Change Requests",
-      content: `Website Development includes 2 rounds of revisions. Additional revisions at ₹1,500/hour. Social Media content changes within 24 hours of posting. Major scope changes require new estimate. Monthly services include reasonable adjustments within package limits.`
+      content: `Website Development includes 2 rounds of design revisions. Additional revisions billed at agreed hourly scope rates. Social Media content changes within 24 hours of posting. Major scope changes require new scope estimates. Monthly services include reasonable adjustments within agreed retainer limits.`
     },
     {
       id: 7,
@@ -80,12 +86,12 @@ const Terms: React.FC = () => {
     {
       service: "Website Development",
       terms: [
-        "5-page responsive website standard package",
-        "1 year hosting and SSL included",
-        "6 months technical support",
-        "Additional pages: ₹2,000/page",
-        "E-commerce features extra",
-        "Source code delivered upon final payment"
+        "Modern responsive web architecture aligned to agreed brief",
+        "Managed hosting and SSL options available",
+        "Dedicated post-launch technical support",
+        "Additional pages or complex features scoped individually",
+        "E-commerce, API, and database integrations quoted per architecture",
+        "Source code delivered upon final milestone sign-off"
       ]
     },
     {
@@ -127,7 +133,7 @@ const Terms: React.FC = () => {
     const element = document.createElement("a");
     const file = new Blob([document.getElementById("terms-content")?.innerText || ""], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = "Grworth-Services-Terms-of-Service.txt";
+    element.download = "Growth-Service-Terms-of-Service.txt";
     document.body.appendChild(element);
     element.click();
   };
@@ -135,15 +141,16 @@ const Terms: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Terms of Service | Grworth Services - Professional Digital Solutions</title>
+        <title>Terms of Service | Growth Service - Professional Digital Solutions</title>
         <meta
           name="description"
-          content="Read Grworth Services' Terms of Service for website development, SEO, social media management, and business setup services. Professional agreements and policies."
+          content="Read Growth Service's Terms of Service for website development, SEO, social media management, and business setup services. Professional agreements and policies."
         />
         <meta
           name="keywords"
           content="terms of service, website development agreement, SEO services terms, social media management contract, business setup terms, digital solutions agreement"
         />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/terms`} />
       </Helmet>
 
       {/* Hero Section */}
@@ -152,7 +159,7 @@ const Terms: React.FC = () => {
           <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
         </div>
         
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Container className="relative text-center">
           <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
             <Shield className="h-5 w-5 mr-2" />
             <span className="text-lg font-semibold">LEGAL TERMS</span>
@@ -182,11 +189,11 @@ const Terms: React.FC = () => {
               })}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Container className="py-16">
         {/* Important Notice */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mb-12">
           <div className="flex items-start gap-4">
@@ -194,7 +201,7 @@ const Terms: React.FC = () => {
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Important Notice</h3>
               <p className="text-gray-700">
-                These Terms of Service govern your use of Grworth Services' professional digital solutions. 
+                These Terms of Service govern your use of Growth Service's professional digital solutions. 
                 By engaging with our services, you agree to these terms. For custom agreements, please contact us.
               </p>
             </div>
@@ -266,19 +273,19 @@ const Terms: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Clear pricing with no hidden fees</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Professional deliverables with ownership transfer</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Timely delivery with progress updates</span>
               </div>
@@ -287,19 +294,19 @@ const Terms: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Data protection and confidentiality</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Ongoing support and maintenance</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ✓
+                  <Check className="w-4 h-4 text-white" />
                 </div>
                 <span>Transparent communication channels</span>
               </div>
@@ -316,42 +323,42 @@ const Terms: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a
-              href="mailto:contact@grworth.com"
+              href={getMailtoHref(primaryEmail)}
               className="bg-blue-50 hover:bg-blue-100 text-blue-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
                 <Mail className="h-8 w-8" />
                 <div>
                   <div className="font-bold">Email Us</div>
-                  <div className="text-sm text-blue-700">contact@grworth.com</div>
+                  <div className="text-sm text-blue-700">{primaryEmail}</div>
                 </div>
               </div>
             </a>
             
             <a
-              href="https://wa.me/9779707382481"
+              href={primaryWhatsApp}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-50 hover:bg-green-100 text-green-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
-                <MessageCircle className="h-8 w-8" />
+                <WhatsAppIcon className="h-8 w-8" />
                 <div>
                   <div className="font-bold">WhatsApp</div>
-                  <div className="text-sm text-green-700">+9779707382481</div>
+                  <div className="text-sm text-green-700">{primaryPhone}</div>
                 </div>
               </div>
             </a>
             
             <a
-              href="tel:+9779707382481"
+              href={getTelHref(primaryPhone)}
               className="bg-purple-50 hover:bg-purple-100 text-purple-600 p-6 rounded-xl text-center transition-colors"
             >
               <div className="flex flex-col items-center gap-3">
                 <Phone className="h-8 w-8" />
                 <div>
                   <div className="font-bold">Call Us</div>
-                  <div className="text-sm text-purple-700">+9779707382481</div>
+                  <div className="text-sm text-purple-700">{primaryPhone}</div>
                 </div>
               </div>
             </a>
@@ -364,7 +371,7 @@ const Terms: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

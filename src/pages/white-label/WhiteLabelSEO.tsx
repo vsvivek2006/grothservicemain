@@ -3,6 +3,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaChartLine, FaShieldAlt, FaUsers, FaRocket, FaFileAlt, FaCog, FaMobileAlt, FaGlobe, FaSync, FaCode, FaGoogle } from 'react-icons/fa';
+import {
+  ClipboardList,
+  Search,
+  Zap,
+  BarChart3,
+  Tag,
+  Lock,
+  MessageCircle,
+  LayoutDashboard,
+  DollarSign,
+  LifeBuoy,
+  GraduationCap,
+  TrendingUp,
+  Phone,
+  Check,
+  Rocket as LucideRocket,
+} from 'lucide-react';
+import { getPrimaryPhone } from '../../selectors';
+import { getTelHref, getNepalWhatsAppUrl } from '../../services';
+import { WhatsAppIcon } from '../../components/ui';
 
 const WhiteLabelSEO = () => {
   return (
@@ -28,7 +48,7 @@ const WhiteLabelSEO = () => {
                 Book White Label Demo
               </Link>
               <Link
-                to="/whitelabel"
+                to="/white-label"
                 className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
               >
                 View All White Label Services
@@ -46,7 +66,7 @@ const WhiteLabelSEO = () => {
               Scale Your Agency with White Label SEO
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Become a full-service digital agency with high-margin SEO services
+              Expand your service offerings without increasing overhead or hiring costs
             </p>
           </div>
           
@@ -55,7 +75,7 @@ const WhiteLabelSEO = () => {
               <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FaChartLine className="text-blue-600 text-3xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">65-75% Profit Margin</h3>
+              <h3 className="text-xl font-semibold mb-3">70% Profit Margin</h3>
               <p className="text-gray-600">
                 White label SEO services typically offer 65-75% profit margins for agencies
               </p>
@@ -65,126 +85,138 @@ const WhiteLabelSEO = () => {
               <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FaRocket className="text-purple-600 text-3xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Recurring Revenue</h3>
+              <h3 className="text-xl font-semibold mb-3">Instant Scaling</h3>
               <p className="text-gray-600">
-                SEO is a monthly service providing predictable, recurring revenue streams
+                Take on enterprise clients immediately without building an in-house SEO team
               </p>
             </div>
             
             <div className="text-center p-6">
               <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaUsers className="text-green-600 text-3xl" />
+                <FaShieldAlt className="text-green-600 text-3xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Client Retention</h3>
+              <h3 className="text-xl font-semibold mb-3">Zero Client Risk</h3>
               <p className="text-gray-600">
-                SEO clients stay 3x longer than PPC clients, increasing agency stability
+                100% white label with strict NDAs. Your clients remain yours forever
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* White Label SEO Services */}
+      {/* SEO Services We Offer */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Complete White Label SEO Services
+              Complete White Label SEO Capabilities
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              End-to-end SEO solutions delivered under your brand
+              Deliver every aspect of SEO under your brand with our comprehensive service suite
             </p>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="text-blue-600 text-3xl mb-4">
                 <FaSearch />
               </div>
               <h3 className="text-xl font-semibold mb-3">Technical SEO</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Site speed optimization</li>
-                <li>• Mobile-first indexing</li>
-                <li>• XML sitemap creation</li>
-                <li>• Robots.txt optimization</li>
-                <li>• Structured data markup</li>
+              <p className="text-gray-600 mb-4 text-sm">
+                Complete technical audits, crawl error fixes, site speed optimization, and schema markup implementation.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Core Web Vitals optimization</li>
+                <li>• Mobile-first indexing fixes</li>
+                <li>• XML sitemap & robots.txt</li>
+                <li>• Structured data implementation</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-green-600 text-3xl mb-4">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-purple-600 text-3xl mb-4">
                 <FaFileAlt />
               </div>
               <h3 className="text-xl font-semibold mb-3">On-Page SEO</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Keyword research & optimization</li>
-                <li>• Content optimization</li>
-                <li>• Meta tags optimization</li>
-                <li>• Header tag optimization</li>
-                <li>• Internal linking strategy</li>
+              <p className="text-gray-600 mb-4 text-sm">
+                Keyword research, content optimization, meta tags, heading structures, and internal linking strategies.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Comprehensive keyword mapping</li>
+                <li>• Title & meta description optimization</li>
+                <li>• Content quality improvements</li>
+                <li>• Internal linking architecture</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-purple-600 text-3xl mb-4">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-green-600 text-3xl mb-4">
                 <FaGlobe />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Off-Page SEO</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Quality backlink building</li>
-                <li>• Directory submissions</li>
-                <li>• Guest posting outreach</li>
-                <li>• Brand mention monitoring</li>
-                <li>• Local citation building</li>
+              <h3 className="text-xl font-semibold mb-3">Off-Page SEO & Links</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                High-quality backlink building through white-hat outreach, digital PR, and authority placement.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Contextual guest posting</li>
+                <li>• Resource page link building</li>
+                <li>• Broken link replacement</li>
+                <li>• Brand mention conversion</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="text-yellow-600 text-3xl mb-4">
                 <FaMobileAlt />
               </div>
               <h3 className="text-xl font-semibold mb-3">Local SEO</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Google Business Profile optimization</li>
-                <li>• Local citation management</li>
-                <li>• Review management</li>
-                <li>• Local keyword targeting</li>
-                <li>• Map pack optimization</li>
+              <p className="text-gray-600 mb-4 text-sm">
+                Google Business Profile optimization, local citation building, and review management for local clients.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• GBP setup & optimization</li>
+                <li>• Local citation building (NAP)</li>
+                <li>• Review generation strategy</li>
+                <li>• Local pack ranking optimization</li>
               </ul>
             </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="text-red-600 text-3xl mb-4">
-                <FaCode />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">E-commerce SEO</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Product page optimization</li>
-                <li>• Category page SEO</li>
-                <li>• E-commerce site structure</li>
-                <li>• Product schema markup</li>
-                <li>• Shopping feed optimization</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-indigo-600 text-3xl mb-4">
                 <FaChartLine />
               </div>
-              <h3 className="text-xl font-semibold mb-3">SEO Analytics</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>• Monthly performance reports</li>
-                <li>• Rank tracking & monitoring</li>
-                <li>• Traffic analysis</li>
-                <li>• Competitor analysis</li>
-                <li>• ROI tracking & reporting</li>
+              <h3 className="text-xl font-semibold mb-3">E-commerce SEO</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                Specialized SEO for online stores: product optimization, category pages, and faceted navigation.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Product schema & review markup</li>
+                <li>• Category page optimization</li>
+                <li>• Faceted navigation handling</li>
+                <li>• E-commerce platform expertise</li>
+              </ul>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="text-indigo-600 text-3xl mb-4">
+                <FaRocket />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Enterprise SEO</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                Large-scale SEO for complex websites, international SEO, and multi-location business frameworks.
+              </p>
+              <ul className="text-gray-500 space-y-1 text-xs">
+                <li>• Multi-language & hreflang setup</li>
+                <li>• Subdomain/subfolder strategies</li>
+                <li>• Large-scale crawl optimization</li>
+                <li>• Custom analytics & reporting</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How White Label SEO Works */}
+      {/* How It Works */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -198,20 +230,23 @@ const WhiteLabelSEO = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: 1, title: 'Onboarding', desc: 'Client details & website access', icon: '📋' },
-              { step: 2, title: 'Audit & Strategy', desc: 'Comprehensive SEO analysis', icon: '🔍' },
-              { step: 3, title: 'Implementation', desc: 'Monthly SEO execution', icon: '⚡' },
-              { step: 4, title: 'Reporting', desc: 'White label reports delivery', icon: '📊' },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  {item.step}
+              { step: 1, title: 'Onboarding', desc: 'Client details & website access', icon: ClipboardList },
+              { step: 2, title: 'Audit & Strategy', desc: 'Comprehensive SEO analysis', icon: Search },
+              { step: 3, title: 'Implementation', desc: 'Monthly SEO execution', icon: Zap },
+              { step: 4, title: 'Reporting', desc: 'White label reports delivery', icon: BarChart3 },
+            ].map((item) => {
+              const StepIcon = item.icon;
+              return (
+                <div key={item.step} className="text-center">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                    {item.step}
+                  </div>
+                  <div className="text-purple-600 mb-3 flex justify-center"><StepIcon className="w-8 h-8" /></div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
                 </div>
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -219,27 +254,30 @@ const WhiteLabelSEO = () => {
       {/* White Label Platform Features */}
       <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          <h2 className="text-3xl font-bold center mb-12 text-gray-800">
             White Label Platform Features
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { feature: 'Branded Reports', desc: 'Custom reports with your logo', icon: '🏷️' },
-              { feature: 'Client Portal', desc: 'White label dashboard access', icon: '🔐' },
-              { feature: 'Direct Communication', desc: 'You maintain client contact', icon: '💬' },
-              { feature: 'Agency Dashboard', desc: 'Manage all client campaigns', icon: '📱' },
-              { feature: 'Scalable Pricing', desc: 'Volume-based discounts', icon: '💰' },
-              { feature: '24/7 Support', desc: 'Technical & strategic support', icon: '🛟' },
-              { feature: 'Training Resources', desc: 'Agency growth materials', icon: '🎓' },
-              { feature: 'Performance Tracking', desc: 'Real-time rank monitoring', icon: '📈' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
+              { feature: 'Branded Reports', desc: 'Custom reports with your logo', icon: Tag },
+              { feature: 'Client Portal', desc: 'White label dashboard access', icon: Lock },
+              { feature: 'Direct Communication', desc: 'You maintain client contact', icon: MessageCircle },
+              { feature: 'Agency Dashboard', desc: 'Manage all client campaigns', icon: LayoutDashboard },
+              { feature: 'Scalable Pricing', desc: 'Volume-based discounts', icon: DollarSign },
+              { feature: '24/7 Support', desc: 'Technical & strategic support', icon: LifeBuoy },
+              { feature: 'Training Resources', desc: 'Agency growth materials', icon: GraduationCap },
+              { feature: 'Performance Tracking', desc: 'Real-time rank monitoring', icon: TrendingUp },
+            ].map((item, index) => {
+              const FeatureIcon = item.icon;
+              return (
+                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="text-purple-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
+                  <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -282,10 +320,10 @@ const WhiteLabelSEO = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label SEO Packages
+              White Label SEO Frameworks
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Flexible monthly plans for agencies of all sizes
+              White-hat organic growth, technical site audits, and search rankings executed seamlessly behind your agency
             </p>
           </div>
           
@@ -293,40 +331,40 @@ const WhiteLabelSEO = () => {
             {[
               { 
                 name: 'Starter SEO', 
-                price: '₹9,999', 
-                clients: '1-5 Clients',
-                features: ['Basic Technical SEO', 'On-Page Optimization', 'Monthly Reports', 'Keyword Research', 'Weekly Updates', 'Email Support'],
+                tier: 'Foundation & On-Page SEO', 
+                clients: '1-5 Client Engagements',
+                features: ['Core Technical SEO Audit', 'On-Page Optimization', 'White-Label Monthly Ranking Reports', 'Keyword Research & Search Intent', 'Bi-Weekly Progress Updates', 'Dedicated Email Support'],
                 color: 'border-blue-200'
               },
               { 
                 name: 'Professional SEO', 
-                price: '₹19,999', 
-                clients: '6-15 Clients',
-                features: ['Complete Technical SEO', 'Advanced On-Page SEO', 'Off-Page Link Building', 'Local SEO Optimization', 'Monthly Strategy Calls', 'Client Portal Access', 'Phone Support'],
+                tier: 'High-Authority Organic Scale', 
+                clients: '6-15 Client Engagements',
+                features: ['Comprehensive Technical Architecture', 'Advanced On-Page & Schema Optimization', 'White-Hat Editorial Outreach & Backlinks', 'Local SEO & Multi-Location Maps', 'Monthly Strategy Reviews', 'Custom Client Portal Access', 'Direct Priority Support'],
                 color: 'border-purple-300',
                 popular: true
               },
               { 
                 name: 'Enterprise SEO', 
-                price: '₹39,999', 
-                clients: '16+ Clients',
-                features: ['Full-Scale SEO Strategy', 'Advanced Link Building', 'E-commerce SEO', 'Competitor Analysis', 'Dedicated Account Manager', 'Priority Support', 'Custom Reporting', 'Volume Discounts'],
+                tier: 'Full Enterprise Search Domination', 
+                clients: '16+ Client Engagements',
+                features: ['Full-Scale Competitive SEO Strategy', 'High-DA Link Syndication & Digital PR', 'Enterprise E-commerce Architecture', 'Algorithmic Penalty Recovery', 'Dedicated SEO Director', 'Custom White-Label Live Dashboards', 'Dedicated SLA Turnaround'],
                 color: 'border-blue-300'
               },
             ].map((plan) => (
               <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST POPULAR
+                    MOST REQUESTED
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">{plan.price}<span className="text-lg text-gray-600">/month</span></div>
-                <p className="text-gray-600 mb-4">For agencies with: <span className="font-semibold">{plan.clients}</span></p>
+                <div className="text-2xl font-bold text-blue-900 mb-2">{plan.tier}</div>
+                <p className="text-gray-600 mb-4">Scale: <span className="font-semibold">{plan.clients}</span></p>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -335,7 +373,7 @@ const WhiteLabelSEO = () => {
                   to="/book-call"
                   className="block w-full bg-gradient-to-r from-blue-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
                 >
-                  Start White Label Partnership
+                  Partner Inquiry
                 </Link>
               </div>
             ))}
@@ -343,7 +381,7 @@ const WhiteLabelSEO = () => {
           
           <div className="text-center mt-8">
             <p className="text-gray-600">
-              *Setup fee: ₹14,999 per client. Minimum 6-month commitment for best results.
+              *Agency volume retainers and custom multi-account white-label agreements scoped individually
             </p>
           </div>
         </div>
@@ -376,7 +414,7 @@ const WhiteLabelSEO = () => {
                   'Build agency valuation'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center">
-                    <span className="text-white mr-3">🚀</span>
+                    <LucideRocket className="w-4 h-4 text-white mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -397,7 +435,7 @@ const WhiteLabelSEO = () => {
                   'Expert support when needed'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center text-gray-700">
-                    <span className="text-blue-500 mr-3">⚡</span>
+                    <Zap className="w-4 h-4 text-blue-500 mr-3 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -478,31 +516,42 @@ const WhiteLabelSEO = () => {
                 Book White Label Demo
               </Link>
               <a
-                href="tel:+919341436937"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                href={getTelHref(getPrimaryPhone())}
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                📞 Call: +91 93414 36937
+                <Phone className="w-5 h-5" />
+                <span>Call: {getPrimaryPhone()}</span>
               </a>
               <a
-                href="https://wa.me/977977382481"
+                href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
               >
-                💬 WhatsApp Partnership
+                <WhatsAppIcon className="w-5 h-5" />
+                <span>WhatsApp Partnership</span>
               </a>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">🏷️ 100% White Label</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <Tag className="w-4 h-4" />
+                  <span>100% White Label</span>
+                </div>
                 <div className="text-sm opacity-90">Your brand only</div>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">💰 High Margins</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <DollarSign className="w-4 h-4" />
+                  <span>High Margins</span>
+                </div>
                 <div className="text-sm opacity-90">65-75% profit margins</div>
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold">📈 Recurring Revenue</div>
+                <div className="font-semibold flex items-center justify-center gap-1.5">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Recurring Revenue</span>
+                </div>
                 <div className="text-sm opacity-90">Monthly retainers</div>
               </div>
             </div>
@@ -616,7 +665,7 @@ const WhiteLabelSEO = () => {
                     'Ethical business practices'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="text-blue-500 mr-2">✓</span>
+                      <Check className="w-4 h-4 text-blue-500 mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -637,7 +686,7 @@ const WhiteLabelSEO = () => {
                     'Scalable pricing structure'
                   ].map((item, index) => (
                     <li key={index} className="flex items-center">
-                      <span className="text-white mr-2">⚡</span>
+                      <Zap className="w-4 h-4 text-white mr-2 shrink-0" />
                       {item}
                     </li>
                   ))}

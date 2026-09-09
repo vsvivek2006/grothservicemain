@@ -15,8 +15,15 @@ import {
   Globe,
   Smartphone,
   Search,
-  ShoppingCart
+  ShoppingCart,
+  Phone,
+  Mail,
+  Smile,
+  CheckCircle,
 } from "lucide-react";
+import { getPrimaryPhone, getBusinessEmail } from "../selectors";
+import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
+import { WhatsAppIcon } from "../components/ui";
 
 const Testimonials: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -41,7 +48,7 @@ const Testimonials: React.FC = () => {
       category: "website",
       rating: 5,
       image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Grworth built our travel portal in just 15 days! The website is fast, responsive, and already generating 5x more bookings than our old site. Their team was professional and delivered exactly what we needed.",
+      quote: "Growth Service built our travel portal in just 15 days! The website is fast, responsive, and already generating 5x more bookings than our old site. Their team was professional and delivered exactly what we needed.",
       project: "Tour & Travel Website",
       duration: "15 Days",
       results: ["+500% bookings", "+300% website traffic", "+45% conversion rate"],
@@ -56,7 +63,7 @@ const Testimonials: React.FC = () => {
       category: "smm",
       rating: 5,
       image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Our social media presence was non-existent before Grworth. In 3 months, we gained 10,000+ followers and sales increased by 300%. Their content strategy is simply brilliant!",
+      quote: "Our social media presence was non-existent before Growth Service. In 3 months, we gained 10,000+ followers and sales increased by 300%. Their content strategy is simply brilliant!",
       project: "Social Media Management",
       duration: "3 Months",
       results: ["+10,000 followers", "+300% sales", "+250% engagement"],
@@ -71,7 +78,7 @@ const Testimonials: React.FC = () => {
       category: "seo",
       rating: 5,
       image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "SEO services from Grworth put us on Google's first page. We're getting 220% more organic traffic and 150% more online orders! Their monthly reports are detailed and transparent.",
+      quote: "SEO services from Growth Service put us on Google's first page. We're getting 220% more organic traffic and 150% more online orders! Their monthly reports are detailed and transparent.",
       project: "Local SEO Campaign",
       duration: "4 Months",
       results: ["+220% organic traffic", "+150% online orders", "Top 3 rankings"],
@@ -86,7 +93,7 @@ const Testimonials: React.FC = () => {
       category: "business",
       rating: 5,
       image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Complete business setup by Grworth transformed our operations. From website to social media to Google Business Profile - everything done professionally. Highly recommended!",
+      quote: "Complete business setup by Growth Service transformed our operations. From website to social media to Google Business Profile - everything done professionally. Highly recommended!",
       project: "Business Digital Setup",
       duration: "45 Days",
       results: ["Complete online presence", "+60% efficiency", "-35% operational costs"],
@@ -101,7 +108,7 @@ const Testimonials: React.FC = () => {
       category: "website",
       rating: 5,
       image: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Our corporate website was outdated. Grworth developed a modern, responsive site that perfectly represents our brand. The admin panel makes updates super easy.",
+      quote: "Our corporate website was outdated. Growth Service developed a modern, responsive site that perfectly represents our brand. The admin panel makes updates super easy.",
       project: "Corporate Website",
       duration: "20 Days",
       results: ["Modern responsive design", "Easy content management", "+180% lead generation"],
@@ -131,7 +138,7 @@ const Testimonials: React.FC = () => {
       category: "seo",
       rating: 5,
       image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600",
-      quote: "Local SEO work by Grworth increased our property inquiries by 180%. Now we rank #1 for all important local keywords. Worth every penny!",
+      quote: "Local SEO work by Growth Service increased our property inquiries by 180%. Now we rank #1 for all important local keywords. Worth every penny!",
       project: "Local Real Estate SEO",
       duration: "5 Months",
       results: ["#1 local rankings", "+180% inquiries", "+120% website visits"],
@@ -193,15 +200,16 @@ const Testimonials: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Helmet>
-        <title>Client Testimonials & Success Stories | Grworth Services</title>
+        <title>Client Testimonials & Success Stories | Growth Service</title>
         <meta
           name="description"
-          content="Read real client testimonials and success stories about Grworth Services' website development, SEO, social media management, and business setup services."
+          content="Read real client testimonials and success stories about Growth Service' website development, SEO, social media management, and business setup services."
         />
         <meta
           name="keywords"
           content="client testimonials, success stories, website development reviews, SEO service feedback, social media management testimonials, business setup reviews"
         />
+        <link rel="canonical" href="https://www.growthservice.in/testimonials" />
       </Helmet>
 
       {/* Hero Section */}
@@ -304,9 +312,9 @@ const Testimonials: React.FC = () => {
                             <h4 className="font-semibold text-gray-900 mb-3">Results Achieved:</h4>
                             <div className="flex flex-wrap gap-3">
                               {testimonial.results.map((result, idx) => (
-                                <div key={idx} className="bg-white px-4 py-2 rounded-lg shadow-sm">
-                                  <span className="text-green-600 font-bold">✓</span>
-                                  <span className="ml-2 text-gray-700 font-medium">{result}</span>
+                                <div key={idx} className="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+                                  <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
+                                  <span className="text-gray-700 font-medium">{result}</span>
                                 </div>
                               ))}
                             </div>
@@ -466,7 +474,9 @@ const Testimonials: React.FC = () => {
           {/* No Results */}
           {filteredTestimonials.length === 0 && (
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">😊</div>
+              <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Smile className="w-10 h-10" />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">No testimonials found</h3>
               <p className="text-gray-600">Try selecting a different category</p>
             </div>
@@ -534,12 +544,12 @@ const Testimonials: React.FC = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
             <a
-              href="https://wa.me/9779707382481"
+              href={getNepalWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">💬</div>
+              <div className="text-emerald-600"><WhatsAppIcon className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">WhatsApp</div>
                 <div className="text-sm text-gray-600">Instant Response</div>
@@ -547,24 +557,24 @@ const Testimonials: React.FC = () => {
             </a>
             
             <a
-              href="tel:+9779707382481"
+              href={getTelHref(getPrimaryPhone())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">📞</div>
+              <div className="text-blue-600"><Phone className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">Call Now</div>
-                <div className="text-sm text-gray-600">+9779707382481</div>
+                <div className="text-sm text-gray-600">{getPrimaryPhone()}</div>
               </div>
             </a>
             
             <a
-              href="mailto:contact@grworth.com"
+              href={getMailtoHref(getBusinessEmail())}
               className="bg-white hover:bg-gray-100 text-blue-600 px-6 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="text-2xl">✉️</div>
+              <div className="text-purple-600"><Mail className="w-7 h-7" /></div>
               <div>
                 <div className="font-bold">Email Us</div>
-                <div className="text-sm text-gray-600">contact@grworth.com</div>
+                <div className="text-sm text-gray-600">{getBusinessEmail()}</div>
               </div>
             </a>
           </div>
