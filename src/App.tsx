@@ -69,9 +69,10 @@ const CityHubPage = lazy(() => import('./pages/CityHubPage'));
 const TeamPage = lazy(() => import('./pages/TeamPage'));
 const Accessibility = lazy(() => import('./pages/Accessibility'));
 const TrustVerification = lazy(() => import('./pages/TrustVerification'));
+const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
 
 import { useParams, Navigate } from 'react-router-dom';
-import { businessConfig } from './config/business';
+import { businessConfig } from './config';
 
 // Helper component for programmatic dynamic route alias redirection
 const LocationServiceRedirect: React.FC = () => {
@@ -149,7 +150,7 @@ function App() {
               <Route path="/about/team" element={<Navigate to="/team" replace />} />
 
               {/* Legal & Verification Dedicated Routes */}
-              <Route path="/refund" element={<Privacy />} />
+              <Route path="/refund" element={<RefundPolicy />} />
               <Route path="/accessibility" element={<Accessibility />} />
               <Route path="/verify" element={<TrustVerification />} />
 
