@@ -565,12 +565,12 @@ const Home: React.FC = () => {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION WITH ENHANCED VISUAL DEPTH & AMBIENT MESH               */}
       {/* ========================================================================= */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white pt-12 pb-20 md:pt-16 md:pb-28 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 md:pt-16 md:pb-28 overflow-hidden">
         {/* Ambient backdrop glow layers & grid */}
         <DecorativeGrid variant="dots" dark />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse-subtle"></div>
-        <div className="absolute -top-10 -right-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-purple-600/30 rounded-full blur-[120px] pointer-events-none animate-pulse-subtle"></div>
+        <div className="absolute -top-10 -right-10 w-96 h-96 bg-blue-600/25 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-purple-600/25 rounded-full blur-[100px] pointer-events-none animate-pulse-subtle" style={{ animationDelay: '4s' }}></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -1091,7 +1091,7 @@ const Home: React.FC = () => {
       {/* ========================================================================= */}
       {/* 13. BENEFITS (Why Choose Us — Lucide icons, upgraded glass cards)          */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white relative overflow-hidden" aria-label="Why Choose Us">
+      <section className="py-20 md:py-28 bg-gradient-to-r from-blue-900 to-purple-900 text-white relative overflow-hidden" aria-label="Why Choose Us">
         <DecorativeGrid variant="dots" dark />
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-0 right-10 w-96 h-96 bg-purple-600 rounded-full blur-[100px] animate-pulse-subtle"></div>
@@ -1193,10 +1193,10 @@ const Home: React.FC = () => {
       {/* ========================================================================= */}
       {/* 15. FINAL CALL TO ACTION (Verbatim copy)                                  */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-gradient-to-r from-slate-950 via-[#1c0836] to-slate-900 text-white relative overflow-hidden" aria-label="Contact Call to Action">
+      <section className="py-20 md:py-28 bg-gradient-to-r from-gray-900 to-blue-900 text-white relative overflow-hidden" aria-label="Contact Call to Action">
         <DecorativeGrid variant="dots" dark />
-        <div className="absolute inset-0 opacity-15 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-600 rounded-full blur-[140px] animate-pulse-subtle"></div>
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-600/30 rounded-full blur-[140px] animate-pulse-subtle"></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">

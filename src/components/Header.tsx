@@ -129,40 +129,40 @@ const Header: React.FC = () => {
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200/80' : 'bg-white shadow-sm'}`}>
       {/* Top Bar - Office Locations & Contact */}
-      <div className="bg-slate-900 border-b border-slate-800 text-slate-300 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-purple-900 via-purple-700 to-pink-600 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex flex-wrap justify-between items-center py-1.5 gap-2">
             {/* Left - Office Locations (Desktop) */}
             <div className="hidden md:flex items-center space-x-2 text-xs">
               <Link 
                 to="/offices/jaipur" 
-                className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-0.5 rounded-full border border-slate-700/60 transition-colors"
+                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
               >
-                <MapPin className="h-3 w-3 text-purple-400" /> Jaipur
+                <MapPin className="h-3 w-3 text-yellow-300" /> Jaipur
               </Link>
               <Link 
                 to="/offices/vrindavan" 
-                className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-0.5 rounded-full border border-slate-700/60 transition-colors"
+                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
               >
-                <MapPin className="h-3 w-3 text-purple-400" /> Vrindavan
+                <MapPin className="h-3 w-3 text-yellow-300" /> Vrindavan
               </Link>
               <Link 
                 to="/offices/nepal" 
-                className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-0.5 rounded-full border border-slate-700/60 transition-colors"
+                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
               >
-                <Building className="h-3 w-3 text-purple-400" /> Nepal
+                <Building className="h-3 w-3 text-yellow-300" /> Nepal
               </Link>
             </div>
 
             {/* Center - Animated Text */}
             <div className="flex items-center justify-center flex-1">
-              <div className="bg-slate-800/80 px-3 py-0.5 rounded-full border border-slate-700/60">
+              <div className="bg-white/10 backdrop-blur-sm px-3 py-0.5 rounded-full border border-white/15">
                 <div className="flex items-center space-x-2">
-                  <span className="text-purple-400 text-xs">✦</span>
-                  <span className="text-slate-200 font-medium text-xs whitespace-nowrap">
+                  <span className="text-yellow-300 animate-pulse text-xs">⚡</span>
+                  <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent font-bold text-xs whitespace-nowrap">
                     {animatedText}
                   </span>
-                  <span className="text-purple-400 text-xs">✦</span>
+                  <span className="text-yellow-300 animate-pulse text-xs">⚡</span>
                 </div>
               </div>
             </div>
@@ -173,13 +173,13 @@ const Header: React.FC = () => {
                 <a
                   key={index}
                   href={item.href}
-                  className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-all hover:scale-105 relative group"
+                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 relative group"
                   target={item.href.startsWith('http') ? '_blank' : '_self'}
                   rel={item.href.startsWith('http') ? 'noopener noreferrer' : ''}
                   aria-label={item.name}
                 >
                   {item.icon}
-                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-950 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg border border-slate-800 z-50 pointer-events-none">
+                  <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-950 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg border border-purple-800 z-50 pointer-events-none">
                     {item.location}
                   </span>
                 </a>

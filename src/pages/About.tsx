@@ -632,9 +632,9 @@ const About: React.FC = () => {
       </Helmet>
 
       {/* === HERO SECTION WITH OFFICE LOCATIONS === */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white py-16 md:py-24 overflow-hidden">
-        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-60 h-60 bg-indigo-600/15 rounded-full blur-[60px] pointer-events-none"></div>
+      <section className="relative bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 text-white py-16 md:py-24 overflow-hidden">
+        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-purple-600/30 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-60 h-60 bg-indigo-600/25 rounded-full blur-[60px] pointer-events-none"></div>
         
         <div className="relative max-w-6xl mx-auto px-4">
           {/* Office Location Badges */}

@@ -34,7 +34,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   };
 
   const variantStyles = {
-    primary: "bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 text-white hover:from-purple-700 hover:to-indigo-800 shadow-purple-900/25 hover:shadow-purple-900/40 focus-visible:ring-purple-600",
+    primary: "bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white hover:from-blue-600 hover:to-indigo-800 shadow-purple-900/25 hover:shadow-purple-900/40 focus-visible:ring-purple-600",
     secondary: "bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-bold shadow-yellow-500/25 hover:shadow-yellow-500/40 focus-visible:ring-yellow-400",
     outline: "border-2 border-purple-600 text-purple-600 hover:bg-purple-50 focus-visible:ring-purple-600",
     white: "bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 shadow-sm hover:shadow-md focus-visible:ring-slate-900",

@@ -613,8 +613,8 @@ const Packages: React.FC = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 text-white py-16 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
+      <section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Professional Digital Solutions</h1>
           <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
@@ -733,8 +733,8 @@ const Packages: React.FC = () => {
         </div>
 
         {/* Final CTA */}
-        <div className="relative bg-gradient-to-br from-slate-950 via-[#1c0836] to-slate-900 rounded-2xl shadow-card p-12 text-white text-center overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-card p-12 text-white text-center overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[100px] pointer-events-none"></div>
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Ready to Start Your Project?</h2>
             <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">

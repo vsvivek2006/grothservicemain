@@ -73,7 +73,7 @@ export const OfficeDetailPage: React.FC = () => {
       </Helmet>
 
       {/* Hero Header */}
-      <section className="relative bg-gradient-to-br from-slate-950 via-[#1b0834] to-slate-900 text-white pt-10 pb-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-10 pb-20 overflow-hidden">
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle"></div>
 
