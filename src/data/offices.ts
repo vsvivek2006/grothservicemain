@@ -59,7 +59,7 @@ export const physicalOffices: readonly OfficeData[] = [
       "C-Scheme", "Sitapura", "Tonk Road", "Ajmer Road", 
       "Raja Park", "Bani Park", "Sanganer", "Pratap Nagar"
     ],
-    teamMemberIds: [2, 4, 3, 5, 13, 6, 9, 10, 11, 12],
+    teamMemberIds: [4, 2, 5, 13, 9, 6, 12, 10, 11, 3],
     description: "Our Jaipur office serves as the corporate and technology hub for Growth Service's India operations. Located at JTML MALL, Jagatpura, Jaipur, we deliver premium web development, SEO, digital marketing, and Google Ads services to businesses across Rajasthan and pan-India clients."
   },
   {
@@ -92,7 +92,7 @@ export const physicalOffices: readonly OfficeData[] = [
       "Vrindavan", "Mathura", "Agra", "Aligarh", "Lucknow", 
       "Kanpur", "Noida", "Delhi NCR", "Ghaziabad", "Firozabad"
     ],
-    teamMemberIds: [8],
+    teamMemberIds: [14, 15, 8],
     description: "Our Vrindavan office is the digital marketing and operations hub for Growth Service. Located in the spiritual city of Vrindavan, Uttar Pradesh, we serve businesses across Mathura, Agra, Lucknow, and the entire UP region with expert SEO, social media marketing, content creation, and web development services."
   },
   {

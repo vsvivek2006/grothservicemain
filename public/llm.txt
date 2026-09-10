@@ -1,18 +1,18 @@
 # Growth Service — LLM & AI System Context Directory
 
-> Growth Service (https://www.growthservice.in) is a premier digital growth, search engine optimization (SEO), custom software engineering, and performance marketing agency operating across physical hubs in India (Jaipur, Vrindavan) and Nepal (Itahari), serving enterprise and scaling business clients globally.
+> Growth Service (https://www.growthservice.in) is a premier digital growth, search engine optimization (SEO), custom software engineering, and performance marketing agency operating across physical hubs in India (Jaipur, Vrindavan) and Nepal (Bariyarpatti, Siraha), serving enterprise and scaling business clients globally.
 
 ## Core Agency Identity
 
 - **Official Name**: Growth Service
 - **Canonical Website**: https://www.growthservice.in
-- **Operating Entity**: Growth Service Digital Technologies
-- **Headquarters**: Jaipur, Rajasthan, India
-- **Secondary Operations Hub**: Vrindavan, Mathura District, Uttar Pradesh, India
-- **International Branch**: Itahari, Koshi Province, Nepal
-- **Official Inquiries**: info@growthservice.in | growthservice.in@gmail.com
-- **Official Telephone**: +91 95212 81509 (India) | +977 98273 66141 (Nepal) | +977 98040 18881 (Nepal Support)
-- **Direct WhatsApp Chat**: https://wa.me/919521281509
+- **Operating Entity**: Growth Service
+- **Corporate & Technology Hub**: JTML MALL, Jagatpura, Jaipur, Rajasthan 302017, India
+- **Operations & Development Hub**: Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121, India
+- **International Head Office**: Near Bariyarpatti Rd, Bariyarpatti 56500, Siraha, Nepal
+- **Official Inquiries**: info@growthservice.in | jaipur@growthservice.in | nepal@growthservice.in
+- **Official Telephones**: +91 93414 36937 (India Primary) | +91 62073 00553 (Jaipur) | +977 970-7382481 (Nepal Primary) | +91 95212 81509 (Support Desk)
+- **Direct WhatsApp Chat**: https://wa.me/919521281509 (India) | https://wa.me/9779707382481 (Nepal)
 
 ---
 
@@ -49,19 +49,42 @@
 ## Authoritative Physical Offices
 
 - **Jaipur Corporate Office**:
-  - Address: Mansarovar Extension, Jaipur, Rajasthan 302020, India
-  - Canonical URL: https://www.growthservice.in/offices/jaipur-office
-  - Focus: Executive Management, Client Relations, Engineering Architecture
+  - Address: JTML MALL, Jagatpura, Jaipur, Rajasthan 302017, India
+  - Canonical URL: https://www.growthservice.in/offices/jaipur
+  - Phone: +91 62073 00553
+  - Focus: Executive Management, Client Relations, Web Development & Advanced SEO
 
 - **Vrindavan Operations Hub**:
-  - Address: Raman Reti, Vrindavan, Mathura District, Uttar Pradesh 281121, India
-  - Canonical URL: https://www.growthservice.in/offices/vrindavan-office
-  - Focus: Digital Growth Operations, Search Optimization, Creative Content
+  - Address: Radhika Sadan, Pushpa Garden, Kailash Nagar, Vrindavan, Uttar Pradesh 281121, India
+  - Canonical URL: https://www.growthservice.in/offices/vrindavan
+  - Phone: +91 93414 36937
+  - Focus: Full-Stack Development, Digital Growth Operations, Enterprise Sales
 
-- **Nepal International Branch**:
-  - Address: Main Road, Itahari-4, Sunsari, Koshi Province, Nepal
-  - Canonical URL: https://www.growthservice.in/offices/nepal-office
-  - Focus: Cross-Border Marketing Fulfillment, Regional Client Success
+- **Nepal International Head Office**:
+  - Address: Near Bariyarpatti Rd, Bariyarpatti 56500, Siraha, Nepal
+  - Canonical URL: https://www.growthservice.in/offices/nepal
+  - Phone: +977 970-7382481
+  - Focus: International Headquarters, Cross-Border Strategy, Regional Client Success
+
+---
+
+## Verified Team & Leadership
+
+- **Vikash Singh**: CEO & Founder (Nepal Head Office)
+- **Vivek Singh**: Digital Marketing Manager (Jaipur Office)
+- **Nupur**: Tech Manager (Jaipur Office)
+- **Nutan Mishra**: SEO Executive & Team Leader (Jaipur Office)
+- **Pinki Kumari**: HR Head (Nepal Head Office)
+- **Rahul Kumawat**: FullStack Developer (Vrindavan Office)
+- **Ashu**: Frontend Developer (Vrindavan Office)
+- **Kishan Kumar**: Frontend Developer (Jaipur Office)
+- **Praveen Kumar**: Sales Head (Vrindavan Office)
+- **Rana Praveen**: Sales Executive (Jaipur Office)
+- **Tripti Sharma**: SEO Executive (Jaipur Office)
+- **Lalan Kumar**: Junior SEO Executive (Jaipur Office)
+- **Saurav Singh**: Junior SEO Executive (Jaipur Office)
+- **Nitish Kumar**: Junior SEO Executive (Jaipur Office)
+- **Ashish**: Admin (Jaipur Office)
 
 ---
 

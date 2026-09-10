@@ -40,12 +40,34 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Operations",
     officeId: "nepal",
     employeeCode: "GS-NPL-02",
-    image: "",
+    image: "/team/pinki_kumari.webp",
     bio: "Human resources head fostering a high-performance culture, talent development, transparent recruitment, and team excellence across all office branches in Nepal and India.",
     expertise: ["Talent Acquisition", "Employee Relations", "Organizational Culture", "HR Operations"]
   },
 
   // === VRINDAVAN OFFICE ===
+  {
+    id: 14,
+    name: "Rahul Kumawat",
+    role: "FullStack Developer",
+    department: "Development",
+    officeId: "vrindavan",
+    employeeCode: "GS-VRN-02",
+    image: "/team/rahul_kumawat.webp",
+    bio: "Full-stack developer building robust, scalable web applications and enterprise portals using React, Node.js, and modern cloud architecture.",
+    expertise: ["Full-Stack Development", "React.js", "Node.js", "API Engineering", "Database Architecture"]
+  },
+  {
+    id: 15,
+    name: "Ashu",
+    role: "Frontend Developer",
+    department: "Development",
+    officeId: "vrindavan",
+    employeeCode: "GS-VRN-03",
+    image: "/team/ashu.webp",
+    bio: "Frontend developer specializing in building modern, responsive, and intuitive web interfaces with clean component architectures and high aesthetic standards.",
+    expertise: ["Frontend Development", "React.js", "UI/UX Implementation", "Responsive Design"]
+  },
   {
     id: 8,
     name: "Praveen Kumar",
@@ -61,38 +83,27 @@ export const teamMembers: readonly TeamMember[] = [
 
   // === JAIPUR OFFICE ===
   {
-    id: 2,
-    name: "Nupur",
-    role: "Tech Manager",
-    department: "Development",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-01",
-    image: "",
-    bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
-    expertise: ["Technical Architecture", "Web Engineering", "Full-Stack Development", "System Delivery"]
-  },
-  {
     id: 4,
     name: "Vivek Singh",
     role: "Digital Marketing Manager",
     department: "Marketing",
     officeId: "jaipur",
     employeeCode: "GS-JPR-02",
-    image: "",
+    image: "/team/vivek_singh.webp",
     bio: "Digital marketing manager leading multi-channel growth campaigns, search engine visibility, and client ROI performance across India and international markets.",
     expertise: ["Digital Strategy", "SEO & Performance Marketing", "Meta Ads", "Brand Scaling"],
     email: "info@growthservice.in"
   },
   {
-    id: 3,
-    name: "Ashish",
-    role: "Admin",
-    department: "Operations",
+    id: 2,
+    name: "Nupur",
+    role: "Tech Manager",
+    department: "Development",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-03",
-    image: "/team/aashish.webp",
-    bio: "Administrative coordinator managing operational logistics, client communication coordination, and smooth day-to-day workflow across our corporate facilities.",
-    expertise: ["Office Operations", "Client Support", "Workflow Coordination", "Administrative Management"]
+    employeeCode: "GS-JPR-01",
+    image: "/team/nupur.webp",
+    bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
+    expertise: ["Technical Architecture", "Web Engineering", "Full-Stack Development", "System Delivery"]
   },
   {
     id: 5,
@@ -122,17 +133,6 @@ export const teamMembers: readonly TeamMember[] = [
     }
   },
   {
-    id: 6,
-    name: "Tripti Sharma",
-    role: "SEO Executive",
-    department: "Marketing",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-05",
-    image: "",
-    bio: "SEO executive specializing in in-depth keyword analysis, on-page content optimization, competitive auditing, and sustainable organic traffic growth.",
-    expertise: ["Keyword Research", "On-Page SEO", "Link Building", "Content Optimization"]
-  },
-  {
     id: 9,
     name: "Rana Praveen",
     role: "Sales Executive",
@@ -142,6 +142,28 @@ export const teamMembers: readonly TeamMember[] = [
     image: "/team/rana_praveen.webp",
     bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
     expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
+  },
+  {
+    id: 6,
+    name: "Tripti Sharma",
+    role: "SEO Executive",
+    department: "Marketing",
+    officeId: "jaipur",
+    employeeCode: "GS-JPR-05",
+    image: "/team/tripty.webp",
+    bio: "SEO executive specializing in in-depth keyword analysis, on-page content optimization, competitive auditing, and sustainable organic traffic growth.",
+    expertise: ["Keyword Research", "On-Page SEO", "Link Building", "Content Optimization"]
+  },
+  {
+    id: 12,
+    name: "Lalan Kumar",
+    role: "Junior SEO Executive",
+    department: "Marketing",
+    officeId: "jaipur",
+    employeeCode: "GS-JPR-10",
+    image: "",
+    bio: "Junior SEO executive executing local SEO strategies, Google Business Profile management, and content-led optimization to boost regional search visibility.",
+    expertise: ["Local SEO", "Google Business Profile", "Content Strategy", "Rank Tracking"]
   },
   {
     id: 10,
@@ -166,57 +188,71 @@ export const teamMembers: readonly TeamMember[] = [
     expertise: ["Technical SEO", "Link Analysis", "SERP Tracking", "Audit Support"]
   },
   {
-    id: 12,
-    name: "Lalan Kumar",
-    role: "Junior SEO Executive",
-    department: "Marketing",
+    id: 3,
+    name: "Ashish",
+    role: "Admin",
+    department: "Operations",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-10",
-    image: "",
-    bio: "Junior SEO executive executing local SEO strategies, Google Business Profile management, and content-led optimization to boost regional search visibility.",
-    expertise: ["Local SEO", "Google Business Profile", "Content Strategy", "Rank Tracking"]
+    employeeCode: "GS-JPR-03",
+    image: "/team/aashish.webp",
+    bio: "Administrative coordinator managing operational logistics, client communication coordination, and smooth day-to-day workflow across our corporate facilities.",
+    expertise: ["Office Operations", "Client Support", "Workflow Coordination", "Administrative Management"]
   },
 ] as const;
 
-/** Role hierarchy: lower number = higher rank.
- *  'junior' is checked explicitly before the loop to prevent "Junior SEO Executive" matching 'executive'. */
-const ROLE_PRIORITY: Record<string, number> = {
-  'ceo': 1,
-  'founder': 1,
-  'co-founder': 2,
-  'cto': 3,
-  'cmo': 3,
-  'coo': 3,
-  'director': 4,
-  'head': 5,
-  'manager': 6,
-  'lead': 7,
-  'senior': 8,
-  'developer': 8,
-  'executive': 9,
-  'junior': 10,
-  'specialist': 11,
-  'coordinator': 12,
-  'associate': 14,
-  'admin': 15,
-  'intern': 16,
-};
+/**
+ * Role hierarchy:
+ * CEO -> Vivek Singh (Digital Marketing Manager) -> Tech Manager / Lead -> SEO Executive & Team Leader -> HR Head -> FullStack -> Frontend Developer -> Sales -> SEO Executives -> Lalan Kumar -> Junior SEO -> Admin
+ */
+export function getRolePriority(role: string, name?: string): number {
+  const r = role.toLowerCase();
+  const n = (name || '').toLowerCase();
 
-function getRolePriority(role: string): number {
-  const lower = role.toLowerCase();
-  if (lower.includes('junior')) return ROLE_PRIORITY['junior'];
-  for (const [key, priority] of Object.entries(ROLE_PRIORITY)) {
-    if (lower.includes(key)) return priority;
-  }
+  // 1. CEO & Founders
+  if (r.includes('ceo') || r.includes('founder')) return 1;
+
+  // 2. Vivek Singh / Digital Marketing Manager (first after CEO)
+  if (n.includes('vivek') || r.includes('digital marketing manager')) return 2;
+
+  // 3. Tech Manager / Tech Lead
+  if (r.includes('tech manager') || r.includes('technology manager') || r.includes('tech lead')) return 3;
+
+  // 4. SEO Executive & Team Leader (comes right after tech manager/lead)
+  if (r.includes('seo') && (r.includes('leader') || r.includes('lead') || r.includes('team lead'))) return 4;
+
+  // 5. HR Head / Operations Leadership
+  if (r.includes('hr') || r.includes('human resources')) return 5;
+
+  // 6. FullStack Developer
+  if (r.includes('fullstack') || r.includes('full-stack') || r.includes('full stack')) return 6;
+
+  // 7. Frontend Developer
+  if (r.includes('frontend') || r.includes('front-end') || r.includes('front end')) return 7;
+
+  // Fallback for general developer
+  if (r.includes('developer') || r.includes('engineer')) return 8;
+
+  // 8. Sales (Sales Head -> Sales Executive)
+  if (r.includes('sales head')) return 9;
+  if (r.includes('sales')) return 10;
+
+  // 9. SEO (Executives -> Lalan -> Other Junior SEO)
+  if (r.includes('seo') && !r.includes('junior')) return 11;
+  if (n.includes('lalan')) return 12;
+  if (r.includes('seo') || r.includes('junior')) return 13;
+
+  // 10. Admin / Office Operations
+  if (r.includes('admin')) return 14;
+
   return 99;
 }
 
-export function sortByRolePriority<T extends { role: string }>(members: readonly T[]): T[] {
-  return [...members].sort((a, b) => getRolePriority(a.role) - getRolePriority(b.role));
+export function sortByRolePriority<T extends { role: string; name?: string }>(members: readonly T[]): T[] {
+  return [...members].sort((a, b) => getRolePriority(a.role, a.name) - getRolePriority(b.role, b.name));
 }
 
 export function getAllTeamMembers(): readonly TeamMember[] {
-  return teamMembers;
+  return sortByRolePriority(teamMembers);
 }
 
 export function getAllTeamMembersSorted(): TeamMember[] {
@@ -228,6 +264,6 @@ export function getTeamMemberById(id: number): TeamMember | undefined {
 }
 
 export function getTeamMembersByOffice(officeId: string): readonly TeamMember[] {
-  if (!officeId || officeId === 'all') return teamMembers;
-  return teamMembers.filter(m => m.officeId.toLowerCase() === officeId.toLowerCase());
+  if (!officeId || officeId === 'all') return sortByRolePriority(teamMembers);
+  return sortByRolePriority(teamMembers.filter(m => m.officeId.toLowerCase() === officeId.toLowerCase()));
 }
