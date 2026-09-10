@@ -761,22 +761,23 @@ const SEOResults: React.FC = () => {
               Let our experts analyze your website and create a customized SEO strategy to boost your rankings and traffic.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
+              <Button
                 href={getNepalWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3"
+                isExternal
+                variant="white"
+                size="lg"
+                icon={<WhatsAppIcon className="w-5 h-5 text-emerald-600" />}
               >
-                <WhatsAppIcon className="w-5 h-5 text-emerald-600" />
-                <span>Get Free SEO Audit</span>
-              </a>
-              <a
+                Get Free SEO Audit
+              </Button>
+              <Button
                 href={getMailtoHref(getBusinessEmail())}
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3"
+                variant="outline-white"
+                size="lg"
+                icon={<Mail className="w-5 h-5 text-yellow-300" />}
               >
-                <Mail className="w-5 h-5" />
-                <span>Email for Proposal</span>
-              </a>
+                Email for Proposal
+              </Button>
             </div>
             <p className="text-blue-200 text-sm mt-6">
               Response within 24 hours • Free initial consultation • No commitment required

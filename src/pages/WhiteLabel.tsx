@@ -215,9 +215,9 @@ const WhiteLabel: React.FC = () => {
                 </Button>
                 <Button
                   onClick={() => setActiveTab('services')}
-                  variant="outline"
+                  variant="outline-white"
                   size="lg"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold"
+                  className="font-bold"
                 >
                   View Services
                 </Button>

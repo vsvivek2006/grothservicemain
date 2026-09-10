@@ -490,11 +490,9 @@ const OurImpact: React.FC = () => {
                 <ArrowRight className="h-5 w-5" />
               </Button>
               <Button
-                as={Link}
                 to="/services"
                 variant="outline"
                 size="lg"
-                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
               >
                 Explore Our Services
               </Button>

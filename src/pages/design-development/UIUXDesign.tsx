@@ -74,9 +74,9 @@ const UIUXDesign: React.FC = () => {
               </AnimatedButton>
               <Button
                 to="/book-call"
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-900"
+                className="w-full sm:w-auto"
               >
                 Discuss Your Design Project
               </Button>
@@ -583,11 +583,11 @@ const UIUXDesign: React.FC = () => {
               </AnimatedButton>
               <Button
                 href={getTelHref(primaryPhone)}
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-gray-900 inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2"
               >
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5 text-yellow-300" />
                 <span>Call: {primaryPhone}</span>
               </Button>
               <Button

@@ -51,9 +51,9 @@ export const HomeCTA: React.FC = () => {
 
             <AnimatedButton
               to="/contact"
-              variant="outline"
+              variant="outline-white"
               size="lg"
-              className="border-purple-400 text-purple-200 hover:bg-purple-800/40 hover:text-white"
+              icon={<FileText className="w-5 h-5 text-yellow-400" />}
             >
               Contact Form
             </AnimatedButton>

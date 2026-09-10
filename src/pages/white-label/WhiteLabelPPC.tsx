@@ -66,11 +66,9 @@ const WhiteLabelPPC = () => {
                 Book White Label Demo
               </Button>
               <Button
-                as={Link}
                 to="/white-label"
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
               >
                 View All White Label Services
               </Button>
@@ -513,13 +511,12 @@ const WhiteLabelPPC = () => {
                 Book White Label Demo
               </Button>
               <Button
-                as="a"
                 href={getTelHref(getPrimaryPhone())}
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-purple-900 inline-flex items-center justify-center gap-2"
+                className="inline-flex items-center justify-center gap-2"
               >
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5 text-yellow-300" />
                 <span>Call: {getPrimaryPhone()}</span>
               </Button>
               <Button

@@ -176,11 +176,10 @@ const Terms: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               onClick={downloadTerms}
-              variant="outline"
+              variant="white"
               size="lg"
-              className="bg-white text-blue-600 hover:bg-gray-100 border-white font-bold"
+              icon={<Download className="h-5 w-5" />}
             >
-              <Download className="h-5 w-5 mr-2" />
               Download Terms
             </Button>
             <div className="text-blue-200">

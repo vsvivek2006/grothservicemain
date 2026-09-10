@@ -150,9 +150,8 @@ export const LocationServicePage: React.FC = () => {
 
                 <Button
                   to={`/locations/${city.slug}`}
-                  variant="outline"
+                  variant="outline-white"
                   size="lg"
-                  className="border-purple-400 text-purple-200 hover:bg-purple-800/40 hover:text-white"
                 >
                   View {city.name} Overview
                 </Button>

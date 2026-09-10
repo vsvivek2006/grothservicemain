@@ -169,10 +169,9 @@ export const CityHubPage: React.FC = () => {
                 {city.isPhysicalOffice && office && (
                   <Button
                     to={`/offices/${office.slug}`}
-                    variant="outline"
+                    variant="outline-white"
                     size="lg"
-                    className="border-purple-400 text-purple-200 hover:bg-purple-800/40 hover:text-white"
-                    icon={<Building2 className="w-5 h-5" />}
+                    icon={<Building2 className="w-5 h-5 text-yellow-400" />}
                   >
                     View Physical Office
                   </Button>

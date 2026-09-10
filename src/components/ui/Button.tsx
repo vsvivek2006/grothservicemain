@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'white' | 'whatsapp' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'outline-white' | 'white' | 'whatsapp' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   to?: string;
@@ -35,6 +35,7 @@ export const Button: React.FC<ButtonProps> = ({
     primary: "bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 text-white hover:from-purple-700 hover:to-indigo-800 shadow-purple-900/20 hover:shadow-purple-900/40 focus-visible:ring-purple-600",
     secondary: "bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-bold shadow-yellow-500/20 hover:shadow-yellow-500/40 focus-visible:ring-yellow-400",
     outline: "border-2 border-purple-600 text-purple-600 hover:bg-purple-50 hover:border-purple-700 focus-visible:ring-purple-600",
+    'outline-white': "border-2 border-white/70 hover:border-white text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm shadow-md focus-visible:ring-white",
     white: "bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 shadow-sm hover:shadow-md focus-visible:ring-slate-900",
     whatsapp: "bg-[#25D366] hover:bg-emerald-600 text-white shadow-emerald-900/20 hover:shadow-emerald-900/40 focus-visible:ring-emerald-500",
     ghost: "text-slate-700 hover:text-purple-600 hover:bg-purple-50/80 focus-visible:ring-purple-600",

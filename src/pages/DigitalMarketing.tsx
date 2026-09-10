@@ -283,11 +283,9 @@ const DigitalMarketing: React.FC = () => {
                 <span>Get Free Strategy Session</span>
               </Button>
               <Button
-                as="a"
                 href="#services"
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-900"
               >
                 Explore Services
               </Button>

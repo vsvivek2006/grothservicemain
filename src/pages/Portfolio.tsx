@@ -258,24 +258,22 @@ const Portfolio = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
+              <Button
                 href="#portfolio"
-                className="bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 hover:scale-105 shadow-xl flex items-center gap-3"
+                variant="white"
+                size="lg"
               >
-                <span>Explore Portfolio</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </a>
-              <a
+                Explore Portfolio
+              </Button>
+              <Button
                 href={getNepalWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex items-center gap-3"
+                isExternal
+                variant="outline-white"
+                size="lg"
+                icon={<WhatsAppIcon className="w-5 h-5 text-emerald-300" />}
               >
-                <WhatsAppIcon className="w-5 h-5 text-emerald-300" />
-                <span>Free Consultation</span>
-              </a>
+                Free Consultation
+              </Button>
             </div>
           </div>
         </Container>

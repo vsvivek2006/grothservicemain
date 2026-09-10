@@ -64,25 +64,26 @@ const OnboardingAgreement: React.FC = () => {
             onClick={handleDownloadPDF}
             variant="outline"
             size="sm"
-            className="flex items-center gap-2"
+            icon={<Download className="h-4 w-4" />}
           >
-            <Download className="h-4 w-4" />
             Download PDF Version
           </Button>
-          <a
+          <Button
             href={getTelHref(getPrimaryPhone())}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+            variant="primary"
+            size="sm"
+            icon={<Phone className="h-4 w-4" />}
           >
-            <Phone className="h-4 w-4" />
             Call for Questions
-          </a>
-          <a
+          </Button>
+          <Button
             href={getMailtoHref(getBusinessEmail())}
-            className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+            variant="white"
+            size="sm"
+            icon={<Mail className="h-4 w-4" />}
           >
-            <Mail className="h-4 w-4" />
             Email Queries
-          </a>
+          </Button>
         </div>
 
         {/* Introduction */}

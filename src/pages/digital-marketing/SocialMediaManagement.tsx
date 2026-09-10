@@ -46,11 +46,9 @@ const SocialMediaManagement = () => {
                 Get Social Media Audit
               </Button>
               <Button
-                as={Link}
                 to="/book-call"
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
               >
                 Book Free Strategy Session
               </Button>
@@ -292,13 +290,12 @@ const SocialMediaManagement = () => {
                 Start Your Social Media Journey
               </Button>
               <Button
-                as="a"
                 href={getTelHref(primaryPhone)}
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-purple-700 inline-flex items-center gap-2"
+                className="inline-flex items-center gap-2"
               >
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5 text-yellow-300" />
                 <span>Call: {primaryPhone}</span>
               </Button>
               <Button

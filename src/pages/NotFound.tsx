@@ -439,29 +439,31 @@ const NotFound: React.FC = () => {
             Our team is ready to help you find the perfect digital solution for your business
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
+            <Button
               href={primaryWhatsApp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-white text-purple-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+              isExternal
+              variant="white"
+              size="md"
+              icon={<WhatsAppIcon className="h-5 w-5 text-[#25D366]" />}
             >
-              <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
               Chat on WhatsApp
-            </a>
-            <Link
+            </Button>
+            <Button
               to="/"
-              className="inline-flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white hover:text-purple-600 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+              variant="outline-white"
+              size="md"
+              icon={<Home className="h-5 w-5" />}
             >
-              <Home className="h-5 w-5" />
               Explore Homepage
-            </Link>
-            <Link
+            </Button>
+            <Button
               to="/contact"
-              className="inline-flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white hover:text-purple-600 px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
+              variant="outline-white"
+              size="md"
+              icon={<MapPin className="h-5 w-5" />}
             >
-              <MapPin className="h-5 w-5" />
               Visit Our Offices
-            </Link>
+            </Button>
           </div>
           <div className="mt-4 text-sm text-purple-200">
             <span className="flex items-center justify-center gap-1.5">
