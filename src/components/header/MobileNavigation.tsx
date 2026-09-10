@@ -45,7 +45,16 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
   return (
     <div className="lg:hidden fixed inset-0 z-40 bg-white overflow-y-auto shadow-2xl border-t border-slate-200/80 animate-fade-in pt-24">
-      <div className="px-4 py-4 space-y-3 pb-28 max-w-lg mx-auto">
+      {/* Close button — top right */}
+      <button
+        onClick={closeMenu}
+        className="fixed top-[72px] right-4 z-50 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors shadow-md"
+        aria-label="Close navigation menu"
+      >
+        <X className="w-5 h-5" />
+      </button>
+
+      <div className="px-4 py-4 space-y-3 pb-16 max-w-lg mx-auto">
         {/* Quick Action Bar */}
         <div className="grid grid-cols-2 gap-2">
           <Link 
@@ -281,14 +290,6 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
           ))}
         </div>
 
-        {/* Close Menu */}
-        <button
-          onClick={closeMenu}
-          className="w-full mt-2 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
-        >
-          <span>Close Navigation</span>
-          <X className="w-4 h-4" />
-        </button>
       </div>
     </div>
   );
