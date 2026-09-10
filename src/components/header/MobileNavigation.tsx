@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import { Link, NavLink } from "react-router-dom";
 import { 
   Phone, Sparkles, Building, Zap, 
@@ -8,6 +9,7 @@ import { WhatsAppIcon } from "../ui";
 import { navigationConfig } from "../../config";
 import { getPhysicalOffices } from "../../selectors";
 import { getNepalWhatsAppUrl } from "../../services";
+import Brand from "./Brand";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -34,6 +36,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
   }, [isOpen]);
 
   if (!isOpen) return null;
+  if (typeof document === 'undefined') return null;
 
   const digitalMarketingSubmenu = navigationConfig.digitalMarketingSubmenu;
   const designDevelopmentSubmenu = navigationConfig.designDevelopmentSubmenu;
@@ -43,18 +46,22 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
   const closeMenu = () => setIsOpen(false);
 
-  return (
-    <div className="lg:hidden fixed inset-0 z-40 bg-white overflow-y-auto shadow-2xl border-t border-slate-200/80 animate-fade-in pt-24">
-      {/* Close button — top right */}
-      <button
-        onClick={closeMenu}
-        className="fixed top-[72px] right-4 z-50 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors shadow-md"
-        aria-label="Close navigation menu"
-      >
-        <X className="w-5 h-5" />
-      </button>
+  return createPortal(
+    <div className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col animate-fade-in">
+      {/* Mobile Drawer Top Bar */}
+      <div className="flex items-center justify-between px-4 h-16 border-b border-slate-200/80 shrink-0 bg-white shadow-sm">
+        <Brand />
+        <button
+          onClick={closeMenu}
+          className="inline-flex items-center justify-center p-2 rounded-xl text-gray-700 hover:text-purple-600 hover:bg-purple-50 transition-colors min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-purple-600"
+          aria-label="Close navigation menu"
+        >
+          <X className="w-6 h-6 text-purple-700" />
+        </button>
+      </div>
 
-      <div className="px-4 py-4 space-y-3 pb-16 max-w-lg mx-auto">
+      {/* Scrollable Navigation Body */}
+      <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-3 pb-20 max-w-lg mx-auto w-full">
         {/* Quick Action Bar */}
         <div className="grid grid-cols-2 gap-2">
           <Link 
@@ -291,7 +298,8 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

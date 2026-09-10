@@ -8,32 +8,20 @@ import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from "../../services";
 const texts = ["Jaipur • Vrindavan • Nepal", "300+ Happy Clients", "Digital Growth Partner"];
 
 export const TopBar: React.FC = () => {
-  const [animatedText, setAnimatedText] = useState<string>("");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTextIndex((prev) => (prev + 1) % texts.length);
-    }, 3000);
+      setIsFading(true);
+      const timeout = setTimeout(() => {
+        setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+        setIsFading(false);
+      }, 250);
+      return () => clearTimeout(timeout);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    const currentText = texts[currentTextIndex];
-    let currentIndex = 0;
-    let timeout: NodeJS.Timeout;
-
-    const typeWriter = () => {
-      if (currentIndex <= currentText.length) {
-        setAnimatedText(currentText.slice(0, currentIndex));
-        currentIndex++;
-        timeout = setTimeout(typeWriter, 80);
-      }
-    };
-
-    typeWriter();
-    return () => clearTimeout(timeout);
-  }, [currentTextIndex]);
 
   const offices = getPhysicalOffices();
   const primaryPhone = getPrimaryPhone();
@@ -64,7 +52,7 @@ export const TopBar: React.FC = () => {
   return (
     <div className="bg-gradient-to-r from-purple-900 via-purple-700 to-pink-600 text-white relative overflow-hidden">
       <Container className="relative z-10">
-        <div className="flex flex-wrap justify-between items-center py-1.5 gap-2">
+        <div className="flex items-center justify-between py-1.5 gap-1.5 sm:gap-2">
           {/* Left - Office Locations (Desktop) */}
           <div className="hidden md:flex items-center space-x-2 text-xs">
             {offices.map((office) => (
@@ -85,24 +73,24 @@ export const TopBar: React.FC = () => {
 
           {/* Center - Animated Text */}
           <div className="flex items-center justify-center flex-1 min-w-0">
-            <div className="bg-white/10 backdrop-blur-sm px-2.5 sm:px-3 py-0.5 rounded-full border border-white/15 max-w-[220px] sm:max-w-none">
+            <div className="bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-0.5 rounded-full border border-white/15 max-w-[200px] sm:max-w-none">
               <div className="flex items-center space-x-1.5 sm:space-x-2 overflow-hidden">
-                <Zap className="h-3 w-3 text-yellow-300 animate-pulse shrink-0" />
-                <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent font-bold text-[11px] sm:text-xs truncate">
-                  {animatedText}
+                <Zap className="h-3 w-3 text-yellow-300 shrink-0" />
+                <span className={`bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent font-bold text-[10px] sm:text-xs truncate transition-opacity duration-250 ${isFading ? 'opacity-0' : 'opacity-100'}`}>
+                  {texts[currentTextIndex]}
                 </span>
-                <Zap className="h-3 w-3 text-yellow-300 animate-pulse shrink-0" />
+                <Zap className="h-3 w-3 text-yellow-300 shrink-0" />
               </div>
             </div>
           </div>
 
           {/* Right - Contact Icons */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2 shrink-0">
             {topNavItems.map((item, index) => (
               <a
                 key={index}
                 href={item.href}
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 relative group"
+                className="p-1 sm:p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 relative group"
                 target={item.href.startsWith('http') ? '_blank' : '_self'}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : ''}
                 aria-label={item.name}

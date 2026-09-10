@@ -31,7 +31,7 @@ const CANONICAL_WHITELIST = new Set([
 const RESTRICTED_FACTS = [
   {
     name: 'Jaipur Office Physical Address',
-    patterns: ['138 A, Vivek Vihar', '138A Vivek Vihar'],
+    patterns: ['JTML MALL', 'JTM Mall'],
     category: 'Office Address'
   },
   {

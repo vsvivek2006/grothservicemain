@@ -38,14 +38,14 @@ export const physicalOffices: readonly OfficeData[] = [
     flag: "🇮🇳",
     isHeadOffice: false,
     tagline: "Web Development, SEO & Digital Marketing in Rajasthan",
-    address: "138 A, Vivek Vihar, Mayapuri, Jagatpura, Jaipur, Rajasthan 302017",
+    address: "JTML MALL, Jagatpura, Jaipur, Rajasthan 302017",
     phone: "+91 62073 00553",
     email: "jaipur@growthservice.in",
-    landmark: "Near Jagatpura Flyover",
+    landmark: "JTML Mall, Jagatpura",
     postalCode: "302017",
-    mapLink: "https://maps.google.com/?q=138A+Vivek+Vihar+Mayapuri+Jagatpura+Jaipur",
+    mapLink: "https://maps.google.com/?q=JTML+MALL+Jagatpura+Jaipur+302017",
     timings: "Mon-Sat: 9:00 AM - 7:00 PM",
-    coordinates: { lat: 26.8289, lng: 75.8656 },
+    coordinates: { lat: 26.8182, lng: 75.8398 },
     servicesOffered: [
       "Web Development",
       "SEO Services",
@@ -60,7 +60,7 @@ export const physicalOffices: readonly OfficeData[] = [
       "Raja Park", "Bani Park", "Sanganer", "Pratap Nagar"
     ],
     teamMemberIds: [2, 3, 4, 5, 6, 9, 10, 11, 12, 13],
-    description: "Our Jaipur office serves as the corporate and technology hub for Growth Service's India operations. Located in Jagatpura, Jaipur, we deliver premium web development, SEO, digital marketing, and Google Ads services to businesses across Rajasthan and pan-India clients."
+    description: "Our Jaipur office serves as the corporate and technology hub for Growth Service's India operations. Located at JTML MALL, Jagatpura, Jaipur, we deliver premium web development, SEO, digital marketing, and Google Ads services to businesses across Rajasthan and pan-India clients."
   },
   {
     id: "vrindavan",

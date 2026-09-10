@@ -32,7 +32,7 @@ const CANONICAL_FACTS = [
   },
   {
     name: 'Jaipur Office Physical Address',
-    patterns: ['138 A, Vivek Vihar', '138A Vivek Vihar'],
+    patterns: ['JTML MALL', 'JTM Mall'],
     ownerFile: 'src/data/offices.ts',
     category: 'Office Address'
   },

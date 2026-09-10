@@ -96,7 +96,7 @@ const WhatsAppFloat: React.FC = () => {
           }}
         >
           {/* Animated glow rings */}
-          <span className="absolute inset-0 rounded-2xl bg-emerald-400/30 animate-ping opacity-60 pointer-events-none" />
+          <span className="absolute inset-0 rounded-2xl bg-emerald-400/30 hidden sm:block animate-ping opacity-60 pointer-events-none" />
           <span className="absolute -inset-1.5 rounded-[18px] border-2 border-emerald-400/25 animate-pulse pointer-events-none" />
 
           {/* Icon */}
@@ -104,7 +104,7 @@ const WhatsAppFloat: React.FC = () => {
 
           {/* Live badge */}
           <span className="absolute -top-1.5 -right-1.5 flex items-center justify-center w-5 h-5 bg-red-500 rounded-full border-2 border-white z-20 pointer-events-none">
-            <span className="absolute inset-0 rounded-full bg-red-400 animate-ping opacity-75" />
+            <span className="absolute inset-0 rounded-full bg-red-400 hidden sm:block animate-ping opacity-75" />
             <MessageCircle className="w-2.5 h-2.5 text-white relative z-10" />
           </span>
         </a>
