@@ -28,7 +28,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Leadership",
     officeId: "nepal",
     employeeCode: "GS-NPL-01",
-    image: "",
+    image: "/team/vikash_singh.webp",
     bio: "Founder and CEO driving strategic digital transformation, corporate vision, and client growth partnerships across Growth Service's offices in India and Nepal.",
     expertise: ["Business Strategy", "Digital Leadership", "Corporate Growth", "Global Operations"],
     email: "info@growthservice.in"
@@ -90,7 +90,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Operations",
     officeId: "jaipur",
     employeeCode: "GS-JPR-03",
-    image: "",
+    image: "/team/aashish.webp",
     bio: "Administrative coordinator managing operational logistics, client communication coordination, and smooth day-to-day workflow across our corporate facilities.",
     expertise: ["Office Operations", "Client Support", "Workflow Coordination", "Administrative Management"]
   },
@@ -101,7 +101,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Marketing",
     officeId: "jaipur",
     employeeCode: "GS-JPR-04",
-    image: "",
+    image: "/team/nutan.webp",
     bio: "SEO team leader driving organic search performance, technical audit execution, on-page optimization, and SERP rankings for enterprise and local clients.",
     expertise: ["Technical SEO", "On-Page Optimization", "Search Analytics", "Keyword Strategy"]
   },
@@ -123,7 +123,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Sales",
     officeId: "jaipur",
     employeeCode: "GS-JPR-06",
-    image: "",
+    image: "/team/rana_praveen.webp",
     bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
     expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
   },
@@ -150,7 +150,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Marketing",
     officeId: "jaipur",
     employeeCode: "GS-JPR-08",
-    image: "",
+    image: "/team/saurav_singh.webp",
     bio: "Junior SEO executive contributing to on-page optimization, keyword research, and content strategy to drive organic growth for our clients.",
     expertise: ["On-Page SEO", "Keyword Research", "Content Optimization", "SEO Reporting"]
   },
@@ -161,7 +161,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Marketing",
     officeId: "jaipur",
     employeeCode: "GS-JPR-09",
-    image: "",
+    image: "/team/nitish_kumar.webp",
     bio: "Junior SEO executive focused on technical SEO implementation, backlink analysis, and supporting campaigns to improve client search rankings.",
     expertise: ["Technical SEO", "Link Analysis", "SERP Tracking", "Audit Support"]
   },
