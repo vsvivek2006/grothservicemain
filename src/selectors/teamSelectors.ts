@@ -15,6 +15,17 @@ export function getAllTeamMembersRaw(): readonly TeamMember[] {
 }
 
 /**
+ * Returns featured team members for homepage display.
+ * Praveen is excluded; Vivek Singh is featured alongside executive leadership.
+ */
+export function getHomeTeamMembers(): TeamMember[] {
+  const targetIds = [1, 4, 7, 2];
+  return targetIds
+    .map(id => teamMembers.find(m => m.id === id))
+    .filter((m): m is TeamMember => Boolean(m));
+}
+
+/**
  * Finds a team member by their ID.
  */
 export function getTeamMemberById(id: number): TeamMember | undefined {

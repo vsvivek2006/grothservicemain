@@ -33,6 +33,17 @@ export const teamMembers: readonly TeamMember[] = [
     expertise: ["Business Strategy", "Digital Leadership", "Corporate Growth", "Global Operations"],
     email: "info@growthservice.in"
   },
+  {
+    id: 7,
+    name: "Pinki Kumari",
+    role: "HR Head",
+    department: "Operations",
+    officeId: "nepal",
+    employeeCode: "GS-NPL-02",
+    image: "",
+    bio: "Human resources head fostering a high-performance culture, talent development, transparent recruitment, and team excellence across all office branches in Nepal and India.",
+    expertise: ["Talent Acquisition", "Employee Relations", "Organizational Culture", "HR Operations"]
+  },
 
   // === VRINDAVAN OFFICE ===
   {
@@ -46,17 +57,6 @@ export const teamMembers: readonly TeamMember[] = [
     bio: "Sales head spearheading regional business development, client consultative partnerships, and enterprise digital solutions across India and Nepal.",
     expertise: ["Enterprise Sales", "Client Acquisition", "Growth Consultation", "Market Expansion"],
     email: "info@growthservice.in"
-  },
-  {
-    id: 7,
-    name: "Pinki Kumari",
-    role: "HR Head",
-    department: "Operations",
-    officeId: "vrindavan",
-    employeeCode: "GS-VRN-02",
-    image: "",
-    bio: "Human resources head fostering a high-performance culture, talent development, transparent recruitment, and team excellence across all office branches.",
-    expertise: ["Talent Acquisition", "Employee Relations", "Organizational Culture", "HR Operations"]
   },
 
   // === JAIPUR OFFICE ===
@@ -106,6 +106,22 @@ export const teamMembers: readonly TeamMember[] = [
     expertise: ["Technical SEO", "On-Page Optimization", "Search Analytics", "Keyword Strategy"]
   },
   {
+    id: 13,
+    name: "Kishan Kumar",
+    role: "Frontend Developer",
+    department: "Development",
+    officeId: "jaipur",
+    employeeCode: "GS-JPR-07",
+    image: "/team/kishan-kumar.jpg",
+    bio: "Frontend developer crafting fast, responsive, and visually polished web interfaces using React.js and modern CSS. Focused on pixel-perfect UI implementation, Core Web Vitals performance, and smooth user experiences across devices.",
+    expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"],
+    email: "kishan.growthservice@gmail.com",
+    phone: "+91 6203386747",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/kishankr2007"
+    }
+  },
+  {
     id: 6,
     name: "Tripti Sharma",
     role: "SEO Executive",
@@ -126,22 +142,6 @@ export const teamMembers: readonly TeamMember[] = [
     image: "/team/rana_praveen.webp",
     bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
     expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
-  },
-  {
-    id: 13,
-    name: "Kishan Kumar",
-    role: "Frontend Developer",
-    department: "Development",
-    officeId: "jaipur",
-    employeeCode: "GS-JPR-07",
-    image: "/team/kishan-kumar.jpg",
-    bio: "Frontend developer crafting fast, responsive, and visually polished web interfaces using React.js and modern CSS. Focused on pixel-perfect UI implementation, Core Web Vitals performance, and smooth user experiences across devices.",
-    expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"],
-    email: "kishan.growthservice@gmail.com",
-    phone: "+91 6203386747",
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/kishankr2007"
-    }
   },
   {
     id: 10,
@@ -192,11 +192,11 @@ const ROLE_PRIORITY: Record<string, number> = {
   'manager': 6,
   'lead': 7,
   'senior': 8,
+  'developer': 8,
   'executive': 9,
   'junior': 10,
   'specialist': 11,
   'coordinator': 12,
-  'developer': 13,
   'associate': 14,
   'admin': 15,
   'intern': 16,

@@ -6,10 +6,10 @@ import Section from "../ui/Section";
 import SectionHeader from "../ui/SectionHeader";
 import EmployeeCard from "../team/EmployeeCard";
 import { StaggerContainer, StaggerItem } from "../animations";
-import { getAllTeamMembers } from "../../selectors";
+import { getHomeTeamMembers } from "../../selectors";
 
 export const HomeTeamSection: React.FC = () => {
-  const teamMembers = getAllTeamMembers();
+  const teamMembers = getHomeTeamMembers();
 
   return (
     <Section variant="subtle" aria-label="Our Team">
@@ -22,7 +22,7 @@ export const HomeTeamSection: React.FC = () => {
         />
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" staggerDelay={90}>
-          {teamMembers.slice(0, 4).map((member, idx) => (
+          {teamMembers.map((member, idx) => (
             <StaggerItem key={member.id} index={idx} className="h-full">
               <EmployeeCard member={member} />
             </StaggerItem>
