@@ -17,6 +17,8 @@ export const Brand: React.FC = () => {
           <img 
             src="/logo.png" 
             alt={`${businessName} Logo`} 
+            width={40}
+            height={40}
             className="h-10 w-10 object-contain p-1"
             onError={(e) => {
               e.currentTarget.style.display = 'none';

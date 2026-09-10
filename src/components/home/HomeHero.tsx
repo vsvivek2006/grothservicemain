@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { 
   Sparkles, MapPin,
   TrendingUp, Users, 
@@ -98,81 +98,58 @@ export const HomeHero: React.FC = () => {
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             300+
           </div>
-          <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
-            Happy Clients
-          </div>
-          <div className="text-[11px] text-purple-300/80 mt-1">
-            Multi-Industry Growth
+          <div className="text-xs font-medium text-slate-300 mt-1">
+            Active Global Clients
           </div>
         </div>
       )
     },
     {
       colSpan: 1,
-      className: "group rounded-2xl bg-white/8 backdrop-blur-md border border-white/10 p-4 sm:p-5 hover:bg-white/12 hover:border-yellow-400/40 transition-all duration-300 shadow-card",
+      className: "group rounded-2xl bg-white/8 backdrop-blur-md border border-white/10 p-4 sm:p-5 hover:bg-white/12 hover:border-purple-400/40 transition-all duration-300 shadow-card",
       children: (
         <div>
           <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-300 mb-3 group-hover:scale-110 transition-transform">
             <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            4.9 / 5
+            98%
           </div>
-          <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
-            Client Rating
-          </div>
-          <div className="text-[11px] text-amber-300/80 mt-1 flex items-center gap-1.5">
-            <span className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
-              ))}
-            </span>
-            <span>Verified Feedback</span>
+          <div className="text-xs font-medium text-slate-300 mt-1">
+            Client Retention Rate
           </div>
         </div>
       )
     },
     {
       colSpan: 1,
-      className: "group rounded-2xl bg-white/8 backdrop-blur-md border border-white/10 p-4 sm:p-5 hover:bg-white/12 hover:border-emerald-400/40 transition-all duration-300 shadow-card",
+      className: "group rounded-2xl bg-white/8 backdrop-blur-md border border-white/10 p-4 sm:p-5 hover:bg-white/12 hover:border-purple-400/40 transition-all duration-300 shadow-card",
       children: (
         <div>
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-300 group-hover:scale-110 transition-transform">
-              <Headphones className="w-4 h-4" />
-            </div>
-            <span className="flex items-center gap-1 text-[11px] text-emerald-300 font-medium bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Live
-            </span>
+          <div className="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-300 mb-3 group-hover:scale-110 transition-transform">
+            <Headphones className="w-4 h-4" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             24/7
           </div>
-          <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
-            Dedicated Support
-          </div>
-          <div className="text-[11px] text-emerald-300/80 mt-1">
-            Direct WhatsApp line
+          <div className="text-xs font-medium text-slate-300 mt-1">
+            Dedicated Client Support
           </div>
         </div>
       )
     },
     {
       colSpan: 1,
-      className: "group rounded-2xl bg-white/8 backdrop-blur-md border border-white/10 p-4 sm:p-5 hover:bg-white/12 hover:border-indigo-400/40 transition-all duration-300 shadow-card",
+      className: "group rounded-2xl bg-white/8 backdrop-blur-md border border-white/10 p-4 sm:p-5 hover:bg-white/12 hover:border-purple-400/40 transition-all duration-300 shadow-card",
       children: (
         <div>
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 mb-3 group-hover:scale-110 transition-transform">
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-300 mb-3 group-hover:scale-110 transition-transform">
             <Globe className="w-4 h-4" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            {offices.length} Offices
+            3 Hubs
           </div>
-          <div className="text-xs sm:text-sm font-semibold text-slate-200 mt-0.5">
-            Company Locations
-          </div>
-          <div className="text-[11px] text-purple-300/80 mt-1 truncate">
+          <div className="text-xs font-medium text-slate-300 mt-1">
             Jaipur • Vrindavan • Nepal
           </div>
         </div>
@@ -181,20 +158,9 @@ export const HomeHero: React.FC = () => {
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isHeroPaused, setIsHeroPaused] = useState(false);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-
-  useEffect(() => {
-    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isHeroPaused || prefersReducedMotion) return;
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6500);
-    return () => clearInterval(interval);
-  }, [heroSlides.length, isHeroPaused]);
 
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 md:pt-16 md:pb-28 overflow-hidden">
@@ -209,11 +175,7 @@ export const HomeHero: React.FC = () => {
           {/* Left Column: Hero Text & Dynamic Slides */}
           <div className="lg:col-span-7 flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
             <div 
-              className="relative min-h-[520px] sm:min-h-[420px] lg:min-h-[440px] flex flex-col justify-center focus:outline-none"
-              onMouseEnter={() => setIsHeroPaused(true)}
-              onMouseLeave={() => setIsHeroPaused(false)}
-              onFocus={() => setIsHeroPaused(true)}
-              onBlur={() => setIsHeroPaused(false)}
+              className="grid grid-cols-1 grid-rows-1 items-center w-full focus:outline-none"
               tabIndex={0}
               role="region"
               aria-roledescription="carousel"
@@ -223,63 +185,67 @@ export const HomeHero: React.FC = () => {
                 if (e.key === "ArrowRight") nextSlide();
               }}
             >
-              {heroSlides.map((slide, index) => (
-                <div
-                  key={index}
-                  className={`transition-all duration-700 ease-out ${
-                    index === currentSlide 
-                      ? 'opacity-100 translate-y-0 relative z-10' 
-                      : 'opacity-0 translate-y-6 absolute inset-0 pointer-events-none z-0'
-                  }`}
-                >
-                  {/* Location Pill */}
-                  <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5 shadow-inner transition-colors mx-auto lg:mx-0 self-center lg:self-start">
-                    <span className="text-base">{slide.flag}</span>
-                    <span className="text-purple-200 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-yellow-400" />
-                      <span>{slide.location}</span>
-                    </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  </div>
+              {heroSlides.map((slide, index) => {
+                const isActive = index === currentSlide;
+                return (
+                  <div
+                    key={index}
+                    className={`col-start-1 row-start-1 flex flex-col items-center lg:items-start transition-opacity duration-300 ease-out ${
+                      isActive 
+                        ? 'opacity-100 pointer-events-auto z-10' 
+                        : 'opacity-0 pointer-events-none z-0 invisible'
+                    }`}
+                    aria-hidden={!isActive}
+                  >
+                    {/* Location Pill */}
+                    <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5 shadow-inner transition-colors mx-auto lg:mx-0 self-center lg:self-start">
+                      <span className="text-base">{slide.flag}</span>
+                      <span className="text-purple-200 flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-yellow-400" />
+                        <span>{slide.location}</span>
+                      </span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    </div>
 
-                  {/* Main Hero Headline */}
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight mb-4 sm:mb-5 leading-[1.15] text-white">
-                    {slide.title}
-                  </h1>
-                  
-                  {/* Subtitle */}
-                  <div className="text-base sm:text-xl text-purple-200 font-medium mb-4 sm:mb-5 leading-relaxed max-w-2xl">
-                    {slide.subtitle}
-                  </div>
-                  
-                  {/* Description */}
-                  <p className="text-sm sm:text-base text-slate-300 mb-6 sm:mb-8 max-w-2xl leading-relaxed font-normal">
-                    {slide.description}
-                  </p>
-                  
-                  {/* Dual CTAs */}
-                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
-                    <AnimatedButton
-                      to={slide.ctaLink}
-                      variant="primary"
-                      size="lg"
-                      icon={<Sparkles className="w-5 h-5 text-yellow-300" />}
-                    >
-                      {slide.cta}
-                    </AnimatedButton>
+                    {/* Main Hero Headline */}
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight mb-4 sm:mb-5 leading-[1.15] text-white">
+                      {slide.title}
+                    </h1>
+                    
+                    {/* Subtitle */}
+                    <div className="text-base sm:text-xl text-purple-200 font-medium mb-4 sm:mb-5 leading-relaxed max-w-2xl">
+                      {slide.subtitle}
+                    </div>
+                    
+                    {/* Description */}
+                    <p className="text-sm sm:text-base text-slate-300 mb-6 sm:mb-8 max-w-2xl leading-relaxed font-normal">
+                      {slide.description}
+                    </p>
+                    
+                    {/* Dual CTAs */}
+                    <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+                      <AnimatedButton
+                        to={slide.ctaLink}
+                        variant="primary"
+                        size="lg"
+                        icon={<Sparkles className="w-5 h-5 text-yellow-300" />}
+                      >
+                        {slide.cta}
+                      </AnimatedButton>
 
-                    <AnimatedButton
-                      href={whatsappUrl}
-                      isExternal
-                      variant="white"
-                      size="lg"
-                      icon={<WhatsAppIcon className="w-5 h-5 text-emerald-600" />}
-                    >
-                      Free Consultation
-                    </AnimatedButton>
+                      <AnimatedButton
+                        href={whatsappUrl}
+                        isExternal
+                        variant="white"
+                        size="lg"
+                        icon={<WhatsAppIcon className="w-5 h-5 text-emerald-600" />}
+                      >
+                        Free Consultation
+                      </AnimatedButton>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Slide Dots */}
@@ -294,6 +260,7 @@ export const HomeHero: React.FC = () => {
                       : 'bg-white/30 hover:bg-white/60 w-2.5'
                   }`}
                   aria-label={`Go to slide ${index + 1}: ${slide.location}`}
+                  aria-pressed={index === currentSlide}
                 />
               ))}
             </div>
