@@ -52,7 +52,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "FullStack Developer",
     department: "Development",
     officeId: "vrindavan",
-    employeeCode: "GS-VRN-02",
+    employeeCode: "GS-VRN-01",
     image: "/team/rahul_kumawat.webp",
     bio: "Full-stack developer building robust, scalable web applications and enterprise portals using React, Node.js, and modern cloud architecture.",
     expertise: ["Full-Stack Development", "React.js", "Node.js", "API Engineering", "Database Architecture"]
@@ -63,7 +63,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Frontend Developer",
     department: "Development",
     officeId: "vrindavan",
-    employeeCode: "GS-VRN-03",
+    employeeCode: "GS-VRN-02",
     image: "/team/ashu.webp",
     bio: "Frontend developer specializing in building modern, responsive, and intuitive web interfaces with clean component architectures and high aesthetic standards.",
     expertise: ["Frontend Development", "React.js", "UI/UX Implementation", "Responsive Design"]
@@ -74,7 +74,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Sales Head",
     department: "Sales",
     officeId: "vrindavan",
-    employeeCode: "GS-VRN-01",
+    employeeCode: "GS-VRN-03",
     image: "",
     bio: "Sales head spearheading regional business development, client consultative partnerships, and enterprise digital solutions across India and Nepal.",
     expertise: ["Enterprise Sales", "Client Acquisition", "Growth Consultation", "Market Expansion"],
@@ -88,7 +88,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Digital Marketing Manager",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-02",
+    employeeCode: "GS-JPR-01",
     image: "/team/vivek_singh.webp",
     bio: "Digital marketing manager leading multi-channel growth campaigns, search engine visibility, and client ROI performance across India and international markets.",
     expertise: ["Digital Strategy", "SEO & Performance Marketing", "Meta Ads", "Brand Scaling"],
@@ -100,7 +100,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Tech Manager",
     department: "Development",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-01",
+    employeeCode: "GS-JPR-02",
     image: "/team/nupur.webp",
     bio: "Technology manager overseeing development architecture, web performance, modern React/Node.js solutions, and end-to-end technical delivery.",
     expertise: ["Technical Architecture", "Web Engineering", "Full-Stack Development", "System Delivery"]
@@ -111,7 +111,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "SEO Executive & Team Leader",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-04",
+    employeeCode: "GS-JPR-03",
     image: "/team/nutan.webp",
     bio: "SEO team leader driving organic search performance, technical audit execution, on-page optimization, and SERP rankings for enterprise and local clients.",
     expertise: ["Technical SEO", "On-Page Optimization", "Search Analytics", "Keyword Strategy"]
@@ -122,7 +122,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Frontend Developer",
     department: "Development",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-07",
+    employeeCode: "GS-JPR-04",
     image: "/team/kishan-kumar.jpg",
     bio: "Frontend developer crafting fast, responsive, and visually polished web interfaces using React.js and modern CSS. Focused on pixel-perfect UI implementation, Core Web Vitals performance, and smooth user experiences across devices.",
     expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"],
@@ -138,7 +138,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Sales Executive",
     department: "Sales",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-06",
+    employeeCode: "GS-JPR-05",
     image: "/team/rana_praveen.webp",
     bio: "Sales executive connecting businesses with tailored digital marketing and web development packages to achieve measurable revenue expansion.",
     expertise: ["Client Onboarding", "Consultative Selling", "Account Management", "Service Inquiries"]
@@ -149,7 +149,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "SEO Executive",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-05",
+    employeeCode: "GS-JPR-06",
     image: "/team/tripty.webp",
     bio: "SEO executive specializing in in-depth keyword analysis, on-page content optimization, competitive auditing, and sustainable organic traffic growth.",
     expertise: ["Keyword Research", "On-Page SEO", "Link Building", "Content Optimization"]
@@ -160,7 +160,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Junior SEO Executive",
     department: "Marketing",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-10",
+    employeeCode: "GS-JPR-07",
     image: "",
     bio: "Junior SEO executive executing local SEO strategies, Google Business Profile management, and content-led optimization to boost regional search visibility.",
     expertise: ["Local SEO", "Google Business Profile", "Content Strategy", "Rank Tracking"]
@@ -193,7 +193,7 @@ export const teamMembers: readonly TeamMember[] = [
     role: "Admin",
     department: "Operations",
     officeId: "jaipur",
-    employeeCode: "GS-JPR-03",
+    employeeCode: "GS-JPR-10",
     image: "/team/aashish.webp",
     bio: "Administrative coordinator managing operational logistics, client communication coordination, and smooth day-to-day workflow across our corporate facilities.",
     expertise: ["Office Operations", "Client Support", "Workflow Coordination", "Administrative Management"]
