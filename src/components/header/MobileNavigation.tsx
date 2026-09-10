@@ -44,7 +44,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="lg:hidden fixed inset-x-0 bottom-0 top-[100%] bg-white/98 backdrop-blur-md z-40 overflow-y-auto animate-fade-in shadow-2xl border-t border-slate-200/80">
+    <div className="lg:hidden fixed inset-0 z-40 bg-white overflow-y-auto shadow-2xl border-t border-slate-200/80 animate-fade-in pt-24">
       <div className="px-4 py-4 space-y-3 pb-28 max-w-lg mx-auto">
         {/* Quick Action Bar */}
         <div className="grid grid-cols-2 gap-2">
