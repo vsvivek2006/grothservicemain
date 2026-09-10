@@ -350,7 +350,7 @@ const WhiteLabelPPC = () => {
               <Card key={plan.name} variant={plan.popular ? 'featured' : 'default'} className={`border-2 ${plan.color} p-8 relative flex flex-col justify-between`}>
                 <div>
                   {plan.popular && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-semibold">
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-semibold whitespace-nowrap z-10">
                       MOST REQUESTED
                     </div>
                   )}

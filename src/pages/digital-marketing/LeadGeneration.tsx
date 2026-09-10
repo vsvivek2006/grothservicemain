@@ -576,7 +576,7 @@ const LeadGeneration: React.FC = () => {
                 className="relative flex flex-col justify-between"
               >
                 {plan.popular && (
-                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide shadow-md flex items-center gap-1">
+                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide shadow-md flex items-center gap-1 whitespace-nowrap z-10">
                     <FaStar className="text-yellow-300" />
                     <span>MOST POPULAR</span>
                   </div>

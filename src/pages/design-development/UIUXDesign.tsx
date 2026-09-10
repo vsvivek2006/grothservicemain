@@ -466,7 +466,7 @@ const UIUXDesign: React.FC = () => {
                 className="relative flex flex-col justify-between"
               >
                 {plan.popular && (
-                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide shadow-md">
+                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide shadow-md whitespace-nowrap z-10">
                     RECOMMENDED SCOPE
                   </div>
                 )}

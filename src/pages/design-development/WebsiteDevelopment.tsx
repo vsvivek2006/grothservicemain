@@ -454,7 +454,7 @@ const WebsiteDevelopment: React.FC = () => {
               >
                 <div>
                   {plan.popular && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white text-xs font-bold px-4 py-1 rounded-full shadow-sm">
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white text-xs font-bold px-4 py-1 rounded-full shadow-sm whitespace-nowrap z-10">
                       RECOMMENDED FRAMEWORK
                     </div>
                   )}
