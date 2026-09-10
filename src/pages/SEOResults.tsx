@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getMailtoHref } from '../services';
-import { WhatsAppIcon, Container, Section, Card } from '../components/ui';
+import { WhatsAppIcon, Container, Section, Card, Button } from '../components/ui';
 
 const SEOResults: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');

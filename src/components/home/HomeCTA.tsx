@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone, MapPin, Clock } from "lucide-react";
+import { Phone, MapPin, Clock, FileText } from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
 import DecorativeGrid from "../ui/DecorativeGrid";
