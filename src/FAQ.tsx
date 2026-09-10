@@ -6,6 +6,8 @@ import { buildWhatsAppUrl } from "./config";
 import { getTelHref } from "./services";
 import { getPrimaryPhone, getBusinessName } from "./selectors";
 
+import { Container, Section, Card } from "./components/ui";
+
 type QA = { q: string; a: string; category: string };
 
 const FAQ: React.FC = () => {
@@ -126,19 +128,22 @@ const FAQ: React.FC = () => {
       {/* Enhanced Hero Section */}
       <section className="relative bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-10"></div>
-        <div className="relative max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Frequently Asked <span className="text-yellow-400">Questions</span>
-          </h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto text-purple-100 leading-relaxed">
-            Get answers to common questions about digital marketing, web development, 
-            branding, SEO, and growing your business online.
-          </p>
-        </div>
+        <Container>
+          <div className="relative max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              Frequently Asked <span className="text-yellow-400">Questions</span>
+            </h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-purple-100 leading-relaxed">
+              Get answers to common questions about digital marketing, web development, 
+              branding, SEO, and growing your business online.
+            </p>
+          </div>
+        </Container>
       </section>
 
       {/* Search and Filter Section */}
-      <section className="max-w-6xl mx-auto px-4 -mt-8 relative z-10">
+      <div className="-mt-8 relative z-10">
+        <Container>
         <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
           {/* Search Bar */}
           <div className="relative mb-6">
@@ -171,128 +176,133 @@ const FAQ: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+        </Container>
+      </div>
 
       {/* FAQ Accordion */}
-      <section className="max-w-6xl mx-auto px-4 py-12">
-        <div className="space-y-4">
-          {filteredFaqs.length > 0 ? (
-            filteredFaqs.map((item, index) => (
-              <div
-                key={index}
-                className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 ${
-                  openIndex === index ? 'ring-2 ring-purple-500' : ''
-                }`}
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
-                >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">
-                        {item.category}
-                      </span>
-                    </div>
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-900 pr-8">
-                      {item.q}
-                    </h3>
-                  </div>
-                  <div className="flex-shrink-0 ml-4">
-                    {openIndex === index ? (
-                      <ChevronUp className="h-6 w-6 text-purple-600 transition-transform duration-300" />
-                    ) : (
-                      <ChevronDown className="h-6 w-6 text-gray-500 transition-transform duration-300" />
-                    )}
-                  </div>
-                </button>
-                
+      <Section variant="default" padding="default">
+        <Container>
+          <div className="space-y-4">
+            {filteredFaqs.length > 0 ? (
+              filteredFaqs.map((item, index) => (
                 <div
-                  className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                    openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  key={index}
+                  className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 ${
+                    openIndex === index ? 'ring-2 ring-purple-500' : ''
                   }`}
                 >
-                  <div className="px-6 pb-6 pt-2 border-t border-gray-100">
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                      {item.a}
-                    </p>
-                    {openIndex === index && (
-                      <div className="mt-4 pt-4 border-t border-gray-100">
-                        <a
-                          href={buildWhatsAppUrl('india', `I have a question about: ${item.q}`)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-semibold transition-colors"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                          Need more details? Chat with us
-                        </a>
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">
+                          {item.category}
+                        </span>
                       </div>
-                    )}
+                      <h3 className="text-lg md:text-xl font-semibold text-gray-900 pr-8">
+                        {item.q}
+                      </h3>
+                    </div>
+                    <div className="flex-shrink-0 ml-4">
+                      {openIndex === index ? (
+                        <ChevronUp className="h-6 w-6 text-purple-600 transition-transform duration-300" />
+                      ) : (
+                        <ChevronDown className="h-6 w-6 text-gray-500 transition-transform duration-300" />
+                      )}
+                    </div>
+                  </button>
+                  
+                  <div
+                    className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                      openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="px-6 pb-6 pt-2 border-t border-gray-100">
+                      <p className="text-gray-700 text-lg leading-relaxed">
+                        {item.a}
+                      </p>
+                      {openIndex === index && (
+                        <div className="mt-4 pt-4 border-t border-gray-100">
+                          <a
+                            href={buildWhatsAppUrl('india', `I have a question about: ${item.q}`)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-semibold transition-colors"
+                          >
+                            <MessageCircle className="h-4 w-4" />
+                            Need more details? Chat with us
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="text-center py-16">
+                <Search className="w-16 h-16 mx-auto mb-4 text-gray-400" aria-hidden="true" />
+                <h3 className="text-2xl font-semibold text-gray-600 mb-2">No questions found</h3>
+                <p className="text-gray-500 text-lg">
+                  Try adjusting your search or filter to find what you're looking for.
+                </p>
               </div>
-            ))
-          ) : (
-            <div className="text-center py-16">
-              <Search className="w-16 h-16 mx-auto mb-4 text-gray-400" aria-hidden="true" />
-              <h3 className="text-2xl font-semibold text-gray-600 mb-2">No questions found</h3>
-              <p className="text-gray-500 text-lg">
-                Try adjusting your search or filter to find what you're looking for.
-              </p>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-          <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
-            <div className="text-3xl font-bold text-purple-600 mb-2">{faqs.length}+</div>
-            <div className="text-gray-700 font-semibold">Questions Answered</div>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+            <Card className="text-center p-6 bg-white rounded-2xl shadow-lg">
+              <div className="text-3xl font-bold text-purple-600 mb-2">{faqs.length}+</div>
+              <div className="text-gray-700 font-semibold">Questions Answered</div>
+            </Card>
+            <Card className="text-center p-6 bg-white rounded-2xl shadow-lg">
+              <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+              <div className="text-gray-700 font-semibold">Support Available</div>
+            </Card>
+            <Card className="text-center p-6 bg-white rounded-2xl shadow-lg">
+              <div className="text-3xl font-bold text-purple-600 mb-2">95%</div>
+              <div className="text-gray-700 font-semibold">Satisfaction Rate</div>
+            </Card>
           </div>
-          <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
-            <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
-            <div className="text-gray-700 font-semibold">Support Available</div>
-          </div>
-          <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
-            <div className="text-3xl font-bold text-purple-600 mb-2">95%</div>
-            <div className="text-gray-700 font-semibold">Satisfaction Rate</div>
-          </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Enhanced CTA Section */}
       <section className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-20">
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Still Have <span className="text-yellow-400">Questions</span>?
-          </h2>
-          <p className="text-xl mb-8 text-purple-100 max-w-2xl mx-auto leading-relaxed">
-            Our team of experts is here to help you get the answers you need. 
-            We're always happy to discuss your specific requirements and provide personalized solutions.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href={buildWhatsAppUrl('india', `Hello ${getBusinessName()}, I have a question about your services`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-3"
-            >
-              <MessageCircle className="h-5 w-5" />
-              Chat on WhatsApp
-            </a>
-            <a
-              href={getTelHref(getPrimaryPhone())}
-              className="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex items-center gap-3"
-            >
-              <Phone className="h-5 w-5" />
-              Call Us Directly
-            </a>
+        <Container>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Still Have <span className="text-yellow-400">Questions</span>?
+            </h2>
+            <p className="text-xl mb-8 text-purple-100 max-w-2xl mx-auto leading-relaxed">
+              Our team of experts is here to help you get the answers you need. 
+              We're always happy to discuss your specific requirements and provide personalized solutions.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                href={buildWhatsAppUrl('india', `Hello ${getBusinessName()}, I have a question about your services`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-3"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Chat on WhatsApp
+              </a>
+              <a
+                href={getTelHref(getPrimaryPhone())}
+                className="border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex items-center gap-3"
+              >
+                <Phone className="h-5 w-5" />
+                Call Us Directly
+              </a>
+            </div>
+            <p className="mt-6 text-purple-200 text-lg">
+              Typically reply within 15 minutes during business hours
+            </p>
           </div>
-          <p className="mt-6 text-purple-200 text-lg">
-            Typically reply within 15 minutes during business hours
-          </p>
-        </div>
+        </Container>
       </section>
     </div>
   );

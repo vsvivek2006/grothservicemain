@@ -10,6 +10,7 @@ import {
 
 import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
+import { Container, Section } from '../components/ui';
 
 const HelpCenter: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -226,8 +227,8 @@ const HelpCenter: React.FC = () => {
       </Helmet>
 
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-8">
-        <div className="max-w-6xl mx-auto px-4">
+      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12">
+        <Container>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-center md:text-left">
               <h1 className="text-3xl font-bold mb-2">Help Center</h1>
@@ -242,10 +243,11 @@ const HelpCenter: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <Section variant="default" padding="default">
+        <Container>
         {/* Search Section */}
         <div className="mb-8">
           <div className="relative">
@@ -500,7 +502,8 @@ const HelpCenter: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+        </Container>
+      </Section>
 
       {/* Mobile-friendly styles */}
       <style dangerouslySetInnerHTML={{ __html: `

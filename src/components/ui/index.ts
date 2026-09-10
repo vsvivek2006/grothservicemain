@@ -1,4 +1,5 @@
 export * from './Button';
+export * from './AnimatedButton';
 export * from './Card';
 export * from './Badge';
 export * from './Container';

@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
-import { WhatsAppIcon } from '../components/ui';
+import { WhatsAppIcon, Container, Section } from '../components/ui';
 
 const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -715,7 +715,7 @@ Our Transformation Package:
 
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+        <Container className="max-w-4xl text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 tracking-tight">
             Growth Service Blog
           </h1>
@@ -736,10 +736,11 @@ Our Transformation Package:
               <span>Paid Growth & ROI</span>
             </span>
           </div>
-        </div>
+        </Container>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <Section variant="default" padding="default">
+        <Container>
         {/* Search & Filter */}
         <div className="mb-8">
           <div className="relative mb-6">
@@ -863,7 +864,8 @@ Our Transformation Package:
             </a>
           </div>
         </div>
-      </div>
+        </Container>
+      </Section>
 
       {/* Blog Post Modal */}
       {selectedPost && (

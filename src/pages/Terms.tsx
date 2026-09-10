@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";
-import { Container, WhatsAppIcon } from "../components/ui";
+import { Container, Section, Button, WhatsAppIcon } from "../components/ui";
 import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
 import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
@@ -174,13 +174,15 @@ const Terms: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
+            <Button
               onClick={downloadTerms}
-              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 flex items-center gap-3"
+              variant="outline"
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-gray-100 border-white font-bold"
             >
-              <Download className="h-5 w-5" />
+              <Download className="h-5 w-5 mr-2" />
               Download Terms
-            </button>
+            </Button>
             <div className="text-blue-200">
               Last updated: {new Date().toLocaleDateString('en-IN', { 
                 year: 'numeric', 
@@ -193,7 +195,8 @@ const Terms: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <Container className="py-16">
+      <Section variant="default" padding="default">
+        <Container>
         {/* Important Notice */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mb-12">
           <div className="flex items-start gap-4">
@@ -371,7 +374,8 @@ const Terms: React.FC = () => {
             </p>
           </div>
         </div>
-      </Container>
+        </Container>
+      </Section>
     </div>
   );
 };

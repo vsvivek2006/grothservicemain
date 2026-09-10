@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { 
-  ArrowRight, Play, Star, TrendingUp, Users, Target, Award, Globe, Shield, Zap, Clock,
+  ArrowRight, Play, Star, TrendingUp, Users, Target, Globe, Shield, Zap, Clock,
   Factory, HeartPulse, Rocket, ShoppingCart, Briefcase, Cog, Trophy
 } from 'lucide-react';
+import { getCanonicalOrigin } from '../selectors';
+import Container from '../components/ui/Container';
+import Section from '../components/ui/Section';
+import SectionHeader from '../components/ui/SectionHeader';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
 
 const OurImpact: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -126,10 +132,10 @@ const OurImpact: React.FC = () => {
   ];
 
   const stats = [
-    { number: "500+", label: "Businesses Transformed", icon: <Users className="h-8 w-8" /> },
-    { number: "₹25Cr+", label: "Client Revenue Generated", icon: <TrendingUp className="h-8 w-8" /> },
-    { number: "96%", label: "Client Retention Rate", icon: <Shield className="h-8 w-8" /> },
-    { number: "150+", label: "Industries Served", icon: <Globe className="h-8 w-8" /> }
+    { number: "500+", label: "Businesses Transformed", icon: <Users className="h-7 w-7 text-blue-600" /> },
+    { number: "₹25Cr+", label: "Client Revenue Generated", icon: <TrendingUp className="h-7 w-7 text-blue-600" /> },
+    { number: "96%", label: "Client Retention Rate", icon: <Shield className="h-7 w-7 text-blue-600" /> },
+    { number: "150+", label: "Industries Served", icon: <Globe className="h-7 w-7 text-blue-600" /> }
   ];
 
   const awards = [
@@ -143,25 +149,25 @@ const OurImpact: React.FC = () => {
     {
       title: "Digital Marketing",
       description: "End-to-end digital marketing solutions for business growth",
-      icon: <Zap className="h-6 w-6" />,
+      icon: <Zap className="h-6 w-6 text-blue-600" />,
       features: ["SEO", "Social Media", "PPC", "Content Marketing"]
     },
     {
       title: "Brand Strategy",
       description: "Building powerful brands that resonate with audiences",
-      icon: <Target className="h-6 w-6" />,
+      icon: <Target className="h-6 w-6 text-blue-600" />,
       features: ["Brand Identity", "Positioning", "Voice & Tone", "Visual Design"]
     },
     {
       title: "Business Automation",
       description: "Streamline operations with smart automation solutions",
-      icon: <Clock className="h-6 w-6" />,
+      icon: <Clock className="h-6 w-6 text-blue-600" />,
       features: ["Workflow Automation", "CRM Setup", "Integration", "Analytics"]
     },
     {
       title: "Web Solutions",
       description: "High-performance websites and web applications",
-      icon: <Globe className="h-6 w-6" />,
+      icon: <Globe className="h-6 w-6 text-blue-600" />,
       features: ["Web Development", "E-commerce", "Progressive Web Apps", "Maintenance"]
     }
   ];
@@ -171,7 +177,7 @@ const OurImpact: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-white">
       <Helmet>
         <title>Our Impact - Business Transformation Stories | Growth Service</title>
         <meta 
@@ -182,302 +188,320 @@ const OurImpact: React.FC = () => {
           name="keywords" 
           content="business transformation, digital marketing, business automation, branding, web development, growth strategy" 
         />
-        <link rel="canonical" href="https://www.growthservice.in/impact" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/impact`} />
       </Helmet>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Transforming Businesses, Driving Growth</h1>
-          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            At Growth Service, we don't just deliver services - we deliver results that transform businesses and drive sustainable growth.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <span className="bg-white/20 px-4 py-2 rounded-full">Digital Marketing</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full">Business Automation</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full">Brand Strategy</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full">Web Solutions</span>
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Transforming Businesses, Driving Growth</h1>
+            <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+              At Growth Service, we don't just deliver services - we deliver results that transform businesses and drive sustainable growth.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 text-sm">
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full">Digital Marketing</span>
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full">Business Automation</span>
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full">Brand Strategy</span>
+              <span className="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full">Web Solutions</span>
+            </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Impact in Numbers</h2>
-            <p className="text-xl text-gray-600">Measurable results that speak louder than words</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our Impact in Numbers"
+            subtitle="Measurable results that speak louder than words"
+            align="center"
+          />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
+              <Card key={index} variant="interactive" className="p-6 text-center">
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-100">
                   {stat.icon}
                 </div>
-                <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.number}</div>
+                <div className="text-gray-600 text-sm font-medium">{stat.label}</div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Our Services */}
-      <section className="bg-gradient-to-b from-white to-blue-50 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Comprehensive Solutions</h2>
-            <p className="text-xl text-gray-600">End-to-end business solutions for sustainable growth</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our Comprehensive Solutions"
+            subtitle="End-to-end business solutions for sustainable growth"
+            align="center"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white mb-4">
+              <Card key={index} variant="default" className="p-6">
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4 border border-blue-100">
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
                 <p className="text-gray-600 mb-4 text-sm">{service.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {service.features.map((feature, idx) => (
-                    <span key={idx} className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">
+                    <span key={idx} className="bg-blue-50 text-blue-700 px-2.5 py-1 rounded text-xs font-medium border border-blue-100">
                       {feature}
                     </span>
                   ))}
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Categories Filter */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Success Stories</h2>
-          <p className="text-xl text-gray-600 mb-8">Real businesses, real transformations</p>
-        </div>
-        
-        <div className="flex flex-wrap gap-4 justify-center mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-200 ${
-                activeCategory === category.id
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
-              }`}
-            >
-              {category.name}
-              <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
-                activeCategory === category.id
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600'
-              }`}>
-                {category.count}
-              </span>
-            </button>
-          ))}
-        </div>
+      {/* Success Stories */}
+      <Section variant="default" padding="default">
+        <Container>
+          {/* Categories Filter */}
+          <SectionHeader
+            title="Success Stories"
+            subtitle="Real businesses, real transformations"
+            align="center"
+          />
+          
+          <div className="flex flex-wrap gap-2 justify-center mb-12">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-5 py-2 rounded-full font-semibold transition-all duration-200 text-sm flex items-center ${
+                  activeCategory === category.id
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
+                }`}
+              >
+                <span>{category.name}</span>
+                <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+                  activeCategory === category.id
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-gray-100 text-gray-600'
+                }`}>
+                  {category.count}
+                </span>
+              </button>
+            ))}
+          </div>
 
-        {/* Success Stories Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {filteredStories.map((story) => (
-            <div 
-              key={story.id}
-              className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${
-                story.featured ? 'ring-2 ring-blue-500' : ''
-              }`}
-            >
-              <div className="p-8">
-                {/* Header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-blue-50 rounded-xl inline-flex">{story.image}</div>
-                  {story.featured && (
-                    <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      Featured Transformation
-                    </div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="mb-6">
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
-                      {story.industry}
-                    </span>
-                    <span>•</span>
-                    <span>{story.duration}</span>
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{story.title}</h3>
-                  
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <span className="text-red-500">Challenge:</span>
-                    </h4>
-                    <p className="text-gray-600 text-sm">{story.challenge}</p>
-                  </div>
-
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <span className="text-green-500">Our Solution:</span>
-                    </h4>
-                    <p className="text-gray-600 text-sm">{story.solution}</p>
-                  </div>
-                </div>
-
-                {/* Results */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  {Object.entries(story.results).map(([key, value]) => (
-                    <div key={key} className="text-center p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg">
-                      <div className="text-lg font-bold text-blue-600">{value}</div>
-                      <div className="text-xs text-gray-600 capitalize">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
+          {/* Success Stories Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {filteredStories.map((story) => (
+              <Card 
+                key={story.id}
+                variant={story.featured ? 'featured' : 'default'}
+                className={`p-8 ${story.featured ? 'ring-2 ring-purple-400' : ''}`}
+              >
+                <div>
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="p-3 bg-blue-50 rounded-xl inline-flex border border-blue-100">{story.image}</div>
+                    {story.featured && (
+                      <div className="bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                        Featured Transformation
                       </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-medium border border-blue-100">
+                        {story.industry}
+                      </span>
+                      <span>•</span>
+                      <span>{story.duration}</span>
                     </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{story.title}</h3>
+                    
+                    <div className="mb-4">
+                      <h4 className="font-semibold text-gray-900 mb-1 flex items-center gap-2 text-sm">
+                        <span className="text-red-500 font-bold">Challenge:</span>
+                      </h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">{story.challenge}</p>
+                    </div>
+
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-gray-900 mb-1 flex items-center gap-2 text-sm">
+                        <span className="text-green-600 font-bold">Our Solution:</span>
+                      </h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">{story.solution}</p>
+                    </div>
+                  </div>
+
+                  {/* Results */}
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    {Object.entries(story.results).map(([key, value]) => (
+                      <div key={key} className="text-center p-3 bg-blue-50/50 rounded-xl border border-blue-100">
+                        <div className="text-lg font-bold text-blue-600">{value}</div>
+                        <div className="text-xs text-gray-600 capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Action Link */}
+                  <Button
+                    as={Link}
+                    to="/contact"
+                    variant="primary"
+                    className="w-full justify-center text-sm font-semibold"
+                  >
+                    <Play className="h-4 w-4 mr-2" />
+                    <span>View Detailed Case Study</span>
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Awards & Recognition */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Awards & Recognition</h2>
+              <p className="text-gray-600 text-sm">Our commitment to excellence has been recognized by industry leaders</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {awards.map((award, index) => (
+                <Card key={index} variant="default" className="text-center p-6 bg-blue-50/30 border border-blue-100">
+                  <div className="mb-3 flex justify-center">{award.icon}</div>
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm">{award.title}</h3>
+                  <div className="text-blue-600 font-bold text-xs">{award.year}</div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Client Testimonials */}
+          <div className="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl shadow-xl p-8 md:p-12 text-white mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-2">What Business Leaders Say</h2>
+              <p className="text-blue-100 text-sm">Success stories from our valued partners</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-300 fill-current" />
                   ))}
                 </div>
+                <p className="text-blue-100 text-sm mb-4 leading-relaxed">
+                  "Growth Service transformed our manufacturing business from traditional to digital-first. 185% revenue growth in 8 months!"
+                </p>
+                <div className="font-semibold text-xs text-yellow-300">- Manufacturing Company CEO</div>
+              </div>
 
-                {/* Video Button */}
-                <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2">
-                  <Play className="h-4 w-4" />
-                  View Detailed Case Study
-                </button>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-300 fill-current" />
+                  ))}
+                </div>
+                <p className="text-blue-100 text-sm mb-4 leading-relaxed">
+                  "The business automation solutions saved us 35% in operational costs and improved efficiency by 60%."
+                </p>
+                <div className="font-semibold text-xs text-yellow-300">- Service Industry Director</div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-300 fill-current" />
+                  ))}
+                </div>
+                <p className="text-blue-100 text-sm mb-4 leading-relaxed">
+                  "Our brand identity and digital strategy by Growth Service made us industry leaders within a year."
+                </p>
+                <div className="font-semibold text-xs text-yellow-300">- Healthcare Startup Founder</div>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Awards & Recognition */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-12">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Awards & Recognition</h2>
-            <p className="text-xl text-gray-600">Our commitment to excellence has been recognized by industry leaders</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {awards.map((award, index) => (
-              <div key={index} className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-md transition-shadow duration-300">
-                <div className="mb-4 flex justify-center">{award.icon}</div>
-                <h3 className="font-semibold text-gray-900 mb-2">{award.title}</h3>
-                <div className="text-blue-600 font-medium">{award.year}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Client Testimonials */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg p-12 text-white mb-12">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">What Business Leaders Say</h2>
-            <p className="text-blue-100 text-xl">Success stories from our valued partners</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 text-yellow-300 fill-current" />
-                ))}
-              </div>
-              <p className="text-blue-100 mb-4">
-                "Growth Service transformed our manufacturing business from traditional to digital-first. 185% revenue growth in 8 months!"
-              </p>
-              <div className="font-semibold">- Manufacturing Company CEO</div>
+          {/* Process Section */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Our Proven Process</h2>
+              <p className="text-gray-600 text-sm">A systematic approach to business transformation</p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 text-yellow-300 fill-current" />
-                ))}
-              </div>
-              <p className="text-blue-100 mb-4">
-                "The business automation solutions saved us 35% in operational costs and improved efficiency by 60%."
-              </p>
-              <div className="font-semibold">- Service Industry Director</div>
-            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              <Card variant="default" className="text-center p-6">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-4 shadow-md">
+                  1
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Discovery & Analysis</h3>
+                <p className="text-gray-600 text-xs">Deep dive into your business challenges and opportunities</p>
+              </Card>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 text-yellow-300 fill-current" />
-                ))}
-              </div>
-              <p className="text-blue-100 mb-4">
-                "Our brand identity and digital strategy by Growth Service made us industry leaders within a year."
-              </p>
-              <div className="font-semibold">- Healthcare Startup Founder</div>
+              <Card variant="default" className="text-center p-6">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-4 shadow-md">
+                  2
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Strategy & Planning</h3>
+                <p className="text-gray-600 text-xs">Customized roadmap for transformation and growth</p>
+              </Card>
+
+              <Card variant="default" className="text-center p-6">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-4 shadow-md">
+                  3
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Implementation</h3>
+                <p className="text-gray-600 text-xs">Execution with precision and expertise</p>
+              </Card>
+
+              <Card variant="default" className="text-center p-6">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-4 shadow-md">
+                  4
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Optimization & Growth</h3>
+                <p className="text-gray-600 text-xs">Continuous improvement and scaling success</p>
+              </Card>
             </div>
           </div>
-        </div>
 
-        {/* Process Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-12">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Proven Process</h2>
-            <p className="text-xl text-gray-600">A systematic approach to business transformation</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                1
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Discovery & Analysis</h3>
-              <p className="text-gray-600 text-sm">Deep dive into your business challenges and opportunities</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                2
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Strategy & Planning</h3>
-              <p className="text-gray-600 text-sm">Customized roadmap for transformation and growth</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                3
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Implementation</h3>
-              <p className="text-gray-600 text-sm">Execution with precision and expertise</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                4
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Optimization & Growth</h3>
-              <p className="text-gray-600 text-sm">Continuous improvement and scaling success</p>
+          {/* CTA Section */}
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Business?</h2>
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              Let's create your success story. Partner with Growth Service for sustainable growth and business excellence.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                as={Link}
+                to="/book-call"
+                variant="primary"
+                size="lg"
+                className="shadow-lg inline-flex items-center gap-2"
+              >
+                <span>Book Free Consultation</span>
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+              <Button
+                as={Link}
+                to="/services"
+                variant="outline"
+                size="lg"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+              >
+                Explore Our Services
+              </Button>
             </div>
           </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Business?</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Let's create your success story. Partner with Growth Service for sustainable growth and business excellence.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/book-call"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
-            >
-              Book Free Consultation
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link
-              to="/services"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 flex items-center justify-center"
-            >
-              Explore Our Services
-            </Link>
-          </div>
-        </div>
-      </div>
+        </Container>
+      </Section>
     </div>
   );
 };

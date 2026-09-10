@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../selectors";
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
-import { WhatsAppIcon } from "../components/ui";
+import { WhatsAppIcon, Container, Section, Button } from "../components/ui";
 
 const OnboardingAgreement: React.FC = () => {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -26,8 +26,8 @@ const OnboardingAgreement: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Header */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12">
-        <div className="max-w-6xl mx-auto px-4">
+      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+        <Container>
           <div className="text-center">
             <div className="flex justify-center mb-4">
               <FileText className="h-12 w-12" />
@@ -53,19 +53,22 @@ const OnboardingAgreement: React.FC = () => {
               </span>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <Section variant="default" padding="default">
+        <Container>
         {/* Quick Action Buttons */}
         <div className="mb-8 flex flex-wrap gap-3">
-          <button
+          <Button
             onClick={handleDownloadPDF}
-            className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
           >
             <Download className="h-4 w-4" />
             Download PDF Version
-          </button>
+          </Button>
           <a
             href={getTelHref(getPrimaryPhone())}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
@@ -421,13 +424,15 @@ const OnboardingAgreement: React.FC = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
+              <Button
                 onClick={handleDownloadPDF}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                variant="primary"
+                size="lg"
+                className="flex items-center justify-center gap-2"
               >
                 <Download className="h-5 w-5" />
                 Download & Sign Agreement
-              </button>
+              </Button>
               
               <a
                 href={getNepalWhatsAppUrl()}
@@ -456,7 +461,8 @@ const OnboardingAgreement: React.FC = () => {
             Please consult with legal counsel for specific legal guidance.
           </p>
         </div>
-      </div>
+        </Container>
+      </Section>
 
       {/* Mobile Optimizations */}
       <style dangerouslySetInnerHTML={{ __html: `

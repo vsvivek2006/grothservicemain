@@ -23,8 +23,7 @@ import {
 } from 'lucide-react';
 import { getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getMailtoHref } from '../services';
-import { businessConfig } from '../config/business';
-import { WhatsAppIcon } from '../components/ui';
+import { WhatsAppIcon, Container, Section, Card } from '../components/ui';
 
 const SEOResults: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
@@ -91,7 +90,7 @@ const SEOResults: React.FC = () => {
 
 
   const renderMetricCard = (title: string, value: string | number, change: string, icon: React.ReactNode, color: string) => (
-    <div className={`bg-white rounded-2xl shadow-lg p-6 border-l-4 ${color}`}>
+    <Card className={`bg-white rounded-2xl shadow-lg p-6 border-l-4 ${color}`}>
       <div className="flex items-start justify-between mb-4">
         <div className="p-3 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
           {icon}
@@ -102,7 +101,7 @@ const SEOResults: React.FC = () => {
       </div>
       <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
       <div className="text-gray-600 font-medium">{title}</div>
-    </div>
+    </Card>
   );
 
   return (
@@ -126,7 +125,7 @@ const SEOResults: React.FC = () => {
           <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="lg:w-2/3">
               <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
@@ -181,12 +180,12 @@ const SEOResults: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Dashboard Navigation */}
-      <section className="py-6 bg-white border-b sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-6 bg-white border-b sticky top-0 z-40 shadow-sm">
+        <Container>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex flex-wrap gap-2">
               <button
@@ -254,11 +253,12 @@ const SEOResults: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </div>
 
       {/* Main Dashboard Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Section variant="default" padding="default">
+        <Container>
         {/* Overview Section */}
         {activeMetric === 'overview' && (
           <div className="space-y-8">
@@ -783,7 +783,8 @@ const SEOResults: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+        </Container>
+      </Section>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 import { getTechnologyByName } from '../data/technologies';
-import { WhatsAppIcon } from '../components/ui';
+import { WhatsAppIcon, Container, Section } from '../components/ui';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -242,8 +242,8 @@ const Portfolio = () => {
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+        <Container>
+          <div className="relative text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4 text-yellow-300" />
               <span className="text-sm font-semibold">500+ Projects Delivered</span>
@@ -278,12 +278,12 @@ const Portfolio = () => {
               </a>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default" padding="default">
+        <Container>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
@@ -295,12 +295,12 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Technologies We Use */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" padding="compact">
+        <Container>
           <div className="text-center mb-8">
             <h3 className="text-lg font-semibold text-gray-700 mb-2">Technologies We Master</h3>
             <p className="text-gray-600">Built with modern technologies for optimal performance</p>
@@ -313,12 +313,12 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Filter Section */}
-      <section id="portfolio" className="py-6 bg-white sticky top-0 z-40 border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="portfolio" className="py-6 bg-white sticky top-0 z-40 border-b shadow-sm">
+        <Container>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Filter className="h-5 w-5 text-blue-600" />
@@ -340,12 +340,12 @@ const Portfolio = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </div>
 
       {/* Portfolio Grid */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" padding="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-blue-600">Featured Work</span>
@@ -455,12 +455,12 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Our Process */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="default" padding="default">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our <span className="text-blue-600">5-Step Process</span>
@@ -489,12 +489,12 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Testimonials Carousel */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" padding="relaxed">
+        <Container>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               What Our <span className="text-blue-600">Clients Say</span>
@@ -566,15 +566,15 @@ const Portfolio = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
+      <section className="py-20 relative overflow-hidden bg-gradient-to-r from-blue-900 to-purple-900 text-white">
         <div className="absolute inset-0 bg-black opacity-10"></div>
         
-        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <Container>
+          <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
             <Zap className="h-5 w-5 text-yellow-300 mr-2" />
             <span className="text-white font-semibold">Ready to Start Your Project?</span>
@@ -649,6 +649,7 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
+        </Container>
       </section>
 
       {/* Case Study Modal */}

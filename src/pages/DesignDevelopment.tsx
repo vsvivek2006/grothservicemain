@@ -2,16 +2,17 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { 
   Monitor, Smartphone, Palette, Code, Database, 
-  Layers, Shield, Zap, Globe, Users, BarChart,
-  CheckCircle, ArrowRight, Cpu, Cloud,
-  ShoppingCart, Briefcase, Home, Calendar, Camera,
-  Search, Rocket, Wrench, MessageCircle, Phone
+  Shield, Zap, CheckCircle, ArrowRight, Cpu, Cloud,
+  ShoppingCart, Briefcase, Search, Rocket, Wrench, MessageCircle, Phone
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref } from '../services';
 import { getTechnologyByName } from '../data/technologies';
-import { WhatsAppIcon } from '../components/ui';
+import { Container, Section, SectionHeader, WhatsAppIcon } from '../components/ui';
+import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { AnimatedButton } from '../components/ui/AnimatedButton';
+import { Breadcrumb } from '../components/ui/Breadcrumb';
 
 const DesignDevelopment: React.FC = () => {
   // Services we offer
@@ -177,7 +178,7 @@ const DesignDevelopment: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
+    <div className="min-h-screen bg-white">
       <Helmet>
         <title>Design & Development Services | Growth Service</title>
         <meta 
@@ -187,142 +188,149 @@ const DesignDevelopment: React.FC = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-purple-900 via-blue-800 to-cyan-900 text-white py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-400 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Design & <span className="text-cyan-300">Development</span>
+        <Container className="relative">
+          <Breadcrumb
+            items={[
+              { label: 'Home', path: '/' },
+              { label: 'Design & Development' }
+            ]}
+          />
+          <div className="text-center max-w-4xl mx-auto mt-6">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+              Design & <span className="text-yellow-300">Development</span>
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
               We create stunning, functional websites and applications using cutting-edge technologies
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-              <a
+              <Button
                 href={getNepalWhatsAppUrl()}
+                variant="primary"
+                size="lg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+                className="w-full sm:w-auto bg-[#25D366] hover:bg-emerald-600 border-none text-white inline-flex items-center justify-center gap-2"
               >
                 <WhatsAppIcon className="w-5 h-5 text-white" />
                 <span>Discuss Your Project</span>
-              </a>
-              <a
-                href="#portfolio"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
+              </Button>
+              <Button
+                to="/portfolio"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-900"
               >
                 View Our Work
-              </a>
+              </Button>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Design & Development Services
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Comprehensive solutions from concept to deployment using modern technologies
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our Design & Development Services"
+            subtitle="Comprehensive solutions from concept to deployment using modern technologies"
+            centered
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div 
+              <Card 
                 key={index}
-                className="bg-gradient-to-b from-white to-blue-50 border border-gray-200 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                variant="interactive"
+                padding="lg"
+                className="flex flex-col justify-between"
               >
-                <div className="text-blue-600 mb-4">
-                  {service.icon}
+                <div>
+                  <div className="text-blue-600 mb-4">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                  
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start text-sm text-gray-700">
+                        <CheckCircle className="h-4 w-4 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {service.description}
-                </p>
-                
-                <ul className="space-y-2 mb-6">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start text-sm text-gray-700">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
 
                 <a
                   href={getNepalWhatsAppUrl(`Hello! I'm interested in ${service.title} service. Please provide details.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm pt-2"
                 >
                   Get Custom Quote
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </a>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Technology Stack */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Technology Stack
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We work with modern technologies to build fast, scalable, and reliable applications
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Technology Stack"
+            subtitle="We work with modern technologies to build fast, scalable, and reliable applications"
+            centered
+          />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {technologies.map((tech) => (
-              <div 
+              <Card 
                 key={tech.name}
-                className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-center group hover:-translate-y-1 border border-slate-100"
+                variant="default"
+                padding="default"
+                className="text-center group hover:-translate-y-1 transition-transform"
               >
                 <div className="w-10 h-10 mx-auto rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-2 group-hover:scale-110 transition-transform">
                   <tech.Icon className="w-6 h-6" />
                 </div>
                 <div className="font-semibold text-gray-900 text-sm">{tech.name}</div>
                 <div className="text-xs text-gray-500 mt-1">{tech.category}</div>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Development Process */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Development Process
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              A systematic approach ensuring quality, transparency, and timely delivery
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our Development Process"
+            subtitle="A systematic approach ensuring quality, transparency, and timely delivery"
+            centered
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {processSteps.map((step) => (
               <div 
                 key={step.step}
-                className="relative bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100 rounded-2xl p-6"
+                className="relative bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-6"
               >
-                <div className="absolute -top-4 -left-4 bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-sm">
+                <div className="absolute -top-3.5 -left-3.5 bg-blue-600 text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow-md">
                   {step.step}
                 </div>
                 <div className="w-12 h-12 rounded-xl bg-blue-100/60 flex items-center justify-center text-blue-600 mb-4 mt-2">
@@ -331,51 +339,52 @@ const DesignDevelopment: React.FC = () => {
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   {step.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-sm leading-relaxed">
                   {step.description}
                 </p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Project Types */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Types of Projects We Build
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Custom solutions tailored to specific industries and business needs
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Types of Projects We Build"
+            subtitle="Custom solutions tailored to specific industries and business needs"
+            centered
+          />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {projectTypes.map((project, index) => (
-              <div 
+              <Card 
                 key={index}
-                className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                variant="interactive"
+                padding="lg"
+                className="flex flex-col justify-between"
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {project.type}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {project.description}
-                </p>
-                
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">Includes Pages:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.pages.map((page, idx) => (
-                      <span 
-                        key={idx}
-                        className="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full"
-                      >
-                        {page}
-                      </span>
-                    ))}
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {project.type}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 mb-2 text-xs uppercase tracking-wider">Includes Pages:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.pages.map((page, idx) => (
+                        <span 
+                          key={idx}
+                          className="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full border border-blue-100 font-medium"
+                        >
+                          {page}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -383,28 +392,25 @@ const DesignDevelopment: React.FC = () => {
                   href={getNepalWhatsAppUrl(`Hello! I'm interested in ${project.type} development. Please provide details.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm pt-2"
                 >
                   Get Custom Quote for {project.type}
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </a>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Our Development Services
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              What makes us the preferred choice for web and application development
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Why Choose Our Development Services"
+            subtitle="What makes us the preferred choice for web and application development"
+            centered
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -439,60 +445,67 @@ const DesignDevelopment: React.FC = () => {
                 description: "Built with SEO best practices for better search engine visibility"
               }
             ].map((benefit, index) => (
-              <div 
+              <Card 
                 key={index}
-                className="bg-gradient-to-br from-blue-50 to-white border border-blue-100 p-6 rounded-xl"
+                variant="default"
+                padding="lg"
               >
-                <div className="w-12 h-12 rounded-xl bg-blue-100/60 flex items-center justify-center text-blue-600 mb-3">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 mb-3">
                   <benefit.Icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   {benefit.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm leading-relaxed">
                   {benefit.description}
                 </p>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-900 to-cyan-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Build Your Digital Solution?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss your project requirements and create a custom solution for your business
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={getNepalWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
-            >
-              <MessageCircle className="w-5 h-5" />
-              <span>Get Custom Quote on WhatsApp</span>
-            </a>
+      <Section variant="dark" padding="default">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to Build Your Digital Solution?
+            </h2>
+            <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Let's discuss your project requirements and create a custom solution for your business
+            </p>
             
-            <a
-              href={getTelHref(getPrimaryPhone())}
-              className="bg-white hover:bg-gray-100 text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
-            >
-              <Phone className="w-5 h-5" />
-              <span>Call: {getPrimaryPhone()}</span>
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                href={getNepalWhatsAppUrl()}
+                variant="primary"
+                size="lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto bg-[#25D366] hover:bg-emerald-600 border-none text-white inline-flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>Get Custom Quote on WhatsApp</span>
+              </Button>
+              
+              <Button
+                href={getTelHref(getPrimaryPhone())}
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-gray-900 inline-flex items-center justify-center gap-2"
+              >
+                <Phone className="w-5 h-5" />
+                <span>Call: {getPrimaryPhone()}</span>
+              </Button>
+            </div>
+            
+            <p className="mt-8 text-blue-200 text-sm">
+              Custom Development • Mobile Apps • UI/UX Design • Web Applications
+            </p>
           </div>
-          
-          <p className="mt-6 text-blue-200 text-sm">
-            Custom Development • Mobile Apps • UI/UX Design • Web Applications
-          </p>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

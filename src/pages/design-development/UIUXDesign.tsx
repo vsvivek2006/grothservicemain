@@ -1,9 +1,8 @@
-
 // src/pages/design-development/UIUXDesign.tsx
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaPaintBrush, FaDesktop, FaMobileAlt, FaUsers, FaRocket, FaPalette, FaLightbulb, FaChartLine, FaEye, FaMagic, FaPenAlt, FaCheckCircle } from 'react-icons/fa';
+import { FaPaintBrush, FaMobileAlt, FaUsers, FaRocket, FaPalette, FaPenAlt, FaCheckCircle } from 'react-icons/fa';
 import {
   Check,
   Laptop,
@@ -33,192 +32,201 @@ import {
 } from 'lucide-react';
 import { primaryPhone } from '../../data/centralizedData';
 import { getNepalWhatsAppUrl, getTelHref } from '../../services';
+import { Container, Section, SectionHeader } from '../../components/ui';
+import { Card } from '../../components/ui/Card';
+import { Button } from '../../components/ui/Button';
+import { AnimatedButton } from '../../components/ui/AnimatedButton';
+import { Breadcrumb } from '../../components/ui/Breadcrumb';
 
-const UIUXDesign = () => {
+const UIUXDesign: React.FC = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-purple-500 to-pink-600 text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <Container>
+          <Breadcrumb
+            items={[
+              { label: 'Home', path: '/' },
+              { label: 'Design & Development', path: '/design-development' },
+              { label: 'UI/UX Design' }
+            ]}
+          />
+          <div className="max-w-4xl mx-auto text-center mt-6">
             <div className="flex justify-center mb-6">
-              <FaPaintBrush className="text-5xl" />
+              <div className="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-inner">
+                <FaPaintBrush className="text-4xl text-yellow-300" />
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
               Professional UI/UX Design
             </h1>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-xl mb-8 opacity-90 leading-relaxed max-w-3xl mx-auto">
               Create beautiful, intuitive digital experiences that users love and convert better
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <AnimatedButton
                 to="/free-audit"
-                className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="w-full sm:w-auto"
               >
                 Get Free Design Audit
-              </Link>
-              <Link
+              </AnimatedButton>
+              <Button
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-900"
               >
                 Discuss Your Design Project
-              </Link>
+              </Button>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Design Impact Statistics */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              The Power of Great Design
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Good design is good business - and great design drives results
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="The Power of Great Design"
+            subtitle="Good design is good business - and great design drives results"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
+            <Card variant="default" padding="lg" className="text-center">
               <div className="text-5xl font-bold text-purple-600 mb-2">94%</div>
-              <h3 className="text-xl font-semibold mb-3">First Impressions</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">First Impressions</h3>
+              <p className="text-gray-600 leading-relaxed">
                 94% of first impressions are design-related. Good design builds immediate trust.
               </p>
-            </div>
+            </Card>
             
-            <div className="text-center p-6">
-              <div className="text-5xl font-bold text-pink-600 mb-2">400%</div>
-              <h3 className="text-xl font-semibold mb-3">Conversion Increase</h3>
-              <p className="text-gray-600">
+            <Card variant="default" padding="lg" className="text-center">
+              <div className="text-5xl font-bold text-indigo-600 mb-2">400%</div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Conversion Increase</h3>
+              <p className="text-gray-600 leading-relaxed">
                 Well-designed websites convert 400% better than poor designs
               </p>
-            </div>
+            </Card>
             
-            <div className="text-center p-6">
-              <div className="text-5xl font-bold text-blue-600 mb-2">75%</div>
-              <h3 className="text-xl font-semibold mb-3">Credibility Factor</h3>
-              <p className="text-gray-600">
+            <Card variant="default" padding="lg" className="text-center">
+              <div className="text-5xl font-bold text-emerald-600 mb-2">75%</div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Credibility Factor</h3>
+              <p className="text-gray-600 leading-relaxed">
                 75% of users judge a company's credibility based on website design
               </p>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* UI/UX Services */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Comprehensive UI/UX Design Services
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              End-to-end design solutions that combine beauty with functionality
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Comprehensive UI/UX Design Services"
+            subtitle="End-to-end design solutions that combine beauty with functionality"
+            centered
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-purple-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4">
                 <FaUsers />
               </div>
-              <h3 className="text-xl font-semibold mb-3">User Research & Analysis</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">User Research & Analysis</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• User persona development</li>
                 <li>• User journey mapping</li>
                 <li>• Competitor analysis</li>
                 <li>• Usability testing</li>
                 <li>• User interviews & surveys</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-pink-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl mb-4">
                 <FaPenAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Wireframing & Prototyping</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Wireframing & Prototyping</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Low-fidelity wireframes</li>
                 <li>• High-fidelity mockups</li>
                 <li>• Interactive prototypes</li>
                 <li>• User flow diagrams</li>
                 <li>• Information architecture</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-blue-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-4">
                 <FaPalette />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Visual UI Design</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Visual UI Design</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Color palette creation</li>
                 <li>• Typography system</li>
                 <li>• Icon design</li>
                 <li>• Component library</li>
                 <li>• Design system creation</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-green-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-4">
                 <FaMobileAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Responsive Design</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Responsive Design</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Mobile-first design</li>
                 <li>• Tablet optimization</li>
                 <li>• Desktop adaptation</li>
                 <li>• Cross-device consistency</li>
                 <li>• Touch-friendly interfaces</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-yellow-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4">
                 <FaRocket />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Interaction Design</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Interaction Design</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Micro-interactions</li>
                 <li>• Animation design</li>
                 <li>• Transition effects</li>
                 <li>• Gesture design</li>
                 <li>• Loading states</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-red-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4">
                 <FaCheckCircle />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Usability Testing</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Usability Testing</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• A/B testing setup</li>
                 <li>• User testing sessions</li>
                 <li>• Heatmap analysis</li>
                 <li>• Conversion rate optimization</li>
                 <li>• Accessibility testing</li>
               </ul>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Platforms */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Platforms We Design For
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Creating seamless experiences across all digital touchpoints
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Platforms We Design For"
+            subtitle="Creating seamless experiences across all digital touchpoints"
+            centered
+          />
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
@@ -233,23 +241,27 @@ const UIUXDesign = () => {
             ].map((item, index) => {
               const Icon = item.icon;
               return (
-                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200 hover:border-purple-300 transition-colors">
-                  <div className="text-purple-600 mb-3"><Icon className="w-8 h-8" /></div>
-                  <h3 className="font-semibold text-gray-800 mb-2">{item.platform}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
-                </div>
+                <Card key={index} variant="interactive" padding="default" className="text-left">
+                  <div className="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm">{item.platform}</h3>
+                  <p className="text-gray-600 text-xs">{item.desc}</p>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Process */}
-      <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Our 6-Step UI/UX Design Process
-          </h2>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our 6-Step UI/UX Design Process"
+            subtitle="Iterative, user-tested engineering roadmap from empathy to design system delivery"
+            centered
+          />
           
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
@@ -265,35 +277,32 @@ const UIUXDesign = () => {
                 return (
                   <div key={item.step} className="text-center">
                     <div className="relative mb-4">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto">
+                      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto shadow-md">
                         {item.step}
                       </div>
                       {item.step < 6 && (
-                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-purple-200 transform -translate-y-1/2"></div>
+                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-blue-100 transform -translate-y-1/2"></div>
                       )}
                     </div>
-                    <div className="flex justify-center text-purple-600 mb-2"><Icon className="w-6 h-6" /></div>
-                    <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
-                    <p className="text-gray-600 text-sm">{item.desc}</p>
+                    <div className="flex justify-center text-indigo-600 mb-2"><Icon className="w-6 h-6" /></div>
+                    <h3 className="font-semibold text-gray-900 mb-1 text-sm">{item.title}</h3>
+                    <p className="text-gray-600 text-xs">{item.desc}</p>
                   </div>
                 );
               })}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Principles */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Our Design Principles
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Core principles that guide every design decision we make
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our Design Principles"
+            subtitle="Core principles that guide every design decision we make"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -308,28 +317,27 @@ const UIUXDesign = () => {
             ].map((item, index) => {
               const Icon = item.icon;
               return (
-                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                  <div className="text-purple-600 mb-3"><Icon className="w-6 h-6" /></div>
-                  <h3 className="font-bold text-lg mb-2 text-gray-800">{item.principle}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
+                <Card key={index} variant="default" padding="default" className="text-left">
+                  <div className="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-base mb-1 text-gray-900">{item.principle}</h3>
+                  <p className="text-gray-600 text-xs leading-relaxed">{item.desc}</p>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Deliverables */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Design Deliverables
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Everything you need for successful implementation
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Design Deliverables"
+            subtitle="Everything you need for successful implementation"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
@@ -366,70 +374,66 @@ const UIUXDesign = () => {
             ].map((item, index) => {
               const Icon = item.icon;
               return (
-                <div key={index} className="bg-white p-8 rounded-xl shadow-sm">
-                  <div className="text-purple-600 mb-4"><Icon className="w-8 h-8" /></div>
-                  <h3 className="font-bold text-xl mb-4 text-gray-800">{item.deliverable}</h3>
+                <Card key={index} variant="interactive" padding="lg">
+                  <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-bold text-xl mb-4 text-gray-900">{item.deliverable}</h3>
                   <ul className="space-y-2">
                     {item.items.map((subItem, idx) => (
-                      <li key={idx} className="flex items-center text-gray-600">
-                        <span className="text-purple-500 mr-2">•</span>
+                      <li key={idx} className="flex items-center text-gray-600 text-sm">
+                        <span className="text-purple-600 mr-2 font-bold">•</span>
                         {subItem}
                       </li>
                     ))}
                   </ul>
-                </div>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Tools We Use */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Professional Design Tools
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Industry-standard tools for world-class design work
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Professional Design Tools"
+            subtitle="Industry-standard tools for world-class design work"
+            centered
+          />
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
-              { tool: 'Figma', color: 'bg-purple-100 text-purple-800' },
-              { tool: 'Adobe XD', color: 'bg-pink-100 text-pink-800' },
-              { tool: 'Sketch', color: 'bg-yellow-100 text-yellow-800' },
-              { tool: 'InVision', color: 'bg-blue-100 text-blue-800' },
-              { tool: 'Adobe Creative Cloud', color: 'bg-red-100 text-red-800' },
-              { tool: 'Webflow', color: 'bg-cyan-100 text-cyan-800' },
-              { tool: 'ProtoPie', color: 'bg-green-100 text-green-800' },
-              { tool: 'Framer', color: 'bg-gray-100 text-gray-800' },
-              { tool: 'Miro', color: 'bg-orange-100 text-orange-800' },
-              { tool: 'Zeplin', color: 'bg-indigo-100 text-indigo-800' },
-              { tool: 'Hotjar', color: 'bg-red-50 text-red-700' },
-              { tool: 'UserTesting', color: 'bg-green-50 text-green-700' },
+              { tool: 'Figma', color: 'bg-purple-50 border-purple-200 text-purple-900' },
+              { tool: 'Adobe XD', color: 'bg-pink-50 border-pink-200 text-pink-900' },
+              { tool: 'Sketch', color: 'bg-amber-50 border-amber-200 text-amber-900' },
+              { tool: 'InVision', color: 'bg-blue-50 border-blue-200 text-blue-900' },
+              { tool: 'Creative Cloud', color: 'bg-rose-50 border-rose-200 text-rose-900' },
+              { tool: 'Webflow', color: 'bg-cyan-50 border-cyan-200 text-cyan-900' },
+              { tool: 'ProtoPie', color: 'bg-emerald-50 border-emerald-200 text-emerald-900' },
+              { tool: 'Framer', color: 'bg-gray-50 border-gray-200 text-gray-900' },
+              { tool: 'Miro', color: 'bg-orange-50 border-orange-200 text-orange-900' },
+              { tool: 'Zeplin', color: 'bg-indigo-50 border-indigo-200 text-indigo-900' },
+              { tool: 'Hotjar', color: 'bg-red-50 border-red-200 text-red-900' },
+              { tool: 'UserTesting', color: 'bg-teal-50 border-teal-200 text-teal-900' },
             ].map((item, index) => (
-              <div key={index} className={`${item.color} p-4 rounded-lg text-center font-medium`}>
+              <div key={index} className={`${item.color} border p-4 rounded-xl text-center font-medium text-sm shadow-sm`}>
                 {item.tool}
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Packages */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              UI/UX Design Engagement Frameworks
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Human-centered product design, interactive prototypes, and scalable design systems
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="UI/UX Design Engagement Frameworks"
+            subtitle="Human-centered product design, interactive prototypes, and scalable design systems"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -438,14 +442,13 @@ const UIUXDesign = () => {
                 tier: 'Focused Flow & Wireframes', 
                 scope: 'Single Platform Design',
                 features: ['Up to 10 Screens', 'Basic UI Design', 'Wireframing', 'Color Palette & Typography', 'Clickable Prototype', 'Design Handoff Assets'],
-                color: 'border-purple-200'
+                popular: false
               },
               { 
                 name: 'Professional Design', 
                 tier: 'Multi-Platform Product Design', 
                 scope: 'Cross-Platform Applications',
                 features: ['Up to 30 Screens', 'Complete UI/UX Design', 'Interactive High-Fidelity Prototypes', 'Design System & Component Library', 'User Usability Testing', 'Responsive Layouts'],
-                color: 'border-pink-300',
                 popular: true
               },
               { 
@@ -453,169 +456,187 @@ const UIUXDesign = () => {
                 tier: 'Full Product Architecture', 
                 scope: 'End-to-End Enterprise Software',
                 features: ['Full Product Architecture', 'End-to-End UX Process', 'Advanced Prototyping & Motion Design', 'Enterprise Design System Creation', 'User Research & Journey Mapping', 'WCAG Accessibility Audit', 'Design-to-Engineering Oversight'],
-                color: 'border-purple-300'
+                popular: false
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
+              <Card 
+                key={plan.name} 
+                variant={plan.popular ? 'featured' : 'default'} 
+                padding="lg" 
+                className="relative flex flex-col justify-between"
+              >
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide shadow-md">
                     RECOMMENDED SCOPE
                   </div>
                 )}
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-2xl font-bold text-purple-900 mb-2">{plan.tier}</div>
-                <p className="text-gray-600 mb-4">Scope: <span className="font-semibold">{plan.scope}</span></p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                  <div className="text-lg font-bold text-purple-900 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 mb-6 text-sm">Scope: <span className="font-semibold text-gray-800">{plan.scope}</span></p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700 text-sm">
+                        <Check className="w-4 h-4 text-emerald-500 mr-2 shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <Button
                   to="/book-call"
-                  className="block w-full bg-gradient-to-r from-purple-600 to-pink-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
+                  variant={plan.popular ? 'primary' : 'outline'}
+                  size="md"
+                  className="w-full"
                 >
                   Discuss Design Scope
-                </Link>
-              </div>
+                </Button>
+              </Card>
             ))}
           </div>
           
           <div className="text-center mt-8">
-            <p className="text-gray-600">
+            <p className="text-gray-500 text-sm">
               *Complex SaaS platforms, design system governance, and mobile design sprints scoped individually
             </p>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Impact */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Design ROI & Impact
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              How good design translates to business success
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Design ROI & Impact"
+            subtitle="How good design translates to measurable business success"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-8 rounded-xl">
-              <h3 className="text-2xl font-bold mb-6">Business Benefits</h3>
-              <ul className="space-y-4">
-                {[
-                  'Higher conversion rates (up to 400%)',
-                  'Reduced development costs (by 50%)',
-                  'Lower customer support requests',
-                  'Increased user engagement & retention',
-                  'Competitive differentiation',
-                  'Brand credibility & trust',
-                  'Faster time-to-market',
-                  'Improved customer satisfaction'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <Check className="w-4 h-4 text-white mr-3 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white p-8 rounded-2xl shadow-md flex flex-col justify-between">
+              <div>
+                <h3 className="text-2xl font-bold mb-6 text-yellow-300">Business Benefits</h3>
+                <ul className="space-y-4">
+                  {[
+                    'Higher conversion rates (up to 400%)',
+                    'Reduced development costs (by 50%)',
+                    'Lower customer support requests',
+                    'Increased user engagement & retention',
+                    'Competitive differentiation',
+                    'Brand credibility & trust',
+                    'Faster time-to-market',
+                    'Improved customer satisfaction'
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-center text-sm">
+                      <Check className="w-4 h-4 text-emerald-400 mr-3 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             
-            <div className="bg-white p-8 rounded-xl border border-purple-200">
-              <h3 className="text-2xl font-bold mb-6 text-gray-800">User Experience Metrics</h3>
-              <ul className="space-y-4">
-                {[
-                  'Task completion rate improvement',
-                  'Error rate reduction',
-                  'Time-on-task decrease',
-                  'User satisfaction increase (NPS)',
-                  'Learning curve reduction',
-                  'Accessibility compliance',
-                  'Mobile experience optimization',
-                  'Cross-platform consistency'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700">
-                    <span className="text-purple-500 mr-3">•</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <Card variant="default" padding="lg" className="flex flex-col justify-between border-purple-200">
+              <div>
+                <h3 className="text-2xl font-bold mb-6 text-gray-900">User Experience Metrics</h3>
+                <ul className="space-y-4">
+                  {[
+                    'Task completion rate improvement',
+                    'Error rate reduction',
+                    'Time-on-task decrease',
+                    'User satisfaction increase (NPS)',
+                    'Learning curve reduction',
+                    'Accessibility compliance',
+                    'Mobile experience optimization',
+                    'Cross-platform consistency'
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-center text-gray-700 text-sm">
+                      <span className="text-purple-600 mr-3 font-bold">•</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-purple-600 to-pink-700 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">
+      <Section variant="dark" padding="default">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Transform Your Digital Experience?
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-lg md:text-xl mb-8 opacity-90 leading-relaxed">
               Let's create beautiful, functional designs that users love and businesses thrive on
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <AnimatedButton
                 to="/book-call"
-                className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="w-full sm:w-auto"
               >
                 Book Free Design Consultation
-              </Link>
-              <a
+              </AnimatedButton>
+              <Button
                 href={getTelHref(primaryPhone)}
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-gray-900 inline-flex items-center justify-center gap-2"
               >
                 <Phone className="w-5 h-5" />
                 <span>Call: {primaryPhone}</span>
-              </a>
-              <a
+              </Button>
+              <Button
                 href={getNepalWhatsAppUrl()}
+                variant="primary"
+                size="lg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
+                className="w-full sm:w-auto bg-[#25D366] hover:bg-emerald-600 border-none text-white inline-flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp Design Expert</span>
-              </a>
+              </Button>
             </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white/10 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex flex-col items-center">
                 <div className="font-semibold inline-flex items-center gap-2 mb-1">
-                  <Palette className="w-4 h-4 text-pink-300" />
+                  <Palette className="w-4 h-4 text-yellow-300" />
                   <span>Award-Winning Designers</span>
                 </div>
-                <div className="text-sm opacity-90">Creative professionals</div>
+                <div className="text-sm opacity-80">Creative professionals</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+              <div className="bg-white/10 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex flex-col items-center">
                 <div className="font-semibold inline-flex items-center gap-2 mb-1">
-                  <Rocket className="w-4 h-4 text-pink-300" />
+                  <Rocket className="w-4 h-4 text-yellow-300" />
                   <span>Fast Turnaround</span>
                 </div>
-                <div className="text-sm opacity-90">2-4 weeks delivery</div>
+                <div className="text-sm opacity-80">2-4 weeks delivery</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg flex flex-col items-center">
+              <div className="bg-white/10 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex flex-col items-center">
                 <div className="font-semibold inline-flex items-center gap-2 mb-1">
-                  <CheckCircle2 className="w-4 h-4 text-pink-300" />
+                  <CheckCircle2 className="w-4 h-4 text-yellow-300" />
                   <span>Satisfaction Guarantee</span>
                 </div>
-                <div className="text-sm opacity-90">Unlimited revisions</div>
+                <div className="text-sm opacity-80">Unlimited revisions</div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design Portfolio */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Design Portfolio Preview
-          </h2>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Design Portfolio Preview"
+            subtitle="Selected user experience engagements across ecommerce, SaaS, and mobile platforms"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -623,63 +644,64 @@ const UIUXDesign = () => {
                 category: 'E-commerce UI',
                 project: 'Fashion Store Redesign',
                 highlights: ['Mobile-first design', 'Shopping cart optimization', 'Product discovery'],
-                color: 'bg-pink-100'
               },
               {
                 category: 'SaaS Dashboard',
                 project: 'Analytics Platform',
                 highlights: ['Data visualization', 'Complex interactions', 'User workflow'],
-                color: 'bg-blue-100'
               },
               {
                 category: 'Mobile App',
                 project: 'Fitness Tracking App',
                 highlights: ['Health metrics display', 'Activity tracking', 'Social features'],
-                color: 'bg-green-100'
               },
             ].map((project, index) => (
-              <div key={index} className={`${project.color} p-8 rounded-xl`}>
-                <div className="text-sm font-semibold text-purple-600 mb-2">{project.category}</div>
-                <h3 className="font-bold text-xl mb-4 text-gray-800">{project.project}</h3>
-                <ul className="space-y-2 mb-4">
-                  {project.highlights.map((highlight, idx) => (
-                    <li key={idx} className="flex items-center text-gray-700">
-                      <span className="text-purple-500 mr-2">•</span>
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
+              <Card key={index} variant="interactive" padding="lg" className="flex flex-col justify-between">
+                <div>
+                  <div className="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2">{project.category}</div>
+                  <h3 className="font-bold text-xl mb-4 text-gray-900">{project.project}</h3>
+                  <ul className="space-y-2 mb-6">
+                    {project.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex items-center text-gray-600 text-sm">
+                        <span className="text-purple-600 mr-2 font-bold">•</span>
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <Link
                   to="/portfolio"
-                  className="text-purple-600 hover:text-purple-800 font-semibold inline-flex items-center"
+                  className="text-purple-600 hover:text-purple-800 font-semibold inline-flex items-center text-sm"
                 >
                   View Case Study
                   <span className="ml-2">→</span>
                 </Link>
-              </div>
+              </Card>
             ))}
           </div>
           
           <div className="text-center mt-8">
             <Link
               to="/portfolio"
-              className="inline-flex items-center text-purple-600 hover:text-purple-800 font-semibold text-lg"
+              className="inline-flex items-center text-purple-600 hover:text-purple-800 font-semibold text-base"
             >
               View Full Design Portfolio
               <span className="ml-2">→</span>
             </Link>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Design FAQ */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            UI/UX Design FAQs
-          </h2>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="UI/UX Design FAQs"
+            subtitle="Common questions about our process, tooling, and deliverables"
+            centered
+          />
           
-          <div className="max-w-3xl mx-auto space-y-6">
+          <div className="max-w-3xl mx-auto space-y-4">
             {[
               {
                 q: 'What\'s the difference between UI and UX design?',
@@ -706,14 +728,14 @@ const UIUXDesign = () => {
                 a: 'We primarily use Figma for collaborative design, along with Adobe Creative Suite, Sketch, InVision, and prototyping tools for interactive designs.'
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg">
-                <h3 className="font-semibold text-lg text-gray-800 mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
-              </div>
+              <Card key={index} variant="default" padding="default">
+                <h3 className="font-semibold text-base text-gray-900 mb-2">{faq.q}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

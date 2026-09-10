@@ -1,7 +1,6 @@
-// src/pages/white-label/WhiteLabelWebDevelopment.tsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { FaCode, FaWordpress, FaShoppingCart, FaMobileAlt, FaServer, FaShieldAlt, FaRocket, FaUsers, FaChartLine } from 'react-icons/fa';
 import {
   ClipboardList,
@@ -25,210 +24,227 @@ import {
   Tag,
   Phone,
 } from 'lucide-react';
-import { getPrimaryPhone } from '../../selectors';
+import { getPrimaryPhone, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getNepalWhatsAppUrl } from '../../services';
 import { WhatsAppIcon } from '../../components/ui';
+import Container from '../../components/ui/Container';
+import Section from '../../components/ui/Section';
+import SectionHeader from '../../components/ui/SectionHeader';
+import Card from '../../components/ui/Card';
+import Button from '../../components/ui/Button';
+import AnimatedButton from '../../components/ui/AnimatedButton';
 
 const WhiteLabelWebDevelopment = () => {
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>White Label Web Development Services for Agencies | Growth Service</title>
+        <meta 
+          name="description" 
+          content="Offer premium web development services under your brand with our complete white label solution. WordPress, E-commerce, custom apps, high margins, and 100% white label delivery." 
+        />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label-web`} />
+      </Helmet>
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
-        <div className="container mx-auto px-4">
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <Container>
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
-              <FaCode className="text-5xl" />
+              <FaCode className="text-5xl text-yellow-300" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               White Label Web Development
             </h1>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-xl mb-8 opacity-90 max-w-3xl mx-auto">
               Offer premium web development services under your brand with our complete white label solution
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                as={Link}
                 to="/book-call"
-                className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg"
               >
                 Book White Label Demo
-              </Link>
-              <Link
+              </Button>
+              <Button
+                as={Link}
                 to="/white-label"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="outline"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
               >
                 View All White Label Services
-              </Link>
+              </Button>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Why White Label Web Development */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Scale Your Agency with Web Development
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Add high-margin development services without the overhead of building an in-house tech team
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Scale Your Agency with Web Development"
+            subtitle="Add high-margin development services without the overhead of building an in-house tech team"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="bg-indigo-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaChartLine className="text-indigo-600 text-3xl" />
+            <Card variant="interactive" className="p-8 text-center">
+              <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FaChartLine className="text-indigo-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">70-80% Profit Margin</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">70-80% Profit Margin</h3>
+              <p className="text-gray-600 text-sm">
                 Web development projects command premium pricing with exceptional profit margins
               </p>
-            </div>
+            </Card>
             
-            <div className="text-center p-6">
-              <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaRocket className="text-purple-600 text-3xl" />
+            <Card variant="interactive" className="p-8 text-center">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FaRocket className="text-purple-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">High-Ticket Projects</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">High-Ticket Projects</h3>
+              <p className="text-gray-600 text-sm">
                 Website projects often lead to ongoing retainer services like SEO and maintenance
               </p>
-            </div>
+            </Card>
             
-            <div className="text-center p-6">
-              <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaUsers className="text-green-600 text-3xl" />
+            <Card variant="interactive" className="p-8 text-center">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FaUsers className="text-green-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">100% Confidential</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">100% Confidential</h3>
+              <p className="text-gray-600 text-sm">
                 We work silently in the background. Your clients only know and interact with your agency
               </p>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Web Development Services We Offer */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Complete Web Development Services
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              From simple landing pages to complex web applications, we build it all under your brand
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Complete Web Development Services"
+            subtitle="From simple landing pages to complex web applications, we build it all under your brand"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-indigo-600 text-3xl mb-4">
                 <FaWordpress />
               </div>
-              <h3 className="text-xl font-semibold mb-3">WordPress Development</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">WordPress Development</h3>
               <p className="text-gray-600 mb-4 text-sm">
                 Custom theme development, plugin integration, Elementor/Gutenberg builds, and WooCommerce setups.
               </p>
-              <ul className="text-gray-500 space-y-1 text-xs">
+              <ul className="text-gray-500 space-y-1.5 text-xs">
                 <li>• Custom themes & child themes</li>
                 <li>• Elementor & page builder sites</li>
                 <li>• Plugin customization</li>
                 <li>• Speed & security optimization</li>
               </ul>
-            </div>
+            </Card>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-purple-600 text-3xl mb-4">
                 <FaShoppingCart />
               </div>
-              <h3 className="text-xl font-semibold mb-3">E-Commerce Development</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">E-Commerce Development</h3>
               <p className="text-gray-600 mb-4 text-sm">
                 Shopify, WooCommerce, and custom headless e-commerce solutions with payment gateway integrations.
               </p>
-              <ul className="text-gray-500 space-y-1 text-xs">
+              <ul className="text-gray-500 space-y-1.5 text-xs">
                 <li>• Shopify store setup & themes</li>
                 <li>• WooCommerce configuration</li>
                 <li>• Payment gateway integrations</li>
                 <li>• Product catalog & checkout flow</li>
               </ul>
-            </div>
+            </Card>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-blue-600 text-3xl mb-4">
                 <FaCode />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Custom Web Apps</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Custom Web Apps</h3>
               <p className="text-gray-600 mb-4 text-sm">
                 React, Next.js, Node.js, and TypeScript web applications tailored for specific business logic.
               </p>
-              <ul className="text-gray-500 space-y-1 text-xs">
+              <ul className="text-gray-500 space-y-1.5 text-xs">
                 <li>• Single-page applications (SPA)</li>
                 <li>• Server-side rendering (SSR)</li>
                 <li>• REST API & GraphQL integration</li>
                 <li>• Scalable cloud architecture</li>
               </ul>
-            </div>
+            </Card>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-yellow-600 text-3xl mb-4">
                 <FaMobileAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Landing Pages & Funnels</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Landing Pages & Funnels</h3>
               <p className="text-gray-600 mb-4 text-sm">
                 High-converting, fast-loading landing pages designed to drive leads and sales for PPC campaigns.
               </p>
-              <ul className="text-gray-500 space-y-1 text-xs">
+              <ul className="text-gray-500 space-y-1.5 text-xs">
                 <li>• Conversion-optimized layouts</li>
                 <li>• Form & CRM integrations</li>
                 <li>• Fast loading speed (90+ score)</li>
                 <li>• A/B testing setup</li>
               </ul>
-            </div>
+            </Card>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-green-600 text-3xl mb-4">
                 <FaServer />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Website Maintenance</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Website Maintenance</h3>
               <p className="text-gray-600 mb-4 text-sm">
                 Ongoing updates, security patches, regular backups, uptime monitoring, and technical support.
               </p>
-              <ul className="text-gray-500 space-y-1 text-xs">
+              <ul className="text-gray-500 space-y-1.5 text-xs">
                 <li>• Core & plugin updates</li>
                 <li>• Automated daily backups</li>
                 <li>• Security scans & malware cleanup</li>
                 <li>• 24/7 uptime monitoring</li>
               </ul>
-            </div>
+            </Card>
             
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-red-600 text-3xl mb-4">
                 <FaShieldAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Speed & Security</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Speed & Security</h3>
               <p className="text-gray-600 mb-4 text-sm">
                 Core Web Vitals optimization, caching solutions, SSL enforcement, and vulnerability hardening.
               </p>
-              <ul className="text-gray-500 space-y-1 text-xs">
+              <ul className="text-gray-500 space-y-1.5 text-xs">
                 <li>• Core Web Vitals compliance</li>
                 <li>• CDN setup & caching</li>
                 <li>• Database optimization</li>
                 <li>• Firewall & DDoS protection</li>
               </ul>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* How White Label Works */}
-      <section className="py-16 bg-gradient-to-r from-indigo-50 to-purple-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            How White Label Web Development Works
-          </h2>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="How White Label Web Development Works"
+            subtitle="5-step streamlined methodology for flawless delivery"
+            align="center"
+          />
           
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
             {[
               { step: 1, title: 'Client Brief', desc: 'You gather requirements', icon: ClipboardList },
               { step: 2, title: 'Planning', desc: 'We create project plan', icon: BarChart3 },
@@ -238,31 +254,28 @@ const WhiteLabelWebDevelopment = () => {
             ].map((item) => {
               const StepIcon = item.icon;
               return (
-                <div key={item.step} className="text-center">
-                  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                <Card key={item.step} variant="default" className="p-6 text-center">
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                     {item.step}
                   </div>
-                  <div className="text-indigo-600 mb-3 flex justify-center"><StepIcon className="w-8 h-8" /></div>
+                  <div className="text-blue-600 mb-3 flex justify-center"><StepIcon className="w-7 h-7" /></div>
                   <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* White Label Platform Features */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Platform Features
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Everything you need to deliver web development services
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label Platform Features"
+            subtitle="Everything you need to deliver web development services"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -277,72 +290,59 @@ const WhiteLabelWebDevelopment = () => {
             ].map((item, index) => {
               const FeatureIcon = item.icon;
               return (
-                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                  <div className="text-indigo-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
+                <Card key={index} variant="interactive" className="p-6">
+                  <div className="text-blue-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
                   <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Development Process */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Our Web Development Process
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Structured process for successful project delivery
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our Web Development Process"
+            subtitle="Structured process for successful project delivery"
+            align="center"
+          />
           
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-              {[
-                { step: 1, title: 'Discovery', desc: 'Requirements gathering', icon: Search },
-                { step: 2, title: 'Planning', desc: 'Project scope & timeline', icon: ClipboardList },
-                { step: 3, title: 'Design', desc: 'UI/UX design & wireframes', icon: Palette },
-                { step: 4, title: 'Development', desc: 'Coding & implementation', icon: Code },
-                { step: 5, title: 'Testing', desc: 'QA & bug fixing', icon: TestTube },
-                { step: 6, title: 'Launch', desc: 'Deployment & handover', icon: Rocket },
-              ].map((item) => {
-                const ProcessIcon = item.icon;
-                return (
-                  <div key={item.step} className="text-center">
-                    <div className="relative mb-2">
-                      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold mx-auto">
-                        {item.step}
-                      </div>
-                      {item.step < 6 && (
-                        <div className="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-indigo-200 transform -translate-y-1/2"></div>
-                      )}
-                    </div>
-                    <div className="text-indigo-600 mb-1 flex justify-center"><ProcessIcon className="w-5 h-5" /></div>
-                    <h3 className="font-semibold text-gray-800 mb-1 text-sm">{item.title}</h3>
-                    <p className="text-gray-600 text-xs">{item.desc}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            {[
+              { step: 1, title: 'Discovery', desc: 'Requirements gathering', icon: Search },
+              { step: 2, title: 'Planning', desc: 'Project scope & timeline', icon: ClipboardList },
+              { step: 3, title: 'Design', desc: 'UI/UX design & wireframes', icon: Palette },
+              { step: 4, title: 'Development', desc: 'Coding & implementation', icon: Code },
+              { step: 5, title: 'Testing', desc: 'QA & bug fixing', icon: TestTube },
+              { step: 6, title: 'Launch', desc: 'Deployment & handover', icon: Rocket },
+            ].map((item) => {
+              const ProcessIcon = item.icon;
+              return (
+                <Card key={item.step} variant="default" className="p-4 text-center">
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold mx-auto mb-2">
+                    {item.step}
                   </div>
-                );
-              })}
-            </div>
+                  <div className="text-blue-600 mb-1 flex justify-center"><ProcessIcon className="w-5 h-5" /></div>
+                  <h3 className="font-semibold text-gray-800 mb-1 text-sm">{item.title}</h3>
+                  <p className="text-gray-500 text-xs">{item.desc}</p>
+                </Card>
+              );
+            })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* White Label Packages */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Web Development Frameworks
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Production-ready development capacities engineered seamlessly under your agency's brand
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label Web Development Frameworks"
+            subtitle="Production-ready development capacities engineered seamlessly under your agency's brand"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -351,7 +351,7 @@ const WhiteLabelWebDevelopment = () => {
                 tier: 'Agency Turnkey Site', 
                 type: 'Brochure Website',
                 features: ['5-7 Pages', 'Responsive Modern Design', 'Contact Form & Lead Capture', 'On-Page SEO', 'CMS Integration', '1 Month Post-Launch Support'],
-                color: 'border-indigo-200'
+                color: 'border-blue-200'
               },
               { 
                 name: 'Business Website', 
@@ -366,55 +366,57 @@ const WhiteLabelWebDevelopment = () => {
                 tier: 'Full Commerce Engine', 
                 type: 'Online Store',
                 features: ['Full E-commerce Capability', 'Payment Gateway Integration', 'Catalog & Inventory Management', 'ERP Sync Ready', 'Mobile-Responsive UI', '6 Months Support', 'Dedicated Account Manager'],
-                color: 'border-indigo-300'
+                color: 'border-yellow-300'
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST REQUESTED
-                  </div>
-                )}
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-2xl font-bold text-indigo-900 mb-2">{plan.tier}</div>
-                <p className="text-gray-600 mb-4">Type: <span className="font-semibold">{plan.type}</span></p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/book-call"
-                  className="block w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
-                >
-                  Partner Inquiry
-                </Link>
-              </div>
+              <Card key={plan.name} variant={plan.popular ? 'featured' : 'default'} className={`border-2 ${plan.color} p-8 relative flex flex-col justify-between`}>
+                <div>
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-semibold">
+                      MOST REQUESTED
+                    </div>
+                  )}
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-purple-700 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-sm mb-6">Type: <span className="font-semibold text-gray-900">{plan.type}</span></p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700 text-sm">
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-4">
+                  <AnimatedButton
+                    to="/book-call"
+                    variant="primary"
+                    className="w-full justify-center"
+                  >
+                    Partner Inquiry
+                  </AnimatedButton>
+                </div>
+              </Card>
             ))}
           </div>
           
           <div className="text-center mt-8">
-            <p className="text-gray-600">
+            <p className="text-gray-500 text-sm">
               *Custom agency volume tiers and enterprise multi-site agreements scoped individually
             </p>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Maintenance Plans */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Maintenance Frameworks
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Reliable recurring maintenance fulfillment for your agency's client portfolio
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label Maintenance Frameworks"
+            subtitle="Reliable recurring maintenance fulfillment for your agency's client portfolio"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -422,61 +424,63 @@ const WhiteLabelWebDevelopment = () => {
                 name: 'Basic Care', 
                 tier: 'Essential Maintenance', 
                 features: ['Weekly Backups', 'Security Updates', 'Uptime Monitoring', 'White-Label Bug Fixes', 'Monthly Performance Reports', 'Core Updates'],
-                color: 'bg-indigo-50'
+                color: 'bg-blue-50/40 border-blue-200'
               },
               { 
                 name: 'Professional Care', 
                 tier: 'Proactive Optimization', 
                 features: ['Daily Backups', 'Advanced Security', 'Speed Optimization', 'Monthly Content Updates', 'Priority Agency SLA', 'Quarterly Review Audits'],
-                color: 'bg-purple-50',
+                color: 'bg-purple-50/40 border-purple-300',
                 popular: true
               },
               { 
                 name: 'Enterprise Care', 
                 tier: 'Dedicated SLA', 
                 features: ['Real-time Backups', 'Enterprise Hardening', '24/7 Monitoring', 'Active Hours Retainer', 'Emergency Incident Response', 'Strategic Technical Architecture'],
-                color: 'bg-indigo-50'
+                color: 'bg-yellow-50/40 border-yellow-300'
               },
             ].map((plan) => (
-              <div key={plan.name} className={`${plan.color} p-8 rounded-xl border border-indigo-200`}>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-2xl font-bold text-indigo-900 mb-4">{plan.tier}</div>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/book-call"
-                  className="block w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
-                >
-                  Discuss Maintenance Retainers
-                </Link>
-              </div>
+              <Card key={plan.name} variant={plan.popular ? 'featured' : 'default'} className={`${plan.color} p-8 border flex flex-col justify-between`}>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-purple-700 mb-4">{plan.tier}</div>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700 text-sm">
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-4">
+                  <AnimatedButton
+                    to="/book-call"
+                    variant="primary"
+                    className="w-full justify-center"
+                  >
+                    Discuss Maintenance Retainers
+                  </AnimatedButton>
+                </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Agency Benefits */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Benefits for Your Agency
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Why agencies choose our white label web development
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Benefits for Your Agency"
+            subtitle="Why agencies choose our white label web development"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-8 rounded-xl">
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 rounded-xl">
               <h3 className="text-2xl font-bold mb-6">Business Growth</h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {[
                   'Add high-margin web development (70-80% profit)',
                   'Increase project sizes by 3-5x',
@@ -487,17 +491,17 @@ const WhiteLabelWebDevelopment = () => {
                   'Build long-term client partnerships',
                   'Increase agency valuation with diverse services'
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <Rocket className="w-4 h-4 text-white mr-3 shrink-0" />
-                    {item}
+                  <li key={index} className="flex items-center text-sm">
+                    <Rocket className="w-4 h-4 text-yellow-300 mr-3 shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
-            <div className="bg-white p-8 rounded-xl border border-indigo-200">
+            <Card variant="default" className="p-8 border border-blue-200">
               <h3 className="text-2xl font-bold mb-6 text-gray-800">Operational Efficiency</h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {[
                   'No need to hire web developers',
                   'No software or tool license costs',
@@ -508,174 +512,181 @@ const WhiteLabelWebDevelopment = () => {
                   '24/7 technical support',
                   'Expert development team at your service'
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700">
-                    <Zap className="w-4 h-4 text-indigo-500 mr-3 shrink-0" />
-                    {item}
+                  <li key={index} className="flex items-center text-gray-700 text-sm">
+                    <Zap className="w-4 h-4 text-blue-600 mr-3 shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Case Study */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Agency Success Story
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              See how agencies transform with white label web development
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Agency Success Story"
+            subtitle="See how agencies transform with white label web development"
+            align="center"
+          />
           
-          <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="md:w-1/3">
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-lg text-center">
-                  <div className="text-4xl font-bold mb-2">500%</div>
-                  <div className="font-semibold">Revenue Growth</div>
+          <div className="max-w-4xl mx-auto">
+            <Card variant="default" className="p-8">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="md:w-1/3">
+                  <div className="bg-blue-50 text-blue-900 p-6 rounded-xl text-center border border-blue-100">
+                    <div className="text-4xl font-bold mb-2">500%</div>
+                    <div className="font-semibold text-sm">Revenue Growth</div>
+                  </div>
+                </div>
+                <div className="md:w-2/3">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-800">Marketing Agency Transformation</h3>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-700 mb-2 text-sm">Before White Label Web Development:</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm">
+                      <li>• Only offering digital marketing services</li>
+                      <li>• Referring web development work to others</li>
+                      <li>• 10 clients, ₹6L/month revenue</li>
+                      <li>• Missing website project opportunities</li>
+                      <li>• No technical capabilities in-house</li>
+                    </ul>
+                  </div>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-700 mb-2 text-sm">After White Label Web Development:</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm">
+                      <li>• Added full web development services</li>
+                      <li>• Completed 15 website projects in 6 months</li>
+                      <li>• Converted 8 marketing clients to web projects</li>
+                      <li>• ₹30L/month revenue (500% growth)</li>
+                      <li>• Added ₹2L/month in maintenance revenue</li>
+                      <li>• Became full-service digital agency</li>
+                    </ul>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-gray-100">
+                    <p className="text-gray-700 font-semibold italic text-sm">"White label web development transformed our agency from service provider to full digital partner. We now handle everything from strategy to development, and our clients love the seamless experience."</p>
+                    <p className="text-gray-500 mt-1 text-xs">- Agency Founder, 2-year partnership</p>
+                  </div>
                 </div>
               </div>
-              <div className="md:w-2/3">
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Marketing Agency Transformation</h3>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-700 mb-2">Before White Label Web Development:</h4>
-                  <ul className="space-y-1 text-gray-600">
-                    <li>• Only offering digital marketing services</li>
-                    <li>• Referring web development work to others</li>
-                    <li>• 10 clients, ₹6L/month revenue</li>
-                    <li>• Missing website project opportunities</li>
-                    <li>• No technical capabilities in-house</li>
-                  </ul>
-                </div>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-700 mb-2">After White Label Web Development:</h4>
-                  <ul className="space-y-1 text-gray-600">
-                    <li>• Added full web development services</li>
-                    <li>• Completed 15 website projects in 6 months</li>
-                    <li>• Converted 8 marketing clients to web projects</li>
-                    <li>• ₹30L/month revenue (500% growth)</li>
-                    <li>• Added ₹2L/month in maintenance revenue</li>
-                    <li>• Became full-service digital agency</li>
-                  </ul>
-                </div>
-                <div className="mt-6">
-                  <p className="text-gray-700 font-semibold">"White label web development transformed our agency from service provider to full digital partner. We now handle everything from strategy to development, and our clients love the seamless experience."</p>
-                  <p className="text-gray-600 mt-2">- Agency Founder, 2-year partnership</p>
-                </div>
-              </div>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">
+      <section className="bg-gradient-to-r from-blue-900 to-purple-900 text-white py-16">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">
               Ready to Offer Web Development Services?
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-lg mb-8 opacity-90">
               Add high-margin web development to your agency with complete white label support
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                as={Link}
                 to="/book-call"
-                className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="bg-white text-purple-900 hover:bg-gray-100 shadow-lg"
               >
                 Book White Label Demo
-              </Link>
-              <a
+              </Button>
+              <Button
+                as="a"
                 href={getTelHref(getPrimaryPhone())}
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
+                variant="outline"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white hover:text-purple-900 inline-flex items-center justify-center gap-2"
               >
                 <Phone className="w-5 h-5" />
                 <span>Call: {getPrimaryPhone()}</span>
-              </a>
-              <a
+              </Button>
+              <Button
+                as="a"
                 href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
+                variant="primary"
+                size="lg"
+                className="bg-[#25D366] hover:bg-emerald-600 text-white border-0 inline-flex items-center justify-center gap-2 shadow-lg"
               >
                 <WhatsAppIcon className="w-5 h-5" />
                 <span>WhatsApp Partnership</span>
-              </a>
+              </Button>
             </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold flex items-center justify-center gap-1.5">
-                  <Tag className="w-4 h-4" />
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white/10 p-4 rounded-xl border border-white/10">
+                <div className="font-semibold flex items-center justify-center gap-1.5 text-sm">
+                  <Tag className="w-4 h-4 text-yellow-300" />
                   <span>100% White Label</span>
                 </div>
-                <div className="text-sm opacity-90">Your brand only</div>
+                <div className="text-xs opacity-90 mt-1">Your brand only</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold flex items-center justify-center gap-1.5">
-                  <DollarSign className="w-4 h-4" />
+              <div className="bg-white/10 p-4 rounded-xl border border-white/10">
+                <div className="font-semibold flex items-center justify-center gap-1.5 text-sm">
+                  <DollarSign className="w-4 h-4 text-yellow-300" />
                   <span>High Margins</span>
                 </div>
-                <div className="text-sm opacity-90">70-80% profit margins</div>
+                <div className="text-xs opacity-90 mt-1">70-80% profit margins</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold flex items-center justify-center gap-1.5">
-                  <Zap className="w-4 h-4" />
+              <div className="bg-white/10 p-4 rounded-xl border border-white/10">
+                <div className="font-semibold flex items-center justify-center gap-1.5 text-sm">
+                  <Zap className="w-4 h-4 text-yellow-300" />
                   <span>Fast Development</span>
                 </div>
-                <div className="text-sm opacity-90">2-6 weeks delivery</div>
+                <div className="text-xs opacity-90 mt-1">2-6 weeks delivery</div>
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Technology Stack */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Professional Technology Stack
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Modern technologies for exceptional web development
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Professional Technology Stack"
+            subtitle="Modern technologies for exceptional web development"
+            align="center"
+          />
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
-              { tech: 'React.js', color: 'bg-cyan-100 text-cyan-800' },
-              { tech: 'Next.js', color: 'bg-gray-100 text-gray-800' },
-              { tech: 'Node.js', color: 'bg-green-100 text-green-800' },
-              { tech: 'TypeScript', color: 'bg-blue-100 text-blue-800' },
-              { tech: 'WordPress', color: 'bg-blue-50 text-blue-700' },
-              { tech: 'Shopify', color: 'bg-green-50 text-green-700' },
-              { tech: 'PHP', color: 'bg-purple-100 text-purple-800' },
-              { tech: 'Python', color: 'bg-yellow-100 text-yellow-800' },
-              { tech: 'MySQL', color: 'bg-blue-100 text-blue-800' },
-              { tech: 'MongoDB', color: 'bg-green-100 text-green-800' },
-              { tech: 'AWS', color: 'bg-orange-100 text-orange-800' },
-              { tech: 'Docker', color: 'bg-blue-100 text-blue-800' },
+              { tech: 'React.js', color: 'bg-cyan-50 text-cyan-800 border-cyan-100' },
+              { tech: 'Next.js', color: 'bg-slate-50 text-slate-800 border-slate-200' },
+              { tech: 'Node.js', color: 'bg-emerald-50 text-emerald-800 border-emerald-100' },
+              { tech: 'TypeScript', color: 'bg-blue-50 text-blue-800 border-blue-100' },
+              { tech: 'WordPress', color: 'bg-sky-50 text-sky-800 border-sky-100' },
+              { tech: 'Shopify', color: 'bg-green-50 text-green-800 border-green-100' },
+              { tech: 'PHP', color: 'bg-purple-50 text-purple-800 border-purple-100' },
+              { tech: 'Python', color: 'bg-yellow-50 text-yellow-800 border-yellow-100' },
+              { tech: 'MySQL', color: 'bg-blue-50 text-blue-800 border-blue-100' },
+              { tech: 'MongoDB', color: 'bg-green-50 text-green-800 border-green-100' },
+              { tech: 'AWS', color: 'bg-amber-50 text-amber-800 border-amber-100' },
+              { tech: 'Docker', color: 'bg-blue-50 text-blue-800 border-blue-100' },
             ].map((item, index) => (
-              <div key={index} className={`${item.color} p-4 rounded-lg text-center font-medium`}>
+              <Card key={index} variant="interactive" className={`${item.color} p-4 text-center font-medium text-sm border`}>
                 {item.tech}
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            White Label Web Development FAQs
-          </h2>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label Web Development FAQs"
+            subtitle="Frequently asked questions about our web development partnerships"
+            align="center"
+          />
           
-          <div className="max-w-3xl mx-auto space-y-6">
+          <div className="max-w-3xl mx-auto space-y-4">
             {[
               {
                 q: 'How do you ensure our clients never know about you?',
@@ -702,30 +713,27 @@ const WhiteLabelWebDevelopment = () => {
                 a: 'Yes, we provide client training for content management systems. We create video tutorials and documentation that you can share with your clients under your branding.'
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
+              <Card key={index} variant="default" className="p-6">
                 <h3 className="font-semibold text-lg text-gray-800 mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
-              </div>
+                <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Partnership Requirements */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Agency Partnership Requirements
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              What we look for in white label agency partners
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Agency Partnership Requirements"
+            subtitle="What we look for in white label agency partners"
+            align="center"
+          />
           
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white p-8 rounded-xl border border-indigo-200">
+              <Card variant="default" className="p-8 border border-indigo-200">
                 <h3 className="text-xl font-bold mb-4 text-gray-800">Agency Requirements</h3>
                 <ul className="space-y-3">
                   {[
@@ -738,15 +746,15 @@ const WhiteLabelWebDevelopment = () => {
                     'Willingness to learn web development process',
                     'Ethical business practices'
                   ].map((item, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
+                    <li key={index} className="flex items-center text-gray-700 text-sm">
                       <Check className="w-4 h-4 text-indigo-500 mr-2 shrink-0" />
-                      {item}
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Card>
               
-              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-8 rounded-xl">
+              <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 rounded-xl">
                 <h3 className="text-xl font-bold mb-4">We Provide</h3>
                 <ul className="space-y-3">
                   {[
@@ -759,9 +767,9 @@ const WhiteLabelWebDevelopment = () => {
                     'Agency sales resources',
                     'Dedicated project manager'
                   ].map((item, index) => (
-                    <li key={index} className="flex items-center">
+                    <li key={index} className="flex items-center text-sm">
                       <Zap className="w-4 h-4 text-yellow-300 mr-2 shrink-0" />
-                      {item}
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -769,21 +777,23 @@ const WhiteLabelWebDevelopment = () => {
             </div>
             
             <div className="text-center mt-8">
-              <div className="inline-block bg-indigo-50 p-6 rounded-xl">
-                <p className="text-indigo-700 font-semibold text-lg">
+              <div className="inline-block bg-indigo-50 border border-indigo-200 p-6 rounded-xl">
+                <p className="text-indigo-900 font-medium text-sm mb-4">
                   Ready to become a white label web development partner? Schedule a demo to see our portfolio and process.
                 </p>
-                <Link
+                <Button
+                  as={Link}
                   to="/book-call"
-                  className="inline-block mt-4 bg-gradient-to-r from-indigo-600 to-purple-700 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90"
+                  variant="primary"
+                  className="shadow-md"
                 >
                   Schedule Partnership Call
-                </Link>
+                </Button>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

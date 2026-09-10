@@ -1,8 +1,7 @@
-// src/pages/white-label/WhiteLabelPPC.tsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaGoogle, FaFacebook, FaLinkedin, FaChartLine, FaUsers, FaDollarSign, FaRocket, FaShieldAlt, FaSync, FaCog, FaBullseye, FaFileAlt } from 'react-icons/fa';
+import { Helmet } from 'react-helmet';
+import { FaGoogle, FaFacebook, FaLinkedin, FaDollarSign, FaRocket, FaShieldAlt, FaCog, FaBullseye, FaFileAlt } from 'react-icons/fa';
 import {
   Handshake,
   ClipboardList,
@@ -20,18 +19,32 @@ import {
   TrendingUp,
   Check,
 } from 'lucide-react';
-import { getPrimaryPhone } from '../../selectors';
+import { getPrimaryPhone, getCanonicalOrigin } from '../../selectors';
 import { getTelHref, getNepalWhatsAppUrl } from '../../services';
-import { WhatsAppIcon } from '../../components/ui';
+import Container from '../../components/ui/Container';
+import Section from '../../components/ui/Section';
+import SectionHeader from '../../components/ui/SectionHeader';
+import Card from '../../components/ui/Card';
+import Button from '../../components/ui/Button';
+import AnimatedButton from '../../components/ui/AnimatedButton';
 
 const WhiteLabelPPC = () => {
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>White Label PPC Management Services | Growth Service</title>
+        <meta 
+          name="description" 
+          content="Offer premium PPC services under your brand with our complete white label solution. High profit margins, zero hiring costs, and 100% confidential fulfillment." 
+        />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label-ppc`} />
+      </Helmet>
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-20">
-        <div className="container mx-auto px-4">
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-6 space-x-4">
+            <div className="flex justify-center mb-6 space-x-6 text-white/90">
               <FaGoogle className="text-4xl" />
               <FaFacebook className="text-4xl" />
               <FaLinkedin className="text-4xl" />
@@ -39,186 +52,183 @@ const WhiteLabelPPC = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               White Label PPC Management
             </h1>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-xl mb-8 opacity-90 max-w-3xl mx-auto">
               Offer premium PPC services under your brand with our complete white label solution
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                as={Link}
                 to="/book-call"
-                className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg"
               >
                 Book White Label Demo
-              </Link>
-              <Link
+              </Button>
+              <Button
+                as={Link}
                 to="/white-label"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-green-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="outline"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
               >
                 View All White Label Services
-              </Link>
+              </Button>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Why White Label PPC */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Why Choose White Label PPC?
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Scale your agency revenue without hiring PPC experts or investing in expensive tools
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Why Choose White Label PPC?"
+            subtitle="Scale your agency revenue without hiring PPC experts or investing in expensive tools"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center">
+            <Card variant="interactive" className="p-8 text-center">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaDollarSign className="text-green-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-bold mb-4">High Profit Margins</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-3 text-gray-900">High Profit Margins</h3>
+              <p className="text-gray-600 text-sm">
                 Resell our services at your own price point and keep 60-70% profit margins on every project.
               </p>
-            </div>
+            </Card>
             
-            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center">
+            <Card variant="interactive" className="p-8 text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaRocket className="text-blue-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Instant Expertise</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-3 text-gray-900">Instant Expertise</h3>
+              <p className="text-gray-600 text-sm">
                 Offer advanced PPC capabilities immediately backed by our team of certified specialists.
               </p>
-            </div>
+            </Card>
             
-            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 text-center">
+            <Card variant="interactive" className="p-8 text-center">
               <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaShieldAlt className="text-purple-600 text-2xl" />
               </div>
-              <h3 className="text-xl font-bold mb-4">100% Confidential</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-3 text-gray-900">100% Confidential</h3>
+              <p className="text-gray-600 text-sm">
                 Complete white label delivery under your brand name with strict NDA protection.
               </p>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* White Label PPC Services */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Complete White Label PPC Services
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Everything you need to offer premium PPC management under your brand
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Complete White Label PPC Services"
+            subtitle="Everything you need to offer premium PPC management under your brand"
+            align="center"
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-green-600 text-3xl mb-4">
+            <Card variant="default" className="p-8">
+              <div className="text-blue-600 text-3xl mb-4">
                 <FaGoogle />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Google Ads Management</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Google Ads Management</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Search Campaign Management</li>
                 <li>• Display Network Campaigns</li>
                 <li>• YouTube Video Ads</li>
                 <li>• Shopping Campaigns</li>
                 <li>• App Campaigns</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-blue-600 text-3xl mb-4">
                 <FaFacebook />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Meta Ads Management</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Meta Ads Management</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Facebook Ads Management</li>
                 <li>• Instagram Ads</li>
                 <li>• WhatsApp Business Ads</li>
                 <li>• Messenger Ads</li>
                 <li>• Audience Network</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-purple-600 text-3xl mb-4">
                 <FaLinkedin />
               </div>
-              <h3 className="text-xl font-semibold mb-3">LinkedIn Ads Management</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">LinkedIn Ads Management</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• B2B Lead Generation</li>
                 <li>• Sponsored Content</li>
                 <li>• Message Ads</li>
                 <li>• Dynamic Ads</li>
                 <li>• Account-Based Marketing</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-red-600 text-3xl mb-4">
                 <FaBullseye />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Strategy & Planning</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Strategy & Planning</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Campaign Strategy Development</li>
                 <li>• Keyword Research & Planning</li>
                 <li>• Audience Targeting Strategy</li>
                 <li>• Budget Allocation Planning</li>
                 <li>• Competitive Analysis</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-yellow-600 text-3xl mb-4">
                 <FaCog />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Implementation & Optimization</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Implementation & Optimization</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Campaign Setup & Launch</li>
                 <li>• Daily Bid Optimization</li>
                 <li>• Ad Creative Testing</li>
                 <li>• Landing Page Optimization</li>
                 <li>• Conversion Tracking Setup</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <Card variant="default" className="p-8">
               <div className="text-indigo-600 text-3xl mb-4">
                 <FaFileAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Reporting & Analytics</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Reporting & Analytics</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Custom White Label Reports</li>
                 <li>• Monthly Performance Reviews</li>
                 <li>• ROI Analysis</li>
                 <li>• Client Dashboard Access</li>
                 <li>• Quarterly Strategy Reviews</li>
               </ul>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* How White Label Works */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              How White Label PPC Works
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Simple 4-step process to scale your agency with PPC services
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="How White Label PPC Works"
+            subtitle="Simple 4-step process to scale your agency with PPC services"
+            align="center"
+          />
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { step: 1, title: 'Onboarding', desc: 'Client details & access sharing', icon: Handshake },
               { step: 2, title: 'Strategy', desc: 'Campaign planning & setup', icon: ClipboardList },
@@ -227,26 +237,28 @@ const WhiteLabelPPC = () => {
             ].map((item) => {
               const StepIcon = item.icon;
               return (
-                <div key={item.step} className="text-center">
-                  <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                <Card key={item.step} variant="default" className="p-6 text-center">
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                     {item.step}
                   </div>
-                  <div className="text-green-600 mb-3 flex justify-center"><StepIcon className="w-8 h-8" /></div>
+                  <div className="text-blue-600 mb-3 flex justify-center"><StepIcon className="w-7 h-7" /></div>
                   <h3 className="text-lg font-semibold mb-2 text-gray-800">{item.title}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* White Label Platform */}
-      <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Our White Label Platform Features
-          </h2>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Our White Label Platform Features"
+            subtitle="Engineered for seamless client delivery and effortless agency scaling"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -261,60 +273,54 @@ const WhiteLabelPPC = () => {
             ].map((item, index) => {
               const FeatureIcon = item.icon;
               return (
-                <div key={index} className="bg-white p-6 rounded-xl border border-gray-200">
-                  <div className="text-green-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
+                <Card key={index} variant="interactive" className="p-6">
+                  <div className="text-blue-600 mb-3"><FeatureIcon className="w-7 h-7" /></div>
                   <h3 className="font-bold text-lg mb-2 text-gray-800">{item.feature}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* PPC Platforms Covered */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              PPC Platforms We Manage
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Complete coverage across all major advertising platforms
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="PPC Platforms We Manage"
+            subtitle="Complete coverage across all major advertising platforms"
+            align="center"
+          />
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { platform: 'Google Ads', color: 'bg-green-100 text-green-800', spend: '$10K+' },
-              { platform: 'Microsoft Ads', color: 'bg-blue-100 text-blue-800', spend: '$5K+' },
-              { platform: 'Facebook Ads', color: 'bg-blue-50 text-blue-700', spend: '$5K+' },
-              { platform: 'Instagram Ads', color: 'bg-pink-100 text-pink-800', spend: '$3K+' },
-              { platform: 'LinkedIn Ads', color: 'bg-blue-100 text-blue-800', spend: '$15K+' },
-              { platform: 'Twitter Ads', color: 'bg-blue-100 text-blue-800', spend: '$3K+' },
-              { platform: 'Pinterest Ads', color: 'bg-red-100 text-red-800', spend: '$2K+' },
-              { platform: 'TikTok Ads', color: 'bg-black text-white', spend: '$2K+' },
+              { platform: 'Google Ads', color: 'bg-blue-50 text-blue-900 border-blue-100', spend: '$10K+' },
+              { platform: 'Microsoft Ads', color: 'bg-blue-50/60 text-blue-800 border-blue-100', spend: '$5K+' },
+              { platform: 'Facebook Ads', color: 'bg-indigo-50 text-indigo-900 border-indigo-100', spend: '$5K+' },
+              { platform: 'Instagram Ads', color: 'bg-pink-50 text-pink-900 border-pink-100', spend: '$3K+' },
+              { platform: 'LinkedIn Ads', color: 'bg-blue-50 text-blue-900 border-blue-100', spend: '$15K+' },
+              { platform: 'Twitter Ads', color: 'bg-sky-50 text-sky-900 border-sky-100', spend: '$3K+' },
+              { platform: 'Pinterest Ads', color: 'bg-red-50 text-red-900 border-red-100', spend: '$2K+' },
+              { platform: 'TikTok Ads', color: 'bg-gray-100 text-gray-900 border-gray-200', spend: '$2K+' },
             ].map((platform, index) => (
-              <div key={index} className={`${platform.color} p-6 rounded-xl text-center`}>
+              <Card key={index} variant="interactive" className={`${platform.color} p-6 text-center border`}>
                 <h3 className="font-bold text-lg mb-2">{platform.platform}</h3>
-                <p className="text-sm opacity-80">Minimum spend: {platform.spend}/month</p>
-              </div>
+                <p className="text-xs opacity-80">Minimum spend: {platform.spend}/month</p>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* White Label Packages */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label PPC Frameworks
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              High-converting Google Ads and Meta Ads performance fulfillment delivered under your agency's banner
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label PPC Frameworks"
+            subtitle="High-converting Google Ads and Meta Ads performance fulfillment delivered under your agency's banner"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -323,14 +329,14 @@ const WhiteLabelPPC = () => {
                 tier: 'Single-Channel Paid Search / Social', 
                 clients: '1-5 Client Accounts',
                 features: ['Google OR Meta Ads Management', 'Campaign Architecture & Strategy', 'White-Label Performance Reporting', 'Weekly Bid & Negative Match Optimization', 'Dedicated Email Support', 'Pixel & Conversion API Verification'],
-                color: 'border-green-200'
+                color: 'border-blue-200'
               },
               { 
                 name: 'Growth', 
                 tier: 'Multi-Channel Performance Scale', 
                 clients: '6-15 Client Accounts',
                 features: ['Full Google + Meta Ads Synergy', 'Weekly Strategic Optimization', 'Advanced Multi-Touch Attribution Reporting', 'Daily Bid & Audience Optimization', 'Priority Phone Support', 'Live White-Label Client Dashboards', 'Creative Ad Copy & Hook Testing'],
-                color: 'border-blue-300',
+                color: 'border-purple-300',
                 popular: true
               },
               { 
@@ -338,58 +344,60 @@ const WhiteLabelPPC = () => {
                 tier: 'Omni-Channel & High Spend Retainer', 
                 clients: '16+ Client Accounts',
                 features: ['Omnichannel (Google, Meta, YouTube, LinkedIn)', 'Dedicated Senior Media Buyer', 'Custom White-Label Executive Dashboards', 'Continuous Real-Time Budget Optimization', 'Priority Agency SLA', 'Internal Agency Team Strategy Sessions', 'Volume Retainer Discounts'],
-                color: 'border-green-300'
+                color: 'border-yellow-300'
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative`}>
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    MOST REQUESTED
-                  </div>
-                )}
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                <div className="text-2xl font-bold text-green-900 mb-2">{plan.tier}</div>
-                <p className="text-gray-600 mb-4">Scale: <span className="font-semibold">{plan.clients}</span></p>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
-                      <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/book-call"
-                  className="block w-full bg-gradient-to-r from-green-600 to-blue-700 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
-                >
-                  Partner Inquiry
-                </Link>
-              </div>
+              <Card key={plan.name} variant={plan.popular ? 'featured' : 'default'} className={`border-2 ${plan.color} p-8 relative flex flex-col justify-between`}>
+                <div>
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-semibold">
+                      MOST REQUESTED
+                    </div>
+                  )}
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-purple-700 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-sm mb-6">Scale: <span className="font-semibold text-gray-900">{plan.clients}</span></p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700 text-sm">
+                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-4">
+                  <AnimatedButton
+                    to="/book-call"
+                    variant="primary"
+                    className="w-full justify-center"
+                  >
+                    Partner Inquiry
+                  </AnimatedButton>
+                </div>
+              </Card>
             ))}
           </div>
           
           <div className="text-center mt-8">
-            <p className="text-gray-600">
+            <p className="text-gray-500 text-sm">
               *Agency volume retainers and custom multi-client performance agreements scoped individually
             </p>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Agency Benefits */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Benefits for Your Agency
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Why agencies choose our white label PPC solution
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Benefits for Your Agency"
+            subtitle="Why agencies choose our white label PPC solution"
+            align="center"
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-8 rounded-xl">
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 rounded-xl">
               <h3 className="text-2xl font-bold mb-6">Financial Benefits</h3>
               <ul className="space-y-3">
                 {[
@@ -402,15 +410,15 @@ const WhiteLabelPPC = () => {
                   'Lower client acquisition costs',
                   'Faster ROI on services'
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <LucideDollarSign className="w-4 h-4 text-white mr-3 shrink-0" />
-                    {item}
+                  <li key={index} className="flex items-center text-sm">
+                    <LucideDollarSign className="w-4 h-4 text-yellow-300 mr-3 shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
-            <div className="bg-white p-8 rounded-xl border border-green-200">
+            <Card variant="default" className="p-8 border border-blue-200">
               <h3 className="text-2xl font-bold mb-6 text-gray-800">Operational Benefits</h3>
               <ul className="space-y-3">
                 {[
@@ -423,137 +431,147 @@ const WhiteLabelPPC = () => {
                   'Industry best practices',
                   'Continuous optimization'
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700">
-                    <Zap className="w-4 h-4 text-green-500 mr-3 shrink-0" />
-                    {item}
+                  <li key={index} className="flex items-center text-gray-700 text-sm">
+                    <Zap className="w-4 h-4 text-blue-600 mr-3 shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Case Study */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              White Label Success Story
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              See how agencies grow with our white label PPC solution
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label Success Story"
+            subtitle="See how agencies grow with our white label PPC solution"
+            align="center"
+          />
           
-          <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="md:w-1/3">
-                <div className="bg-green-100 text-green-800 p-6 rounded-lg text-center">
-                  <div className="text-4xl font-bold mb-2">450%</div>
-                  <div className="font-semibold">Revenue Growth</div>
+          <div className="max-w-4xl mx-auto">
+            <Card variant="default" className="p-8">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="md:w-1/3">
+                  <div className="bg-blue-50 text-blue-800 p-6 rounded-xl text-center border border-blue-100">
+                    <div className="text-4xl font-bold mb-2">450%</div>
+                    <div className="font-semibold text-sm">Revenue Growth</div>
+                  </div>
+                </div>
+                <div className="md:w-2/3">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-800">Digital Marketing Agency Success</h3>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-700 mb-2 text-sm">Before White Label PPC:</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm">
+                      <li>• Limited to SEO and social media services</li>
+                      <li>• Turning away PPC client requests</li>
+                      <li>• 5 clients, ₹3L/month revenue</li>
+                      <li>• No PPC expertise in-house</li>
+                    </ul>
+                  </div>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-700 mb-2 text-sm">After White Label PPC:</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm">
+                      <li>• Added full PPC services under their brand</li>
+                      <li>• Acquired 12 new PPC clients in 6 months</li>
+                      <li>• ₹13.5L/month revenue (450% growth)</li>
+                      <li>• Expanded to enterprise clients</li>
+                      <li>• Become full-service digital agency</li>
+                    </ul>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-gray-100">
+                    <p className="text-gray-700 font-semibold italic text-sm">"White label PPC transformed our agency from niche to full-service. Our clients love the results, and they never know we have a partner."</p>
+                    <p className="text-gray-500 mt-1 text-xs">- Agency Founder, 3-year partnership</p>
+                  </div>
                 </div>
               </div>
-              <div className="md:w-2/3">
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">Digital Marketing Agency Success</h3>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-700 mb-2">Before White Label PPC:</h4>
-                  <ul className="space-y-1 text-gray-600">
-                    <li>• Limited to SEO and social media services</li>
-                    <li>• Turning away PPC client requests</li>
-                    <li>• 5 clients, ₹3L/month revenue</li>
-                    <li>• No PPC expertise in-house</li>
-                  </ul>
-                </div>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-gray-700 mb-2">After White Label PPC:</h4>
-                  <ul className="space-y-1 text-gray-600">
-                    <li>• Added full PPC services under their brand</li>
-                    <li>• Acquired 12 new PPC clients in 6 months</li>
-                    <li>• ₹13.5L/month revenue (450% growth)</li>
-                    <li>• Expanded to enterprise clients</li>
-                    <li>• Become full-service digital agency</li>
-                  </ul>
-                </div>
-                <div className="mt-6">
-                  <p className="text-gray-700 font-semibold">"White label PPC transformed our agency from niche to full-service. Our clients love the results, and they never know we have a partner."</p>
-                  <p className="text-gray-600 mt-2">- Agency Founder, 3-year partnership</p>
-                </div>
-              </div>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-green-600 to-blue-700 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">
+      <section className="bg-gradient-to-r from-blue-900 to-purple-900 text-white py-16">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">
               Ready to Scale Your Agency with PPC?
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-lg mb-8 opacity-90">
               Add high-margin PPC services to your offerings with our complete white label solution
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                as={Link}
                 to="/book-call"
-                className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="bg-white text-purple-900 hover:bg-gray-100 shadow-lg"
               >
                 Book White Label Demo
-              </Link>
-              <a
+              </Button>
+              <Button
+                as="a"
                 href={getTelHref(getPrimaryPhone())}
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-green-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
+                variant="outline"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white hover:text-purple-900 inline-flex items-center justify-center gap-2"
               >
                 <Phone className="w-5 h-5" />
                 <span>Call: {getPrimaryPhone()}</span>
-              </a>
-              <a
+              </Button>
+              <Button
+                as="a"
                 href={getNepalWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-800 hover:bg-green-900 border-2 border-green-800 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center justify-center gap-2"
+                variant="primary"
+                size="lg"
+                className="bg-[#25D366] hover:bg-emerald-600 text-white border-0 inline-flex items-center justify-center gap-2 shadow-lg"
               >
-                <WhatsAppIcon className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp Partnership</span>
-              </a>
+              </Button>
             </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold flex items-center justify-center gap-1.5">
-                  <Tag className="w-4 h-4" />
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white/10 p-4 rounded-xl border border-white/10">
+                <div className="font-semibold flex items-center justify-center gap-1.5 text-sm">
+                  <Tag className="w-4 h-4 text-yellow-300" />
                   <span>100% White Label</span>
                 </div>
-                <div className="text-sm opacity-90">Your brand only</div>
+                <div className="text-xs opacity-90 mt-1">Your brand only</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold flex items-center justify-center gap-1.5">
-                  <LucideDollarSign className="w-4 h-4" />
+              <div className="bg-white/10 p-4 rounded-xl border border-white/10">
+                <div className="font-semibold flex items-center justify-center gap-1.5 text-sm">
+                  <LucideDollarSign className="w-4 h-4 text-yellow-300" />
                   <span>High Margins</span>
                 </div>
-                <div className="text-sm opacity-90">60-70% profit margins</div>
+                <div className="text-xs opacity-90 mt-1">60-70% profit margins</div>
               </div>
-              <div className="bg-white/10 p-4 rounded-lg">
-                <div className="font-semibold flex items-center justify-center gap-1.5">
-                  <TrendingUp className="w-4 h-4" />
+              <div className="bg-white/10 p-4 rounded-xl border border-white/10">
+                <div className="font-semibold flex items-center justify-center gap-1.5 text-sm">
+                  <TrendingUp className="w-4 h-4 text-yellow-300" />
                   <span>Performance Guarantee</span>
                 </div>
-                <div className="text-sm opacity-90">Minimum ROI targets</div>
+                <div className="text-xs opacity-90 mt-1">Minimum ROI targets</div>
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            White Label PPC FAQs
-          </h2>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="White Label PPC FAQs"
+            subtitle="Common questions about partnering with our white-label fulfillment team"
+            align="center"
+          />
           
-          <div className="max-w-3xl mx-auto space-y-6">
+          <div className="max-w-3xl mx-auto space-y-4">
             {[
               {
                 q: 'Is this really 100% white label?',
@@ -580,30 +598,27 @@ const WhiteLabelPPC = () => {
                 a: 'We require a 3-month minimum commitment per client to ensure proper campaign setup and optimization time. No long-term agency contracts.'
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
+              <Card key={index} variant="default" className="p-6">
                 <h3 className="font-semibold text-lg text-gray-800 mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
-              </div>
+                <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Partnership Requirements */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Agency Partnership Requirements
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              What we look for in white label agency partners
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Agency Partnership Requirements"
+            subtitle="What we look for in white label agency partners"
+            align="center"
+          />
           
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white p-8 rounded-xl">
+              <Card variant="default" className="p-8">
                 <h3 className="text-xl font-bold mb-4 text-gray-800">Requirements</h3>
                 <ul className="space-y-3">
                   {[
@@ -616,15 +631,15 @@ const WhiteLabelPPC = () => {
                     'Willingness to learn and grow',
                     '3-month minimum commitment'
                   ].map((item, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
+                    <li key={index} className="flex items-center text-gray-700 text-sm">
                       <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
-                      {item}
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Card>
               
-              <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-8 rounded-xl">
+              <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 rounded-xl">
                 <h3 className="text-xl font-bold mb-4">We Provide</h3>
                 <ul className="space-y-3">
                   {[
@@ -637,9 +652,9 @@ const WhiteLabelPPC = () => {
                     'Dedicated account manager',
                     'Scalable pricing structure'
                   ].map((item, index) => (
-                    <li key={index} className="flex items-center">
-                      <Zap className="w-4 h-4 text-white mr-2 shrink-0" />
-                      {item}
+                    <li key={index} className="flex items-center text-sm">
+                      <Zap className="w-4 h-4 text-yellow-300 mr-2 shrink-0" />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -647,15 +662,15 @@ const WhiteLabelPPC = () => {
             </div>
             
             <div className="text-center mt-8">
-              <div className="inline-block bg-green-50 p-6 rounded-xl">
-                <p className="text-green-700 font-semibold">
+              <div className="inline-block bg-blue-50 border border-blue-200 p-6 rounded-xl">
+                <p className="text-blue-800 font-medium text-sm">
                   Ready to become a white label partner? Schedule a demo to see our platform in action.
                 </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

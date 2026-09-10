@@ -1,4 +1,3 @@
-
 // src/pages/digital-marketing/GoogleBusinessProfile.tsx
 
 import React from 'react';
@@ -23,271 +22,277 @@ import {
 } from 'lucide-react';
 import { primaryPhone } from '../../data/centralizedData';
 import { getNepalWhatsAppUrl, getTelHref } from '../../services';
+import { Container, Section, SectionHeader } from '../../components/ui';
+import { Card } from '../../components/ui/Card';
+import { Button } from '../../components/ui/Button';
+import { AnimatedButton } from '../../components/ui/AnimatedButton';
+import { Breadcrumb } from '../../components/ui/Breadcrumb';
 
-const GoogleBusinessProfile = () => {
+const GoogleBusinessProfile: React.FC = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-500 to-red-500 text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <Container>
+          <Breadcrumb
+            items={[
+              { label: 'Home', path: '/' },
+              { label: 'Digital Marketing', path: '/digital-marketing' },
+              { label: 'Google Business Profile' }
+            ]}
+          />
+          <div className="max-w-4xl mx-auto text-center mt-6">
             <div className="flex justify-center mb-6">
-              <FaGoogle className="text-5xl" />
+              <div className="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-inner">
+                <FaGoogle className="text-4xl text-yellow-300" />
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
               Google Business Profile Optimization
             </h1>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-xl mb-8 opacity-90 leading-relaxed max-w-3xl mx-auto">
               Dominate local search results, attract more customers, and grow your business with expert GBP management
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <AnimatedButton
                 to="/free-audit"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="w-full sm:w-auto"
               >
                 Get Free GBP Audit
-              </Link>
-              <Link
+              </AnimatedButton>
+              <Button
                 to="/book-call"
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-900"
               >
                 Book Free Consultation
-              </Link>
+              </Button>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Why GBP Matters */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Why Google Business Profile is Essential
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Your GBP is often the first impression customers have of your business
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Why Google Business Profile is Essential"
+            subtitle="Your GBP is often the first impression customers have of your business"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaSearch className="text-blue-600 text-3xl" />
+            <Card variant="default" padding="lg" className="text-center">
+              <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <FaSearch className="text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Local Search Visibility</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Local Search Visibility</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 46% of all Google searches have local intent. GBP helps you appear in "Google Maps 3-Pack"
               </p>
-            </div>
+            </Card>
             
-            <div className="text-center p-6">
-              <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaStar className="text-green-600 text-3xl" />
+            <Card variant="default" padding="lg" className="text-center">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4 text-emerald-600">
+                <FaStar className="text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Trust & Credibility</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Trust & Credibility</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Businesses with complete GBP listings receive 7x more clicks and 2x more website visits
               </p>
-            </div>
+            </Card>
             
-            <div className="text-center p-6">
-              <div className="bg-red-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaPhone className="text-red-600 text-3xl" />
+            <Card variant="default" padding="lg" className="text-center">
+              <div className="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center mx-auto mb-4 text-purple-600">
+                <FaPhone className="text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Direct Conversions</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Direct Conversions</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Customers can call, get directions, or visit your website directly from your GBP
               </p>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* GBP Services */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Complete GBP Management Services
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              We handle every aspect of your Google Business Profile for maximum impact
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Complete GBP Management Services"
+            subtitle="We handle every aspect of your Google Business Profile for maximum impact"
+            centered
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-blue-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-4">
                 <FaMapMarkerAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Profile Setup & Optimization</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Profile Setup & Optimization</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Complete GBP creation</li>
                 <li>• Category & attribute optimization</li>
                 <li>• Business hours & service areas</li>
                 <li>• Contact information setup</li>
                 <li>• Verification assistance</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-green-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-4">
                 <FaImages />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Visual Content Management</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Visual Content Management</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Professional photo uploads</li>
                 <li>• Virtual tours setup</li>
                 <li>• Logo & cover image optimization</li>
                 <li>• Regular photo updates</li>
                 <li>• Video content integration</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-purple-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4">
                 <FaComment />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Review Management</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Review Management</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Review monitoring & responses</li>
                 <li>• Review generation strategy</li>
                 <li>• Negative review management</li>
                 <li>• Review analytics</li>
                 <li>• Star rating improvement</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-red-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4">
                 <FaChartBar />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Posts & Updates</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Posts & Updates</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Weekly Google Posts</li>
                 <li>• Event announcements</li>
                 <li>• Product/service updates</li>
                 <li>• Offer & promotion posts</li>
                 <li>• Q&A management</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-yellow-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4">
                 <FaGlobe />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Local SEO Integration</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Local SEO Integration</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Local keyword optimization</li>
                 <li>• Citation building</li>
                 <li>• NAP consistency check</li>
                 <li>• Local backlink strategy</li>
                 <li>• Competitor analysis</li>
               </ul>
-            </div>
+            </Card>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-indigo-600 text-3xl mb-4">
+            <Card variant="interactive" padding="lg">
+              <div className="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl mb-4">
                 <FaCalendarAlt />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Analytics & Reporting</h3>
-              <ul className="text-gray-600 space-y-2">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Analytics & Reporting</h3>
+              <ul className="text-gray-600 space-y-2 text-sm">
                 <li>• Monthly performance reports</li>
                 <li>• Customer action tracking</li>
                 <li>• Search query analysis</li>
                 <li>• Photo view analytics</li>
                 <li>• Competitor benchmarking</li>
               </ul>
-            </div>
+            </Card>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Results Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Expected Results from GBP Optimization
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              What our clients typically achieve within 3 months
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Expected Results from GBP Optimization"
+            subtitle="What our clients typically achieve within 3 months"
+            centered
+          />
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { value: '200%', label: 'More Profile Views', color: 'bg-blue-100 text-blue-600' },
-              { value: '150%', label: 'Increase in Calls', color: 'bg-green-100 text-green-600' },
-              { value: '4.8 / 5', label: 'Average Rating', color: 'bg-yellow-100 text-yellow-600' },
-              { value: '300%', label: 'Direction Requests', color: 'bg-red-100 text-red-600' },
-              { value: '80%', label: 'Search Appearance', color: 'bg-purple-100 text-purple-600' },
-              { value: '250%', label: 'Website Clicks', color: 'bg-indigo-100 text-indigo-600' },
-              { value: '100+', label: 'Monthly Views', color: 'bg-pink-100 text-pink-600' },
-              { value: '50%', label: 'Conversion Rate', color: 'bg-teal-100 text-teal-600' },
+              { value: '200%', label: 'More Profile Views', color: 'text-blue-600' },
+              { value: '150%', label: 'Increase in Calls', color: 'text-emerald-600' },
+              { value: '4.8 / 5', label: 'Average Rating', color: 'text-amber-500' },
+              { value: '300%', label: 'Direction Requests', color: 'text-rose-600' },
+              { value: '80%', label: 'Search Appearance', color: 'text-purple-600' },
+              { value: '250%', label: 'Website Clicks', color: 'text-indigo-600' },
+              { value: '100+', label: 'Monthly Views', color: 'text-pink-600' },
+              { value: '50%', label: 'Conversion Rate', color: 'text-teal-600' },
             ].map((stat, index) => (
-              <div key={index} className="text-center p-4">
-                <div className={`text-3xl font-bold mb-2 ${stat.color.split(' ')[1]}`}>
+              <Card key={index} variant="default" padding="default" className="text-center">
+                <div className={`text-3xl font-bold mb-1 ${stat.color}`}>
                   {stat.value}
                 </div>
-                <div className="text-gray-700 font-medium">{stat.label}</div>
-              </div>
+                <div className="text-gray-800 font-medium text-xs">{stat.label}</div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* GBP Checklist */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-red-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
-              GBP Optimization Checklist
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                'Complete Business Information',
-                'Accurate NAP (Name, Address, Phone)',
-                'Proper Business Categories',
-                'High-Quality Photos & Logo',
-                'Business Hours (Including Holidays)',
-                'Service Areas & Locations',
-                'Products/Services Listed',
-                'Attributes Selection',
-                'Booking/Appointment Links',
-                'Website & Social Links',
-                'Review Response Strategy',
-                'Regular Google Posts',
-                'Q&A Monitoring',
-                'Photo Updates (Monthly)',
-                'Analytics Tracking',
-                'Competitor Benchmarking'
-              ].map((item, index) => (
-                <div key={index} className="flex items-center bg-white p-4 rounded-lg shadow-sm">
-                  <div className="bg-green-100 text-green-600 w-8 h-8 rounded-full flex items-center justify-center mr-3 shrink-0">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <span className="text-gray-700">{item}</span>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="GBP Optimization Checklist"
+            subtitle="Essential technical data points verified across every local map listing"
+            centered
+          />
+          
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              'Complete Business Information',
+              'Accurate NAP (Name, Address, Phone)',
+              'Proper Business Categories',
+              'High-Quality Photos & Logo',
+              'Business Hours (Including Holidays)',
+              'Service Areas & Locations',
+              'Products/Services Listed',
+              'Attributes Selection',
+              'Booking/Appointment Links',
+              'Website & Social Links',
+              'Review Response Strategy',
+              'Regular Google Posts',
+              'Q&A Monitoring',
+              'Photo Updates (Monthly)',
+              'Analytics Tracking',
+              'Competitor Benchmarking'
+            ].map((item, index) => (
+              <Card key={index} variant="default" padding="default" className="flex items-center">
+                <div className="bg-emerald-100 text-emerald-600 w-7 h-7 rounded-full flex items-center justify-center mr-3 shrink-0">
+                  <Check className="w-4 h-4" />
                 </div>
-              ))}
-            </div>
+                <span className="text-gray-800 font-medium text-sm">{item}</span>
+              </Card>
+            ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Industries We Serve */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Industries We've Helped
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              GBP optimization works for businesses of all types and sizes
-            </p>
-          </div>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Industries We've Helped"
+            subtitle="GBP optimization works for businesses of all types and sizes"
+            centered
+          />
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
@@ -306,27 +311,24 @@ const GoogleBusinessProfile = () => {
             ].map((industry, index) => {
               const Icon = industry.icon;
               return (
-                <div key={index} className="bg-white p-4 rounded-lg text-center border border-gray-200 hover:border-blue-300 transition-colors">
+                <Card key={index} variant="interactive" padding="sm" className="text-center">
                   <div className="flex justify-center text-blue-600 mb-2"><Icon className="w-6 h-6" /></div>
-                  <div className="text-gray-700 font-medium">{industry.name}</div>
-                </div>
+                  <div className="text-gray-800 font-medium text-xs">{industry.name}</div>
+                </Card>
               );
             })}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Pricing Packages */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              Google Business Profile Frameworks
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Structured local map management tiers to capture nearby customer searches
-            </p>
-          </div>
+      <Section variant="subtle" padding="default">
+        <Container>
+          <SectionHeader
+            title="Google Business Profile Frameworks"
+            subtitle="Structured local map management tiers to capture nearby customer searches"
+            centered
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -335,14 +337,13 @@ const GoogleBusinessProfile = () => {
                 tier: 'Foundation Setup',
                 bestFor: 'Single Location & New Businesses',
                 features: ['Profile Setup', 'Basic Optimization', 'Monthly Updates', 'Review Monitoring'],
-                color: 'border-blue-200'
+                popular: false
               },
               { 
                 name: 'Professional Scope', 
                 tier: 'Active Growth Retainer',
                 bestFor: 'Growing Local Businesses',
                 features: ['Complete Optimization', 'Weekly Google Posts', 'Review Management', 'Photo Updates', 'Monthly Reports'],
-                color: 'border-red-300',
                 popular: true
               },
               { 
@@ -350,95 +351,110 @@ const GoogleBusinessProfile = () => {
                 tier: 'Multi-Location Network',
                 bestFor: 'Regional Chains & Franchises',
                 features: ['Multi-Location Management', 'Daily Monitoring', 'Competitor Analysis', 'Advanced Analytics', 'Local SEO Integration', 'Priority Support'],
-                color: 'border-purple-300'
+                popular: false
               },
             ].map((plan) => (
-              <div key={plan.name} className={`border-2 ${plan.color} bg-white p-8 rounded-xl relative flex flex-col justify-between`}>
+              <Card 
+                key={plan.name} 
+                variant={plan.popular ? 'featured' : 'default'} 
+                padding="lg" 
+                className="relative flex flex-col justify-between"
+              >
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-1 rounded-full text-xs font-semibold shadow-md">
+                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wide shadow-md">
                     POPULAR SCOPE
                   </div>
                 )}
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-1">{plan.name}</h3>
-                  <div className="text-sm font-semibold text-red-600 mb-2">{plan.tier}</div>
-                  <p className="text-gray-600 text-xs mb-4">Best for: <span className="font-semibold text-gray-800">{plan.bestFor}</span></p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-1">{plan.name}</h3>
+                  <div className="text-sm font-semibold text-purple-900 mb-2">{plan.tier}</div>
+                  <p className="text-gray-600 text-xs mb-6">Best for: <span className="font-semibold text-gray-800">{plan.bestFor}</span></p>
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-center text-gray-700 text-sm">
-                        <Check className="w-4 h-4 text-green-500 mr-2 shrink-0" />
+                        <Check className="w-4 h-4 text-emerald-500 mr-2 shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <Link
+                <Button
                   to="/book-call"
-                  className="block w-full bg-gradient-to-r from-blue-500 to-red-500 text-white text-center py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
+                  variant={plan.popular ? 'primary' : 'outline'}
+                  size="md"
+                  className="w-full"
                 >
                   Discuss GMB Scope
-                </Link>
-              </div>
+                </Button>
+              </Card>
             ))}
           </div>
           
-          <div className="text-center mt-8 text-gray-600 text-sm">
+          <div className="text-center mt-8 text-gray-500 text-sm">
             *All engagements include Google Business Profile verification guidance
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-red-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">
+      <Section variant="dark" padding="default">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Dominate Your Local Market with Google
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-lg md:text-xl mb-8 opacity-90 leading-relaxed">
               Don't let competitors get the local search advantage. Optimize your Google Business Profile today!
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-              <Link
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <AnimatedButton
                 to="/book-call"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-all"
+                variant="secondary"
+                size="lg"
+                className="w-full sm:w-auto"
               >
                 Book Free GBP Audit
-              </Link>
-              <a
+              </AnimatedButton>
+              <Button
                 href={getTelHref(primaryPhone)}
-                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-gray-900 inline-flex items-center justify-center gap-2"
               >
                 <Phone className="w-5 h-5" />
                 <span>Call: {primaryPhone}</span>
-              </a>
-              <a
+              </Button>
+              <Button
                 href={getNepalWhatsAppUrl()}
+                variant="primary"
+                size="lg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 border-2 border-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all inline-flex items-center gap-2"
+                className="w-full sm:w-auto bg-[#25D366] hover:bg-emerald-600 border-none text-white inline-flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp Consultation</span>
-              </a>
+              </Button>
             </div>
-            <div className="mt-8 bg-white/10 p-4 rounded-lg inline-block">
-              <p className="text-blue-100">
-                <span className="font-semibold">Limited Time Offer:</span> First month FREE with annual commitment
+            <div className="mt-8 bg-white/10 backdrop-blur-sm border border-white/10 p-4 rounded-xl inline-block">
+              <p className="text-blue-100 text-sm">
+                <span className="font-semibold text-yellow-300">Limited Time Offer:</span> First month FREE with annual commitment
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* FAQ Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Frequently Asked Questions
-          </h2>
+      <Section variant="default" padding="default">
+        <Container>
+          <SectionHeader
+            title="Frequently Asked Questions"
+            subtitle="Common questions about our local Google Maps management and verification"
+            centered
+          />
           
-          <div className="max-w-3xl mx-auto space-y-6">
+          <div className="max-w-3xl mx-auto space-y-4">
             {[
               {
                 q: 'How long does it take to see results from GBP optimization?',
@@ -461,14 +477,14 @@ const GoogleBusinessProfile = () => {
                 a: 'We conduct a comprehensive audit of your existing listing, identify optimization opportunities, and implement improvements to enhance performance.'
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-semibold text-lg text-gray-800 mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
-              </div>
+              <Card key={index} variant="default" padding="default">
+                <h3 className="font-semibold text-base text-gray-900 mb-2">{faq.q}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { getOfficePhone, getBusinessEmail, getBusinessDomain } from '../selectors';
 import { getNepalWhatsAppUrl } from '../services';
+import { Container, Section } from '../components/ui';
 
 interface AuditOption {
   id: string;
@@ -247,7 +248,7 @@ I would like to schedule an audit strategy session with your digital growth team
           <meta name="description" content="Your free website audit request has been sent. We'll send you a basic SEO analysis report." />
         </Helmet>
         
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container className="max-w-4xl">
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -330,7 +331,7 @@ I would like to schedule an audit strategy session with your digital growth team
               </button>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }
@@ -343,7 +344,7 @@ I would like to schedule an audit strategy session with your digital growth team
           <meta name="description" content="Your payment for professional website audit is confirmed. We'll start the audit immediately." />
         </Helmet>
         
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container className="max-w-4xl">
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="h-10 w-10 text-green-600" />
@@ -402,7 +403,7 @@ I would like to schedule an audit strategy session with your digital growth team
               </a>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }
@@ -424,38 +425,41 @@ I would like to schedule an audit strategy session with your digital growth team
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Website Audit & Performance Analysis</h1>
-          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Comprehensive SEO, technical architecture, and conversion rate audits
-          </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
-              <Target className="w-6 h-6 text-yellow-300 mb-2" />
-              <h3 className="font-semibold text-sm">Basic Audit</h3>
-              <p className="text-blue-200 text-xs">Instant Review</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
-              <BarChart className="w-6 h-6 text-yellow-300 mb-2" />
-              <h3 className="font-semibold text-sm">Professional</h3>
-              <p className="text-blue-200 text-xs">Deep Technical</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
-              <ShoppingBag className="w-6 h-6 text-yellow-300 mb-2" />
-              <h3 className="font-semibold text-sm">E-commerce</h3>
-              <p className="text-blue-200 text-xs">CRO & Funnel</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
-              <Monitor className="w-6 h-6 text-yellow-300 mb-2" />
-              <h3 className="font-semibold text-sm">Enterprise</h3>
-              <p className="text-blue-200 text-xs">Full Architecture</p>
+        <Container>
+          <div className="relative text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Website Audit & Performance Analysis</h1>
+            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+              Comprehensive SEO, technical architecture, and conversion rate audits
+            </p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+                <Target className="w-6 h-6 text-yellow-300 mb-2" />
+                <h3 className="font-semibold text-sm">Basic Audit</h3>
+                <p className="text-blue-200 text-xs">Instant Review</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+                <BarChart className="w-6 h-6 text-yellow-300 mb-2" />
+                <h3 className="font-semibold text-sm">Professional</h3>
+                <p className="text-blue-200 text-xs">Deep Technical</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+                <ShoppingBag className="w-6 h-6 text-yellow-300 mb-2" />
+                <h3 className="font-semibold text-sm">E-commerce</h3>
+                <p className="text-blue-200 text-xs">CRO & Funnel</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center">
+                <Monitor className="w-6 h-6 text-yellow-300 mb-2" />
+                <h3 className="font-semibold text-sm">Enterprise</h3>
+                <p className="text-blue-200 text-xs">Full Architecture</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Section variant="default" padding="default">
+        <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Free Audit Form */}
           <div>
@@ -753,7 +757,8 @@ I would like to schedule an audit strategy session with your digital growth team
             </div>
           </div>
         </div>
-      </div>
+        </Container>
+      </Section>
     </div>
   );
 };

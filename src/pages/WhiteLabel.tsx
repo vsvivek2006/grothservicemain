@@ -2,26 +2,31 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { 
   Shield, 
-  Users, 
   TrendingUp, 
   Zap, 
   Clock, 
   DollarSign, 
-  Globe,
-  BarChart,
-  MessageCircle,
-  Headphones,
-  Award,
-  Check,
-  ArrowRight,
-  Mail,
-  Smartphone,
-  Target,
-  Lock,
-  Briefcase
+  Globe, 
+  BarChart, 
+  MessageCircle, 
+  Headphones, 
+  Award, 
+  Check, 
+  ArrowRight, 
+  Mail, 
+  Smartphone, 
+  Target, 
+  Lock, 
+  Briefcase 
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/ui';
 import { businessConfig } from '../config/business';
+import { getCanonicalOrigin } from '../selectors';
+import Container from '../components/ui/Container';
+import Section from '../components/ui/Section';
+import SectionHeader from '../components/ui/SectionHeader';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
 
 const WhiteLabel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -36,7 +41,7 @@ const WhiteLabel: React.FC = () => {
 
   const services = [
     {
-      icon: <Globe className="h-10 w-10" />,
+      icon: <Globe className="h-10 w-10 text-blue-600" />,
       title: 'Website Development',
       description: 'Custom websites, e-commerce stores, web applications',
       pricing: 'Scoped per project architecture',
@@ -44,7 +49,7 @@ const WhiteLabel: React.FC = () => {
       features: ['React.js Development', 'MERN Stack', 'Responsive Design', 'SEO Ready']
     },
     {
-      icon: <TrendingUp className="h-10 w-10" />,
+      icon: <TrendingUp className="h-10 w-10 text-blue-600" />,
       title: 'SEO Services',
       description: 'Complete SEO optimization and ranking services',
       pricing: 'Monthly Retainer SLA',
@@ -52,7 +57,7 @@ const WhiteLabel: React.FC = () => {
       features: ['Keyword Research', 'Technical SEO', 'Content Strategy', 'Ranking Reports']
     },
     {
-      icon: <MessageCircle className="h-10 w-10" />,
+      icon: <MessageCircle className="h-10 w-10 text-blue-600" />,
       title: 'Social Media Management',
       description: 'Complete social media marketing and management',
       pricing: 'Monthly Content Retainer',
@@ -60,7 +65,7 @@ const WhiteLabel: React.FC = () => {
       features: ['Content Creation', 'Community Management', 'Performance Analytics', 'Video Production']
     },
     {
-      icon: <Target className="h-10 w-10" />,
+      icon: <Target className="h-10 w-10 text-blue-600" />,
       title: 'Digital Advertising',
       description: 'Meta, Google, and LinkedIn ad campaigns',
       pricing: 'Campaign Management Retainer',
@@ -68,7 +73,7 @@ const WhiteLabel: React.FC = () => {
       features: ['Campaign Strategy', 'Ad Creation', 'A/B Testing', 'ROI Optimization']
     },
     {
-      icon: <BarChart className="h-10 w-10" />,
+      icon: <BarChart className="h-10 w-10 text-blue-600" />,
       title: 'Analytics & Reporting',
       description: 'Custom dashboards and performance tracking',
       pricing: 'Custom Dashboard Retainer',
@@ -76,7 +81,7 @@ const WhiteLabel: React.FC = () => {
       features: ['Custom Dashboards', 'Performance Reports', 'Competitor Analysis', 'ROI Tracking']
     },
     {
-      icon: <Headphones className="h-10 w-10" />,
+      icon: <Headphones className="h-10 w-10 text-blue-600" />,
       title: 'Support & Maintenance',
       description: 'Ongoing technical support and maintenance',
       pricing: 'Tiered Maintenance SLA',
@@ -87,32 +92,32 @@ const WhiteLabel: React.FC = () => {
 
   const benefits = [
     {
-      icon: <Shield className="h-8 w-8" />,
+      icon: <Shield className="h-6 w-6 text-white" />,
       title: '100% White Label',
       description: 'No branding from our side. Everything delivered under your brand name'
     },
     {
-      icon: <DollarSign className="h-8 w-8" />,
+      icon: <DollarSign className="h-6 w-6 text-white" />,
       title: 'High Profit Margins',
       description: 'Earn 40-85% margins on all services you resell'
     },
     {
-      icon: <Clock className="h-8 w-8" />,
+      icon: <Clock className="h-6 w-6 text-white" />,
       title: 'Quick Turnaround',
       description: 'Website delivery in 7-15 days, reports within 24 hours'
     },
     {
-      icon: <Zap className="h-8 w-8" />,
+      icon: <Zap className="h-6 w-6 text-white" />,
       title: 'Dedicated Account Manager',
       description: 'Single point of contact for all your white label needs'
     },
     {
-      icon: <Lock className="h-8 w-8" />,
+      icon: <Lock className="h-6 w-6 text-white" />,
       title: 'Secure Communication',
       description: 'Secure client portals and encrypted file sharing'
     },
     {
-      icon: <Award className="h-8 w-8" />,
+      icon: <Award className="h-6 w-6 text-white" />,
       title: 'Quality Assurance',
       description: 'All work undergoes rigorous quality checks before delivery'
     }
@@ -167,7 +172,7 @@ const WhiteLabel: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-white">
       <Helmet>
         <title>White Label Partner Program | Growth Service</title>
         <meta
@@ -178,87 +183,87 @@ const WhiteLabel: React.FC = () => {
           name="keywords"
           content="white label services, digital marketing white label, website development white label, SEO white label, agency partnership, reseller program"
         />
-        <link rel="canonical" href="https://www.growthservice.in/white-label" />
+        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label`} />
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">
+        <Container>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="lg:w-1/2">
-              <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-                <Briefcase className="h-5 w-5 mr-2" />
-                <span className="text-lg font-semibold">PARTNER PROGRAM</span>
+            <div className="lg:w-1/2 text-center lg:text-left">
+              <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full mb-6">
+                <Briefcase className="h-4 w-4 mr-2 text-yellow-300" />
+                <span className="text-sm font-semibold tracking-wider uppercase">PARTNER PROGRAM</span>
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                White Label <span className="text-cyan-300">Partner Program</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                White Label <span className="text-yellow-300">Partner Program</span>
               </h1>
-              <p className="text-lg md:text-xl mb-8 text-blue-100 leading-relaxed">
+              <p className="text-lg md:text-xl mb-8 text-blue-100 leading-relaxed max-w-2xl">
                 Scale your agency with our professional digital services. Resell website development, 
                 SEO, and marketing services under your brand with high profit margins and zero overhead.
               </p>
               
-              <div className="flex flex-wrap gap-4">
-                <button
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <Button
                   onClick={() => setActiveTab('partnership')}
-                  className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105"
+                  variant="secondary"
+                  size="lg"
+                  className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg font-bold"
                 >
                   Apply for Partnership
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setActiveTab('services')}
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200"
+                  variant="outline"
+                  size="lg"
+                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold"
                 >
                   View Services
-                </button>
+                </Button>
               </div>
             </div>
             
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 w-full">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
                 <h3 className="text-2xl font-bold mb-6">Why Partner With Us?</h3>
-                <div className="space-y-4">
+                <div className="space-y-4 text-sm md:text-base">
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
+                    <Check className="h-5 w-5 text-green-300 shrink-0" />
                     <span>40-85% Profit Margins</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
+                    <Check className="h-5 w-5 text-green-300 shrink-0" />
                     <span>100% White Label - No Branding</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
+                    <Check className="h-5 w-5 text-green-300 shrink-0" />
                     <span>7-15 Days Website Delivery</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
+                    <Check className="h-5 w-5 text-green-300 shrink-0" />
                     <span>Dedicated Account Managers</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
+                    <Check className="h-5 w-5 text-green-300 shrink-0" />
                     <span>24/7 Support & Communication</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Navigation Tabs */}
-      <section className="py-6 bg-white border-b sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-4 bg-white border-b sticky top-0 z-40 shadow-sm">
+        <Container>
           <div className="flex flex-wrap justify-center gap-2">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm ${
                 activeTab === 'overview'
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
@@ -266,9 +271,9 @@ const WhiteLabel: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('services')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm ${
                 activeTab === 'services'
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
@@ -276,9 +281,9 @@ const WhiteLabel: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('pricing')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm ${
                 activeTab === 'pricing'
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
@@ -286,385 +291,382 @@ const WhiteLabel: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('partnership')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm ${
                 activeTab === 'partnership'
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
               Apply for Partnership
             </button>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Overview Tab */}
-        {activeTab === 'overview' && (
-          <div className="space-y-16">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Scale Your Agency Without Limits</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Our White Label Partner Program enables digital agencies to offer comprehensive services 
-                without the overhead of hiring specialized teams. Focus on client acquisition while we handle 
-                the execution under your brand.
-              </p>
-            </div>
+      <Section variant="default" padding="default">
+        <Container>
+          {/* Overview Tab */}
+          {activeTab === 'overview' && (
+            <div className="space-y-16">
+              <SectionHeader
+                title="Scale Your Agency Without Limits"
+                subtitle="Our White Label Partner Program enables digital agencies to offer comprehensive services without the overhead of hiring specialized teams. Focus on client acquisition while we handle the execution under your brand."
+                align="center"
+              />
 
-            {/* Benefits */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Partner Benefits</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white mb-4">
-                      {benefit.icon}
+              {/* Benefits */}
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Partner Benefits</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {benefits.map((benefit, index) => (
+                    <Card key={index} variant="interactive" className="p-6">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center text-white mb-4 shadow-md">
+                        {benefit.icon}
+                      </div>
+                      <h4 className="text-xl font-bold text-gray-900 mb-2">{benefit.title}</h4>
+                      <p className="text-gray-600 text-sm">{benefit.description}</p>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              {/* How It Works */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">How It Works</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                  <div className="text-center">
+                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-xl font-bold text-blue-600 mx-auto mb-4 shadow-md border border-blue-100">
+                      1
                     </div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">{benefit.title}</h4>
-                    <p className="text-gray-600">{benefit.description}</p>
+                    <h4 className="font-bold text-gray-900 mb-1">Client Onboarding</h4>
+                    <p className="text-gray-600 text-xs">You onboard client under your brand</p>
                   </div>
+                  <div className="text-center">
+                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-xl font-bold text-blue-600 mx-auto mb-4 shadow-md border border-blue-100">
+                      2
+                    </div>
+                    <h4 className="font-bold text-gray-900 mb-1">Project Handover</h4>
+                    <p className="text-gray-600 text-xs">Share requirements with our team</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-xl font-bold text-blue-600 mx-auto mb-4 shadow-md border border-blue-100">
+                      3
+                    </div>
+                    <h4 className="font-bold text-gray-900 mb-1">We Deliver</h4>
+                    <p className="text-gray-600 text-xs">We complete work under your brand</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-xl font-bold text-blue-600 mx-auto mb-4 shadow-md border border-blue-100">
+                      4
+                    </div>
+                    <h4 className="font-bold text-gray-900 mb-1">You Invoice</h4>
+                    <p className="text-gray-600 text-xs">You invoice client and earn margin</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Services Tab */}
+          {activeTab === 'services' && (
+            <div className="space-y-12">
+              <SectionHeader
+                title="White Label Services"
+                subtitle="Complete suite of digital services available for white label reselling. All services delivered 100% under your brand."
+                align="center"
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.map((service, index) => (
+                  <Card key={index} variant="interactive" className="p-8 flex flex-col justify-between">
+                    <div>
+                      <div className="text-blue-600 mb-4">
+                        {service.icon}
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                      <p className="text-gray-600 text-sm mb-4">{service.description}</p>
+                      
+                      <div className="mb-6 p-3 bg-gray-50 rounded-xl">
+                        <div className="flex items-center justify-between mb-1.5 text-xs">
+                          <span className="text-gray-500">Delivery Model:</span>
+                          <span className="font-bold text-blue-600">{service.pricing}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-gray-500">Partner Margin:</span>
+                          <span className="font-bold text-green-600">{service.margin}</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-gray-900 text-xs uppercase tracking-wider">Includes:</h4>
+                        {service.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <Check className="h-4 w-4 text-green-500 shrink-0" />
+                            <span className="text-sm text-gray-700">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </Card>
                 ))}
               </div>
             </div>
+          )}
 
-            {/* How It Works */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">How It Works</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-blue-600 mx-auto mb-4 shadow-lg">
-                    1
-                  </div>
-                  <h4 className="font-bold text-gray-900 mb-2">Client Onboarding</h4>
-                  <p className="text-gray-600 text-sm">You onboard client under your brand</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-blue-600 mx-auto mb-4 shadow-lg">
-                    2
-                  </div>
-                  <h4 className="font-bold text-gray-900 mb-2">Project Handover</h4>
-                  <p className="text-gray-600 text-sm">Share requirements with our team</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-blue-600 mx-auto mb-4 shadow-lg">
-                    3
-                  </div>
-                  <h4 className="font-bold text-gray-900 mb-2">We Deliver</h4>
-                  <p className="text-gray-600 text-sm">We complete work under your brand</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-blue-600 mx-auto mb-4 shadow-lg">
-                    4
-                  </div>
-                  <h4 className="font-bold text-gray-900 mb-2">You Invoice</h4>
-                  <p className="text-gray-600 text-sm">You invoice client and earn margin</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+          {/* Pricing Tab */}
+          {activeTab === 'pricing' && (
+            <div className="space-y-12">
+              <SectionHeader
+                title="Pricing Models & Margins"
+                subtitle="Choose the partnership model that best fits your agency's needs and scale."
+                align="center"
+              />
 
-        {/* Services Tab */}
-        {activeTab === 'services' && (
-          <div className="space-y-16">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">White Label Services</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Complete suite of digital services available for white label reselling. 
-                All services delivered 100% under your brand.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <div key={index} className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-shadow">
-                  <div className="p-8">
-                    <div className="text-blue-600 mb-4">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                    <p className="text-gray-600 mb-4">{service.description}</p>
-                    
-                    <div className="mb-6">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-gray-500">Delivery Model:</span>
-                        <span className="font-bold text-blue-600">{service.pricing}</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {pricingModels.map((model, index) => (
+                  <Card key={index} variant={index === 1 ? 'featured' : 'default'} className={`p-8 flex flex-col justify-between border-2 ${
+                    index === 1 ? 'border-purple-400 md:scale-105' : 'border-gray-200'
+                  }`}>
+                    <div>
+                      <div className="text-center mb-6">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2">{model.name}</h3>
+                        <p className="text-gray-600 text-sm mb-4">{model.description}</p>
+                        <div className="text-4xl font-bold text-blue-600 mb-1">{model.price}</div>
+                        <div className="text-gray-500 text-xs uppercase tracking-wider">Profit Margin</div>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">Partner Margin:</span>
-                        <span className="font-bold text-green-600">{service.margin}</span>
+
+                      <div className="space-y-3">
+                        {model.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-3">
+                            <Check className="h-4 w-4 text-green-500 shrink-0" />
+                            <span className="text-gray-700 text-sm">{feature}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <h4 className="font-semibold text-gray-900">Includes:</h4>
-                      {service.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-500" />
-                          <span className="text-sm text-gray-700">{feature}</span>
-                        </div>
-                      ))}
+                    <div className="pt-8">
+                      <Button
+                        onClick={() => setActiveTab('partnership')}
+                        variant={index === 1 ? 'primary' : 'outline'}
+                        className="w-full justify-center"
+                      >
+                        Apply Now
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Additional Information */}
+              <div className="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-8 text-white">
+                <h3 className="text-2xl font-bold mb-6 text-center">Additional Benefits</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-yellow-300" />
+                      <span>No setup fees or hidden charges</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-yellow-300" />
+                      <span>Volume discounts available</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-yellow-300" />
+                      <span>30-day payment terms for established partners</span>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Pricing Tab */}
-        {activeTab === 'pricing' && (
-          <div className="space-y-16">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Pricing Models & Margins</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Choose the partnership model that best fits your agency's needs and scale.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {pricingModels.map((model, index) => (
-                <div key={index} className={`bg-white rounded-2xl shadow-xl border-2 ${
-                  index === 1 ? 'border-blue-500 transform scale-105' : 'border-gray-200'
-                } overflow-hidden`}>
-                  <div className="p-8">
-                    <div className="text-center mb-6">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{model.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{model.description}</p>
-                      <div className="text-4xl font-bold text-blue-600 mb-2">{model.price}</div>
-                      <div className="text-gray-500">Profit Margin</div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-yellow-300" />
+                      <span>White label reporting dashboard</span>
                     </div>
-
-                    <div className="space-y-4">
-                      {model.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-3">
-                          <Check className="h-5 w-5 text-green-500" />
-                          <span className="text-gray-700">{feature}</span>
-                        </div>
-                      ))}
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-yellow-300" />
+                      <span>Direct communication with project teams</span>
                     </div>
-
-                    <button
-                      onClick={() => setActiveTab('partnership')}
-                      className={`w-full mt-8 py-3 rounded-xl font-semibold transition-all duration-200 ${
-                        index === 1 
-                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:scale-105'
-                          : 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50'
-                      }`}
-                    >
-                      Apply Now
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Additional Information */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-6 text-center">Additional Benefits</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
-                    <span>No setup fees or hidden charges</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
-                    <span>Volume discounts available</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
-                    <span>30-day payment terms for established partners</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
-                    <span>White label reporting dashboard</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
-                    <span>Direct communication with project teams</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-green-300" />
-                    <span>Quarterly strategy review meetings</span>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-yellow-300" />
+                      <span>Quarterly strategy review meetings</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Partnership Application Tab */}
-        {activeTab === 'partnership' && (
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Apply for White Label Partnership</h2>
-              <p className="text-lg text-gray-600">
-                Fill out the form below to start your journey as a Growth Service White Label Partner.
-                We'll contact you within 24 hours.
-              </p>
-            </div>
+          {/* Partnership Application Tab */}
+          {activeTab === 'partnership' && (
+            <div className="max-w-4xl mx-auto">
+              <SectionHeader
+                title="Apply for White Label Partnership"
+                subtitle="Fill out the form below to start your journey as a Growth Service White Label Partner. We'll contact you within 24 hours."
+                align="center"
+              />
 
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card variant="default" className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="John Smith"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="john@agency.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="+91 9876543210"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Agency Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="agency"
+                        value={formData.agency}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="Your Agency Name"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Your Name *
+                      Services Interested In *
                     </label>
                     <input
                       type="text"
-                      name="name"
-                      value={formData.name}
+                      name="services"
+                      value={formData.services}
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="John Smith"
+                      placeholder="Website Development, SEO, Social Media, etc."
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
+                      Number of Current Clients (Optional)
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
+                      type="number"
+                      name="clients"
+                      value={formData.clients}
                       onChange={handleInputChange}
-                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="john@agency.com"
+                      placeholder="5"
                     />
                   </div>
+
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    className="w-full justify-center text-lg"
+                  >
+                    <span>Apply for Partnership</span>
+                    <ArrowRight className="h-5 w-5 ml-2" />
+                  </Button>
+
+                  <p className="text-xs text-gray-500 text-center">
+                    By applying, you agree to our partnership terms. We'll contact you within 24 hours.
+                  </p>
+                </form>
+              </Card>
+
+              {/* Quick Apply */}
+              <div className="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+                <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Quick Apply Options</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <a
+                    href={businessConfig.whatsapp.defaultUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:-translate-y-0.5 border border-gray-200 shadow-sm"
+                  >
+                    <WhatsAppIcon className="h-8 w-8 text-emerald-500 mx-auto mb-3" />
+                    <div className="font-bold">WhatsApp</div>
+                    <div className="text-xs text-gray-600 mt-1">Quick chat</div>
+                  </a>
+                  <a
+                    href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
+                    className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:-translate-y-0.5 border border-gray-200 shadow-sm"
+                  >
+                    <Smartphone className="h-8 w-8 text-blue-500 mx-auto mb-3" />
+                    <div className="font-bold">Call Now</div>
+                    <div className="text-xs text-gray-600 mt-1">{businessConfig.phones.indiaPrimary}</div>
+                  </a>
+                  <a
+                    href={`mailto:${businessConfig.emails.primary}`}
+                    className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:-translate-y-0.5 border border-gray-200 shadow-sm"
+                  >
+                    <Mail className="h-8 w-8 text-red-500 mx-auto mb-3" />
+                    <div className="font-bold">Email</div>
+                    <div className="text-xs text-gray-600 mt-1">{businessConfig.emails.primary}</div>
+                  </a>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="+91 9876543210"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Agency Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="agency"
-                      value={formData.agency}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="Your Agency Name"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Services Interested In *
-                  </label>
-                  <input
-                    type="text"
-                    name="services"
-                    value={formData.services}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="Website Development, SEO, Social Media, etc."
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Current Clients (Optional)
-                  </label>
-                  <input
-                    type="number"
-                    name="clients"
-                    value={formData.clients}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="5"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105"
-                >
-                  Apply for Partnership
-                  <ArrowRight className="h-5 w-5 inline ml-2" />
-                </button>
-
-                <p className="text-sm text-gray-500 text-center">
-                  By applying, you agree to our partnership terms. We'll contact you within 24 hours.
-                </p>
-              </form>
-            </div>
-
-            {/* Quick Apply */}
-            <div className="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Apply Options</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a
-                  href={businessConfig.whatsapp.defaultUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
-                >
-                  <WhatsAppIcon className="h-8 w-8 text-emerald-500 mx-auto mb-3" />
-                  <div className="font-bold">WhatsApp</div>
-                  <div className="text-sm text-gray-600">Quick chat</div>
-                </a>
-                <a
-                  href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}
-                  className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
-                >
-                  <Smartphone className="h-8 w-8 text-blue-500 mx-auto mb-3" />
-                  <div className="font-bold">Call Now</div>
-                  <div className="text-sm text-gray-600">{businessConfig.phones.indiaPrimary}</div>
-                </a>
-                <a
-                  href={`mailto:${businessConfig.emails.primary}`}
-                  className="bg-white hover:bg-gray-50 text-gray-800 p-6 rounded-xl text-center transition-all duration-200 hover:scale-105 border border-gray-200"
-                >
-                  <Mail className="h-8 w-8 text-red-500 mx-auto mb-3" />
-                  <div className="font-bold">Email</div>
-                  <div className="text-sm text-gray-600">{businessConfig.emails.primary}</div>
-                </a>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* CTA Section */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-xl p-8 md:p-12 text-white text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Scale Your Agency?</h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join 50+ agencies already growing with our white label services
-          </p>
-          <button
-            onClick={() => setActiveTab('partnership')}
-            className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:scale-105 inline-flex items-center gap-3"
-          >
-            Apply for Partnership Today
-            <ArrowRight className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
+          {/* Bottom CTA Banner */}
+          <div className="mt-16 bg-gradient-to-r from-blue-900 to-purple-900 rounded-2xl shadow-xl p-8 md:p-12 text-white text-center">
+            <h2 className="text-3xl font-bold mb-4">Ready to Scale Your Agency?</h2>
+            <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
+              Join 50+ agencies already growing with our white label services
+            </p>
+            <Button
+              onClick={() => setActiveTab('partnership')}
+              variant="secondary"
+              size="lg"
+              className="bg-white text-blue-900 hover:bg-gray-100 font-bold inline-flex items-center gap-2 shadow-lg"
+            >
+              <span>Apply for Partnership Today</span>
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </div>
+        </Container>
+      </Section>
     </div>
   );
 };

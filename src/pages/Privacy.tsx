@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Container } from "../components/ui";
+import { Container, Section } from "../components/ui";
 import { CheckCircle, XCircle } from "lucide-react";
 import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
 import { getPrimaryWhatsAppUrl, getMailtoHref } from "../services";
@@ -60,12 +60,12 @@ const Privacy: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-pink-500 via-purple-500 to-blue-600 text-white py-16">
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16">
         <Container className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">
             {activeTab === "refund" ? "Refund Policy" : activeTab === "cancellation" ? "Cancellation Policy" : "Privacy Policy"}
           </h1>
-          <p className="text-pink-100 text-lg md:text-xl">
+          <p className="text-blue-100 text-lg md:text-xl">
             How Growth Service protects your information and service satisfaction.
           </p>
           <p className="text-sm text-blue-200 mt-2">Last updated: {lastUpdated}</p>
@@ -76,8 +76,8 @@ const Privacy: React.FC = () => {
               onClick={() => setActiveTab("privacy")}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTab === "privacy" 
-                ? "bg-white text-pink-600 shadow-lg" 
-                : "bg-pink-700 text-white hover:bg-pink-600"
+                ? "bg-white text-blue-600 shadow-lg" 
+                : "bg-white/10 text-white hover:bg-white/20"
               }`}
             >
               Privacy Policy
@@ -87,7 +87,7 @@ const Privacy: React.FC = () => {
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTab === "refund" 
                 ? "bg-white text-blue-600 shadow-lg" 
-                : "bg-blue-700 text-white hover:bg-blue-600"
+                : "bg-white/10 text-white hover:bg-white/20"
               }`}
             >
               Refund Policy
@@ -96,8 +96,8 @@ const Privacy: React.FC = () => {
               onClick={() => setActiveTab("cancellation")}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTab === "cancellation" 
-                ? "bg-white text-purple-600 shadow-lg" 
-                : "bg-purple-700 text-white hover:bg-purple-600"
+                ? "bg-white text-blue-600 shadow-lg" 
+                : "bg-white/10 text-white hover:bg-white/20"
               }`}
             >
               Cancellation Policy
@@ -108,7 +108,7 @@ const Privacy: React.FC = () => {
 
       {/* Privacy Policy Content */}
       {activeTab === "privacy" && (
-        <section className="py-14 bg-white">
+        <Section variant="default" padding="default">
           <Container variant="narrow" className="text-gray-700 space-y-10">
             {/* Intro */}
             <div>
@@ -319,12 +319,12 @@ const Privacy: React.FC = () => {
               Disclaimer: This template is for general guidance and not legal advice. Please review with legal counsel.
             </p>
           </Container>
-        </section>
+        </Section>
       )}
 
       {/* Refund Policy Content */}
       {activeTab === "refund" && (
-        <section className="py-14 bg-white">
+        <Section variant="default" padding="default">
           <Container variant="narrow" className="text-gray-700 space-y-10">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Refund Policy</h2>
@@ -509,12 +509,12 @@ const Privacy: React.FC = () => {
               </div>
             </div>
           </Container>
-        </section>
+        </Section>
       )}
 
       {/* Cancellation Policy Content */}
       {activeTab === "cancellation" && (
-        <section className="py-14 bg-white">
+        <Section variant="default" padding="default">
           <Container variant="narrow" className="text-gray-700 space-y-10">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Cancellation Policy</h2>
@@ -688,7 +688,7 @@ const Privacy: React.FC = () => {
               </div>
             </div>
           </Container>
-        </section>
+        </Section>
       )}
     </div>
   );

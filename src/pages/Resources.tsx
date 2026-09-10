@@ -7,7 +7,7 @@ import {
   Layers, CheckSquare, Book, Laptop, Rocket, Gift, MessageCircle 
 } from 'lucide-react';
 import { businessConfig } from '../config/business';
-import { WhatsAppIcon } from '../components/ui';
+import { WhatsAppIcon, Container, Section, Card } from '../components/ui';
 
 const Resources: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -282,38 +282,40 @@ const Resources: React.FC = () => {
           <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <Gift className="w-5 h-5 text-yellow-300" />
-            <span className="text-lg font-semibold">FREE RESOURCES</span>
-          </div>
+        <Container>
+          <div className="relative max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
+              <Gift className="w-5 h-5 text-yellow-300" />
+              <span className="text-lg font-semibold">FREE RESOURCES</span>
+            </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Free <span className="text-cyan-300">Resources</span> for<br />Your <span className="text-cyan-300">Success</span>
-          </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-blue-100 leading-relaxed">
-            Download professional templates, tools, and guides to accelerate your business growth and digital transformation.
-          </p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Free <span className="text-cyan-300">Resources</span> for<br />Your <span className="text-cyan-300">Success</span>
+            </h1>
+            <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-blue-100 leading-relaxed">
+              Download professional templates, tools, and guides to accelerate your business growth and digital transformation.
+            </p>
 
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search resources, templates, tools..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-300 shadow-lg"
-              />
+            {/* Search Bar */}
+            <div className="max-w-2xl mx-auto">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Search resources, templates, tools..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-300 shadow-lg"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Featured Bundles */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Section variant="subtle" padding="default">
+        <Container>
           <div className="flex items-center justify-between mb-10">
             <h2 className="text-3xl font-bold text-gray-900">Featured Resource Bundles</h2>
             <div className="flex items-center space-x-2 text-blue-600 font-semibold hover:text-blue-700 cursor-pointer">
@@ -324,7 +326,7 @@ const Resources: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredResources.map((resource, index) => (
-              <div
+              <Card
                 key={index}
                 className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 border-2 border-transparent hover:border-blue-200 group"
               >
@@ -342,14 +344,15 @@ const Resources: React.FC = () => {
                     <Download className="h-4 w-4" />
                   </button>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <Section variant="default" padding="default">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Categories */}
@@ -663,7 +666,8 @@ const Resources: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+        </Container>
+      </Section>
     </div>
   );
 };
