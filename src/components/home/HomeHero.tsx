@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { 
-  Sparkles, MapPin, ChevronLeft, 
-  ChevronRight, Play, Pause, TrendingUp, Users, 
+  Sparkles, MapPin,
+  TrendingUp, Users, 
   Star, Headphones, Globe 
 } from "lucide-react";
 import Container from "../ui/Container";
@@ -282,51 +282,20 @@ export const HomeHero: React.FC = () => {
               ))}
             </div>
 
-            {/* Accessible Controls Bar */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-6 sm:mt-8 z-20 relative pt-2" aria-label="Hero Slide Navigation">
-              <button
-                onClick={prevSlide}
-                aria-label="Previous slide (ArrowLeft)"
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-yellow-400"
-              >
-                <ChevronLeft className="w-3.5 h-3.5" />
-              </button>
-
-              <div className="flex items-center gap-2">
-                {heroSlides.map((slide, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-yellow-400 ${
-                      index === currentSlide 
-                        ? 'bg-yellow-400 w-9 shadow-glow' 
-                        : 'bg-white/30 hover:bg-white/60 w-2.5'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}: ${slide.location}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                onClick={nextSlide}
-                aria-label="Next slide (ArrowRight)"
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-yellow-400"
-              >
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-
-              <button
-                onClick={() => setIsHeroPaused((v) => !v)}
-                aria-label={isHeroPaused ? "Resume auto rotation" : "Pause auto rotation"}
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-yellow-400 ml-1"
-                title={isHeroPaused ? "Resume auto rotation" : "Pause auto rotation"}
-              >
-                {isHeroPaused ? <Play className="w-3.5 h-3.5 text-yellow-300" /> : <Pause className="w-3.5 h-3.5 text-purple-200" />}
-              </button>
-
-              <span className="text-xs text-purple-300/80 font-medium ml-1">
-                {currentSlide + 1} / {heroSlides.length} • {heroSlides[currentSlide]?.location}
-              </span>
+            {/* Slide Dots */}
+            <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8" aria-label="Hero Slide Navigation">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-yellow-400 ${
+                    index === currentSlide
+                      ? 'bg-yellow-400 w-9 shadow-glow'
+                      : 'bg-white/30 hover:bg-white/60 w-2.5'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}: ${slide.location}`}
+                />
+              ))}
             </div>
           </div>
 
