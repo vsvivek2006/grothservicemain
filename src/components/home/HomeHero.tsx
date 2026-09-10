@@ -207,7 +207,7 @@ export const HomeHero: React.FC = () => {
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Hero Text & Dynamic Slides */}
-          <div className="lg:col-span-7 flex flex-col justify-center text-left">
+          <div className="lg:col-span-7 flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
             <div 
               className="relative min-h-[520px] sm:min-h-[420px] lg:min-h-[440px] flex flex-col justify-center focus:outline-none"
               onMouseEnter={() => setIsHeroPaused(true)}
@@ -233,7 +233,7 @@ export const HomeHero: React.FC = () => {
                   }`}
                 >
                   {/* Location Pill */}
-                  <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5 shadow-inner transition-colors">
+                  <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5 shadow-inner transition-colors mx-auto lg:mx-0 self-center lg:self-start">
                     <span className="text-base">{slide.flag}</span>
                     <span className="text-purple-200 flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-yellow-400" />
@@ -258,7 +258,7 @@ export const HomeHero: React.FC = () => {
                   </p>
                   
                   {/* Dual CTAs */}
-                  <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
                     <AnimatedButton
                       to={slide.ctaLink}
                       variant="primary"
@@ -283,7 +283,7 @@ export const HomeHero: React.FC = () => {
             </div>
 
             {/* Accessible Controls Bar */}
-            <div className="flex flex-wrap items-center gap-3 mt-6 sm:mt-8 z-20 relative pt-2" aria-label="Hero Slide Navigation">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-6 sm:mt-8 z-20 relative pt-2" aria-label="Hero Slide Navigation">
               <button
                 onClick={prevSlide}
                 aria-label="Previous slide (ArrowLeft)"

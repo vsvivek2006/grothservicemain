@@ -27,7 +27,7 @@ export const Brand: React.FC = () => {
             }}
           />
         </div>
-        <div className="hidden sm:block">
+        <div className="block">
           <h1 className="text-xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
             {businessName}
           </h1>
