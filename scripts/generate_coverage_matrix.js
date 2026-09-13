@@ -80,7 +80,7 @@ for (const f of files) {
   const content = fs.readFileSync(fullPath, 'utf8');
   const audit = auditPage(f);
 
-  const route = FILE_TO_ROUTE[f] || f;
+  const route = FILE_TO_ROUTE[f] || FILE_TO_ROUTE[f.replace(/^src\/views\//, 'src/pages/')] || f;
   const comp = path.basename(f, '.tsx');
   const family = audit.family;
 

@@ -74,10 +74,13 @@ const PAGE_FAMILIES = {
 };
 
 function getAllPageFiles() {
-  const pagesDir = path.join(ROOT_DIR, 'src', 'pages');
+  const pagesDir = fs.existsSync(path.join(ROOT_DIR, 'src', 'views'))
+    ? path.join(ROOT_DIR, 'src', 'views')
+    : path.join(ROOT_DIR, 'src', 'pages');
   const files = [];
 
   function scanDir(dir) {
+    if (!fs.existsSync(dir)) return;
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
@@ -102,7 +105,8 @@ function getAllPageFiles() {
 function auditPage(filePath) {
   const fullPath = path.join(ROOT_DIR, filePath);
   const content = fs.readFileSync(fullPath, 'utf8');
-  const family = PAGE_FAMILIES[filePath] || 'Other';
+  const normalizedKey = filePath.replace(/^src\/views\//, 'src/pages/');
+  const family = PAGE_FAMILIES[filePath] || PAGE_FAMILIES[normalizedKey] || 'Other';
 
   const issues = [];
   let score = 100;

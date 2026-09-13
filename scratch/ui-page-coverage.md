@@ -1,6 +1,6 @@
 # UI Page Coverage Matrix — Full Site-Wide Audit
 
-Generated: 2026-09-10T06:16:21.266Z
+Generated: 2026-09-13T18:28:53.852Z
 
 | Route | Component | Family | Container | Section | Button | Card | Breadcrumb | Centralized Data | Responsive | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@ Generated: 2026-09-10T06:16:21.266Z
 | `/` | `Home` | Core Marketing | ❌ | ❌ | ❌ | ❌ | — | ✅ | 320–1440px | ✅ Normal |
 | `/:city/:serviceSlug` | `LocationServicePage` | Programmatic Location SEO | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 320–1440px | ✅ Normal |
 | `/locations` | `LocationsHub` | Locations & Offices | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | 320–1440px | ✅ Normal |
-| `/404` | `NotFound` | Core Marketing | ✅ | ❌ | ❌ | ❌ | — | ✅ | 320–1440px | ✅ Normal |
+| `/404` | `NotFound` | Core Marketing | ✅ | ❌ | ✅ | ❌ | — | ✅ | 320–1440px | ✅ Normal |
 | `/offer` | `Offer` | Core Marketing | ✅ | ✅ | ❌ | ❌ | — | ✅ | 320–1440px | ✅ Normal |
 | `/offices/:officeSlug` | `OfficeDetailPage` | Locations & Offices | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 320–1440px | ✅ Normal |
 | `/offices` | `OfficesHub` | Locations & Offices | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | 320–1440px | ✅ Normal |
@@ -32,7 +32,7 @@ Generated: 2026-09-10T06:16:21.266Z
 | `/privacy` | `Privacy` | Legal & Compliance | ✅ | ✅ | ❌ | ❌ | — | ✅ | 320–1440px | ✅ Normal |
 | `/refund` | `RefundPolicy` | Legal & Compliance | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | 320–1440px | ✅ Normal |
 | `/resources` | `Resources` | Resources & Proof | ✅ | ✅ | ❌ | ✅ | — | — | 320–1440px | ✅ Normal |
-| `/seo-results (internal)` | `SEOResults` | Resources & Proof | ✅ | ✅ | ❌ | ✅ | — | ✅ | 320–1440px | ✅ Normal |
+| `/seo-results (internal)` | `SEOResults` | Resources & Proof | ✅ | ✅ | ✅ | ✅ | — | ✅ | 320–1440px | ✅ Normal |
 | `/services` | `Services` | Core Marketing | ✅ | ✅ | ❌ | ❌ | — | ✅ | 320–1440px | ✅ Normal |
 | `/team` | `TeamPage` | Locations & Offices | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | 320–1440px | ✅ Normal |
 | `/terms` | `Terms` | Legal & Compliance | ✅ | ✅ | ✅ | ❌ | — | ✅ | 320–1440px | ✅ Normal |

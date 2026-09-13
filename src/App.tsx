@@ -8,68 +8,68 @@ import ScrollToTop from './components/ScrollToTop';
 import { APP_ROUTES, getRouteAliases } from './routing';
 
 // Core Pages (Route-level Code Splitting for optimal Core Web Vitals)
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const Services = lazy(() => import('./pages/Services'));
-const Portfolio = lazy(() => import('./pages/Portfolio'));
-const Pricing = lazy(() => import('./pages/Pricing'));
-const Contact = lazy(() => import('./pages/Contact'));
-const Terms = lazy(() => import('./pages/Terms'));
-const OnboardingAgreement = lazy(() => import('./pages/OnboardingAgreement'));
-const Privacy = lazy(() => import('./pages/Privacy'));
+const Home = lazy(() => import('./views/Home'));
+const About = lazy(() => import('./views/About'));
+const Services = lazy(() => import('./views/Services'));
+const Portfolio = lazy(() => import('./views/Portfolio'));
+const Pricing = lazy(() => import('./views/Pricing'));
+const Contact = lazy(() => import('./views/Contact'));
+const Terms = lazy(() => import('./views/Terms'));
+const OnboardingAgreement = lazy(() => import('./views/OnboardingAgreement'));
+const Privacy = lazy(() => import('./views/Privacy'));
 const FAQ = lazy(() => import('./FAQ'));
-const NotFound = lazy(() => import('./pages/NotFound'));
-const FreeWebsiteAudit = lazy(() => import('./pages/FreeWebsiteAudit'));
-const Offer = lazy(() => import('./pages/Offer'));
-const GrowthServices = lazy(() => import('./pages/GrowthServices'));
-const BookCall = lazy(() => import('./pages/BookCall'));
-const OurImpact = lazy(() => import('./pages/OurImpact'));
-const Packages = lazy(() => import('./pages/Packages'));
-const Blog = lazy(() => import('./pages/Blog'));
+const NotFound = lazy(() => import('./views/NotFound'));
+const FreeWebsiteAudit = lazy(() => import('./views/FreeWebsiteAudit'));
+const Offer = lazy(() => import('./views/Offer'));
+const GrowthServices = lazy(() => import('./views/GrowthServices'));
+const BookCall = lazy(() => import('./views/BookCall'));
+const OurImpact = lazy(() => import('./views/OurImpact'));
+const Packages = lazy(() => import('./views/Packages'));
+const Blog = lazy(() => import('./views/Blog'));
 
 // Digital Marketing Pages
-const SEOService = lazy(() => import('./pages/digital-marketing/SEOService'));
-const SocialMediaManagement = lazy(() => import('./pages/digital-marketing/SocialMediaManagement'));
-const MetaAdsManagement = lazy(() => import('./pages/digital-marketing/MetaAdsManagement'));
-const GoogleBusinessProfile = lazy(() => import('./pages/digital-marketing/GoogleBusinessProfile'));
-const ContentMarketing = lazy(() => import('./pages/digital-marketing/ContentMarketing'));
-const LeadGeneration = lazy(() => import('./pages/digital-marketing/LeadGeneration'));
-const BrandStrategy = lazy(() => import('./pages/digital-marketing/BrandStrategy'));
-const DigitalMarketing = lazy(() => import('./pages/DigitalMarketing'));
+const SEOService = lazy(() => import('./views/digital-marketing/SEOService'));
+const SocialMediaManagement = lazy(() => import('./views/digital-marketing/SocialMediaManagement'));
+const MetaAdsManagement = lazy(() => import('./views/digital-marketing/MetaAdsManagement'));
+const GoogleBusinessProfile = lazy(() => import('./views/digital-marketing/GoogleBusinessProfile'));
+const ContentMarketing = lazy(() => import('./views/digital-marketing/ContentMarketing'));
+const LeadGeneration = lazy(() => import('./views/digital-marketing/LeadGeneration'));
+const BrandStrategy = lazy(() => import('./views/digital-marketing/BrandStrategy'));
+const DigitalMarketing = lazy(() => import('./views/DigitalMarketing'));
 
 // Design & Development Pages
-const WebsiteDevelopment = lazy(() => import('./pages/design-development/WebsiteDevelopment'));
-const UIUXDesign = lazy(() => import('./pages/design-development/UIUXDesign'));
-const WordPressDevelopment = lazy(() => import('./pages/design-development/WordPressDevelopment'));
-const EcommerceDevelopment = lazy(() => import('./pages/design-development/EcommerceDevelopment'));
-const MobileAppDevelopment = lazy(() => import('./pages/design-development/MobileAppDevelopment'));
-const DesignDevelopment = lazy(() => import('./pages/DesignDevelopment'));
+const WebsiteDevelopment = lazy(() => import('./views/design-development/WebsiteDevelopment'));
+const UIUXDesign = lazy(() => import('./views/design-development/UIUXDesign'));
+const WordPressDevelopment = lazy(() => import('./views/design-development/WordPressDevelopment'));
+const EcommerceDevelopment = lazy(() => import('./views/design-development/EcommerceDevelopment'));
+const MobileAppDevelopment = lazy(() => import('./views/design-development/MobileAppDevelopment'));
+const DesignDevelopment = lazy(() => import('./views/DesignDevelopment'));
 
 // White Label Pages
-const WhiteLabel = lazy(() => import('./pages/WhiteLabel'));
-const WhiteLabelSEO = lazy(() => import('./pages/white-label/WhiteLabelSEO'));
-const WhiteLabelPPC = lazy(() => import('./pages/white-label/WhiteLabelPPC'));
-const WhiteLabelSocialMedia = lazy(() => import('./pages/white-label/WhiteLabelSocialMedia'));
-const WhiteLabelWebDevelopment = lazy(() => import('./pages/white-label/WhiteLabelWebDevelopment'));
+const WhiteLabel = lazy(() => import('./views/WhiteLabel'));
+const WhiteLabelSEO = lazy(() => import('./views/white-label/WhiteLabelSEO'));
+const WhiteLabelPPC = lazy(() => import('./views/white-label/WhiteLabelPPC'));
+const WhiteLabelSocialMedia = lazy(() => import('./views/white-label/WhiteLabelSocialMedia'));
+const WhiteLabelWebDevelopment = lazy(() => import('./views/white-label/WhiteLabelWebDevelopment'));
 
 // Resource & Proof Pages
-const Resources = lazy(() => import('./pages/Resources'));
-const CaseStudies = lazy(() => import('./pages/CaseStudies'));
-const Testimonials = lazy(() => import('./pages/Testimonials'));
-const HelpCenter = lazy(() => import('./pages/HelpCenter'));
+const Resources = lazy(() => import('./views/Resources'));
+const CaseStudies = lazy(() => import('./views/CaseStudies'));
+const Testimonials = lazy(() => import('./views/Testimonials'));
+const HelpCenter = lazy(() => import('./views/HelpCenter'));
 
 // Hubs, Offices & Location Architecture
-const OfficesHub = lazy(() => import('./pages/OfficesHub'));
-const OfficeDetailPage = lazy(() => import('./pages/OfficeDetailPage'));
-const LocationsHub = lazy(() => import('./pages/LocationsHub'));
-const CityHubPage = lazy(() => import('./pages/CityHubPage'));
-const TeamPage = lazy(() => import('./pages/TeamPage'));
-const Accessibility = lazy(() => import('./pages/Accessibility'));
-const TrustVerification = lazy(() => import('./pages/TrustVerification'));
-const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
+const OfficesHub = lazy(() => import('./views/OfficesHub'));
+const OfficeDetailPage = lazy(() => import('./views/OfficeDetailPage'));
+const LocationsHub = lazy(() => import('./views/LocationsHub'));
+const CityHubPage = lazy(() => import('./views/CityHubPage'));
+const TeamPage = lazy(() => import('./views/TeamPage'));
+const Accessibility = lazy(() => import('./views/Accessibility'));
+const TrustVerification = lazy(() => import('./views/TrustVerification'));
+const RefundPolicy = lazy(() => import('./views/RefundPolicy'));
 
 // Scalable Programmatic Location SEO Template
-const LocationServicePage = lazy(() => import('./pages/LocationServicePage'));
+const LocationServicePage = lazy(() => import('./views/LocationServicePage'));
 
 // Static Route Component Binding Map
 const ROUTE_COMPONENTS: Record<string, React.ComponentType> = {
