@@ -4,21 +4,36 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only protect admin routes
-  if (!pathname.startsWith("/admin")) {
+  // Ignore static assets, next internal files, and files with extensions
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    /\.[a-zA-Z0-9]+$/.test(pathname)
+  ) {
     return NextResponse.next();
   }
 
-  const isLoginPage = pathname === "/admin/login";
+  // Normalize pathname (strip trailing slash)
+  const normalizedPath = pathname.replace(/\/+$/, "") || "/";
+
+  // Only protect admin routes
+  if (!normalizedPath.startsWith("/admin")) {
+    return NextResponse.next();
+  }
+
+  const isLoginPage = normalizedPath === "/admin/login";
 
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+    // Fail-safe check for missing environment variables
     if (!supabaseUrl || !supabaseAnonKey) {
       if (!isLoginPage) {
-        const loginUrl = new URL("/admin/login", request.url);
-        loginUrl.searchParams.set("redirectTo", pathname);
+        const loginUrl = request.nextUrl.clone();
+        loginUrl.pathname = "/admin/login";
+        loginUrl.search = "";
+        loginUrl.searchParams.set("redirectTo", normalizedPath);
         return NextResponse.redirect(loginUrl);
       }
       return NextResponse.next();
@@ -47,20 +62,27 @@ export async function proxy(request: NextRequest) {
       },
     });
 
+    // Safely retrieve user session
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    // If unauthenticated and trying to access protected admin page
-    if (!user && !isLoginPage) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("redirectTo", pathname);
+    // If unauthenticated or session invalid, redirect to login
+    if ((!user || userError) && !isLoginPage) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/admin/login";
+      loginUrl.search = "";
+      loginUrl.searchParams.set("redirectTo", normalizedPath);
       return NextResponse.redirect(loginUrl);
     }
 
-    // If already authenticated and trying to access login page
+    // If already authenticated and visiting login page, redirect to admin home
     if (user && isLoginPage) {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      const adminUrl = request.nextUrl.clone();
+      adminUrl.pathname = "/admin";
+      adminUrl.search = "";
+      return NextResponse.redirect(adminUrl);
     }
 
     return supabaseResponse;
@@ -68,8 +90,10 @@ export async function proxy(request: NextRequest) {
     console.error("Proxy middleware error:", error);
     // On unexpected error, fail safe without crashing the routing engine
     if (!isLoginPage) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("redirectTo", pathname);
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/admin/login";
+      loginUrl.search = "";
+      loginUrl.searchParams.set("redirectTo", normalizedPath);
       return NextResponse.redirect(loginUrl);
     }
     return NextResponse.next();
@@ -81,3 +105,4 @@ export default proxy;
 export const config = {
   matcher: ["/admin", "/admin/:path*"],
 };
+
