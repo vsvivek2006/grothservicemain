@@ -49,7 +49,7 @@ console.log('   ✓ City -> Office foreign key relationship resolves directly th
 
 // 3. Team Member -> Office relationship
 const team = selectors.getAllTeamMembers();
-assert.strictEqual(team.length, 13, 'Must have exactly 13 team members');
+assert.strictEqual(team.length, 15, 'Must have exactly 15 team members');
 const member = selectors.getTeamMemberById(2);
 assert.ok(member, 'Employee with id 2 must exist');
 assert.strictEqual(member.officeId, 'jaipur', 'Employee must belong to jaipur office');

@@ -1,0 +1,55 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getCityBySlug, getServiceBySlug, getAllCities, getServicesForCity } from '@/selectors';
+import LocationServicePageView from '@/views/LocationServicePage';
+
+interface PageProps {
+  params: Promise<{ city: string; serviceSlug: string }>;
+}
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  const params: { city: string; serviceSlug: string }[] = [];
+  const cities = getAllCities();
+  for (const city of cities) {
+    const services = getServicesForCity(city);
+    for (const service of services) {
+      params.push({
+        city: city.slug,
+        serviceSlug: service.slug,
+      });
+    }
+  }
+  return params;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { city: citySlug, serviceSlug } = await params;
+  const city = getCityBySlug(citySlug);
+  const service = getServiceBySlug(serviceSlug);
+  if (!city || !service || !city.servicesAvailable.includes(service.slug)) {
+    return {};
+  }
+
+  const pageTitle = `${service.title} in ${city.name}, ${city.state} | Growth Service`;
+  const pageDescription = `Top-rated ${service.title.toLowerCase()} in ${city.name}, ${city.state}. Drive targeted traffic and measurable conversions with Growth Service.`;
+
+  return {
+    title: pageTitle,
+    description: pageDescription,
+    alternates: {
+      canonical: `/${city.slug}/${service.slug}`,
+    },
+  };
+}
+
+export default async function LocationServicePageRoute({ params }: PageProps) {
+  const { city: citySlug, serviceSlug } = await params;
+  const city = getCityBySlug(citySlug);
+  const service = getServiceBySlug(serviceSlug);
+  if (!city || !service || !city.servicesAvailable.includes(service.slug)) {
+    notFound();
+  }
+  return <LocationServicePageView />;
+}
