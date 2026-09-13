@@ -1,3 +1,5 @@
+﻿"use client";
+
 // src/pages/digital-marketing/GoogleBusinessProfile.tsx
 
 import React from 'react';

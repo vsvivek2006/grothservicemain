@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  as?: React.ElementType;
   variant?: 'primary' | 'secondary' | 'outline' | 'outline-white' | 'white' | 'whatsapp' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   to?: string;
+  target?: string;
+  rel?: string;
   isExternal?: boolean;
   icon?: React.ReactNode;
   children: React.ReactNode;
@@ -13,10 +16,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button: React.FC<ButtonProps> = ({
+  as,
   variant = 'primary',
   size = 'md',
   href,
   to,
+  target,
+  rel,
   isExternal = false,
   icon,
   children,
@@ -43,21 +49,22 @@ export const Button: React.FC<ButtonProps> = ({
 
   const combinedClasses = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`;
 
-  if (to) {
+  if (to || as === Link) {
     return (
-      <Link to={to} className={combinedClasses}>
+      <Link to={to || href || '#'} className={combinedClasses} target={target} rel={rel}>
         {icon && <span className="shrink-0 transition-transform duration-200 group-hover:scale-105 group-hover:translate-x-0.5">{icon}</span>}
         <span>{children}</span>
       </Link>
     );
   }
 
-  if (href) {
+  if (href || as === 'a') {
     return (
       <a
         href={href}
         className={combinedClasses}
-        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        target={target || (isExternal ? "_blank" : undefined)}
+        rel={rel || (isExternal ? "noopener noreferrer" : undefined)}
       >
         {icon && <span className="shrink-0 transition-transform duration-200 group-hover:scale-105 group-hover:translate-x-0.5">{icon}</span>}
         <span>{children}</span>

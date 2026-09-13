@@ -4,8 +4,8 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   className?: string;
   variant?: 'default' | 'subtle' | 'dark' | 'primary' | 'transparent';
-  padding?: 'default' | 'sm' | 'lg' | 'none';
-  spacing?: 'default' | 'sm' | 'lg' | 'none' | string;
+  padding?: 'default' | 'sm' | 'lg' | 'none' | 'compact' | 'relaxed';
+  spacing?: 'default' | 'sm' | 'lg' | 'none' | 'compact' | 'relaxed' | string;
   id?: string;
 }
 
@@ -18,7 +18,7 @@ export const Section: React.FC<SectionProps> = ({
   id,
   ...props
 }) => {
-  const effectivePadding = (spacing && ['default', 'sm', 'lg', 'none'].includes(spacing) ? spacing : padding) as keyof typeof paddingStyles;
+  const effectivePadding = (spacing && ['default', 'sm', 'lg', 'none', 'compact', 'relaxed'].includes(spacing) ? spacing : padding) as keyof typeof paddingStyles;
   const variantStyles = {
     default: 'bg-white text-slate-900',
     subtle: 'bg-slate-50 text-slate-900 border-y border-slate-200/60',
@@ -30,7 +30,9 @@ export const Section: React.FC<SectionProps> = ({
   const paddingStyles = {
     default: 'py-16 md:py-24 lg:py-28',
     sm: 'py-10 md:py-16',
+    compact: 'py-8 md:py-12',
     lg: 'py-20 md:py-28 lg:py-32',
+    relaxed: 'py-20 md:py-28 lg:py-32',
     none: 'py-0',
   };
 

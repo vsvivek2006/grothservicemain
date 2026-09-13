@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useMemo } from 'react';
 import { 
   ExternalLink, Filter, Star, TrendingUp, Users, Clock, 
@@ -9,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 import { getTechnologyByName } from '../data/technologies';
-import { WhatsAppIcon, Container, Section } from '../components/ui';
+import { WhatsAppIcon, Container, Section, Button } from '../components/ui';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');

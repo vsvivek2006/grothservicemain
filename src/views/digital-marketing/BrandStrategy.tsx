@@ -1,3 +1,5 @@
+﻿"use client";
+
 // src/pages/digital-marketing/BrandStrategy.tsx
 
 import React from 'react';

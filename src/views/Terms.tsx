@@ -1,3 +1,5 @@
+﻿"use client";
+
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";

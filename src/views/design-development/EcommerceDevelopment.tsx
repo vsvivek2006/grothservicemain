@@ -1,3 +1,5 @@
+﻿"use client";
+
 // src/pages/design-development/EcommerceDevelopment.tsx
 
 import React from 'react';

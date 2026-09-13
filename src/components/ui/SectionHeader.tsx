@@ -6,11 +6,13 @@ export interface SectionHeaderProps {
   badge?: string;
   eyebrow?: string;
   badgeIcon?: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   titleHighlight?: string;
   highlightColor?: string;
-  description?: string;
+  description?: React.ReactNode;
+  subtitle?: React.ReactNode;
   align?: 'center' | 'left';
+  centered?: boolean;
   className?: string;
   dark?: boolean;
 }
@@ -23,17 +25,21 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   titleHighlight,
   highlightColor = 'text-purple-600',
   description,
+  subtitle,
   align = 'center',
+  centered,
   className = '',
   dark = false,
 }) => {
   const displayBadge = eyebrow || badge;
-  const alignClasses = align === 'center' ? 'text-center mx-auto' : 'text-left';
+  const displayDescription = description || subtitle;
+  const effectiveAlign = centered ? 'center' : align;
+  const alignClasses = effectiveAlign === 'center' ? 'text-center mx-auto' : 'text-left';
 
   return (
     <FadeIn direction="up" distance={20} duration={550} className={`max-w-3xl mb-12 sm:mb-16 ${alignClasses} ${className}`}>
       {displayBadge && (
-        <div className={`mb-3.5 flex ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
+        <div className={`mb-3.5 flex ${effectiveAlign === 'center' ? 'justify-center' : 'justify-start'}`}>
           <Badge
             variant={dark ? 'dark' : 'purple'}
             icon={badgeIcon}
@@ -51,9 +57,9 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         )}
       </h2>
 
-      {description && (
+      {displayDescription && (
         <p className={`text-lg sm:text-xl leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
-          {description}
+          {displayDescription}
         </p>
       )}
     </FadeIn>

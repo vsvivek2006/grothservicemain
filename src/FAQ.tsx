@@ -1,3 +1,5 @@
+﻿"use client";
+
 // src/pages/FAQ.tsx
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";

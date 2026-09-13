@@ -1,3 +1,5 @@
+﻿"use client";
+
 // src/pages/design-development/MobileAppDevelopment.tsx
 
 import React from 'react';

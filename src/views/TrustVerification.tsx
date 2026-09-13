@@ -1,3 +1,5 @@
+﻿"use client";
+
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { ShieldCheck, AlertTriangle, CheckCircle, Mail, Phone, ExternalLink, HelpCircle, XCircle } from 'lucide-react';

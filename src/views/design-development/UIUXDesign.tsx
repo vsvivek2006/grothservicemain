@@ -1,3 +1,5 @@
+﻿"use client";
+
 // src/pages/design-development/UIUXDesign.tsx
 
 import React from 'react';

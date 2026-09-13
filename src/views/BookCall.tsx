@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -146,7 +148,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
   };
 
   const getNextWeekdays = () => {
-    const days = [];
+    const days: string[] = [];
     const today = new Date();
     
     for (let i = 1; i <= 7; i++) {
