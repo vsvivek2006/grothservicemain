@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Only protect admin routes
@@ -65,7 +65,7 @@ export async function middleware(request: NextRequest) {
 
     return supabaseResponse;
   } catch (error) {
-    console.error("Middleware error:", error);
+    console.error("Proxy middleware error:", error);
     // On unexpected error, fail safe without crashing the routing engine
     if (!isLoginPage) {
       const loginUrl = new URL("/admin/login", request.url);
@@ -75,6 +75,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 }
+
+export default proxy;
 
 export const config = {
   matcher: ["/admin", "/admin/:path*"],
