@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '../index.css';
+import { Header, Footer, WhatsAppFloat, ScrollToTop } from './_components/layout';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthservice.in'),
@@ -42,9 +43,16 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />
       </head>
-      <body className="min-h-screen bg-gray-900 text-white antialiased font-sans">
-        {children}
+      <body className="min-h-screen bg-gray-900 text-white antialiased font-sans flex flex-col">
+        <ScrollToTop />
+        <Header />
+        <div className="flex-1">
+          {children}
+        </div>
+        <Footer />
+        <WhatsAppFloat />
       </body>
     </html>
   );
 }
+
