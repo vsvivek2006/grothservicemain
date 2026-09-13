@@ -71,11 +71,5 @@
     { "source": "/scam-alert", "destination": "/verify", "permanent": true },
     { "source": "/report-scam", "destination": "/verify", "permanent": true },
     { "source": "/locations/:city/:serviceSlug", "destination": "/:city/:serviceSlug", "permanent": true }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!assets/|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\..*).*)",
-      "destination": "/index.html"
-    }
   ]
 }

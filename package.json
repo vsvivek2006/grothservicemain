@@ -8,10 +8,14 @@
     "npm": ">=9.0.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "dev:vite": "vite",
+    "build:vite": "vite build",
+    "preview:vite": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "next start",
     "data:validate": "node scripts/validate_data_architecture.js",
     "data:audit": "node scripts/data_literal_audit.js",
     "architecture:audit": "node scripts/centralization_audit.js",
@@ -26,7 +30,8 @@
     "typecheck": "tsc --noEmit",
     "next:dev": "next dev",
     "next:build": "next build",
-    "next:start": "next start"
+    "next:start": "next start",
+    "next:test": "node scripts/live_next_server_test.js"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",
