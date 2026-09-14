@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { ArrowLeft, Calendar, User, ArrowRight } from "lucide-react";
 import { createPublicClient } from "@/lib/supabase/public";
 import { cleanHtml } from "@/lib/ai/contentFormatter";
+import { getPostCoverImage } from "@/lib/blog/images";
 
 export const revalidate = 60; // ISR revalidation every 60 seconds
 
@@ -110,7 +111,8 @@ export async function generateMetadata({
   const description =
     post.meta_description ||
     "Read the latest digital marketing and SEO insights on Growth Service Blog.";
-  const images = post.cover_image_url ? [post.cover_image_url] : ["https://www.growthservice.in/logo.png"];
+  const coverImg = getPostCoverImage(post.cover_image_url, post.title);
+  const images = [coverImg];
 
   return {
     title,
@@ -167,16 +169,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const sanitizedContent = cleanHtml(post.content);
+  let sanitizedContent = "";
+  try {
+    sanitizedContent = cleanHtml(post.content || "");
+  } catch (sanitizeErr) {
+    console.error("Content sanitization error:", sanitizeErr);
+    sanitizedContent = post.content || "";
+  }
+
+  const articleDate = post.published_at || post.created_at || new Date().toISOString();
+  const articleModified = post.updated_at || articleDate;
+
+  const coverImageUrl = getPostCoverImage(post.cover_image_url, post.title, post.tags || []);
 
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    description: post.meta_description,
-    image: post.cover_image_url ? [post.cover_image_url] : ["https://www.growthservice.in/logo.png"],
-    datePublished: post.published_at || post.created_at,
-    dateModified: post.updated_at || post.published_at || post.created_at,
+    headline: post.title || "Growth Service Blog",
+    description: post.meta_description || "",
+    image: [coverImageUrl],
+    datePublished: articleDate,
+    dateModified: articleModified,
     author: {
       "@type": "Person",
       name: post.author || "Growth Service Team",
@@ -268,10 +281,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Main Post Container */}
       <div className="max-w-4xl mx-auto px-6 sm:px-8 py-12">
         {/* Cover Image */}
-        {post.cover_image_url && (
+        {coverImageUrl && (
           <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-purple-900/40 mb-12 shadow-2xl shadow-purple-950/50 bg-gray-900">
             <Image
-              src={post.cover_image_url}
+              src={coverImageUrl}
               alt={post.title}
               fill
               priority

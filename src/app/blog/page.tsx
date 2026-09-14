@@ -4,6 +4,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { ArrowRight, Calendar, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { createPublicClient } from "@/lib/supabase/public";
+import { getPostCoverImage } from "@/lib/blog/images";
 
 export const revalidate = 60; // ISR revalidation every 60 seconds
 
@@ -114,22 +115,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 <div>
                   {/* Cover Image */}
                   <Link href={`/blog/${post.slug}`} className="block relative aspect-video w-full overflow-hidden bg-gray-950">
-                    {post.cover_image_url ? (
-                      <Image
-                        src={post.cover_image_url}
-                        alt={post.title}
-                        fill
-                        unoptimized
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-950/50 to-gray-900 text-purple-400">
-                        <span className="text-sm font-semibold tracking-wider uppercase opacity-60">
-                          Growth Service
-                        </span>
-                      </div>
-                    )}
+                    <Image
+                      src={getPostCoverImage(post.cover_image_url, post.title, post.tags)}
+                      alt={post.title}
+                      fill
+                      unoptimized
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                   </Link>
 
                   {/* Body */}

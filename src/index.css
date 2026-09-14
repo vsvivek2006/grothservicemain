@@ -396,3 +396,30 @@ html {
   color: #f3e8ff;
   font-style: italic;
 }
+
+.article-content img,
+.tiptap-editor-surface img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 2rem auto;
+  display: block;
+  border: 1px solid rgba(147, 51, 234, 0.25);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(106, 13, 173, 0.3);
+}
+
+.article-content figure,
+.tiptap-editor-surface figure {
+  margin: 2rem auto;
+  display: block;
+  text-align: center;
+}
+
+.article-content figcaption,
+.tiptap-editor-surface figcaption {
+  font-size: 0.875rem;
+  color: #c4b5fd;
+  margin-top: 0.5rem;
+  font-style: italic;
+  text-align: center;
+}

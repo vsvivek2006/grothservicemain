@@ -1,36 +1,122 @@
 /**
  * Formats and normalizes AI generated content into rich semantic HTML for Tiptap editor.
- * Ensures H2, H3, paragraphs, lists, bold, italic, and blockquotes are preserved or converted.
+ * Ensures H2, H3, paragraphs, lists, bold, italic, images, and blockquotes are preserved or converted.
+ * Uses a zero-dependency server-safe HTML sanitizer compatible with Edge/Serverless runtimes.
  */
-import DOMPurify from "isomorphic-dompurify";
 
-// Allowlist shared by both normalizeContentToHtml and cleanHtml.
-// Only tags and attributes the formatter itself can produce are allowed.
-const DOMPURIFY_CONFIG: Parameters<typeof DOMPurify.sanitize>[1] = {
-  ALLOWED_TAGS: [
-    "h1", "h2", "h3", "h4", "h5", "h6",
-    "p", "br", "hr",
-    "ul", "ol", "li",
-    "strong", "em", "code", "pre", "blockquote",
-    "s", "strike", "del", "span",
-    "a", "img",
-    "table", "thead", "tbody", "tr", "th", "td",
-  ],
-  ALLOWED_ATTR: [
-    "href", "target", "rel",
-    "src", "alt", "title", "class", "width", "height", "loading",
-  ],
-  ALLOW_DATA_ATTR: false,
+// Allowed tags set
+const ALLOWED_TAGS = new Set([
+  "h1", "h2", "h3", "h4", "h5", "h6",
+  "p", "br", "hr",
+  "ul", "ol", "li",
+  "strong", "b", "em", "i", "u", "s", "del", "strike",
+  "code", "pre", "blockquote",
+  "a", "img",
+  "table", "thead", "tbody", "tfoot", "tr", "th", "td",
+  "figure", "figcaption", "span", "div",
+]);
+
+// Allowed attributes per tag or globally
+const GLOBAL_ATTRS = new Set(["class", "title", "id", "width", "height"]);
+const TAG_ATTRS: Record<string, Set<string>> = {
+  a: new Set(["href", "target", "rel"]),
+  img: new Set(["src", "alt", "loading", "srcset", "sizes"]),
+  th: new Set(["scope", "colspan", "rowspan"]),
+  td: new Set(["colspan", "rowspan"]),
 };
 
-DOMPurify.addHook("afterSanitizeAttributes", (node) => {
-  // Enforce target=_blank links get rel=noopener noreferrer
-  if (node.tagName === "A") {
-    if (node.getAttribute("target") === "_blank") {
-      node.setAttribute("rel", "noopener noreferrer");
+export function cleanHtml(html: string): string {
+  if (!html || typeof html !== "string") return "";
+
+  let clean = html;
+
+  // 1. Remove dangerous blocks and their contents completely
+  clean = clean.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
+  clean = clean.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "");
+  clean = clean.replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, "");
+  clean = clean.replace(/<object\b[^>]*>[\s\S]*?<\/object>/gi, "");
+  clean = clean.replace(/<embed\b[^>]*>[\s\S]*?<\/embed>/gi, "");
+  clean = clean.replace(/<form\b[^>]*>[\s\S]*?<\/form>/gi, "");
+  clean = clean.replace(/<!--[\s\S]*?-->/g, ""); // HTML comments
+
+  // 2. Parse tags and sanitize attributes
+  clean = clean.replace(/<\/?([a-z0-9-]+)([^>]*)>/gi, (match, tagNameRaw, attrsRaw) => {
+    const tagName = tagNameRaw.toLowerCase();
+    const isClosing = match.startsWith("</");
+
+    if (!ALLOWED_TAGS.has(tagName)) {
+      return "";
     }
-  }
-});
+
+    if (isClosing) {
+      return `</${tagName}>`;
+    }
+
+    const allowedForTag = TAG_ATTRS[tagName] || new Set();
+    const sanitizedAttrs: string[] = [];
+    let hasTargetBlank = false;
+    let existingRel = "";
+
+    const attrRegex = /([a-z0-9_-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/gi;
+    let attrMatch;
+
+    while ((attrMatch = attrRegex.exec(attrsRaw)) !== null) {
+      const attrName = attrMatch[1].toLowerCase();
+      const attrValue = attrMatch[2] ?? attrMatch[3] ?? attrMatch[4] ?? "";
+
+      // Strip on* event handlers (onclick, onerror, onload, etc.)
+      if (attrName.startsWith("on")) {
+        continue;
+      }
+
+      // Check allowed attributes
+      if (!GLOBAL_ATTRS.has(attrName) && !allowedForTag.has(attrName)) {
+        continue;
+      }
+
+      // Check URL safety for href and src
+      if (attrName === "href" || attrName === "src") {
+        const trimmedVal = attrValue.trim().toLowerCase();
+        if (
+          trimmedVal.startsWith("javascript:") ||
+          trimmedVal.startsWith("vbscript:") ||
+          (trimmedVal.startsWith("data:") && (!trimmedVal.startsWith("data:image/") || attrName !== "src"))
+        ) {
+          continue;
+        }
+      }
+
+      if (tagName === "a" && attrName === "target" && attrValue === "_blank") {
+        hasTargetBlank = true;
+      }
+
+      if (tagName === "a" && attrName === "rel") {
+        existingRel = attrValue;
+        continue;
+      }
+
+      sanitizedAttrs.push(`${attrName}="${attrValue.replace(/"/g, "&quot;")}"`);
+    }
+
+    if (tagName === "a") {
+      if (hasTargetBlank) {
+        const relTokens = new Set((existingRel || "").split(/\s+/).filter(Boolean));
+        relTokens.add("noopener");
+        relTokens.add("noreferrer");
+        sanitizedAttrs.push(`rel="${Array.from(relTokens).join(" ")}"`);
+      } else if (existingRel) {
+        sanitizedAttrs.push(`rel="${existingRel.replace(/"/g, "&quot;")}"`);
+      }
+    }
+
+    const attrString = sanitizedAttrs.length > 0 ? " " + sanitizedAttrs.join(" ") : "";
+    const isVoid = tagName === "br" || tagName === "hr" || tagName === "img";
+
+    return `<${tagName}${attrString}${isVoid ? " />" : ">"}`;
+  });
+
+  return clean;
+}
 
 export function normalizeContentToHtml(raw: string): string {
   if (!raw || typeof raw !== "string") return "";
@@ -51,9 +137,11 @@ export function normalizeContentToHtml(raw: string): string {
   text = text.replace(/(?:^|\n)#{1,2}\s+([^\n]+)/g, "\n<h2>$1</h2>\n");
   text = text.replace(/(?:^|\n)#{3,6}\s+([^\n]+)/g, "\n<h3>$1</h3>\n");
 
-  // 4. Normalize inline markdown (bold, italic, code, links)
-  // Links: [text](url) -> <a href="$2">$1</a> (supporting both https:// and internal /paths)
-  text = text.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/|#)[^\s)]+)\)/g, '<a href="$2">$1</a>');
+  // 4. Normalize inline markdown (images, bold, italic, code, links)
+  // Images FIRST: ![alt](url) -> <img src="$2" alt="$1" loading="lazy" />
+  text = text.replace(/!\[([^\]]*)\]\(((?:https?:\/\/|\/|data:image\/)[^\s)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
+  // Links: [text](url) -> <a href="$2">$1</a> (avoiding ! before bracket)
+  text = text.replace(/(?<!\!)\[([^\]]+)\]\(((?:https?:\/\/|\/|#)[^\s)]+)\)/g, '<a href="$2">$1</a>');
   // Bold: **text** -> <strong>$1</strong>
   text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   // Italic: *text* -> <em>$1</em> (avoiding ** which is already replaced)
@@ -146,12 +234,13 @@ export function normalizeContentToHtml(raw: string): string {
 
     // Check if line is already an HTML block element
     const isHtmlBlock =
-      /^<\/?(?:h[1-6]|p|ul|ol|li|blockquote|div|hr|pre|table|thead|tbody|tr|th|td|section|article)\b/i.test(
+      /^<\/?(?:h[1-6]|p|ul|ol|li|blockquote|div|hr|pre|table|thead|tbody|tr|th|td|section|article|figure|figcaption)\b/i.test(
         trimmed
       ) ||
-      /<\/(?:h[1-6]|p|ul|ol|li|blockquote|div|pre|table|section|article)>$/i.test(
+      /<\/(?:h[1-6]|p|ul|ol|li|blockquote|div|pre|table|section|article|figure|figcaption)>$/i.test(
         trimmed
-      );
+      ) ||
+      /^<img\b[^>]*\/?>$/i.test(trimmed);
 
     if (isHtmlBlock) {
       result.push(trimmed);
@@ -172,9 +261,4 @@ export function normalizeContentToHtml(raw: string): string {
     .replace(/<p><br\s*\/?><\/p>/gi, "");
 
   return cleanHtml(finalHtml);
-}
-
-export function cleanHtml(html: string): string {
-  if (!html) return "";
-  return DOMPurify.sanitize(html, DOMPURIFY_CONFIG) as string;
 }
