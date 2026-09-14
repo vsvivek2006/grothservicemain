@@ -32,20 +32,52 @@ export async function generateStaticParams() {
   }
 }
 
+interface BlogPostMeta {
+  title: string;
+  meta_description: string | null;
+  cover_image_url: string | null;
+  published_at: string | null;
+  author: string | null;
+}
+
+interface BlogPostDetail {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  meta_description: string | null;
+  cover_image_url: string | null;
+  author: string | null;
+  tags: string[] | null;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string | null;
+}
+
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const supabase = createPublicClient();
-  const { data: post } = await supabase
-    .from("posts")
-    .select("title, meta_description, cover_image_url, published_at, author")
-    .eq("slug", slug)
-    .eq("status", "published")
-    .maybeSingle();
+  let post: BlogPostMeta | null = null;
+
+  try {
+    const supabase = createPublicClient();
+    const { data } = await supabase
+      .from("posts")
+      .select("title, meta_description, cover_image_url, published_at, author")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    post = data;
+  } catch (err) {
+    console.error("Error fetching metadata for blog post:", err);
+  }
 
   if (!post) {
-    notFound();
+    return {
+      title: "Article Not Found | Growth Service",
+      description: "The requested article could not be found.",
+    };
   }
 
   const title = `${post.title} | Growth Service`;
@@ -80,17 +112,23 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const supabase = createPublicClient();
+  let post: BlogPostDetail | null = null;
 
-  // Explicit column selection — NEVER select `source` or `*` on public pages
-  const { data: post } = await supabase
-    .from("posts")
-    .select(
-      "id, title, slug, content, meta_description, cover_image_url, author, tags, published_at, created_at, updated_at"
-    )
-    .eq("slug", slug)
-    .eq("status", "published")
-    .maybeSingle();
+  try {
+    const supabase = createPublicClient();
+    // Explicit column selection — NEVER select `source` or `*` on public pages
+    const { data } = await supabase
+      .from("posts")
+      .select(
+        "id, title, slug, content, meta_description, cover_image_url, author, tags, published_at, created_at, updated_at"
+      )
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    post = data;
+  } catch (err) {
+    console.error("Error loading blog post page:", err);
+  }
 
   if (!post) {
     notFound();
