@@ -1,15 +1,15 @@
 # Growth Service — Migration Ledger
 
-> Governed by `.agents/rules/growthservice-vite-to-nextjs-migration-rules.md` (Section 48).  
+> Governed by `.agents/rules/` (`01-` through `08-`).  
 > **Status Lifecycle:** `NOT STARTED` → `IN PROGRESS` → `PARITY READY` → `VERIFIED` → `CUTOVER READY` → `LIVE`
 
 ---
 
 ## 1. Architectural Decisions (Rule 2)
 
-- **Admin Boundary:** Architecture A selected and locked.
-  - Public website (`growthservice.in`): Next.js App Router (migration candidate).
-  - Admin application (`Admin/`): Standalone Next.js app, independently deployed. No changes, merges, or deletions.
+- **Admin Boundary:** Admin merged into root app — see `.agents/rules/01-architecture-merge-plan.md`.
+  - Public website (`growthservice.in`) and Admin suite (`/admin`) unified under root Next.js App Router.
+  - Admin routes, Supabase auth/storage, AI generation API, and components integrated directly into `src/app/admin`, `src/lib/ai`, `src/lib/supabase`, and `src/components/admin`.
 
 ## 2. Phase Progression Status
 
@@ -60,7 +60,7 @@ Live Parity Audit:       40 / 40 PASSED (0 errors)
 Route Matrix Test:       83 / 83 PASSED (0 errors)
 Internal Link Audit:     0 broken links
 Sitemap XML Audit:       175 / 175 valid URLs (0 errors)
-Admin Boundary:          Architecture A (Admin/ untouched & standalone)
+Admin Boundary:          Merged into root Next.js App Router (src/app/admin)
 Emergency Rollback:      Documented in ROLLBACK.md (< 60 second recovery)
 Status:                  CUTOVER READY
 ```
