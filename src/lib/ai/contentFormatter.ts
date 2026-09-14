@@ -2,6 +2,32 @@
  * Formats and normalizes AI generated content into rich semantic HTML for Tiptap editor.
  * Ensures H2, H3, paragraphs, lists, bold, italic, and blockquotes are preserved or converted.
  */
+import DOMPurify from "isomorphic-dompurify";
+
+// Allowlist shared by both normalizeContentToHtml and cleanHtml.
+// Only tags and attributes the formatter itself can produce are allowed.
+const DOMPURIFY_CONFIG: Parameters<typeof DOMPurify.sanitize>[1] = {
+  ALLOWED_TAGS: [
+    "h2", "h3",
+    "p", "br",
+    "ul", "ol", "li",
+    "strong", "em", "code", "blockquote",
+    "a", "hr",
+  ],
+  ALLOWED_ATTR: ["href", "target", "rel"],
+  // Force safe link targets — prevent javascript: href XSS
+  ALLOW_DATA_ATTR: false,
+};
+
+DOMPurify.addHook("afterSanitizeAttributes", (node) => {
+  // Enforce target=_blank links get rel=noopener
+  if (node.tagName === "A") {
+    if (node.getAttribute("target") === "_blank") {
+      node.setAttribute("rel", "noopener noreferrer");
+    }
+  }
+});
+
 export function normalizeContentToHtml(raw: string): string {
   if (!raw || typeof raw !== "string") return "";
 
@@ -145,10 +171,6 @@ export function normalizeContentToHtml(raw: string): string {
 }
 
 export function cleanHtml(html: string): string {
-  // Strip dangerous tags while strictly keeping semantic rich content tags
-  return html
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
-    .replace(/\son\w+="[^"]*"/gi, "")
-    .replace(/\son\w+='[^']*'/gi, "");
+  if (!html) return "";
+  return DOMPurify.sanitize(html, DOMPURIFY_CONFIG) as string;
 }
