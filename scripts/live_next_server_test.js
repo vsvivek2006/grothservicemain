@@ -1,6 +1,6 @@
 import http from 'http';
 
-const BASE_URL = 'http://localhost:3005';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 function fetchPath(path) {
   return new Promise((resolve, reject) => {

@@ -116,6 +116,9 @@ for (const [link, files] of internalLinks.entries()) {
     hashOnly.push({ link, files: Array.from(files) });
     continue;
   }
+  if (/\.(png|jpg|jpeg|svg|webp|ico|xml|txt|pdf|mp4)$/i.test(cleanLink)) {
+    continue;
+  }
   
   // 1. Exact route match
   if (appRoutes.has(cleanLink)) {

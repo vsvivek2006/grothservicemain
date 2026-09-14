@@ -13,6 +13,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  serverExternalPackages: ['react-icons'],
   images: {
     remotePatterns: [
       {
