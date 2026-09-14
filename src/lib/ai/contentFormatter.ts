@@ -8,19 +8,23 @@ import DOMPurify from "isomorphic-dompurify";
 // Only tags and attributes the formatter itself can produce are allowed.
 const DOMPURIFY_CONFIG: Parameters<typeof DOMPurify.sanitize>[1] = {
   ALLOWED_TAGS: [
-    "h2", "h3",
-    "p", "br",
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "p", "br", "hr",
     "ul", "ol", "li",
-    "strong", "em", "code", "blockquote",
-    "a", "hr",
+    "strong", "em", "code", "pre", "blockquote",
+    "s", "strike", "del", "span",
+    "a", "img",
+    "table", "thead", "tbody", "tr", "th", "td",
   ],
-  ALLOWED_ATTR: ["href", "target", "rel"],
-  // Force safe link targets — prevent javascript: href XSS
+  ALLOWED_ATTR: [
+    "href", "target", "rel",
+    "src", "alt", "title", "class", "width", "height", "loading",
+  ],
   ALLOW_DATA_ATTR: false,
 };
 
 DOMPurify.addHook("afterSanitizeAttributes", (node) => {
-  // Enforce target=_blank links get rel=noopener
+  // Enforce target=_blank links get rel=noopener noreferrer
   if (node.tagName === "A") {
     if (node.getAttribute("target") === "_blank") {
       node.setAttribute("rel", "noopener noreferrer");

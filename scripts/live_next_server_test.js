@@ -72,10 +72,10 @@ const testCases = [
 
   // 7. Sitemap & Robots
   { path: '/sitemap.xml', expectedStatus: 200, checks: ['<urlset', 'https://www.growthservice.in'] },
-  { path: '/robots.txt', expectedStatus: 200, checks: ['User-agent', 'sitemap.xml'] },
+  { path: '/robots.txt', expectedStatus: 200, checks: ['User-Agent', 'sitemap.xml'] },
 
   // 8. Dynamic Blog Detail (200 OK)
-  { path: '/blog/how-growth-service-works-a-complete-guide-for-business-leaders', expectedStatus: 200, checks: ['How Growth Service Works', 'Growth Service'] },
+  { path: '/blog/seo-vs-ppc-which-one-should-you-actually-bet-on', expectedStatus: 200, checks: ['SEO vs PPC', 'Growth Service'] },
 
   // 9. Admin Anonymous Login (200 OK)
   { path: '/admin/login', expectedStatus: 200, checks: ['Admin', 'Portal'] },

@@ -16,20 +16,57 @@ esbuild.buildSync({
   platform: 'node'
 });
 
-const { resolveRoute, normalizePath, getRouteAliases } = await import('./dist/routing/index.js');
+const { 
+  resolveRoute, 
+  normalizePath, 
+  getRouteAliases, 
+  getSitemapRoutes, 
+  buildCanonicalUrl, 
+  buildOfficePath, 
+  buildCityPath, 
+  buildLocationServicePath 
+} = await import('./dist/routing/index.js');
+const { physicalOffices } = await import('./dist/data/offices.js');
+const { citiesData } = await import('./dist/data/locations.js');
+const { servicesData } = await import('./dist/data/services.js');
 const { businessConfig } = await import('./dist/config/business.js');
 
+let locMatches = [];
 const sitemapPath = path.resolve('public/sitemap.xml');
-if (!fs.existsSync(sitemapPath)) {
-  console.error(`❌ Sitemap file not found at: ${sitemapPath}`);
+const appSitemapPath = path.resolve('src/app/sitemap.ts');
+
+if (fs.existsSync(sitemapPath)) {
+  const content = fs.readFileSync(sitemapPath, 'utf-8');
+  locMatches = [...content.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
+} else if (fs.existsSync(appSitemapPath)) {
+  for (const route of getSitemapRoutes()) {
+    if (route.path !== '/locations' && route.path !== '/offices') {
+      locMatches.push(buildCanonicalUrl(route.canonical));
+    }
+  }
+  locMatches.push(buildCanonicalUrl(buildOfficePath('')));
+  for (const office of physicalOffices) {
+    locMatches.push(buildCanonicalUrl(buildOfficePath(office.slug)));
+  }
+  locMatches.push(buildCanonicalUrl(buildCityPath('')));
+  for (const city of citiesData) {
+    locMatches.push(buildCanonicalUrl(buildCityPath(city.slug)));
+  }
+  for (const city of citiesData) {
+    for (const srvSlug of city.servicesAvailable) {
+      const srv = servicesData.find((s) => s.slug === srvSlug);
+      if (srv) {
+        locMatches.push(buildCanonicalUrl(buildLocationServicePath(city.slug, srv.slug)));
+      }
+    }
+  }
+} else {
+  console.error(`❌ Sitemap file not found at ${sitemapPath} or ${appSitemapPath}`);
   process.exit(1);
 }
 
-const content = fs.readFileSync(sitemapPath, 'utf-8');
 const expectedOrigin = businessConfig.canonicalOrigin;
-
 const errors = [];
-const locMatches = [...content.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
 
 if (locMatches.length === 0) {
   errors.push('Sitemap contains 0 <loc> entries');

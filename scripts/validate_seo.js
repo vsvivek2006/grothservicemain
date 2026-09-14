@@ -50,13 +50,15 @@ if (!fs.existsSync(logoPath)) {
   errors.push('Primary branded asset "public/logo.png" does not exist.');
 }
 
-const robotsPath = path.resolve('public/robots.txt');
+const robotsAppPath = path.resolve('src/app/robots.ts');
+const robotsPublicPath = path.resolve('public/robots.txt');
+const robotsPath = fs.existsSync(robotsAppPath) ? robotsAppPath : robotsPublicPath;
 if (!fs.existsSync(robotsPath)) {
-  errors.push('Robots configuration "public/robots.txt" does not exist.');
+  errors.push('Robots configuration ("src/app/robots.ts" or "public/robots.txt") does not exist.');
 } else {
   const robotsContent = fs.readFileSync(robotsPath, 'utf-8');
-  if (!robotsContent.includes('Sitemap: https://www.growthservice.in/sitemap.xml')) {
-    errors.push('robots.txt does not reference the authoritative sitemap URL (https://www.growthservice.in/sitemap.xml).');
+  if (!robotsContent.includes('https://www.growthservice.in/sitemap.xml')) {
+    errors.push('robots configuration does not reference the authoritative sitemap URL (https://www.growthservice.in/sitemap.xml).');
   }
 }
 

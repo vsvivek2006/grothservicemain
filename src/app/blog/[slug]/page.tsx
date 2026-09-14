@@ -54,20 +54,42 @@ interface BlogPostDetail {
   updated_at: string | null;
 }
 
+function formatDisplayDate(
+  dateStr: string | null | undefined,
+  fallbackStr?: string | null
+): string {
+  const target = dateStr || fallbackStr;
+  if (!target) return "";
+  try {
+    const parsed = new Date(target);
+    if (isNaN(parsed.getTime())) return "";
+    return format(parsed, "MMMM d, yyyy");
+  } catch {
+    return "";
+  }
+}
+
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
   let post: BlogPostMeta | null = null;
 
   try {
     const supabase = createPublicClient();
-    const { data } = await supabase
+    let query = supabase
       .from("posts")
       .select("title, meta_description, cover_image_url, published_at, author")
-      .eq("slug", slug)
-      .eq("status", "published")
-      .maybeSingle();
+      .eq("status", "published");
+
+    if (slug === decodedSlug) {
+      query = query.eq("slug", slug);
+    } else {
+      query = query.or(`slug.eq."${slug}",slug.eq."${decodedSlug}"`);
+    }
+
+    const { data } = await query.maybeSingle();
     post = data;
   } catch (err) {
     console.error("Error fetching metadata for blog post:", err);
@@ -77,6 +99,10 @@ export async function generateMetadata({
     return {
       title: "Article Not Found | Growth Service",
       description: "The requested article could not be found.",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
@@ -112,19 +138,26 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
   let post: BlogPostDetail | null = null;
 
   try {
     const supabase = createPublicClient();
     // Explicit column selection — NEVER select `source` or `*` on public pages
-    const { data } = await supabase
+    let query = supabase
       .from("posts")
       .select(
         "id, title, slug, content, meta_description, cover_image_url, author, tags, published_at, created_at, updated_at"
       )
-      .eq("slug", slug)
-      .eq("status", "published")
-      .maybeSingle();
+      .eq("status", "published");
+
+    if (slug === decodedSlug) {
+      query = query.eq("slug", slug);
+    } else {
+      query = query.or(`slug.eq."${slug}",slug.eq."${decodedSlug}"`);
+    }
+
+    const { data } = await query.maybeSingle();
     post = data;
   } catch (err) {
     console.error("Error loading blog post page:", err);
@@ -224,9 +257,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div>
                 <span className="text-xs text-purple-300/70 block">Published</span>
                 <span className="font-medium text-white">
-                  {post.published_at
-                    ? format(new Date(post.published_at), "MMMM d, yyyy")
-                    : format(new Date(post.created_at), "MMMM d, yyyy")}
+                  {formatDisplayDate(post.published_at, post.created_at)}
                 </span>
               </div>
             </div>
