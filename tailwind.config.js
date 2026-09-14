@@ -42,8 +42,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'Poppins', 'system-ui', '-apple-system', 'sans-serif'],
       },
       spacing: {
         '18': '4.5rem',

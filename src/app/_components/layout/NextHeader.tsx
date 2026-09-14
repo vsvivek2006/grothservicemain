@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   Phone, Mail, MapPin, Building, Zap, Info, BookOpen, 
@@ -189,11 +190,12 @@ export const NextHeader: React.FC = () => {
               aria-label="Home"
             >
               <div className="h-12 w-12 rounded-full bg-white border-2 border-purple-200 flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-lg transition-all">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt={`${businessName} Logo`} 
                   width={40}
                   height={40}
+                  priority
                   className="h-10 w-10 object-contain p-1"
                 />
               </div>
@@ -365,7 +367,7 @@ export const NextHeader: React.FC = () => {
           <div className="flex items-center justify-between px-4 h-16 border-b border-slate-200/80 shrink-0 bg-white shadow-sm">
             <div className="flex items-center space-x-2">
               <div className="h-10 w-10 rounded-full bg-white border-2 border-purple-200 flex items-center justify-center overflow-hidden">
-                <img src="/logo.png" alt="Growth Service Logo" width={32} height={32} className="h-8 w-8 object-contain p-0.5" />
+                <Image src="/logo.png" alt="Growth Service Logo" width={32} height={32} priority className="h-8 w-8 object-contain p-0.5" />
               </div>
               <span className="text-lg font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 {businessName}

@@ -367,6 +367,8 @@ const Portfolio = () => {
                   <img
                     src={project.image}
                     alt={project.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -512,6 +514,10 @@ const Portfolio = () => {
                     <img
                       src={testimonials[currentTestimonial].image}
                       alt={testimonials[currentTestimonial].name}
+                      width={112}
+                      height={112}
+                      loading="lazy"
+                      decoding="async"
                       className="w-28 h-28 rounded-full object-cover shadow-xl"
                     />
                     <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2">
@@ -673,6 +679,8 @@ const Portfolio = () => {
                   <img
                     src={selectedCaseStudy.image}
                     alt={selectedCaseStudy.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-64 object-cover rounded-xl mb-4"
                   />
                   <div className="bg-blue-50 p-4 rounded-xl mb-4">

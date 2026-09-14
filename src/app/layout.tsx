@@ -1,6 +1,25 @@
 import type { Metadata } from 'next';
+import { Inter, Poppins } from 'next/font/google';
+import Script from 'next/script';
 import '../index.css';
 import { Header, Footer, WhatsAppFloat, ScrollToTop } from './_components/layout';
+
+import { buildOrganizationSchema } from '../seo/schema';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+  variable: '--font-poppins',
+});
+
+const organizationSchema = buildOrganizationSchema();
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthservice.in'),
@@ -38,12 +57,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body className="min-h-screen bg-gray-900 text-white antialiased font-sans flex flex-col">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-P50L6F04NE"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-P50L6F04NE');
+          `}
+        </Script>
         <ScrollToTop />
         <Header />
         <div className="flex-1">
