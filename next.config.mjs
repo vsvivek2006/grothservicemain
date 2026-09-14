@@ -66,6 +66,20 @@ const nextConfig = {
       },
     ];
   },
+  turbopack: {
+    resolveAlias: {
+      'react-router-dom': './src/shims/react-router-dom.tsx',
+      'react-helmet': './src/shims/react-helmet.tsx',
+    },
+  },
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        'react-router-dom': './src/shims/react-router-dom.tsx',
+        'react-helmet': './src/shims/react-helmet.tsx',
+      },
+    },
+  },
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
