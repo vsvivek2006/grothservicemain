@@ -73,6 +73,17 @@ const testCases = [
   // 7. Sitemap & Robots
   { path: '/sitemap.xml', expectedStatus: 200, checks: ['<urlset', 'https://www.growthservice.in'] },
   { path: '/robots.txt', expectedStatus: 200, checks: ['User-agent', 'sitemap.xml'] },
+
+  // 8. Dynamic Blog Detail (200 OK)
+  { path: '/blog/how-growth-service-works-a-complete-guide-for-business-leaders', expectedStatus: 200, checks: ['How Growth Service Works', 'Growth Service'] },
+
+  // 9. Admin Anonymous Login (200 OK)
+  { path: '/admin/login', expectedStatus: 200, checks: ['Admin', 'Portal'] },
+
+  // 10. Admin Protected Routes (Redirects unauthenticated requests to login)
+  { path: '/admin', expectedStatus: 307, locationIncludes: '/admin/login' },
+  { path: '/admin/blog', expectedStatus: 307, locationIncludes: '/admin/login' },
+  { path: '/admin/blog/new', expectedStatus: 307, locationIncludes: '/admin/login' },
 ];
 
 async function run() {
@@ -96,6 +107,11 @@ async function run() {
       if (tc.expectedLocation && res.headers.location !== tc.expectedLocation) {
         ok = false;
         reasons.push(`Location: got ${res.headers.location}, expected ${tc.expectedLocation}`);
+      }
+
+      if (tc.locationIncludes && (!res.headers.location || !res.headers.location.includes(tc.locationIncludes))) {
+        ok = false;
+        reasons.push(`Location: got ${res.headers.location}, expected to include ${tc.locationIncludes}`);
       }
 
       if (tc.checks) {

@@ -54,6 +54,7 @@ export const EmployeeAvatar: React.FC<EmployeeAvatarProps> = ({
             onError={() => setImageError(true)}
             className="w-full h-full object-cover object-center relative z-10 transition-transform duration-500 hover:scale-105"
             loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center relative z-10 p-2 text-center select-none">

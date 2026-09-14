@@ -27,16 +27,8 @@ const { citiesData } = await import('./dist/data/locations.js');
 const { physicalOffices } = await import('./dist/data/offices.js');
 const { servicesData } = await import('./dist/data/services.js');
 
-// 3. Extract routes from App.tsx
-const appTsx = fs.readFileSync(path.join(rootDir, 'src/App.tsx'), 'utf8');
-const routeRegex = /<Route\s+path=["']([^"']+)["']/g;
+// 3. Extract routes from authoritative route registry
 const appRoutes = new Set();
-let match;
-while ((match = routeRegex.exec(appTsx)) !== null) {
-  appRoutes.add(match[1]);
-}
-
-// Add canonicals & aliases from route registry
 for (const r of Object.values(APP_ROUTES)) {
   appRoutes.add(r.path);
   appRoutes.add(r.canonical);
@@ -45,7 +37,7 @@ for (const r of Object.values(APP_ROUTES)) {
   }
 }
 
-console.log(`--- REGISTERED ROUTES IN App.tsx / Registry (${appRoutes.size}) ---`);
+console.log(`--- REGISTERED CANONICAL & ALIAS ROUTES (${appRoutes.size}) ---`);
 
 // 4. Data slug sets
 const citySlugMap = new Map();
@@ -120,8 +112,9 @@ for (const [link, files] of internalLinks.entries()) {
     continue;
   }
   
-  // 1. Exact route match
-  if (appRoutes.has(cleanLink)) {
+  // 1. Exact route match or admin route match
+  const adminRoutes = new Set(['/admin', '/admin/login', '/admin/blog', '/admin/blog/new']);
+  if (appRoutes.has(cleanLink) || adminRoutes.has(cleanLink) || /^\/admin\/blog\/[^/]+\/edit$/.test(cleanLink)) {
     validStatic.push({ link, files: Array.from(files) });
     continue;
   }
@@ -177,7 +170,7 @@ for (const [link, files] of internalLinks.entries()) {
   }
   
   // Not matched anywhere
-  broken.push({ link, reason: 'Route not registered in App.tsx or routes registry', files: Array.from(files) });
+  broken.push({ link, reason: 'Route not registered in routes registry', files: Array.from(files) });
 }
 
 console.log(`VALID STATIC LINKS: ${validStatic.length}`);

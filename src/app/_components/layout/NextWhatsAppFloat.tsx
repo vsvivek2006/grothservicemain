@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { ArrowUp } from 'lucide-react';
 import { WhatsAppIcon } from '../../../components/ui/WhatsAppIcon';
 import { getNepalWhatsAppUrl } from '../../../services';
 
 export const NextWhatsAppFloat: React.FC = () => {
+  const pathname = usePathname();
   const whatsappUrl = getNepalWhatsAppUrl("Hello Growth Service, I want to discuss my digital marketing project.");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isWAHovered, setIsWAHovered] = useState(false);
@@ -17,6 +19,10 @@ export const NextWhatsAppFloat: React.FC = () => {
   }, []);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex flex-col items-center gap-3">

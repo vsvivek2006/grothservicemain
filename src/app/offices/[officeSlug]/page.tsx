@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getOfficeBySlug, getPhysicalOffices } from '@/selectors';
+import { buildLocalBusinessSchema, buildBreadcrumbSchema } from '@/seo/schema';
 import OfficeDetailPageView from '@/views/OfficeDetailPage';
 
 interface PageProps {
@@ -38,5 +39,24 @@ export default async function OfficePage({ params }: PageProps) {
   if (!office) {
     notFound();
   }
-  return <OfficeDetailPageView />;
+
+  const localBusinessSchema = buildLocalBusinessSchema(office);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { label: 'Offices', path: '/offices' },
+    { label: office.name, path: `/offices/${office.slug}` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <OfficeDetailPageView />
+    </>
+  );
 }

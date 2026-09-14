@@ -37,10 +37,6 @@
   ],
   "exclude": [
     "node_modules",
-    "Admin",
-    "dist",
-    "src/pages",
-    "src/App.tsx",
-    "src/main.tsx"
+    "dist"
   ]
 }

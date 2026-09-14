@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { 
   Building2, Users, Trophy, Briefcase, FileText, Lock, DollarSign, Eye, ShieldCheck,
   TrendingUp, Search, Share2, Target, MapPin, BookOpen, Palette, Layout,
@@ -21,6 +24,7 @@ interface FooterLink {
 }
 
 export const NextFooter: React.FC = () => {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
   const offices = getPhysicalOffices();
   const social = getSocialProfiles();
@@ -106,6 +110,10 @@ export const NextFooter: React.FC = () => {
     { icon: Linkedin, href: social.linkedin, label: "LinkedIn", color: "hover:text-blue-400" },
     { icon: Youtube, href: social.youtube, label: "YouTube", color: "hover:text-red-500" }
   ];
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">

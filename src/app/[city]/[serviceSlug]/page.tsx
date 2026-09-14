@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCityBySlug, getServiceBySlug, getAllCities, getServicesForCity } from '@/selectors';
+import { buildServiceSchema, buildBreadcrumbSchema } from '@/seo/schema';
 import LocationServicePageView from '@/views/LocationServicePage';
 
 interface PageProps {
@@ -51,5 +52,25 @@ export default async function LocationServicePageRoute({ params }: PageProps) {
   if (!city || !service || !city.servicesAvailable.includes(service.slug)) {
     notFound();
   }
-  return <LocationServicePageView />;
+
+  const serviceSchema = buildServiceSchema(service, city);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { label: 'Locations', path: '/locations' },
+    { label: city.name, path: `/locations/${city.slug}` },
+    { label: `${service.title} in ${city.name}`, path: `/${city.slug}/${service.slug}` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <LocationServicePageView />
+    </>
+  );
 }

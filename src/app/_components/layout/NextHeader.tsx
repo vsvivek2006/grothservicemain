@@ -120,6 +120,10 @@ export const NextHeader: React.FC = () => {
     { name: "FREE AUDIT", href: "/free-audit", highlight: true, icon: <Sparkles className="h-3.5 w-3.5" /> }
   ];
 
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-200/80' : 'bg-white shadow-sm'}`}>
       {/* Top Bar with Office Badges & Verified Contacts */}

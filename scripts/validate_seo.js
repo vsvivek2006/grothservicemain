@@ -131,7 +131,9 @@ function scanDir(dir) {
 }
 
 scanDir(path.resolve('src'));
-scanFile(path.resolve('index.html'));
+if (fs.existsSync(path.resolve('index.html'))) {
+  scanFile(path.resolve('index.html'));
+}
 
 console.log(`Audited Canonical Origin:  ${businessConfig.canonicalOrigin}`);
 console.log(`Audited Office Schemas:    ${physicalOffices.length}`);

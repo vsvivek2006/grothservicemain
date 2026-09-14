@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCityBySlug, getAllCities } from '@/selectors';
+import { buildBreadcrumbSchema } from '@/seo/schema';
 import CityHubPageView from '@/views/CityHubPage';
 
 interface PageProps {
@@ -38,5 +39,19 @@ export default async function LocationCityPage({ params }: PageProps) {
   if (!city) {
     notFound();
   }
-  return <CityHubPageView />;
+
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { label: 'Locations', path: '/locations' },
+    { label: city.name, path: `/locations/${city.slug}` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <CityHubPageView />
+    </>
+  );
 }
