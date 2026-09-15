@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPaymentProvider } from "@/infrastructure/payments/payment-provider";
 import { reconcilePaymentEvent } from "@/modules/billing/services/reconciliationService";
+import { sendPaymentSuccessNotification } from "@/modules/billing/services/notificationService";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -113,6 +114,13 @@ export async function POST(req: NextRequest) {
           error_message: result.success ? null : result.message,
         })
         .eq("id", webhookEventId);
+    }
+
+    // 7. Asynchronously trigger automated payment success notification
+    if (result.success && result.paymentId && normalizedEvent.eventType === "payment.captured") {
+      sendPaymentSuccessNotification(result.paymentId).catch((notifErr) => {
+        console.warn("[RazorpayWebhook] Failed to dispatch payment success notification:", notifErr);
+      });
     }
 
     return NextResponse.json({

@@ -14,12 +14,14 @@ import {
   AlertCircle,
   CheckCircle2,
   Calendar,
+  Mail,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
   createPaymentLinkAction,
   cancelPaymentLinkAction,
 } from "@/modules/billing/actions/paymentLinkActions";
+import { sendPaymentLinkEmailAction } from "@/modules/billing/actions/notificationActions";
 import type { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import type { PaymentLinkRecord } from "@/modules/billing/types/database";
 
@@ -33,6 +35,7 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
   const router = useRouter();
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const [sendingLinkId, setSendingLinkId] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -95,6 +98,22 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
       toast.error(err instanceof Error ? err.message : "Error cancelling link");
     } finally {
       setCancellingId(null);
+    }
+  };
+
+  const handleEmailLink = async (linkId: string) => {
+    setSendingLinkId(linkId);
+    try {
+      const res = await sendPaymentLinkEmailAction({ paymentLinkId: linkId });
+      if (!res.success) {
+        toast.error(res.error || "Failed to email payment link");
+        return;
+      }
+      toast.success("Payment link successfully emailed to client");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Error emailing payment link");
+    } finally {
+      setSendingLinkId(null);
     }
   };
 
@@ -314,6 +333,22 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
                     <ExternalLink className="h-3.5 w-3.5" />
                     <span>Open</span>
                   </a>
+
+                  {!isCancelledOrPaid && (
+                    <button
+                      onClick={() => handleEmailLink(link.id)}
+                      disabled={sendingLinkId === link.id}
+                      className="flex items-center gap-1 rounded-md border border-blue-500/30 bg-blue-950/30 px-2.5 py-1.5 text-xs font-medium text-blue-300 hover:bg-blue-900/40 disabled:cursor-not-allowed disabled:opacity-50"
+                      title="Email payment link to client"
+                    >
+                      {sendingLinkId === link.id ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <Mail className="h-3.5 w-3.5" />
+                      )}
+                      <span>Email</span>
+                    </button>
+                  )}
 
                   {!isCancelledOrPaid && (
                     <button

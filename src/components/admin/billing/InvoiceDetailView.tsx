@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { cancelInvoiceAction, issueInvoiceAction } from "@/modules/billing/actions/invoiceActions";
+import {
+  sendInvoiceEmailAction,
+  sendPaymentReminderEmailAction,
+} from "@/modules/billing/actions/notificationActions";
 import { InvoicePaymentLinksSection } from "./InvoicePaymentLinksSection";
 import { toast } from "sonner";
 import {
@@ -21,6 +25,8 @@ import {
   AlertTriangle,
   Loader2,
   Download,
+  Mail,
+  Bell,
 } from "lucide-react";
 
 interface InvoiceDetailViewProps {
@@ -35,6 +41,8 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const [showIssueModal, setShowIssueModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [isSendingReminder, setIsSendingReminder] = useState(false);
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -126,6 +134,38 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
     }
   };
 
+  const handleSendEmail = async () => {
+    setIsSendingEmail(true);
+    try {
+      const res = await sendInvoiceEmailAction({ invoiceId: invoice.id });
+      if (!res.success) {
+        toast.error(res.error || "Failed to send invoice email");
+        return;
+      }
+      toast.success("Invoice successfully emailed to client");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Error sending invoice email");
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  const handleSendReminder = async () => {
+    setIsSendingReminder(true);
+    try {
+      const res = await sendPaymentReminderEmailAction({ invoiceId: invoice.id });
+      if (!res.success) {
+        toast.error(res.error || "Failed to send payment reminder");
+        return;
+      }
+      toast.success("Payment reminder successfully sent to client");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Error sending payment reminder");
+    } finally {
+      setIsSendingReminder(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Action Header */}
@@ -174,6 +214,38 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             <Printer className="h-4 w-4" />
             <span>Print View</span>
           </button>
+
+          {!isDraft && !isCancelled && (
+            <button
+              onClick={handleSendEmail}
+              disabled={isSendingEmail}
+              className="flex items-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-60"
+              title="Email invoice PDF to client"
+            >
+              {isSendingEmail ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Mail className="h-4 w-4" />
+              )}
+              <span>{isSendingEmail ? "Sending…" : "Email Invoice"}</span>
+            </button>
+          )}
+
+          {!isDraft && !isCancelled && invoice.payment_status !== "paid" && (
+            <button
+              onClick={handleSendReminder}
+              disabled={isSendingReminder}
+              className="flex items-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300 hover:bg-amber-900/50 disabled:cursor-not-allowed disabled:opacity-60"
+              title="Send payment reminder to client"
+            >
+              {isSendingReminder ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Bell className="h-4 w-4" />
+              )}
+              <span>{isSendingReminder ? "Sending…" : "Send Reminder"}</span>
+            </button>
+          )}
 
           {isDraft && (
             <>

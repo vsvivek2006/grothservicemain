@@ -20,12 +20,14 @@ export type AuditAction =
   | "ITEM_ARCHIVED"
   | "POST_CREATED"
   | "POST_UPDATED"
-  | "POST_DELETED";
+  | "POST_DELETED"
+  | "NOTIFICATION_SENT"
+  | "PAYMENT_REMINDER_SENT";
 
 export interface AuditLogEntry {
   actorUserId: string;
   action: AuditAction;
-  entityType: "client" | "billing_profile" | "billing_item" | "invoice" | "payment_link" | "payment" | "refund" | "post";
+  entityType: "client" | "billing_profile" | "billing_item" | "invoice" | "payment_link" | "payment" | "refund" | "post" | "notification";
   entityId: string;
   oldValues?: Record<string, unknown> | null;
   newValues?: Record<string, unknown> | null;
