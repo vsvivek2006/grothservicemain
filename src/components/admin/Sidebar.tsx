@@ -42,6 +42,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Clients", href: "/admin/clients", icon: Users },
       { label: "Catalog Items", href: "/admin/billing/items", icon: Package },
+      { label: "Invoices", href: "/admin/billing/invoices", icon: FileText },
     ],
   },
   {
