@@ -7,7 +7,6 @@ import {
   Zap, Award, ChevronLeft, ChevronRight, Play,
   ClipboardList, CheckCircle, Rocket, Phone, Mail, Sparkles, X, Check 
 } from 'lucide-react';
-import { Helmet } from 'react-helmet';
 import { getPrimaryPhone, getBusinessEmail } from '../selectors';
 import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from '../services';
 import { getTechnologyByName } from '../data/technologies';
@@ -223,18 +222,6 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Helmet>
-        <title>Our Portfolio - Real Projects & Case Studies | Growth Service</title>
-        <meta
-          name="description"
-          content="Explore our portfolio of website development, SEO services, social media campaigns, and business setup projects. See real results and case studies."
-        />
-        <meta
-          name="keywords"
-          content="web development portfolio, SEO case studies, social media marketing projects, business setup examples, react js projects, MERN stack portfolio"
-        />
-        <link rel="canonical" href="https://www.growthservice.in/portfolio" />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24 overflow-hidden">

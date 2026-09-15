@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import {
   Code,
   Laptop,
@@ -213,14 +212,6 @@ const WebsiteDevelopment: React.FC = () => {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <Helmet>
-        <title>Professional Website Development Services | {businessName}</title>
-        <meta
-          name="description"
-          content="Custom web development that drives conversions, engages visitors, and scales your business online. Responsive, high-performance web engineering."
-        />
-        <link rel="canonical" href={`${canonicalOrigin}/web-development`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 md:py-24 overflow-hidden">

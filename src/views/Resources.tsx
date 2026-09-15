@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   Download, Search, Filter, BookOpen, Video, FileText, Wrench, 
   ArrowRight, ExternalLink, FileCode, Globe, Smartphone, Zap, 
@@ -264,18 +263,6 @@ const Resources: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Helmet>
-        <title>Free Digital Marketing & SEO Resources | Growth Service</title>
-        <meta
-          name="description"
-          content="Free resources for web development, SEO, social media marketing, and business growth. Download templates, guides, tools, and checklists from Growth Service."
-        />
-        <meta
-          name="keywords"
-          content="free website templates, SEO tools, marketing guides, business growth resources, social media templates, digital marketing resources"
-        />
-        <link rel="canonical" href="https://www.growthservice.in/resources" />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24">

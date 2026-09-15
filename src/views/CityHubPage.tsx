@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   Building2, Phone, MessageCircle, ArrowRight, 
   ChevronRight, HelpCircle, MapPin, CheckCircle
@@ -71,38 +70,6 @@ export const CityHubPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>{`${city.name} Digital Marketing, SEO & Web Agency | Growth Service`}</title>
-        <meta
-          name="description"
-          content={`Comprehensive digital marketing, SEO, Meta ads, and web development services tailored for businesses and startups in ${city.name}, ${city.state}.`}
-        />
-        <link rel="canonical" href={canonicalUrl} />
-        
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": `Digital Marketing, SEO & Web Development in ${city.name}`,
-            "areaServed": {
-              "@type": "City",
-              "name": city.name,
-              "containedInPlace": {
-                "@type": "AdministrativeArea",
-                "name": city.state
-              }
-            },
-            "provider": {
-              "@type": "Organization",
-              "name": businessName,
-              "url": canonicalOrigin,
-              "telephone": cityPhone,
-              "email": cityEmail
-            },
-            "description": city.description
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   FaPenAlt, 
   FaChartLine, 
@@ -57,23 +56,6 @@ import { Breadcrumb } from '../../components/ui/Breadcrumb';
 const ContentMarketing: React.FC = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Best Content Marketing Services in Jaipur, Vrindavan & Nepal | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Professional content marketing services in Jaipur, Vrindavan, and Nepal. Create compelling content that attracts, engages, and converts your target audience. Get free content audit today!" 
-        />
-        <meta 
-          name="keywords" 
-          content="content marketing Jaipur, content writing services Vrindavan, content marketing Nepal, digital content strategy, SEO content writing, blog writing services, content marketing agency India, content strategy Jaipur"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/content-marketing`} />
-        
-        <meta property="og:title" content="Best Content Marketing Services in Jaipur, Vrindavan & Nepal" />
-        <meta property="og:description" content="Professional content marketing services with 300+ happy clients. Create content that drives traffic, generates leads, and grows your business." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/content-marketing`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

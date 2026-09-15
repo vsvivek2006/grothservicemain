@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { Eye, ShieldCheck, CheckCircle, Mail, Phone } from 'lucide-react';
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
@@ -15,14 +14,6 @@ const Accessibility: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Accessibility Statement | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Growth Service is committed to digital accessibility. Learn about our WCAG 2.1 AA compliance, accessibility features, and support contact channels." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/accessibility`} />
-      </Helmet>
 
       {/* Hero Header */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { ShieldCheck, AlertTriangle, CheckCircle, Mail, Phone, ExternalLink, HelpCircle, XCircle } from 'lucide-react';
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
@@ -11,14 +10,6 @@ import { businessConfig } from '../config/business';
 const TrustVerification: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Trust, Verification & Scam Alert | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Official verification portal for Growth Service. Verify official representatives, payment channels, and report impersonation or fraud attempts." 
-        />
-        <link rel="canonical" href="https://www.growthservice.in/verify" />
-      </Helmet>
 
       {/* Hero Header */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

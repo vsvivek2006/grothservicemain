@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { 
   Star, 
   Quote, 
@@ -205,18 +204,6 @@ const Testimonials: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>Client Testimonials & Success Stories | Growth Service</title>
-        <meta
-          name="description"
-          content="Read real client testimonials and success stories about Growth Service website development, SEO, social media management, and business setup services."
-        />
-        <meta
-          name="keywords"
-          content="client testimonials, success stories, website development reviews, SEO service feedback, social media management testimonials, business setup reviews"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/testimonials`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Container, Section, WhatsAppIcon } from "../components/ui";
 import { getPhysicalOffices, getCanonicalOrigin } from "../selectors";
@@ -33,7 +32,6 @@ const Offer: React.FC = () => {
     location: "Jaipur",
     message: ""
   });
-
 
   // Consultation Domains & Capabilities
   const services = [
@@ -183,18 +181,6 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Free Digital Growth Strategy & Audit | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Request a complimentary 30-minute growth strategy consultation and technical digital audit with senior specialists across Jaipur, Vrindavan, and Nepal." 
-        />
-        <meta 
-          name="keywords" 
-          content="free digital audit, website audit Jaipur, SEO consultation Vrindavan, social media audit Nepal, growth strategy session"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/offer`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-16 md:py-24 overflow-hidden">

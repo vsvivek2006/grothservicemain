@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaUsers, FaChartLine, FaCalendarAlt, FaPalette, FaComment, FaRocket } from 'react-icons/fa';
 import {
   ClipboardList,
@@ -39,14 +38,6 @@ import AnimatedButton from '../../components/ui/AnimatedButton';
 const WhiteLabelSocialMedia = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>White Label Social Media Management Services | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Offer premium social media services under your brand with our complete white label solution. Turnkey creative assets, 60-70% profit margins, and 100% white label fulfillment." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label-smo`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

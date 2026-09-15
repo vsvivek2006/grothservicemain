@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   FaFilter, 
   FaBullseye, 
@@ -48,41 +47,6 @@ import { Breadcrumb } from '../../components/ui/Breadcrumb';
 const LeadGeneration: React.FC = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Best Lead Generation Services in Jaipur, Vrindavan & Nepal | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Professional lead generation services in Jaipur, Vrindavan, and Nepal. Get high-quality B2B leads, inbound marketing, and sales pipeline growth. 300+ happy clients." 
-        />
-        <meta 
-          name="keywords" 
-          content="lead generation Jaipur, B2B lead generation Vrindavan, lead generation Nepal, sales pipeline growth, inbound marketing, LinkedIn lead generation, cold email outreach, lead generation agency India"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/lead-generation`} />
-        
-        <meta property="og:title" content="Best Lead Generation Services in Jaipur, Vrindavan & Nepal" />
-        <meta property="og:description" content="Professional lead generation services with 300+ happy clients. Fuel your sales pipeline with qualified leads that convert." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/lead-generation`} />
-        
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "Lead Generation Services",
-            "provider": {
-              "@type": "Organization",
-              "name": "Growth Service",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Jaipur",
-                "addressRegion": "Rajasthan",
-                "addressCountry": "India"
-              }
-            }
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

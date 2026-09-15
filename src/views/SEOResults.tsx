@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   TrendingUp, 
   Search, 
@@ -90,7 +89,6 @@ const SEOResults: React.FC = () => {
     { date: 'Current', title: 'Continuous Monitoring', description: 'Weekly performance tracking' }
   ];
 
-
   const renderMetricCard = (title: string, value: string | number, change: string, icon: React.ReactNode, color: string) => (
     <Card className={`bg-white rounded-2xl shadow-lg p-6 border-l-4 ${color}`}>
       <div className="flex items-start justify-between mb-4">
@@ -108,18 +106,6 @@ const SEOResults: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Helmet>
-        <title>SEO Results & Analytics Dashboard | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Track SEO performance, keyword rankings, traffic growth, and competitor analysis with our comprehensive SEO results dashboard." 
-        />
-        <meta 
-          name="keywords" 
-          content="SEO results, keyword rankings, organic traffic analytics, SEO performance, competitor analysis, Google ranking" 
-        />
-        <link rel="canonical" href="https://www.growthservice.in/seo-results" />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-20">

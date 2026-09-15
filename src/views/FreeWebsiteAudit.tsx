@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   CheckCircle, AlertTriangle, ArrowRight, Download, 
   Search, Globe, Clock, Shield, Zap, Smartphone, 
@@ -245,10 +244,6 @@ I would like to schedule an audit strategy session with your digital growth team
   if (isSubmitted && !paymentComplete) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
-        <Helmet>
-          <title>Free Audit Request Sent - Growth Service</title>
-          <meta name="description" content="Your free website audit request has been sent. We'll send you a basic SEO analysis report." />
-        </Helmet>
         
         <Container className="max-w-4xl">
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -341,10 +336,6 @@ I would like to schedule an audit strategy session with your digital growth team
   if (paymentComplete) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 py-12">
-        <Helmet>
-          <title>Payment Confirmed - Growth Service</title>
-          <meta name="description" content="Your payment for professional website audit is confirmed. We'll start the audit immediately." />
-        </Helmet>
         
         <Container className="max-w-4xl">
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
@@ -412,13 +403,6 @@ I would like to schedule an audit strategy session with your digital growth team
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-      <Helmet>
-        <title>Free Website Audit & Strategic Analysis | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Get a comprehensive website audit and strategic growth analysis. Technical SEO, speed benchmarking, and conversion optimization." 
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-900 via-indigo-800 to-purple-900 text-white py-20 overflow-hidden">

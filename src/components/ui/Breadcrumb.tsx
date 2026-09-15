@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
-import { Helmet } from 'react-helmet';
 import { buildBreadcrumbSchema } from '../../seo/schema';
 
 export interface BreadcrumbItem {
@@ -28,11 +27,10 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
       aria-label="Breadcrumb" 
       className={`flex items-center text-xs sm:text-sm py-3 ${isDark ? 'text-purple-200/80' : 'text-slate-500'} ${className}`}
     >
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
-        </script>
-      </Helmet>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <ol className="flex items-center flex-wrap gap-1.5 sm:gap-2">
         <li>

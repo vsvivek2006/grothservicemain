@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import {
   Code,
@@ -152,17 +151,6 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Professional Digital Services | Growth Service</title>
-        <meta
-          name="description"
-          content="Explore professional digital services: Custom Website Development, SEO, Social Media Management, and Strategic Business Setup tailored to your growth goals."
-        />
-        <meta 
-          name="keywords" 
-          content="website development services, SEO agency India, social media management, business setup services, digital marketing solutions"
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">

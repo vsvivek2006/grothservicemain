@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   FaFacebook, 
   FaInstagram, 
@@ -52,41 +51,6 @@ import { Breadcrumb } from '../../components/ui/Breadcrumb';
 const MetaAdsManagement: React.FC = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Best Meta Ads Management in Jaipur, Vrindavan & Nepal | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Professional Meta Ads management services in Jaipur, Vrindavan, and Nepal. Expert Facebook, Instagram & WhatsApp advertising. Get 5x ROI with our data-driven ad strategies." 
-        />
-        <meta 
-          name="keywords" 
-          content="Meta ads management Jaipur, Facebook ads Vrindavan, Instagram advertising Nepal, Meta ads agency, social media advertising, Facebook ads management India, WhatsApp business ads, Meta Ads expert Jaipur"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/paid-marketing`} />
-        
-        <meta property="og:title" content="Best Meta Ads Management in Jaipur, Vrindavan & Nepal" />
-        <meta property="og:description" content="Professional Meta Ads management services with 300+ happy clients. Maximize ROI from Facebook, Instagram & WhatsApp advertising." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/paid-marketing`} />
-        
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "Meta Ads Management",
-            "provider": {
-              "@type": "Organization",
-              "name": "Growth Service",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Jaipur",
-                "addressRegion": "Rajasthan",
-                "addressCountry": "India"
-              }
-            }
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

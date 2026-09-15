@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import { Container, Section } from "../components/ui";
 import { CheckCircle, XCircle } from "lucide-react";
 import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
@@ -48,18 +47,6 @@ const Privacy: React.FC = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta 
-          name="description" 
-          content={
-            activeTab === "refund"
-              ? "Read Growth Service's official refund policy, criteria, and payment protection guidelines."
-              : "Read Growth Service's privacy policy and data governance practices compliant with India's DPDP Act."
-          }
-        />
-        <link rel="canonical" href={canonicalUrl} />
-      </Helmet>
 
       {/* Hero */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16">

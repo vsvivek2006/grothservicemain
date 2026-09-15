@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, Award, Calendar, MessageCircle, Sparkles } from 'lucide-react';
 import { Container, Section, WhatsAppIcon } from '../components/ui';
@@ -598,17 +597,6 @@ const Packages: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Engagement Models & Solutions | Growth Service</title>
-        <meta
-          name="description"
-          content="Explore structured engagement models and service solutions across web development, SEO, social media, and digital marketing tailored to your business needs."
-        />
-        <meta 
-          name="keywords" 
-          content="digital marketing solutions, custom web development scope, SEO retainers, social media management, Growth Service India Nepal"
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">

@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   Search, TrendingUp, Users, Target, BarChart, 
   MessageCircle, Video, Mail, ShoppingBag, Globe,
@@ -251,14 +250,6 @@ const DigitalMarketing: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>Digital Marketing Services | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Complete digital marketing solutions including SEO, Social Media Management, Meta Ads, Google My Business, Lead Generation, and Email Marketing." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/digital-marketing`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24 overflow-hidden">

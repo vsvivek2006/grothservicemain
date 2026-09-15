@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { getPhysicalOffices, getOfficePhone, getPrimaryPhone, getBusinessEmail, getCanonicalOrigin } from '../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../services';
@@ -167,10 +166,6 @@ I have booked a free consultation call. Please confirm the schedule.`;
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8 md:py-12">
-        <Helmet>
-          <title>Booking Confirmed - Growth Service | Free Consultation</title>
-          <meta name="description" content="Your free consultation with Growth Service has been confirmed. Our team will contact you shortly." />
-        </Helmet>
         
         <div className="max-w-2xl mx-auto px-4">
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
@@ -304,23 +299,6 @@ I have booked a free consultation call. Please confirm the schedule.`;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      <Helmet>
-        <title>Book Free Consultation | Digital Experts in Nepal, Jaipur & Vrindavan - Growth Service</title>
-        <meta 
-          name="description" 
-          content="Schedule a free 30-minute consultation with our digital experts at our Nepal Office, Jaipur Office, or Vrindavan Office. Discuss web development, SEO, and digital marketing." 
-        />
-        <meta 
-          name="keywords" 
-          content="free consultation, digital marketing consultation, web development consultation, SEO consultation, book call, growth service, Nepal consultation, Jaipur digital marketing, Vrindavan web development" 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/book-call`} />
-        
-        <meta property="og:title" content="Book Free Consultation - Growth Service Digital Agency" />
-        <meta property="og:description" content="Free 30-minute strategy session with our digital experts. Offices in Nepal, Jaipur, and Vrindavan." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/book-call`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white py-12 md:py-16 relative overflow-hidden">

@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   ExternalLink, Calendar, Users, Target, Globe, CheckCircle, ArrowRight, X,
   MapPin, Compass, Landmark, Building2, TrendingUp, Award,
@@ -261,13 +260,6 @@ const CaseStudies: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      <Helmet>
-        <title>Case Studies | Growth Service - Successful Projects Portfolio</title>
-        <meta 
-          name="description" 
-          content="Explore our successful case studies and projects. See how we helped businesses grow with web development, SEO, and digital marketing solutions." 
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-indigo-800 text-white py-16">

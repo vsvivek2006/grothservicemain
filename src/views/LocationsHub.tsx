@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { Globe, Search, ArrowRight } from 'lucide-react';
 import { getAllCities, getAllRegions, getCitiesByRegion, getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl } from '../services';
@@ -31,14 +30,6 @@ export const LocationsHub: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Locations We Serve — Regional Digital Marketing & SEO | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Explore Growth Service digital marketing, SEO, and web development services across Delhi NCR, Rajasthan, Uttar Pradesh, Bihar, Punjab, Goa, Maharashtra, Karnataka, and Nepal." 
-        />
-        <link rel="canonical" href="https://www.growthservice.in/locations" />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

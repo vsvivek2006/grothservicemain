@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { FaSearch, FaChartLine, FaShieldAlt, FaRocket, FaFileAlt, FaMobileAlt, FaGlobe } from 'react-icons/fa';
 import {
   ClipboardList,
@@ -34,14 +33,6 @@ import AnimatedButton from '../../components/ui/AnimatedButton';
 const WhiteLabelSEO = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>White Label SEO Services for Agencies | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Offer premium SEO services under your brand with our complete white label solution. High profit margins, zero overhead, and 100% confidential white-hat fulfillment." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label-seo`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

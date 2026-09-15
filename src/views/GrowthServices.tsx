@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { 
   Check, 
@@ -196,17 +195,6 @@ Hi, I am reaching out to discuss this growth service. Please share details on sc
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Specialized SEO & Organic Growth Solutions | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Accelerate organic traffic and local brand visibility with specialized authority backlink outreach, Google Business Profile optimization, and technical audits." 
-        />
-        <meta 
-          name="keywords" 
-          content="authority backlinks, Google Business Profile optimization, technical SEO audit, local SEO agency Jaipur Nepal"
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">

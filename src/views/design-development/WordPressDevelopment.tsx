@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import {
   Check,
   Building2,
@@ -267,14 +266,6 @@ const WordPressDevelopment: React.FC = () => {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <Helmet>
-        <title>Custom WordPress Development Services | {businessName}</title>
-        <meta
-          name="description"
-          content="Build powerful, scalable WordPress websites that drive business growth. Custom themes, plugin engineering, WooCommerce, and high-performance hosting integration."
-        />
-        <link rel="canonical" href={`${canonicalOrigin}/wordpress-development`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 md:py-24 overflow-hidden">

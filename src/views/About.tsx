@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import {
   Users, Clock, Building2, Globe, Laptop, Lock, MessageCircle, Phone,
   MapPin, Smile, Rocket, TrendingUp, Star, Mail, ArrowRight,
@@ -596,25 +595,6 @@ const About: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>About Growth Service | Digital Agency with Offices in Jaipur, Vrindavan & Nepal</title>
-        <meta
-          name="description"
-          content="Growth Service is a leading digital marketing agency with offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Nepal. We provide web development, SEO, and digital marketing services globally."
-        />
-        <meta 
-          name="keywords" 
-          content="digital marketing agency Jaipur, web development company Vrindavan, SEO services Nepal, digital agency India, growth service, digital marketing Rajasthan, web development Uttar Pradesh, SEO Nepal, digital solutions India"
-        />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/about`} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="About Growth Service - Digital Agency in Jaipur, Vrindavan & Nepal" />
-        <meta property="og:description" content="Leading digital marketing agency with 3 offices in India and Nepal. Web development, SEO, and digital marketing services worldwide." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/about`} />
-      </Helmet>
 
       {/* === HERO SECTION WITH OFFICE LOCATIONS === */}
       <section className="relative bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 text-white py-16 md:py-24 overflow-hidden">

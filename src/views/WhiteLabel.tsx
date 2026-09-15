@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   Shield, 
   TrendingUp, 
@@ -175,18 +174,6 @@ const WhiteLabel: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>White Label Partner Program | Growth Service</title>
-        <meta
-          name="description"
-          content="White label digital marketing, website development, and SEO services for agencies. Resell our services under your brand with 40-85% profit margins."
-        />
-        <meta
-          name="keywords"
-          content="white label services, digital marketing white label, website development white label, SEO white label, agency partnership, reseller program"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

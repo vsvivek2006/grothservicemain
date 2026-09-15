@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { FaCode, FaWordpress, FaShoppingCart, FaMobileAlt, FaServer, FaShieldAlt, FaRocket, FaUsers, FaChartLine } from 'react-icons/fa';
 import {
   ClipboardList,
@@ -39,14 +38,6 @@ import AnimatedButton from '../../components/ui/AnimatedButton';
 const WhiteLabelWebDevelopment = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>White Label Web Development Services for Agencies | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Offer premium web development services under your brand with our complete white label solution. WordPress, E-commerce, custom apps, high margins, and 100% white label delivery." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label-web`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

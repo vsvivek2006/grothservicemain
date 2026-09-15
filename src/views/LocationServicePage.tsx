@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   CheckCircle, ArrowRight, Phone, MessageCircle, 
   ShieldCheck, Sparkles, ChevronRight, MapPin
@@ -75,18 +74,6 @@ export const LocationServicePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>{`${service.title} in ${city.name}, ${city.state} | Growth Service`}</title>
-        <meta
-          name="description"
-          content={`Professional ${service.title.toLowerCase()} in ${city.name}, ${city.state}. ${service.shortDesc} Scoped transparently by Growth Service.`}
-        />
-        <link rel="canonical" href={canonicalUrl} />
-
-        <script type="application/ld+json">
-          {JSON.stringify(serviceSchema)}
-        </script>
-      </Helmet>
 
       {/* Hero Header Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

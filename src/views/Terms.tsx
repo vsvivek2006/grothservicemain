@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";
 import { Container, Section, Button, WhatsAppIcon } from "../components/ui";
 import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
@@ -142,18 +141,6 @@ const Terms: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Helmet>
-        <title>Terms of Service | Growth Service - Professional Digital Solutions</title>
-        <meta
-          name="description"
-          content="Read Growth Service's Terms of Service for website development, SEO, social media management, and business setup services. Professional agreements and policies."
-        />
-        <meta
-          name="keywords"
-          content="terms of service, website development agreement, SEO services terms, social media management contract, business setup terms, digital solutions agreement"
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/terms`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24">

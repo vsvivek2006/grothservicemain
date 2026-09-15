@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { FaGoogle, FaFacebook, FaLinkedin, FaDollarSign, FaRocket, FaShieldAlt, FaCog, FaBullseye, FaFileAlt } from 'react-icons/fa';
 import {
   Handshake,
@@ -33,14 +32,6 @@ import AnimatedButton from '../../components/ui/AnimatedButton';
 const WhiteLabelPPC = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>White Label PPC Management Services | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Offer premium PPC services under your brand with our complete white label solution. High profit margins, zero hiring costs, and 100% confidential fulfillment." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/white-label-ppc`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

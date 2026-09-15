@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   Users, ShieldCheck, ArrowRight, Building2, Sparkles, Rocket 
 } from 'lucide-react';
@@ -46,39 +45,6 @@ export const TeamPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Meet Our Team | Growth Service Employee Directory</title>
-        <meta 
-          name="description" 
-          content="Meet the verified leadership, developers, SEO specialists, and marketing team across Growth Service's offices in Jaipur, Vrindavan, and Nepal." 
-        />
-        <link rel="canonical" href="https://www.growthservice.in/team" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            "name": `Meet Our Team - ${businessName}`,
-            "description": `Official employee directory of ${businessName} across Jaipur, Vrindavan, and Nepal branches.`,
-            "mainEntity": {
-              "@type": "Organization",
-              "name": businessName,
-              "url": canonicalOrigin,
-              "employee": allEmployees.map(m => ({
-                "@type": "Person",
-                "name": m.name,
-                "jobTitle": m.role,
-                "description": m.bio,
-                "knowsAbout": m.expertise,
-                "workLocation": {
-                  "@type": "Place",
-                  "name": `${m.officeId.toUpperCase()} Office, ${businessName}`
-                }
-              }))
-            }
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Header Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

@@ -18,7 +18,6 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { Container, Section, Input, Textarea, WhatsAppIcon } from '../components/ui';
 import { 
   getPhysicalOffices, 
@@ -238,49 +237,6 @@ I would like to discuss my project with you. Please provide more details.`;
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>Contact Growth Service | Offices in Nepal, Jaipur & Vrindavan - Digital Marketing Agency</title>
-        <meta 
-          name="description" 
-          content="Contact Growth Service with offices in Nepal, Jaipur (Rajasthan), and Vrindavan (Uttar Pradesh). Get professional web development, SEO, and digital marketing services." 
-        />
-        <meta 
-          name="keywords" 
-          content="contact digital marketing agency, web development company Nepal, SEO services Jaipur, digital agency Vrindavan, growth service contact, digital marketing India, web development Nepal, SEO India, contact growth service, digital agency Nepal" 
-        />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/contact`} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Contact Growth Service - Offices in Nepal, Jaipur & Vrindavan" />
-        <meta property="og:description" content="Connect with our team at our Nepal Office, Jaipur Office, or Vrindavan Office for web development and digital marketing services." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/contact`} />
-        
-        {/* JSON-LD Structured Data for Multiple Offices */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": getBusinessLegalName(),
-            "url": getCanonicalOrigin(),
-            "contactPoint": [
-              {
-                "@type": "ContactPoint",
-                "telephone": getOfficePhone('nepal'),
-                "contactType": "Nepal Office",
-                "availableLanguage": ["English", "Hindi", "Nepali"]
-              },
-              {
-                "@type": "ContactPoint",
-                "telephone": primaryPhone,
-                "contactType": "India Office",
-                "availableLanguage": ["English", "Hindi"]
-              }
-            ]
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-purple-700 to-pink-600 text-white py-16 md:py-20 overflow-hidden">

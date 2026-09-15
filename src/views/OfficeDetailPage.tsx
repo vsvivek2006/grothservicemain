@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   Building2, MapPin, Phone, Clock, ExternalLink, 
   CheckCircle, ArrowRight, Navigation, Trophy
@@ -57,16 +56,6 @@ export const OfficeDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={buildCanonicalUrl(buildOfficePath(office.slug))} />
-
-        {/* LocalBusiness Schema for this physical office */}
-        <script type="application/ld+json">
-          {JSON.stringify(buildLocalBusinessSchema(office))}
-        </script>
-      </Helmet>
 
       {/* Hero Header */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-10 pb-20 overflow-hidden">

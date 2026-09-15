@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   Search, HelpCircle, MessageCircle, Phone, Mail, 
   Clock, CheckCircle, FileText, Download, ExternalLink,
@@ -220,13 +219,6 @@ const HelpCenter: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Helmet>
-        <title>Help Center - Growth Service Support & FAQs</title>
-        <meta 
-          name="description" 
-          content="Get help with website development, SEO services, social media management, and billing. Contact our support team for assistance." 
-        />
-      </Helmet>
 
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12">

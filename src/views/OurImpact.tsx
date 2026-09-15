@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   ArrowRight, Play, Star, TrendingUp, Users, Target, Globe, Shield, Zap, Clock,
   Factory, HeartPulse, Rocket, ShoppingCart, Briefcase, Cog, Trophy
@@ -180,18 +179,6 @@ const OurImpact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>Our Impact - Business Transformation Stories | Growth Service</title>
-        <meta 
-          name="description" 
-          content="See how Growth Service transforms businesses with digital solutions, automation, and growth strategies. Real results and success stories." 
-        />
-        <meta 
-          name="keywords" 
-          content="business transformation, digital marketing, business automation, branding, web development, growth strategy" 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/impact`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

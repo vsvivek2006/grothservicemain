@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { 
   DollarSign, ShieldCheck, Clock, AlertCircle, FileText, CheckCircle, Mail, Phone, ArrowRight 
@@ -59,29 +58,6 @@ export const RefundPolicy: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Refund & Cancellation Policy | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Review the Growth Service Refund and Cancellation Policy for web development, SEO retainers, and digital marketing services." 
-        />
-        <link rel="canonical" href="https://www.growthservice.in/refund" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Refund & Cancellation Policy - Growth Service",
-            "url": "https://www.growthservice.in/refund",
-            "description": "Official refund policy and cancellation terms for Growth Service.",
-            "publisher": {
-              "@type": "Organization",
-              "name": businessConfig.name,
-              "url": businessConfig.domain
-            }
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Header */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { 
   Monitor, Smartphone, Palette, Code, Database, 
   Shield, Zap, CheckCircle, ArrowRight, Cpu, Cloud,
@@ -181,13 +180,6 @@ const DesignDevelopment: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>Design & Development Services | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Professional website design and development services using React, TypeScript, Node.js, and modern technologies. Custom web applications, mobile apps, and UI/UX design." 
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24 overflow-hidden">

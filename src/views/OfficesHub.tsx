@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   Building2, MapPin, Phone, Clock, 
   ArrowRight, ShieldCheck, CheckCircle 
@@ -24,37 +23,6 @@ export const OfficesHub: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Our 3 Company Offices — Jaipur, Vrindavan & Nepal | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Explore Growth Service physical offices in Jaipur (Rajasthan), Vrindavan (Uttar Pradesh), and Bariyarpatti (Nepal). Verified addresses, direct contacts, and business hours." 
-        />
-        <link rel="canonical" href="https://www.growthservice.in/offices" />
-        
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Growth Service",
-            "url": "https://www.growthservice.in",
-            "department": offices.map(o => ({
-              "@type": "LocalBusiness",
-              "name": `Growth Service - ${o.name}`,
-              "telephone": o.phone,
-              "email": o.email,
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": o.address,
-                "addressLocality": o.city,
-                "addressRegion": o.state,
-                "postalCode": o.postalCode,
-                "addressCountry": o.country
-              }
-            }))
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">

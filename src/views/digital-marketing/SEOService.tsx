@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { 
   FaSearch, 
   FaChartLine, 
@@ -48,44 +47,6 @@ import AnimatedButton from '../../components/ui/AnimatedButton';
 const SEOService = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Best SEO Services in Jaipur, Vrindavan & Nepal | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Professional SEO services in Jaipur, Vrindavan, and Nepal. Top Google rankings, organic traffic growth, and verified client outcomes. Free SEO audit available." 
-        />
-        <meta name="keywords" content="SEO services Jaipur, SEO company Vrindavan, SEO expert Nepal, digital marketing, rank on Google, SEO audit" />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/seo`} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Professional SEO Services in Jaipur, Vrindavan & Nepal | Growth Service" />
-        <meta property="og:description" content="Professional SEO services with proven ranking track record. Comprehensive organic optimization and technical audits." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${getCanonicalOrigin()}/seo`} />
-        
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "SEO Services",
-            "provider": {
-              "@type": "Organization",
-              "name": "Growth Service",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Jaipur",
-                "addressRegion": "Rajasthan",
-                "addressCountry": "India"
-              }
-            },
-            "offers": {
-              "@type": "Offer",
-              "price": "15999",
-              "priceCurrency": "INR"
-            }
-          })}
-        </script>
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

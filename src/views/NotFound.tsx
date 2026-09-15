@@ -22,7 +22,6 @@ import {
   Award,
   Zap
 } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { Container, WhatsAppIcon, Button } from "../components/ui";
 import { 
   getPhysicalOffices, 
@@ -158,18 +157,6 @@ const NotFound: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Helmet>
-        <title>404 - Page Not Found | Growth Service - Digital Agency in Jaipur, Vrindavan & Nepal</title>
-        <meta
-          name="description"
-          content="Page not found. Explore Growth Service's professional web development & digital marketing services. Offices in Jaipur, Vrindavan & Nepal. Custom digital strategies & engineering."
-        />
-        <meta 
-          name="keywords" 
-          content="404 page, page not found, digital marketing Jaipur, web development Vrindavan, SEO Nepal, growth service, digital agency"
-        />
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
 
       {/* Main Content */}
       <Container className="py-8 md:py-12">

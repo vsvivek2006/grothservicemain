@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaChartBar, FaUsers, FaBullhorn, FaVideo, FaHashtag } from 'react-icons/fa';
 import { Check, Phone, MessageCircle } from 'lucide-react';
 import { primaryPhone } from '../../data/centralizedData';
@@ -18,14 +17,6 @@ import AnimatedButton from '../../components/ui/AnimatedButton';
 const SocialMediaManagement = () => {
   return (
     <div className="bg-white">
-      <Helmet>
-        <title>Social Media Management Services | Growth Service</title>
-        <meta 
-          name="description" 
-          content="Build your brand, engage your audience, and drive measurable business growth with our expert social media management services." 
-        />
-        <link rel="canonical" href={`${getCanonicalOrigin()}/social-media`} />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 md:py-24">

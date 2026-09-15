@@ -6,7 +6,6 @@ import {
   Check, Shield, Clock, MessageCircle, Code, Award, 
   Calendar, Sparkles, Globe, Search, Share2, MapPin, Rocket, X 
 } from 'lucide-react';
-import { Helmet } from 'react-helmet';
 import { Container, Section, WhatsAppIcon } from '../components/ui';
 import { getNepalWhatsAppUrl } from '../services';
 
@@ -320,17 +319,6 @@ const Pricing: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Custom Quotes & Solutions | Growth Service</title>
-        <meta
-          name="description"
-          content="Request custom quotes and scope consultations for website development, SEO, social media management, and digital transformation tailored to your business."
-        />
-        <meta 
-          name="keywords" 
-          content="digital services quote, custom website development, SEO consultation, social media marketing agency, business growth solutions India Nepal"
-        />
-      </Helmet>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">
