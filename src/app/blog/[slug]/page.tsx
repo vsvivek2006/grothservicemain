@@ -70,18 +70,17 @@ function formatDisplayDate(
   }
 }
 
-export async function generateMetadata({
-  params,
-}: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
-  let post: BlogPostMeta | null = null;
+import { cache } from "react";
 
+const getBlogPost = cache(async (slug: string): Promise<BlogPostDetail | null> => {
+  const decodedSlug = decodeURIComponent(slug);
   try {
     const supabase = createPublicClient();
     let query = supabase
       .from("posts")
-      .select("title, meta_description, cover_image_url, published_at, author")
+      .select(
+        "id, title, slug, content, meta_description, cover_image_url, author, tags, published_at, created_at, updated_at"
+      )
       .eq("status", "published");
 
     if (slug === decodedSlug) {
@@ -91,10 +90,18 @@ export async function generateMetadata({
     }
 
     const { data } = await query.maybeSingle();
-    post = data;
+    return (data as BlogPostDetail) || null;
   } catch (err) {
-    console.error("Error fetching metadata for blog post:", err);
+    console.error("Error loading blog post:", err);
+    return null;
   }
+});
+
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
 
   if (!post) {
     return {
@@ -140,30 +147,7 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
-  let post: BlogPostDetail | null = null;
-
-  try {
-    const supabase = createPublicClient();
-    // Explicit column selection — NEVER select `source` or `*` on public pages
-    let query = supabase
-      .from("posts")
-      .select(
-        "id, title, slug, content, meta_description, cover_image_url, author, tags, published_at, created_at, updated_at"
-      )
-      .eq("status", "published");
-
-    if (slug === decodedSlug) {
-      query = query.eq("slug", slug);
-    } else {
-      query = query.or(`slug.eq."${slug}",slug.eq."${decodedSlug}"`);
-    }
-
-    const { data } = await query.maybeSingle();
-    post = data;
-  } catch (err) {
-    console.error("Error loading blog post page:", err);
-  }
+  const post = await getBlogPost(slug);
 
   if (!post) {
     notFound();
@@ -288,7 +272,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               alt={post.title}
               fill
               priority
-              unoptimized
               className="object-cover"
               sizes="(max-width: 896px) 100vw, 896px"
             />

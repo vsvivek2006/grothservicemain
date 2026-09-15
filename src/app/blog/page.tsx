@@ -119,7 +119,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                       src={getPostCoverImage(post.cover_image_url, post.title, post.tags)}
                       alt={post.title}
                       fill
-                      unoptimized
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />

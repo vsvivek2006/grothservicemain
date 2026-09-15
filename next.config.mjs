@@ -64,6 +64,33 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/team/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/:asset(logo\\.png|favicon\\.png)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000, stale-while-revalidate=86400',
+          },
+        ],
+      },
     ];
   },
   turbopack: {
@@ -73,12 +100,12 @@ const nextConfig = {
     },
   },
   experimental: {
-    turbo: {
-      resolveAlias: {
-        'react-router-dom': './src/shims/react-router-dom.tsx',
-        'react-helmet': './src/shims/react-helmet.tsx',
-      },
-    },
+    optimizePackageImports: [
+      'lucide-react',
+      'react-icons',
+      'date-fns',
+      'sonner',
+    ],
   },
   webpack: (config) => {
     config.resolve.alias = {
