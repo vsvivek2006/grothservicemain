@@ -1,4 +1,5 @@
 import "server-only";
+import { createAdminClient } from "@/lib/supabase/server";
 
 export type AuditAction =
   | "INVOICE_CREATED"
@@ -40,13 +41,7 @@ export interface AuditLogEntry {
  */
 export async function logAuditEvent(entry: AuditLogEntry): Promise<void> {
   try {
-    const timestamp = new Date().toISOString();
-    const payload = {
-      timestamp,
-      ...entry,
-    };
-
-    // Structured server-side audit log output
+    // 1. Structured server-side console output
     console.info(`[AUDIT_LOG] [${entry.action}] [${entry.entityType}:${entry.entityId}] by user:${entry.actorUserId}`, {
       action: entry.action,
       entityType: entry.entityType,
@@ -55,10 +50,26 @@ export async function logAuditEvent(entry: AuditLogEntry): Promise<void> {
       hasChanges: Boolean(entry.oldValues || entry.newValues),
     });
 
-    // NOTE: In Phase 2, when the `audit_logs` table is provisioned,
-    // this function will persist records directly via createAdminClient().
+    // 2. Persist to audit_logs table in Supabase
+    try {
+      const adminClient = createAdminClient();
+      await adminClient.from("audit_logs").insert({
+        actor_user_id: entry.actorUserId,
+        action: entry.action,
+        entity_type: entry.entityType,
+        entity_id: entry.entityId,
+        old_values: entry.oldValues ?? null,
+        new_values: entry.newValues ?? null,
+        ip_address: entry.ipAddress ?? null,
+        user_agent: entry.userAgent ?? null,
+        metadata: entry.metadata ?? null,
+      });
+    } catch {
+      // Gracefully silent if table not yet migrated on remote Supabase instance
+    }
   } catch (err) {
     // Non-blocking catch
     console.error("[AUDIT_LOG_FAILURE] Failed to record audit log event:", err);
   }
 }
+
