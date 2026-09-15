@@ -20,11 +20,27 @@ export interface NavItem {
   label: string;
   href: string;
   icon: typeof LayoutDashboard;
+  exact?: boolean;
 }
 
-const navItems: NavItem[] = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Blog Posts", href: "/admin/blog", icon: FileText },
+export interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
+export const navGroups: NavGroup[] = [
+  {
+    title: "Overview",
+    items: [
+      { label: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
+    ],
+  },
+  {
+    title: "Content",
+    items: [
+      { label: "Blog Posts", href: "/admin/blog", icon: FileText },
+    ],
+  },
 ];
 
 interface SidebarProps {
@@ -116,29 +132,35 @@ export function Sidebar({ userEmail, isMobileOpen = false, onClose }: SidebarPro
         </div>
 
         {/* Navigation Links */}
-        <nav className="p-4 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive =
-              item.href === "/admin"
-                ? pathname === "/admin"
-                : pathname.startsWith(item.href);
+        <nav className="p-4 space-y-4">
+          {navGroups.map((group) => (
+            <div key={group.title} className="space-y-1">
+              <div className="px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                {group.title}
+              </div>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = item.exact
+                  ? pathname === item.href
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
-                  isActive
-                    ? "bg-purple-600 text-white"
-                    : "text-gray-300 hover:bg-gray-800 hover:text-white"
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-gray-400"}`} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
+                      isActive
+                        ? "bg-purple-600 text-white shadow-xs"
+                        : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-gray-400"}`} />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
 
           <div className="pt-3 border-t border-gray-800/80 mt-3">
             <Link
