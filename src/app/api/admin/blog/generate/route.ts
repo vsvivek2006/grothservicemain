@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       );
     }
     const body = await request.json();
-    const { topic, tone, keywords, wordCount, audience } = body;
+    const { topic, tone, keywords, wordCount, audience, model } = body;
 
     if (!topic || typeof topic !== "string") {
       return NextResponse.json(
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
       keywords,
       wordCount,
       audience,
+      model,
     });
 
     return NextResponse.json(result);

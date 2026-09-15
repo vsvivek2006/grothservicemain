@@ -6,6 +6,7 @@ export interface GenerateBlogPostInput {
   keywords?: string[];      // SEO keywords to naturally include
   wordCount?: number;       // approx target length
   audience?: string;        // e.g. "small business owners in India"
+  model?: string;           // AI model ID (e.g. "openai/gpt-oss-120b")
 }
 
 export interface GenerateBlogPostOutput {

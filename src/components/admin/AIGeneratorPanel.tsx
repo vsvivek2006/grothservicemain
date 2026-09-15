@@ -7,23 +7,17 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
-  Zap,
   Sliders,
+  Cpu,
 } from "lucide-react";
 import { toast } from "sonner";
 import type { GenerateBlogPostOutput } from "@/lib/ai/generateBlogPost";
+import { AVAILABLE_MODELS, DEFAULT_MODEL_ID } from "@/lib/ai/models";
 
 interface AIGeneratorPanelProps {
   onGenerated: (output: GenerateBlogPostOutput) => void;
   disabled?: boolean;
 }
-
-const GENERATION_STEPS = [
-  { label: "Connecting to Groq Llama 3.3 Engine...", progress: 20 },
-  { label: "Analyzing topic, audience & search intent...", progress: 45 },
-  { label: "Structuring semantic H2/H3 headings & outline...", progress: 70 },
-  { label: "Drafting rich sanitized HTML content & SEO tags...", progress: 90 },
-];
 
 const SUGGESTED_TOPICS = [
   "7 Local SEO Strategies for Indian Service Businesses",
@@ -33,6 +27,7 @@ const SUGGESTED_TOPICS = [
 
 export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProps) {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<string>(DEFAULT_MODEL_ID);
   const [topic, setTopic] = useState("");
   const [tone, setTone] = useState("Professional & Authoritative");
   const [keywords, setKeywords] = useState("");
@@ -40,6 +35,16 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
   const [audience, setAudience] = useState("Business owners and marketing leaders");
   const [hasGenerated, setHasGenerated] = useState(false);
   const [errorBanner, setErrorBanner] = useState<string | null>(null);
+
+  const selectedModelInfo =
+    AVAILABLE_MODELS.find((m) => m.id === selectedModel) || AVAILABLE_MODELS[0];
+
+  const generationSteps = [
+    { label: `Connecting to ${selectedModelInfo.name} (${selectedModelInfo.speed})...`, progress: 20 },
+    { label: "Analyzing topic, audience & search intent...", progress: 45 },
+    { label: "Structuring semantic H2/H3 headings & outline...", progress: 70 },
+    { label: "Drafting rich sanitized HTML content & SEO tags...", progress: 90 },
+  ];
 
   // Animated progress state
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -55,9 +60,9 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
       let step = 0;
       stepTimerRef.current = setInterval(() => {
         step += 1;
-        if (step < GENERATION_STEPS.length) {
+        if (step < generationSteps.length) {
           setCurrentStepIndex(step);
-          setProgressPercent(GENERATION_STEPS[step].progress);
+          setProgressPercent(generationSteps[step].progress);
         } else {
           // Creep forward slowly while waiting for final payload
           setProgressPercent((prev) => Math.min(prev + 2, 94));
@@ -75,7 +80,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
         clearInterval(stepTimerRef.current);
       }
     };
-  }, [isGenerating]);
+  }, [isGenerating, generationSteps]);
 
   const handleGenerate = async () => {
     if (!topic.trim()) {
@@ -88,7 +93,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
     setIsGenerating(true);
     setErrorBanner(null);
 
-    const toastId = toast.loading("Generating article with AI...", {
+    const toastId = toast.loading(`Generating article with ${selectedModelInfo.name}...`, {
       description: "Crafting headline, SEO metadata, rich content, and tags.",
     });
 
@@ -107,6 +112,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
           keywords: keywordList,
           wordCount,
           audience,
+          model: selectedModel,
         }),
       });
 
@@ -119,7 +125,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
       setProgressPercent(100);
       toast.success("AI draft generated successfully!", {
         id: toastId,
-        description: "Content loaded into editor. Review, tweak, and save as draft.",
+        description: `Generated via ${selectedModelInfo.name}. Loaded into editor.`,
       });
 
       setHasGenerated(true);
@@ -150,8 +156,8 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
           <div>
             <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
               AI Content Strategist
-              <span className="text-[10px] px-2 py-0.5 rounded-md font-semibold bg-gray-800 text-gray-300 border border-gray-700">
-                Groq Llama 3.3
+              <span className="text-[10px] px-2 py-0.5 rounded-md font-semibold bg-purple-950/80 text-purple-300 border border-purple-800/60">
+                {selectedModelInfo.name}
               </span>
             </h3>
             <p className="text-xs text-gray-400 mt-0.5">
@@ -196,7 +202,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
           <div className="flex items-center justify-between text-xs">
             <span className="font-semibold text-white flex items-center gap-2">
               <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-400" />
-              {GENERATION_STEPS[currentStepIndex]?.label || "Finalizing content..."}
+              {generationSteps[currentStepIndex]?.label || "Finalizing content..."}
             </span>
             <span className="font-mono font-semibold text-gray-400">
               {progressPercent}%
@@ -213,7 +219,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
 
           {/* Step indicators */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
-            {GENERATION_STEPS.map((step, idx) => {
+            {generationSteps.map((step, idx) => {
               const isDone = idx < currentStepIndex;
               const isCurrent = idx === currentStepIndex;
               return (
@@ -246,6 +252,63 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
 
       {/* Form Controls */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Model Selection Selector */}
+        <div className="md:col-span-2 space-y-2">
+          <label className="block text-xs font-semibold text-gray-300 flex items-center justify-between">
+            <span className="flex items-center gap-1.5">
+              <Cpu className="w-3.5 h-3.5 text-purple-400" />
+              AI Model Engine <span className="text-gray-400 font-normal">(Free Groq LPUs)</span>
+            </span>
+            <span className="text-[11px] text-gray-400 font-mono">
+              Speed: <span className="text-yellow-400">{selectedModelInfo.speed}</span>
+            </span>
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {AVAILABLE_MODELS.map((model) => {
+              const isSelected = selectedModel === model.id;
+              return (
+                <button
+                  key={model.id}
+                  type="button"
+                  onClick={() => setSelectedModel(model.id)}
+                  disabled={disabled || isGenerating}
+                  className={`p-3 rounded-xl border text-left transition-all relative overflow-hidden cursor-pointer ${
+                    isSelected
+                      ? "bg-purple-950/60 border-purple-500 shadow-md shadow-purple-950/50 ring-1 ring-purple-500/50"
+                      : "bg-gray-800/60 border-gray-700/80 hover:border-gray-600 hover:bg-gray-800"
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className="text-xs font-bold text-white truncate">
+                      {model.name}
+                    </span>
+                    <span
+                      className={`text-[9px] px-1.5 py-0.5 rounded font-semibold shrink-0 ${
+                        model.isDefault
+                          ? "bg-purple-900/90 text-yellow-300 border border-purple-700/60"
+                          : model.id === "openai/gpt-oss-20b"
+                          ? "bg-emerald-950/90 text-emerald-300 border border-emerald-800/60"
+                          : "bg-gray-800 text-purple-300 border border-gray-700"
+                      }`}
+                    >
+                      {model.badge}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-400 leading-snug line-clamp-2 mb-2">
+                    {model.description}
+                  </p>
+                  <div className="flex items-center justify-between text-[10px] font-mono text-gray-400 pt-1.5 border-t border-gray-800/80">
+                    <span>Context: {model.contextWindow}</span>
+                    <span className={isSelected ? "text-yellow-400 font-semibold" : "text-gray-400"}>
+                      ⚡ {model.speed}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Topic Input & Quick Suggestions */}
         <div className="md:col-span-2 space-y-1.5">
           <label className="block text-xs font-semibold text-gray-300">
@@ -260,42 +323,48 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
             className="w-full px-3.5 py-2.5 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all disabled:opacity-50"
           />
 
-          {/* Suggested Topic Chips */}
-          <div className="flex flex-wrap items-center gap-1.5 pt-1">
-            <span className="text-[11px] font-medium text-gray-400 flex items-center gap-1 mr-1">
-              <Zap className="w-3 h-3 text-yellow-400" />
-              Quick Prompts:
-            </span>
-            {SUGGESTED_TOPICS.map((suggested) => (
-              <button
-                key={suggested}
-                type="button"
-                onClick={() => setTopic(suggested)}
-                disabled={disabled || isGenerating}
-                className="text-[11px] px-2.5 py-1 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 transition-colors disabled:opacity-50 cursor-pointer"
-              >
-                {suggested}
-              </button>
-            ))}
+          {/* Quick Prompts */}
+          <div className="pt-1">
+            <span className="text-[11px] text-gray-400 mr-2">Try inspiration:</span>
+            <div className="inline-flex flex-wrap gap-1.5 mt-1">
+              {SUGGESTED_TOPICS.map((suggested) => (
+                <button
+                  key={suggested}
+                  type="button"
+                  onClick={() => setTopic(suggested)}
+                  disabled={disabled || isGenerating}
+                  className="text-[11px] px-2 py-1 rounded bg-gray-800/80 hover:bg-gray-700 text-purple-300 hover:text-white border border-gray-700 transition-colors truncate max-w-[280px] sm:max-w-none cursor-pointer disabled:opacity-50"
+                >
+                  {suggested}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Tone & Style */}
+        {/* Tone Selector */}
         <div>
-          <label className="block text-xs font-semibold text-gray-300 mb-1.5 flex items-center gap-1.5">
-            <Sliders className="w-3.5 h-3.5 text-gray-400" />
-            Tone &amp; Editorial Style
+          <label className="block text-xs font-semibold text-gray-300 mb-1.5">
+            Editorial Tone
           </label>
           <select
             value={tone}
             onChange={(e) => setTone(e.target.value)}
             disabled={disabled || isGenerating}
-            className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all disabled:opacity-50"
+            className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all disabled:opacity-50 cursor-pointer"
           >
-            <option value="Professional & Authoritative">Professional &amp; Authoritative</option>
-            <option value="Conversational & Engaging">Conversational &amp; Engaging</option>
-            <option value="Educational & Action-Oriented">Educational &amp; Action-Oriented</option>
-            <option value="Direct & Data-Driven">Direct &amp; Data-Driven</option>
+            <option value="Professional & Authoritative">
+              Professional &amp; Authoritative (Default)
+            </option>
+            <option value="Conversational & Direct">
+              Conversational &amp; Direct
+            </option>
+            <option value="Technical & Analytical">
+              Technical &amp; Deeply Analytical
+            </option>
+            <option value="Case-Study Style">
+              Results &amp; Case-Study Driven
+            </option>
           </select>
         </div>
 
@@ -357,7 +426,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
       {/* Action Trigger */}
       <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-gray-800">
         <p className="text-[11px] text-gray-400 text-center sm:text-left">
-          Generates title, slug, meta description, outline, content &amp; tags into editor.
+          Using <span className="text-yellow-400 font-semibold">{selectedModelInfo.name}</span>. Generates title, slug, meta description, outline, content &amp; tags.
         </p>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">

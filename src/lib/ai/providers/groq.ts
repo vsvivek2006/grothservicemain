@@ -1,6 +1,7 @@
 import Groq from "groq-sdk";
 import { buildBlogPostPrompt } from "../prompts/blogPost";
 import { normalizeContentToHtml } from "../contentFormatter";
+import { getValidModel } from "../models";
 import type { GenerateBlogPostInput, GenerateBlogPostOutput } from "../generateBlogPost";
 
 let groqInstance: Groq | null = null;
@@ -21,7 +22,7 @@ export async function generateBlogPostWithGroq(
 ): Promise<GenerateBlogPostOutput> {
   const groq = getGroqClient();
   const prompt = buildBlogPostPrompt(input);
-  const model = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+  const model = getValidModel(input.model || process.env.GROQ_MODEL);
 
   const completion = await groq.chat.completions.create({
     messages: [
@@ -36,7 +37,7 @@ export async function generateBlogPostWithGroq(
       },
     ],
     model,
-    max_tokens: 3500,
+    max_tokens: 4096,
     response_format: { type: "json_object" },
   });
 
@@ -45,7 +46,7 @@ export async function generateBlogPostWithGroq(
     throw new Error("No response received from Groq");
   }
 
-  const parsed = JSON.parse(raw);
+  const parsed = safeParseJson(raw);
 
   // Normalize and clean HTML content ensuring full rich-text tag validity
   const formattedHtml = normalizeContentToHtml(parsed.content || "");
@@ -58,4 +59,43 @@ export async function generateBlogPostWithGroq(
       ? parsed.suggestedTags.map((t: unknown) => String(t).trim()).filter(Boolean)
       : [],
   };
+}
+
+interface ParsedBlogResponse {
+  title?: string;
+  metaDescription?: string;
+  content?: string;
+  suggestedTags?: string[];
+}
+
+function safeParseJson(raw: string): ParsedBlogResponse {
+  let cleaned = raw.trim();
+  if (cleaned.startsWith("```")) {
+    cleaned = cleaned.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?```\s*$/, "").trim();
+  }
+  try {
+    return JSON.parse(cleaned);
+  } catch {
+    // Attempt repair for truncated JSON responses
+    let repaired = cleaned;
+    if (!repaired.endsWith("}")) {
+      const quoteCount = (repaired.match(/(?<!\\)"/g) || []).length;
+      if (quoteCount % 2 !== 0) {
+        repaired += '"';
+      }
+      repaired += "}";
+    }
+    try {
+      return JSON.parse(repaired);
+    } catch {
+      // Robust regex extraction fallback
+      const title = repaired.match(/"title"\s*:\s*"([^"]+)"/)?.[1] || "";
+      const metaDescription = repaired.match(/"metaDescription"\s*:\s*"([^"]+)"/)?.[1] || "";
+      const contentMatch = repaired.match(/"content"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"suggestedTags"|"$)/);
+      const content = contentMatch
+        ? contentMatch[1].replace(/\\n/g, "\n").replace(/\\"/g, '"')
+        : "";
+      return { title, metaDescription, content, suggestedTags: [] };
+    }
+  }
 }
