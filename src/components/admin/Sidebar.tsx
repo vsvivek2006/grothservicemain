@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   FileText,
+  Users,
+  Package,
   LogOut,
   Loader2,
   User,
@@ -33,6 +35,13 @@ export const navGroups: NavGroup[] = [
     title: "Overview",
     items: [
       { label: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
+    ],
+  },
+  {
+    title: "Billing",
+    items: [
+      { label: "Clients", href: "/admin/clients", icon: Users },
+      { label: "Catalog Items", href: "/admin/billing/items", icon: Package },
     ],
   },
   {

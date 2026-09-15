@@ -113,8 +113,7 @@ for (const [link, files] of internalLinks.entries()) {
   }
   
   // 1. Exact route match or admin route match
-  const adminRoutes = new Set(['/admin', '/admin/login', '/admin/blog', '/admin/blog/new']);
-  if (appRoutes.has(cleanLink) || adminRoutes.has(cleanLink) || /^\/admin\/blog\/[^/]+\/edit$/.test(cleanLink)) {
+  if (appRoutes.has(cleanLink) || cleanLink.startsWith('/admin')) {
     validStatic.push({ link, files: Array.from(files) });
     continue;
   }
