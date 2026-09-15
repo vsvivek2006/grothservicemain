@@ -14,6 +14,7 @@ import {
   X,
   PlusCircle,
   ExternalLink,
+  CreditCard,
 } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
@@ -40,6 +41,7 @@ export const navGroups: NavGroup[] = [
   {
     title: "Billing",
     items: [
+      { label: "Overview", href: "/admin/billing", icon: CreditCard, exact: true },
       { label: "Clients", href: "/admin/clients", icon: Users },
       { label: "Catalog Items", href: "/admin/billing/items", icon: Package },
       { label: "Invoices", href: "/admin/billing/invoices", icon: FileText },

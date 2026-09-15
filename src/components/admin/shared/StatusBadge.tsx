@@ -113,6 +113,32 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; dot: string; lab
     dot: "bg-emerald-400",
     label: "Published",
   },
+
+  // Payment record and link specific statuses
+  captured: {
+    bg: "bg-emerald-950/70 border-emerald-900/50",
+    text: "text-emerald-400",
+    dot: "bg-emerald-400",
+    label: "Captured",
+  },
+  failed: {
+    bg: "bg-rose-950/70 border-rose-900/50",
+    text: "text-rose-400",
+    dot: "bg-rose-400",
+    label: "Failed",
+  },
+  created: {
+    bg: "bg-sky-950/70 border-sky-900/50",
+    text: "text-sky-400",
+    dot: "bg-sky-400",
+    label: "Created",
+  },
+  expired: {
+    bg: "bg-gray-800/80 border-gray-700/50",
+    text: "text-gray-400",
+    dot: "bg-gray-500",
+    label: "Expired",
+  },
 };
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({

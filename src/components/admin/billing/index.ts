@@ -5,3 +5,5 @@ export * from "./ItemTable";
 export * from "./InvoiceTable";
 export * from "./InvoiceForm";
 export * from "./InvoiceDetailView";
+export * from "./InvoicePaymentLinksSection";
+export * from "./BillingDashboardView";

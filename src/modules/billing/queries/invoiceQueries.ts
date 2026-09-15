@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { Invoice, InvoiceItem, Client, BillingProfile, PaymentLinkRecord } from "../types/database";
+import { computeDashboardStats, type BillingDashboardStats } from "../services/dashboardStats";
 
 export interface InvoiceWithRelations extends Invoice {
   client?: Pick<Client, "id" | "client_code" | "company_name" | "contact_name" | "email" | "phone">;
@@ -25,18 +26,7 @@ export interface InvoiceListResponse {
   totalPages: number;
 }
 
-export interface InvoiceStats {
-  totalInvoices: number;
-  draftCount: number;
-  issuedCount: number;
-  unpaidCount: number;
-  partiallyPaidCount: number;
-  paidCount: number;
-  overdueCount: number;
-  cancelledCount: number;
-  totalReceivables: number;
-  totalCollected: number;
-}
+export type InvoiceStats = BillingDashboardStats;
 
 /**
  * Fetch paginated invoices with optional filters and client relation.
@@ -153,70 +143,8 @@ export async function getInvoiceStats(): Promise<InvoiceStats> {
     .select("document_status, payment_status, grand_total, amount_paid, amount_due, due_date");
 
   if (error || !data) {
-    return {
-      totalInvoices: 0,
-      draftCount: 0,
-      issuedCount: 0,
-      unpaidCount: 0,
-      partiallyPaidCount: 0,
-      paidCount: 0,
-      overdueCount: 0,
-      cancelledCount: 0,
-      totalReceivables: 0,
-      totalCollected: 0,
-    };
+    return computeDashboardStats([]);
   }
 
-  const todayStr = new Date().toISOString().split("T")[0];
-  let draftCount = 0;
-  let issuedCount = 0;
-  let unpaidCount = 0;
-  let partiallyPaidCount = 0;
-  let paidCount = 0;
-  let overdueCount = 0;
-  let cancelledCount = 0;
-  let totalReceivables = 0;
-  let totalCollected = 0;
-
-  for (const inv of data) {
-    if (inv.document_status === "draft") draftCount++;
-    if (inv.document_status === "issued" || inv.document_status === "sent") issuedCount++;
-    if (inv.document_status === "cancelled" || inv.document_status === "void") cancelledCount++;
-
-    if (inv.document_status !== "cancelled" && inv.document_status !== "void") {
-      totalCollected += Number(inv.amount_paid) || 0;
-      totalReceivables += Number(inv.amount_due) || 0;
-
-      if (inv.payment_status === "paid") {
-        paidCount++;
-      } else if (inv.payment_status === "partially_paid") {
-        partiallyPaidCount++;
-      } else {
-        unpaidCount++;
-      }
-
-      // Check if overdue
-      if (
-        inv.due_date &&
-        inv.due_date < todayStr &&
-        inv.payment_status !== "paid" &&
-        inv.payment_status !== "refunded"
-      ) {
-        overdueCount++;
-      }
-    }
-  }
-
-  return {
-    totalInvoices: data.length,
-    draftCount,
-    issuedCount,
-    unpaidCount,
-    partiallyPaidCount,
-    paidCount,
-    overdueCount,
-    cancelledCount,
-    totalReceivables: Math.round(totalReceivables * 100) / 100,
-    totalCollected: Math.round(totalCollected * 100) / 100,
-  };
+  return computeDashboardStats(data as any);
 }
