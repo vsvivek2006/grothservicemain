@@ -36,21 +36,26 @@ export interface PaymentProvider {
   ): NormalizedPaymentEvent;
 }
 
+import { RazorpayProvider } from "./razorpay/razorpay-provider";
+
+let cachedRazorpayProvider: RazorpayProvider | null = null;
+
 /**
  * Payment Provider Registry / Factory
- * Defaults to 'razorpay'.
- * Concrete provider adapters will be mounted in Phase 6.
+ * Defaults to 'razorpay' or PAYMENT_PROVIDER environment variable.
  */
-export function getPaymentProvider(providerName = "razorpay"): PaymentProvider {
-  switch (providerName.toLowerCase()) {
+export function getPaymentProvider(providerName?: string): PaymentProvider {
+  const target = (providerName || process.env.PAYMENT_PROVIDER || "razorpay").toLowerCase();
+
+  switch (target) {
     case "razorpay":
-      // Provider implementation will be injected in Phase 6
-      throw new Error(
-        "RazorpayProvider adapter not yet registered. Scheduled for Phase 6."
-      );
+      if (!cachedRazorpayProvider) {
+        cachedRazorpayProvider = new RazorpayProvider();
+      }
+      return cachedRazorpayProvider;
     default:
       throw new Error(
-        `Unsupported payment provider: ${providerName}.`
+        `Unsupported payment provider: ${target}. Supported providers: razorpay.`
       );
   }
 }
