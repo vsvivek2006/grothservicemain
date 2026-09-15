@@ -1,10 +1,11 @@
 import { createAdminClient } from "@/lib/supabase/server";
-import { Invoice, InvoiceItem, Client, BillingProfile } from "../types/database";
+import { Invoice, InvoiceItem, Client, BillingProfile, PaymentLinkRecord } from "../types/database";
 
 export interface InvoiceWithRelations extends Invoice {
   client?: Pick<Client, "id" | "client_code" | "company_name" | "contact_name" | "email" | "phone">;
   billing_profile?: BillingProfile;
   items?: InvoiceItem[];
+  payment_links?: PaymentLinkRecord[];
 }
 
 export interface GetInvoicesParams {
@@ -113,7 +114,8 @@ export async function getInvoiceById(id: string): Promise<InvoiceWithRelations |
       *,
       client:clients(*),
       billing_profile:billing_profiles(*),
-      items:invoice_items(*)
+      items:invoice_items(*),
+      payment_links:payment_links(*)
     `
     )
     .eq("id", id)
@@ -127,6 +129,14 @@ export async function getInvoiceById(id: string): Promise<InvoiceWithRelations |
   // Sort items deterministically by sort_order
   if (data.items && Array.isArray(data.items)) {
     data.items.sort((a: InvoiceItem, b: InvoiceItem) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+  }
+
+  // Sort payment links newest first
+  if (data.payment_links && Array.isArray(data.payment_links)) {
+    data.payment_links.sort(
+      (a: PaymentLinkRecord, b: PaymentLinkRecord) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
   }
 
   return data as unknown as InvoiceWithRelations;

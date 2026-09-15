@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
-import { issueInvoiceAction, cancelInvoiceAction } from "@/modules/billing/actions/invoiceActions";
+import { cancelInvoiceAction, issueInvoiceAction } from "@/modules/billing/actions/invoiceActions";
+import { InvoicePaymentLinksSection } from "./InvoicePaymentLinksSection";
 import { toast } from "sonner";
 import {
   ArrowLeft,
@@ -458,6 +459,9 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           </div>
         </div>
       </div>
+
+      {/* Payment Links Section (Phase 7) */}
+      <InvoicePaymentLinksSection invoice={invoice} />
 
       {/* Issue Modal */}
       {showIssueModal && (
