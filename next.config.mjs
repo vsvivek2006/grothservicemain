@@ -91,12 +91,26 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/admin/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0, must-revalidate',
+          },
+        ],
+      },
     ];
   },
+  generateEtags: true,
+  serverExternalPackages: ['groq-sdk'],
   turbopack: {
     resolveAlias: {
       'react-router-dom': './src/shims/react-router-dom.tsx',
-      'react-helmet': './src/shims/react-helmet.tsx',
     },
   },
   experimental: {
@@ -111,7 +125,6 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       'react-router-dom': path.resolve(__dirname, 'src/shims/react-router-dom.tsx'),
-      'react-helmet': path.resolve(__dirname, 'src/shims/react-helmet.tsx'),
     };
     return config;
   },

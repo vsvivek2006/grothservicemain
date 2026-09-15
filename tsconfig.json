@@ -29,9 +29,6 @@
       ],
       "react-router-dom": [
         "./src/shims/react-router-dom.tsx"
-      ],
-      "react-helmet": [
-        "./src/shims/react-helmet.tsx"
       ]
     }
   },

@@ -123,7 +123,7 @@ export const teamMembers: readonly TeamMember[] = [
     department: "Development",
     officeId: "jaipur",
     employeeCode: "GS-JPR-04",
-    image: "/team/kishan-kumar.jpg",
+    image: "/team/kishan-kumar.webp",
     bio: "Frontend developer crafting fast, responsive, and visually polished web interfaces using React.js and modern CSS. Focused on pixel-perfect UI implementation, Core Web Vitals performance, and smooth user experiences across devices.",
     expertise: ["Web Development", "React.js", "UI/UX Implementation", "Performance Optimization"],
     email: "kishan.growthservice@gmail.com",

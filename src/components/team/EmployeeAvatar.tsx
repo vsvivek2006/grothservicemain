@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { ShieldCheck, User } from 'lucide-react';
 
 interface EmployeeAvatarProps {
@@ -6,12 +7,14 @@ interface EmployeeAvatarProps {
   image?: string;
   department: string;
   size?: 'md' | 'lg';
+  priority?: boolean;
 }
 
 export const EmployeeAvatar: React.FC<EmployeeAvatarProps> = ({
   name,
   image,
   size = 'lg',
+  priority = false,
 }) => {
   const [imageError, setImageError] = useState(!image);
 
@@ -36,7 +39,7 @@ export const EmployeeAvatar: React.FC<EmployeeAvatarProps> = ({
       >
         {/* Subtle geometric dot pattern */}
         <div 
-          className="absolute inset-0 opacity-20 pointer-events-none"
+          className="absolute inset-0 opacity-20 pointer-events-none z-0"
           style={{
             backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
             backgroundSize: '12px 12px'
@@ -44,17 +47,18 @@ export const EmployeeAvatar: React.FC<EmployeeAvatarProps> = ({
         />
 
         {/* Ambient glow */}
-        <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/20 rounded-full blur-xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-pink-500/20 rounded-full blur-xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/20 rounded-full blur-xl pointer-events-none z-0" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-pink-500/20 rounded-full blur-xl pointer-events-none z-0" />
 
         {!imageError && image ? (
-          <img
+          <Image
             src={image}
             alt={name}
+            fill
+            sizes={isLg ? "(max-width: 640px) 128px, 144px" : "80px"}
+            priority={priority}
             onError={() => setImageError(true)}
-            className="w-full h-full object-cover object-center relative z-10 transition-transform duration-500 hover:scale-105"
-            loading="lazy"
-            decoding="async"
+            className="object-cover object-center relative z-10 transition-transform duration-500 hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center relative z-10 p-2 text-center select-none">

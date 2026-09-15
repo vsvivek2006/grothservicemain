@@ -8,7 +8,7 @@ import { createPublicClient } from "@/lib/supabase/public";
 import { cleanHtml } from "@/lib/ai/contentFormatter";
 import { getPostCoverImage } from "@/lib/blog/images";
 
-export const revalidate = 60; // ISR revalidation every 60 seconds
+export const revalidate = 300; // ISR revalidation every 5 minutes (admin publishes call revalidatePath)
 
 interface BlogPostPageProps {
   params: Promise<{

@@ -1,8 +1,7 @@
-﻿"use client";
+"use client";
 
 // src/pages/FAQ.tsx
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { ChevronDown, ChevronUp, MessageCircle, Search, Phone } from "lucide-react";
 import { buildWhatsAppUrl } from "./config";
 import { getTelHref } from "./services";
@@ -95,24 +94,10 @@ const FAQ: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-purple-50">
-      <Helmet>
-        <title>Frequently Asked Questions | Growth Service</title>
-        <meta
-          name="description"
-          content="Frequently asked questions about digital marketing, web development, branding, SEO, and white label solutions. Get answers from Growth Service."
-        />
-        <meta
-          name="keywords"
-          content="digital marketing faq, web development questions, SEO questions, Growth Service"
-        />
-        <link rel="canonical" href="https://www.growthservice.in/faq" />
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="Growth Service" />
-        <meta name="publisher" content="Growth Service" />
-        <html lang="en" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             mainEntity: faqs.map((faq) => ({
@@ -123,9 +108,9 @@ const FAQ: React.FC = () => {
                 text: faq.a,
               },
             })),
-          })}
-        </script>
-      </Helmet>
+          }),
+        }}
+      />
 
       {/* Enhanced Hero Section */}
       <section className="relative bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 text-white py-20 overflow-hidden">

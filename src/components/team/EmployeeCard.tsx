@@ -8,9 +8,10 @@ import EmployeeAvatar from './EmployeeAvatar';
 
 interface EmployeeCardProps {
   member: TeamMember;
+  priority?: boolean;
 }
 
-export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
+export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member, priority = false }) => {
   const office = getOfficeById(member.officeId);
 
   const deptBadgeStyles: Record<string, string> = {
@@ -54,6 +55,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member }) => {
             image={member.image}
             department={member.department}
             size="lg"
+            priority={priority}
           />
         </div>
 

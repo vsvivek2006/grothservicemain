@@ -6,7 +6,7 @@ import { ArrowRight, Calendar, User, ChevronLeft, ChevronRight } from "lucide-re
 import { createPublicClient } from "@/lib/supabase/public";
 import { getPostCoverImage } from "@/lib/blog/images";
 
-export const revalidate = 60; // ISR revalidation every 60 seconds
+export const revalidate = 300; // ISR revalidation every 5 minutes (admin publishes call revalidatePath)
 
 export const metadata: Metadata = {
   title: "Digital Marketing & Web Development Insights | Growth Service",

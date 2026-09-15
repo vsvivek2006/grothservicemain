@@ -24,7 +24,7 @@ export const HomeTeamSection: React.FC = () => {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" staggerDelay={90}>
           {teamMembers.map((member, idx) => (
             <StaggerItem key={member.id} index={idx} className="h-full">
-              <EmployeeCard member={member} />
+              <EmployeeCard member={member} priority={idx === 0} />
             </StaggerItem>
           ))}
         </StaggerContainer>
