@@ -32,11 +32,12 @@ const { servicesData } = await import('./dist/data/services.js');
 const { businessConfig } = await import('./dist/config/business.js');
 
 let locMatches = [];
+let content = '';
 const sitemapPath = path.resolve('public/sitemap.xml');
 const appSitemapPath = path.resolve('src/app/sitemap.ts');
 
 if (fs.existsSync(sitemapPath)) {
-  const content = fs.readFileSync(sitemapPath, 'utf-8');
+  content = fs.readFileSync(sitemapPath, 'utf-8');
   locMatches = [...content.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
 } else if (fs.existsSync(appSitemapPath)) {
   for (const route of getSitemapRoutes()) {
@@ -112,7 +113,7 @@ for (const loc of locMatches) {
 }
 
 // 7. Check for fake lastmod dates
-if (content.includes('<lastmod>')) {
+if (content && content.includes('<lastmod>')) {
   errors.push('Fabricated <lastmod> detected. Unverifiable timestamps must be omitted per Google Search guidelines.');
 }
 

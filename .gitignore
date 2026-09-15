@@ -28,3 +28,4 @@ dist-ssr
 scripts/dist/
 .next/
 out/
+public/sitemap.xml

@@ -34,8 +34,8 @@ Starts Vite dev server on `http://localhost:5173`.
 | `npm run lint` | Lints TypeScript and TSX files using ESLint |
 | `npm run routes:validate` | Validates route registry, categories, aliases, and builders |
 | `npm run routes:test` | Executes 80-case route resolution test matrix |
-| `npm run sitemap:generate`| Programmatically builds `public/sitemap.xml` from canonical routes |
-| `npm run sitemap:validate`| Validates XML sitemap structure, canonical origin, and status codes |
+| `src/app/sitemap.ts` | **Automatic**: Next.js serves `/sitemap.xml` dynamically (includes routes, offices, cities, & live Supabase posts) |
+| `npm run sitemap:validate`| Validates sitemap structure, canonical origin, and status codes |
 | `npm run seo:validate` | Validates canonical origin, assets, titles, and JSON-LD schemas |
 | `npm run data:validate` | Validates data normalization and foreign key integrity |
 | `npm run centralization:audit` | Ensures zero hardcoded business facts or raw tel/wa links in UI |

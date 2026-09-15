@@ -57,6 +57,7 @@ export async function createPostAction(input: PostInput) {
     revalidatePath("/admin/blog");
     revalidatePath("/blog");
     revalidatePath(`/blog/${validated.slug}`);
+    revalidatePath("/sitemap.xml");
 
     return { success: true, data };
   } catch (err: unknown) {
@@ -131,6 +132,7 @@ export async function updatePostAction(id: string, input: PostInput) {
     revalidatePath(`/admin/blog/${id}/edit`);
     revalidatePath("/blog");
     revalidatePath(`/blog/${validated.slug}`);
+    revalidatePath("/sitemap.xml");
 
     return { success: true, data };
   } catch (err: unknown) {
@@ -171,6 +173,7 @@ export async function deletePostAction(id: string) {
     if (post?.slug) {
       revalidatePath(`/blog/${post.slug}`);
     }
+    revalidatePath("/sitemap.xml");
 
     return { success: true };
   } catch (err: unknown) {

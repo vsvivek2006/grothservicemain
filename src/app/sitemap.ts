@@ -11,7 +11,7 @@ import { citiesData } from "@/data/locations";
 import { servicesData } from "@/data/services";
 import { createPublicClient } from "@/lib/supabase/public";
 
-export const revalidate = 3600; // Hourly ISR
+export const revalidate = 300; // 5-minute ISR fallback (admin actions trigger instant revalidatePath)
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes: MetadataRoute.Sitemap = [];
