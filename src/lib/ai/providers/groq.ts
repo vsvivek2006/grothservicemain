@@ -1,5 +1,5 @@
 import Groq from "groq-sdk";
-import { buildBlogPostPrompt } from "../prompts/blogPost";
+import { buildBlogPostPrompt, blogPostResponseSchema } from "../prompts/blogPost";
 import { normalizeContentToHtml } from "../contentFormatter";
 import { getValidModel } from "../models";
 import type { GenerateBlogPostInput, GenerateBlogPostOutput } from "../generateBlogPost";
@@ -37,11 +37,38 @@ export async function generateBlogPostWithGroq(
       },
     ],
     model,
-    max_tokens: 4096,
-    response_format: { type: "json_object" },
+    // gpt-oss-120b is a reasoning model — hidden chain-of-thought tokens are
+    // drawn from this SAME budget before it writes a single character of
+    // visible content. 4096 was tight enough that reasoning could eat the
+    // whole budget and leave message.content empty or cut off mid-string —
+    // exactly the truncated/invalid JSON safeParseJson below was patching
+    // over. Raised well past what an ~800-1500 word HTML post needs (model
+    // supports up to 65,536).
+    max_completion_tokens: 8000,
+    // Content generation doesn't need heavy deliberation — "low" leaves far
+    // more of the shared budget for the actual answer. Bump to "medium"
+    // only if you notice a real quality drop on harder topics.
+    reasoning_effort: "low",
+    // Schema-guaranteed JSON via constrained decoding, instead of the older
+    // json_object mode, which only checks syntax after the fact and can't
+    // help at all when the response was truncated for token-budget reasons.
+    response_format: { type: "json_schema", json_schema: blogPostResponseSchema },
   });
 
-  const raw = completion.choices[0]?.message?.content;
+  const choice = completion.choices[0];
+  const raw = choice?.message?.content;
+
+  if (choice?.finish_reason === "length") {
+    // Ran out of budget mid-response — almost certainly reasoning tokens
+    // (or an unusually long post) eating into max_completion_tokens.
+    // Logged explicitly so this is diagnosable instead of silently falling
+    // through to the regex-repair fallback below.
+    console.error(
+      "Groq response truncated (finish_reason: length) — consider raising max_completion_tokens further or lowering reasoning_effort.",
+      { usage: completion.usage }
+    );
+  }
+
   if (!raw) {
     throw new Error("No response received from Groq");
   }
@@ -76,7 +103,9 @@ function safeParseJson(raw: string): ParsedBlogResponse {
   try {
     return JSON.parse(cleaned);
   } catch {
-    // Attempt repair for truncated JSON responses
+    // Repair attempt for truncated JSON — kept as a safety net. With
+    // max_completion_tokens raised and structured outputs on, this path
+    // should now rarely trigger.
     let repaired = cleaned;
     if (!repaired.endsWith("}")) {
       const quoteCount = (repaired.match(/(?<!\\)"/g) || []).length;
