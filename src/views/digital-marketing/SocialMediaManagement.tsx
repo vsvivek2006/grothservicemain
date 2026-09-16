@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaChartBar, FaUsers, FaBullhorn, FaVideo, FaHashtag } from 'react-icons/fa';
 import { Check, Phone, MessageCircle } from 'lucide-react';
 import { primaryPhone } from '../../data/centralizedData';
@@ -30,8 +29,7 @@ const SocialMediaManagement = () => {
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg"
@@ -39,7 +37,7 @@ const SocialMediaManagement = () => {
                 Get Social Media Audit
               </Button>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
               >
@@ -274,8 +272,7 @@ const SocialMediaManagement = () => {
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-purple-700 hover:bg-gray-100 shadow-lg"
@@ -338,7 +335,7 @@ const SocialMediaManagement = () => {
                 </div>
                 <div className="pt-4">
                   <AnimatedButton
-                    to="/book-call"
+                    href="/book-call"
                     variant="primary"
                     className="w-full justify-center"
                   >

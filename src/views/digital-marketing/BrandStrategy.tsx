@@ -1,9 +1,8 @@
-﻿"use client";
 
 // src/pages/digital-marketing/BrandStrategy.tsx
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaChessKing, FaBullseye, FaUsers, FaPalette, FaChartLine, FaRocket, FaLightbulb, FaGlobe, FaHeart, FaCrown } from 'react-icons/fa';
 import {
   Check,
@@ -54,7 +53,7 @@ const BrandStrategy: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -62,7 +61,7 @@ const BrandStrategy: React.FC = () => {
                 Get Brand Audit
               </AnimatedButton>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -441,7 +440,7 @@ const BrandStrategy: React.FC = () => {
                   </ul>
                 </div>
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -472,7 +471,7 @@ const BrandStrategy: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"

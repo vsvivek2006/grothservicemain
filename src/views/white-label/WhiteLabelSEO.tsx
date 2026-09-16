@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaSearch, FaChartLine, FaShieldAlt, FaRocket, FaFileAlt, FaMobileAlt, FaGlobe } from 'react-icons/fa';
 import {
   ClipboardList,
@@ -49,8 +48,7 @@ const WhiteLabelSEO = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg"
@@ -58,7 +56,7 @@ const WhiteLabelSEO = () => {
                 Book White Label Demo
               </Button>
               <Button
-                to="/white-label"
+                href="/white-label"
                 variant="outline-white"
                 size="lg"
               >
@@ -371,7 +369,7 @@ const WhiteLabelSEO = () => {
                 </div>
                 <div className="pt-4">
                   <AnimatedButton
-                    to="/book-call"
+                    href="/book-call"
                     variant="primary"
                     className="w-full justify-center"
                   >
@@ -509,8 +507,7 @@ const WhiteLabelSEO = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-purple-900 hover:bg-gray-100 shadow-lg"
@@ -703,8 +700,7 @@ const WhiteLabelSEO = () => {
                   Ready to become a white label SEO partner? Schedule a demo to see our platform and results.
                 </p>
                 <Button
-                  as={Link}
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="shadow-md"
                 >

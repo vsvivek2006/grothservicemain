@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaUsers, FaChartLine, FaCalendarAlt, FaPalette, FaComment, FaRocket } from 'react-icons/fa';
 import {
   ClipboardList,
@@ -57,8 +56,7 @@ const WhiteLabelSocialMedia = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg"
@@ -66,7 +64,7 @@ const WhiteLabelSocialMedia = () => {
                 Book White Label Demo
               </Button>
               <Button
-                to="/white-label"
+                href="/white-label"
                 variant="outline-white"
                 size="lg"
               >
@@ -410,7 +408,7 @@ const WhiteLabelSocialMedia = () => {
                 </div>
                 <div className="pt-4">
                   <AnimatedButton
-                    to="/book-call"
+                    href="/book-call"
                     variant="primary"
                     className="w-full justify-center"
                   >
@@ -548,8 +546,7 @@ const WhiteLabelSocialMedia = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-purple-900 hover:bg-gray-100 shadow-lg"
@@ -742,8 +739,7 @@ const WhiteLabelSocialMedia = () => {
                   Ready to become a white label social media partner? Schedule a demo to see our platform in action.
                 </p>
                 <Button
-                  as={Link}
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="shadow-md"
                 >

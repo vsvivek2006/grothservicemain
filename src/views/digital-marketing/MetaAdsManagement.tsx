@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   FaFacebook, 
   FaInstagram, 
@@ -84,7 +83,7 @@ const MetaAdsManagement: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2"
@@ -93,7 +92,7 @@ const MetaAdsManagement: React.FC = () => {
                 <span>Get Free Ads Audit</span>
               </AnimatedButton>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2"
@@ -430,7 +429,7 @@ const MetaAdsManagement: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <Link to="/contact" className="text-blue-600 hover:text-blue-800 font-semibold text-sm inline-flex items-center pt-2">
+                  <Link href="/contact" className="text-blue-600 hover:text-blue-800 font-semibold text-sm inline-flex items-center pt-2">
                     Get Directions →
                   </Link>
                 </Card>
@@ -530,7 +529,7 @@ const MetaAdsManagement: React.FC = () => {
                   </ul>
                 </div>
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -682,7 +681,7 @@ const MetaAdsManagement: React.FC = () => {
           <div className="text-center mt-10">
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2"
@@ -691,7 +690,7 @@ const MetaAdsManagement: React.FC = () => {
                 <span>Get Free Ads Audit</span>
               </AnimatedButton>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2"
@@ -709,17 +708,17 @@ const MetaAdsManagement: React.FC = () => {
         <Container className="text-center">
           <p className="text-gray-600 text-xs mb-3 font-medium uppercase tracking-wider">Explore More Services:</p>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
-            <Link to="/seo" className="text-blue-600 hover:text-blue-800 font-medium">SEO Services</Link>
+            <Link href="/seo" className="text-blue-600 hover:text-blue-800 font-medium">SEO Services</Link>
             <span className="text-gray-300">|</span>
-            <Link to="/web-development" className="text-blue-600 hover:text-blue-800 font-medium">Web Development</Link>
+            <Link href="/web-development" className="text-blue-600 hover:text-blue-800 font-medium">Web Development</Link>
             <span className="text-gray-300">|</span>
-            <Link to="/social-media" className="text-blue-600 hover:text-blue-800 font-medium">Social Media Management</Link>
+            <Link href="/social-media" className="text-blue-600 hover:text-blue-800 font-medium">Social Media Management</Link>
             <span className="text-gray-300">|</span>
-            <Link to="/content-marketing" className="text-blue-600 hover:text-blue-800 font-medium">Content Marketing</Link>
+            <Link href="/content-marketing" className="text-blue-600 hover:text-blue-800 font-medium">Content Marketing</Link>
             <span className="text-gray-300">|</span>
-            <Link to="/local-seo" className="text-blue-600 hover:text-blue-800 font-medium">Google Business Profile</Link>
+            <Link href="/local-seo" className="text-blue-600 hover:text-blue-800 font-medium">Google Business Profile</Link>
             <span className="text-gray-300">|</span>
-            <Link to="/ecommerce" className="text-blue-600 hover:text-blue-800 font-medium">E-commerce Solutions</Link>
+            <Link href="/ecommerce" className="text-blue-600 hover:text-blue-800 font-medium">E-commerce Solutions</Link>
           </div>
         </Container>
       </section>

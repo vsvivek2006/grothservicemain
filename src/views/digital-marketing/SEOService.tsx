@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   FaSearch, 
   FaChartLine, 
@@ -66,8 +65,7 @@ const SEOService = () => {
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg inline-flex items-center justify-center gap-2"
@@ -76,7 +74,7 @@ const SEOService = () => {
                 <span>Get Free SEO Audit</span>
               </Button>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="inline-flex items-center justify-center gap-2"
@@ -297,7 +295,7 @@ const SEOService = () => {
               
               <div className="text-center pt-4">
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="w-full justify-center"
                 >
@@ -355,7 +353,7 @@ const SEOService = () => {
               
               <div className="text-center pt-4">
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="w-full justify-center bg-purple-600 hover:bg-purple-700"
                 >
@@ -410,7 +408,7 @@ const SEOService = () => {
               
               <div className="text-center pt-4">
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="w-full justify-center bg-yellow-500 text-gray-900 hover:bg-yellow-600"
                 >
@@ -472,7 +470,7 @@ const SEOService = () => {
               
               <div className="text-center pt-4">
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="w-full justify-center"
                 >
@@ -521,7 +519,7 @@ const SEOService = () => {
               
               <div className="text-center pt-4">
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="w-full justify-center bg-purple-600 hover:bg-purple-700"
                 >
@@ -570,7 +568,7 @@ const SEOService = () => {
               
               <div className="text-center pt-4">
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   className="w-full justify-center bg-yellow-500 text-gray-900 hover:bg-yellow-600"
                 >
@@ -638,7 +636,7 @@ const SEOService = () => {
                       <CheckCircle2 className={`w-4 h-4 ${textAccent}`} /> {office.timings}
                     </p>
                   </div>
-                  <Link to="/contact" className={`mt-4 inline-block ${textAccent} font-semibold hover:underline text-sm`}>
+                  <Link href="/contact" className={`mt-4 inline-block ${textAccent} font-semibold hover:underline text-sm`}>
                     Get Directions →
                   </Link>
                 </div>
@@ -658,49 +656,49 @@ const SEOService = () => {
           />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Link to="/web-development" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/web-development" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Code2 className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Web Development</h3>
               <p className="text-gray-500 text-sm">Responsive Architecture</p>
             </Link>
 
-            <Link to="/social-media" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/social-media" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Smartphone className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Social Media Management</h3>
               <p className="text-gray-500 text-sm">Creative Brand Strategy</p>
             </Link>
 
-            <Link to="/paid-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/paid-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Target className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Meta Ads Management</h3>
               <p className="text-gray-500 text-sm">Performance Acquisition</p>
             </Link>
 
-            <Link to="/local-seo" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/local-seo" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><MapPin className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Google Business Profile</h3>
               <p className="text-gray-500 text-sm">Local 3-Pack Dominance</p>
             </Link>
 
-            <Link to="/content-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/content-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><FileText className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Content Writing</h3>
               <p className="text-gray-500 text-sm">SEO Content Strategy</p>
             </Link>
 
-            <Link to="/ecommerce" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/ecommerce" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><ShoppingCart className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">E-commerce Solutions</h3>
               <p className="text-gray-500 text-sm">Custom Store Architecture</p>
             </Link>
 
-            <Link to="/branding" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/branding" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Palette className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Brand Strategy</h3>
               <p className="text-gray-500 text-sm">Identity & Positioning</p>
             </Link>
 
-            <Link to="/digital-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
+            <Link href="/digital-marketing" className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1 text-center group">
               <div className="text-blue-600 mb-3 flex justify-center group-hover:scale-110 transition-transform"><Mail className="w-8 h-8" /></div>
               <h3 className="font-semibold text-gray-800">Email Marketing</h3>
               <p className="text-gray-500 text-sm">Lifecycle Funnels</p>
@@ -843,8 +841,7 @@ const SEOService = () => {
           <div className="text-center mt-10">
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg inline-flex items-center justify-center gap-2"
@@ -853,7 +850,7 @@ const SEOService = () => {
                 <span>Get Free SEO Audit</span>
               </Button>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="inline-flex items-center justify-center gap-2"

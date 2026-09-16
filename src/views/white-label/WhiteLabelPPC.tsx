@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaGoogle, FaFacebook, FaLinkedin, FaDollarSign, FaRocket, FaShieldAlt, FaCog, FaBullseye, FaFileAlt } from 'react-icons/fa';
 import {
   Handshake,
@@ -50,8 +49,7 @@ const WhiteLabelPPC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg"
@@ -59,7 +57,7 @@ const WhiteLabelPPC = () => {
                 Book White Label Demo
               </Button>
               <Button
-                to="/white-label"
+                href="/white-label"
                 variant="outline-white"
                 size="lg"
               >
@@ -359,7 +357,7 @@ const WhiteLabelPPC = () => {
                 </div>
                 <div className="pt-4">
                   <AnimatedButton
-                    to="/book-call"
+                    href="/book-call"
                     variant="primary"
                     className="w-full justify-center"
                   >
@@ -495,8 +493,7 @@ const WhiteLabelPPC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="bg-white text-purple-900 hover:bg-gray-100 shadow-lg"
