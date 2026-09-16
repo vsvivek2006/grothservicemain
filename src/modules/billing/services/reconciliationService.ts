@@ -130,86 +130,134 @@ export async function reconcilePaymentEvent(
       const now = new Date().toISOString();
       const capturedAt = event.capturedAt ? event.capturedAt.toISOString() : now;
 
-      // Insert Payment Record
-      const { data: newPayment, error: paymentErr } = await supabase
-        .from("payments")
-        .insert({
-          invoice_id: invoice.id,
-          payment_link_id: paymentLink?.id || null,
-          provider: event.provider,
-          provider_payment_id: event.providerPaymentId || null,
-          provider_order_id: event.providerOrderId || null,
-          amount: event.amount,
-          currency: event.currency,
-          status: "captured",
-          payment_method: event.paymentMethod || null,
-          captured_at: capturedAt,
-          payer_name: event.payerName || null,
-          payer_email: event.payerEmail || null,
-          payer_phone: event.payerPhone || null,
-          metadata: {
+      // 1. Attempt Atomic Transaction via PostgreSQL RPC
+      let paymentRecordId: string | null = null;
+      let isAtomicSuccess = false;
+
+      const { data: rpcData, error: rpcErr } = await supabase.rpc(
+        "reconcile_payment_transaction",
+        {
+          p_invoice_id: invoice.id,
+          p_payment_link_id: paymentLink?.id || null,
+          p_provider: event.provider,
+          p_provider_payment_id: event.providerPaymentId || null,
+          p_provider_order_id: event.providerOrderId || null,
+          p_amount: event.amount,
+          p_currency: event.currency || "INR",
+          p_payment_method: event.paymentMethod || null,
+          p_captured_at: capturedAt,
+          p_payer_name: event.payerName || null,
+          p_payer_email: event.payerEmail || null,
+          p_payer_phone: event.payerPhone || null,
+          p_metadata: {
             provider_event_id: event.providerEventId,
             raw_event: event.eventType,
           },
-        })
-        .select()
-        .single();
+          p_source: `${event.provider}_webhook`,
+          p_provider_link_id: event.providerLinkId || null,
+        }
+      );
 
-      if (paymentErr || !newPayment) {
-        throw new Error(`Failed to insert payment record: ${paymentErr?.message}`);
+      if (!rpcErr && rpcData) {
+        const resObj = typeof rpcData === "string" ? JSON.parse(rpcData) : rpcData;
+        if (resObj.status === "duplicate") {
+          return {
+            success: true,
+            status: "duplicate",
+            message: resObj.message || `Payment ${event.providerPaymentId} already processed previously.`,
+            invoiceId: invoice.id,
+            paymentId: resObj.payment_id,
+          };
+        }
+        if (resObj.success) {
+          paymentRecordId = resObj.payment_id;
+          isAtomicSuccess = true;
+        }
       }
 
-      // Insert Ledger Transaction
-      const { data: transactionRecord, error: txErr } = await supabase
-        .from("payment_transactions")
-        .insert({
-          invoice_id: invoice.id,
-          payment_id: newPayment.id,
-          transaction_type: "payment",
-          amount: event.amount,
-          balance_before: reconciliation.balanceBefore,
-          balance_after: reconciliation.balanceAfter,
-          source: `${event.provider}_webhook`,
-          metadata: {
-            provider_payment_id: event.providerPaymentId,
-            provider_link_id: event.providerLinkId,
-            status: reconciliation.newPaymentStatus,
-          },
-        })
-        .select()
-        .single();
-
-      if (txErr) {
-        console.error("[reconcilePaymentEvent] Ledger insert error:", txErr);
-      }
-
-      // Update Invoice Balances & Payment Status
-      const invoiceUpdates: Partial<Invoice> = {
-        amount_paid: reconciliation.amountPaidAfter,
-        amount_due: reconciliation.balanceAfter,
-        payment_status: reconciliation.newPaymentStatus,
-        updated_at: now,
-      };
-
-      const { error: invoiceUpdateErr } = await supabase
-        .from("invoices")
-        .update(invoiceUpdates)
-        .eq("id", invoice.id);
-
-      if (invoiceUpdateErr) {
-        throw new Error(`Failed to update invoice balances: ${invoiceUpdateErr.message}`);
-      }
-
-      // Update Payment Link Status if applicable
-      if (paymentLink) {
-        const linkStatus = reconciliation.isFullyPaid ? "paid" : "partially_paid";
-        await supabase
-          .from("payment_links")
-          .update({
-            status: linkStatus,
-            updated_at: now,
+      // 2. Fallback path if stored procedure is not yet applied
+      if (!isAtomicSuccess) {
+        // Insert Payment Record
+        const { data: newPayment, error: paymentErr } = await supabase
+          .from("payments")
+          .insert({
+            invoice_id: invoice.id,
+            payment_link_id: paymentLink?.id || null,
+            provider: event.provider,
+            provider_payment_id: event.providerPaymentId || null,
+            provider_order_id: event.providerOrderId || null,
+            amount: event.amount,
+            currency: event.currency,
+            status: "captured",
+            payment_method: event.paymentMethod || null,
+            captured_at: capturedAt,
+            payer_name: event.payerName || null,
+            payer_email: event.payerEmail || null,
+            payer_phone: event.payerPhone || null,
+            metadata: {
+              provider_event_id: event.providerEventId,
+              raw_event: event.eventType,
+            },
           })
-          .eq("id", paymentLink.id);
+          .select()
+          .single();
+
+        if (paymentErr || !newPayment) {
+          throw new Error(`Failed to insert payment record: ${paymentErr?.message}`);
+        }
+
+        paymentRecordId = newPayment.id;
+
+        // Insert Ledger Transaction
+        const { error: txErr } = await supabase
+          .from("payment_transactions")
+          .insert({
+            invoice_id: invoice.id,
+            payment_id: newPayment.id,
+            transaction_type: "payment",
+            amount: event.amount,
+            balance_before: reconciliation.balanceBefore,
+            balance_after: reconciliation.balanceAfter,
+            source: `${event.provider}_webhook`,
+            metadata: {
+              provider_payment_id: event.providerPaymentId,
+              provider_link_id: event.providerLinkId,
+              status: reconciliation.newPaymentStatus,
+            },
+          });
+
+        if (txErr) {
+          console.error("[reconcilePaymentEvent] Ledger insert error:", txErr);
+        }
+
+        // Update Invoice Balances & Payment Status
+        const invoiceUpdates: Partial<Invoice> = {
+          amount_paid: reconciliation.amountPaidAfter,
+          amount_due: reconciliation.balanceAfter,
+          payment_status: reconciliation.newPaymentStatus,
+          updated_at: now,
+        };
+
+        const { error: invoiceUpdateErr } = await supabase
+          .from("invoices")
+          .update(invoiceUpdates)
+          .eq("id", invoice.id);
+
+        if (invoiceUpdateErr) {
+          throw new Error(`Failed to update invoice balances: ${invoiceUpdateErr.message}`);
+        }
+
+        // Update Payment Link Status if applicable
+        if (paymentLink) {
+          const linkStatus = reconciliation.isFullyPaid ? "paid" : "partially_paid";
+          await supabase
+            .from("payment_links")
+            .update({
+              status: linkStatus,
+              updated_at: now,
+            })
+            .eq("id", paymentLink.id);
+        }
       }
 
       // Audit Log
@@ -217,7 +265,7 @@ export async function reconcilePaymentEvent(
         actorUserId: "system",
         action: "PAYMENT_RECORDED",
         entityType: "payment",
-        entityId: newPayment.id,
+        entityId: paymentRecordId || invoice.id,
         oldValues: {
           amount_paid: reconciliation.amountPaidBefore,
           amount_due: reconciliation.balanceBefore,
@@ -240,8 +288,7 @@ export async function reconcilePaymentEvent(
         status: "processed",
         message: `Successfully reconciled payment of ₹${event.amount} for invoice ${invoice.invoice_number}`,
         invoiceId: invoice.id,
-        paymentId: newPayment.id,
-        transactionId: transactionRecord?.id,
+        paymentId: paymentRecordId || undefined,
       };
     }
 

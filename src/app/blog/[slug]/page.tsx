@@ -158,7 +158,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     sanitizedContent = cleanHtml(post.content || "");
   } catch (sanitizeErr) {
     console.error("Content sanitization error:", sanitizeErr);
-    sanitizedContent = post.content || "";
+    sanitizedContent = "<p>Content could not be displayed safely.</p>";
   }
 
   const articleDate = post.published_at || post.created_at || new Date().toISOString();

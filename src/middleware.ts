@@ -97,13 +97,50 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(destinationUrl);
     }
 
-    // If authenticated and accessing admin, forward user identity headers to downstream server components
+    // If authenticated and accessing admin, verify authorized role & route boundaries
     if (user && !isLoginPage) {
+      const validRoles = ["superadmin", "admin", "billing_manager", "editor"];
+      const adminRole = user.app_metadata?.role as string | undefined;
+
+      // Unassigned or unauthorized user cannot enter admin portal
+      if (!adminRole || !validRoles.includes(adminRole)) {
+        const loginUrl = request.nextUrl.clone();
+        loginUrl.pathname = "/admin/login";
+        loginUrl.search = "";
+        loginUrl.searchParams.set("error", "unauthorized");
+        return NextResponse.redirect(loginUrl);
+      }
+
+      // Route-level role boundary checks:
+      // 1. Billing & Clients section: restricted to superadmin, admin, billing_manager
+      if (
+        (normalizedPath.startsWith("/admin/billing") || normalizedPath.startsWith("/admin/clients")) &&
+        adminRole === "editor"
+      ) {
+        const adminUrl = request.nextUrl.clone();
+        adminUrl.pathname = "/admin";
+        adminUrl.search = "";
+        adminUrl.searchParams.set("unauthorized", "billing");
+        return NextResponse.redirect(adminUrl);
+      }
+
+      // 2. Content section: restricted to superadmin, admin, editor
+      if (
+        normalizedPath.startsWith("/admin/blog") &&
+        adminRole === "billing_manager"
+      ) {
+        const adminUrl = request.nextUrl.clone();
+        adminUrl.pathname = "/admin";
+        adminUrl.search = "";
+        adminUrl.searchParams.set("unauthorized", "content");
+        return NextResponse.redirect(adminUrl);
+      }
+
       const requestHeaders = new Headers(request.headers);
       requestHeaders.set("x-user-email", user.email || "");
       requestHeaders.set("x-user-id", user.id);
-      const adminRole = (user.app_metadata?.role as string) || "admin";
       requestHeaders.set("x-user-role", adminRole);
+      requestHeaders.set("x-pathname", normalizedPath);
 
       const responseWithHeaders = NextResponse.next({
         request: {

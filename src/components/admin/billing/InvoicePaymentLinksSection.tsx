@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import {
   Link as LinkIcon,
   Copy,
@@ -15,6 +16,7 @@ import {
   CheckCircle2,
   Calendar,
   Mail,
+  RefreshCw,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -38,6 +40,7 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
   const [linkToCancel, setLinkToCancel] = useState<string | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
   const [sendingLinkId, setSendingLinkId] = useState<string | null>(null);
+  const [syncingLinkId, setSyncingLinkId] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -51,8 +54,96 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
   const [minPartialAmount, setMinPartialAmount] = useState<number | "">("");
   const [expiresInDays, setExpiresInDays] = useState<number | "">(15);
   const [reminderEnabled, setReminderEnabled] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const links: PaymentLinkRecord[] = invoice.payment_links || [];
+
+  // Authoritative manual sync against Razorpay API via Route Handler
+  const handleManualRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
+      const res = await fetch(`/api/billing/invoices/${invoice.id}/sync`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to sync with Razorpay");
+      }
+      toast.success(data.data?.message || data.message || "Synced payment status with Razorpay");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Sync failed");
+    } finally {
+      React.startTransition(() => {
+        router.refresh();
+      });
+      setIsRefreshing(false);
+    }
+  }, [invoice.id, router]);
+
+  // Single link authoritative sync against Razorpay API via Route Handler
+  const handleSyncSingleLink = async (linkId: string) => {
+    setSyncingLinkId(linkId);
+    try {
+      const res = await fetch(
+        `/api/billing/invoices/${invoice.id}/sync?linkId=${encodeURIComponent(linkId)}`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to sync link");
+      }
+      toast.success(data.data?.message || data.message || "Status synced with Razorpay");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Sync failed");
+    } finally {
+      React.startTransition(() => {
+        router.refresh();
+      });
+      setSyncingLinkId(null);
+    }
+  };
+
+  // Supabase Realtime: auto-refresh when webhook updates payment_links or invoices
+  useEffect(() => {
+    const supabase = createClient();
+    const channel = supabase
+      .channel(`invoice-payment-sync-${invoice.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "payment_links",
+          filter: `invoice_id=eq.${invoice.id}`,
+        },
+        () => {
+          React.startTransition(() => {
+            router.refresh();
+          });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "invoices",
+          filter: `id=eq.${invoice.id}`,
+        },
+        () => {
+          React.startTransition(() => {
+            router.refresh();
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [invoice.id, router]);
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -96,7 +187,9 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
       }
       toast.success("Payment link cancelled");
       setLinkToCancel(null);
-      router.refresh();
+      React.startTransition(() => {
+        router.refresh();
+      });
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Error cancelling link");
     } finally {
@@ -156,7 +249,9 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
 
       toast.success("Payment link created successfully!");
       setShowCreateModal(false);
-      router.refresh();
+      React.startTransition(() => {
+        router.refresh();
+      });
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Error creating payment link");
     } finally {
@@ -224,18 +319,31 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
           </p>
         </div>
 
-        {canGenerateLink && (
+        <div className="flex items-center gap-2">
+
           <button
-            onClick={() => {
-              setAmount(amountDue);
-              setShowCreateModal(true);
-            }}
-            className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-purple-950/40 hover:from-blue-600 hover:to-indigo-800"
+            onClick={handleManualRefresh}
+            disabled={isRefreshing}
+            className="flex items-center gap-1 rounded-md border border-gray-700 bg-gray-800/60 px-2.5 py-1.5 text-xs font-medium text-gray-400 hover:bg-gray-700 hover:text-white disabled:opacity-50"
+            title="Refresh payment status"
           >
-            <Plus className="h-4 w-4" />
-            <span>Generate Payment Link</span>
+            <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+            <span>Refresh</span>
           </button>
-        )}
+
+          {canGenerateLink && (
+            <button
+              onClick={() => {
+                setAmount(amountDue);
+                setShowCreateModal(true);
+              }}
+              className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-purple-950/40 hover:from-blue-600 hover:to-indigo-800"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Generate Payment Link</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Links List */}
@@ -336,6 +444,16 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
                     <ExternalLink className="h-3.5 w-3.5" />
                     <span>Open</span>
                   </a>
+
+                  <button
+                    onClick={() => handleSyncSingleLink(link.id)}
+                    disabled={syncingLinkId === link.id}
+                    className="flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-950/20 px-2.5 py-1.5 text-xs font-medium text-emerald-400 hover:bg-emerald-900/40 disabled:opacity-50"
+                    title="Sync live status directly from Razorpay"
+                  >
+                    <RefreshCw className={`h-3.5 w-3.5 ${syncingLinkId === link.id ? "animate-spin" : ""}`} />
+                    <span>Sync</span>
+                  </button>
 
                   {!isCancelledOrPaid && (
                     <button

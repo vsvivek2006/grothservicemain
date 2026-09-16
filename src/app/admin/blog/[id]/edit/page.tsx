@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { PostEditor } from "@/components/admin/PostEditor";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 import type { PostRecord } from "@/lib/validations/post";
 
 interface EditBlogPostPageProps {
@@ -12,6 +13,9 @@ interface EditBlogPostPageProps {
 }
 
 export default async function EditBlogPostPage({ params }: EditBlogPostPageProps) {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "content:write");
+
   const { id } = await params;
   let post: PostRecord | null = null;
 

@@ -16,6 +16,7 @@ import {
   ExternalLink,
   CreditCard,
   Receipt,
+  TrendingUp,
 } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
@@ -43,11 +44,11 @@ export const navGroups: NavGroup[] = [
   {
     title: "Billing",
     items: [
-      { label: "Overview", href: "/admin/billing", icon: CreditCard, exact: true },
+      { label: "Overview", href: "/admin/billing", icon: TrendingUp, exact: true },
       { label: "Clients", href: "/admin/clients", icon: Users },
       { label: "Catalog Items", href: "/admin/billing/items", icon: Package },
-      { label: "Invoices", href: "/admin/billing/invoices", icon: FileText },
-      { label: "Payments", href: "/admin/billing/payments", icon: Receipt },
+      { label: "Invoices", href: "/admin/billing/invoices", icon: Receipt },
+      { label: "Payments", href: "/admin/billing/payments", icon: CreditCard },
     ],
   },
   {
@@ -57,6 +58,8 @@ export const navGroups: NavGroup[] = [
     ],
   },
 ];
+
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 
 interface SidebarProps {
   userEmail?: string | null;
@@ -69,17 +72,28 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
   const pathname = usePathname();
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const paymentsActive = isPaymentsEnabled();
 
   // Role-based navigation group filtering
-  const visibleNavGroups = navGroups.filter((group) => {
-    if (group.title === "Billing") {
-      return userRole !== "editor";
-    }
-    if (group.title === "Content") {
-      return userRole !== "billing_manager";
-    }
-    return true;
-  });
+  const visibleNavGroups = navGroups
+    .filter((group) => {
+      if (group.title === "Billing") {
+        return userRole !== "editor";
+      }
+      if (group.title === "Content") {
+        return userRole !== "billing_manager";
+      }
+      return true;
+    })
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => {
+        if (item.href === "/admin/billing/payments" && !paymentsActive) {
+          return false;
+        }
+        return true;
+      }),
+    }));
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -147,8 +161,18 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
           )}
         </div>
 
-        {/* Action Button */}
-        {userRole !== "billing_manager" && (
+        {/* Role-Aware Action Button */}
+        {userRole === "billing_manager" ? (
+          <div className="p-4 pb-2">
+            <Link
+              href="/admin/billing/invoices/new"
+              className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white transition-all shadow-xs"
+            >
+              <PlusCircle className="w-4 h-4" />
+              New Invoice
+            </Link>
+          </div>
+        ) : userRole === "editor" ? (
           <div className="p-4 pb-2">
             <Link
               href="/admin/blog/new"
@@ -156,6 +180,16 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
             >
               <PlusCircle className="w-4 h-4" />
               Create Post
+            </Link>
+          </div>
+        ) : (
+          <div className="p-4 pb-2">
+            <Link
+              href="/admin/billing/invoices/new"
+              className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white transition-all shadow-xs"
+            >
+              <PlusCircle className="w-4 h-4" />
+              New Invoice
             </Link>
           </div>
         )}
@@ -248,13 +282,13 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
   return (
     <>
       {/* Desktop Persistent Sidebar */}
-      <aside className="hidden lg:flex w-60 bg-gray-900 border-r border-gray-800 min-h-screen flex-col shrink-0 text-gray-200 print:hidden">
+      <aside className="hidden lg:flex w-60 bg-gray-900 border-r border-gray-800 min-h-screen flex-col shrink-0 text-gray-200 print:!hidden no-print">
         {navContent}
       </aside>
 
       {/* Mobile Slide-Over Drawer */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex print:hidden">
+        <div className="fixed inset-0 z-50 lg:hidden flex print:!hidden no-print">
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/60 transition-opacity"

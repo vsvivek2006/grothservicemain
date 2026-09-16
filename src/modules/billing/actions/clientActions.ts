@@ -210,7 +210,24 @@ export async function updateClientAction(
       });
     }
 
-    // 3. Audit Log Event
+    // 3. Sync Client Contacts
+    if (validated.contacts !== undefined) {
+      await adminClient.from("client_contacts").delete().eq("client_id", id);
+      if (validated.contacts.length > 0) {
+        const contactsToInsert = validated.contacts.map((c) => ({
+          client_id: id,
+          name: c.name,
+          email: c.email || null,
+          phone: c.phone || null,
+          designation: c.designation || null,
+          is_primary: c.is_primary,
+          is_billing_contact: c.is_billing_contact,
+        }));
+        await adminClient.from("client_contacts").insert(contactsToInsert);
+      }
+    }
+
+    // 4. Audit Log Event
     await logAuditEvent({
       actorUserId: adminUser.id,
       action: "CLIENT_UPDATED",
@@ -243,6 +260,27 @@ export async function archiveClientAction(
     assertPermission(adminUser, "billing:write");
 
     const adminClient = createAdminClient();
+
+    // Guard: Check for outstanding receivables on issued invoices
+    const { data: openInvoices, error: invErr } = await adminClient
+      .from("invoices")
+      .select("id, invoice_number, amount_due")
+      .eq("client_id", id)
+      .eq("document_status", "issued")
+      .gt("amount_due", 0);
+
+    if (invErr) {
+      return actionError(`Failed to verify invoice balance: ${invErr.message}`);
+    }
+
+    if (openInvoices && openInvoices.length > 0) {
+      const totalDue = openInvoices.reduce((sum, inv) => sum + Number(inv.amount_due || 0), 0);
+      const invoiceNumbers = openInvoices.map((inv) => inv.invoice_number).slice(0, 3).join(", ");
+      return actionError(
+        `Cannot archive client: Client has ${openInvoices.length} issued invoice(s) with an unpaid balance of ₹${totalDue.toLocaleString("en-IN")} (${invoiceNumbers}${openInvoices.length > 3 ? "..." : ""}). Please reconcile or cancel invoices first.`
+      );
+    }
+
     const { error } = await adminClient
       .from("clients")
       .update({ status: "archived", updated_by: adminUser.id })

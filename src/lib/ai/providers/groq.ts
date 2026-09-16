@@ -17,6 +17,27 @@ function getGroqClient(): Groq {
   return groqInstance;
 }
 
+/** Retry on transient Groq errors (429 rate-limit, 502/503 server errors). */
+async function withRetry<T>(fn: () => Promise<T>, maxRetries = 2): Promise<T> {
+  const RETRIABLE = [429, 502, 503];
+  const BACKOFF_MS = [1000, 3000];
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err: unknown) {
+      lastError = err;
+      // Groq SDK surfaces status as err.status
+      const status = (err as { status?: number }).status;
+      if (!status || !RETRIABLE.includes(status) || attempt === maxRetries) {
+        throw err;
+      }
+      await new Promise((res) => setTimeout(res, BACKOFF_MS[attempt] ?? 3000));
+    }
+  }
+  throw lastError;
+}
+
 export async function generateBlogPostWithGroq(
   input: GenerateBlogPostInput
 ): Promise<GenerateBlogPostOutput> {
@@ -24,36 +45,38 @@ export async function generateBlogPostWithGroq(
   const prompt = buildBlogPostPrompt(input);
   const model = getValidModel(input.model || process.env.GROQ_MODEL);
 
-  const completion = await groq.chat.completions.create({
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are a seasoned human editorial director and performance marketing practitioner with 15+ years of live agency experience. You write with deep analytical substance, natural burstiness, and zero detectable AI clichés or synthetic filler. Output strictly valid JSON matching the requested schema. The content field MUST be clean, valid semantic HTML with rich visual hierarchy (h2, h3, p, ul, ol, li, strong, blockquote). Never output markdown code blocks or commentary around the JSON.",
-      },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-    model,
-    // gpt-oss-120b is a reasoning model — hidden chain-of-thought tokens are
-    // drawn from this SAME budget before it writes a single character of
-    // visible content. 4096 was tight enough that reasoning could eat the
-    // whole budget and leave message.content empty or cut off mid-string —
-    // exactly the truncated/invalid JSON safeParseJson below was patching
-    // over. Raised well past what an ~800-1500 word HTML post needs (model
-    // supports up to 65,536).
-    max_completion_tokens: 8000,
-    // Content generation doesn't need heavy deliberation — "low" leaves far
-    // more of the shared budget for the actual answer. Bump to "medium"
-    // only if you notice a real quality drop on harder topics.
-    reasoning_effort: "low",
-    // Schema-guaranteed JSON via constrained decoding, instead of the older
-    // json_object mode, which only checks syntax after the fact and can't
-    // help at all when the response was truncated for token-budget reasons.
-    response_format: { type: "json_schema", json_schema: blogPostResponseSchema },
-  });
+  const completion = await withRetry(() =>
+    groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a seasoned human editorial director and performance marketing practitioner with 15+ years of live agency experience. You write with deep analytical substance, natural burstiness, and zero detectable AI clichés or synthetic filler. Output strictly valid JSON matching the requested schema. The content field MUST be clean, valid semantic HTML with rich visual hierarchy (h2, h3, p, ul, ol, li, strong, blockquote). Never output markdown code blocks or commentary around the JSON.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      model,
+      // gpt-oss-120b is a reasoning model — hidden chain-of-thought tokens are
+      // drawn from this SAME budget before it writes a single character of
+      // visible content. 4096 was tight enough that reasoning could eat the
+      // whole budget and leave message.content empty or cut off mid-string —
+      // exactly the truncated/invalid JSON safeParseJson below was patching
+      // over. Raised well past what an ~800-1500 word HTML post needs (model
+      // supports up to 65,536).
+      max_completion_tokens: 8000,
+      // Content generation doesn't need heavy deliberation — "low" leaves far
+      // more of the shared budget for the actual answer. Bump to "medium"
+      // only if you notice a real quality drop on harder topics.
+      reasoning_effort: "low",
+      // Schema-guaranteed JSON via constrained decoding, instead of the older
+      // json_object mode, which only checks syntax after the fact and can't
+      // help at all when the response was truncated for token-budget reasons.
+      response_format: { type: "json_schema", json_schema: blogPostResponseSchema },
+    })
+  );
 
   const choice = completion.choices[0];
   const raw = choice?.message?.content;

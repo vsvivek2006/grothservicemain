@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   CreditCard,
   CheckCircle2,
@@ -12,6 +13,7 @@ import {
   BookOpen,
   ArrowUpDown,
   ShieldCheck,
+  X,
 } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/shared/AdminPageHeader";
 import { StatCard } from "@/components/admin/shared/StatCard";
@@ -48,6 +50,7 @@ export const PaymentLedgerView: React.FC<PaymentLedgerViewProps> = ({
   currentStatus,
   currentSearch,
 }) => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"payments" | "ledger">("payments");
   const [searchTerm, setSearchTerm] = useState(currentSearch);
 
@@ -204,15 +207,28 @@ export const PaymentLedgerView: React.FC<PaymentLedgerViewProps> = ({
               className="relative w-full sm:w-64"
             >
               <input type="hidden" name="status" value={currentStatus} />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
               <input
                 type="text"
                 name="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search transaction ID, email…"
-                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-gray-800 bg-gray-900 text-white placeholder-gray-500 focus:outline-hidden focus:border-purple-500"
+                className="w-full pl-9 pr-8 py-1.5 text-xs rounded-lg border border-gray-800 bg-gray-900 text-white placeholder-gray-500 focus:outline-hidden focus:border-purple-500"
               />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchTerm("");
+                    router.push(`/admin/billing/payments?status=${currentStatus}`);
+                  }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-0.5 rounded cursor-pointer"
+                  aria-label="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </form>
           </div>
 
@@ -230,7 +246,7 @@ export const PaymentLedgerView: React.FC<PaymentLedgerViewProps> = ({
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-gray-800 bg-gray-950/50 text-[11px] font-medium text-gray-400">
+                    <tr className="border-b border-gray-800 bg-gray-900/50 text-[11px] font-medium text-gray-400">
                       <th className="py-3 px-4">Transaction / Provider ID</th>
                       <th className="py-3 px-4">Invoice #</th>
                       <th className="py-3 px-4">Client</th>
@@ -362,7 +378,7 @@ export const PaymentLedgerView: React.FC<PaymentLedgerViewProps> = ({
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-gray-800 bg-gray-950/50 text-[11px] font-medium text-gray-400">
+                    <tr className="border-b border-gray-800 bg-gray-900/50 text-[11px] font-medium text-gray-400">
                       <th className="py-3 px-4">Transaction Type</th>
                       <th className="py-3 px-4">Invoice #</th>
                       <th className="py-3 px-4">Source</th>

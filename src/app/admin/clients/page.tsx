@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AdminPageHeader } from "@/components/admin/shared";
 import { ClientTable } from "@/components/admin/billing";
 import { getClients } from "@/modules/billing/queries/clientQueries";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export const metadata: Metadata = {
   title: "Clients Directory | Growth Service Admin",
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
 export const revalidate = 0; // Fresh data on each load
 
 export default async function AdminClientsPage() {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "billing:read");
+
   const clients = await getClients();
 
   return (

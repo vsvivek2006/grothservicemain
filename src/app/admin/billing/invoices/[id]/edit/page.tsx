@@ -4,6 +4,7 @@ import { getInvoiceById } from "@/modules/billing/queries/invoiceQueries";
 import { getClients } from "@/modules/billing/queries/clientQueries";
 import { getBillingItems } from "@/modules/billing/queries/itemQueries";
 import { InvoiceForm } from "@/components/admin/billing/InvoiceForm";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export const revalidate = 0;
 
@@ -12,6 +13,9 @@ interface PageProps {
 }
 
 export default async function EditInvoicePage({ params }: PageProps) {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "billing:write");
+
   const { id } = await params;
   const invoice = await getInvoiceById(id);
 
@@ -29,11 +33,16 @@ export default async function EditInvoicePage({ params }: PageProps) {
     getBillingItems({ activeOnly: true }),
   ]);
 
+  const clientList =
+    invoice.client && !clients.some((c) => c.id === invoice.client_id)
+      ? [invoice.client as any, ...clients]
+      : clients;
+
   return (
     <div className="mx-auto max-w-6xl">
       <InvoiceForm
         initialInvoice={invoice}
-        clients={clients}
+        clients={clientList}
         catalogItems={items}
       />
     </div>

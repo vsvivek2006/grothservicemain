@@ -88,6 +88,11 @@ function LoginForm() {
         <p className="text-sm text-purple-200/80 mt-2">
           Sign in with your Growth Service admin credentials
         </p>
+        {searchParams.get("error") === "unauthorized" && (
+          <div className="mt-4 p-3 rounded-lg bg-rose-950/70 border border-rose-800/60 text-xs text-rose-200 text-left">
+            Access denied: Your account does not possess authorized administrator roles.
+          </div>
+        )}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative">

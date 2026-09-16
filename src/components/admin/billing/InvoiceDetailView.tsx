@@ -15,6 +15,7 @@ import {
   sendPaymentReminderEmailAction,
 } from "@/modules/billing/actions/notificationActions";
 import { InvoicePaymentLinksSection } from "./InvoicePaymentLinksSection";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 import { toast } from "sonner";
 import {
   ArrowLeft,
@@ -85,11 +86,17 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   /**
    * Authoritative PDF Download Handler
    * Attempts authenticated Server Action RPC first with deferred blob revocation;
-   * falls back seamlessly to direct API stream.
+   * falls back seamlessly to direct API stream blob download without exposing raw JSON tabs.
    */
   const handleDownloadPdf = async () => {
     if (isDownloading) return;
     setIsDownloading(true);
+    const toastId = toast.loading("Generating invoice PDF...");
+
+    const safeFilename = `Invoice_${(invoice.invoice_number || "Draft")
+      .replace(/[^a-zA-Z0-9\-_]/g, "_")
+      .replace(/_+/g, "_")}.pdf`;
+
     try {
       // 1. Primary path: Server Action (inherits Next.js RPC session)
       const actionRes = await downloadInvoicePdfAction(invoice.id);
@@ -103,13 +110,10 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download =
-          actionRes.data.filename ||
-          `Invoice_${invoice.invoice_number.replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
+        a.download = actionRes.data.filename || safeFilename;
         document.body.appendChild(a);
         a.click();
 
-        // Prevent premature blob revocation (must give browser time to read file)
         setTimeout(() => {
           try {
             document.body.removeChild(a);
@@ -117,15 +121,40 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           } catch {}
         }, 15000);
 
-        toast.success("Invoice PDF download started");
+        toast.success("Invoice PDF downloaded successfully!", { id: toastId });
         return;
       }
 
-      // 2. Direct fallback to stream endpoint in new tab
-      window.open(`/api/billing/invoices/${invoice.id}/pdf`, "_blank");
-      toast.info("Opened PDF in new tab");
-    } catch {
-      window.open(`/api/billing/invoices/${invoice.id}/pdf`, "_blank");
+      // 2. Direct fallback to stream endpoint via fetch blob (prevents raw JSON new-tab display)
+      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
+      if (!res.ok) {
+        let msg = "Failed to generate PDF";
+        try {
+          const errData = await res.json();
+          if (errData?.error) msg = errData.error;
+        } catch {}
+        throw new Error(msg);
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = safeFilename;
+      document.body.appendChild(a);
+      a.click();
+
+      setTimeout(() => {
+        try {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch {}
+      }, 15000);
+
+      toast.success("Invoice PDF downloaded successfully!", { id: toastId });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Error downloading invoice PDF";
+      toast.error(msg, { id: toastId });
     } finally {
       setIsDownloading(false);
     }
@@ -142,7 +171,9 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
       }
       toast.success(`Invoice issued: ${res.data.invoice_number}`);
       setShowIssueModal(false);
-      router.refresh();
+      React.startTransition(() => {
+        router.refresh();
+      });
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Error issuing invoice");
     } finally {
@@ -165,7 +196,9 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
       }
       toast.success("Invoice cancelled");
       setShowCancelModal(false);
-      router.refresh();
+      React.startTransition(() => {
+        router.refresh();
+      });
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Error cancelling invoice");
     } finally {
@@ -277,7 +310,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
           <button
             type="button"
-            onClick={() => window.open(`/admin/billing/invoices/${invoice.id}/print`, "_blank")}
+            onClick={() => window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank")}
             className="flex items-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
           >
             <Printer className="h-4 w-4" />
@@ -430,7 +463,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         {/* Snapshots Grid: Seller vs Buyer */}
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 print:grid-cols-2 print:gap-4 print:mb-6">
           {/* Seller Snapshot */}
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
             <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400 print:text-purple-800">
               Billed From (Seller)
             </span>
@@ -460,7 +493,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           </div>
 
           {/* Buyer Snapshot */}
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
             <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-400 print:text-blue-900">
               Billed To (Buyer)
             </span>
@@ -495,7 +528,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         {/* Line Items Table */}
         <div className="mb-8 overflow-x-auto rounded-lg border border-gray-800 print:border-gray-300 print:overflow-visible print:mb-6">
           <table className="w-full text-left text-xs text-gray-300 print:text-black">
-            <thead className="border-b border-gray-800 bg-gray-950/60 uppercase tracking-wider text-gray-400 print:bg-gray-100 print:border-gray-300 print:text-gray-900">
+            <thead className="border-b border-gray-800 bg-gray-900/60 uppercase tracking-wider text-gray-400 print:bg-gray-100 print:border-gray-300 print:text-gray-900">
               <tr>
                 <th className="px-4 py-3 print:py-2">#</th>
                 <th className="px-4 py-3 print:py-2">Description</th>
@@ -568,14 +601,14 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           {/* Notes & Bank Details */}
           <div className="space-y-4 text-xs md:col-span-7 print:col-span-7">
             {invoice.notes && (
-              <div className="rounded-lg border border-gray-800 bg-gray-950/30 p-4 print:border-gray-300 print:bg-gray-50/50 print:p-3 print:text-black">
+              <div className="rounded-lg border border-gray-800 bg-gray-900/30 p-4 print:border-gray-300 print:bg-gray-50/50 print:p-3 print:text-black">
                 <span className="font-semibold text-gray-400 print:text-gray-700">Notes:</span>
                 <p className="mt-1 whitespace-pre-line text-gray-300 print:text-black">{invoice.notes}</p>
               </div>
             )}
 
             {seller.bankDetails && (
-              <div className="rounded-lg border border-gray-800 bg-gray-950/30 p-4 print:border-gray-300 print:bg-gray-50/50 print:p-3 print:text-black">
+              <div className="rounded-lg border border-gray-800 bg-gray-900/30 p-4 print:border-gray-300 print:bg-gray-50/50 print:p-3 print:text-black">
                 <span className="font-semibold text-purple-400 print:text-purple-800">
                   Bank Details for Direct RTGS/NEFT:
                 </span>
@@ -603,7 +636,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
           {/* Totals Table */}
           <div className="md:col-span-5 print:col-span-5">
-            <div className="rounded-lg border border-gray-800 bg-gray-950/60 p-5 text-xs print:border-gray-300 print:bg-gray-50/70 print:p-4 print:text-black">
+            <div className="rounded-lg border border-gray-800 bg-gray-900/60 p-5 text-xs print:border-gray-300 print:bg-gray-50/70 print:p-4 print:text-black">
               <div className="space-y-2">
                 <div className="flex justify-between text-gray-400 print:text-gray-700">
                   <span>Subtotal</span>
@@ -708,10 +741,12 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
       </div>
 
-      {/* Payment Links Section (Phase 7) — Hidden during print */}
-      <div className="print:hidden">
-        <InvoicePaymentLinksSection invoice={invoice} />
-      </div>
+      {/* Payment Links Section — Dev / Local only until production payment credentials enabled */}
+      {isPaymentsEnabled() && (
+        <div className="print:hidden">
+          <InvoicePaymentLinksSection invoice={invoice} />
+        </div>
+      )}
 
       {/* Issue Modal */}
       {showIssueModal && (
@@ -839,7 +874,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 </div>
               )}
 
-              <div className="rounded-lg border border-gray-800 bg-gray-950/40 p-3 text-xs text-gray-400 space-y-1">
+              <div className="rounded-lg border border-gray-800 bg-gray-900/40 p-3 text-xs text-gray-400 space-y-1">
                 <p>
                   <span className="text-gray-500">Invoice:</span>{" "}
                   <strong className="text-white font-mono">{invoice.invoice_number}</strong>
@@ -911,7 +946,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                   />
                 </div>
 
-                <div className="rounded-lg border border-gray-800 bg-gray-950/40 p-3 text-xs text-gray-400 space-y-1">
+                <div className="rounded-lg border border-gray-800 bg-gray-900/40 p-3 text-xs text-gray-400 space-y-1">
                   <p>
                     <span className="text-gray-500">Invoice:</span>{" "}
                     <strong className="text-white font-mono">{invoice.invoice_number}</strong>

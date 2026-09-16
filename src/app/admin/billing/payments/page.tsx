@@ -1,7 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { getPayments, getPaymentTransactions } from "@/modules/billing/queries/paymentQueries";
 import { PaymentLedgerView } from "@/components/admin/billing/PaymentLedgerView";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 
 export const revalidate = 0; // Fresh real-time financial ledger
 
@@ -22,6 +25,13 @@ interface PageProps {
 }
 
 export default async function PaymentsPage({ searchParams }: PageProps) {
+  if (!isPaymentsEnabled()) {
+    redirect("/admin/billing");
+  }
+
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "billing:read");
+
   const params = await searchParams;
   const page = Number(params.page) || 1;
   const status = params.status || "all";

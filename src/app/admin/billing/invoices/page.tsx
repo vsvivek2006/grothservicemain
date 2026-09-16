@@ -6,6 +6,7 @@ import { EmptyState } from "@/components/admin/shared/EmptyState";
 import { InvoiceTable } from "@/components/admin/billing/InvoiceTable";
 import { getInvoices, getInvoiceStats } from "@/modules/billing/queries/invoiceQueries";
 import { Plus, FileText, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export const revalidate = 0;
 
@@ -19,6 +20,9 @@ interface PageProps {
 }
 
 export default async function InvoicesPage({ searchParams }: PageProps) {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "billing:read");
+
   const params = await searchParams;
   const page = Number(params.page) || 1;
   const status = params.status || "all";

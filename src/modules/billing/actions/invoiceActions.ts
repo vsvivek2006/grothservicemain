@@ -39,7 +39,7 @@ export async function createInvoiceAction(
     // 1. Fetch Client and Billing Profile
     const { data: client, error: clientErr } = await adminClient
       .from("clients")
-      .select("id, client_code, company_name, contact_name, email, phone")
+      .select("id, client_code, company_name, contact_name, email, phone, status")
       .eq("id", validated.client_id)
       .single();
 
@@ -47,16 +47,21 @@ export async function createInvoiceAction(
       return actionError(`Client not found: ${clientErr?.message || "invalid ID"}`);
     }
 
+    if (client.status !== "active") {
+      return actionError(`Cannot create invoice for client in "${client.status || "inactive"}" status. Only active clients can be billed.`);
+    }
+
     let profileQuery = adminClient
       .from("billing_profiles")
       .select("*")
-      .eq("client_id", validated.client_id);
+      .eq("client_id", validated.client_id)
+      .order("created_at", { ascending: false });
 
     if (validated.billing_profile_id) {
       profileQuery = profileQuery.eq("id", validated.billing_profile_id);
     }
 
-    const { data: profile, error: profileErr } = await profileQuery.maybeSingle();
+    const { data: profile, error: profileErr } = await profileQuery.limit(1).maybeSingle();
 
     if (profileErr || !profile) {
       return actionError("Client does not have a valid billing profile configured");
@@ -253,26 +258,51 @@ export async function updateInvoiceAction(
     // 2. Fetch Client and Billing Profile
     const { data: client } = await adminClient
       .from("clients")
-      .select("id, client_code, company_name, contact_name, email, phone")
+      .select("id, client_code, company_name, contact_name, email, phone, status")
       .eq("id", validated.client_id)
       .single();
 
     let profileQuery = adminClient
       .from("billing_profiles")
       .select("*")
-      .eq("client_id", validated.client_id);
+      .eq("client_id", validated.client_id)
+      .order("created_at", { ascending: false });
 
     if (validated.billing_profile_id) {
       profileQuery = profileQuery.eq("id", validated.billing_profile_id);
     }
-    const { data: profile } = await profileQuery.maybeSingle();
+    const { data: profile } = await profileQuery.limit(1).maybeSingle();
 
     if (!client || !profile) {
       return actionError("Invalid client or billing profile");
     }
 
-    // 3. Recalculate
+    if (client.status !== "active") {
+      return actionError(`Cannot invoice client in "${client.status || "inactive"}" status.`);
+    }
+
+    // 3. Recalculate & Snapshots
     const sellerSnapshot = getSellerSnapshot();
+    const buyerSnapshot = {
+      clientId: client.id,
+      clientCode: client.client_code,
+      companyName: client.company_name,
+      legalName: profile.legal_name || client.company_name,
+      contactName: client.contact_name,
+      email: profile.billing_email || client.email,
+      phone: profile.billing_phone || client.phone,
+      gstin: profile.gstin || null,
+      pan: profile.pan || null,
+      addressLine1: profile.address_line_1,
+      addressLine2: profile.address_line_2 || null,
+      city: profile.city,
+      state: profile.state,
+      stateCode: profile.state_code,
+      postalCode: profile.postal_code,
+      country: profile.country || "India",
+      taxRegistrationType: profile.tax_registration_type,
+    };
+
     const placeOfSupplyStateCode =
       validated.place_of_supply_state_code || profile.state_code || "08";
     const placeOfSupply = validated.place_of_supply || profile.state || "Rajasthan";
@@ -301,7 +331,7 @@ export async function updateInvoiceAction(
     const issueDate = validated.issue_date || new Date().toISOString().split("T")[0];
     const dueDate = calculateDueDate(issueDate, validated.payment_terms_days);
 
-    // 4. Update Header
+    // 4. Update Header with Synchronized Snapshots
     const { data: updatedInvoice, error: updateErr } = await adminClient
       .from("invoices")
       .update({
@@ -328,6 +358,8 @@ export async function updateInvoiceAction(
         is_interstate: totals.isInterstate,
         notes: validated.notes || null,
         terms_and_conditions: validated.terms_and_conditions || null,
+        seller_snapshot: sellerSnapshot as unknown as Record<string, unknown>,
+        buyer_snapshot: buyerSnapshot as unknown as Record<string, unknown>,
         updated_by: adminUser.id,
       })
       .eq("id", id)
@@ -338,9 +370,7 @@ export async function updateInvoiceAction(
       return actionError(`Failed to update invoice: ${updateErr?.message}`);
     }
 
-    // 5. Replace Line Items atomically
-    await adminClient.from("invoice_items").delete().eq("invoice_id", id);
-
+    // 5. Replace Line Items safely
     const itemsToInsert = totals.calculatedItems.map((c) => ({
       invoice_id: id,
       item_id: c.itemId,
@@ -368,7 +398,15 @@ export async function updateInvoiceAction(
       sort_order: c.sortOrder,
     }));
 
-    await adminClient.from("invoice_items").insert(itemsToInsert);
+    const { error: deleteErr } = await adminClient.from("invoice_items").delete().eq("invoice_id", id);
+    if (deleteErr) {
+      console.error("[updateInvoiceAction] Failed to clear old line items:", deleteErr.message);
+    }
+    const { error: insertErr } = await adminClient.from("invoice_items").insert(itemsToInsert);
+    if (insertErr) {
+      console.error("[updateInvoiceAction] Failed to insert new line items:", insertErr.message);
+      return actionError(`Failed to save invoice line items: ${insertErr.message}`);
+    }
 
     // 6. Audit Log
     await logAuditEvent({
@@ -397,7 +435,7 @@ export async function updateInvoiceAction(
 export async function issueInvoiceAction(id: string): Promise<ActionResult<Invoice>> {
   try {
     const adminUser = await assertAdminUser();
-    assertPermission(adminUser, "billing:write");
+    assertPermission(adminUser, "billing:issue");
 
     const adminClient = createAdminClient();
 
@@ -416,43 +454,77 @@ export async function issueInvoiceAction(id: string): Promise<ActionResult<Invoi
       return actionError(`Invoice is already in "${invoice.document_status}" status`);
     }
 
-    // 2. Allocate consecutive legal invoice number
-    const { invoiceNumber } = await allocateNextInvoiceNumber(adminClient, "GS");
+    // 2. Execute Atomic Issue & Sequential Allocation via PostgreSQL RPC
+    let issuedInvoice: Invoice | null = null;
+    const { getFinancialYear } = await import("../services/sequenceService");
+    const fy = getFinancialYear(new Date());
 
-    const now = new Date().toISOString();
-    const issueDate = invoice.issue_date || now.split("T")[0];
+    const { data: rpcData, error: rpcErr } = await adminClient.rpc(
+      "issue_invoice_with_sequence",
+      {
+        p_invoice_id: id,
+        p_fy: fy,
+        p_series: "GS",
+        p_actor_id: adminUser.id,
+      }
+    );
 
-    // 3. Update Invoice to Issued
-    const { data: issuedInvoice, error: updateErr } = await adminClient
-      .from("invoices")
-      .update({
-        invoice_number: invoiceNumber,
-        document_status: "issued",
-        issue_date: issueDate,
-        issued_at: now,
-        updated_by: adminUser.id,
-      })
-      .eq("id", id)
-      .eq("document_status", "draft")
-      .select()
-      .maybeSingle();
+    if (!rpcErr && rpcData) {
+      const parsed = typeof rpcData === "string" ? JSON.parse(rpcData as string) : rpcData;
+      if (parsed.success) {
+        const { data: freshInvoice } = await adminClient
+          .from("invoices")
+          .select("*")
+          .eq("id", id)
+          .single();
+        issuedInvoice = freshInvoice as Invoice;
+      }
+    }
 
-    if (updateErr || !issuedInvoice) {
-      return actionError(
-        updateErr
-          ? `Failed to issue invoice: ${updateErr.message}`
-          : "Invoice was already issued or modified concurrently by another process"
-      );
+    // Fallback path if stored procedure is not yet applied
+    if (!issuedInvoice) {
+      const { invoiceNumber } = await allocateNextInvoiceNumber(adminClient, "GS");
+
+      const now = new Date().toISOString();
+      const issueDate = invoice.issue_date || now.split("T")[0];
+
+      const { data: fallbackUpdated, error: updateErr } = await adminClient
+        .from("invoices")
+        .update({
+          invoice_number: invoiceNumber,
+          document_status: "issued",
+          issue_date: issueDate,
+          issued_at: now,
+          updated_by: adminUser.id,
+        })
+        .eq("id", id)
+        .eq("document_status", "draft")
+        .select()
+        .maybeSingle();
+
+      if (updateErr || !fallbackUpdated) {
+        return actionError(
+          updateErr
+            ? `Failed to issue invoice: ${updateErr.message}`
+            : "Invoice was already issued or modified concurrently by another process"
+        );
+      }
+      issuedInvoice = fallbackUpdated as Invoice;
     }
 
     // 4. Audit Log
+    const issuedTimestamp = issuedInvoice.issued_at || new Date().toISOString();
     await logAuditEvent({
       actorUserId: adminUser.id,
       action: "INVOICE_ISSUED",
       entityType: "invoice",
       entityId: id,
       oldValues: { invoice_number: invoice.invoice_number, document_status: "draft" },
-      newValues: { invoice_number: invoiceNumber, document_status: "issued", issued_at: now },
+      newValues: {
+        invoice_number: issuedInvoice.invoice_number,
+        document_status: "issued",
+        issued_at: issuedTimestamp,
+      },
     });
 
     revalidatePath("/admin/billing/invoices");
@@ -473,7 +545,7 @@ export async function cancelInvoiceAction(
 ): Promise<ActionResult<Invoice>> {
   try {
     const adminUser = await assertAdminUser();
-    assertPermission(adminUser, "billing:write");
+    assertPermission(adminUser, "billing:cancel");
 
     const adminClient = createAdminClient();
 

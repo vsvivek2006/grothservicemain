@@ -24,6 +24,7 @@ import { AdminPageHeader } from "@/components/admin/shared/AdminPageHeader";
 import { StatCard } from "@/components/admin/shared/StatCard";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { EmptyState } from "@/components/admin/shared/EmptyState";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 import type { InvoiceStats, InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import type {
   RecentPaymentWithInvoice,
@@ -188,37 +189,37 @@ export const BillingDashboardView: React.FC<BillingDashboardViewProps> = ({
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/60 p-3">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/60 p-3">
             <span className="text-[11px] font-medium text-amber-400">Draft</span>
             <p className="text-xl font-bold text-white mt-0.5">{stats.draftCount}</p>
             <span className="text-[10px] text-gray-500">Unissued drafts</span>
           </div>
 
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/60 p-3">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/60 p-3">
             <span className="text-[11px] font-medium text-blue-400">Issued</span>
             <p className="text-xl font-bold text-white mt-0.5">{stats.issuedCount}</p>
             <span className="text-[10px] text-gray-500">Issued or sent</span>
           </div>
 
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/60 p-3">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/60 p-3">
             <span className="text-[11px] font-medium text-amber-300">Unpaid</span>
             <p className="text-xl font-bold text-white mt-0.5">{stats.unpaidCount}</p>
             <span className="text-[10px] text-gray-500">Awaiting payment</span>
           </div>
 
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/60 p-3">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/60 p-3">
             <span className="text-[11px] font-medium text-sky-400">Partially Paid</span>
             <p className="text-xl font-bold text-white mt-0.5">{stats.partiallyPaidCount}</p>
             <span className="text-[10px] text-gray-500">Partial balance due</span>
           </div>
 
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/60 p-3">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/60 p-3">
             <span className="text-[11px] font-medium text-emerald-400">Paid</span>
             <p className="text-xl font-bold text-white mt-0.5">{stats.paidCount}</p>
             <span className="text-[10px] text-gray-500">Fully settled</span>
           </div>
 
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/60 p-3">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-900/60 p-3">
             <span className="text-[11px] font-medium text-rose-400">Overdue</span>
             <p className="text-xl font-bold text-white mt-0.5">{stats.overdueCount}</p>
             <span className="text-[10px] text-gray-500">Past due date</span>
@@ -226,8 +227,9 @@ export const BillingDashboardView: React.FC<BillingDashboardViewProps> = ({
         </div>
       </div>
 
-      {/* Two-Column Grid: Recent Payments & Recent Payment Links */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Two-Column Grid: Recent Payments & Recent Payment Links (Local/Dev Only until enabled) */}
+      {isPaymentsEnabled() && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column: Recent Captured / Logged Payments */}
         <div className="rounded-xl border border-gray-800 bg-gray-900/80 flex flex-col min-h-[340px]">
           <div className="flex items-center justify-between p-4 border-b border-gray-800">
@@ -380,6 +382,7 @@ export const BillingDashboardView: React.FC<BillingDashboardViewProps> = ({
           </div>
         </div>
       </div>
+      )}
 
       {/* Bottom Section: Recent Invoices Table */}
       <div className="rounded-xl border border-gray-800 bg-gray-900/80 overflow-hidden">
@@ -408,7 +411,7 @@ export const BillingDashboardView: React.FC<BillingDashboardViewProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-gray-800 bg-gray-950/40 text-[11px] font-medium text-gray-400">
+                <tr className="border-b border-gray-800 bg-gray-900/40 text-[11px] font-medium text-gray-400">
                   <th className="py-3 px-4">Invoice #</th>
                   <th className="py-3 px-4">Client</th>
                   <th className="py-3 px-4">Issue Date</th>
@@ -479,15 +482,17 @@ export const BillingDashboardView: React.FC<BillingDashboardViewProps> = ({
       </div>
 
       {/* Security & Multi-Provider Architecture Badge */}
-      <div className="rounded-lg border border-purple-900/40 bg-gradient-to-r from-purple-950/40 via-purple-900/20 to-blue-950/40 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-gray-400">
-        <div className="flex items-center gap-2 text-purple-300 font-medium">
-          <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />
-          <span>Provider-Agnostic Financial Pipeline (Active Adapter: Razorpay)</span>
+      {isPaymentsEnabled() && (
+        <div className="rounded-lg border border-purple-900/40 bg-gradient-to-r from-purple-950/40 via-purple-900/20 to-blue-950/40 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-gray-400">
+          <div className="flex items-center gap-2 text-purple-300 font-medium">
+            <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />
+            <span>Provider-Agnostic Financial Pipeline (Active Adapter: Razorpay)</span>
+          </div>
+          <div className="text-[11px] text-gray-400">
+            Server-authoritative balances • Immutable historical snapshots • Signature verified webhooks
+          </div>
         </div>
-        <div className="text-[11px] text-gray-400">
-          Server-authoritative balances • Immutable historical snapshots • Signature verified webhooks
-        </div>
-      </div>
+      )}
     </div>
   );
 };

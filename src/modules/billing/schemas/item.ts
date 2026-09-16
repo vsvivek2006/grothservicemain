@@ -12,7 +12,15 @@ export const billingItemFormSchema = z.object({
   description: z.string().max(1000).optional().or(z.literal("")),
   item_type: z.enum(["service", "product", "retainer", "custom"]).default("service"),
   service_category: z.string().max(100).optional().or(z.literal("")),
-  hsn_sac_code: z.string().max(20).optional().or(z.literal("")),
+  hsn_sac_code: z
+    .string()
+    .trim()
+    .refine(
+      (val) => !val || /^([0-9]{4}|[0-9]{6}|[0-9]{8})$/.test(val),
+      "HSN/SAC code must be 4, 6, or 8 digits (e.g. 998311, 998313)"
+    )
+    .optional()
+    .or(z.literal("")),
   unit: z.string().min(1, "Unit of measurement is required").default("unit"),
   default_unit_price: z.coerce.number().min(0, "Unit price cannot be negative"),
   default_tax_rate: z.coerce.number().min(0, "Tax rate cannot be negative").max(100).default(18),
@@ -21,6 +29,18 @@ export const billingItemFormSchema = z.object({
   currency: z.string().default("INR"),
   is_taxable: z.boolean().default(true),
   is_active: z.boolean().default(true),
-});
+})
+.refine(
+  (data) => {
+    if (data.default_discount_type === "percentage" && data.default_discount_value != null) {
+      return data.default_discount_value <= 100;
+    }
+    return true;
+  },
+  {
+    message: "Percentage discount cannot exceed 100%",
+    path: ["default_discount_value"],
+  }
+);
 
 export type BillingItemFormInput = z.infer<typeof billingItemFormSchema>;

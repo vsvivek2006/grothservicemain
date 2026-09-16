@@ -63,6 +63,17 @@ export const ItemModal: React.FC<ItemModalProps> = ({
     }
   }, [item, isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !isSubmitting) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, isSubmitting, onClose]);
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,8 +118,16 @@ export const ItemModal: React.FC<ItemModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity"
+        onClick={() => {
+          if (!isSubmitting) onClose();
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative w-full max-w-xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden my-8 z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
@@ -196,10 +215,12 @@ export const ItemModal: React.FC<ItemModalProps> = ({
               <input
                 type="text"
                 value={hsnSac}
-                onChange={(e) => setHsnSac(e.target.value)}
+                maxLength={8}
+                onChange={(e) => setHsnSac(e.target.value.replace(/[^0-9]/g, ""))}
                 placeholder="998311 (IT Services)"
                 className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs font-mono focus:border-purple-500 focus:outline-hidden"
               />
+              <p className="text-[10px] text-gray-500 mt-0.5">4, 6, or 8 digits (e.g. 998311)</p>
             </div>
 
             <div>

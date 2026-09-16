@@ -18,13 +18,20 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
   const [items, setItems] = useState<BillingItem[]>(initialItems);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<BillingItem | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  const pageSize = 15;
+
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, categoryFilter]);
 
   const categories = Array.from(
     new Set(items.map((i) => i.service_category).filter(Boolean))
@@ -42,6 +49,11 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
 
     return matchesSearch && matchesCategory;
   });
+
+  const totalFiltered = filteredItems.length;
+  const totalPages = Math.max(1, Math.ceil(totalFiltered / pageSize));
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedItems = filteredItems.slice(startIndex, startIndex + pageSize);
 
   const handleOpenCreate = () => {
     setSelectedItem(null);
@@ -149,7 +161,7 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800/80 text-gray-300">
-                {filteredItems.map((item) => (
+                {paginatedItems.map((item) => (
                   <tr
                     key={item.id}
                     className="hover:bg-gray-800/40 transition-colors"
@@ -232,13 +244,42 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
         </div>
       )}
 
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-xs text-gray-400">
+          <div>
+            Showing {startIndex + 1}–{Math.min(startIndex + pageSize, totalFiltered)} of {totalFiltered} items (Page {currentPage} of {totalPages})
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              disabled={currentPage <= 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={currentPage >= totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              className="px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Modal */}
       <ItemModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         item={selectedItem}
         onSuccess={() => {
-          router.refresh();
+          startTransition(() => {
+            router.refresh();
+          });
         }}
       />
     </div>

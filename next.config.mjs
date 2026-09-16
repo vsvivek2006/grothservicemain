@@ -109,7 +109,7 @@ const nextConfig = {
     ];
   },
   generateEtags: true,
-  serverExternalPackages: ['groq-sdk'],
+  serverExternalPackages: ['groq-sdk', '@react-pdf/renderer'],
   experimental: {
     optimizePackageImports: [
       'lucide-react',

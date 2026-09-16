@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { getBillingDashboardData } from "@/modules/billing/queries/dashboardQueries";
 import { BillingDashboardView } from "@/components/admin/billing/BillingDashboardView";
 
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
+
 export const revalidate = 0; // Always fetch real-time financial metrics
 
 export const metadata: Metadata = {
@@ -14,6 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default async function BillingDashboardPage() {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "billing:read");
+
   const data = await getBillingDashboardData();
 
   return (

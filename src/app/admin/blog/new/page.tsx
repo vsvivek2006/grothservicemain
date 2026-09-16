@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { PostEditor } from "@/components/admin/PostEditor";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
-export default function NewBlogPostPage() {
+export default async function NewBlogPostPage() {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "content:write");
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div className="flex items-center gap-3 pb-2 border-b border-gray-800">

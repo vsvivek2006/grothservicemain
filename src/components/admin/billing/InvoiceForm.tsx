@@ -11,8 +11,11 @@ import {
 import { createInvoiceAction, updateInvoiceAction } from "@/modules/billing/actions/invoiceActions";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { toast } from "sonner";
-import { Plus, Trash2, ArrowLeft, Loader2, Calculator } from "lucide-react";
+import { Plus, Trash2, ArrowLeft, Loader2, Calculator, UserPlus, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { ClientModal } from "./ClientModal";
+import type { ClientListItem } from "@/modules/billing/queries/clientQueries";
+import { INDIAN_STATES } from "@/modules/billing/constants/indianStates";
 
 interface LineItemFormState {
   itemId: string | null;
@@ -31,38 +34,47 @@ interface InvoiceFormProps {
   initialInvoice?: InvoiceWithRelations | null;
   clients: Client[];
   catalogItems: BillingItem[];
+  defaultClientId?: string;
 }
-
-const INDIAN_STATES = [
-  { code: "08", name: "Rajasthan" },
-  { code: "07", name: "Delhi" },
-  { code: "27", name: "Maharashtra" },
-  { code: "29", name: "Karnataka" },
-  { code: "06", name: "Haryana" },
-  { code: "09", name: "Uttar Pradesh" },
-  { code: "19", name: "West Bengal" },
-  { code: "33", name: "Tamil Nadu" },
-  { code: "24", name: "Gujarat" },
-  { code: "36", name: "Telangana" },
-  { code: "10", name: "Bihar" },
-  { code: "30", name: "Goa" },
-  { code: "03", name: "Punjab" },
-  { code: "23", name: "Madhya Pradesh" },
-  { code: "32", name: "Kerala" },
-  { code: "21", name: "Odisha" },
-  { code: "18", name: "Assam" },
-  { code: "97", name: "Other / Territory" },
-];
 
 export const InvoiceForm: React.FC<InvoiceFormProps> = ({
   initialInvoice,
   clients,
   catalogItems,
+  defaultClientId,
 }) => {
   const router = useRouter();
   const isEditing = Boolean(initialInvoice);
 
-  const [clientId, setClientId] = useState(initialInvoice?.client_id || (clients[0]?.id ?? ""));
+  const [clientList, setClientList] = useState<ClientListItem[]>(clients as ClientListItem[]);
+  const [isClientModalOpen, setIsClientModalOpen] = useState(false);
+  const [clientId, setClientId] = useState(
+    initialInvoice?.client_id || defaultClientId || (clients[0]?.id ?? "")
+  );
+
+  useEffect(() => {
+    setClientList(clients as ClientListItem[]);
+  }, [clients]);
+
+  useEffect(() => {
+    if (defaultClientId && !isEditing) {
+      const match = (clients as ClientListItem[]).find((c) => c.id === defaultClientId);
+      if (match) {
+        setClientId(match.id);
+        if (match.billing_profile?.state_code) {
+          setPlaceOfSupplyCode(match.billing_profile.state_code);
+        }
+      }
+    }
+  }, [defaultClientId, clients, isEditing]);
+
+  const handleClientCreated = (newClient: ClientListItem) => {
+    setClientList((prev) => [newClient, ...prev]);
+    setClientId(newClient.id);
+    if (newClient.billing_profile?.state_code) {
+      setPlaceOfSupplyCode(newClient.billing_profile.state_code);
+    }
+  };
   const [invoiceType, setInvoiceType] = useState(initialInvoice?.invoice_type || "tax_invoice");
   const [issueDate, setIssueDate] = useState(
     initialInvoice?.issue_date || new Date().toISOString().split("T")[0]
@@ -260,7 +272,8 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <>
+      <form onSubmit={handleSubmit} className="space-y-8">
       {/* Top Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
@@ -306,16 +319,26 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
       <div className="grid grid-cols-1 gap-6 rounded-xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-md lg:grid-cols-3">
         {/* Client Selection */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400">
-            Client <span className="text-red-400">*</span>
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400">
+              Client <span className="text-red-400">*</span>
+            </label>
+            <button
+              type="button"
+              onClick={() => setIsClientModalOpen(true)}
+              className="inline-flex items-center gap-1 text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors cursor-pointer"
+            >
+              <UserPlus className="h-3.5 w-3.5" />
+              <span>Register Client</span>
+            </button>
+          </div>
           <select
             value={clientId}
             onChange={(e) => {
               const selectedClientId = e.target.value;
               setClientId(selectedClientId);
               if (!isEditing && selectedClientId) {
-                const selectedClient = clients.find((c: any) => c.id === selectedClientId) as any;
+                const selectedClient = clientList.find((c: any) => c.id === selectedClientId) as any;
                 if (selectedClient?.billing_profile?.state_code) {
                   setPlaceOfSupplyCode(selectedClient.billing_profile.state_code);
                 }
@@ -325,12 +348,28 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
             className="mt-1.5 w-full rounded-lg border border-gray-700 bg-gray-800 px-3.5 py-2.5 text-sm text-white focus:border-purple-500 focus:outline-none"
           >
             <option value="">Select a registered client...</option>
-            {clients.map((c) => (
+            {clientList.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.company_name} ({c.client_code})
               </option>
             ))}
           </select>
+
+          {clientList.length === 0 && (
+            <div className="mt-2 flex items-center justify-between rounded-lg border border-amber-500/20 bg-amber-500/10 p-2.5 text-xs text-amber-300">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 shrink-0 text-amber-400" />
+                <span>No active clients found. Register one now to bill.</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsClientModalOpen(true)}
+                className="ml-2 shrink-0 font-semibold text-amber-300 underline hover:text-amber-200 cursor-pointer"
+              >
+                Register Now
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Invoice Type */}
@@ -658,11 +697,11 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
               ) : (
                 <>
                   <div className="flex justify-between text-purple-400">
-                    <span>CGST (9%)</span>
+                    <span>CGST</span>
                     <span className="font-mono">{formatCurrency(totals.cgstTotal)}</span>
                   </div>
                   <div className="flex justify-between text-purple-400">
-                    <span>SGST (9%)</span>
+                    <span>SGST</span>
                     <span className="font-mono">{formatCurrency(totals.sgstTotal)}</span>
                   </div>
                 </>
@@ -692,6 +731,12 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
           </div>
         </div>
       </div>
-    </form>
+      </form>
+      <ClientModal
+        isOpen={isClientModalOpen}
+        onClose={() => setIsClientModalOpen(false)}
+        onClientCreated={handleClientCreated}
+      />
+    </>
   );
 };

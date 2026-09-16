@@ -72,7 +72,7 @@ function fmtQty(n: number | null | undefined): string {
 
 // ─── Amount in words ─────────────────────────────────────────────────────────
 
-function amountToWords(amount: number): string {
+export function amountToWords(amount: number): string {
   const ones = [
     "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
     "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
@@ -90,9 +90,15 @@ function amountToWords(amount: number): string {
     return convert(Math.floor(n / 10000000)) + "Crore " + convert(n % 10000000);
   }
 
-  const rounded = Math.round(amount);
-  const paise = Math.round((amount - rounded) * 100);
-  let words = convert(rounded).trim();
+  const abs = Math.abs(amount || 0);
+  let integerPart = Math.floor(abs);
+  let paise = Math.round((abs - integerPart) * 100);
+  if (paise >= 100) {
+    integerPart += 1;
+    paise = 0;
+  }
+
+  let words = convert(integerPart).trim();
   if (!words) words = "Zero";
   words += " Rupees";
   if (paise > 0) words += ` and ${convert(paise).trim()} Paise`;
@@ -232,7 +238,7 @@ export function InvoicePdfDocument({ invoice, items, seller, buyer }: InvoicePdf
             <Text style={styles.invoiceTitle}>{docLabel}</Text>
             <Text style={styles.invoiceNumber}>#{invoice.invoice_number}</Text>
             <View style={styles.statusBadge}>
-              <Text style={styles.statusText}>{invoice.document_status.toUpperCase()}</Text>
+              <Text style={styles.statusText}>{(invoice.document_status || "draft").toUpperCase()}</Text>
             </View>
           </View>
         </View>
@@ -261,7 +267,7 @@ export function InvoicePdfDocument({ invoice, items, seller, buyer }: InvoicePdf
           </View>
           <View style={styles.metaCell}>
             <Text style={styles.metaLabel}>Payment Status</Text>
-            <Text style={styles.metaValue}>{invoice.payment_status.replace(/_/g, " ").toUpperCase()}</Text>
+            <Text style={styles.metaValue}>{(invoice.payment_status || "unpaid").replace(/_/g, " ").toUpperCase()}</Text>
           </View>
         </View>
 

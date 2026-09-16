@@ -2,11 +2,15 @@ import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { PostTable } from "@/components/admin/PostTable";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 import type { PostSummary } from "@/lib/validations/post";
 
 export const revalidate = 0; // Always fresh list
 
 export default async function AdminBlogListPage() {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "content:read");
+
   let postList: PostSummary[] = [];
 
   try {

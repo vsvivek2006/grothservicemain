@@ -4,6 +4,7 @@ import { getInvoiceById } from "@/modules/billing/queries/invoiceQueries";
 import { PrintInvoiceView } from "@/components/admin/billing/PrintInvoiceView";
 
 export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ id: string }>;

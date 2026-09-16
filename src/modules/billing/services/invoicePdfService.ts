@@ -4,22 +4,80 @@
  * Server-only module. Generates PDF bytes from frozen invoice snapshot data.
  * Must never be imported by client components.
  *
+ * Uses an isolated Node worker (pdfWorker.mjs) running standard React 18
+ * to eliminate Next.js 15 React 19 reconciler conflicts (Minified React Error #31).
+ *
  * Key guarantee: PDF is reproducible from stored invoice data alone.
  * Catalog edits or client record changes cannot alter a historical invoice PDF.
  */
 
 import "server-only";
 
-import React from "react";
-import { renderToBuffer } from "@react-pdf/renderer";
+import { spawn } from "node:child_process";
+import path from "node:path";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getSellerSnapshot } from "./sellerConfig";
-import { InvoicePdfDocument, type BuyerSnapshot } from "./invoicePdfTemplate";
+import type { BuyerSnapshot } from "./invoicePdfTemplate";
 import type { Invoice, InvoiceItem } from "../types/database";
 
 export interface InvoicePdfResult {
   buffer: Buffer;
   filename: string;
+}
+
+/**
+ * Spawns an isolated Node.js process to render PDF via @react-pdf/renderer.
+ * Decouples PDF rendering from Next.js 15's React 19 canary runtime to guarantee
+ * 100% stable PDF generation without React invariant/reconciler conflicts (Error #31).
+ */
+function renderPdfViaWorker(payload: Record<string, unknown>): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const workerPath = path.resolve(process.cwd(), "src/modules/billing/services/pdfWorker.mjs");
+    const proc = spawn(process.execPath, [workerPath]);
+
+    let stdout = "";
+    let stderr = "";
+
+    proc.stdout.on("data", (chunk) => {
+      stdout += chunk.toString();
+    });
+
+    proc.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+
+    proc.on("error", (err) => {
+      reject(new Error(`Failed to spawn PDF worker: ${err.message}`));
+    });
+
+    proc.on("close", (code) => {
+      if (code === 0 && stdout) {
+        try {
+          const buffer = Buffer.from(stdout, "base64");
+          resolve(buffer);
+        } catch (parseErr) {
+          reject(
+            new Error(
+              `Failed to decode PDF buffer: ${
+                parseErr instanceof Error ? parseErr.message : "decode error"
+              }`
+            )
+          );
+        }
+      } else {
+        reject(
+          new Error(
+            `PDF rendering failed (code ${code}): ${
+              stderr || "unknown worker error"
+            }`
+          )
+        );
+      }
+    });
+
+    proc.stdin.write(JSON.stringify(payload));
+    proc.stdin.end();
+  });
 }
 
 /**
@@ -82,21 +140,19 @@ export async function generateInvoicePdf(invoiceId: string): Promise<InvoicePdfR
     country: (rawBuyer?.country as string) ?? "India",
   };
 
-  // 5. Render to PDF buffer (server-side, never in browser bundle)
-  const element = React.createElement(InvoicePdfDocument, {
+  // 5. Render to PDF buffer in isolated Node worker (eliminates Next 15 React 19 reconciler conflict)
+  const buffer = await renderPdfViaWorker({
     invoice: invoice as Invoice,
     items: sortedItems,
     seller,
     buyer,
   });
 
-  const buffer = await renderToBuffer(element as unknown as React.ReactElement);
-
   // 6. Build a clean, safe filename
-  const safeNumber = invoice.invoice_number
+  const safeNumber = (invoice.invoice_number || invoice.id)
     .replace(/[^a-zA-Z0-9\-_]/g, "_")
     .replace(/_+/g, "_");
   const filename = `Invoice_${safeNumber}.pdf`;
 
-  return { buffer: Buffer.from(buffer), filename };
+  return { buffer, filename };
 }

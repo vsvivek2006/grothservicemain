@@ -4,17 +4,23 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { downloadInvoicePdfAction } from "@/modules/billing/actions/invoiceActions";
-import { Printer, Download, ArrowLeft, CheckCircle2, AlertCircle } from "lucide-react";
+import { Printer, Download, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 
 interface PrintInvoiceViewProps {
   invoice: InvoiceWithRelations;
 }
 
-// Convert numbers into Indian Currency words (e.g., 3186 -> Three Thousand One Hundred Eighty-Six)
+// Convert numbers into Indian Currency words (e.g., 3186 -> Three Thousand One Hundred Eighty-Six Rupees Only)
 function numberToIndianWords(num: number): string {
   if (!num || isNaN(num)) return "Zero Rupees Only";
-  const integerPart = Math.floor(Math.abs(num));
+  const abs = Math.abs(num);
+  let integerPart = Math.floor(abs);
+  let paise = Math.round((abs - integerPart) * 100);
+  if (paise >= 100) {
+    integerPart += 1;
+    paise = 0;
+  }
 
   const a = [
     "",
@@ -69,18 +75,46 @@ function numberToIndianWords(num: number): string {
   if (thousand > 0) words += convertTwoDigits(thousand) + " Thousand ";
   if (rem > 0) words += convertThreeDigits(rem);
 
-  return (words.trim() || "Zero") + " Rupees Only";
+  let result = (words.trim() || "Zero") + " Rupees";
+  if (paise > 0) {
+    result += ` and ${convertTwoDigits(paise).trim()} Paise`;
+  }
+  return result + " Only";
+}
+
+function triggerBlobDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    try {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {}
+  }, 15000);
+}
+
+function getSafeInvoiceFilename(invoiceNumber?: string | null): string {
+  const safe = (invoiceNumber || "Invoice")
+    .replace(/[^a-zA-Z0-9\-_]/g, "_")
+    .replace(/_+/g, "_");
+  return `Invoice_${safe}.pdf`;
 }
 
 export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) => {
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // Automatically trigger print dialog on mount
+  // Trigger print dialog on mount ONLY if explicit query param ?autoprint=1 is provided
   useEffect(() => {
-    const timer = setTimeout(() => {
-      window.print();
-    }, 450);
-    return () => clearTimeout(timer);
+    if (typeof window !== "undefined" && window.location.search.includes("autoprint=1")) {
+      const timer = setTimeout(() => {
+        window.print();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const formatCurrency = (val: number) => {
@@ -104,7 +138,10 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
   const handleDownload = async () => {
     if (isDownloading) return;
     setIsDownloading(true);
+    const toastId = toast.loading("Preparing invoice PDF...");
+
     try {
+      // 1. Try Next.js Server Action first (returns base64 buffer)
       const actionRes = await downloadInvoicePdfAction(invoice.id);
       if (actionRes.success && actionRes.data?.base64) {
         const byteCharacters = atob(actionRes.data.base64);
@@ -113,30 +150,31 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
           byteNumbers[i] = byteCharacters.charCodeAt(i);
         }
         const blob = new Blob([byteNumbers], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download =
-          actionRes.data.filename ||
-          `Invoice_${invoice.invoice_number.replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-
-        setTimeout(() => {
-          try {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          } catch {}
-        }, 15000);
-
-        toast.success("PDF download started!");
+        triggerBlobDownload(
+          blob,
+          actionRes.data.filename || getSafeInvoiceFilename(invoice.invoice_number)
+        );
+        toast.success("Invoice PDF downloaded successfully!", { id: toastId });
         return;
       }
 
-      // Direct fallback
-      window.open(`/api/billing/invoices/${invoice.id}/pdf`, "_blank");
+      // 2. Direct HTTP stream fallback with blob download (no raw JSON tabs)
+      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
+      if (!res.ok) {
+        let msg = "Failed to generate PDF";
+        try {
+          const errData = await res.json();
+          if (errData?.error) msg = errData.error;
+        } catch {}
+        throw new Error(msg);
+      }
+
+      const blob = await res.blob();
+      triggerBlobDownload(blob, getSafeInvoiceFilename(invoice.invoice_number));
+      toast.success("Invoice PDF downloaded successfully!", { id: toastId });
     } catch (err: unknown) {
-      window.open(`/api/billing/invoices/${invoice.id}/pdf`, "_blank");
+      const msg = err instanceof Error ? err.message : "Failed to download PDF";
+      toast.error(msg, { id: toastId });
     } finally {
       setIsDownloading(false);
     }
@@ -144,8 +182,69 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 print:bg-white print:p-0 print:m-0">
+      {/* Embedded CSS for Exact A4 Portrait Page Layout & Zero Overflow */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @page {
+              size: A4 portrait;
+              margin: 8mm 10mm 8mm 10mm;
+            }
+            @media print {
+              *, *:before, *:after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+              }
+              html, body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+              }
+              aside, header, nav, footer,
+              .no-print,
+              .print\\:hidden,
+              .print\\:\\!hidden {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                width: 0 !important;
+                overflow: hidden !important;
+              }
+              .print-container {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+              }
+              .avoid-break {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+              }
+              tr {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+              }
+              thead {
+                display: table-header-group !important;
+              }
+              .print-purple-hdr {
+                background-color: #581c87 !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+            }
+          `,
+        }}
+      />
+
       {/* Non-Printable Top Action Bar */}
-      <div className="mx-auto mb-6 flex max-w-[210mm] items-center justify-between rounded-lg bg-gray-900 px-5 py-3 text-white shadow-md print:hidden">
+      <div className="no-print print:!hidden mx-auto mb-6 flex max-w-[210mm] items-center justify-between rounded-lg bg-gray-900 px-5 py-3 text-white shadow-md">
         <div className="flex items-center gap-3">
           <Link
             href={`/admin/billing/invoices/${invoice.id}`}
@@ -159,8 +258,13 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
             {invoice.invoice_number}
           </span>
           <span className="rounded bg-purple-900/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-purple-200">
-            {invoice.document_status}
+            {invoice.document_status || "draft"}
           </span>
+          {invoice.payment_status === "paid" && (
+            <span className="rounded bg-emerald-950 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-300 border border-emerald-700">
+              PAID
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-2.5">
@@ -185,16 +289,16 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
       </div>
 
       {/* Official A4 Indian Tax Invoice Document Sheet */}
-      <div className="mx-auto w-full max-w-[210mm] rounded-sm bg-white p-8 text-gray-900 shadow-2xl print:max-w-none print:w-full print:p-0 print:shadow-none border border-gray-300 print:border-none">
+      <div className="print-container mx-auto w-full max-w-[210mm] rounded-sm bg-white p-8 print:p-0 text-gray-900 shadow-2xl print:max-w-none print:w-full print:shadow-none border border-gray-300 print:border-none">
         {/* Header: Company Identity & Tax Invoice Title */}
-        <div className="border-b-2 border-purple-800 pb-5">
+        <div className="avoid-break border-b-2 border-purple-800 pb-3 print:pb-2">
           <div className="flex items-start justify-between">
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded bg-purple-800 text-sm font-black text-white">
+                <div className="flex h-7 w-7 items-center justify-center rounded bg-purple-800 text-xs font-black text-white">
                   GS
                 </div>
-                <h1 className="text-2xl font-black tracking-tight text-purple-800">
+                <h1 className="text-xl font-black tracking-tight text-purple-800">
                   GROWTH SERVICE
                 </h1>
               </div>
@@ -205,7 +309,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                 {seller.addressLine1 || "Plot No. 42, Malviya Nagar"}, {seller.city || "Jaipur"},{" "}
                 {seller.state || "Rajasthan"} - {seller.postalCode || "302017"}, India
               </p>
-              <div className="mt-1 flex flex-wrap gap-x-4 text-[11px] font-semibold text-gray-800">
+              <div className="mt-0.5 flex flex-wrap gap-x-4 text-[11px] font-semibold text-gray-800">
                 <span>
                   GSTIN: <strong className="font-mono text-black">{seller.gstin || "08AAAAA0000A1Z5"}</strong>
                 </span>
@@ -221,11 +325,11 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
               </p>
             </div>
 
-            <div className="text-right space-y-1">
-              <span className="inline-block rounded border border-purple-800 bg-purple-100 px-3 py-1 text-xs font-black uppercase tracking-widest text-purple-900">
+            <div className="text-right space-y-0.5">
+              <span className="inline-block rounded border border-purple-800 bg-purple-100 px-2.5 py-0.5 text-xs font-black uppercase tracking-widest text-purple-900">
                 TAX INVOICE
               </span>
-              <p className="font-mono text-base font-bold text-gray-900 mt-1">
+              <p className="font-mono text-sm font-bold text-gray-900 mt-0.5">
                 {invoice.invoice_number}
               </p>
               <p className="text-xs text-gray-700">
@@ -234,30 +338,35 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
               <p className="text-xs text-gray-700">
                 Due Date: <strong className="text-black">{formatDate(invoice.due_date)}</strong>
               </p>
-              <div className="pt-1">
+              <div className="pt-0.5 flex items-center justify-end gap-2">
                 <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-700">
                   ORIGINAL FOR RECIPIENT
                 </span>
+                {invoice.payment_status === "paid" && (
+                  <span className="inline-block rounded border border-emerald-600 bg-emerald-100 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-800">
+                    PAID
+                  </span>
+                )}
               </div>
             </div>
           </div>
         </div>
 
         {/* Billed From & Billed To Cards */}
-        <div className="my-5 grid grid-cols-2 gap-4 text-xs">
+        <div className="avoid-break my-3 print:my-2 grid grid-cols-2 gap-3 text-xs">
           {/* Seller / Supplier */}
-          <div className="rounded border border-gray-300 bg-gray-50/60 p-3.5">
+          <div className="rounded border border-gray-300 bg-gray-50/60 p-3 print:p-2.5">
             <span className="font-bold uppercase tracking-wider text-purple-800 text-[10px]">
               Supplier / Billed From:
             </span>
-            <p className="mt-1 font-bold text-sm text-gray-900">
+            <p className="mt-0.5 font-bold text-xs text-gray-900">
               {seller.legalName || "Growth Service Technologies LLP"}
             </p>
-            <p className="text-gray-600 mt-0.5">{seller.addressLine1 || "Plot No. 42, Malviya Nagar"}</p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-[11px]">{seller.addressLine1 || "Plot No. 42, Malviya Nagar"}</p>
+            <p className="text-gray-600 text-[11px]">
               {seller.city || "Jaipur"}, {seller.state || "Rajasthan"} - {seller.postalCode || "302017"}
             </p>
-            <div className="mt-2.5 space-y-0.5 border-t border-gray-200 pt-1.5 text-[11px]">
+            <div className="mt-1.5 space-y-0.5 border-t border-gray-200 pt-1 text-[11px]">
               <p>
                 <span className="text-gray-500">GSTIN:</span>{" "}
                 <span className="font-mono font-bold text-black">{seller.gstin || "08AAAAA0000A1Z5"}</span>
@@ -270,23 +379,23 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
           </div>
 
           {/* Buyer / Recipient */}
-          <div className="rounded border border-gray-300 bg-gray-50/60 p-3.5">
+          <div className="rounded border border-gray-300 bg-gray-50/60 p-3 print:p-2.5">
             <span className="font-bold uppercase tracking-wider text-purple-800 text-[10px]">
               Recipient / Billed To:
             </span>
-            <p className="mt-1 font-bold text-sm text-gray-900">
+            <p className="mt-0.5 font-bold text-xs text-gray-900">
               {buyer.legalName || buyer.companyName || invoice.client?.company_name || "Valued Client"}
             </p>
-            <p className="text-gray-600 mt-0.5">
+            <p className="text-gray-600 text-[11px]">
               Attn: {buyer.contactName || invoice.client?.contact_name || "Accounts Dept."}
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-[11px]">
               {buyer.addressLine1 || "Client Address Not Provided"}
               {buyer.city ? `, ${buyer.city}` : ""}
               {buyer.state ? `, ${buyer.state}` : ""}
               {buyer.postalCode ? ` - ${buyer.postalCode}` : ""}
             </p>
-            <div className="mt-2.5 space-y-0.5 border-t border-gray-200 pt-1.5 text-[11px]">
+            <div className="mt-1.5 space-y-0.5 border-t border-gray-200 pt-1 text-[11px]">
               <p>
                 <span className="text-gray-500">GSTIN:</span>{" "}
                 <span className="font-mono font-bold text-black">{buyer.gstin || "Unregistered"}</span>
@@ -296,7 +405,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                 <span className="font-semibold text-black">
                   {invoice.place_of_supply || "Rajasthan"} (Code: {invoice.place_of_supply_state_code || "08"})
                 </span>{" "}
-                <span className="text-[10px] text-purple-700">
+                <span className="text-[10px] text-purple-700 font-semibold">
                   {invoice.is_interstate ? "[IGST]" : "[CGST + SGST]"}
                 </span>
               </p>
@@ -305,86 +414,89 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         </div>
 
         {/* Line Items Table */}
-        <div className="my-5 border border-gray-300 rounded overflow-hidden">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-purple-900 text-white uppercase text-[10px] tracking-wider">
+        <div className="my-3 print:my-2 border border-gray-300 rounded overflow-hidden">
+          <table className="w-full text-left text-xs table-fixed">
+            <thead className="print-purple-hdr bg-purple-900 text-white uppercase text-[10px] tracking-wider">
               <tr>
-                <th className="px-3 py-2.5 w-[5%] text-center">#</th>
-                <th className="px-3 py-2.5 w-[38%]">Item Description</th>
-                <th className="px-3 py-2.5 w-[11%]">HSN/SAC</th>
-                <th className="px-3 py-2.5 w-[8%] text-right">Qty</th>
-                <th className="px-3 py-2.5 w-[12%] text-right">Rate</th>
-                <th className="px-3 py-2.5 w-[8%] text-right">Disc</th>
-                <th className="px-3 py-2.5 w-[10%] text-right">Taxable</th>
-                <th className="px-3 py-2.5 w-[8%] text-right">GST</th>
-                <th className="px-3 py-2.5 w-[10%] text-right">Total</th>
+                <th className="px-2 py-1.5 print:py-1 w-[4%] text-center">#</th>
+                <th className="px-2.5 py-1.5 print:py-1 w-[34%]">Item Description</th>
+                <th className="px-2 py-1.5 print:py-1 w-[10%]">HSN/SAC</th>
+                <th className="px-2 py-1.5 print:py-1 w-[7%] text-right">Qty</th>
+                <th className="px-2 py-1.5 print:py-1 w-[11%] text-right">Rate</th>
+                <th className="px-2 py-1.5 print:py-1 w-[7%] text-right">Disc</th>
+                <th className="px-2 py-1.5 print:py-1 w-[12%] text-right">Taxable</th>
+                <th className="px-1.5 py-1.5 print:py-1 w-[5%] text-right">GST</th>
+                <th className="px-2.5 py-1.5 print:py-1 w-[10%] text-right">Total</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {invoice.items?.map((it, idx) => {
-                const taxAmt =
-                  Number(it.cgst_amount || 0) +
-                  Number(it.sgst_amount || 0) +
-                  Number(it.igst_amount || 0);
-
-                return (
-                  <tr key={it.id || idx} className="hover:bg-gray-50/50">
-                    <td className="px-3 py-2.5 text-center text-gray-500 font-medium">{idx + 1}</td>
-                    <td className="px-3 py-2.5 font-bold text-gray-900">
-                      <div>{it.description_snapshot}</div>
-                      {it.sku_snapshot && (
-                        <div className="text-[10px] font-normal text-gray-500">
-                          SKU: {it.sku_snapshot}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-3 py-2.5 font-mono text-gray-700">{it.hsn_sac_snapshot || "—"}</td>
-                    <td className="px-3 py-2.5 text-right font-mono">
-                      {Number(it.quantity)} {it.unit_snapshot}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono">
-                      {formatCurrency(Number(it.unit_price))}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-gray-700">
-                      {Number(it.discount_amount) > 0 ? `-${formatCurrency(Number(it.discount_amount))}` : "—"}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono font-medium text-black">
-                      {formatCurrency(Number(it.taxable_amount))}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono">
-                      {Number(it.tax_rate)}%
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono font-bold text-black">
-                      {formatCurrency(Number(it.line_total))}
-                    </td>
-                  </tr>
-                );
-              })}
+              {(!invoice.items || invoice.items.length === 0) ? (
+                <tr>
+                  <td colSpan={9} className="px-3 py-4 text-center text-gray-500">
+                    No items on this invoice
+                  </td>
+                </tr>
+              ) : (
+                invoice.items.map((it, idx) => {
+                  return (
+                    <tr key={it.id || idx} className="avoid-break hover:bg-gray-50/50">
+                      <td className="px-2 py-1.5 print:py-1 text-center text-gray-500 font-medium">{idx + 1}</td>
+                      <td className="px-2.5 py-1.5 print:py-1 font-bold text-gray-900">
+                        <div className="break-words">{it.description_snapshot}</div>
+                        {it.sku_snapshot && (
+                          <div className="text-[10px] font-normal text-gray-500">
+                            SKU: {it.sku_snapshot}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-2 py-1.5 print:py-1 font-mono text-gray-700">{it.hsn_sac_snapshot || "—"}</td>
+                      <td className="px-2 py-1.5 print:py-1 text-right font-mono">
+                        {Number(it.quantity)} {it.unit_snapshot}
+                      </td>
+                      <td className="px-2 py-1.5 print:py-1 text-right font-mono">
+                        {formatCurrency(Number(it.unit_price))}
+                      </td>
+                      <td className="px-2 py-1.5 print:py-1 text-right font-mono text-gray-700">
+                        {Number(it.discount_amount) > 0 ? `-${formatCurrency(Number(it.discount_amount))}` : "—"}
+                      </td>
+                      <td className="px-2 py-1.5 print:py-1 text-right font-mono font-medium text-black">
+                        {formatCurrency(Number(it.taxable_amount))}
+                      </td>
+                      <td className="px-1.5 py-1.5 print:py-1 text-right font-mono">
+                        {Number(it.tax_rate)}%
+                      </td>
+                      <td className="px-2.5 py-1.5 print:py-1 text-right font-mono font-bold text-black">
+                        {formatCurrency(Number(it.line_total))}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
 
-        {/* Bottom Section: Bank Details & Totals Breakdown */}
-        <div className="my-5 grid grid-cols-12 gap-5">
+        {/* Bottom Section: Bank Details & Totals Breakdown (Side-by-side flex layout to guarantee single-page fit) */}
+        <div className="avoid-break my-3 print:my-2 flex flex-row items-start justify-between gap-4">
           {/* Left: Bank Details & Amount in Words */}
-          <div className="col-span-7 space-y-3 text-xs">
+          <div className="w-[58%] shrink-0 space-y-2 text-xs">
             {/* Amount in Words */}
-            <div className="rounded border border-gray-300 bg-purple-50/40 p-3">
+            <div className="rounded border border-gray-300 bg-purple-50/40 p-2.5 print:p-2">
               <span className="font-bold text-purple-900 text-[10px] uppercase tracking-wider">
                 Total Amount in Words:
               </span>
-              <p className="mt-0.5 font-bold text-gray-900 text-xs">
+              <p className="mt-0.5 font-bold text-gray-900 text-[11px]">
                 {numberToIndianWords(Number(invoice.grand_total))}
               </p>
             </div>
 
             {/* Bank Details */}
             {seller.bankDetails && (
-              <div className="rounded border border-gray-300 p-3">
+              <div className="rounded border border-gray-300 p-2.5 print:p-2">
                 <span className="font-bold text-purple-900 text-[10px] uppercase tracking-wider">
-                  Bank Details for Direct RTGS/NEFT:
+                  Bank Details for Direct RTGS / NEFT / IMPS:
                 </span>
-                <div className="mt-1.5 grid grid-cols-2 gap-y-1 gap-x-2 text-[11px] text-gray-800">
+                <div className="mt-1 grid grid-cols-2 gap-y-0.5 gap-x-2 text-[11px] text-gray-800">
                   <p>
                     <span className="text-gray-500">Account Name:</span>{" "}
                     <strong>{seller.bankDetails.accountName}</strong>
@@ -403,13 +515,19 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                       {seller.bankDetails.bankName} ({seller.bankDetails.branch})
                     </strong>
                   </p>
+                  {seller.bankDetails.upiId && (
+                    <p className="col-span-2">
+                      <span className="text-gray-500">UPI ID:</span>{" "}
+                      <strong className="font-mono text-purple-900">{seller.bankDetails.upiId}</strong>
+                    </p>
+                  )}
                 </div>
               </div>
             )}
 
             {/* Notes */}
             {invoice.notes && (
-              <div className="rounded border border-gray-200 p-2.5 text-[11px] text-gray-600">
+              <div className="rounded border border-gray-200 p-2 text-[11px] text-gray-600">
                 <span className="font-bold text-gray-700">Remarks / Notes: </span>
                 <span>{invoice.notes}</span>
               </div>
@@ -417,9 +535,9 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
           </div>
 
           {/* Right: Totals Breakdown */}
-          <div className="col-span-5">
-            <div className="rounded border border-gray-300 bg-gray-50/70 p-3.5 text-xs">
-              <div className="space-y-1.5">
+          <div className="w-[40%] shrink-0">
+            <div className="rounded border border-gray-300 bg-gray-50/70 p-3 print:p-2 text-xs">
+              <div className="space-y-1">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
                   <span className="font-mono font-medium text-black">
@@ -460,7 +578,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                 )}
 
                 {Number(invoice.round_off) !== 0 && (
-                  <div className="flex justify-between text-gray-500 text-[11px]">
+                  <div className="flex justify-between text-gray-500 text-[10px]">
                     <span>Round Off</span>
                     <span className="font-mono">
                       {Number(invoice.round_off) > 0 ? `+${invoice.round_off}` : invoice.round_off}
@@ -468,25 +586,25 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                   </div>
                 )}
 
-                <div className="border-t-2 border-purple-800 pt-2 mt-2">
-                  <div className="flex items-baseline justify-between text-sm">
+                <div className="border-t-2 border-purple-800 pt-1.5 mt-1">
+                  <div className="flex items-baseline justify-between text-xs">
                     <span className="font-black text-purple-900">Grand Total</span>
-                    <span className="font-mono text-base font-black text-purple-900">
+                    <span className="font-mono text-sm font-black text-purple-900">
                       {formatCurrency(Number(invoice.grand_total))}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex justify-between border-t border-gray-300 pt-1.5 text-gray-600">
+                <div className="flex justify-between border-t border-gray-300 pt-1 text-gray-600 text-[11px]">
                   <span>Amount Paid</span>
                   <span className="font-mono font-semibold text-emerald-700">
                     {formatCurrency(Number(invoice.amount_paid))}
                   </span>
                 </div>
 
-                <div className="flex justify-between font-bold text-black border-t border-gray-300 pt-1.5">
+                <div className="flex justify-between font-bold text-black border-t border-gray-300 pt-1">
                   <span>Total Amount Due</span>
-                  <span className="font-mono text-sm text-purple-950">
+                  <span className="font-mono text-xs text-purple-950">
                     {formatCurrency(Number(invoice.amount_due))}
                   </span>
                 </div>
@@ -496,20 +614,20 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         </div>
 
         {/* Legal Declaration & Authorized Signatory */}
-        <div className="mt-8 pt-6 border-t-2 border-gray-300 flex justify-between items-end">
-          <div className="text-[10px] text-gray-500 max-w-sm space-y-1">
+        <div className="avoid-break mt-4 pt-3 print:mt-2 print:pt-2 border-t border-gray-300 flex justify-between items-end">
+          <div className="text-[10px] text-gray-500 max-w-sm space-y-0.5">
             <p className="font-bold text-gray-700">Terms & Conditions:</p>
             <p>1. We declare that this invoice shows the actual price of services described and all particulars are true and correct.</p>
             <p>2. Subject to Jaipur jurisdiction.</p>
-            <p className="italic pt-1 text-gray-400">This is a computer generated tax invoice and requires no physical seal or signature.</p>
+            <p className="italic pt-0.5 text-gray-400">This is a computer generated tax invoice and requires no physical seal or signature.</p>
           </div>
 
           <div className="text-right text-xs">
             <p className="font-bold text-gray-900">
               For {seller.legalName || "Growth Service Technologies LLP"}
             </p>
-            <div className="h-16"></div>
-            <p className="border-t border-gray-400 pt-1 font-bold text-gray-800">
+            <div className="h-10 print:h-8"></div>
+            <p className="border-t border-gray-400 pt-0.5 font-bold text-gray-800">
               Authorized Signatory
             </p>
           </div>

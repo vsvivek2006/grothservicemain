@@ -10,6 +10,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { assertAdminUser } from "@/lib/authorization";
 import { generateInvoicePdf } from "@/modules/billing/services/invoicePdfService";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }

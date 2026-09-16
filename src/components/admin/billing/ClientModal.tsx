@@ -5,47 +5,24 @@ import { X, Loader2, Building2 } from "lucide-react";
 import { toast } from "sonner";
 import { createClientAction, updateClientAction } from "@/modules/billing/actions/clientActions";
 import { ClientListItem } from "@/modules/billing/queries/clientQueries";
+import { INDIAN_STATES } from "@/modules/billing/constants/indianStates";
+
+export { INDIAN_STATES };
 
 interface ClientModalProps {
   isOpen: boolean;
   onClose: () => void;
   client?: ClientListItem | null;
   onSuccess?: () => void;
+  onClientCreated?: (newClient: ClientListItem) => void;
 }
-
-export const INDIAN_STATES = [
-  { name: "Rajasthan", code: "08" },
-  { name: "Maharashtra", code: "27" },
-  { name: "Delhi", code: "07" },
-  { name: "Karnataka", code: "29" },
-  { name: "Uttar Pradesh", code: "09" },
-  { name: "Gujarat", code: "24" },
-  { name: "Haryana", code: "06" },
-  { name: "Tamil Nadu", code: "33" },
-  { name: "Telangana", code: "36" },
-  { name: "West Bengal", code: "19" },
-  { name: "Punjab", code: "03" },
-  { name: "Madhya Pradesh", code: "23" },
-  { name: "Bihar", code: "10" },
-  { name: "Kerala", code: "32" },
-  { name: "Andhra Pradesh", code: "37" },
-  { name: "Odisha", code: "21" },
-  { name: "Assam", code: "18" },
-  { name: "Jharkhand", code: "20" },
-  { name: "Uttarakhand", code: "05" },
-  { name: "Himachal Pradesh", code: "02" },
-  { name: "Goa", code: "30" },
-  { name: "Chandigarh", code: "04" },
-  { name: "Jammu and Kashmir", code: "01" },
-  { name: "Chhattisgarh", code: "22" },
-  { name: "Puducherry", code: "34" },
-];
 
 export const ClientModal: React.FC<ClientModalProps> = ({
   isOpen,
   onClose,
   client,
   onSuccess,
+  onClientCreated,
 }) => {
   const isEditing = Boolean(client);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,6 +32,9 @@ export const ClientModal: React.FC<ClientModalProps> = ({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
+  const [addressLine1, setAddressLine1] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [state, setState] = useState("Rajasthan");
   const [stateCode, setStateCode] = useState("08");
 
@@ -76,6 +56,9 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         setPan(bp.pan || "");
         setState(bp.state || "Rajasthan");
         setStateCode(bp.state_code || "08");
+        setAddressLine1(bp.address_line_1 && bp.address_line_1 !== "N/A" ? bp.address_line_1 : "");
+        setCity(bp.city && bp.city !== "N/A" ? bp.city : "");
+        setPostalCode(bp.postal_code && bp.postal_code !== "000000" ? bp.postal_code : "");
       }
 
       // Check for saved Aadhaar in client notes
@@ -91,6 +74,9 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       setEmail("");
       setPhone("");
       setWebsite("");
+      setAddressLine1("");
+      setCity("");
+      setPostalCode("");
       setState("Rajasthan");
       setStateCode("08");
       setGstin("");
@@ -98,6 +84,17 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       setAadhaar("");
     }
   }, [client, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !isSubmitting) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, isSubmitting, onClose]);
 
   if (!isOpen) return null;
 
@@ -171,11 +168,11 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       status: (client?.status || "active") as "active" | "inactive" | "archived",
       billing_profile: {
         legal_name: cleanCompany,
-        address_line_1: "N/A",
-        city: state,
+        address_line_1: addressLine1.trim() || "N/A",
+        city: city.trim() || state,
         state: state,
         state_code: stateCode,
-        postal_code: "000000",
+        postal_code: postalCode.trim() || "000000",
         country: "India",
         gstin: cleanGstin || "",
         pan: cleanPan || "",
@@ -198,6 +195,37 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       }
 
       toast.success(isEditing ? "Client updated successfully" : "Client registered successfully");
+      if (!isEditing && res.data && onClientCreated) {
+        onClientCreated({
+          ...res.data,
+          billing_profile: {
+            id: "",
+            client_id: res.data.id,
+            legal_name: payload.billing_profile.legal_name,
+            display_name: null,
+            billing_email: payload.email,
+            billing_phone: payload.phone,
+            address_line_1: payload.billing_profile.address_line_1,
+            address_line_2: null,
+            city: payload.billing_profile.city,
+            district: null,
+            state: payload.billing_profile.state,
+            state_code: payload.billing_profile.state_code,
+            postal_code: payload.billing_profile.postal_code,
+            country: payload.billing_profile.country,
+            gstin: payload.billing_profile.gstin || null,
+            pan: payload.billing_profile.pan || null,
+            tax_registration_type: payload.billing_profile.tax_registration_type,
+            place_of_supply_state: payload.billing_profile.state,
+            place_of_supply_state_code: payload.billing_profile.state_code,
+            currency: "INR",
+            payment_terms_days: 0,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+          contacts_count: 0,
+        });
+      }
       if (onSuccess) onSuccess();
       onClose();
     } catch (err: unknown) {
@@ -208,8 +236,16 @@ export const ClientModal: React.FC<ClientModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs">
-      <div className="relative w-full max-w-lg bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity"
+        onClick={() => {
+          if (!isSubmitting) onClose();
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative w-full max-w-lg bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
@@ -229,7 +265,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
           {/* 1. Client / Company Name */}
           <div>
             <label className="block text-xs font-semibold text-gray-300 mb-1">
@@ -277,36 +313,79 @@ export const ClientModal: React.FC<ClientModalProps> = ({
             </div>
           </div>
 
-          {/* 3. Website & State */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* 3. Website */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-300 mb-1">
+              Website URL <span className="text-gray-500 font-normal">(Optional)</span>
+            </label>
+            <input
+              type="text"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              placeholder="https://company.com"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
+            />
+          </div>
+
+          {/* 4. Billing Address Details */}
+          <div className="space-y-3 pt-1">
             <div>
               <label className="block text-xs font-semibold text-gray-300 mb-1">
-                Website URL <span className="text-gray-500 font-normal">(Optional)</span>
+                Street Address <span className="text-gray-500 font-normal">(Invoice Header)</span>
               </label>
               <input
                 type="text"
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
-                placeholder="https://company.com"
+                value={addressLine1}
+                onChange={(e) => setAddressLine1(e.target.value)}
+                placeholder="e.g. 123 Business Tower, Tech Zone"
                 className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-300 mb-1">
-                State / Place of Supply <span className="text-rose-400">*</span>
-              </label>
-              <select
-                value={stateCode}
-                onChange={handleStateSelect}
-                className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-              >
-                {INDIAN_STATES.map((s) => (
-                  <option key={s.code} value={s.code}>
-                    {s.name} ({s.code})
-                  </option>
-                ))}
-              </select>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  City
+                </label>
+                <input
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="e.g. Jaipur"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  State / POS <span className="text-rose-400">*</span>
+                </label>
+                <select
+                  value={stateCode}
+                  onChange={handleStateSelect}
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
+                >
+                  {INDIAN_STATES.map((s) => (
+                    <option key={s.code} value={s.code}>
+                      {s.name} ({s.code})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  PIN Code
+                </label>
+                <input
+                  type="text"
+                  maxLength={6}
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 6))}
+                  placeholder="302017"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs font-mono focus:border-purple-500 focus:outline-hidden"
+                />
+              </div>
             </div>
           </div>
 

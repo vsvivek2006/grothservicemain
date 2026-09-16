@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Search,
   PlusCircle,
@@ -13,6 +14,7 @@ import {
   Globe,
   MapPin,
   ExternalLink,
+  FilePlus,
 } from "lucide-react";
 import { toast } from "sonner";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
@@ -30,14 +32,21 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
   const [clients, setClients] = useState<ClientListItem[]>(initialClients);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<ClientListItem | null>(null);
   const [archiveTarget, setArchiveTarget] = useState<{ id: string; name: string } | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  const pageSize = 15;
+
   useEffect(() => {
     setClients(initialClients);
   }, [initialClients]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, statusFilter]);
 
   const filteredClients = clients.filter((client) => {
     const matchesSearch =
@@ -52,6 +61,11 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
 
     return matchesSearch && matchesStatus;
   });
+
+  const totalFiltered = filteredClients.length;
+  const totalPages = Math.max(1, Math.ceil(totalFiltered / pageSize));
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedClients = filteredClients.slice(startIndex, startIndex + pageSize);
 
   const handleOpenCreate = () => {
     setSelectedClient(null);
@@ -160,7 +174,7 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800/80 text-gray-300">
-                {filteredClients.map((client) => {
+                {paginatedClients.map((client) => {
                   const bp = client.billing_profile;
                   return (
                     <tr
@@ -239,10 +253,20 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
 
                       <td className="py-3 px-4 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
+                          {client.status === "active" && (
+                            <Link
+                              href={`/admin/billing/invoices/new?clientId=${client.id}`}
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium text-purple-300 hover:text-white bg-purple-950/60 hover:bg-purple-900/80 border border-purple-800/60 transition-colors"
+                              title="Create Invoice for Client"
+                            >
+                              <FilePlus className="w-3 h-3 text-purple-400" />
+                              <span>Invoice</span>
+                            </Link>
+                          )}
                           <button
                             type="button"
                             onClick={() => handleOpenEdit(client)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 transition-colors cursor-pointer"
                           >
                             <Edit3 className="w-3 h-3" />
                             Edit
@@ -266,6 +290,34 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Controls */}
+          <div className="flex items-center justify-between px-4 py-3 border-t border-gray-800 bg-gray-900/60 text-xs text-gray-400">
+            <span>
+              Showing {totalFiltered === 0 ? 0 : startIndex + 1}–{Math.min(startIndex + pageSize, totalFiltered)} of {totalFiltered} clients
+              {totalPages > 1 ? ` (Page ${currentPage} of ${totalPages})` : ""}
+            </span>
+            {totalPages > 1 && (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={currentPage <= 1}
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  className="px-3 py-1.5 rounded-lg border border-gray-800 bg-gray-900 text-gray-300 hover:text-white hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  className="px-3 py-1.5 rounded-lg border border-gray-800 bg-gray-900 text-gray-300 hover:text-white hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -288,7 +340,9 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
         onClose={() => setIsModalOpen(false)}
         client={selectedClient}
         onSuccess={() => {
-          router.refresh();
+          startTransition(() => {
+            router.refresh();
+          });
         }}
       />
     </div>

@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import React from "react";
 import { renderToBuffer } from "@react-pdf/renderer";
-import { InvoicePdfDocument, type InvoicePdfData, type BuyerSnapshot } from "../invoicePdfTemplate";
+import { InvoicePdfDocument, amountToWords, type InvoicePdfData, type BuyerSnapshot } from "../invoicePdfTemplate";
 import type { Invoice, InvoiceItem } from "../../types/database";
 import type { SellerSnapshot } from "../sellerConfig";
 
@@ -159,6 +159,24 @@ async function testPdfRender() {
   const interstateBuffer = await renderToBuffer(interstateElement as unknown as React.ReactElement);
   assert.ok(interstateBuffer.length > 5000, "Interstate PDF buffer too small");
   console.log(`✓ Test 3 Passed: Inter-state (IGST) invoice PDF rendered ${interstateBuffer.length} bytes successfully`);
+
+  // Test 4: Financial words and fractional paise calculations
+  const w1 = amountToWords(53100);
+  assert.strictEqual(w1, "Fifty Three Thousand One Hundred Rupees Only", `Unexpected w1: ${w1}`);
+
+  const w2 = amountToWords(3186.75);
+  assert.strictEqual(w2, "Three Thousand One Hundred Eighty Six Rupees and Seventy Five Paise Only", `Unexpected w2: ${w2}`);
+
+  const w3 = amountToWords(100.25);
+  assert.strictEqual(w3, "One Hundred Rupees and Twenty Five Paise Only", `Unexpected w3: ${w3}`);
+
+  const w4 = amountToWords(0);
+  assert.strictEqual(w4, "Zero Rupees Only", `Unexpected w4: ${w4}`);
+
+  const w5 = amountToWords(99.999);
+  assert.strictEqual(w5, "One Hundred Rupees Only", `Unexpected w5: ${w5}`);
+
+  console.log("✓ Test 4 Passed: Indian currency words & fractional paise math validated without negative drift");
 
   console.log("====================================================");
   console.log("ALL INVOICE PDF GENERATION TESTS PASSED!");

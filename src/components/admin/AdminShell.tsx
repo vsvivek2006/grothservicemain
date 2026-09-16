@@ -18,12 +18,8 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   const pathname = usePathname();
 
   // If viewing a dedicated print view, completely omit all admin chrome (sidebar, topbar, drawers)
-  if (pathname?.endsWith("/print")) {
-    return (
-      <div className="min-h-screen bg-white text-black print:p-0 print:m-0">
-        {children}
-      </div>
-    );
+  if (pathname?.includes("/print")) {
+    return <>{children}</>;
   }
 
   return (
@@ -63,7 +59,15 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
             >
               <ExternalLink className="w-4 h-4" />
             </Link>
-            {userRole !== "billing_manager" && (
+            {userRole === "billing_manager" ? (
+              <Link
+                href="/admin/billing/invoices/new"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white transition-all shadow-xs"
+              >
+                <PlusCircle className="w-3.5 h-3.5" />
+                <span>New Invoice</span>
+              </Link>
+            ) : (
               <Link
                 href="/admin/blog/new"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors"

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -302,7 +302,7 @@ const Pricing: React.FC = () => {
   ];
 
   const handleWhatsAppClick = (serviceName: string) => {
-    const message = `🚀 *Growth Service - Consultation Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to request a custom quote and project scope for this service. Please share details on consultation availability.`;
+    const message = `?? *Growth Service - Consultation Inquiry*\n\n*Service:* ${serviceName}\n\nHi, I would like to request a custom quote and project scope for this service. Please share details on consultation availability.`;
     window.open(getNepalWhatsAppUrl(message), '_blank');
   };
 
@@ -313,7 +313,7 @@ const Pricing: React.FC = () => {
   const stats = [
     { number: '300+', label: 'Delivered Engagements' },
     { number: '98%', label: 'Client Satisfaction' },
-    { number: 'Jaipur • Vrindavan • Nepal', label: 'Physical Agency Offices' },
+    { number: 'Jaipur � Vrindavan � Nepal', label: 'Physical Agency Offices' },
     { number: 'Custom Scoping', label: 'Milestone-Based Agility' }
   ];
 
@@ -638,7 +638,7 @@ const Pricing: React.FC = () => {
 
       {/* Service Detail Modal */}
       {selectedService && (
-        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
             <div className="p-6 md:p-8">
               <div className="flex justify-between items-start mb-6">

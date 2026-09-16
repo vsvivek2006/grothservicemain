@@ -63,7 +63,7 @@ export async function getInvoices(params: GetInvoicesParams = {}): Promise<Invoi
 
   if (params.search && params.search.trim() !== "") {
     const term = `%${params.search.trim()}%`;
-    query = query.ilike("invoice_number", term);
+    query = query.or(`invoice_number.ilike.${term},buyer_snapshot->>companyName.ilike.${term},buyer_snapshot->>email.ilike.${term}`);
   }
 
   const { data, error, count } = await query;

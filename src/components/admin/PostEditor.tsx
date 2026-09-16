@@ -29,6 +29,11 @@ import { AIGeneratorPanel } from "./AIGeneratorPanel";
 import { ConfirmDialog } from "./ConfirmDialog";
 import type { GenerateBlogPostOutput } from "@/lib/ai/generateBlogPost";
 
+/** localStorage key for autosaved drafts. */
+function getDraftKey(postId?: string) {
+  return `blog-draft-${postId ?? "new"}`;
+}
+
 const TiptapEditor = dynamic(
   () => import("./TiptapEditor").then((mod) => mod.TiptapEditor),
   {
@@ -58,6 +63,8 @@ export function PostEditor({ initialData }: PostEditorProps) {
     initialData?.source === "ai" || initialData?.source === "ai-edited"
   );
   const [originalAiContent, setOriginalAiContent] = useState<string | null>(null);
+  const [showDraftBanner, setShowDraftBanner] = useState(false);
+  const draftKey = getDraftKey(initialData?.id);
 
   const {
     register,
@@ -97,6 +104,48 @@ export function PostEditor({ initialData }: PostEditorProps) {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isDirty, isSubmitting, isDeleting]);
+
+  // Autosave to localStorage (debounced 1.5s)
+  useEffect(() => {
+    if (!isDirty) return;
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem(
+          draftKey,
+          JSON.stringify({
+            savedAt: new Date().toISOString(),
+            title: titleValue,
+            content: contentValue,
+            meta_description: metaDescriptionValue,
+            slug: slugValue,
+          })
+        );
+      } catch {
+        // localStorage quota exceeded — silently skip
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [isDirty, draftKey, titleValue, contentValue, metaDescriptionValue, slugValue]);
+
+  // Draft recovery: show banner if a newer localStorage draft exists
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(draftKey);
+      if (!raw) return;
+      const draft = JSON.parse(raw) as { savedAt: string };
+      const draftDate = new Date(draft.savedAt);
+      const dbDate = initialData?.updated_at ? new Date(initialData.updated_at) : null;
+      // Show banner only if draft is newer than the last DB save (or it's a new post)
+      if (!dbDate || draftDate > dbDate) {
+        setShowDraftBanner(true);
+      } else {
+        localStorage.removeItem(draftKey); // stale draft, discard
+      }
+    } catch {
+      // corrupt localStorage entry — ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Handle automatic slug generation
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,6 +231,8 @@ export function PostEditor({ initialData }: PostEditorProps) {
                 : "Your changes have been saved to the database.",
           }
         );
+        // Clear autosaved draft on successful persist
+        try { localStorage.removeItem(draftKey); } catch { /* ignore */ }
         router.push("/admin/blog");
         router.refresh();
       } catch {
@@ -245,6 +296,58 @@ export function PostEditor({ initialData }: PostEditorProps) {
         onConfirm={handleConfirmDelete}
         onCancel={() => setIsConfirmDeleteOpen(false)}
       />
+
+      {/* Draft Recovery Banner */}
+      {showDraftBanner && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-blue-700/50 bg-blue-950/40 px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <Info className="w-4 h-4 text-blue-400 shrink-0" />
+            <p className="text-xs text-blue-200">
+              <span className="font-bold text-white">Unsaved draft recovered.</span>{" "}
+              You have a locally autosaved version newer than the last database save.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <button
+              type="button"
+              onClick={() => {
+                try {
+                  const raw = localStorage.getItem(draftKey);
+                  if (!raw) return;
+                  const draft = JSON.parse(raw) as {
+                    title?: string;
+                    content?: string;
+                    meta_description?: string;
+                    slug?: string;
+                  };
+                  if (draft.title) setValue("title", draft.title, { shouldDirty: true });
+                  if (draft.slug) setValue("slug", draft.slug, { shouldDirty: true });
+                  if (draft.content) setValue("content", draft.content, { shouldDirty: true });
+                  if (draft.meta_description)
+                    setValue("meta_description", draft.meta_description, { shouldDirty: true });
+                  toast.success("Draft restored into editor.");
+                } catch {
+                  toast.error("Could not restore draft.");
+                }
+                setShowDraftBanner(false);
+              }}
+              className="px-3 py-1.5 rounded-md text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors"
+            >
+              Restore
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.removeItem(draftKey);
+                setShowDraftBanner(false);
+              }}
+              className="px-3 py-1.5 rounded-md text-xs font-medium border border-gray-700 text-gray-400 hover:bg-gray-800 transition-colors"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Unsaved changes indicator */}
       {isDirty && (
@@ -369,7 +472,7 @@ export function PostEditor({ initialData }: PostEditorProps) {
             type="button"
             onClick={() => handleSave("published")}
             disabled={isSubmitting || isDeleting}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors disabled:opacity-50 cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white shadow-xs transition-all disabled:opacity-50 cursor-pointer"
           >
             {isSubmitting ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -579,7 +682,7 @@ export function PostEditor({ initialData }: PostEditorProps) {
           type="button"
           onClick={() => handleSave("published")}
           disabled={isSubmitting || isDeleting}
-          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors disabled:opacity-50"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white shadow-xs transition-all disabled:opacity-50"
         >
           {isSubmitting ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />

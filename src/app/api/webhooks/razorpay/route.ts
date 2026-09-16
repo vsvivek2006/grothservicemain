@@ -3,6 +3,7 @@ import { getPaymentProvider } from "@/infrastructure/payments/payment-provider";
 import { reconcilePaymentEvent } from "@/modules/billing/services/reconciliationService";
 import { sendPaymentSuccessNotification } from "@/modules/billing/services/notificationService";
 import { createAdminClient } from "@/lib/supabase/server";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,13 @@ export const dynamic = "force-dynamic";
  * webhook_events, and updates payment state and ledger balances.
  */
 export async function POST(req: NextRequest) {
+  if (!isPaymentsEnabled()) {
+    return NextResponse.json(
+      { error: "Payments feature is disabled in this environment" },
+      { status: 403 }
+    );
+  }
+
   try {
     // 1. Read raw body as text for HMAC verification
     const rawBody = await req.text();

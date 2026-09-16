@@ -2,11 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
-import { assertAdminUser } from "@/lib/authorization";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 import { logAuditEvent } from "@/lib/audit";
 import { actionSuccess, actionError, ActionResult } from "@/lib/actions/result";
 import { createPaymentLinkSchema } from "../schemas/paymentLinkSchemas";
 import { getPaymentProvider } from "@/infrastructure/payments/payment-provider";
+import { reconcilePaymentEvent } from "../services/reconciliationService";
+import { isPaymentsEnabled } from "../constants/featureFlags";
 import type { PaymentLinkRecord, Invoice } from "../types/database";
 
 /**
@@ -18,7 +20,12 @@ export async function createPaymentLinkAction(
   rawInput: unknown
 ): Promise<ActionResult<PaymentLinkRecord>> {
   try {
+    if (!isPaymentsEnabled()) {
+      return actionError("Online payment features are currently restricted to local development environments.");
+    }
+
     const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
 
     // 1. Validate form input
     const parsed = createPaymentLinkSchema.safeParse(rawInput);
@@ -184,7 +191,12 @@ export async function cancelPaymentLinkAction(
   paymentLinkId: string
 ): Promise<ActionResult<{ id: string; status: string }>> {
   try {
+    if (!isPaymentsEnabled()) {
+      return actionError("Online payment features are currently restricted to local development environments.");
+    }
+
     const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
     const supabase = createAdminClient();
 
     // 1. Fetch payment link
@@ -249,3 +261,171 @@ export async function cancelPaymentLinkAction(
     return actionError(message);
   }
 }
+
+/**
+ * Server action to actively poll and sync the latest status of a payment link directly from Razorpay.
+ * Idempotently reconciles payments into the ledger if marked paid/partially paid at provider.
+ */
+export async function syncPaymentLinkAction(
+  paymentLinkId: string
+): Promise<ActionResult<{ id: string; status: string; message: string }>> {
+  try {
+    if (!isPaymentsEnabled()) {
+      return actionError("Online payment features are currently restricted to local development environments.");
+    }
+
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
+    const supabase = createAdminClient();
+
+    // 1. Fetch local link record
+    const { data: link, error: fetchErr } = await supabase
+      .from("payment_links")
+      .select("*")
+      .eq("id", paymentLinkId)
+      .maybeSingle();
+
+    if (fetchErr || !link) {
+      return actionError("Payment link not found");
+    }
+
+    if (!link.provider_link_id) {
+      return actionError("No provider link ID on this record");
+    }
+
+    // 2. Fetch fresh state directly from provider API
+    const provider = getPaymentProvider(link.provider);
+    const fetched = await provider.fetchPaymentLink(link.provider_link_id);
+
+    const now = new Date().toISOString();
+    const raw = (fetched.rawResponse || {}) as Record<string, unknown>;
+
+    // 3. Reconcile if paid or partially paid
+    if (fetched.status === "paid" || fetched.status === "partially_paid") {
+      const rawPayments = Array.isArray((raw as any).payments) ? (raw as any).payments : [];
+      const latestPayment = rawPayments[rawPayments.length - 1] || {};
+      const providerPaymentId = latestPayment.payment_id || `sync_${fetched.providerLinkId}_pay`;
+      const amountPaidPaise = Number((raw as any).amount_paid);
+      const amountPaidRupees = amountPaidPaise ? amountPaidPaise / 100 : fetched.amount;
+
+      const reconcileResult = await reconcilePaymentEvent({
+        provider: link.provider,
+        providerEventId: `sync_${fetched.providerLinkId}_${Date.now()}`,
+        eventType: "payment_link.paid",
+        providerPaymentId,
+        providerOrderId: (raw as any).order_id ? String((raw as any).order_id) : undefined,
+        providerLinkId: fetched.providerLinkId,
+        amount: amountPaidRupees,
+        currency: fetched.currency || "INR",
+        status: "captured",
+        paymentMethod: latestPayment.method || "online",
+        payerName: (raw as any).customer?.name || link.customer_name,
+        payerEmail: (raw as any).customer?.email || link.customer_email,
+        payerPhone: (raw as any).customer?.contact || link.customer_phone,
+        capturedAt: latestPayment.created_at ? new Date(latestPayment.created_at * 1000) : new Date(),
+        rawPayload: { payload: { payment_link: { entity: raw } } },
+      });
+
+      // Update payment_link status explicitly in case it was cancelled/expired in local DB
+      await supabase
+        .from("payment_links")
+        .update({
+          status: fetched.status,
+          updated_at: now,
+        })
+        .eq("id", link.id);
+
+      revalidatePath("/admin/billing/invoices");
+      revalidatePath(`/admin/billing/invoices/${link.invoice_id}`);
+      revalidatePath("/admin/billing/payments");
+      revalidatePath("/admin/billing");
+
+      return actionSuccess({
+        id: link.id,
+        status: fetched.status,
+        message: reconcileResult.message || `Payment of ₹${amountPaidRupees.toLocaleString("en-IN")} reconciled.`,
+      });
+    }
+
+    // 4. Update status if changed (cancelled, expired, created)
+    if (link.status !== fetched.status) {
+      await supabase
+        .from("payment_links")
+        .update({
+          status: fetched.status,
+          cancelled_at: fetched.status === "cancelled" ? now : link.cancelled_at,
+          expired_at: fetched.status === "expired" ? now : link.expired_at,
+          updated_at: now,
+        })
+        .eq("id", link.id);
+    }
+
+    revalidatePath("/admin/billing/invoices");
+    revalidatePath(`/admin/billing/invoices/${link.invoice_id}`);
+    revalidatePath("/admin/billing/payments");
+
+    return actionSuccess({
+      id: link.id,
+      status: fetched.status,
+      message: `Status synced with Razorpay: ${fetched.status.toUpperCase()}`,
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Failed to sync payment link";
+    console.error("[syncPaymentLinkAction] Error:", err);
+    return actionError(message);
+  }
+}
+
+/**
+ * Server action to sync ALL payment links for a given invoice directly with Razorpay API.
+ */
+export async function syncInvoicePaymentLinksAction(
+  invoiceId: string
+): Promise<ActionResult<{ invoiceId: string; message: string; updatedCount: number }>> {
+  try {
+    if (!isPaymentsEnabled()) {
+      return actionError("Online payment features are currently restricted to local development environments.");
+    }
+
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
+    const supabase = createAdminClient();
+
+    const { data: links, error } = await supabase
+      .from("payment_links")
+      .select("id, provider_link_id, status")
+      .eq("invoice_id", invoiceId);
+
+    if (error || !links || links.length === 0) {
+      return actionSuccess({
+        invoiceId,
+        message: "No payment links found for this invoice.",
+        updatedCount: 0,
+      });
+    }
+
+    let updatedCount = 0;
+    for (const link of links) {
+      if (!link.provider_link_id) continue;
+      const res = await syncPaymentLinkAction(link.id);
+      if (res.success) {
+        updatedCount++;
+      }
+    }
+
+    revalidatePath("/admin/billing/invoices");
+    revalidatePath(`/admin/billing/invoices/${invoiceId}`);
+    revalidatePath("/admin/billing/payments");
+    revalidatePath("/admin/billing");
+
+    return actionSuccess({
+      invoiceId,
+      message: `Synced ${updatedCount} payment link(s) with Razorpay.`,
+      updatedCount,
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Failed to sync invoice payment links";
+    return actionError(message);
+  }
+}
+

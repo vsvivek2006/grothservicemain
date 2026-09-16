@@ -35,6 +35,9 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
   const [audience, setAudience] = useState("Business owners and marketing leaders");
   const [hasGenerated, setHasGenerated] = useState(false);
   const [errorBanner, setErrorBanner] = useState<string | null>(null);
+  const [isRateLimited, setIsRateLimited] = useState(false);
+
+  const FALLBACK_MODEL_ID = "openai/gpt-oss-20b";
 
   const selectedModelInfo =
     AVAILABLE_MODELS.find((m) => m.id === selectedModel) || AVAILABLE_MODELS[0];
@@ -95,6 +98,7 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
 
     setIsGenerating(true);
     setErrorBanner(null);
+    setIsRateLimited(false);
 
     const toastId = toast.loading(`Generating article with ${selectedModelInfo.name}...`, {
       description: "Crafting headline, SEO metadata, rich content, and tags.",
@@ -138,11 +142,25 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
         err instanceof Error
           ? err.message
           : "Unexpected error during AI generation. Check your network or API quota.";
-      setErrorBanner(message);
-      toast.error("Generation failed", {
-        id: toastId,
-        description: message,
-      });
+      // Detect rate-limit: Groq SDK error message or HTTP 429 in body
+      const isLimit =
+        message.toLowerCase().includes("429") ||
+        message.toLowerCase().includes("rate limit") ||
+        message.toLowerCase().includes("rate_limit");
+      if (isLimit) {
+        setIsRateLimited(true);
+        setErrorBanner(null);
+        toast.error("Rate limit hit", {
+          id: toastId,
+          description: "The flagship model is busy. Switch to GPT-OSS 20B for instant generation.",
+        });
+      } else {
+        setErrorBanner(message);
+        toast.error("Generation failed", {
+          id: toastId,
+          description: message,
+        });
+      }
     } finally {
       setIsGenerating(false);
     }
@@ -176,6 +194,34 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
           </span>
         )}
       </div>
+
+      {/* Rate-Limit Fallback Banner */}
+      {isRateLimited && !isGenerating && (
+        <div className="p-3.5 rounded-lg border border-amber-700/50 bg-amber-950/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-start gap-2.5">
+            <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-bold text-white">Flagship Model Rate-Limited</h4>
+              <p className="text-xs text-amber-200/90 mt-0.5">
+                GPT-OSS 120B is temporarily busy. Switch to the Ultra-Fast 20B model for instant generation.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedModel(FALLBACK_MODEL_ID);
+              setIsRateLimited(false);
+              // Trigger generation after state update
+              setTimeout(handleGenerate, 50);
+            }}
+            className="self-end sm:self-auto shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-amber-500 hover:bg-amber-400 text-gray-900 transition-colors cursor-pointer"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            Switch & Retry (20B)
+          </button>
+        </div>
+      )}
 
       {/* Inline Error Banner with Retry */}
       {errorBanner && (

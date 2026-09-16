@@ -2,6 +2,7 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getInvoiceById } from "@/modules/billing/queries/invoiceQueries";
 import { InvoiceDetailView } from "@/components/admin/billing/InvoiceDetailView";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export const revalidate = 0;
 
@@ -10,6 +11,9 @@ interface PageProps {
 }
 
 export default async function InvoiceDetailPage({ params }: PageProps) {
+  const adminUser = await assertAdminUser();
+  assertPermission(adminUser, "billing:read");
+
   const { id } = await params;
   const invoice = await getInvoiceById(id);
 

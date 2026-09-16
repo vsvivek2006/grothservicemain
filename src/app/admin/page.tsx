@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
+import { headers } from "next/headers";
+import type { AdminRole } from "@/lib/authorization";
 import {
   FileText,
   Users,
@@ -19,6 +21,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { getInvoiceStats, getInvoices, type InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { StatCardSkeleton, TableRowSkeleton } from "@/components/admin/shared/AdminDashboardSkeleton";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 
 export const revalidate = 0; // Fresh real-time data on load
 
@@ -40,13 +43,62 @@ function formatDate(dateStr?: string | null) {
 // -----------------------------------------------------------------------------
 // Component 1: Operational Metrics Cards (Streaming)
 // -----------------------------------------------------------------------------
-async function OperationalMetrics() {
+async function OperationalMetrics({ isEditor = false }: { isEditor?: boolean }) {
   const supabase = createAdminClient();
+
+  if (isEditor) {
+    const [{ count: publishedPosts }, { count: draftPosts }, { count: totalPosts }] =
+      await Promise.all([
+        supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "published"),
+        supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "draft"),
+        supabase.from("posts").select("*", { count: "exact", head: true }),
+      ]);
+
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Published Posts */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Live Articles</span>
+            <p className="text-2xl font-bold text-emerald-400 mt-1">{publishedPosts ?? 0}</p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">Published and indexing</span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 shrink-0">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+        </div>
+
+        {/* Draft Posts */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Draft Articles</span>
+            <p className="text-2xl font-bold text-amber-400 mt-1">{draftPosts ?? 0}</p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">In progress or review</span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-amber-950/50 border border-amber-900/40 flex items-center justify-center text-amber-400 shrink-0">
+            <Clock className="w-5 h-5" />
+          </div>
+        </div>
+
+        {/* Total Articles */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Total Articles</span>
+            <p className="text-2xl font-bold text-purple-400 mt-1">{totalPosts ?? 0}</p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">Full content library</span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-purple-950/50 border border-purple-900/40 flex items-center justify-center text-purple-400 shrink-0">
+            <FileText className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const [invoiceStats, { count: clientCount }, { count: publishedPosts }, { count: draftPosts }] =
     await Promise.all([
       getInvoiceStats(),
-      supabase.from("clients").select("*", { count: "exact", head: true }),
+      supabase.from("clients").select("*", { count: "exact", head: true }).neq("status", "archived"),
       supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "published"),
       supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "draft"),
     ]);
@@ -181,7 +233,22 @@ async function RecentInvoicesSection() {
                     {inv.client?.company_name || "—"}
                   </td>
                   <td className="py-2.5 px-4 whitespace-nowrap">
-                    <StatusBadge status={inv.payment_status} type="payment" />
+                    <StatusBadge
+                      status={
+                        inv.document_status === "draft"
+                          ? "draft"
+                          : inv.document_status === "cancelled" || inv.document_status === "void"
+                          ? inv.document_status
+                          : inv.payment_status
+                      }
+                      type={
+                        inv.document_status === "draft" ||
+                        inv.document_status === "cancelled" ||
+                        inv.document_status === "void"
+                          ? "document"
+                          : "payment"
+                      }
+                    />
                   </td>
                   <td className="py-2.5 px-4 text-right font-medium text-white whitespace-nowrap">
                     {formatCurrency(inv.grand_total)}
@@ -317,7 +384,11 @@ function ActivityTableSkeleton({ title }: { title: string }) {
 // -----------------------------------------------------------------------------
 // Main Page: Instant Shell + Concurrent Streaming
 // -----------------------------------------------------------------------------
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  const headersList = await headers();
+  const userRole = (headersList.get("x-user-role") as AdminRole) || "admin";
+  const isEditor = userRole === "editor";
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Top Header Shell (Renders in < 20ms) */}
@@ -327,7 +398,9 @@ export default function AdminDashboardPage() {
             Dashboard
           </h1>
           <p className="text-xs text-gray-400 mt-0.5">
-            Operational overview across revenue, billing, clients, and content.
+            {isEditor
+              ? "Content operations, article drafts, publishing pipeline, and AI generator."
+              : "Operational overview across revenue, billing, clients, and content."}
           </p>
         </div>
 
@@ -340,98 +413,187 @@ export default function AdminDashboardPage() {
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Live Blog</span>
           </Link>
-          <Link
-            href="/admin/billing/invoices/new"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white shadow-sm transition-all"
-          >
-            <PlusCircle className="w-3.5 h-3.5" />
-            <span>New Invoice</span>
-          </Link>
+          {isEditor ? (
+            <Link
+              href="/admin/blog/new"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-sm transition-all"
+            >
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>New Post</span>
+            </Link>
+          ) : (
+            <Link
+              href="/admin/billing/invoices/new"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white shadow-sm transition-all"
+            >
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>New Invoice</span>
+            </Link>
+          )}
         </div>
       </div>
 
       {/* Operational Metric Cards (Streamed via Suspense) */}
       <Suspense fallback={<MetricsGridSkeleton />}>
-        <OperationalMetrics />
+        <OperationalMetrics isEditor={isEditor} />
       </Suspense>
 
       {/* Quick Actions Launchpad (Instant Render) */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Link
-          href="/admin/billing/invoices/new"
-          className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-purple-950/60 border border-purple-900/40 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
-              <Receipt className="w-4 h-4" />
+      {isEditor ? (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Link
+            href="/admin/blog/new"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-950/60 border border-amber-900/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">AI Article Writer</h3>
+                <p className="text-[10px] text-gray-400">Draft SEO article</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xs font-semibold text-white">Create Invoice</h3>
-              <p className="text-[10px] text-gray-400">Issue tax invoice</p>
-            </div>
-          </div>
-          <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-purple-400 transition-colors" />
-        </Link>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-amber-400 transition-colors" />
+          </Link>
 
-        <Link
-          href="/admin/clients"
-          className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-950/60 border border-blue-900/40 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-              <Users className="w-4 h-4" />
+          <Link
+            href="/admin/blog"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-purple-950/60 border border-purple-900/40 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                <FileText className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Article Directory</h3>
+                <p className="text-[10px] text-gray-400">Manage blog posts</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xs font-semibold text-white">Client Directory</h3>
-              <p className="text-[10px] text-gray-400">Manage accounts</p>
-            </div>
-          </div>
-          <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
-        </Link>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-purple-400 transition-colors" />
+          </Link>
 
-        <Link
-          href="/admin/blog/new"
-          className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-950/60 border border-amber-900/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
-              <Sparkles className="w-4 h-4" />
+          <Link
+            href="/blog"
+            target="_blank"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-blue-950/60 border border-blue-900/40 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                <ExternalLink className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Public Blog</h3>
+                <p className="text-[10px] text-gray-400">View live website</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xs font-semibold text-white">AI Article Writer</h3>
-              <p className="text-[10px] text-gray-400">Draft SEO article</p>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Link
+            href="/admin/billing/invoices/new"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-purple-950/60 border border-purple-900/40 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                <Receipt className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Create Invoice</h3>
+                <p className="text-[10px] text-gray-400">Issue tax invoice</p>
+              </div>
             </div>
-          </div>
-          <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-amber-400 transition-colors" />
-        </Link>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-purple-400 transition-colors" />
+          </Link>
 
-        <Link
-          href="/admin/billing/payments"
-          className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
-              <CreditCard className="w-4 h-4" />
+          <Link
+            href="/admin/clients"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-blue-950/60 border border-blue-900/40 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                <Users className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Client Directory</h3>
+                <p className="text-[10px] text-gray-400">Manage accounts</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xs font-semibold text-white">Payment Ledger</h3>
-              <p className="text-[10px] text-gray-400">Audit transactions</p>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
+          </Link>
+
+          <Link
+            href="/admin/blog/new"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-950/60 border border-amber-900/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">AI Article Writer</h3>
+                <p className="text-[10px] text-gray-400">Draft SEO article</p>
+              </div>
             </div>
-          </div>
-          <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400 transition-colors" />
-        </Link>
-      </div>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-amber-400 transition-colors" />
+          </Link>
+
+          {isPaymentsEnabled() ? (
+            <Link
+              href="/admin/billing/payments"
+              className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                  <CreditCard className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold text-white">Payment Ledger</h3>
+                  <p className="text-[10px] text-gray-400">Audit transactions</p>
+                </div>
+              </div>
+              <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400 transition-colors" />
+            </Link>
+          ) : (
+            <Link
+              href="/admin/billing/items"
+              className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                  <Package className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold text-white">Catalog Items</h3>
+                  <p className="text-[10px] text-gray-400">Manage services</p>
+                </div>
+              </div>
+              <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400 transition-colors" />
+            </Link>
+          )}
+        </div>
+      )}
 
       {/* Split Activity Tables (Streamed via Suspense) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Suspense fallback={<ActivityTableSkeleton title="Recent Invoices" />}>
-          <RecentInvoicesSection />
-        </Suspense>
+      {isEditor ? (
+        <div className="grid grid-cols-1 gap-6">
+          <Suspense fallback={<ActivityTableSkeleton title="Recent Articles" />}>
+            <RecentArticlesSection />
+          </Suspense>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Suspense fallback={<ActivityTableSkeleton title="Recent Invoices" />}>
+            <RecentInvoicesSection />
+          </Suspense>
 
-        <Suspense fallback={<ActivityTableSkeleton title="Recent Articles" />}>
-          <RecentArticlesSection />
-        </Suspense>
-      </div>
+          <Suspense fallback={<ActivityTableSkeleton title="Recent Articles" />}>
+            <RecentArticlesSection />
+          </Suspense>
+        </div>
+      )}
     </div>
   );
 }

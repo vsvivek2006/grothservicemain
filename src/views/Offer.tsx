@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Link from 'next/link';
@@ -149,21 +149,21 @@ const Offer: React.FC = () => {
     
     const selectedOffice = offices.find(o => o.city === formData.location) || offices[0];
     
-    const whatsappMessage = `🎯 *Growth Service - Strategy & Audit Session Request*
+    const whatsappMessage = `?? *Growth Service - Strategy & Audit Session Request*
 
-📋 *Client Details:*
+?? *Client Details:*
 Name: ${formData.name}
 Email: ${formData.email}
 Phone: ${formData.phone}
 Preferred Office: ${formData.location} ${selectedOffice.flag}
 
-💼 *Focus Area:* ${formData.service || 'General Digital Growth'}
+?? *Focus Area:* ${formData.service || 'General Digital Growth'}
 
-📝 *Current Business / Website:*
+?? *Current Business / Website:*
 ${formData.message || 'No additional details provided'}
 
-📍 *Assigned Office:* ${selectedOffice.name}
-📞 *Office Phone:* ${selectedOffice.phone}
+?? *Assigned Office:* ${selectedOffice.name}
+?? *Office Phone:* ${selectedOffice.phone}
 
 Hi, I would like to schedule a strategy consultation and digital audit. Please let me know the available time slots.`;
     
@@ -337,7 +337,7 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
                     href={`/offices/${office.slug}`}
                     className="text-slate-600 font-medium text-xs hover:text-purple-600"
                   >
-                    Office Details →
+                    Office Details ?
                   </Link>
                 </div>
               </div>
@@ -348,7 +348,7 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
 
       {/* Quick Consultation Modal */}
       {isFormOpen && (
-        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative border border-slate-200">
             <button
               onClick={() => setIsFormOpen(false)}
@@ -419,9 +419,9 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm bg-white"
                 >
-                  <option value="Jaipur">🇮🇳 Jaipur Office (Rajasthan)</option>
-                  <option value="Vrindavan">🇮🇳 Vrindavan Office (UP)</option>
-                  <option value="Nepal">🇳🇵 Nepal Office (Siraha)</option>
+                  <option value="Jaipur">???? Jaipur Office (Rajasthan)</option>
+                  <option value="Vrindavan">???? Vrindavan Office (UP)</option>
+                  <option value="Nepal">???? Nepal Office (Siraha)</option>
                 </select>
               </div>
 

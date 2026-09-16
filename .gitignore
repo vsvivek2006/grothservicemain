@@ -29,3 +29,5 @@ scripts/dist/
 .next/
 out/
 public/sitemap.xml
+scratch/
+supabase/.temp/

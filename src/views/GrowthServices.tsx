@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Link from 'next/link';
@@ -173,16 +173,16 @@ const GrowthServices: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const whatsappMessage = `🚀 *Growth Service - Growth Solutions Inquiry*
+    const whatsappMessage = `?? *Growth Service - Growth Solutions Inquiry*
 
-📋 *Client Details:*
+?? *Client Details:*
 Name: ${formData.name}
 Email: ${formData.email}
 Phone: ${formData.phone}
 Website: ${formData.website || 'Not provided'}
 
-💼 *Service:* ${formData.service}
-📝 *Project Scope:*
+?? *Service:* ${formData.service}
+?? *Project Scope:*
 ${formData.message || 'I would like to discuss our requirements and scope a custom engagement.'}
 
 Hi, I am reaching out to discuss this growth service. Please share details on scheduling a discovery call.`;
@@ -360,7 +360,7 @@ Hi, I am reaching out to discuss this growth service. Please share details on sc
 
       {/* Inquiry Dialog */}
       {isFormOpen && (
-        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative border border-slate-200">
             <button
               onClick={() => setIsFormOpen(false)}

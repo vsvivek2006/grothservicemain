@@ -1,6 +1,6 @@
 "use server";
 
-import { assertAdminUser } from "@/lib/authorization";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 import { actionSuccess, actionError, ActionResult } from "@/lib/actions/result";
 import {
   sendInvoiceNotification,
@@ -31,6 +31,7 @@ export async function sendInvoiceEmailAction(
 ): Promise<ActionResult<{ messageId?: string; recipient: string }>> {
   try {
     const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:write");
 
     if (!input.invoiceId) {
       return actionError("Invoice ID is required");
@@ -63,6 +64,7 @@ export async function sendPaymentLinkEmailAction(
 ): Promise<ActionResult<{ messageId?: string; recipient: string }>> {
   try {
     const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
 
     if (!input.paymentLinkId) {
       return actionError("Payment Link ID is required");
@@ -95,6 +97,7 @@ export async function sendPaymentReminderEmailAction(
 ): Promise<ActionResult<{ messageId?: string; recipient: string }>> {
   try {
     const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
 
     if (!input.invoiceId) {
       return actionError("Invoice ID is required");
