@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   ArrowRight, Play, Star, TrendingUp, Users, Target, Globe, Shield, Zap, Clock,
   Factory, HeartPulse, Rocket, ShoppingCart, Briefcase, Cog, Trophy
@@ -343,7 +343,7 @@ const OurImpact: React.FC = () => {
                   {/* Action Link */}
                   <Button
                     as={Link}
-                    to="/contact"
+                    href="/contact"
                     variant="primary"
                     className="w-full justify-center text-sm font-semibold"
                   >

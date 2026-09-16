@@ -1,16 +1,13 @@
-﻿"use client";
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
-  DollarSign, ShieldCheck, Clock, AlertCircle, FileText, CheckCircle, Mail, Phone, ArrowRight 
+  DollarSign, ShieldCheck, FileText, Mail, ArrowRight 
 } from 'lucide-react';
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { getBusinessEmail } from '../selectors';
 import { getMailtoHref } from '../services';
-import { businessConfig } from '../config/business';
 
 export const RefundPolicy: React.FC = () => {
   const primaryEmail = getBusinessEmail();
@@ -128,7 +125,7 @@ export const RefundPolicy: React.FC = () => {
                     <span>Email Accounts ({primaryEmail})</span>
                   </a>
                   <Link
-                    to="/contact"
+                    href="/contact"
                     className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors"
                   >
                     <span>Contact Support</span>

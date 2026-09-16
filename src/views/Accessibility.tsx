@@ -1,11 +1,9 @@
-﻿"use client";
-
 import React from 'react';
 import { Eye, ShieldCheck, CheckCircle, Mail, Phone } from 'lucide-react';
 import { Container } from '../components/ui';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import DecorativeGrid from '../components/ui/DecorativeGrid';
-import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from '../selectors';
+import { getBusinessEmail, getPrimaryPhone } from '../selectors';
 import { getMailtoHref, getTelHref } from '../services';
 
 const Accessibility: React.FC = () => {

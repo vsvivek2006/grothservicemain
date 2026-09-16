@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import FAQView from '@/FAQ';
+import FAQView from '@/views/FAQ';
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Growth Service",

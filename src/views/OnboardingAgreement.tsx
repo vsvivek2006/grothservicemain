@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { 
   FileText, CheckCircle, Clock, Shield, 
@@ -14,11 +12,6 @@ import { WhatsAppIcon, Container, Section, Button } from "../components/ui";
 
 const OnboardingAgreement: React.FC = () => {
   const currentDate = "January 1, 2026";
-
-  const handleDownloadPDF = () => {
-    // This would generate/download PDF in production
-    alert("PDF agreement would be downloaded. In production, this would generate a PDF.");
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -58,12 +51,12 @@ const OnboardingAgreement: React.FC = () => {
         {/* Quick Action Buttons */}
         <div className="mb-8 flex flex-wrap gap-3">
           <Button
-            onClick={handleDownloadPDF}
+            href={getMailtoHref(getBusinessEmail(), 'Request Signed Onboarding Agreement')}
             variant="outline"
             size="sm"
-            icon={<Download className="h-4 w-4" />}
+            icon={<Mail className="h-4 w-4" />}
           >
-            Download PDF Version
+            Request Signed Copy
           </Button>
           <Button
             href={getTelHref(getPrimaryPhone())}
@@ -423,13 +416,13 @@ const OnboardingAgreement: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                onClick={handleDownloadPDF}
+                href={getMailtoHref(getBusinessEmail(), 'Accept Onboarding Agreement')}
                 variant="primary"
                 size="lg"
                 className="flex items-center justify-center gap-2"
               >
-                <Download className="h-5 w-5" />
-                Download & Sign Agreement
+                <Mail className="h-5 w-5" />
+                Confirm Agreement via Email
               </Button>
               
               <a

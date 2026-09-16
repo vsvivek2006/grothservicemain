@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import {
   Users, Clock, Building2, Globe, Laptop, Lock, MessageCircle, Phone,
   MapPin, Smile, Rocket, TrendingUp, Star, Mail, ArrowRight,
@@ -643,7 +643,7 @@ const About: React.FC = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full sm:w-auto">
                       <Link
-                        to={slide.ctaLink}
+                        href={slide.ctaLink}
                         className="w-full sm:w-auto bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg text-center"
                       >
                         {slide.cta}

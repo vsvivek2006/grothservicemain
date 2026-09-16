@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   as?: React.ElementType;
@@ -49,9 +49,9 @@ export const Button: React.FC<ButtonProps> = ({
 
   const combinedClasses = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`;
 
-  if (to || as === Link) {
+  if (to || href || as === Link) {
     return (
-      <Link to={to || href || '#'} className={combinedClasses} target={target} rel={rel}>
+      <Link href={to || href || '#'} className={combinedClasses} target={target} rel={rel}>
         {icon && <span className="shrink-0 transition-transform duration-200 group-hover:scale-105 group-hover:translate-x-0.5">{icon}</span>}
         <span>{children}</span>
       </Link>

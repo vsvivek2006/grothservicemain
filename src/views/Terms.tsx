@@ -1,24 +1,13 @@
-"use client";
-
-import React, { useState } from "react";
-import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";
+import React from "react";
+import { Shield, Check, AlertTriangle, Mail, Phone, FileText } from "lucide-react";
 import { Container, Section, Button, WhatsAppIcon } from "../components/ui";
-import { getBusinessEmail, getPrimaryPhone, getCanonicalOrigin } from "../selectors";
+import { getBusinessEmail, getPrimaryPhone } from "../selectors";
 import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 
 const Terms: React.FC = () => {
   const primaryEmail = getBusinessEmail();
   const primaryPhone = getPrimaryPhone();
   const primaryWhatsApp = getPrimaryWhatsAppUrl();
-  const [expandedSections, setExpandedSections] = useState<number[]>([0, 1, 2]);
-
-  const toggleSection = (index: number) => {
-    if (expandedSections.includes(index)) {
-      setExpandedSections(expandedSections.filter(i => i !== index));
-    } else {
-      setExpandedSections([...expandedSections, index]);
-    }
-  };
 
   const termsSections = [
     {
@@ -163,14 +152,13 @@ const Terms: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              onClick={downloadTerms}
-              variant="white"
-              size="lg"
-              icon={<Download className="h-5 w-5" />}
+            <a
+              href="#terms-content"
+              className="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-6 py-3 rounded-xl shadow-md transition-all text-sm"
             >
-              Download Terms
-            </Button>
+              <FileText className="h-5 w-5" />
+              <span>Review Legal Terms</span>
+            </a>
             <div className="text-blue-200">
               Last updated: January 1, 2026
             </div>
@@ -200,28 +188,25 @@ const Terms: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Complete Terms of Service</h2>
           
           {termsSections.map((section) => (
-            <div key={section.id} className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-              <button
-                onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
-              >
+            <details
+              key={section.id}
+              open={section.id <= 3}
+              className="group bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden"
+            >
+              <summary className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer list-none select-none">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0">
                     {section.id}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">{section.title}</h3>
                 </div>
-                <div className="text-gray-500">
-                  {expandedSections.includes(section.id) ? '−' : '+'}
-                </div>
-              </button>
-              
-              {expandedSections.includes(section.id) && (
-                <div className="px-6 pb-6 pt-2 border-t border-gray-200">
-                  <p className="text-gray-700 leading-relaxed">{section.content}</p>
-                </div>
-              )}
-            </div>
+                <div className="text-gray-500 text-xl font-semibold group-open:hidden">+</div>
+                <div className="text-gray-500 text-xl font-semibold hidden group-open:block">−</div>
+              </summary>
+              <div className="px-6 pb-6 pt-2 border-t border-gray-200">
+                <p className="text-gray-700 leading-relaxed">{section.content}</p>
+              </div>
+            </details>
           ))}
         </div>
 

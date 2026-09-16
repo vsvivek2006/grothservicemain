@@ -3,11 +3,11 @@
 // src/pages/FAQ.tsx
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, MessageCircle, Search, Phone } from "lucide-react";
-import { buildWhatsAppUrl } from "./config";
-import { getTelHref } from "./services";
-import { getPrimaryPhone, getBusinessName } from "./selectors";
+import { buildWhatsAppUrl } from "../config";
+import { getTelHref } from "../services";
+import { getPrimaryPhone, getBusinessName } from "../selectors";
 
-import { Container, Section, Card } from "./components/ui";
+import { Container, Section, Card } from "../components/ui";
 
 type QA = { q: string; a: string; category: string };
 
