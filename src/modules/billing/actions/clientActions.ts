@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { ZodError } from "zod";
 import { createAdminClient } from "@/lib/supabase/server";
 import { assertAdminUser, assertPermission } from "@/lib/authorization";
 import { logAuditEvent } from "@/lib/audit";
@@ -112,6 +113,11 @@ export async function createClientAction(
     revalidatePath("/admin/clients");
     return actionSuccess(client as Client);
   } catch (err: unknown) {
+    if (err instanceof ZodError) {
+      const issue = err.issues[0];
+      const field = issue.path[issue.path.length - 1];
+      return actionError(`${field ? `${String(field)}: ` : ""}${issue.message}`);
+    }
     const msg = err instanceof Error ? err.message : "Error creating client";
     return actionError(msg);
   }
@@ -219,6 +225,11 @@ export async function updateClientAction(
     revalidatePath("/admin/clients");
     return actionSuccess(client as Client);
   } catch (err: unknown) {
+    if (err instanceof ZodError) {
+      const issue = err.issues[0];
+      const field = issue.path[issue.path.length - 1];
+      return actionError(`${field ? `${String(field)}: ` : ""}${issue.message}`);
+    }
     const msg = err instanceof Error ? err.message : "Error updating client";
     return actionError(msg);
   }

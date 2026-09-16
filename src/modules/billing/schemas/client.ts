@@ -15,26 +15,16 @@ export const billingProfileSchema = z.object({
   display_name: z.string().max(100).optional().or(z.literal("")),
   billing_email: z.string().email("Invalid billing email").optional().or(z.literal("")),
   billing_phone: z.string().max(20).optional().or(z.literal("")),
-  address_line_1: z.string().min(1, "Address line 1 is required").max(255),
+  address_line_1: z.string().max(255).default("N/A"),
   address_line_2: z.string().max(255).optional().or(z.literal("")),
-  city: z.string().min(1, "City is required").max(100),
+  city: z.string().max(100).default("N/A"),
   district: z.string().max(100).optional().or(z.literal("")),
-  state: z.string().min(1, "State is required").max(100),
-  state_code: z.string().min(1, "State code is required").max(10), // e.g. "08" for Rajasthan
-  postal_code: z.string().min(1, "Postal code is required").max(20),
+  state: z.string().min(1, "State is required").max(100).default("Rajasthan"),
+  state_code: z.string().min(1, "State code is required").max(10).default("08"),
+  postal_code: z.string().max(20).default("000000"),
   country: z.string().default("India"),
-  gstin: z
-    .string()
-    .max(15)
-    .regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, "Invalid 15-character GSTIN format")
-    .optional()
-    .or(z.literal("")),
-  pan: z
-    .string()
-    .max(10)
-    .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Invalid 10-character PAN format")
-    .optional()
-    .or(z.literal("")),
+  gstin: z.string().max(20).optional().or(z.literal("")),
+  pan: z.string().max(15).optional().or(z.literal("")),
   tax_registration_type: z
     .enum(["regular", "composition", "unregistered", "overseas", "consumer"])
     .default("unregistered"),
@@ -48,7 +38,7 @@ export const clientFormSchema = z.object({
   email: z.string().email("Valid business email is required"),
   phone: z.string().min(5, "Contact phone number is required").max(20),
   alternate_phone: z.string().max(20).optional().or(z.literal("")),
-  website: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+  website: z.string().max(255).optional().or(z.literal("")),
   notes: z.string().max(1000).optional().or(z.literal("")),
   status: z.enum(["active", "inactive", "archived"]).default("active"),
   billing_profile: billingProfileSchema,
