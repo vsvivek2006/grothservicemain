@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export interface AnimatedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'outline-white' | 'white' | 'whatsapp' | 'ghost';
@@ -58,7 +58,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
 
   if (to) {
     return (
-      <Link to={to} className={combinedClasses}>
+      <Link href={to} className={combinedClasses}>
         {content}
       </Link>
     );

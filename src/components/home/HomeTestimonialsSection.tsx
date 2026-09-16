@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Quote, Star } from "lucide-react";
 import Container from "../ui/Container";

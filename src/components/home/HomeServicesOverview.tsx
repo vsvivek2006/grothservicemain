@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { 
   CheckCircle, ArrowRight, Search, Code, BarChart3, 
   Users, Target, ShoppingBag 
@@ -102,7 +102,7 @@ export const HomeServicesOverview: React.FC = () => {
             {serviceCategories.map((category, index) => (
               <StaggerItem key={index} index={index} className="h-full">
                 <Link 
-                  to={category.path}
+                  href={category.path}
                   className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col group h-full relative overflow-hidden"
                 >
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -146,7 +146,7 @@ export const HomeServicesOverview: React.FC = () => {
             {/* 1. Anchor Service: SEO (Large 7-col Bento Card) */}
             <div className="lg:col-span-7 h-full">
               <Link
-                to={ourServices[0].path}
+                href={ourServices[0].path}
                 className="group h-full bg-white rounded-2xl p-7 sm:p-9 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600" />
@@ -182,7 +182,7 @@ export const HomeServicesOverview: React.FC = () => {
             {/* 2. Service 2: Website Development (5-col Bento Card) */}
             <div className="lg:col-span-5 h-full">
               <Link
-                to={ourServices[1].path}
+                href={ourServices[1].path}
                 className="group h-full bg-white rounded-2xl p-7 sm:p-9 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-purple-600 to-pink-600" />
@@ -191,17 +191,17 @@ export const HomeServicesOverview: React.FC = () => {
                     <Code className="w-7 h-7" />
                   </div>
                   <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/70 px-3 py-1 rounded-full border border-purple-200/50">
-                    Full-Stack
+                    High-Impact Tech
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-3">
+                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-3">
                   {ourServices[1].title}
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-5">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
                   {ourServices[1].description}
                 </p>
-                <div className="space-y-2 mb-6 flex-grow">
-                  {ourServices[1].features.slice(0, 4).map((feature, fIdx) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8 flex-grow">
+                  {ourServices[1].features.map((feature, fIdx) => (
                     <div key={fIdx} className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
                       <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
                       <span>{feature}</span>
@@ -209,7 +209,7 @@ export const HomeServicesOverview: React.FC = () => {
                   ))}
                 </div>
                 <div className="pt-4 border-t border-slate-100 flex items-center gap-2 font-bold text-sm text-purple-600 group-hover:translate-x-1.5 transition-transform duration-200 mt-auto">
-                  <span>View Development Capabilities</span>
+                  <span>Explore Development</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
@@ -218,7 +218,7 @@ export const HomeServicesOverview: React.FC = () => {
             {/* 3. Performance Marketing (4-col) */}
             <div className="lg:col-span-4 h-full">
               <Link
-                to={ourServices[2].path}
+                href={ourServices[2].path}
                 className="group h-full bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500" />
@@ -249,7 +249,7 @@ export const HomeServicesOverview: React.FC = () => {
             {/* 4. Social Media Management (4-col) */}
             <div className="lg:col-span-4 h-full">
               <Link
-                to={ourServices[3].path}
+                href={ourServices[3].path}
                 className="group h-full bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600" />
@@ -280,7 +280,7 @@ export const HomeServicesOverview: React.FC = () => {
             {/* 5. Content Marketing (4-col) */}
             <div className="lg:col-span-4 h-full">
               <Link
-                to={ourServices[4].path}
+                href={ourServices[4].path}
                 className="group h-full bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-card hover:shadow-card-hover hover:border-purple-300/80 card-lift transition-all duration-300 flex flex-col relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-600 to-teal-600" />
@@ -324,7 +324,7 @@ export const HomeServicesOverview: React.FC = () => {
                       {ourServices[5].description}
                     </p>
                     <Link
-                      to={ourServices[5].path}
+                      href={ourServices[5].path}
                       className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all shadow-sm hover:shadow-md group/btn"
                     >
                       <span>Explore E-commerce Solutions</span>

@@ -62,11 +62,8 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
         <link rel="apple-touch-icon" href="/logo.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://yfyuapeblsncikhkrndj.supabase.co" />
-        <link rel="preconnect" href="https://yfyuapeblsncikhkrndj.supabase.co" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.pexels.com" />
+        <link rel="preconnect" href="https://images.pexels.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

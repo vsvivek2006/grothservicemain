@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
@@ -24,14 +24,14 @@ export const HomeTeamSection: React.FC = () => {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" staggerDelay={90}>
           {teamMembers.map((member, idx) => (
             <StaggerItem key={member.id} index={idx} className="h-full">
-              <EmployeeCard member={member} priority={idx === 0} />
+              <EmployeeCard member={member} priority={false} />
             </StaggerItem>
           ))}
         </StaggerContainer>
 
         <div className="text-center">
           <Link
-            to="/team"
+            href="/team"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-base transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 group"
           >
             <span>Meet the Full Team</span>

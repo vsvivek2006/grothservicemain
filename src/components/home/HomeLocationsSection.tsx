@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight, Globe } from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
@@ -29,7 +29,7 @@ export const HomeLocationsSection: React.FC = () => {
             <p className="text-sm text-slate-500">Visit our active operational facilities in India & Nepal</p>
           </div>
           <Link
-            to="/offices"
+            href="/offices"
             className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 hover:underline"
           >
             <span>View All {offices.length} Company Offices</span>
@@ -68,7 +68,7 @@ export const HomeLocationsSection: React.FC = () => {
               </p>
             </div>
             <Link
-              to="/locations"
+              href="/locations"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all shadow-sm hover:shadow-md shrink-0 group"
             >
               <span>All Locations Directory</span>
@@ -80,7 +80,7 @@ export const HomeLocationsSection: React.FC = () => {
             {expansionLocations.map((loc) => (
               <Link
                 key={loc.slug}
-                to={`/locations/${loc.slug}`}
+                href={`/locations/${loc.slug}`}
                 className="bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-xl border border-slate-200 hover:border-purple-300 transition-all flex items-center gap-1.5 group"
               >
                 <span>{loc.flag}</span>

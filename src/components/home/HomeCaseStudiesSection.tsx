@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
 import Section from "../ui/Section";
@@ -53,7 +53,7 @@ export const HomeCaseStudiesSection: React.FC = () => {
             </p>
           </div>
           <Link
-            to="/case-studies"
+            href="/case-studies"
             className="inline-flex items-center gap-2 font-semibold text-purple-600 hover:text-purple-700 transition-colors"
           >
             <span>View All Case Studies</span>
