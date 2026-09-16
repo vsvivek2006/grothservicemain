@@ -39,7 +39,7 @@ const PAGES_TO_AUDIT = [
     expectedSchemas: ['Organization']
   },
   {
-    path: '/blog/how-growth-service-works-a-complete-guide-for-business-leaders',
+    path: '/blog/2026-b2b-social-media-marketing-roadmap-proven-steps-for-growth',
     name: 'Blog Post',
     expectedSchemas: ['BlogPosting']
   }
