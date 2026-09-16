@@ -445,15 +445,27 @@ html {
   }
 
   /* Force hide all admin chrome, floating badges, navigation, and actions */
+  body aside,
+  body header,
+  body nav,
+  body footer,
   nav,
   aside,
   header,
   footer,
+  aside.lg\:flex,
+  .hidden.lg\:flex,
   .print\:hidden,
   .no-print,
   [data-sonner-toaster],
   button {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
   }
 
   main {

@@ -84,7 +84,8 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
   /**
    * Authoritative PDF Download Handler
-   * Attempts authenticated Server Action RPC first; falls back to direct API stream.
+   * Attempts authenticated Server Action RPC first with deferred blob revocation;
+   * falls back seamlessly to direct API stream.
    */
   const handleDownloadPdf = async () => {
     if (isDownloading) return;
@@ -107,31 +108,24 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           `Invoice_${invoice.invoice_number.replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
         document.body.appendChild(a);
         a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-        toast.success("Invoice PDF downloaded");
+
+        // Prevent premature blob revocation (must give browser time to read file)
+        setTimeout(() => {
+          try {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          } catch {}
+        }, 15000);
+
+        toast.success("Invoice PDF download started");
         return;
       }
 
-      // 2. Secondary fallback path: API streaming endpoint
-      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: "PDF generation failed" }));
-        const actionErrorMsg = !actionRes.success ? actionRes.error : undefined;
-        throw new Error(err.error || actionErrorMsg || "Failed to download PDF");
-      }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Invoice_${invoice.invoice_number.replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      toast.success("Invoice PDF downloaded");
-    } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Error downloading PDF");
+      // 2. Direct fallback to stream endpoint in new tab
+      window.open(`/api/billing/invoices/${invoice.id}/pdf`, "_blank");
+      toast.info("Opened PDF in new tab");
+    } catch {
+      window.open(`/api/billing/invoices/${invoice.id}/pdf`, "_blank");
     } finally {
       setIsDownloading(false);
     }
@@ -283,8 +277,8 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
           <button
             type="button"
-            onClick={() => window.print()}
-            className="flex items-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700"
+            onClick={() => window.open(`/admin/billing/invoices/${invoice.id}/print`, "_blank")}
+            className="flex items-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
           >
             <Printer className="h-4 w-4" />
             <span>Print View</span>

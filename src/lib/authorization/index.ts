@@ -123,7 +123,7 @@ export async function assertAdminUser(
     error,
   } = await supabase.auth.getUser();
 
-  if (error) {
+  if (error || !user) {
     throw new AuthorizationError(
       "Authentication required. Please sign in.",
       401,
@@ -131,7 +131,25 @@ export async function assertAdminUser(
     );
   }
 
-  return verifyAdminRole(user);
+  // If JWT app_metadata.role is missing or stale, fetch live user record from auth admin
+  let targetUser = user;
+  const rawRole = targetUser.app_metadata?.role as string | undefined;
+  const validRoles: AdminRole[] = ["superadmin", "admin", "billing_manager", "editor"];
+
+  if (!rawRole || !validRoles.includes(rawRole as AdminRole)) {
+    try {
+      const { createAdminClient } = await import("@/lib/supabase/server");
+      const adminClient = createAdminClient();
+      const { data: adminUserData } = await adminClient.auth.admin.getUserById(targetUser.id);
+      if (adminUserData?.user?.app_metadata?.role) {
+        targetUser = adminUserData.user;
+      }
+    } catch {
+      // Fall through to verifyAdminRole
+    }
+  }
+
+  return verifyAdminRole(targetUser);
 }
 
 /**

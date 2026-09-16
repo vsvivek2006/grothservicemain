@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, PlusCircle, ExternalLink } from "lucide-react";
 import type { AdminRole } from "@/lib/authorization";
 import { Sidebar } from "./Sidebar";
@@ -14,6 +15,16 @@ interface AdminShellProps {
 
 export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  // If viewing a dedicated print view, completely omit all admin chrome (sidebar, topbar, drawers)
+  if (pathname?.endsWith("/print")) {
+    return (
+      <div className="min-h-screen bg-white text-black print:p-0 print:m-0">
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-950 text-gray-200 print:min-h-0 print:bg-white print:text-black">
