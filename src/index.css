@@ -423,3 +423,54 @@ html {
   font-style: italic;
   text-align: center;
 }
+
+/* === Global Print Stylesheet for Invoices & Reports === */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Force hide all admin chrome, floating badges, navigation, and actions */
+  nav,
+  aside,
+  header,
+  footer,
+  .print\:hidden,
+  .no-print,
+  [data-sonner-toaster],
+  button {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Prevent page breaks inside critical financial blocks */
+  table,
+  tr,
+  td,
+  th,
+  .print-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

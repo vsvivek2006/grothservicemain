@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
-import { cancelInvoiceAction, issueInvoiceAction } from "@/modules/billing/actions/invoiceActions";
+import {
+  cancelInvoiceAction,
+  issueInvoiceAction,
+  downloadInvoicePdfAction,
+} from "@/modules/billing/actions/invoiceActions";
 import {
   sendInvoiceEmailAction,
   sendPaymentReminderEmailAction,
@@ -27,6 +31,8 @@ import {
   Download,
   Mail,
   Bell,
+  Send,
+  Info,
 } from "lucide-react";
 
 interface InvoiceDetailViewProps {
@@ -41,6 +47,15 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const [showIssueModal, setShowIssueModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
+
+  // Notification Modals & Form State
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const initialRecipient =
+    invoice.billing_profile?.billing_email || invoice.client?.email || "";
+  const [emailRecipient, setEmailRecipient] = useState(initialRecipient);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [reminderError, setReminderError] = useState<string | null>(null);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
 
@@ -61,20 +76,49 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
   const isDraft = invoice.document_status === "draft";
   const isCancelled = invoice.document_status === "cancelled" || invoice.document_status === "void";
+  const isPaid = invoice.payment_status === "paid";
   const canCancel = !isCancelled && Number(invoice.amount_paid) === 0;
 
   const seller = (invoice.seller_snapshot as any) || {};
   const buyer = (invoice.buyer_snapshot as any) || {};
 
+  /**
+   * Authoritative PDF Download Handler
+   * Attempts authenticated Server Action RPC first; falls back to direct API stream.
+   */
   const handleDownloadPdf = async () => {
     if (isDownloading) return;
     setIsDownloading(true);
     try {
+      // 1. Primary path: Server Action (inherits Next.js RPC session)
+      const actionRes = await downloadInvoicePdfAction(invoice.id);
+      if (actionRes.success && actionRes.data?.base64) {
+        const byteCharacters = atob(actionRes.data.base64);
+        const byteNumbers = new Uint8Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const blob = new Blob([byteNumbers], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download =
+          actionRes.data.filename ||
+          `Invoice_${invoice.invoice_number.replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        toast.success("Invoice PDF downloaded");
+        return;
+      }
+
+      // 2. Secondary fallback path: API streaming endpoint
       const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: "PDF generation failed" }));
-        toast.error(err.error || "Failed to download PDF");
-        return;
+        const actionErrorMsg = !actionRes.success ? actionRes.error : undefined;
+        throw new Error(err.error || actionErrorMsg || "Failed to download PDF");
       }
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -85,6 +129,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+      toast.success("Invoice PDF downloaded");
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Error downloading PDF");
     } finally {
@@ -134,42 +179,70 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
     }
   };
 
-  const handleSendEmail = async () => {
+  const handleSendEmail = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!emailRecipient.trim() || !emailRecipient.includes("@")) {
+      setEmailError("Please enter a valid recipient email address.");
+      return;
+    }
+
     setIsSendingEmail(true);
+    setEmailError(null);
     try {
-      const res = await sendInvoiceEmailAction({ invoiceId: invoice.id });
+      const res = await sendInvoiceEmailAction({
+        invoiceId: invoice.id,
+        recipientEmail: emailRecipient.trim(),
+      });
       if (!res.success) {
+        setEmailError(res.error || "Failed to send invoice email");
         toast.error(res.error || "Failed to send invoice email");
         return;
       }
-      toast.success("Invoice successfully emailed to client");
+      toast.success(`Invoice successfully emailed to ${emailRecipient.trim()}`);
+      setShowEmailModal(false);
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Error sending invoice email");
+      const msg = err instanceof Error ? err.message : "Error sending invoice email";
+      setEmailError(msg);
+      toast.error(msg);
     } finally {
       setIsSendingEmail(false);
     }
   };
 
-  const handleSendReminder = async () => {
+  const handleSendReminder = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!emailRecipient.trim() || !emailRecipient.includes("@")) {
+      setReminderError("Please enter a valid recipient email address.");
+      return;
+    }
+
     setIsSendingReminder(true);
+    setReminderError(null);
     try {
-      const res = await sendPaymentReminderEmailAction({ invoiceId: invoice.id });
+      const res = await sendPaymentReminderEmailAction({
+        invoiceId: invoice.id,
+        recipientEmail: emailRecipient.trim(),
+      });
       if (!res.success) {
+        setReminderError(res.error || "Failed to send payment reminder");
         toast.error(res.error || "Failed to send payment reminder");
         return;
       }
-      toast.success("Payment reminder successfully sent to client");
+      toast.success(`Payment reminder sent to ${emailRecipient.trim()}`);
+      setShowReminderModal(false);
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Error sending payment reminder");
+      const msg = err instanceof Error ? err.message : "Error sending payment reminder";
+      setReminderError(msg);
+      toast.error(msg);
     } finally {
       setIsSendingReminder(false);
     }
   };
 
   return (
-    <div className="space-y-8">
-      {/* Action Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="space-y-8 print:space-y-0 print:m-0 print:p-0">
+      {/* Action Header — Hidden during print */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between print:hidden">
         <div className="flex items-center gap-3">
           <Link
             href="/admin/billing/invoices"
@@ -195,6 +268,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-2.5">
           <button
+            type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloading}
             className="flex items-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 disabled:cursor-not-allowed disabled:opacity-60"
@@ -208,6 +282,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           </button>
 
           <button
+            type="button"
             onClick={() => window.print()}
             className="flex items-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700"
           >
@@ -215,35 +290,35 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             <span>Print View</span>
           </button>
 
-          {!isDraft && !isCancelled && (
+          {!isCancelled && (
             <button
-              onClick={handleSendEmail}
+              type="button"
+              onClick={() => {
+                setEmailError(null);
+                setShowEmailModal(true);
+              }}
               disabled={isSendingEmail}
               className="flex items-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-60"
               title="Email invoice PDF to client"
             >
-              {isSendingEmail ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Mail className="h-4 w-4" />
-              )}
-              <span>{isSendingEmail ? "Sending…" : "Email Invoice"}</span>
+              <Mail className="h-4 w-4" />
+              <span>Email Invoice</span>
             </button>
           )}
 
-          {!isDraft && !isCancelled && invoice.payment_status !== "paid" && (
+          {!isDraft && !isCancelled && !isPaid && (
             <button
-              onClick={handleSendReminder}
+              type="button"
+              onClick={() => {
+                setReminderError(null);
+                setShowReminderModal(true);
+              }}
               disabled={isSendingReminder}
               className="flex items-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300 hover:bg-amber-900/50 disabled:cursor-not-allowed disabled:opacity-60"
               title="Send payment reminder to client"
             >
-              {isSendingReminder ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Bell className="h-4 w-4" />
-              )}
-              <span>{isSendingReminder ? "Sending…" : "Send Reminder"}</span>
+              <Bell className="h-4 w-4" />
+              <span>Send Reminder</span>
             </button>
           )}
 
@@ -258,6 +333,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
               </Link>
 
               <button
+                type="button"
                 onClick={() => setShowIssueModal(true)}
                 className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/40 hover:from-emerald-700 hover:to-teal-800"
               >
@@ -269,6 +345,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
           {canCancel && (
             <button
+              type="button"
               onClick={() => setShowCancelModal(true)}
               className="flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-950/20 px-3.5 py-2 text-xs font-medium text-red-400 hover:bg-red-900/40"
             >
@@ -279,10 +356,58 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
       </div>
 
-      {/* Main Invoice Card */}
-      <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-6 shadow-2xl backdrop-blur-md md:p-8">
-        {/* Meta Bar */}
-        <div className="mb-8 grid grid-cols-2 gap-4 border-b border-gray-800 pb-6 text-xs sm:grid-cols-4">
+      {/* Main Invoice Card — Fully responsive and print optimized */}
+      <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-6 shadow-2xl backdrop-blur-md md:p-8 print:p-0 print:m-0 print:border-none print:shadow-none print:bg-white print:text-black print:rounded-none">
+        {/* Printable Official Tax Invoice Header (Visible on print only) */}
+        <div className="hidden print:block border-b-2 border-purple-800 pb-4 mb-6">
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <h1 className="font-extrabold text-2xl tracking-tight text-purple-800">
+                GROWTH SERVICE
+              </h1>
+              <p className="text-xs font-bold text-gray-900">
+                {seller.legalName || "Growth Service Technologies LLP"}
+              </p>
+              <p className="text-[11px] text-gray-700">
+                {seller.addressLine1 || "Plot No. 42, Malviya Nagar"}, {seller.city || "Jaipur"},{" "}
+                {seller.state || "Rajasthan"} - {seller.postalCode || "302017"}
+              </p>
+              <div className="mt-1 flex flex-wrap gap-x-4 text-[11px] text-gray-800 font-medium">
+                <span>
+                  GSTIN: <strong className="font-mono">{seller.gstin || "08AAAAA0000A1Z5"}</strong>
+                </span>
+                <span>
+                  PAN: <strong className="font-mono">{seller.pan || "AAAAA0000A"}</strong>
+                </span>
+                <span>
+                  State Code: <strong className="font-mono">{seller.stateCode || "08"}</strong>
+                </span>
+              </div>
+              <p className="text-[10px] text-gray-600">
+                Email: {seller.email || "billing@growthservice.in"} | Web: www.growthservice.in
+              </p>
+            </div>
+
+            <div className="text-right space-y-1">
+              <div className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-900 border border-purple-400 rounded">
+                TAX INVOICE
+              </div>
+              <p className="font-mono text-base font-bold text-gray-900">{invoice.invoice_number}</p>
+              <p className="text-[11px] text-gray-700">
+                Invoice Date: <strong>{formatDate(invoice.issue_date)}</strong>
+              </p>
+              <p className="text-[11px] text-gray-700">
+                Due Date: <strong>{formatDate(invoice.due_date)}</strong>
+              </p>
+              <p className="text-[10px] font-semibold text-purple-900 uppercase tracking-wider">
+                Original for Recipient
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Screen Meta Bar (Hidden during print as print header covers it) */}
+        <div className="mb-8 grid grid-cols-2 gap-4 border-b border-gray-800 pb-6 text-xs sm:grid-cols-4 print:hidden">
           <div>
             <span className="text-gray-500">Document Type</span>
             <p className="mt-1 font-semibold uppercase tracking-wider text-white">
@@ -309,60 +434,64 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
 
         {/* Snapshots Grid: Seller vs Buyer */}
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 print:grid-cols-2 print:gap-4 print:mb-6">
           {/* Seller Snapshot */}
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/40 p-5">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-950/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400 print:text-purple-800">
               Billed From (Seller)
             </span>
-            <h3 className="mt-2 text-base font-bold text-white">
+            <h3 className="mt-2 text-base font-bold text-white print:text-black">
               {seller.legalName || "Growth Service Technologies LLP"}
             </h3>
-            <p className="text-xs text-gray-400">{seller.addressLine1 || "Plot No. 42, Malviya Nagar"}</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-400 print:text-gray-700">
+              {seller.addressLine1 || "Plot No. 42, Malviya Nagar"}
+            </p>
+            <p className="text-xs text-gray-400 print:text-gray-700">
               {seller.city || "Jaipur"}, {seller.state || "Rajasthan"} - {seller.postalCode || "302017"}
             </p>
-            <div className="mt-3 space-y-0.5 border-t border-gray-800/60 pt-2 text-xs">
-              <p className="text-gray-300">
-                <span className="text-gray-500">GSTIN:</span>{" "}
+            <div className="mt-3 space-y-0.5 border-t border-gray-800/60 pt-2 text-xs print:border-gray-300">
+              <p className="text-gray-300 print:text-gray-900">
+                <span className="text-gray-500 print:text-gray-600">GSTIN:</span>{" "}
                 <span className="font-mono">{seller.gstin || "08AAAAA0000A1Z5"}</span>
               </p>
-              <p className="text-gray-300">
-                <span className="text-gray-500">PAN:</span>{" "}
+              <p className="text-gray-300 print:text-gray-900">
+                <span className="text-gray-500 print:text-gray-600">PAN:</span>{" "}
                 <span className="font-mono">{seller.pan || "AAAAA0000A"}</span>
               </p>
-              <p className="text-gray-300">
-                <span className="text-gray-500">State Code:</span>{" "}
+              <p className="text-gray-300 print:text-gray-900">
+                <span className="text-gray-500 print:text-gray-600">State Code:</span>{" "}
                 <span className="font-mono">{seller.stateCode || "08"}</span>
               </p>
             </div>
           </div>
 
           {/* Buyer Snapshot */}
-          <div className="rounded-lg border border-gray-800/80 bg-gray-950/40 p-5">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-400">
+          <div className="rounded-lg border border-gray-800/80 bg-gray-950/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-400 print:text-blue-900">
               Billed To (Buyer)
             </span>
-            <h3 className="mt-2 text-base font-bold text-white">
+            <h3 className="mt-2 text-base font-bold text-white print:text-black">
               {buyer.legalName || buyer.companyName || invoice.client?.company_name || "Client"}
             </h3>
-            <p className="text-xs text-gray-400">Attn: {buyer.contactName || invoice.client?.contact_name || "—"}</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-400 print:text-gray-700">
+              Attn: {buyer.contactName || invoice.client?.contact_name || "—"}
+            </p>
+            <p className="text-xs text-gray-400 print:text-gray-700">
               {buyer.addressLine1 || "—"}
               {buyer.city && `, ${buyer.city}`}
               {buyer.state && `, ${buyer.state} - ${buyer.postalCode || ""}`}
             </p>
-            <div className="mt-3 space-y-0.5 border-t border-gray-800/60 pt-2 text-xs">
-              <p className="text-gray-300">
-                <span className="text-gray-500">GSTIN:</span>{" "}
+            <div className="mt-3 space-y-0.5 border-t border-gray-800/60 pt-2 text-xs print:border-gray-300">
+              <p className="text-gray-300 print:text-gray-900">
+                <span className="text-gray-500 print:text-gray-600">GSTIN:</span>{" "}
                 <span className="font-mono">{buyer.gstin || "Unregistered"}</span>
               </p>
-              <p className="text-gray-300">
-                <span className="text-gray-500">PAN:</span>{" "}
+              <p className="text-gray-300 print:text-gray-900">
+                <span className="text-gray-500 print:text-gray-600">PAN:</span>{" "}
                 <span className="font-mono">{buyer.pan || "—"}</span>
               </p>
-              <p className="text-gray-300">
-                <span className="text-gray-500">State Code:</span>{" "}
+              <p className="text-gray-300 print:text-gray-900">
+                <span className="text-gray-500 print:text-gray-600">State Code:</span>{" "}
                 <span className="font-mono">{buyer.stateCode || "08"}</span>
               </p>
             </div>
@@ -370,23 +499,23 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
 
         {/* Line Items Table */}
-        <div className="mb-8 overflow-x-auto rounded-lg border border-gray-800">
-          <table className="w-full text-left text-xs text-gray-300">
-            <thead className="border-b border-gray-800 bg-gray-950/60 uppercase tracking-wider text-gray-400">
+        <div className="mb-8 overflow-x-auto rounded-lg border border-gray-800 print:border-gray-300 print:overflow-visible print:mb-6">
+          <table className="w-full text-left text-xs text-gray-300 print:text-black">
+            <thead className="border-b border-gray-800 bg-gray-950/60 uppercase tracking-wider text-gray-400 print:bg-gray-100 print:border-gray-300 print:text-gray-900">
               <tr>
-                <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">Description</th>
-                <th className="px-4 py-3">HSN/SAC</th>
-                <th className="px-4 py-3 text-right">Qty</th>
-                <th className="px-4 py-3 text-right">Rate</th>
-                <th className="px-4 py-3 text-right">Disc</th>
-                <th className="px-4 py-3 text-right">Taxable</th>
-                <th className="px-4 py-3 text-right">Tax %</th>
-                <th className="px-4 py-3 text-right">Tax Amt</th>
-                <th className="px-4 py-3 text-right">Total</th>
+                <th className="px-4 py-3 print:py-2">#</th>
+                <th className="px-4 py-3 print:py-2">Description</th>
+                <th className="px-4 py-3 print:py-2">HSN/SAC</th>
+                <th className="px-4 py-3 print:py-2 text-right">Qty</th>
+                <th className="px-4 py-3 print:py-2 text-right">Rate</th>
+                <th className="px-4 py-3 print:py-2 text-right">Disc</th>
+                <th className="px-4 py-3 print:py-2 text-right">Taxable</th>
+                <th className="px-4 py-3 print:py-2 text-right">Tax %</th>
+                <th className="px-4 py-3 print:py-2 text-right">Tax Amt</th>
+                <th className="px-4 py-3 print:py-2 text-right">Total</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800/60">
+            <tbody className="divide-y divide-gray-800/60 print:divide-gray-200">
               {invoice.items?.map((it, idx) => {
                 const taxAmt =
                   Number(it.cgst_amount || 0) +
@@ -394,26 +523,43 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                   Number(it.igst_amount || 0);
 
                 return (
-                  <tr key={it.id || idx} className="hover:bg-gray-800/30">
-                    <td className="px-4 py-3.5 text-gray-500">{idx + 1}</td>
-                    <td className="px-4 py-3.5 font-medium text-white">
+                  <tr
+                    key={it.id || idx}
+                    className="hover:bg-gray-800/30 print:hover:bg-transparent print-avoid-break"
+                  >
+                    <td className="px-4 py-3.5 print:py-2 text-gray-500 print:text-gray-700">{idx + 1}</td>
+                    <td className="px-4 py-3.5 print:py-2 font-medium text-white print:text-black">
                       <div>{it.description_snapshot}</div>
                       {it.sku_snapshot && (
-                        <span className="text-[10px] text-gray-500">SKU: {it.sku_snapshot}</span>
+                        <span className="text-[10px] text-gray-500 print:text-gray-600">
+                          SKU: {it.sku_snapshot}
+                        </span>
                       )}
                     </td>
-                    <td className="px-4 py-3.5 font-mono text-gray-400">{it.hsn_sac_snapshot || "—"}</td>
-                    <td className="px-4 py-3.5 text-right font-mono">
+                    <td className="px-4 py-3.5 print:py-2 font-mono text-gray-400 print:text-gray-800">
+                      {it.hsn_sac_snapshot || "—"}
+                    </td>
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono print:text-black">
                       {Number(it.quantity)} {it.unit_snapshot}
                     </td>
-                    <td className="px-4 py-3.5 text-right font-mono">{formatCurrency(Number(it.unit_price))}</td>
-                    <td className="px-4 py-3.5 text-right font-mono text-emerald-400">
-                      {Number(it.discount_amount) > 0 ? `-${formatCurrency(Number(it.discount_amount))}` : "—"}
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono print:text-black">
+                      {formatCurrency(Number(it.unit_price))}
                     </td>
-                    <td className="px-4 py-3.5 text-right font-mono">{formatCurrency(Number(it.taxable_amount))}</td>
-                    <td className="px-4 py-3.5 text-right font-mono">{Number(it.tax_rate)}%</td>
-                    <td className="px-4 py-3.5 text-right font-mono">{formatCurrency(taxAmt)}</td>
-                    <td className="px-4 py-3.5 text-right font-mono font-semibold text-white">
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono text-emerald-400 print:text-green-800">
+                      {Number(it.discount_amount) > 0
+                        ? `-${formatCurrency(Number(it.discount_amount))}`
+                        : "—"}
+                    </td>
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono print:text-black">
+                      {formatCurrency(Number(it.taxable_amount))}
+                    </td>
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono print:text-black">
+                      {Number(it.tax_rate)}%
+                    </td>
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono print:text-black">
+                      {formatCurrency(taxAmt)}
+                    </td>
+                    <td className="px-4 py-3.5 print:py-2 text-right font-mono font-semibold text-white print:text-black">
                       {formatCurrency(Number(it.line_total))}
                     </td>
                   </tr>
@@ -424,34 +570,37 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
 
         {/* Calculation Summary Footer */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-12 print:grid-cols-12 print:gap-4 print-avoid-break">
           {/* Notes & Bank Details */}
-          <div className="space-y-4 text-xs md:col-span-7">
+          <div className="space-y-4 text-xs md:col-span-7 print:col-span-7">
             {invoice.notes && (
-              <div className="rounded-lg border border-gray-800 bg-gray-950/30 p-4">
-                <span className="font-semibold text-gray-400">Notes:</span>
-                <p className="mt-1 whitespace-pre-line text-gray-300">{invoice.notes}</p>
+              <div className="rounded-lg border border-gray-800 bg-gray-950/30 p-4 print:border-gray-300 print:bg-gray-50/50 print:p-3 print:text-black">
+                <span className="font-semibold text-gray-400 print:text-gray-700">Notes:</span>
+                <p className="mt-1 whitespace-pre-line text-gray-300 print:text-black">{invoice.notes}</p>
               </div>
             )}
 
             {seller.bankDetails && (
-              <div className="rounded-lg border border-gray-800 bg-gray-950/30 p-4">
-                <span className="font-semibold text-purple-400">Bank Details for Direct RTGS/NEFT:</span>
-                <div className="mt-2 grid grid-cols-2 gap-2 text-gray-300">
+              <div className="rounded-lg border border-gray-800 bg-gray-950/30 p-4 print:border-gray-300 print:bg-gray-50/50 print:p-3 print:text-black">
+                <span className="font-semibold text-purple-400 print:text-purple-800">
+                  Bank Details for Direct RTGS/NEFT:
+                </span>
+                <div className="mt-2 grid grid-cols-2 gap-2 text-gray-300 print:text-black">
                   <p>
-                    <span className="text-gray-500">Account:</span> {seller.bankDetails.accountName}
+                    <span className="text-gray-500 print:text-gray-600">Account:</span>{" "}
+                    {seller.bankDetails.accountName}
                   </p>
                   <p>
-                    <span className="text-gray-500">A/C No:</span>{" "}
-                    <span className="font-mono">{seller.bankDetails.accountNumber}</span>
+                    <span className="text-gray-500 print:text-gray-600">A/C No:</span>{" "}
+                    <span className="font-mono font-semibold">{seller.bankDetails.accountNumber}</span>
                   </p>
                   <p>
-                    <span className="text-gray-500">IFSC:</span>{" "}
-                    <span className="font-mono">{seller.bankDetails.ifscCode}</span>
+                    <span className="text-gray-500 print:text-gray-600">IFSC:</span>{" "}
+                    <span className="font-mono font-semibold">{seller.bankDetails.ifscCode}</span>
                   </p>
                   <p>
-                    <span className="text-gray-500">Bank:</span> {seller.bankDetails.bankName} (
-                    {seller.bankDetails.branch})
+                    <span className="text-gray-500 print:text-gray-600">Bank:</span>{" "}
+                    {seller.bankDetails.bankName} ({seller.bankDetails.branch})
                   </p>
                 </div>
               </div>
@@ -459,38 +608,44 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           </div>
 
           {/* Totals Table */}
-          <div className="md:col-span-5">
-            <div className="rounded-lg border border-gray-800 bg-gray-950/60 p-5 text-xs">
+          <div className="md:col-span-5 print:col-span-5">
+            <div className="rounded-lg border border-gray-800 bg-gray-950/60 p-5 text-xs print:border-gray-300 print:bg-gray-50/70 print:p-4 print:text-black">
               <div className="space-y-2">
-                <div className="flex justify-between text-gray-400">
+                <div className="flex justify-between text-gray-400 print:text-gray-700">
                   <span>Subtotal</span>
-                  <span className="font-mono text-white">{formatCurrency(Number(invoice.subtotal))}</span>
+                  <span className="font-mono text-white print:text-black">
+                    {formatCurrency(Number(invoice.subtotal))}
+                  </span>
                 </div>
 
                 {Number(invoice.discount_total) > 0 && (
-                  <div className="flex justify-between text-emerald-400">
+                  <div className="flex justify-between text-emerald-400 print:text-green-800">
                     <span>Discount</span>
-                    <span className="font-mono">-{formatCurrency(Number(invoice.discount_total))}</span>
+                    <span className="font-mono">
+                      -{formatCurrency(Number(invoice.discount_total))}
+                    </span>
                   </div>
                 )}
 
-                <div className="flex justify-between text-gray-400">
+                <div className="flex justify-between text-gray-400 print:text-gray-700">
                   <span>Taxable Value</span>
-                  <span className="font-mono text-white">{formatCurrency(Number(invoice.taxable_total))}</span>
+                  <span className="font-mono text-white print:text-black">
+                    {formatCurrency(Number(invoice.taxable_total))}
+                  </span>
                 </div>
 
                 {invoice.is_interstate ? (
-                  <div className="flex justify-between text-blue-400">
+                  <div className="flex justify-between text-blue-400 print:text-blue-900">
                     <span>IGST</span>
                     <span className="font-mono">{formatCurrency(Number(invoice.igst_total))}</span>
                   </div>
                 ) : (
                   <>
-                    <div className="flex justify-between text-purple-400">
+                    <div className="flex justify-between text-purple-400 print:text-purple-900">
                       <span>CGST</span>
                       <span className="font-mono">{formatCurrency(Number(invoice.cgst_total))}</span>
                     </div>
-                    <div className="flex justify-between text-purple-400">
+                    <div className="flex justify-between text-purple-400 print:text-purple-900">
                       <span>SGST</span>
                       <span className="font-mono">{formatCurrency(Number(invoice.sgst_total))}</span>
                     </div>
@@ -498,31 +653,35 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 )}
 
                 {Number(invoice.round_off) !== 0 && (
-                  <div className="flex justify-between text-gray-500">
+                  <div className="flex justify-between text-gray-500 print:text-gray-600">
                     <span>Round Off</span>
                     <span className="font-mono">
-                      {Number(invoice.round_off) > 0 ? `+${invoice.round_off}` : invoice.round_off}
+                      {Number(invoice.round_off) > 0
+                        ? `+${invoice.round_off}`
+                        : invoice.round_off}
                     </span>
                   </div>
                 )}
 
-                <div className="border-t border-gray-800 pt-3">
+                <div className="border-t border-gray-800 pt-3 print:border-gray-400">
                   <div className="flex items-baseline justify-between text-sm">
-                    <span className="font-bold text-white">Grand Total</span>
-                    <span className="font-mono text-lg font-bold text-yellow-400">
+                    <span className="font-bold text-white print:text-black">Grand Total</span>
+                    <span className="font-mono text-lg font-bold text-yellow-400 print:text-purple-900">
                       {formatCurrency(Number(invoice.grand_total))}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex justify-between border-t border-gray-800/60 pt-2 text-gray-400">
+                <div className="flex justify-between border-t border-gray-800/60 pt-2 text-gray-400 print:border-gray-300 print:text-gray-700">
                   <span>Amount Paid</span>
-                  <span className="font-mono text-emerald-400">{formatCurrency(Number(invoice.amount_paid))}</span>
+                  <span className="font-mono text-emerald-400 print:text-green-800 font-semibold">
+                    {formatCurrency(Number(invoice.amount_paid))}
+                  </span>
                 </div>
 
                 <div className="flex justify-between font-semibold">
-                  <span className="text-white">Amount Due</span>
-                  <span className="font-mono text-sm text-yellow-400">
+                  <span className="text-white print:text-black">Amount Due</span>
+                  <span className="font-mono text-sm text-yellow-400 print:text-black font-bold">
                     {formatCurrency(Number(invoice.amount_due))}
                   </span>
                 </div>
@@ -530,14 +689,39 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             </div>
           </div>
         </div>
+
+        {/* Printable Authorized Signatory & Legal Declaration (Print Only) */}
+        <div className="hidden print:flex justify-between items-end pt-8 mt-8 border-t-2 border-gray-300 print-avoid-break">
+          <div className="text-[10px] text-gray-600 max-w-sm space-y-1">
+            <p className="font-bold text-gray-900">Declaration & Terms:</p>
+            <p>
+              1. We declare that this invoice shows the actual price of services described and that all particulars are true and correct.
+            </p>
+            <p>2. Subject to Jaipur jurisdiction.</p>
+            <p className="pt-2 italic text-gray-500">
+              This is a computer-generated tax invoice and requires no physical signature.
+            </p>
+          </div>
+          <div className="text-right text-xs">
+            <p className="font-bold text-gray-900">
+              For {seller.legalName || "Growth Service Technologies LLP"}
+            </p>
+            <div className="h-16"></div>
+            <p className="border-t border-gray-500 pt-1 font-semibold text-gray-800">
+              Authorized Signatory
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Payment Links Section (Phase 7) */}
-      <InvoicePaymentLinksSection invoice={invoice} />
+      {/* Payment Links Section (Phase 7) — Hidden during print */}
+      <div className="print:hidden">
+        <InvoicePaymentLinksSection invoice={invoice} />
+      </div>
 
       {/* Issue Modal */}
       {showIssueModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm print:hidden">
           <div className="w-full max-w-md rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-2xl">
             <h3 className="text-lg font-bold text-white">Issue Official Invoice?</h3>
             <p className="mt-2 text-sm text-gray-400">
@@ -568,7 +752,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
       {/* Cancel Modal */}
       {showCancelModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm print:hidden">
           <div className="w-full max-w-md rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-2xl">
             <div className="flex items-center gap-2 text-red-400">
               <AlertTriangle className="h-5 w-5" />
@@ -607,6 +791,178 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 <span>Confirm Cancellation</span>
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Graceful Email Invoice Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm print:hidden">
+          <div className="w-full max-w-md rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-2xl">
+            <div className="flex items-center gap-2 text-blue-400">
+              <Mail className="h-5 w-5" />
+              <h3 className="text-lg font-bold text-white">Email Invoice to Client</h3>
+            </div>
+
+            {isDraft && (
+              <div className="mt-3 flex items-start gap-2.5 rounded-lg border border-amber-500/30 bg-amber-950/20 p-3 text-xs text-amber-300">
+                <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold">Invoice is in Draft status</p>
+                  <p className="mt-0.5 text-amber-400/90">
+                    GST rules require invoices to be officially issued before sending to clients. You can issue it first or enter an email to test delivery.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleSendEmail} className="mt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold uppercase text-gray-400">
+                  Recipient Email Address <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={emailRecipient}
+                  onChange={(e) => {
+                    setEmailRecipient(e.target.value);
+                    if (emailError) setEmailError(null);
+                  }}
+                  placeholder="client@company.com"
+                  className="mt-1.5 w-full rounded-lg border border-gray-700 bg-gray-800 px-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+                />
+                {!initialRecipient && (
+                  <p className="mt-1.5 text-[11px] text-gray-400">
+                    No email was configured on this client profile. Please specify one above.
+                  </p>
+                )}
+              </div>
+
+              {emailError && (
+                <div className="rounded-lg border border-red-500/30 bg-red-950/20 p-3 text-xs text-red-300">
+                  <p className="font-medium">{emailError}</p>
+                </div>
+              )}
+
+              <div className="rounded-lg border border-gray-800 bg-gray-950/40 p-3 text-xs text-gray-400 space-y-1">
+                <p>
+                  <span className="text-gray-500">Invoice:</span>{" "}
+                  <strong className="text-white font-mono">{invoice.invoice_number}</strong>
+                </p>
+                <p>
+                  <span className="text-gray-500">Amount Due:</span>{" "}
+                  <strong className="text-yellow-400 font-mono">
+                    {formatCurrency(Number(invoice.amount_due))}
+                  </strong>
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowEmailModal(false)}
+                  className="rounded-lg border border-gray-700 px-4 py-2 text-xs font-medium text-gray-300 hover:bg-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSendingEmail || isDraft}
+                  className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {isSendingEmail ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
+                  <span>{isSendingEmail ? "Sending…" : "Send Email"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Graceful Payment Reminder Modal */}
+      {showReminderModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm print:hidden">
+          <div className="w-full max-w-md rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-2xl">
+            <div className="flex items-center gap-2 text-amber-400">
+              <Bell className="h-5 w-5" />
+              <h3 className="text-lg font-bold text-white">Send Payment Reminder</h3>
+            </div>
+
+            {isPaid ? (
+              <div className="mt-3 flex items-start gap-2.5 rounded-lg border border-emerald-500/30 bg-emerald-950/20 p-3 text-xs text-emerald-300">
+                <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
+                <p>This invoice is already fully paid. No reminder is needed.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSendReminder} className="mt-4 space-y-4">
+                <div>
+                  <label className="block text-xs font-semibold uppercase text-gray-400">
+                    Recipient Email Address <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={emailRecipient}
+                    onChange={(e) => {
+                      setEmailRecipient(e.target.value);
+                      if (reminderError) setReminderError(null);
+                    }}
+                    placeholder="client@company.com"
+                    className="mt-1.5 w-full rounded-lg border border-gray-700 bg-gray-800 px-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none"
+                  />
+                </div>
+
+                <div className="rounded-lg border border-gray-800 bg-gray-950/40 p-3 text-xs text-gray-400 space-y-1">
+                  <p>
+                    <span className="text-gray-500">Invoice:</span>{" "}
+                    <strong className="text-white font-mono">{invoice.invoice_number}</strong>
+                  </p>
+                  <p>
+                    <span className="text-gray-500">Balance Pending:</span>{" "}
+                    <strong className="text-yellow-400 font-mono">
+                      {formatCurrency(Number(invoice.amount_due))}
+                    </strong>
+                  </p>
+                  <p>
+                    <span className="text-gray-500">Due Date:</span>{" "}
+                    <strong className="text-white">{formatDate(invoice.due_date)}</strong>
+                  </p>
+                </div>
+
+                {reminderError && (
+                  <div className="rounded-lg border border-red-500/30 bg-red-950/20 p-3 text-xs text-red-300">
+                    <p className="font-medium">{reminderError}</p>
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowReminderModal(false)}
+                    className="rounded-lg border border-gray-700 px-4 py-2 text-xs font-medium text-gray-300 hover:bg-gray-800"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSendingReminder}
+                    className="flex items-center gap-2 rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50"
+                  >
+                    {isSendingReminder ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
+                    <span>{isSendingReminder ? "Sending…" : "Send Reminder"}</span>
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}

@@ -536,3 +536,31 @@ export async function cancelInvoiceAction(
     return actionError(msg);
   }
 }
+
+/**
+ * Server action to generate and return invoice PDF as base64 string for direct client download.
+ * Runs in authenticated Next.js Server Action context.
+ */
+export async function downloadInvoicePdfAction(
+  invoiceId: string
+): Promise<ActionResult<{ base64: string; filename: string }>> {
+  try {
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:read");
+
+    if (!invoiceId) {
+      return actionError("Invoice ID is required");
+    }
+
+    const { generateInvoicePdf } = await import("../services/invoicePdfService");
+    const { buffer, filename } = await generateInvoicePdf(invoiceId);
+
+    return actionSuccess({
+      base64: buffer.toString("base64"),
+      filename,
+    });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : "Error generating invoice PDF";
+    return actionError(msg);
+  }
+}

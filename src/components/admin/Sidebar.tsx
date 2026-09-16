@@ -248,13 +248,13 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
   return (
     <>
       {/* Desktop Persistent Sidebar */}
-      <aside className="hidden lg:flex w-60 bg-gray-900 border-r border-gray-800 min-h-screen flex-col shrink-0 text-gray-200">
+      <aside className="hidden lg:flex w-60 bg-gray-900 border-r border-gray-800 min-h-screen flex-col shrink-0 text-gray-200 print:hidden">
         {navContent}
       </aside>
 
       {/* Mobile Slide-Over Drawer */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex">
+        <div className="fixed inset-0 z-50 lg:hidden flex print:hidden">
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/60 transition-opacity"

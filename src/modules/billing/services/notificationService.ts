@@ -81,37 +81,48 @@ export async function sendInvoiceNotification(
   const pdfDownloadUrl = `${baseUrl}/api/billing/invoices/${invoice.id}/pdf`;
 
   // 4. Dispatch via abstracted provider
-  const provider = getNotificationProvider();
-  const result = await provider.sendInvoice({
-    recipientEmail: targetEmail,
-    recipientName: targetName,
-    invoiceNumber: invoice.invoice_number,
-    invoiceId: invoice.id,
-    grandTotal: Number(invoice.grand_total),
-    amountDue: Number(invoice.amount_due),
-    currency: invoice.currency || "INR",
-    dueDate: invoice.due_date,
-    pdfDownloadUrl,
-    companyName: invoice.client?.company_name,
-  });
-
-  // 5. Audit log
-  if (result.success) {
-    await logAuditEvent({
-      actorUserId: options.actorUserId || "system",
-      action: "NOTIFICATION_SENT",
-      entityType: "invoice",
-      entityId: invoice.id,
-      metadata: {
-        type: "invoice_email",
-        recipient: targetEmail,
-        provider: result.provider,
-        messageId: result.messageId,
-      },
+  try {
+    const provider = getNotificationProvider();
+    const result = await provider.sendInvoice({
+      recipientEmail: targetEmail,
+      recipientName: targetName,
+      invoiceNumber: invoice.invoice_number,
+      invoiceId: invoice.id,
+      grandTotal: Number(invoice.grand_total),
+      amountDue: Number(invoice.amount_due),
+      currency: invoice.currency || "INR",
+      dueDate: invoice.due_date,
+      pdfDownloadUrl,
+      companyName: invoice.client?.company_name,
     });
-  }
 
-  return result;
+    // 5. Audit log
+    if (result.success) {
+      await logAuditEvent({
+        actorUserId: options.actorUserId || "system",
+        action: "NOTIFICATION_SENT",
+        entityType: "invoice",
+        entityId: invoice.id,
+        metadata: {
+          type: "invoice_email",
+          recipient: targetEmail,
+          provider: result.provider,
+          messageId: result.messageId,
+        },
+      });
+    }
+
+    return result;
+  } catch (providerErr: unknown) {
+    const errMessage = providerErr instanceof Error ? providerErr.message : "Email dispatch failed";
+    console.error("[NotificationService] sendInvoice error:", errMessage);
+    return {
+      success: false,
+      provider: "system",
+      error: `Failed to send email to ${targetEmail}: ${errMessage}`,
+      timestamp: new Date().toISOString(),
+    };
+  }
 }
 
 /**
@@ -177,35 +188,46 @@ export async function sendPaymentLinkNotification(
     "Valued Client";
 
   // 4. Dispatch via provider
-  const provider = getNotificationProvider();
-  const result = await provider.sendPaymentLink({
-    recipientEmail: targetEmail,
-    recipientName: targetName,
-    invoiceNumber: link.invoice?.invoice_number || "Invoice",
-    amount: Number(link.amount),
-    currency: link.currency || "INR",
-    paymentUrl: link.short_url,
-    expiresAt: link.expires_at,
-    description: link.description || undefined,
-  });
-
-  // 5. Audit log
-  if (result.success) {
-    await logAuditEvent({
-      actorUserId: options.actorUserId || "system",
-      action: "NOTIFICATION_SENT",
-      entityType: "payment_link",
-      entityId: link.id,
-      metadata: {
-        type: "payment_link_email",
-        recipient: targetEmail,
-        provider: result.provider,
-        messageId: result.messageId,
-      },
+  try {
+    const provider = getNotificationProvider();
+    const result = await provider.sendPaymentLink({
+      recipientEmail: targetEmail,
+      recipientName: targetName,
+      invoiceNumber: link.invoice?.invoice_number || "Invoice",
+      amount: Number(link.amount),
+      currency: link.currency || "INR",
+      paymentUrl: link.short_url,
+      expiresAt: link.expires_at,
+      description: link.description || undefined,
     });
-  }
 
-  return result;
+    // 5. Audit log
+    if (result.success) {
+      await logAuditEvent({
+        actorUserId: options.actorUserId || "system",
+        action: "NOTIFICATION_SENT",
+        entityType: "payment_link",
+        entityId: link.id,
+        metadata: {
+          type: "payment_link_email",
+          recipient: targetEmail,
+          provider: result.provider,
+          messageId: result.messageId,
+        },
+      });
+    }
+
+    return result;
+  } catch (providerErr: unknown) {
+    const errMessage = providerErr instanceof Error ? providerErr.message : "Payment link email failed";
+    console.error("[NotificationService] sendPaymentLink error:", errMessage);
+    return {
+      success: false,
+      provider: "system",
+      error: `Failed to email payment link to ${targetEmail}: ${errMessage}`,
+      timestamp: new Date().toISOString(),
+    };
+  }
 }
 
 /**
@@ -278,35 +300,46 @@ export async function sendPaymentReminderNotification(
     : null;
 
   // 4. Dispatch reminder
-  const provider = getNotificationProvider();
-  const result = await provider.sendPaymentReminder({
-    recipientEmail: targetEmail,
-    recipientName: targetName,
-    invoiceNumber: invoice.invoice_number,
-    amountDue: Number(invoice.amount_due),
-    currency: invoice.currency || "INR",
-    dueDate: invoice.due_date,
-    paymentUrl: activeLink?.short_url || undefined,
-    daysOverdue: check.daysOverdue,
-  });
-
-  // 5. Audit log
-  if (result.success) {
-    await logAuditEvent({
-      actorUserId: options.actorUserId || "system",
-      action: "PAYMENT_REMINDER_SENT",
-      entityType: "invoice",
-      entityId: invoice.id,
-      metadata: {
-        recipient: targetEmail,
-        daysOverdue: check.daysOverdue,
-        provider: result.provider,
-        messageId: result.messageId,
-      },
+  try {
+    const provider = getNotificationProvider();
+    const result = await provider.sendPaymentReminder({
+      recipientEmail: targetEmail,
+      recipientName: targetName,
+      invoiceNumber: invoice.invoice_number,
+      amountDue: Number(invoice.amount_due),
+      currency: invoice.currency || "INR",
+      dueDate: invoice.due_date,
+      paymentUrl: activeLink?.short_url || undefined,
+      daysOverdue: check.daysOverdue,
     });
-  }
 
-  return result;
+    // 5. Audit log
+    if (result.success) {
+      await logAuditEvent({
+        actorUserId: options.actorUserId || "system",
+        action: "PAYMENT_REMINDER_SENT",
+        entityType: "invoice",
+        entityId: invoice.id,
+        metadata: {
+          recipient: targetEmail,
+          daysOverdue: check.daysOverdue,
+          provider: result.provider,
+          messageId: result.messageId,
+        },
+      });
+    }
+
+    return result;
+  } catch (providerErr: unknown) {
+    const errMessage = providerErr instanceof Error ? providerErr.message : "Payment reminder dispatch failed";
+    console.error("[NotificationService] sendPaymentReminder error:", errMessage);
+    return {
+      success: false,
+      provider: "system",
+      error: `Failed to send reminder to ${targetEmail}: ${errMessage}`,
+      timestamp: new Date().toISOString(),
+    };
+  }
 }
 
 /**

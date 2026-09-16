@@ -28,7 +28,7 @@ export async function GET(
     const { buffer, filename } = await generateInvoicePdf(id);
 
     // 3. Stream as downloadable PDF
-    return new NextResponse(buffer, {
+    return new NextResponse(new Uint8Array(buffer), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -43,12 +43,20 @@ export async function GET(
     const message = err instanceof Error ? err.message : "Failed to generate PDF";
     console.error("[PDF Route] Error:", message);
 
-    // Return 401 for auth failures, 404 for not found, 500 for others
-    const status = message.includes("Unauthorized") || message.includes("not authenticated")
-      ? 401
-      : message.includes("not found") || message.includes("Invoice not found")
-      ? 404
-      : 500;
+    let status = 500;
+    if (typeof (err as any)?.status === "number") {
+      status = (err as any).status;
+    } else if (
+      message.includes("Authentication required") ||
+      message.includes("Unauthorized") ||
+      message.includes("not authenticated")
+    ) {
+      status = 401;
+    } else if (message.includes("Permission denied") || message.includes("Access denied")) {
+      status = 403;
+    } else if (message.includes("not found") || message.includes("Invoice not found")) {
+      status = 404;
+    }
 
     return NextResponse.json({ error: message }, { status });
   }

@@ -16,7 +16,7 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-950 text-gray-200">
+    <div className="flex min-h-screen bg-gray-950 text-gray-200 print:min-h-0 print:bg-white print:text-black">
       {/* Sidebar (Desktop + Mobile Slide-over Drawer) */}
       <Sidebar
         userEmail={userEmail}
@@ -26,9 +26,9 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
       />
 
       {/* Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 print:w-full print:block">
         {/* Mobile Sticky Top Bar */}
-        <header className="lg:hidden sticky top-0 z-30 flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-800">
+        <header className="lg:hidden sticky top-0 z-30 flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-800 print:hidden">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -65,7 +65,7 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
         </header>
 
         {/* Page Content Body */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-y-auto print:p-0 print:m-0 print:overflow-visible print:w-full">
           {children}
         </main>
       </div>
