@@ -2,7 +2,6 @@
 // src/pages/design-development/EcommerceDevelopment.tsx
 
 import React from 'react';
-import Link from 'next/link';
 import { FaShoppingCart, FaMobileAlt, FaCreditCard, FaTruck, FaSearch, FaShieldAlt } from 'react-icons/fa';
 import { 
   Check,

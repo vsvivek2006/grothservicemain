@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaTiktok, FaPinterest, FaUsers, FaChartLine, FaCalendarAlt, FaPalette, FaComment, FaRocket } from 'react-icons/fa';
 import {
   ClipboardList,

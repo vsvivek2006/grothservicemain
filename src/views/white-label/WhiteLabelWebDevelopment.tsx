@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Link from 'next/link';
 import { FaCode, FaWordpress, FaShoppingCart, FaMobileAlt, FaServer, FaShieldAlt, FaRocket, FaUsers, FaChartLine } from 'react-icons/fa';
 import {
   ClipboardList,

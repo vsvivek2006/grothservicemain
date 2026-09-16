@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Link from 'next/link';
 import { FaSearch, FaChartLine, FaShieldAlt, FaRocket, FaFileAlt, FaMobileAlt, FaGlobe } from 'react-icons/fa';
 import {
   ClipboardList,

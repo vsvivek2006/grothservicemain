@@ -2,7 +2,6 @@
 // src/pages/digital-marketing/GoogleBusinessProfile.tsx
 
 import React from 'react';
-import Link from 'next/link';
 import { FaGoogle, FaMapMarkerAlt, FaStar, FaSearch, FaPhone, FaGlobe, FaImages, FaChartBar, FaCalendarAlt, FaComment } from 'react-icons/fa';
 import { 
   Check,

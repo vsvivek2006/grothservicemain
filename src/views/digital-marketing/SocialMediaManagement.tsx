@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaChartBar, FaUsers, FaBullhorn, FaVideo, FaHashtag } from 'react-icons/fa';
 import { Check, Phone, MessageCircle } from 'lucide-react';
 import { primaryPhone } from '../../data/centralizedData';

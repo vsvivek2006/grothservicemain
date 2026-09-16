@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Link from 'next/link';
 import { FaGoogle, FaFacebook, FaLinkedin, FaDollarSign, FaRocket, FaShieldAlt, FaCog, FaBullseye, FaFileAlt } from 'react-icons/fa';
 import {
   Handshake,
