@@ -2,24 +2,24 @@ import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { PostTable } from "@/components/admin/PostTable";
-import type { PostRecord } from "@/lib/validations/post";
+import type { PostSummary } from "@/lib/validations/post";
 
 export const revalidate = 0; // Always fresh list
 
 export default async function AdminBlogListPage() {
-  let postList: PostRecord[] = [];
+  let postList: PostSummary[] = [];
 
   try {
     const supabase = createAdminClient();
     const { data: posts, error } = await supabase
       .from("posts")
-      .select("id, title, slug, content, meta_description, cover_image_url, author, tags, status, source, published_at, created_at, updated_at")
+      .select("id, title, slug, meta_description, cover_image_url, author, tags, status, source, published_at, created_at, updated_at")
       .order("created_at", { ascending: false });
 
     if (error) {
       console.error("Error fetching posts:", error.message);
     }
-    postList = (posts || []) as PostRecord[];
+    postList = (posts || []) as PostSummary[];
   } catch (err) {
     console.error("Admin blog list fetch error:", err);
   }

@@ -120,6 +120,10 @@ const nextConfig = {
       'date-fns',
       'sonner',
     ],
+    staleTimes: {
+      dynamic: 30,
+      static: 180,
+    },
   },
   webpack: (config) => {
     config.resolve.alias = {

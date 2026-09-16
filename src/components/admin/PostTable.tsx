@@ -16,16 +16,16 @@ import {
   Calendar,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { PostRecord } from "@/lib/validations/post";
+import type { PostRecord, PostSummary } from "@/lib/validations/post";
 import { deletePostAction } from "@/app/admin/blog/actions";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 interface PostTableProps {
-  initialPosts: PostRecord[];
+  initialPosts: PostSummary[];
 }
 
 export function PostTable({ initialPosts }: PostTableProps) {
-  const [posts, setPosts] = useState<PostRecord[]>(initialPosts);
+  const [posts, setPosts] = useState<PostSummary[]>(initialPosts);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "published" | "draft">("all");
   const [deletingId, setDeletingId] = useState<string | null>(null);

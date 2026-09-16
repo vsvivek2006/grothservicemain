@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { createSessionClient } from "@/lib/supabase/server";
 import { AdminShell } from "@/components/admin/AdminShell";
@@ -17,15 +18,24 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   let userEmail: string | null = null;
-  try {
-    const supabase = await createSessionClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    userEmail = user?.email || null;
-  } catch {
-    // If Supabase env vars are missing or unconfigured
-    userEmail = null;
+
+  // 1. Fast path: check if middleware already verified and forwarded the user identity (0ms network delay)
+  const headersList = await headers();
+  const headerEmail = headersList.get("x-user-email");
+
+  if (headerEmail) {
+    userEmail = headerEmail;
+  } else {
+    // 2. Fallback only if headers missing or direct access
+    try {
+      const supabase = await createSessionClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      userEmail = user?.email || null;
+    } catch {
+      userEmail = null;
+    }
   }
 
   return (

@@ -97,6 +97,29 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(destinationUrl);
     }
 
+    // If authenticated and accessing admin, forward user identity headers to downstream server components
+    if (user && !isLoginPage) {
+      const requestHeaders = new Headers(request.headers);
+      requestHeaders.set("x-user-email", user.email || "");
+      requestHeaders.set("x-user-id", user.id);
+      if (user.role) {
+        requestHeaders.set("x-user-role", user.role);
+      }
+
+      const responseWithHeaders = NextResponse.next({
+        request: {
+          headers: requestHeaders,
+        },
+      });
+
+      // Preserve any cookies refreshed by Supabase
+      supabaseResponse.cookies.getAll().forEach((cookie) => {
+        responseWithHeaders.cookies.set(cookie);
+      });
+
+      return responseWithHeaders;
+    }
+
     return supabaseResponse;
   } catch (error) {
     console.error("Middleware auth verification error:", error);

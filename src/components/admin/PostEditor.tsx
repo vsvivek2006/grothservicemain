@@ -20,14 +20,27 @@ import {
   Eye,
 } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { postSchema, type PostInput, type PostRecord } from "@/lib/validations/post";
 import { createPostAction, updatePostAction, deletePostAction } from "@/app/admin/blog/actions";
 import { ImageUpload } from "./ImageUpload";
 import { TagInput } from "./TagInput";
-import { TiptapEditor } from "./TiptapEditor";
 import { AIGeneratorPanel } from "./AIGeneratorPanel";
 import { ConfirmDialog } from "./ConfirmDialog";
 import type { GenerateBlogPostOutput } from "@/lib/ai/generateBlogPost";
+
+const TiptapEditor = dynamic(
+  () => import("./TiptapEditor").then((mod) => mod.TiptapEditor),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-[350px] w-full rounded-xl border border-gray-800 bg-gray-900/60 p-6 flex flex-col items-center justify-center text-gray-500 animate-pulse">
+        <Loader2 className="w-6 h-6 animate-spin text-purple-500 mb-2" />
+        <span className="text-xs font-medium">Loading rich text editor...</span>
+      </div>
+    ),
+  }
+);
 
 interface PostEditorProps {
   initialData?: PostRecord | null;

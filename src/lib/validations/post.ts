@@ -23,3 +23,6 @@ export interface PostRecord extends PostInput {
   created_at: string;
   updated_at: string;
 }
+
+export type PostSummary = Omit<PostRecord, "content">;
+
