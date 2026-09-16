@@ -102,9 +102,8 @@ export async function middleware(request: NextRequest) {
       const requestHeaders = new Headers(request.headers);
       requestHeaders.set("x-user-email", user.email || "");
       requestHeaders.set("x-user-id", user.id);
-      if (user.role) {
-        requestHeaders.set("x-user-role", user.role);
-      }
+      const adminRole = (user.app_metadata?.role as string) || "admin";
+      requestHeaders.set("x-user-role", adminRole);
 
       const responseWithHeaders = NextResponse.next({
         request: {

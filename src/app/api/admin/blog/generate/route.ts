@@ -1,21 +1,11 @@
 import { NextResponse } from "next/server";
 import { generateBlogPost } from "@/lib/ai/generateBlogPost";
-import { createSessionClient } from "@/lib/supabase/server";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export async function POST(request: Request) {
   try {
-    const sessionClient = await createSessionClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await sessionClient.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json(
-        { error: "Unauthorized. You must be an authenticated admin to generate content." },
-        { status: 401 }
-      );
-    }
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "content:write");
     const body = await request.json();
     const { topic, tone, keywords, wordCount, audience, model } = body;
 

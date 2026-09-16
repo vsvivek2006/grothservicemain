@@ -1,24 +1,21 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createSessionClient, createAdminClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 import { postSchema, type PostInput } from "@/lib/validations/post";
 
 export async function createPostAction(input: PostInput) {
   try {
-    const validated = postSchema.parse(input);
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "content:write");
 
-    // Verify session
-    const sessionClient = await createSessionClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await sessionClient.auth.getUser();
-
-    if (authError || !user) {
-      return { success: false, error: "Unauthorized. Please sign in." };
-    }
-
+    const normalizedInput = {
+      ...input,
+      meta_description: input.meta_description ?? "",
+      cover_image_url: input.cover_image_url ?? "",
+    };
+    const validated = postSchema.parse(normalizedInput);
     const adminClient = createAdminClient();
 
     const newRecord = {
@@ -68,18 +65,15 @@ export async function createPostAction(input: PostInput) {
 
 export async function updatePostAction(id: string, input: PostInput) {
   try {
-    const validated = postSchema.parse(input);
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "content:write");
 
-    const sessionClient = await createSessionClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await sessionClient.auth.getUser();
-
-    if (authError || !user) {
-      return { success: false, error: "Unauthorized. Please sign in." };
-    }
-
+    const normalizedInput = {
+      ...input,
+      meta_description: input.meta_description ?? "",
+      cover_image_url: input.cover_image_url ?? "",
+    };
+    const validated = postSchema.parse(normalizedInput);
     const adminClient = createAdminClient();
 
     // Fetch existing post to handle published_at logic
@@ -143,15 +137,8 @@ export async function updatePostAction(id: string, input: PostInput) {
 
 export async function deletePostAction(id: string) {
   try {
-    const sessionClient = await createSessionClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await sessionClient.auth.getUser();
-
-    if (authError || !user) {
-      return { success: false, error: "Unauthorized. Please sign in." };
-    }
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "content:delete");
 
     const adminClient = createAdminClient();
 

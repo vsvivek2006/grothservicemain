@@ -1,22 +1,13 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import sharp from "sharp";
-import { createSessionClient, createAdminClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
+import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export async function POST(request: Request) {
   try {
-    const sessionClient = await createSessionClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await sessionClient.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json(
-        { error: "Unauthorized. Admin session required." },
-        { status: 401 }
-      );
-    }
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "content:write");
 
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
