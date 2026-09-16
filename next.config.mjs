@@ -110,11 +110,6 @@ const nextConfig = {
   },
   generateEtags: true,
   serverExternalPackages: ['groq-sdk'],
-  turbopack: {
-    resolveAlias: {
-      'react-router-dom': './src/shims/react-router-dom.tsx',
-    },
-  },
   experimental: {
     optimizePackageImports: [
       'lucide-react',
@@ -126,13 +121,6 @@ const nextConfig = {
       dynamic: 30,
       static: 180,
     },
-  },
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'react-router-dom': path.resolve(__dirname, 'src/shims/react-router-dom.tsx'),
-    };
-    return config;
   },
   async redirects() {
     return [
