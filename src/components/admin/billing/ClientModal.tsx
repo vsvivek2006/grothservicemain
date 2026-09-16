@@ -245,9 +245,9 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         }}
         aria-hidden="true"
       />
-      <div className="relative w-full max-w-lg bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 z-10">
+      <div className="relative w-full max-w-lg bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 z-10 flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 shrink-0">
           <div className="flex items-center gap-2">
             <Building2 className="w-5 h-5 text-purple-400" />
             <h2 className="text-base font-bold text-white tracking-tight">
@@ -265,8 +265,9 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-          {/* 1. Client / Company Name */}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="p-6 space-y-4 flex-1 overflow-y-auto min-h-0">
+            {/* 1. Client / Company Name */}
           <div>
             <label className="block text-xs font-semibold text-gray-300 mb-1">
               Client / Company Name <span className="text-rose-400">*</span>
@@ -438,9 +439,10 @@ export const ClientModal: React.FC<ClientModalProps> = ({
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-800">
+        {/* Action Buttons */}
+          <div className="flex items-center justify-end gap-3 px-6 py-3.5 border-t border-gray-800 bg-gray-900/95 shrink-0">
             <button
               type="button"
               onClick={onClose}

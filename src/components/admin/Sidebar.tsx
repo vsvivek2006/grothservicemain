@@ -137,7 +137,7 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
 
   const navContent = (
     <div className="flex flex-col h-full justify-between bg-gray-900">
-      <div>
+      <div className="flex-1 overflow-y-auto min-h-0">
         {/* Brand Header */}
         <div className="p-5 border-b border-gray-800 flex items-center justify-between">
           <div>
@@ -242,7 +242,7 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
       </div>
 
       {/* Footer / User Profile & Logout */}
-      <div className="p-4 border-t border-gray-800 space-y-2 bg-gray-900/90">
+      <div className="p-4 border-t border-gray-800 space-y-2 bg-gray-900/90 shrink-0">
         {userEmail && (
           <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-gray-800/60 text-xs text-gray-300 border border-gray-800">
             <div className="flex items-center gap-2 min-w-0">

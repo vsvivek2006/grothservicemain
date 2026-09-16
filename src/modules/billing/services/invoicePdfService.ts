@@ -13,11 +13,14 @@
 
 import "server-only";
 
+import React from "react";
+import { renderToBuffer } from "@react-pdf/renderer";
 import { spawn } from "node:child_process";
 import path from "node:path";
+import fs from "node:fs";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getSellerSnapshot } from "./sellerConfig";
-import type { BuyerSnapshot } from "./invoicePdfTemplate";
+import { InvoicePdfDocument, type BuyerSnapshot } from "./invoicePdfTemplate";
 import type { Invoice, InvoiceItem } from "../types/database";
 
 export interface InvoicePdfResult {
@@ -26,13 +29,10 @@ export interface InvoicePdfResult {
 }
 
 /**
- * Spawns an isolated Node.js process to render PDF via @react-pdf/renderer.
- * Decouples PDF rendering from Next.js 15's React 19 canary runtime to guarantee
- * 100% stable PDF generation without React invariant/reconciler conflicts (Error #31).
+ * Spawns an isolated Node.js process to render PDF as secondary fallback.
  */
-function renderPdfViaWorker(payload: Record<string, unknown>): Promise<Buffer> {
+function renderPdfViaWorker(workerPath: string, payload: Record<string, unknown>): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    const workerPath = path.resolve(process.cwd(), "src/modules/billing/services/pdfWorker.mjs");
     const proc = spawn(process.execPath, [workerPath]);
 
     let stdout = "";
@@ -78,6 +78,46 @@ function renderPdfViaWorker(payload: Record<string, unknown>): Promise<Buffer> {
     proc.stdin.write(JSON.stringify(payload));
     proc.stdin.end();
   });
+}
+
+/**
+ * Robust, production-grade PDF renderer.
+ * Tier 1: In-process render via @react-pdf/renderer (serverless-safe, 0 child processes, fast).
+ * Tier 2: Isolated child process worker fallback.
+ */
+async function renderPdfRobustly(payload: {
+  invoice: Invoice;
+  items: InvoiceItem[];
+  seller: ReturnType<typeof getSellerSnapshot>;
+  buyer: BuyerSnapshot;
+}): Promise<Buffer> {
+  // Tier 1: Direct in-process renderToBuffer
+  try {
+    const element = React.createElement(InvoicePdfDocument, payload);
+    const buffer = await renderToBuffer(element as unknown as React.ReactElement);
+    if (buffer && buffer.length > 0) {
+      return Buffer.from(buffer);
+    }
+  } catch (directErr) {
+    console.warn("[invoicePdfService] Direct in-process renderToBuffer failed:", directErr);
+  }
+
+  // Tier 2: Isolated child worker process
+  try {
+    const candidatePaths = [
+      path.resolve(process.cwd(), "src/modules/billing/services/pdfWorker.mjs"),
+      path.resolve(process.cwd(), ".next/server/pdfWorker.mjs"),
+    ];
+    const workerPath = candidatePaths.find((p) => fs.existsSync(p));
+    if (workerPath) {
+      const buffer = await renderPdfViaWorker(workerPath, payload as unknown as Record<string, unknown>);
+      return buffer;
+    }
+  } catch (workerErr) {
+    console.error("[invoicePdfService] Worker fallback also failed:", workerErr);
+  }
+
+  throw new Error("Unable to render invoice PDF on server. Please use Print View to save as PDF.");
 }
 
 /**
@@ -140,8 +180,8 @@ export async function generateInvoicePdf(invoiceId: string): Promise<InvoicePdfR
     country: (rawBuyer?.country as string) ?? "India",
   };
 
-  // 5. Render to PDF buffer in isolated Node worker (eliminates Next 15 React 19 reconciler conflict)
-  const buffer = await renderPdfViaWorker({
+  // 5. Render to PDF buffer via robust multi-tier pipeline
+  const buffer = await renderPdfRobustly({
     invoice: invoice as Invoice,
     items: sortedItems,
     seller,

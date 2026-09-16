@@ -201,7 +201,8 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                 color: #000000 !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                width: 100% !important;
+                width: 210mm !important;
+                min-width: 210mm !important;
               }
               aside, header, nav, footer,
               .no-print,
@@ -214,8 +215,9 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                 overflow: hidden !important;
               }
               .print-container {
-                max-width: 100% !important;
-                width: 100% !important;
+                max-width: 210mm !important;
+                min-width: 210mm !important;
+                width: 210mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 box-shadow: none !important;
@@ -244,17 +246,17 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
       />
 
       {/* Non-Printable Top Action Bar */}
-      <div className="no-print print:!hidden mx-auto mb-6 flex max-w-[210mm] items-center justify-between rounded-lg bg-gray-900 px-5 py-3 text-white shadow-md">
-        <div className="flex items-center gap-3">
+      <div className="no-print print:!hidden mx-auto mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between rounded-xl bg-gray-900 p-3 sm:px-5 sm:py-3.5 text-white shadow-lg border border-gray-800 max-w-[210mm]">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           <Link
             href={`/admin/billing/invoices/${invoice.id}`}
-            className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white"
+            className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white bg-gray-800 px-2.5 py-1.5 rounded-lg transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Dashboard</span>
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span>Back</span>
           </Link>
-          <span className="text-gray-600">|</span>
-          <span className="font-mono text-xs font-semibold text-yellow-400">
+          <span className="text-gray-600 hidden sm:inline">|</span>
+          <span className="font-mono text-xs sm:text-sm font-semibold text-yellow-400">
             {invoice.invoice_number}
           </span>
           <span className="rounded bg-purple-900/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-purple-200">
@@ -267,12 +269,12 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
           )}
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5">
           <button
             type="button"
             onClick={handleDownload}
             disabled={isDownloading}
-            className="flex items-center gap-1.5 rounded-md bg-purple-700 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-purple-600 disabled:opacity-50 cursor-pointer"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-purple-700 px-3.5 py-2 text-xs font-medium text-white hover:bg-purple-600 disabled:opacity-50 cursor-pointer shadow-xs transition-colors"
           >
             <Download className="h-3.5 w-3.5" />
             <span>{isDownloading ? "Generating…" : "Download PDF"}</span>
@@ -280,7 +282,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
           <button
             type="button"
             onClick={() => window.print()}
-            className="flex items-center gap-1.5 rounded-md bg-emerald-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-md transition-colors"
           >
             <Printer className="h-3.5 w-3.5" />
             <span>Print Invoice</span>
@@ -289,7 +291,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
       </div>
 
       {/* Official A4 Indian Tax Invoice Document Sheet */}
-      <div className="print-container mx-auto w-full max-w-[210mm] rounded-sm bg-white p-8 print:p-0 text-gray-900 shadow-2xl print:max-w-none print:w-full print:shadow-none border border-gray-300 print:border-none">
+      <div className="print-container mx-auto w-full max-w-[210mm] rounded-lg bg-white p-4 sm:p-6 md:p-8 print:p-0 text-gray-900 shadow-xl print:max-w-none print:w-full print:shadow-none border border-gray-300 print:border-none">
         {/* Header: Company Identity & Tax Invoice Title */}
         <div className="avoid-break border-b-2 border-purple-800 pb-3 print:pb-2">
           <div className="flex items-start justify-between">
@@ -414,8 +416,8 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         </div>
 
         {/* Line Items Table */}
-        <div className="my-3 print:my-2 border border-gray-300 rounded overflow-hidden">
-          <table className="w-full text-left text-xs table-fixed">
+        <div className="my-3 print:my-2 border border-gray-300 rounded overflow-x-auto print:overflow-visible">
+          <table className="w-full text-left text-xs table-fixed min-w-[580px] print:min-w-0">
             <thead className="print-purple-hdr bg-purple-900 text-white uppercase text-[10px] tracking-wider">
               <tr>
                 <th className="px-2 py-1.5 print:py-1 w-[4%] text-center">#</th>
@@ -476,10 +478,10 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
           </table>
         </div>
 
-        {/* Bottom Section: Bank Details & Totals Breakdown (Side-by-side flex layout to guarantee single-page fit) */}
-        <div className="avoid-break my-3 print:my-2 flex flex-row items-start justify-between gap-4">
+        {/* Bottom Section: Bank Details & Totals Breakdown */}
+        <div className="avoid-break my-3 print:my-2 flex flex-col sm:flex-row print:!flex-row items-stretch sm:items-start justify-between gap-4">
           {/* Left: Bank Details & Amount in Words */}
-          <div className="w-[58%] shrink-0 space-y-2 text-xs">
+          <div className="w-full sm:w-[58%] print:!w-[58%] shrink-0 space-y-2 text-xs">
             {/* Amount in Words */}
             <div className="rounded border border-gray-300 bg-purple-50/40 p-2.5 print:p-2">
               <span className="font-bold text-purple-900 text-[10px] uppercase tracking-wider">

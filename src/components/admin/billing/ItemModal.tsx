@@ -127,9 +127,9 @@ export const ItemModal: React.FC<ItemModalProps> = ({
         }}
         aria-hidden="true"
       />
-      <div className="relative w-full max-w-xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden my-8 z-10">
+      <div className="relative w-full max-w-xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden my-4 z-10 flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 shrink-0">
           <div className="flex items-center gap-2">
             <Package className="w-5 h-5 text-purple-400" />
             <h2 className="text-base font-semibold text-white">
@@ -139,15 +139,16 @@ export const ItemModal: React.FC<ItemModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+            className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="p-6 space-y-4 flex-1 overflow-y-auto min-h-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-300 mb-1">
                 SKU (Catalog Code) *
@@ -271,31 +272,32 @@ export const ItemModal: React.FC<ItemModalProps> = ({
             </div>
           </div>
 
-          <div className="pt-2 flex items-center justify-between">
-            <label className="inline-flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={isActive}
-                onChange={(e) => setIsActive(e.target.checked)}
-                className="rounded border-gray-700 bg-gray-800 text-purple-600 focus:ring-purple-500"
-              />
-              <span className="text-xs text-gray-300">Active in Catalog</span>
-            </label>
+            <div className="pt-2 flex items-center justify-between">
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.checked)}
+                  className="rounded border-gray-700 bg-gray-800 text-purple-600 focus:ring-purple-500"
+                />
+                <span className="text-xs text-gray-300">Active in Catalog</span>
+              </label>
+            </div>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-800">
+          <div className="flex items-center justify-end gap-3 px-6 py-3.5 border-t border-gray-800 bg-gray-900/95 shrink-0">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+              className="px-4 py-2 text-xs font-medium text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
             >
               {isSubmitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {isEditing ? "Save Changes" : "Create Item"}

@@ -127,34 +127,34 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
       // 2. Direct fallback to stream endpoint via fetch blob (prevents raw JSON new-tab display)
       const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
-      if (!res.ok) {
-        let msg = "Failed to generate PDF";
-        try {
-          const errData = await res.json();
-          if (errData?.error) msg = errData.error;
-        } catch {}
-        throw new Error(msg);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = safeFilename;
+        document.body.appendChild(a);
+        a.click();
+
+        setTimeout(() => {
+          try {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          } catch {}
+        }, 15000);
+
+        toast.success("Invoice PDF downloaded successfully!", { id: toastId });
+        return;
       }
 
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = safeFilename;
-      document.body.appendChild(a);
-      a.click();
-
-      setTimeout(() => {
-        try {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        } catch {}
-      }, 15000);
-
-      toast.success("Invoice PDF downloaded successfully!", { id: toastId });
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Error downloading invoice PDF";
-      toast.error(msg, { id: toastId });
+      // 3. Resilient fallback: open print view with autoprint if both server action and direct API fail
+      toast.dismiss(toastId);
+      toast("Direct download unavailable. Opening print view for instant PDF saving...", { icon: "ℹ️" });
+      window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank");
+    } catch {
+      toast.dismiss(toastId);
+      toast("Opening print view for PDF saving...", { icon: "ℹ️" });
+      window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank");
     } finally {
       setIsDownloading(false);
     }
@@ -293,12 +293,12 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
           <button
             type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloading}
-            className="flex items-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex items-center justify-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
           >
             {isDownloading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -311,7 +311,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           <button
             type="button"
             onClick={() => window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank")}
-            className="flex items-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
+            className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
           >
             <Printer className="h-4 w-4" />
             <span>Print View</span>
@@ -325,7 +325,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 setShowEmailModal(true);
               }}
               disabled={isSendingEmail}
-              className="flex items-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
               title="Email invoice PDF to client"
             >
               <Mail className="h-4 w-4" />
@@ -341,7 +341,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 setShowReminderModal(true);
               }}
               disabled={isSendingReminder}
-              className="flex items-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300 hover:bg-amber-900/50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300 hover:bg-amber-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
               title="Send payment reminder to client"
             >
               <Bell className="h-4 w-4" />
@@ -353,7 +353,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             <>
               <Link
                 href={`/admin/billing/invoices/${invoice.id}/edit`}
-                className="flex items-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50"
+                className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50"
               >
                 <Edit2 className="h-4 w-4" />
                 <span>Edit Draft</span>
@@ -362,7 +362,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
               <button
                 type="button"
                 onClick={() => setShowIssueModal(true)}
-                className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/40 hover:from-emerald-700 hover:to-teal-800"
+                className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/40 hover:from-emerald-700 hover:to-teal-800 cursor-pointer"
               >
                 <CheckCircle2 className="h-4 w-4" />
                 <span>Issue Invoice</span>
@@ -374,7 +374,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             <button
               type="button"
               onClick={() => setShowCancelModal(true)}
-              className="flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-950/20 px-3.5 py-2 text-xs font-medium text-red-400 hover:bg-red-900/40"
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-red-500/30 bg-red-950/20 px-3.5 py-2 text-xs font-medium text-red-400 hover:bg-red-900/40 cursor-pointer col-span-2 sm:col-span-1"
             >
               <XCircle className="h-4 w-4" />
               <span>Cancel Invoice</span>
@@ -384,7 +384,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
       </div>
 
       {/* Main Invoice Card — Fully responsive and print optimized */}
-      <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-6 shadow-2xl backdrop-blur-md md:p-8 print:p-0 print:m-0 print:border-none print:shadow-none print:bg-white print:text-black print:rounded-none">
+      <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-md print:p-0 print:m-0 print:border-none print:shadow-none print:bg-white print:text-black print:rounded-none">
         {/* Printable Official Tax Invoice Header (Visible on print only) */}
         <div className="hidden print:block border-b-2 border-purple-800 pb-4 mb-6">
           <div className="flex items-start justify-between">

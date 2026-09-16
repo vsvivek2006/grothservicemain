@@ -110,6 +110,9 @@ const nextConfig = {
   },
   generateEtags: true,
   serverExternalPackages: ['groq-sdk', '@react-pdf/renderer'],
+  outputFileTracingIncludes: {
+    '/api/billing/invoices/[id]/pdf': ['./src/modules/billing/services/**/*'],
+  },
   experimental: {
     optimizePackageImports: [
       'lucide-react',
