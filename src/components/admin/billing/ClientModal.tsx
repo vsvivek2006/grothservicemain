@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, Loader2, Building2, ChevronDown, ChevronUp } from "lucide-react";
+import { X, Loader2, Building2 } from "lucide-react";
 import { toast } from "sonner";
 import { createClientAction, updateClientAction } from "@/modules/billing/actions/clientActions";
 import { ClientListItem } from "@/modules/billing/queries/clientQueries";
@@ -49,61 +49,53 @@ export const ClientModal: React.FC<ClientModalProps> = ({
 }) => {
   const isEditing = Boolean(client);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showOptionalDetails, setShowOptionalDetails] = useState(false);
 
   // Core Essential Fields
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
   const [state, setState] = useState("Rajasthan");
   const [stateCode, setStateCode] = useState("08");
-  const [gstin, setGstin] = useState("");
 
-  // Optional Advanced Details
-  const [contactName, setContactName] = useState("");
-  const [legalName, setLegalName] = useState("");
-  const [addressLine1, setAddressLine1] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [website, setWebsite] = useState("");
+  // Optional Identity / Tax Numbers
+  const [gstin, setGstin] = useState("");
+  const [pan, setPan] = useState("");
+  const [aadhaar, setAadhaar] = useState("");
 
   useEffect(() => {
     if (client) {
       setCompanyName(client.company_name || "");
-      setContactName(client.contact_name || "");
       setEmail(client.email || "");
       setPhone(client.phone || "");
       setWebsite(client.website || "");
 
       const bp = client.billing_profile;
       if (bp) {
-        setLegalName(bp.legal_name || "");
         setGstin(bp.gstin || "");
-        setAddressLine1(bp.address_line_1 || "");
-        setCity(bp.city || "");
+        setPan(bp.pan || "");
         setState(bp.state || "Rajasthan");
         setStateCode(bp.state_code || "08");
-        setPostalCode(bp.postal_code || "");
       }
-      // If editing existing client that has address details, expand optional section
-      if (bp?.address_line_1 || bp?.gstin || client.contact_name) {
-        setShowOptionalDetails(true);
+
+      // Check for saved Aadhaar in client notes
+      if (client.notes) {
+        const match = client.notes.match(/Aadhaar:\s*([0-9\s]+)/i);
+        if (match) {
+          setAadhaar(match[1].trim());
+        }
       }
     } else {
-      // Reset form to bare minimum defaults
+      // Reset form
       setCompanyName("");
-      setContactName("");
       setEmail("");
       setPhone("");
       setWebsite("");
-      setLegalName("");
-      setGstin("");
-      setAddressLine1("");
-      setCity("");
       setState("Rajasthan");
       setStateCode("08");
-      setPostalCode("");
-      setShowOptionalDetails(false);
+      setGstin("");
+      setPan("");
+      setAadhaar("");
     }
   }, [client, isOpen]);
 
@@ -121,7 +113,8 @@ export const ClientModal: React.FC<ClientModalProps> = ({
   const handleGstinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15);
     setGstin(raw);
-    // Auto-detect state from first 2 digits of GSTIN
+
+    // Auto-detect state code from first 2 digits of GSTIN
     if (raw.length >= 2) {
       const code = raw.slice(0, 2);
       const matched = INDIAN_STATES.find((s) => s.code === code);
@@ -130,6 +123,22 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         setStateCode(matched.code);
       }
     }
+
+    // Auto-extract PAN from GSTIN (characters 3-12) if PAN not manually set
+    if (raw.length === 15 && !pan) {
+      setPan(raw.slice(2, 12));
+    }
+  };
+
+  const handlePanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 10);
+    setPan(raw);
+  };
+
+  const handleAadhaarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = e.target.value.replace(/[^0-9]/g, "").slice(0, 12);
+    const formatted = digitsOnly.match(/.{1,4}/g)?.join(" ") || digitsOnly;
+    setAadhaar(formatted);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -137,27 +146,36 @@ export const ClientModal: React.FC<ClientModalProps> = ({
     setIsSubmitting(true);
 
     const cleanCompany = companyName.trim();
+    const cleanEmail = email.trim();
+    const cleanPhone = phone.trim();
+    const cleanWebsite = website.trim()
+      ? website.trim().startsWith("http")
+        ? website.trim()
+        : `https://${website.trim()}`
+      : "";
     const cleanGstin = gstin.trim().toUpperCase();
-    const cleanPan = cleanGstin.length === 15 ? cleanGstin.slice(2, 12) : "";
+    const cleanPan = pan.trim().toUpperCase() || (cleanGstin.length === 15 ? cleanGstin.slice(2, 12) : "");
+    const cleanAadhaar = aadhaar.trim();
+
+    const notesContent = cleanAadhaar
+      ? `Aadhaar: ${cleanAadhaar}`
+      : (client?.notes || "");
 
     const payload = {
       company_name: cleanCompany,
-      contact_name: contactName.trim() || cleanCompany,
-      email: email.trim(),
-      phone: phone.trim(),
-      website: website.trim()
-        ? website.trim().startsWith("http")
-          ? website.trim()
-          : `https://${website.trim()}`
-        : "",
+      contact_name: cleanCompany,
+      email: cleanEmail,
+      phone: cleanPhone,
+      website: cleanWebsite || undefined,
+      notes: notesContent,
       status: (client?.status || "active") as "active" | "inactive" | "archived",
       billing_profile: {
-        legal_name: legalName.trim() || cleanCompany,
-        address_line_1: addressLine1.trim() || "Corporate Office",
-        city: city.trim() || state,
+        legal_name: cleanCompany,
+        address_line_1: "N/A",
+        city: state,
         state: state,
         state_code: stateCode,
-        postal_code: postalCode.trim() || "302001",
+        postal_code: "000000",
         country: "India",
         gstin: cleanGstin || "",
         pan: cleanPan || "",
@@ -211,7 +229,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* 1. Client / Company Name */}
           <div>
             <label className="block text-xs font-semibold text-gray-300 mb-1">
@@ -259,8 +277,21 @@ export const ClientModal: React.FC<ClientModalProps> = ({
             </div>
           </div>
 
-          {/* 3. State & GSTIN */}
+          {/* 3. Website & State */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-gray-300 mb-1">
+                Website URL <span className="text-gray-500 font-normal">(Optional)</span>
+              </label>
+              <input
+                type="text"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                placeholder="https://company.com"
+                className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
+              />
+            </div>
+
             <div>
               <label className="block text-xs font-semibold text-gray-300 mb-1">
                 State / Place of Supply <span className="text-rose-400">*</span>
@@ -277,128 +308,56 @@ export const ClientModal: React.FC<ClientModalProps> = ({
                 ))}
               </select>
             </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-gray-300 mb-1">
-                GSTIN <span className="text-gray-500 font-normal">(Optional)</span>
-              </label>
-              <input
-                type="text"
-                maxLength={15}
-                value={gstin}
-                onChange={handleGstinChange}
-                placeholder="08AAAAA0000A1Z5"
-                className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs font-mono focus:border-purple-500 focus:outline-hidden uppercase"
-              />
-            </div>
           </div>
 
-          {/* Collapsible: Optional Details */}
-          <div className="pt-2 border-t border-gray-800">
-            <button
-              type="button"
-              onClick={() => setShowOptionalDetails(!showOptionalDetails)}
-              className="flex items-center gap-1.5 text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors cursor-pointer"
-            >
-              {showOptionalDetails ? (
-                <>
-                  <ChevronUp className="w-3.5 h-3.5" />
-                  <span>Hide optional details</span>
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="w-3.5 h-3.5" />
-                  <span>+ Add full address &amp; contact person (Optional)</span>
-                </>
-              )}
-            </button>
-
-            {showOptionalDetails && (
-              <div className="mt-3 space-y-3 p-3.5 bg-gray-800/40 rounded-xl border border-gray-800 animate-in fade-in duration-150">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-medium text-gray-400 mb-1">
-                      Contact Person
-                    </label>
-                    <input
-                      type="text"
-                      value={contactName}
-                      onChange={(e) => setContactName(e.target.value)}
-                      placeholder="Defaults to Company Name"
-                      className="w-full px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-medium text-gray-400 mb-1">
-                      Legal Entity Name
-                    </label>
-                    <input
-                      type="text"
-                      value={legalName}
-                      onChange={(e) => setLegalName(e.target.value)}
-                      placeholder="Defaults to Company Name"
-                      className="w-full px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-medium text-gray-400 mb-1">
-                    Street Address
-                  </label>
-                  <input
-                    type="text"
-                    value={addressLine1}
-                    onChange={(e) => setAddressLine1(e.target.value)}
-                    placeholder="e.g. Office 101, Business Park"
-                    className="w-full px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-medium text-gray-400 mb-1">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="e.g. Jaipur"
-                      className="w-full px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-medium text-gray-400 mb-1">
-                      Postal Code / PIN
-                    </label>
-                    <input
-                      type="text"
-                      maxLength={10}
-                      value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
-                      placeholder="e.g. 302001"
-                      className="w-full px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-medium text-gray-400 mb-1">
-                    Website URL
-                  </label>
-                  <input
-                    type="text"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="https://clientwebsite.com"
-                    className="w-full px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-                  />
-                </div>
+          {/* 4. GSTIN, PAN & Aadhaar (All Optional) */}
+          <div className="pt-2 border-t border-gray-800/80">
+            <p className="text-[11px] font-semibold text-gray-400 mb-2">
+              Tax &amp; Identity Numbers (Optional)
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label className="block text-[11px] font-medium text-gray-400 mb-1">
+                  GSTIN
+                </label>
+                <input
+                  type="text"
+                  maxLength={15}
+                  value={gstin}
+                  onChange={handleGstinChange}
+                  placeholder="08AAAAA0000A1Z5"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs font-mono focus:border-purple-500 focus:outline-hidden uppercase"
+                />
               </div>
-            )}
+
+              <div>
+                <label className="block text-[11px] font-medium text-gray-400 mb-1">
+                  PAN
+                </label>
+                <input
+                  type="text"
+                  maxLength={10}
+                  value={pan}
+                  onChange={handlePanChange}
+                  placeholder="AAAAA0000A"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs font-mono focus:border-purple-500 focus:outline-hidden uppercase"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-medium text-gray-400 mb-1">
+                  Aadhaar
+                </label>
+                <input
+                  type="text"
+                  maxLength={14}
+                  value={aadhaar}
+                  onChange={handleAadhaarChange}
+                  placeholder="XXXX XXXX XXXX"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs font-mono focus:border-purple-500 focus:outline-hidden"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Action Buttons */}

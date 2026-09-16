@@ -208,7 +208,10 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
                           <div className="flex items-center gap-1.5">
                             <MapPin className="w-3.5 h-3.5 text-gray-500 shrink-0" />
                             <span>
-                              {bp.city}, {bp.state}
+                              {bp.city && bp.city !== bp.state && bp.city !== "N/A"
+                                ? `${bp.city}, `
+                                : ""}
+                              {bp.state}
                             </span>
                           </div>
                         ) : (
@@ -218,8 +221,12 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
 
                       <td className="py-3 px-4 whitespace-nowrap">
                         {bp?.gstin ? (
-                          <span className="font-mono text-[11px] text-gray-300">
+                          <span className="font-mono text-[11px] text-purple-300">
                             {bp.gstin}
+                          </span>
+                        ) : bp?.pan ? (
+                          <span className="font-mono text-[11px] text-yellow-400">
+                            PAN: {bp.pan}
                           </span>
                         ) : (
                           <span className="text-gray-500 text-[11px]">Unregistered</span>
