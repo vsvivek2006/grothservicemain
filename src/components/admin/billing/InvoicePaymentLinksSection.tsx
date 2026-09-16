@@ -24,6 +24,7 @@ import {
 import { sendPaymentLinkEmailAction } from "@/modules/billing/actions/notificationActions";
 import type { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import type { PaymentLinkRecord } from "@/modules/billing/types/database";
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 
 interface InvoicePaymentLinksSectionProps {
   invoice: InvoiceWithRelations;
@@ -34,6 +35,7 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
 }) => {
   const router = useRouter();
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [linkToCancel, setLinkToCancel] = useState<string | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
   const [sendingLinkId, setSendingLinkId] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -82,17 +84,18 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
     }
   };
 
-  const handleCancel = async (linkId: string) => {
-    if (!confirm("Are you sure you want to cancel this payment link?")) return;
+  const confirmCancel = async () => {
+    if (!linkToCancel) return;
 
-    setCancellingId(linkId);
+    setCancellingId(linkToCancel);
     try {
-      const res = await cancelPaymentLinkAction(linkId);
+      const res = await cancelPaymentLinkAction(linkToCancel);
       if (!res.success) {
         toast.error(res.error);
         return;
       }
       toast.success("Payment link cancelled");
+      setLinkToCancel(null);
       router.refresh();
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Error cancelling link");
@@ -352,7 +355,7 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
 
                   {!isCancelledOrPaid && (
                     <button
-                      onClick={() => handleCancel(link.id)}
+                      onClick={() => setLinkToCancel(link.id)}
                       disabled={isCancelling}
                       className="flex items-center gap-1 rounded-md border border-red-500/30 bg-red-950/20 px-2.5 py-1.5 text-xs font-medium text-red-400 hover:bg-red-900/40 disabled:cursor-not-allowed disabled:opacity-50"
                       title="Cancel payment link"
@@ -527,6 +530,20 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
           </div>
         </div>
       )}
+
+      {/* Cancel Payment Link Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={!!linkToCancel}
+        title="Cancel Payment Link"
+        description="Are you sure you want to cancel this payment link? Once cancelled, the client will not be able to make payments through it."
+        confirmLabel="Cancel Link"
+        isDestructive={true}
+        isLoading={!!cancellingId}
+        onConfirm={confirmCancel}
+        onCancel={() => {
+          if (!cancellingId) setLinkToCancel(null);
+        }}
+      />
     </div>
   );
 };

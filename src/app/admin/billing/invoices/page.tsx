@@ -144,6 +144,10 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
 
         {/* Search */}
         <form method="GET" className="relative w-full sm:w-64">
+          {status !== "all" && <input type="hidden" name="status" value={status} />}
+          {paymentStatus !== "all" && (
+            <input type="hidden" name="paymentStatus" value={paymentStatus} />
+          )}
           <input
             type="text"
             name="search"

@@ -311,7 +311,16 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
           </label>
           <select
             value={clientId}
-            onChange={(e) => setClientId(e.target.value)}
+            onChange={(e) => {
+              const selectedClientId = e.target.value;
+              setClientId(selectedClientId);
+              if (!isEditing && selectedClientId) {
+                const selectedClient = clients.find((c: any) => c.id === selectedClientId) as any;
+                if (selectedClient?.billing_profile?.state_code) {
+                  setPlaceOfSupplyCode(selectedClient.billing_profile.state_code);
+                }
+              }
+            }}
             required
             className="mt-1.5 w-full rounded-lg border border-gray-700 bg-gray-800 px-3.5 py-2.5 text-sm text-white focus:border-purple-500 focus:outline-none"
           >

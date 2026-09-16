@@ -77,7 +77,9 @@ export async function createClientAction(
       });
 
     if (profileErr) {
-      console.warn("[createClientAction] Profile creation warning:", profileErr.message);
+      console.error("[createClientAction] Profile creation failed:", profileErr.message);
+      await adminClient.from("clients").delete().eq("id", client.id);
+      return actionError(`Failed to create client billing profile: ${profileErr.message}`);
     }
 
     // 3. Insert Contacts if provided
