@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useEffect, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   Search,
   PlusCircle,
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { ClientListItem } from "@/modules/billing/queries/clientQueries";
 import { archiveClientAction } from "@/modules/billing/actions/clientActions";
 import { ClientModal } from "./ClientModal";
@@ -24,12 +26,18 @@ interface ClientTableProps {
 }
 
 export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
+  const router = useRouter();
   const [clients, setClients] = useState<ClientListItem[]>(initialClients);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<ClientListItem | null>(null);
+  const [archiveTarget, setArchiveTarget] = useState<{ id: string; name: string } | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setClients(initialClients);
+  }, [initialClients]);
 
   const filteredClients = clients.filter((client) => {
     const matchesSearch =
@@ -55,8 +63,9 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
     setIsModalOpen(true);
   };
 
-  const handleArchive = (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to archive client "${name}"?`)) return;
+  const confirmArchive = () => {
+    if (!archiveTarget) return;
+    const { id, name } = archiveTarget;
 
     startTransition(async () => {
       try {
@@ -66,6 +75,8 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
           setClients((prev) =>
             prev.map((c) => (c.id === id ? { ...c, status: "archived" } : c))
           );
+          setArchiveTarget(null);
+          router.refresh();
         } else {
           toast.error(res.error || "Failed to archive client");
         }
@@ -232,10 +243,10 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
                           {client.status !== "archived" && (
                             <button
                               type="button"
-                              onClick={() => handleArchive(client.id, client.company_name)}
+                              onClick={() => setArchiveTarget({ id: client.id, name: client.company_name })}
                               disabled={isPending}
                               title="Archive Client"
-                              className="p-1 rounded text-gray-500 hover:text-rose-400 hover:bg-gray-800 transition-colors disabled:opacity-50"
+                              className="p-1 rounded text-gray-500 hover:text-rose-400 hover:bg-gray-800 transition-colors disabled:opacity-50 cursor-pointer"
                             >
                               <Archive className="w-3.5 h-3.5" />
                             </button>
@@ -251,14 +262,26 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
         </div>
       )}
 
+      {/* Confirm Archive Dialog */}
+      <ConfirmDialog
+        isOpen={Boolean(archiveTarget)}
+        title="Archive Client?"
+        description={`Are you sure you want to archive "${archiveTarget?.name}"? Archived clients cannot be selected for new invoices until restored.`}
+        confirmLabel="Archive Client"
+        cancelLabel="Cancel"
+        isDestructive={true}
+        isLoading={isPending}
+        onConfirm={confirmArchive}
+        onCancel={() => setArchiveTarget(null)}
+      />
+
       {/* Modal */}
       <ClientModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         client={selectedClient}
         onSuccess={() => {
-          // Window reload or router refresh triggers server re-fetch
-          window.location.reload();
+          router.refresh();
         }}
       />
     </div>

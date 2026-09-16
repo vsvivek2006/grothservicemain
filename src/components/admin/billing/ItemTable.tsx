@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useEffect, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Search, PlusCircle, Package, Edit3, CheckCircle2, XCircle, Tag } from "lucide-react";
 import { toast } from "sonner";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
@@ -13,12 +14,17 @@ interface ItemTableProps {
 }
 
 export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
+  const router = useRouter();
   const [items, setItems] = useState<BillingItem[]>(initialItems);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<BillingItem | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setItems(initialItems);
+  }, [initialItems]);
 
   const categories = Array.from(
     new Set(items.map((i) => i.service_category).filter(Boolean))
@@ -232,7 +238,7 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
         onClose={() => setIsModalOpen(false)}
         item={selectedItem}
         onSuccess={() => {
-          window.location.reload();
+          router.refresh();
         }}
       />
     </div>

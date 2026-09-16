@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Sparkles,
   RefreshCw,
@@ -39,12 +39,15 @@ export function AIGeneratorPanel({ onGenerated, disabled }: AIGeneratorPanelProp
   const selectedModelInfo =
     AVAILABLE_MODELS.find((m) => m.id === selectedModel) || AVAILABLE_MODELS[0];
 
-  const generationSteps = [
-    { label: `Connecting to ${selectedModelInfo.name} (${selectedModelInfo.speed})...`, progress: 20 },
-    { label: "Analyzing topic, audience & search intent...", progress: 45 },
-    { label: "Structuring semantic H2/H3 headings & outline...", progress: 70 },
-    { label: "Drafting rich sanitized HTML content & SEO tags...", progress: 90 },
-  ];
+  const generationSteps = useMemo(
+    () => [
+      { label: `Connecting to ${selectedModelInfo.name} (${selectedModelInfo.speed})...`, progress: 20 },
+      { label: "Analyzing topic, audience & search intent...", progress: 45 },
+      { label: "Structuring semantic H2/H3 headings & outline...", progress: 70 },
+      { label: "Drafting rich sanitized HTML content & SEO tags...", progress: 90 },
+    ],
+    [selectedModelInfo.name, selectedModelInfo.speed]
+  );
 
   // Animated progress state
   const [currentStepIndex, setCurrentStepIndex] = useState(0);

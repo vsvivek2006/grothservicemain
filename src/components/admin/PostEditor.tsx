@@ -101,7 +101,7 @@ export function PostEditor({ initialData }: PostEditorProps) {
   // Handle automatic slug generation
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
-    setValue("title", newTitle, { shouldDirty: true });
+    setValue("title", newTitle, { shouldValidate: true, shouldDirty: true });
     if (!isSlugCustomized) {
       const generatedSlug = slugify(newTitle, { lower: true, strict: true });
       setValue("slug", generatedSlug, { shouldValidate: true, shouldDirty: true });
