@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+import sharp from "sharp";
 import { createSessionClient, createAdminClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
@@ -25,31 +27,43 @@ export async function POST(request: Request) {
 
     if (!file.type.startsWith("image/")) {
       return NextResponse.json(
-        { error: "Only image files (PNG, JPG, WebP, GIF) are allowed" },
+        { error: "Only image files (PNG, JPG, WebP, GIF, AVIF) are allowed" },
         { status: 400 }
       );
     }
 
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 10 * 1024 * 1024) {
       return NextResponse.json(
-        { error: "File size exceeds 5MB limit" },
+        { error: "File size exceeds 10MB limit" },
         { status: 400 }
       );
     }
-
-    const adminClient = createAdminClient();
-    const fileExt = file.name.split(".").pop() || "jpg";
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-    const filePath = `covers/${fileName}`;
 
     const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const inputBuffer = Buffer.from(arrayBuffer);
+
+    // High-performance image transformation via Sharp:
+    // 1. Constrain max bounds to 1600x1600 (without enlarging smaller images)
+    // 2. Convert to modern, high-efficiency WebP format (quality 80)
+    const optimizedBuffer = await sharp(inputBuffer)
+      .resize({
+        width: 1600,
+        height: 1600,
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .webp({ quality: 80, effort: 4 })
+      .toBuffer();
+
+    const adminClient = createAdminClient();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.webp`;
+    const filePath = `covers/${fileName}`;
 
     const { error: uploadError } = await adminClient.storage
       .from("blog-images")
-      .upload(filePath, buffer, {
-        contentType: file.type,
-        cacheControl: "3600",
+      .upload(filePath, optimizedBuffer, {
+        contentType: "image/webp",
+        cacheControl: "public, max-age=31536000, immutable",
         upsert: false,
       });
 
@@ -64,7 +78,19 @@ export async function POST(request: Request) {
       .from("blog-images")
       .getPublicUrl(filePath);
 
-    return NextResponse.json({ url: publicUrlData.publicUrl });
+    // Automatically trigger on-demand revalidation for blog and sitemap
+    try {
+      revalidatePath("/blog");
+      revalidatePath("/sitemap.xml");
+    } catch {
+      // Background revalidation error should not block upload response
+    }
+
+    return NextResponse.json({ 
+      url: publicUrlData.publicUrl,
+      format: "webp",
+      size: optimizedBuffer.length
+    });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Upload failed";
     return NextResponse.json({ error: message }, { status: 500 });

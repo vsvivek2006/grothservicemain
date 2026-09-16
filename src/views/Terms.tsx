@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import { Shield, Check, AlertTriangle, Mail, Phone, Download, FileText } from "lucide-react";
@@ -172,11 +172,7 @@ const Terms: React.FC = () => {
               Download Terms
             </Button>
             <div className="text-blue-200">
-              Last updated: {new Date().toLocaleDateString('en-IN', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
+              Last updated: January 1, 2026
             </div>
           </div>
         </Container>

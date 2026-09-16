@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -19,11 +19,7 @@ const Privacy: React.FC = () => {
     return "privacy";
   };
 
-  const lastUpdated = new Date().toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  });
+  const lastUpdated = "Jan 01, 2026";
 
   const [activeTab, setActiveTab] = useState(getInitialTab);
 

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { 
@@ -13,12 +13,7 @@ import { getNepalWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
 import { WhatsAppIcon, Container, Section, Button } from "../components/ui";
 
 const OnboardingAgreement: React.FC = () => {
-  const currentDate = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+  const currentDate = "January 1, 2026";
 
   const handleDownloadPDF = () => {
     // This would generate/download PDF in production

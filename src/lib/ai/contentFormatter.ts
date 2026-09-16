@@ -141,7 +141,7 @@ export function normalizeContentToHtml(raw: string): string {
   // Images FIRST: ![alt](url) -> <img src="$2" alt="$1" loading="lazy" />
   text = text.replace(/!\[([^\]]*)\]\(((?:https?:\/\/|\/|data:image\/)[^\s)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
   // Links: [text](url) -> <a href="$2">$1</a> (avoiding ! before bracket)
-  text = text.replace(/(?<!\!)\[([^\]]+)\]\(((?:https?:\/\/|\/|#)[^\s)]+)\)/g, '<a href="$2">$1</a>');
+  text = text.replace(/(?<!!)\[([^\]]+)\]\(((?:https?:\/\/|\/|#)[^\s)]+)\)/g, '<a href="$2">$1</a>');
   // Bold: **text** -> <strong>$1</strong>
   text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   // Italic: *text* -> <em>$1</em> (avoiding ** which is already replaced)
