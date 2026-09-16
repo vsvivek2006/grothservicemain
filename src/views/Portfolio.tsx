@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { 
   ExternalLink, Filter, Star, TrendingUp, Users, Clock, 
   MessageCircle, Globe, Code, Smartphone, Search, Target, 
@@ -351,12 +352,12 @@ const Portfolio = () => {
                 onMouseLeave={() => setHoveredProject(null)}
               >
                 <div className="relative overflow-hidden h-64">
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute top-4 left-4">
@@ -498,13 +499,11 @@ const Portfolio = () => {
               <div className="p-8 md:p-12">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="relative">
-                    <img
+                    <Image
                       src={testimonials[currentTestimonial].image}
                       alt={testimonials[currentTestimonial].name}
                       width={112}
                       height={112}
-                      loading="lazy"
-                      decoding="async"
                       className="w-28 h-28 rounded-full object-cover shadow-xl"
                     />
                     <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2">
@@ -663,13 +662,15 @@ const Portfolio = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div>
-                  <img
-                    src={selectedCaseStudy.image}
-                    alt={selectedCaseStudy.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-64 object-cover rounded-xl mb-4"
-                  />
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mb-4">
+                    <Image
+                      src={selectedCaseStudy.image}
+                      alt={selectedCaseStudy.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="bg-blue-50 p-4 rounded-xl mb-4">
                     <h4 className="font-bold text-gray-900 mb-2">Project Details</h4>
                     <div className="grid grid-cols-2 gap-4">

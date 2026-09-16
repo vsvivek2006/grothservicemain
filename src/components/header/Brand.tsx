@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { getBusinessName, getBusinessTagline } from "../../selectors";
 
 export const Brand: React.FC = () => {
@@ -14,19 +15,13 @@ export const Brand: React.FC = () => {
         aria-label="Home"
       >
         <div className="h-12 w-12 rounded-full bg-white border-2 border-purple-200 flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-lg transition-all">
-          <img 
+          <Image 
             src="/logo.png" 
             alt={`${businessName} Logo`} 
             width={40}
             height={40}
+            priority
             className="h-10 w-10 object-contain p-1"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              const fallback = document.createElement('div');
-              fallback.className = 'h-full w-full flex items-center justify-center text-purple-600 font-extrabold text-xl';
-              fallback.textContent = 'GS';
-              e.currentTarget.parentNode?.appendChild(fallback);
-            }}
           />
         </div>
         <div className="block">

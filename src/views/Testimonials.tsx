@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { 
   Star, 
   Quote, 
@@ -260,13 +261,11 @@ const Testimonials: React.FC = () => {
                         {/* Client Image & Info */}
                         <div className="lg:w-1/3 text-center lg:text-left">
                           <div className="relative mb-6 inline-block">
-                            <img
+                            <Image
                               src={testimonial.image}
                               alt={testimonial.name}
                               width={112}
                               height={112}
-                              loading="lazy"
-                              decoding="async"
                               className="w-28 h-28 rounded-full object-cover mx-auto lg:mx-0 shadow-lg border-2 border-purple-200"
                             />
                             <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full p-2 shadow-md">
@@ -406,13 +405,11 @@ const Testimonials: React.FC = () => {
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
                         src={testimonial.image}
                         alt={testimonial.name}
                         width={48}
                         height={48}
-                        loading="lazy"
-                        decoding="async"
                         className="w-12 h-12 rounded-full object-cover border border-gray-200"
                       />
                       <div>
