@@ -34,6 +34,12 @@ export function generateDraftInvoiceNumber(fy?: string): string {
 
 /**
  * Atomically allocates the next legal sequential invoice number for a given series and FY.
+ * 
+ * Strategy:
+ * 1. Primary path: Calls atomic Postgres RPC `allocate_next_invoice_number(p_fy, p_series)`.
+ *    Zero-race condition with database-level row locks.
+ * 2. Fallback path: Optimistic concurrency loop with version match (last_number = existing.last_number)
+ *    and unique constraint recovery if RPC is not available in environment.
  */
 export async function allocateNextInvoiceNumber(
   supabase: SupabaseClient,
@@ -42,72 +48,94 @@ export async function allocateNextInvoiceNumber(
 ): Promise<{ invoiceNumber: string; financialYear: string; sequenceNumber: number }> {
   const financialYear = getFinancialYear(customDate);
 
-  // 1. Fetch current sequence or initialize
-  const { data: existing, error: fetchErr } = await supabase
-    .from("invoice_sequences")
-    .select("id, last_number")
-    .eq("financial_year", financialYear)
-    .eq("series", series)
-    .maybeSingle();
+  // 1. Primary path: Atomic PostgreSQL function
+  try {
+    const { data: rpcNumber, error: rpcErr } = await supabase.rpc(
+      "allocate_next_invoice_number",
+      {
+        p_fy: financialYear,
+        p_series: series,
+      }
+    );
 
-  if (fetchErr) {
-    throw new Error(`Failed to query invoice sequence: ${fetchErr.message}`);
+    if (!rpcErr && rpcNumber != null) {
+      const nextNumber = Number(rpcNumber);
+      const paddedSequence = String(nextNumber).padStart(6, "0");
+      return {
+        invoiceNumber: `${series}/${financialYear}/${paddedSequence}`,
+        financialYear,
+        sequenceNumber: nextNumber,
+      };
+    }
+  } catch {
+    // Fall back to optimistic concurrency loop below
   }
 
-  let nextNumber = 1;
-
-  if (!existing) {
-    // Insert new sequence row
-    const { data: inserted, error: insertErr } = await supabase
+  // 2. Resilient Fallback: Optimistic concurrency retry loop
+  const MAX_RETRIES = 5;
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    const { data: existing, error: fetchErr } = await supabase
       .from("invoice_sequences")
-      .insert({
-        financial_year: financialYear,
-        series,
-        last_number: 1,
-      })
-      .select("last_number")
-      .single();
+      .select("id, last_number")
+      .eq("financial_year", financialYear)
+      .eq("series", series)
+      .maybeSingle();
 
-    if (insertErr) {
-      // Concurrency race: if another request inserted, retry query once
-      const { data: retry, error: retryErr } = await supabase
+    if (fetchErr) {
+      throw new Error(`Failed to query invoice sequence: ${fetchErr.message}`);
+    }
+
+    if (!existing) {
+      // Try to initialize sequence with 1
+      const { data: inserted, error: insertErr } = await supabase
         .from("invoice_sequences")
-        .select("id, last_number")
-        .eq("financial_year", financialYear)
-        .eq("series", series)
+        .insert({
+          financial_year: financialYear,
+          series,
+          last_number: 1,
+        })
+        .select("last_number")
         .single();
 
-      if (retryErr || !retry) {
-        throw new Error(`Failed to allocate invoice sequence: ${insertErr.message}`);
+      if (!insertErr && inserted) {
+        const nextNumber = Number(inserted.last_number);
+        const paddedSequence = String(nextNumber).padStart(6, "0");
+        return {
+          invoiceNumber: `${series}/${financialYear}/${paddedSequence}`,
+          financialYear,
+          sequenceNumber: nextNumber,
+        };
       }
-
-      nextNumber = Number(retry.last_number) + 1;
-      await supabase
-        .from("invoice_sequences")
-        .update({ last_number: nextNumber })
-        .eq("id", retry.id);
-    } else {
-      nextNumber = Number(inserted.last_number);
+      // If insert failed due to conflict, retry loop to fetch the existing row
+      continue;
     }
-  } else {
-    // Increment existing sequence row
-    nextNumber = Number(existing.last_number) + 1;
-    const { error: updateErr } = await supabase
+
+    // Existing sequence found: atomically attempt to increment using optimistic condition
+    const currentLast = Number(existing.last_number);
+    const targetNext = currentLast + 1;
+
+    const { data: updated, error: updateErr } = await supabase
       .from("invoice_sequences")
-      .update({ last_number: nextNumber })
-      .eq("id", existing.id);
+      .update({ last_number: targetNext })
+      .eq("id", existing.id)
+      .eq("last_number", currentLast) // Optimistic concurrency guard
+      .select("last_number")
+      .maybeSingle();
 
-    if (updateErr) {
-      throw new Error(`Failed to increment invoice sequence: ${updateErr.message}`);
+    if (!updateErr && updated) {
+      const nextNumber = Number(updated.last_number);
+      const paddedSequence = String(nextNumber).padStart(6, "0");
+      return {
+        invoiceNumber: `${series}/${financialYear}/${paddedSequence}`,
+        financialYear,
+        sequenceNumber: nextNumber,
+      };
     }
+
+    // Another caller incremented first; loop again
   }
 
-  const paddedSequence = String(nextNumber).padStart(6, "0");
-  const invoiceNumber = `${series}/${financialYear}/${paddedSequence}`;
-
-  return {
-    invoiceNumber,
-    financialYear,
-    sequenceNumber: nextNumber,
-  };
+  throw new Error(
+    `Failed to allocate invoice sequence for ${series}/${financialYear} after ${MAX_RETRIES} attempts due to concurrent modifications.`
+  );
 }

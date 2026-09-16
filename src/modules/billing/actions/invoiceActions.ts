@@ -433,11 +433,16 @@ export async function issueInvoiceAction(id: string): Promise<ActionResult<Invoi
         updated_by: adminUser.id,
       })
       .eq("id", id)
+      .eq("document_status", "draft")
       .select()
-      .single();
+      .maybeSingle();
 
     if (updateErr || !issuedInvoice) {
-      return actionError(`Failed to issue invoice: ${updateErr?.message}`);
+      return actionError(
+        updateErr
+          ? `Failed to issue invoice: ${updateErr.message}`
+          : "Invoice was already issued or modified concurrently by another process"
+      );
     }
 
     // 4. Audit Log
