@@ -313,7 +313,7 @@ const Pricing: React.FC = () => {
   const stats = [
     { number: '300+', label: 'Delivered Engagements' },
     { number: '98%', label: 'Client Satisfaction' },
-    { number: 'Jaipur • Vrindavan • Nepal', label: 'Physical Agency Offices' },
+    { number: 'Jaipur â€¢ Vrindavan â€¢ Nepal', label: 'Physical Agency Offices' },
     { number: 'Custom Scoping', label: 'Milestone-Based Agility' }
   ];
 
