@@ -1,6 +1,4 @@
-import "server-only";
 import { type SupabaseClient, type User } from "@supabase/supabase-js";
-import { createSessionClient } from "@/lib/supabase/server";
 
 export type AdminRole = "superadmin" | "admin" | "billing_manager" | "editor";
 
@@ -71,19 +69,11 @@ export class AuthorizationError extends Error {
 }
 
 /**
- * Asserts that the current request is from an authenticated admin user.
- * Resolves roles and permissions from user metadata.
+ * Pure authorization resolver. Validates that user possesses an authorized admin role in app_metadata.
+ * Rejects client user_metadata spoofing and unauthenticated requests.
  */
-export async function assertAdminUser(
-  client?: SupabaseClient
-): Promise<AdminUserContext> {
-  const supabase = client ?? (await createSessionClient());
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
+export function verifyAdminRole(user: User | null | undefined): AdminUserContext {
+  if (!user) {
     throw new AuthorizationError(
       "Authentication required. Please sign in.",
       401,
@@ -91,17 +81,19 @@ export async function assertAdminUser(
     );
   }
 
-  // Resolve role from metadata; default to 'admin' for valid session users
-  const rawRole = (user.app_metadata?.role ||
-    user.user_metadata?.role ||
-    "admin") as string;
+  // Resolve role exclusively from server-controlled app_metadata (never trust client user_metadata)
+  const rawRole = user.app_metadata?.role as string | undefined;
 
-  const role: AdminRole = ["superadmin", "admin", "billing_manager", "editor"].includes(
-    rawRole
-  )
-    ? (rawRole as AdminRole)
-    : "admin";
+  const validRoles: AdminRole[] = ["superadmin", "admin", "billing_manager", "editor"];
+  if (!rawRole || !validRoles.includes(rawRole as AdminRole)) {
+    throw new AuthorizationError(
+      "Access denied: You do not have an authorized administrator role.",
+      403,
+      "FORBIDDEN"
+    );
+  }
 
+  const role = rawRole as AdminRole;
   const permissions = new Set<AdminPermission>(ROLE_PERMISSIONS[role] || []);
 
   return {
@@ -111,6 +103,35 @@ export async function assertAdminUser(
     permissions,
     rawUser: user,
   };
+}
+
+/**
+ * Asserts that the current request is from an authenticated admin user.
+ * Resolves roles and permissions exclusively from server-controlled app_metadata.
+ */
+export async function assertAdminUser(
+  client?: SupabaseClient
+): Promise<AdminUserContext> {
+  let supabase = client;
+  if (!supabase) {
+    const { createSessionClient } = await import("@/lib/supabase/server");
+    supabase = await createSessionClient();
+  }
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    throw new AuthorizationError(
+      "Authentication required. Please sign in.",
+      401,
+      "UNAUTHENTICATED"
+    );
+  }
+
+  return verifyAdminRole(user);
 }
 
 /**
