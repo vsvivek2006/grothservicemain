@@ -311,10 +311,10 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
               </p>
               <div className="mt-0.5 flex flex-wrap gap-x-4 text-[11px] font-semibold text-gray-800">
                 <span>
-                  GSTIN: <strong className="font-mono text-black">{seller.gstin || "08AAAAA0000A1Z5"}</strong>
+                  GSTIN: <strong className="font-mono text-black">{seller.gstin || "08SDFPS4894L1Z7"}</strong>
                 </span>
                 <span>
-                  PAN: <strong className="font-mono text-black">{seller.pan || "AAAAA0000A"}</strong>
+                  PAN: <strong className="font-mono text-black">{seller.pan || "SDFPS4894L"}</strong>
                 </span>
                 <span>
                   State Code: <strong className="font-mono text-black">{seller.stateCode || "08"}</strong>
@@ -369,7 +369,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
             <div className="mt-1.5 space-y-0.5 border-t border-gray-200 pt-1 text-[11px]">
               <p>
                 <span className="text-gray-500">GSTIN:</span>{" "}
-                <span className="font-mono font-bold text-black">{seller.gstin || "08AAAAA0000A1Z5"}</span>
+                <span className="font-mono font-bold text-black">{seller.gstin || "08SDFPS4894L1Z7"}</span>
               </p>
               <p>
                 <span className="text-gray-500">State:</span>{" "}

@@ -401,10 +401,10 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
               </p>
               <div className="mt-1 flex flex-wrap gap-x-4 text-[11px] text-gray-800 font-medium">
                 <span>
-                  GSTIN: <strong className="font-mono">{seller.gstin || "08AAAAA0000A1Z5"}</strong>
+                  GSTIN: <strong className="font-mono">{seller.gstin || "08SDFPS4894L1Z7"}</strong>
                 </span>
                 <span>
-                  PAN: <strong className="font-mono">{seller.pan || "AAAAA0000A"}</strong>
+                  PAN: <strong className="font-mono">{seller.pan || "SDFPS4894L"}</strong>
                 </span>
                 <span>
                   State Code: <strong className="font-mono">{seller.stateCode || "08"}</strong>
@@ -479,11 +479,11 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             <div className="mt-3 space-y-0.5 border-t border-gray-800/60 pt-2 text-xs print:border-gray-300">
               <p className="text-gray-300 print:text-gray-900">
                 <span className="text-gray-500 print:text-gray-600">GSTIN:</span>{" "}
-                <span className="font-mono">{seller.gstin || "08AAAAA0000A1Z5"}</span>
+                <span className="font-mono">{seller.gstin || "08SDFPS4894L1Z7"}</span>
               </p>
               <p className="text-gray-300 print:text-gray-900">
                 <span className="text-gray-500 print:text-gray-600">PAN:</span>{" "}
-                <span className="font-mono">{seller.pan || "AAAAA0000A"}</span>
+                <span className="font-mono">{seller.pan || "SDFPS4894L"}</span>
               </p>
               <p className="text-gray-300 print:text-gray-900">
                 <span className="text-gray-500 print:text-gray-600">State Code:</span>{" "}
@@ -629,6 +629,12 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                     <span className="text-gray-500 print:text-gray-600">Bank:</span>{" "}
                     {seller.bankDetails.bankName} ({seller.bankDetails.branch})
                   </p>
+                  {seller.bankDetails.upiId && (
+                    <p className="col-span-2">
+                      <span className="text-gray-500 print:text-gray-600">UPI ID:</span>{" "}
+                      <span className="font-mono font-semibold text-purple-400 print:text-purple-800">{seller.bankDetails.upiId}</span>
+                    </p>
+                  )}
                 </div>
               </div>
             )}
