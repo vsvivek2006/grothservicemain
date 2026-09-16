@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Phone, Mail, MapPin, Building, Zap } from "lucide-react";
 import { Container, WhatsAppIcon } from "../ui";
 import { getPhysicalOffices, getPrimaryPhone, getBusinessEmail, getOfficePhone } from "../../selectors";
@@ -58,7 +60,7 @@ export const TopBar: React.FC = () => {
             {offices.map((office) => (
               <Link 
                 key={office.id}
-                to={`/offices/${office.slug}`} 
+                href={`/offices/${office.slug}`} 
                 className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white px-2.5 py-0.5 rounded-full border border-white/20 transition-colors"
               >
                 {office.id === 'nepal' ? (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { getPhysicalOffices, getOfficePhone, getPrimaryPhone, getBusinessEmail, getCanonicalOrigin } from '../selectors';
 import { getTelHref, getMailtoHref, getNepalWhatsAppUrl } from '../services';
 import { 
@@ -285,7 +285,7 @@ I have booked a free consultation call. Please confirm the schedule.`;
               </div>
               
               <Link
-                to="/"
+                href="/"
                 className="block w-full border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-lg font-semibold transition-all duration-200 text-center"
               >
                 Return to Homepage
@@ -663,22 +663,22 @@ I have booked a free consultation call. Please confirm the schedule.`;
             <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-3">Explore More</h3>
               <div className="space-y-2">
-                <Link to="/about" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/about" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
                   <Building className="h-4 w-4" />
                   About Our Offices
                   <ChevronRight className="h-4 w-4 ml-auto" />
                 </Link>
-                <Link to="/services" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/services" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
                   <Target className="h-4 w-4" />
                   Our Services
                   <ChevronRight className="h-4 w-4 ml-auto" />
                 </Link>
-                <Link to="/contact" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/contact" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
                   <MessageCircle className="h-4 w-4" />
                   Contact Us
                   <ChevronRight className="h-4 w-4 ml-auto" />
                 </Link>
-                <Link to="/free-audit" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/free-audit" className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors">
                   <CheckCircle className="h-4 w-4" />
                   Free Website Audit
                   <ChevronRight className="h-4 w-4 ml-auto" />

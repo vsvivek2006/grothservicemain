@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ShieldCheck, Mail, Building2 } from 'lucide-react';
 import { TeamMember } from '../../data/team';
 import { getOfficeById } from '../../selectors';
@@ -79,7 +79,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member, priority = f
           </span>
           {office && (
             <Link
-              to={`/offices/${office.slug}`}
+              href={`/offices/${office.slug}`}
               className="text-[11px] font-medium bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 border border-slate-200 px-2.5 py-0.5 rounded-full transition-colors flex items-center gap-1"
               title={`View ${office.name} Hub`}
             >
@@ -98,7 +98,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member, priority = f
         <div className="pt-3 border-t border-slate-100 mt-auto">
           <div className="flex items-center justify-between text-xs">
             <Link
-              to="/verify"
+              href="/verify"
               className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
               title="Verify Official Staff Authenticity"
             >
@@ -116,7 +116,7 @@ export const EmployeeCard: React.FC<EmployeeCardProps> = ({ member, priority = f
               </a>
             ) : office ? (
               <Link
-                to={`/offices/${office.slug}`}
+                href={`/offices/${office.slug}`}
                 className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 hover:text-purple-600 transition-colors"
               >
                 <Building2 className="w-3.5 h-3.5" />

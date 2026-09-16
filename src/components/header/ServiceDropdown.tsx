@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { navigationConfig } from "../../config";
 import { getPhysicalOffices } from "../../selectors";
@@ -15,6 +18,8 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
   toggleDropdown,
   closeDropdown,
 }) => {
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href;
   const digitalMarketingSubmenu = navigationConfig.digitalMarketingSubmenu;
   const designDevelopmentSubmenu = navigationConfig.designDevelopmentSubmenu;
   const whiteLabelSubmenu = navigationConfig.whiteLabelSubmenu;
@@ -48,20 +53,18 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
             }`}
           >
             {digitalMarketingSubmenu.map((item) => (
-              <NavLink
+              <Link
                 key={item.name}
-                to={item.href}
+                href={item.href}
                 onClick={closeDropdown}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
-                    isActive
-                      ? "bg-purple-50 text-purple-700 font-semibold"
-                      : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
-                  }`
-                }
+                className={`block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
+                  isActive(item.href)
+                    ? "bg-purple-50 text-purple-700 font-semibold"
+                    : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
+                }`}
               >
                 {item.name}
-              </NavLink>
+              </Link>
             ))}
           </div>
         </div>
@@ -91,20 +94,18 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
             }`}
           >
             {designDevelopmentSubmenu.map((item) => (
-              <NavLink
+              <Link
                 key={item.name}
-                to={item.href}
+                href={item.href}
                 onClick={closeDropdown}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
-                    isActive
-                      ? "bg-purple-50 text-purple-700 font-semibold"
-                      : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
-                  }`
-                }
+                className={`block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
+                  isActive(item.href)
+                    ? "bg-purple-50 text-purple-700 font-semibold"
+                    : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
+                }`}
               >
                 {item.name}
-              </NavLink>
+              </Link>
             ))}
           </div>
         </div>
@@ -134,20 +135,18 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
             }`}
           >
             {whiteLabelSubmenu.map((item) => (
-              <NavLink
+              <Link
                 key={item.name}
-                to={item.href}
+                href={item.href}
                 onClick={closeDropdown}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
-                    isActive
-                      ? "bg-purple-50 text-purple-700 font-semibold"
-                      : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
-                  }`
-                }
+                className={`block px-3 py-2 rounded-lg text-sm transition-all duration-150 ${
+                  isActive(item.href)
+                    ? "bg-purple-50 text-purple-700 font-semibold"
+                    : "text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1"
+                }`}
               >
                 {item.name}
-              </NavLink>
+              </Link>
             ))}
           </div>
         </div>
@@ -183,56 +182,56 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
                 </span>
                 <p className="text-[11px] text-gray-500">Key service locations across India & Nepal</p>
               </div>
-              <NavLink
-                to="/locations"
+              <Link
+                href="/locations"
                 onClick={closeDropdown}
                 className="text-xs font-bold text-purple-600 hover:text-purple-700 hover:underline flex items-center gap-1"
               >
                 <span>All Locations Directory</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </NavLink>
+              </Link>
             </div>
 
             <div className="grid grid-cols-3 gap-2.5">
-              <NavLink to="/locations/delhi" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              <Link href="/locations/delhi" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Delhi</div>
                 <div className="text-[10px] text-gray-500">National Capital Region</div>
-              </NavLink>
-              <NavLink to="/locations/jaipur" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/jaipur" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600 flex items-center justify-between">
                   <span>Jaipur</span>
                   <span className="text-[9px] bg-purple-100 text-purple-700 font-semibold px-1 rounded">Office</span>
                 </div>
                 <div className="text-[10px] text-gray-500">Rajasthan</div>
-              </NavLink>
-              <NavLink to="/locations/patna" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/patna" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Patna</div>
                 <div className="text-[10px] text-gray-500">Bihar</div>
-              </NavLink>
-              <NavLink to="/locations/goa" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/goa" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Goa</div>
                 <div className="text-[10px] text-gray-500">Goa</div>
-              </NavLink>
-              <NavLink to="/locations/gurgaon" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/gurgaon" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Gurgaon</div>
                 <div className="text-[10px] text-gray-500">Cyber City, Haryana</div>
-              </NavLink>
-              <NavLink to="/locations/chandigarh" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/chandigarh" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Chandigarh</div>
                 <div className="text-[10px] text-gray-500">Punjab / Tricity</div>
-              </NavLink>
-              <NavLink to="/locations/mumbai" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/mumbai" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Mumbai</div>
                 <div className="text-[10px] text-gray-500">Maharashtra</div>
-              </NavLink>
-              <NavLink to="/locations/bangalore" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/bangalore" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Bangalore</div>
                 <div className="text-[10px] text-gray-500">Karnataka</div>
-              </NavLink>
-              <NavLink to="/locations/lucknow" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
+              </Link>
+              <Link href="/locations/lucknow" onClick={closeDropdown} className="p-2 rounded-xl hover:bg-purple-50/70 transition-colors block group/item">
                 <div className="font-bold text-xs text-gray-900 group-hover/item:text-purple-600">Lucknow</div>
                 <div className="text-[10px] text-gray-500">Uttar Pradesh</div>
-              </NavLink>
+              </Link>
             </div>
 
             <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs bg-purple-50/40 p-2.5 rounded-xl">
@@ -243,9 +242,9 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
                 {offices.map((office, idx) => (
                   <React.Fragment key={office.id}>
                     {idx > 0 && <span className="text-slate-300">•</span>}
-                    <NavLink to={`/offices/${office.slug}`} onClick={closeDropdown} className="text-purple-600 hover:underline">
+                    <Link href={`/offices/${office.slug}`} onClick={closeDropdown} className="text-purple-600 hover:underline">
                       {office.city}
-                    </NavLink>
+                    </Link>
                   </React.Fragment>
                 ))}
               </div>
@@ -278,76 +277,68 @@ export const ServiceDropdown: React.FC<ServiceDropdownProps> = ({
             }`}
           >
             {offices.map((office) => (
-              <NavLink 
+              <Link 
                 key={office.id} 
-                to={`/offices/${office.slug}`} 
+                href={`/offices/${office.slug}`} 
                 onClick={closeDropdown} 
                 className="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:translate-x-1 transition-all duration-150"
               >
                 {office.name} ({office.state})
-              </NavLink>
+              </Link>
             ))}
             <div className="mt-1 pt-1 border-t border-gray-100">
-              <NavLink to="/offices" onClick={closeDropdown} className="block px-3 py-1.5 rounded-lg text-xs font-bold text-purple-600 hover:bg-purple-50 text-center">
+              <Link href="/offices" onClick={closeDropdown} className="block px-3 py-1.5 rounded-lg text-xs font-bold text-purple-600 hover:bg-purple-50 text-center">
                 All {offices.length} Company Offices →
-              </NavLink>
+              </Link>
             </div>
           </div>
         </div>
 
         {/* Team Link */}
-        <NavLink 
-          to="/team" 
-          className={({ isActive }) =>
-            `px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-              isActive
-                ? "text-purple-700 bg-purple-50"
-                : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
-            }`
-          }
+        <Link 
+          href="/team" 
+          className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+            isActive("/team")
+              ? "text-purple-700 bg-purple-50"
+              : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
+          }`}
         >
           Team
-        </NavLink>
+        </Link>
 
         {/* Direct Links */}
-        <NavLink 
-          to="/packages" 
-          className={({ isActive }) =>
-            `px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-              isActive
-                ? "text-purple-700 bg-purple-50"
-                : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
-            }`
-          }
+        <Link 
+          href="/packages" 
+          className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+            isActive("/packages")
+              ? "text-purple-700 bg-purple-50"
+              : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
+          }`}
         >
           Solutions
-        </NavLink>
+        </Link>
         
-        <NavLink 
-          to="/impact" 
-          className={({ isActive }) =>
-            `px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-              isActive
-                ? "text-purple-700 bg-purple-50"
-                : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
-            }`
-          }
+        <Link 
+          href="/impact" 
+          className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+            isActive("/impact")
+              ? "text-purple-700 bg-purple-50"
+              : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
+          }`}
         >
           Our Impact
-        </NavLink>
+        </Link>
         
-        <NavLink 
-          to="/contact" 
-          className={({ isActive }) =>
-            `px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-              isActive
-                ? "text-purple-700 bg-purple-50"
-                : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
-            }`
-          }
+        <Link 
+          href="/contact" 
+          className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+            isActive("/contact")
+              ? "text-purple-700 bg-purple-50"
+              : "text-gray-700 hover:text-purple-600 hover:bg-purple-50"
+          }`}
         >
           Contact
-        </NavLink>
+        </Link>
       </div>
     </div>
   );

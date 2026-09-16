@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from 'next/link';
 import { Container, Section, WhatsAppIcon } from "../components/ui";
 import { getPhysicalOffices, getCanonicalOrigin } from "../selectors";
 import { getNepalWhatsAppUrl, getTelHref } from "../services";
@@ -223,7 +223,7 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
               Request Strategy Session
             </button>
             <Link
-              to="/offices"
+              href="/offices"
               className="bg-white/10 hover:bg-white/20 text-white px-8 py-3.5 rounded-xl font-bold transition-all backdrop-blur-sm border border-white/20 flex items-center gap-2 justify-center"
             >
               <Building className="h-5 w-5" />
@@ -334,7 +334,7 @@ Hi, I would like to schedule a strategy consultation and digital audit. Please l
                     <Phone className="h-3.5 w-3.5" /> {office.phone}
                   </a>
                   <Link
-                    to={`/offices/${office.slug}`}
+                    href={`/offices/${office.slug}`}
                     className="text-slate-600 font-medium text-xs hover:text-purple-600"
                   >
                     Office Details →

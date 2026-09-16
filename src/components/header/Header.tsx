@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
 import { Container } from "../ui";
 import TopBar from "./TopBar";
 import Brand from "./Brand";
@@ -13,7 +15,7 @@ export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileSection, setMobileSection] = useState<string | null>("marketing");
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +29,7 @@ export const Header: React.FC = () => {
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Close dropdowns on Escape key
   useEffect(() => {

@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Globe, Search, ArrowRight } from 'lucide-react';
 import { getAllCities, getAllRegions, getCitiesByRegion, getPrimaryPhone } from '../selectors';
 import { getNepalWhatsAppUrl } from '../services';
@@ -208,7 +208,7 @@ export const LocationsHub: React.FC = () => {
                                 {city.servicesAvailable.length} Core Services
                               </span>
                               <Link
-                                to={`/locations/${city.slug}`}
+                                href={`/locations/${city.slug}`}
                                 className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
                               >
                                 <span>Explore City</span>
@@ -276,7 +276,7 @@ export const LocationsHub: React.FC = () => {
                         {city.servicesAvailable.length} Core Services
                       </span>
                       <Link
-                        to={`/locations/${city.slug}`}
+                        href={`/locations/${city.slug}`}
                         className="inline-flex items-center gap-1 font-bold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
                       >
                         <span>Explore City</span>
@@ -305,7 +305,7 @@ export const LocationsHub: React.FC = () => {
                 </p>
               </div>
               <Link
-                to="/offices"
+                href="/offices"
                 className="px-6 py-3 rounded-xl bg-purple-600 text-white font-bold text-sm hover:bg-purple-700 transition-all shrink-0 shadow-md inline-flex items-center gap-2 hover:shadow-lg active:scale-[0.98]"
               >
                 <span>View 3 Company Offices</span>

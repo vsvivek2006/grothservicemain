@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Check, Shield, Clock, MessageCircle, Code, Award, 
   Calendar, Sparkles, Globe, Search, Share2, MapPin, Rocket, X 
@@ -616,7 +616,7 @@ const Pricing: React.FC = () => {
           
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              to="/book-call"
+              href="/book-call"
               className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
             >
               <Calendar className="h-5 w-5" />
@@ -705,7 +705,7 @@ const Pricing: React.FC = () => {
                 </button>
                 
                 <Link
-                  to="/book-call"
+                  href="/book-call"
                   onClick={() => setSelectedService(null)}
                   className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2"
                 >

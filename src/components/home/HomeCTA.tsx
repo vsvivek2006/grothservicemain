@@ -50,7 +50,7 @@ export const HomeCTA: React.FC = () => {
             </AnimatedButton>
 
             <AnimatedButton
-              to="/contact"
+              href="/contact"
               variant="outline-white"
               size="lg"
               icon={<FileText className="w-5 h-5 text-yellow-400" />}

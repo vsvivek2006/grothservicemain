@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Check, ArrowRight, Globe, Code, Smartphone, Search, MapPin, MessageSquare, TrendingUp, Shield, Clock, Users, Award, Calendar, MessageCircle, Sparkles } from 'lucide-react';
 import { Container, Section, WhatsAppIcon } from '../components/ui';
 import { getNepalWhatsAppUrl } from '../services';
@@ -273,7 +273,7 @@ const Packages: React.FC = () => {
                       Inquire
                     </button>
                     <Link
-                      to="/book-call"
+                      href="/book-call"
                       className="border border-slate-300 text-slate-700 hover:border-purple-600 hover:text-purple-600 py-2.5 px-3 rounded-xl font-semibold text-xs transition-all hover:bg-purple-50 flex items-center justify-center"
                     >
                       Discuss Project
@@ -340,7 +340,7 @@ const Packages: React.FC = () => {
                     Discuss on WhatsApp
                   </button>
                   <Link
-                    to="/book-call"
+                    href="/book-call"
                     className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
                     <Calendar className="h-4 w-4" />
@@ -405,7 +405,7 @@ const Packages: React.FC = () => {
                     Inquire on WhatsApp
                   </button>
                   <Link
-                    to="/book-call"
+                    href="/book-call"
                     className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
                     <Calendar className="h-4 w-4" />
@@ -465,7 +465,7 @@ const Packages: React.FC = () => {
                   WhatsApp
                 </button>
                 <Link
-                  to="/book-call"
+                  href="/book-call"
                   className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
                 >
                   <Calendar className="h-4 w-4" />
@@ -519,7 +519,7 @@ const Packages: React.FC = () => {
                   WhatsApp
                 </button>
                 <Link
-                  to="/book-call"
+                  href="/book-call"
                   className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-2.5 px-3 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
                 >
                   <Calendar className="h-4 w-4" />
@@ -581,7 +581,7 @@ const Packages: React.FC = () => {
                     Inquire on WhatsApp
                   </button>
                   <Link
-                    to="/book-call"
+                    href="/book-call"
                     className="flex-1 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
                     <Calendar className="h-4 w-4" />
@@ -673,7 +673,7 @@ const Packages: React.FC = () => {
 
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              to="/book-call"
+              href="/book-call"
               className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg flex items-center gap-2"
             >
               <Calendar className="h-5 w-5" />

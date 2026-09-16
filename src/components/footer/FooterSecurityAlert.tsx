@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { getBusinessEmail } from "../../selectors";
 import { getMailtoHref } from "../../services";
@@ -24,7 +24,7 @@ export const FooterSecurityAlert: React.FC = () => {
         </div>
         <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
           <Link 
-            to="/verify" 
+            href="/verify" 
             className="bg-yellow-400 hover:bg-yellow-300 text-gray-950 font-bold px-3.5 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1.5"
           >
             <ShieldCheck className="w-3.5 h-3.5" /> Verify Official Domain & Staff

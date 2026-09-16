@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
 import { Container, Section } from "../components/ui";
 import { CheckCircle, XCircle } from "lucide-react";
 import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
@@ -12,10 +12,10 @@ const Privacy: React.FC = () => {
   const primaryEmail = getBusinessEmail();
   const primaryWhatsApp = getPrimaryWhatsAppUrl();
   const canonicalOrigin = getCanonicalOrigin();
-  const location = useLocation();
+  const pathname = usePathname();
   const getInitialTab = () => {
-    if (location.pathname.includes("refund")) return "refund";
-    if (location.pathname.includes("cancellation")) return "cancellation";
+    if (pathname.includes("refund")) return "refund";
+    if (pathname.includes("cancellation")) return "cancellation";
     return "privacy";
   };
 
@@ -24,12 +24,12 @@ const Privacy: React.FC = () => {
   const [activeTab, setActiveTab] = useState(getInitialTab);
 
   useEffect(() => {
-    if (location.pathname.includes("refund")) {
+    if (pathname.includes("refund")) {
       setActiveTab("refund");
-    } else if (location.pathname.includes("cancellation")) {
+    } else if (pathname.includes("cancellation")) {
       setActiveTab("cancellation");
     }
-  }, [location.pathname]);
+  }, [pathname]);
 
   const pageTitle = activeTab === "refund"
     ? "Refund Policy | Growth Service"

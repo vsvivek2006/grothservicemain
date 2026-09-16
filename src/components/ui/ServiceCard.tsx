@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight, Check, Zap } from 'lucide-react';
 import Card from './Card';
 
@@ -67,7 +67,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
 
       {/* CTA */}
       <Link
-        to={path}
+        href={path}
         className="inline-flex items-center gap-2 text-sm font-bold text-purple-600 hover:text-purple-700 mt-auto pt-3 border-t border-slate-100 group-hover:translate-x-1 transition-transform duration-200"
       >
         <span>View Details</span>

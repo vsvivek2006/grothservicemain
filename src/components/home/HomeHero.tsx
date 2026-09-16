@@ -227,7 +227,7 @@ export const HomeHero: React.FC = () => {
                     {/* Dual CTAs */}
                     <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
                       <AnimatedButton
-                        to={slide.ctaLink}
+                        href={slide.ctaLink}
                         variant="primary"
                         size="lg"
                         icon={<Sparkles className="w-5 h-5 text-yellow-300" />}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { getBusinessName, getBusinessTagline } from "../../selectors";
 
 export const Brand: React.FC = () => {
@@ -9,7 +9,7 @@ export const Brand: React.FC = () => {
   return (
     <div className="flex items-center flex-shrink-0">
       <Link 
-        to="/" 
+        href="/" 
         className="flex items-center space-x-2 hover:scale-105 transition-all duration-300 group"
         aria-label="Home"
       >

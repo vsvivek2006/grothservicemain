@@ -469,8 +469,7 @@ const OurImpact: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
-                as={Link}
-                to="/book-call"
+                href="/book-call"
                 variant="primary"
                 size="lg"
                 className="shadow-lg inline-flex items-center gap-2"
@@ -479,7 +478,7 @@ const OurImpact: React.FC = () => {
                 <ArrowRight className="h-5 w-5" />
               </Button>
               <Button
-                to="/services"
+                href="/services"
                 variant="outline"
                 size="lg"
               >

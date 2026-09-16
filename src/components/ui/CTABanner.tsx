@@ -69,7 +69,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({
           </Button>
 
           <Button
-            to={contactLink}
+            href={contactLink}
             variant="outline-white"
             size="lg"
             icon={<FileText className="w-5 h-5 text-yellow-400" />}

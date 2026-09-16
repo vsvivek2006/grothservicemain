@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Users, ShieldCheck, ArrowRight, Building2, Sparkles, Rocket 
 } from 'lucide-react';
@@ -157,7 +157,7 @@ export const TeamPage: React.FC = () => {
 
                 <div className="shrink-0 flex flex-col sm:flex-row gap-3">
                   <Link 
-                    to="/offices" 
+                    href="/offices" 
                     className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-sm transition-all"
                   >
                     <Building2 className="w-4 h-4" />
@@ -165,7 +165,7 @@ export const TeamPage: React.FC = () => {
                   </Link>
 
                   <Link
-                    to="/verify"
+                    href="/verify"
                     className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-colors"
                   >
                     <ShieldCheck className="w-4 h-4 text-emerald-600" />

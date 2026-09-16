@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 /**
  * ScrollToTop component
@@ -8,9 +10,12 @@ import { useLocation } from 'react-router-dom';
  * If a hash (e.g. #section) is present, scrolls smoothly to that specific target element.
  */
 const ScrollToTop: React.FC = () => {
-  const { pathname, search, hash } = useLocation();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const search = searchParams?.toString();
 
   useEffect(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
     if (hash) {
       // If navigating to an anchor within the page, scroll to that element
       const targetId = hash.replace('#', '');
@@ -43,7 +48,7 @@ const ScrollToTop: React.FC = () => {
       cancelAnimationFrame(frameId);
       document.documentElement.style.scrollBehavior = originalScrollBehavior;
     };
-  }, [pathname, search, hash]);
+  }, [pathname, search]);
 
   return null;
 };

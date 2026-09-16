@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { 
   Building2, Users, Trophy, Briefcase, FileText, Lock, DollarSign, Eye, ShieldCheck,
   TrendingUp, Search, Share2, Target, MapPin, BookOpen, Palette, Layout,
@@ -102,7 +102,7 @@ export const FooterNavigation: React.FC = () => {
                 return (
                   <li key={item.name}>
                     <Link 
-                      to={item.path}
+                      href={item.path}
                       className="text-gray-300 hover:text-white transition-colors text-xs flex items-center group py-0.5"
                     >
                       <ItemIcon className="h-3 w-3 mr-1.5 text-purple-400/80 group-hover:text-purple-300 transition-colors flex-shrink-0" />

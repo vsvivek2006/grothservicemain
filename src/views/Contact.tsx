@@ -17,7 +17,7 @@ import {
   Target,
   ExternalLink
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Container, Section, Input, Textarea, WhatsAppIcon } from '../components/ui';
 import { 
   getPhysicalOffices, 
@@ -656,22 +656,22 @@ I would like to discuss my project with you. Please provide more details.`;
               <div className="mt-6 pt-4 border-t border-gray-200">
                 <p className="text-sm text-gray-600 mb-2">Explore More:</p>
                 <div className="flex flex-wrap gap-2">
-                  <Link to="/about" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
+                  <Link href="/about" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
                     <span>About Us</span>
                     <ChevronRight className="h-3 w-3" />
                   </Link>
                   <span className="text-gray-300">|</span>
-                  <Link to="/services" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
+                  <Link href="/services" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
                     <span>Our Services</span>
                     <ChevronRight className="h-3 w-3" />
                   </Link>
                   <span className="text-gray-300">|</span>
-                  <Link to="/blog" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
+                  <Link href="/blog" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
                     <span>Blog</span>
                     <ChevronRight className="h-3 w-3" />
                   </Link>
                   <span className="text-gray-300">|</span>
-                  <Link to="/free-audit" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
+                  <Link href="/free-audit" className="text-xs text-purple-600 hover:text-purple-800 flex items-center gap-1">
                     <span>Free Audit</span>
                     <ChevronRight className="h-3 w-3" />
                   </Link>
@@ -738,7 +738,7 @@ I would like to discuss my project with you. Please provide more details.`;
               <span>Call India</span>
             </a>
             <Link
-              to="/free-audit"
+              href="/free-audit"
               className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center space-x-2"
             >
               <Target className="h-5 w-5" />

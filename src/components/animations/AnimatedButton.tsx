@@ -56,20 +56,23 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
     </>
   );
 
-  if (to) {
+  const targetUrl = to || href;
+  const isInternal = targetUrl && !isExternal && !targetUrl.startsWith('http') && !targetUrl.startsWith('tel:') && !targetUrl.startsWith('mailto:');
+
+  if (isInternal) {
     return (
-      <Link href={to} className={combinedClasses}>
+      <Link href={targetUrl} className={combinedClasses}>
         {content}
       </Link>
     );
   }
 
-  if (href) {
+  if (targetUrl) {
     return (
       <a
-        href={href}
+        href={targetUrl}
         className={combinedClasses}
-        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        {...(isExternal || targetUrl.startsWith('http') ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {content}
       </a>

@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { createPortal } from "react-dom";
-import { Link, NavLink } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { 
   Phone, Sparkles, Building, Zap, 
   MapPin, ChevronDown, ChevronRight, X 
@@ -24,6 +27,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
   mobileSection,
   toggleMobileSection,
 }) => {
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href;
+
   React.useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -65,7 +71,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         {/* Quick Action Bar */}
         <div className="grid grid-cols-2 gap-2">
           <Link 
-            to="/book-call"
+            href="/book-call"
             onClick={closeMenu}
             className="bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 text-white font-bold text-xs py-3 px-3 rounded-xl shadow-sm text-center flex items-center justify-center gap-1.5 min-h-[44px]"
           >
@@ -100,21 +106,19 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
           {mobileSection === 'marketing' && (
             <div className="p-2 pt-0 space-y-1 bg-white/80 border-t border-purple-100">
               {digitalMarketingSubmenu.map((item) => (
-                <NavLink
+                <Link
                   key={item.name}
-                  to={item.href}
+                  href={item.href}
                   onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium min-h-[40px] transition-colors ${
-                      isActive
-                        ? "bg-purple-100 text-purple-800 font-semibold"
-                        : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
-                    }`
-                  }
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium min-h-[40px] transition-colors ${
+                    isActive(item.href)
+                      ? "bg-purple-100 text-purple-800 font-semibold"
+                      : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
+                  }`}
                 >
                   <span>{item.name}</span>
                   <ChevronRight className="h-3.5 w-3.5 text-purple-400" />
-                </NavLink>
+                </Link>
               ))}
             </div>
           )}
@@ -136,21 +140,19 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
           {mobileSection === 'dev' && (
             <div className="p-2 pt-0 space-y-1 bg-white/80 border-t border-purple-100">
               {designDevelopmentSubmenu.map((item) => (
-                <NavLink
+                <Link
                   key={item.name}
-                  to={item.href}
+                  href={item.href}
                   onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium min-h-[40px] transition-colors ${
-                      isActive
-                        ? "bg-purple-100 text-purple-800 font-semibold"
-                        : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
-                    }`
-                  }
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium min-h-[40px] transition-colors ${
+                    isActive(item.href)
+                      ? "bg-purple-100 text-purple-800 font-semibold"
+                      : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
+                  }`}
                 >
                   <span>{item.name}</span>
                   <ChevronRight className="h-3.5 w-3.5 text-purple-400" />
-                </NavLink>
+                </Link>
               ))}
             </div>
           )}
@@ -172,21 +174,19 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
           {mobileSection === 'whitelabel' && (
             <div className="p-2 pt-0 space-y-1 bg-white/80 border-t border-purple-100">
               {whiteLabelSubmenu.map((item) => (
-                <NavLink
+                <Link
                   key={item.name}
-                  to={item.href}
+                  href={item.href}
                   onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium min-h-[40px] transition-colors ${
-                      isActive
-                        ? "bg-purple-100 text-purple-800 font-semibold"
-                        : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
-                    }`
-                  }
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium min-h-[40px] transition-colors ${
+                    isActive(item.href)
+                      ? "bg-purple-100 text-purple-800 font-semibold"
+                      : "text-gray-700 hover:bg-purple-50 hover:text-purple-700"
+                  }`}
                 >
                   <span>{item.name}</span>
                   <ChevronRight className="h-3.5 w-3.5 text-purple-400" />
-                </NavLink>
+                </Link>
               ))}
             </div>
           )}
@@ -215,7 +215,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
                   {offices.map((office) => (
                     <Link 
                       key={office.id} 
-                      to={`/offices/${office.slug}`} 
+                      href={`/offices/${office.slug}`} 
                       onClick={closeMenu} 
                       className="p-2 bg-purple-50 rounded-lg text-center border border-purple-100 block"
                     >
@@ -226,10 +226,10 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
                 </div>
               </div>
               <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
-                <Link to="/offices" onClick={closeMenu} className="text-xs font-bold text-purple-600 hover:underline">
+                <Link href="/offices" onClick={closeMenu} className="text-xs font-bold text-purple-600 hover:underline">
                   All Offices Hub →
                 </Link>
-                <Link to="/locations" onClick={closeMenu} className="text-xs font-bold text-purple-600 hover:underline">
+                <Link href="/locations" onClick={closeMenu} className="text-xs font-bold text-purple-600 hover:underline">
                   National Locations →
                 </Link>
               </div>
@@ -239,48 +239,48 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 
         {/* Core Main Pages Grid */}
         <div className="grid grid-cols-2 gap-2 pt-2">
-          <NavLink
-            to="/about"
+          <Link
+            href="/about"
             onClick={closeMenu}
             className="p-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-800 hover:bg-purple-50 hover:border-purple-200 min-h-[44px] flex items-center justify-center"
           >
             About Growth Service
-          </NavLink>
-          <NavLink
-            to="/packages"
+          </Link>
+          <Link
+            href="/packages"
             onClick={closeMenu}
             className="p-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-800 hover:bg-purple-50 hover:border-purple-200 min-h-[44px] flex items-center justify-center"
           >
             Growth Packages
-          </NavLink>
-          <NavLink
-            to="/team"
+          </Link>
+          <Link
+            href="/team"
             onClick={closeMenu}
             className="p-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-800 hover:bg-purple-50 hover:border-purple-200 min-h-[44px] flex items-center justify-center"
           >
             Leadership & Team
-          </NavLink>
-          <NavLink
-            to="/case-studies"
+          </Link>
+          <Link
+            href="/case-studies"
             onClick={closeMenu}
             className="p-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-800 hover:bg-purple-50 hover:border-purple-200 min-h-[44px] flex items-center justify-center"
           >
             Case Studies
-          </NavLink>
-          <NavLink
-            to="/testimonials"
+          </Link>
+          <Link
+            href="/testimonials"
             onClick={closeMenu}
             className="p-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-800 hover:bg-purple-50 hover:border-purple-200 min-h-[44px] flex items-center justify-center"
           >
             Client Reviews
-          </NavLink>
-          <NavLink
-            to="/contact"
+          </Link>
+          <Link
+            href="/contact"
             onClick={closeMenu}
             className="p-2.5 rounded-xl border border-gray-200 text-center text-xs font-bold text-gray-800 hover:bg-purple-50 hover:border-purple-200 min-h-[44px] flex items-center justify-center"
           >
             Contact & Support
-          </NavLink>
+          </Link>
         </div>
 
         {/* Trust & Verification Pill Links */}
@@ -288,7 +288,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
           {trustAndLegalLinks.map((link) => (
             <Link
               key={link.name}
-              to={link.href}
+              href={link.href}
               onClick={closeMenu}
               className="px-2.5 py-1.5 bg-gray-100 hover:bg-purple-100 text-gray-700 hover:text-purple-800 rounded-lg text-[11px] font-medium transition-colors"
             >

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { 
   ShieldCheck, Award, Star, Share2, Target, 
   Search, Layout, TrendingUp, ShoppingCart, Palette, Heart
@@ -60,7 +60,7 @@ export const FooterBottom: React.FC = () => {
           ].map((item) => (
             <Link 
               key={item.label}
-              to={item.path}
+              href={item.path}
               className="text-gray-400 hover:text-purple-300 transition-colors px-3 py-1.5 hover:bg-purple-900/30 rounded-full text-xs"
             >
               {item.label}
@@ -92,7 +92,7 @@ export const FooterBottom: React.FC = () => {
           return (
             <Link 
               key={badge.text}
-              to={badge.path}
+              href={badge.path}
               className="text-purple-300 text-[11px] bg-purple-900/30 border border-purple-700/50 px-3 py-1.5 rounded-full hover:bg-purple-800/50 hover:text-white transition-all duration-200 hover:scale-105 flex items-center gap-1.5"
             >
               <Icon className="w-3 h-3 text-purple-400" />
@@ -111,7 +111,7 @@ export const FooterBottom: React.FC = () => {
           <span>Made with</span>
           <Heart className="w-3 h-3 text-red-500 fill-red-500 inline" />
           <span>for growing businesses •</span>
-          <Link to="/contact" className="text-purple-400 hover:text-purple-300 transition-colors ml-1">Partner with us</Link>
+          <Link href="/contact" className="text-purple-400 hover:text-purple-300 transition-colors ml-1">Partner with us</Link>
         </p>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
 import { buildBreadcrumbSchema } from '../../seo/schema';
 
@@ -35,7 +35,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
       <ol className="flex items-center flex-wrap gap-1.5 sm:gap-2">
         <li>
           <Link 
-            to="/" 
+            href="/" 
             className={`inline-flex items-center gap-1 transition-colors ${
               isDark 
                 ? 'text-purple-200/90 hover:text-white' 
@@ -64,7 +64,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 </span>
               ) : (
                 <Link 
-                  to={item.path} 
+                  href={item.path} 
                   className={`transition-colors ${
                     isDark 
                       ? 'text-purple-200/90 hover:text-white hover:underline decoration-purple-300/40 underline-offset-4' 

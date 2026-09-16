@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { 
   Building2, ChevronRight, MapPin, Phone, Clock, 
   Globe, Zap, Search, FileText, Facebook, Instagram, 
@@ -31,7 +31,7 @@ export const FooterOfficeSection: React.FC = () => {
             </h3>
           </div>
           <Link 
-            to="/offices" 
+            href="/offices" 
             className="text-xs text-purple-300 hover:text-yellow-300 transition-colors font-medium flex items-center gap-1"
           >
             View All Office Hubs <ChevronRight className="h-3 w-3" />
@@ -48,7 +48,7 @@ export const FooterOfficeSection: React.FC = () => {
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-lg">{office.flag}</span>
                   <Link 
-                    to={`/offices/${office.slug}`}
+                    href={`/offices/${office.slug}`}
                     className="font-semibold text-purple-200 hover:text-white text-xs hover:underline"
                   >
                     {office.name} ({office.state})
@@ -110,19 +110,19 @@ export const FooterOfficeSection: React.FC = () => {
 
           <div className="space-y-2.5">
             <Link 
-              to="/book-call"
+              href="/book-call"
               className="block w-full bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white text-center py-2.5 px-4 rounded-lg font-bold transition-all duration-200 text-xs shadow-md shadow-purple-900/30 flex items-center justify-center gap-2"
             >
               <Phone className="h-3.5 w-3.5" /> Book Free Strategy Call
             </Link>
             <Link 
-              to="/free-audit"
+              href="/free-audit"
               className="block w-full border border-yellow-500/80 text-yellow-300 hover:bg-yellow-500/10 text-center py-2 px-4 rounded-lg font-semibold transition-all duration-200 text-xs flex items-center justify-center gap-2"
             >
               <Search className="h-3.5 w-3.5" /> Request Free Digital Audit
             </Link>
             <Link 
-              to="/contact"
+              href="/contact"
               className="block w-full border border-purple-500/60 text-purple-200 hover:bg-purple-900/40 hover:text-white text-center py-2 px-4 rounded-lg font-medium transition-all duration-200 text-xs flex items-center justify-center gap-2"
             >
               <FileText className="h-3.5 w-3.5" /> Contact Office Directly

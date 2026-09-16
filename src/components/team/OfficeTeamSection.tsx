@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Building2, MapPin, Phone, Clock, ArrowRight, ShieldCheck, Users 
 } from 'lucide-react';
@@ -38,7 +38,7 @@ export const OfficeTeamSection: React.FC<OfficeTeamSectionProps> = ({
             Staff directory update in progress for this location. For local inquiries, please reach out directly.
           </p>
           <Link
-            to={`/offices/${office.slug}`}
+            href={`/offices/${office.slug}`}
             className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 hover:text-purple-800"
           >
             <span>View {office.city} Office Hub Details</span>
@@ -122,7 +122,7 @@ export const OfficeTeamSection: React.FC<OfficeTeamSectionProps> = ({
                 Verified Corporate Hub
               </span>
               <Link
-                to={`/offices/${office.slug}`}
+                href={`/offices/${office.slug}`}
                 className="inline-flex items-center gap-1 text-xs font-bold text-yellow-300 hover:text-white transition-colors"
               >
                 <span>Office Details</span>
