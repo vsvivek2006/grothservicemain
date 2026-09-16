@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
+import type { AdminRole } from "@/lib/authorization";
 
 export interface NavItem {
   label: string;
@@ -59,14 +60,26 @@ export const navGroups: NavGroup[] = [
 
 interface SidebarProps {
   userEmail?: string | null;
+  userRole?: AdminRole | null;
   isMobileOpen?: boolean;
   onClose?: () => void;
 }
 
-export function Sidebar({ userEmail, isMobileOpen = false, onClose }: SidebarProps) {
+export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // Role-based navigation group filtering
+  const visibleNavGroups = navGroups.filter((group) => {
+    if (group.title === "Billing") {
+      return userRole !== "editor";
+    }
+    if (group.title === "Content") {
+      return userRole !== "billing_manager";
+    }
+    return true;
+  });
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -135,19 +148,21 @@ export function Sidebar({ userEmail, isMobileOpen = false, onClose }: SidebarPro
         </div>
 
         {/* Action Button */}
-        <div className="p-4 pb-2">
-          <Link
-            href="/admin/blog/new"
-            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors"
-          >
-            <PlusCircle className="w-4 h-4" />
-            Create Post
-          </Link>
-        </div>
+        {userRole !== "billing_manager" && (
+          <div className="p-4 pb-2">
+            <Link
+              href="/admin/blog/new"
+              className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors"
+            >
+              <PlusCircle className="w-4 h-4" />
+              Create Post
+            </Link>
+          </div>
+        )}
 
         {/* Navigation Links */}
         <nav className="p-4 space-y-4">
-          {navGroups.map((group) => (
+          {visibleNavGroups.map((group) => (
             <div key={group.title} className="space-y-1">
               <div className="px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-400">
                 {group.title}
@@ -195,9 +210,16 @@ export function Sidebar({ userEmail, isMobileOpen = false, onClose }: SidebarPro
       {/* Footer / User Profile & Logout */}
       <div className="p-4 border-t border-gray-800 space-y-2 bg-gray-900/90">
         {userEmail && (
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800/60 text-xs text-gray-300 border border-gray-800">
-            <User className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-            <span className="truncate font-medium text-[11px]">{userEmail}</span>
+          <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-gray-800/60 text-xs text-gray-300 border border-gray-800">
+            <div className="flex items-center gap-2 min-w-0">
+              <User className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+              <span className="truncate font-medium text-[11px]">{userEmail}</span>
+            </div>
+            {userRole && (
+              <span className="rounded px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider bg-purple-950/80 text-yellow-400 border border-purple-800/40 shrink-0">
+                {userRole.replace("_", " ")}
+              </span>
+            )}
           </div>
         )}
 

@@ -3,14 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, PlusCircle, ExternalLink } from "lucide-react";
+import type { AdminRole } from "@/lib/authorization";
 import { Sidebar } from "./Sidebar";
 
 interface AdminShellProps {
   userEmail?: string | null;
+  userRole?: AdminRole | null;
   children: React.ReactNode;
 }
 
-export function AdminShell({ userEmail, children }: AdminShellProps) {
+export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
@@ -18,6 +20,7 @@ export function AdminShell({ userEmail, children }: AdminShellProps) {
       {/* Sidebar (Desktop + Mobile Slide-over Drawer) */}
       <Sidebar
         userEmail={userEmail}
+        userRole={userRole}
         isMobileOpen={isMobileOpen}
         onClose={() => setIsMobileOpen(false)}
       />
@@ -49,13 +52,15 @@ export function AdminShell({ userEmail, children }: AdminShellProps) {
             >
               <ExternalLink className="w-4 h-4" />
             </Link>
-            <Link
-              href="/admin/blog/new"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors"
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>New Post</span>
-            </Link>
+            {userRole !== "billing_manager" && (
+              <Link
+                href="/admin/blog/new"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-colors"
+              >
+                <PlusCircle className="w-3.5 h-3.5" />
+                <span>New Post</span>
+              </Link>
+            )}
           </div>
         </header>
 
