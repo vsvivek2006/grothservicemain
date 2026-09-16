@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Building2, Phone, MessageCircle, ArrowRight, 
   ChevronRight, HelpCircle, MapPin, CheckCircle
@@ -34,8 +33,11 @@ import DecorativeGrid from '../components/ui/DecorativeGrid';
 import NotFound from './NotFound';
 import EmployeeCard from '../components/team/EmployeeCard';
 
-export const CityHubPage: React.FC = () => {
-  const { citySlug } = useParams<{ citySlug: string }>();
+interface CityHubPageProps {
+  citySlug: string;
+}
+
+export const CityHubPage: React.FC<CityHubPageProps> = ({ citySlug }) => {
 
   if (!citySlug) {
     return <NotFound />;
@@ -137,7 +139,7 @@ export const CityHubPage: React.FC = () => {
 
                 {city.isPhysicalOffice && office && (
                   <Button
-                    to={`/offices/${office.slug}`}
+                    href={`/offices/${office.slug}`}
                     variant="outline-white"
                     size="lg"
                     icon={<Building2 className="w-5 h-5 text-yellow-400" />}
@@ -190,7 +192,7 @@ export const CityHubPage: React.FC = () => {
                     </ul>
 
                     <Link
-                      to={`/${city.slug}/${srv.slug}`}
+                      href={`/${city.slug}/${srv.slug}`}
                       className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-bold text-purple-600 group-hover:translate-x-1 transition-all mt-auto"
                     >
                       <span>{srv.title} in {city.name}</span>
@@ -272,7 +274,7 @@ export const CityHubPage: React.FC = () => {
 
                   {city.isPhysicalOffice && office ? (
                     <Link
-                      to={`/offices/${office.slug}`}
+                      href={`/offices/${office.slug}`}
                       className="px-6 py-3 rounded-xl bg-purple-600 text-white font-bold text-sm hover:bg-purple-700 transition-all shrink-0 shadow-md inline-flex items-center gap-2 hover:shadow-lg active:scale-[0.98]"
                     >
                       <span>View Office Details</span>
@@ -280,7 +282,7 @@ export const CityHubPage: React.FC = () => {
                     </Link>
                   ) : (
                     <Link
-                      to="/offices"
+                      href="/offices"
                       className="px-6 py-3 rounded-xl bg-white text-purple-700 font-bold text-sm hover:bg-purple-50 border border-purple-200 transition-all shrink-0 shadow-sm inline-flex items-center gap-2 hover:shadow-md active:scale-[0.98]"
                     >
                       <span>Our 3 Company Offices</span>
@@ -394,7 +396,7 @@ export const CityHubPage: React.FC = () => {
                   {relatedCities.map((c) => (
                     <Link
                       key={c.slug}
-                      to={`/locations/${c.slug}`}
+                      href={`/locations/${c.slug}`}
                       className="bg-white p-3.5 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-sm transition-all flex items-center justify-between text-xs sm:text-sm font-semibold text-slate-700 hover:text-purple-600 group"
                     >
                       <span className="truncate">{c.name}</span>

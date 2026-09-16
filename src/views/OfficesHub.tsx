@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Building2, MapPin, Phone, Clock, 
   ArrowRight, ShieldCheck, CheckCircle 
@@ -139,7 +138,7 @@ export const OfficesHub: React.FC = () => {
                     </a>
 
                     <Link
-                      to={`/offices/${office.slug}`}
+                      href={`/offices/${office.slug}`}
                       className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-600 group-hover:text-purple-700 group-hover:translate-x-1 transition-all"
                     >
                       <span>Office Details</span>
@@ -163,12 +162,12 @@ export const OfficesHub: React.FC = () => {
                   Unlike agencies that list virtual postal mailboxes as physical offices, Growth Service only designates a location as an office where we have actual physical premises. For all other cities, our digital marketing, web development, and SEO services are provided with direct team communication.
                 </p>
                 <div className="flex flex-wrap gap-4 items-center">
-                  <Link to="/locations" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
+                  <Link href="/locations" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
                     <span>View All Locations We Serve</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                   <span className="text-slate-300">•</span>
-                  <Link to="/team" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
+                  <Link href="/team" className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1.5 group">
                     <span>Meet Our Team</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>

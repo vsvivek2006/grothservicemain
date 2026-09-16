@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Building2, MapPin, Phone, Clock, ExternalLink, 
   CheckCircle, ArrowRight, Navigation, Trophy
@@ -32,8 +31,11 @@ import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section } from '../components/ui';
 import NotFound from './NotFound';
 
-export const OfficeDetailPage: React.FC = () => {
-  const { officeSlug } = useParams<{ officeSlug: string }>();
+interface OfficeDetailPageProps {
+  officeSlug: string;
+}
+
+export const OfficeDetailPage: React.FC<OfficeDetailPageProps> = ({ officeSlug }) => {
 
   if (!officeSlug) {
     return <NotFound />;
@@ -308,7 +310,7 @@ export const OfficeDetailPage: React.FC = () => {
                       Meet the team based at our {office.city} office who serve clients in {office.state} and the region.
                     </p>
                   </div>
-                  <Link to="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group">
+                  <Link href="/team" className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-600 hover:text-purple-700 group">
                     <span>View Full Team Directory</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
@@ -357,7 +359,7 @@ export const OfficeDetailPage: React.FC = () => {
                   .map(otherOffice => (
                     <Link
                       key={otherOffice.id}
-                      to={`/offices/${otherOffice.slug}`}
+                      href={`/offices/${otherOffice.slug}`}
                       className="bg-white p-5 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition-all flex items-center justify-between group"
                     >
                       <div className="flex items-center gap-2.5">

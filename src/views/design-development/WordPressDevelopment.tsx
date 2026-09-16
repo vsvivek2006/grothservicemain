@@ -1,4 +1,3 @@
-﻿"use client";
 
 import React from 'react';
 import {
@@ -294,14 +293,14 @@ const WordPressDevelopment: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="white"
                 size="lg"
               >
                 Get Free WordPress Audit
               </AnimatedButton>
               <AnimatedButton
-                to="/book-call"
+                href="/book-call"
                 variant="primary"
                 size="lg"
               >
@@ -550,7 +549,7 @@ const WordPressDevelopment: React.FC = () => {
                 </div>
 
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -594,7 +593,7 @@ const WordPressDevelopment: React.FC = () => {
                 </div>
 
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -619,7 +618,7 @@ const WordPressDevelopment: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10">
-              <Button to="/book-call" variant="secondary" size="lg">
+              <Button href="/book-call" variant="secondary" size="lg">
                 Book Free Consultation
               </Button>
               <Button

@@ -56,7 +56,7 @@ export default async function OfficePage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <OfficeDetailPageView />
+      <OfficeDetailPageView officeSlug={officeSlug} />
     </>
   );
 }

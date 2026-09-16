@@ -1,9 +1,8 @@
-﻿"use client";
 
 // src/pages/design-development/UIUXDesign.tsx
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaPaintBrush, FaMobileAlt, FaUsers, FaRocket, FaPalette, FaPenAlt, FaCheckCircle } from 'react-icons/fa';
 import {
   Check,
@@ -67,7 +66,7 @@ const UIUXDesign: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -75,7 +74,7 @@ const UIUXDesign: React.FC = () => {
                 Get Free Design Audit
               </AnimatedButton>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -486,7 +485,7 @@ const UIUXDesign: React.FC = () => {
                   </ul>
                 </div>
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -576,7 +575,7 @@ const UIUXDesign: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -672,7 +671,7 @@ const UIUXDesign: React.FC = () => {
                   </ul>
                 </div>
                 <Link
-                  to="/portfolio"
+                  href="/portfolio"
                   className="text-purple-600 hover:text-purple-800 font-semibold inline-flex items-center text-sm"
                 >
                   View Case Study
@@ -684,7 +683,7 @@ const UIUXDesign: React.FC = () => {
           
           <div className="text-center mt-8">
             <Link
-              to="/portfolio"
+              href="/portfolio"
               className="inline-flex items-center text-purple-600 hover:text-purple-800 font-semibold text-base"
             >
               View Full Design Portfolio

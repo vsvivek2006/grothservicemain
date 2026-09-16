@@ -1,4 +1,3 @@
-﻿"use client";
 
 import React from 'react';
 import { ShieldCheck, AlertTriangle, CheckCircle, Mail, Phone, ExternalLink, HelpCircle, XCircle } from 'lucide-react';

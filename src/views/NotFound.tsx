@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Home, 
   ArrowLeft, 
@@ -37,7 +38,7 @@ import {
 } from "../services";
 
 const NotFound: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Office Locations from single source of truth
   const offices = getPhysicalOffices();
@@ -212,28 +213,28 @@ const NotFound: React.FC = () => {
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <button
-                  onClick={() => navigate(-1)}
+                  onClick={() => router.back()}
                   className="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group"
                 >
                   <ArrowLeft className="h-6 w-6 text-gray-600 mb-2 group-hover:scale-110 transition-transform" />
                   <span className="text-sm font-medium text-gray-700">Go Back</span>
                 </button>
                 <Link
-                  to="/"
+                  href="/"
                   className="flex flex-col items-center justify-center p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-colors group"
                 >
                   <Home className="h-6 w-6 text-purple-600 mb-2 group-hover:scale-110 transition-transform" />
                   <span className="text-sm font-medium text-gray-700">Homepage</span>
                 </Link>
                 <Link
-                  to="/contact"
+                  href="/contact"
                   className="flex flex-col items-center justify-center p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors group"
                 >
                   <MessageCircle className="h-6 w-6 text-blue-600 mb-2 group-hover:scale-110 transition-transform" />
                   <span className="text-sm font-medium text-gray-700">Contact</span>
                 </Link>
                 <Link
-                  to="/book-call"
+                  href="/book-call"
                   className="flex flex-col items-center justify-center p-4 rounded-xl bg-green-50 hover:bg-green-100 transition-colors group"
                 >
                   <Phone className="h-6 w-6 text-green-600 mb-2 group-hover:scale-110 transition-transform" />
@@ -252,7 +253,7 @@ const NotFound: React.FC = () => {
                 {popularServices.map((service, index) => (
                   <Link
                     key={index}
-                    to={service.link}
+                    href={service.link}
                     className="flex items-center p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all group"
                   >
                     <div className="flex-shrink-0 mr-4 text-purple-600">
@@ -287,7 +288,7 @@ const NotFound: React.FC = () => {
                 {projectTypes.map((project, index) => (
                   <Link
                     key={index}
-                    to={project.link}
+                    href={project.link}
                     className="flex items-center justify-between p-3 bg-white rounded-xl hover:shadow-md transition-shadow group"
                   >
                     <div>
@@ -318,7 +319,7 @@ const NotFound: React.FC = () => {
                 {quickLinks.map((link, index) => (
                   <Link
                     key={index}
-                    to={link.path}
+                    href={link.path}
                     className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 group"
                   >
                     <span className="text-sm text-gray-700 group-hover:text-purple-700">{link.name}</span>
@@ -438,7 +439,7 @@ const NotFound: React.FC = () => {
               Chat on WhatsApp
             </Button>
             <Button
-              to="/"
+              href="/"
               variant="outline-white"
               size="md"
               icon={<Home className="h-5 w-5" />}
@@ -446,7 +447,7 @@ const NotFound: React.FC = () => {
               Explore Homepage
             </Button>
             <Button
-              to="/contact"
+              href="/contact"
               variant="outline-white"
               size="md"
               icon={<MapPin className="h-5 w-5" />}
@@ -467,14 +468,14 @@ const NotFound: React.FC = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="grid grid-cols-4 gap-1 p-2">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => router.back()}
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-gray-50"
           >
             <ArrowLeft className="h-5 w-5 text-gray-600 mb-1" />
             <span className="text-[10px] font-medium text-gray-700">Back</span>
           </button>
           <Link
-            to="/"
+            href="/"
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-purple-50"
           >
             <Home className="h-5 w-5 text-purple-600 mb-1" />
@@ -490,7 +491,7 @@ const NotFound: React.FC = () => {
             <span className="text-[10px] font-medium text-green-700">WhatsApp</span>
           </a>
           <Link
-            to="/contact"
+            href="/contact"
             className="flex flex-col items-center justify-center py-2 rounded-lg hover:bg-blue-50"
           >
             <Phone className="h-5 w-5 text-blue-600 mb-1" />

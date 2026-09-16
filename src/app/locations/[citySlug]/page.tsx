@@ -51,7 +51,7 @@ export default async function LocationCityPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <CityHubPageView />
+      <CityHubPageView citySlug={citySlug} />
     </>
   );
 }

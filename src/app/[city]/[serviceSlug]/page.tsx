@@ -70,7 +70,7 @@ export default async function LocationServicePageRoute({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <LocationServicePageView />
+      <LocationServicePageView citySlug={citySlug} serviceSlug={serviceSlug} />
     </>
   );
 }

@@ -1,9 +1,8 @@
-﻿"use client";
 
 // src/pages/design-development/MobileAppDevelopment.tsx
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaMobileAlt, FaApple, FaAndroid, FaCode, FaShieldAlt, FaCloud, FaSync, FaServer, FaPaintBrush } from 'react-icons/fa';
 import {
   Check,
@@ -85,7 +84,7 @@ const MobileAppDevelopment: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -93,7 +92,7 @@ const MobileAppDevelopment: React.FC = () => {
                 Get Free App Consultation
               </AnimatedButton>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -451,7 +450,7 @@ const MobileAppDevelopment: React.FC = () => {
                   </ul>
                 </div>
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -541,7 +540,7 @@ const MobileAppDevelopment: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -655,7 +654,7 @@ const MobileAppDevelopment: React.FC = () => {
                 <h3 className="font-bold text-lg mb-2 text-gray-900">Have an app idea?</h3>
                 <p className="text-gray-600 mb-4 text-sm">Get a free consultation and project estimate</p>
                 <AnimatedButton
-                  to="/book-call"
+                  href="/book-call"
                   variant="primary"
                   size="md"
                 >
@@ -716,7 +715,7 @@ const MobileAppDevelopment: React.FC = () => {
                     </ul>
                   </div>
                   <Link
-                    to="/case-studies"
+                    href="/case-studies"
                     className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
                   >
                     View Case Study →

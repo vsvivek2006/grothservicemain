@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   CheckCircle, ArrowRight, Phone, MessageCircle, 
   ShieldCheck, Sparkles, ChevronRight, MapPin
@@ -34,8 +33,12 @@ import DecorativeGrid from '../components/ui/DecorativeGrid';
 import { Container, Section, WhatsAppIcon } from '../components/ui';
 import NotFound from './NotFound';
 
-export const LocationServicePage: React.FC = () => {
-  const { city: rawCity, serviceSlug: rawServiceSlug } = useParams<{ city: string; serviceSlug: string }>();
+interface LocationServicePageProps {
+  citySlug: string;
+  serviceSlug: string;
+}
+
+export const LocationServicePage: React.FC<LocationServicePageProps> = ({ citySlug: rawCity, serviceSlug: rawServiceSlug }) => {
 
   if (!rawCity || !rawServiceSlug) {
     return <NotFound />;
@@ -138,7 +141,7 @@ export const LocationServicePage: React.FC = () => {
                 </Button>
 
                 <Button
-                  to={`/locations/${city.slug}`}
+                  href={`/locations/${city.slug}`}
                   variant="outline-white"
                   size="lg"
                 >
@@ -233,7 +236,7 @@ export const LocationServicePage: React.FC = () => {
                 <div className="flex flex-wrap gap-3">
                   {city.isPhysicalOffice && office ? (
                     <Link 
-                      to={`/offices/${office.slug}`}
+                      href={`/offices/${office.slug}`}
                       className="text-xs sm:text-sm font-bold text-purple-700 hover:text-purple-800 inline-flex items-center gap-1 bg-white px-3.5 py-1.5 rounded-lg border border-purple-200 shadow-sm transition-all hover:shadow-md active:scale-[0.98]"
                     >
                       <span>View Office Details</span>
@@ -241,7 +244,7 @@ export const LocationServicePage: React.FC = () => {
                     </Link>
                   ) : (
                     <Link 
-                      to="/offices"
+                      href="/offices"
                       className="text-xs sm:text-sm font-bold text-purple-700 hover:text-purple-800 inline-flex items-center gap-1 bg-white px-3.5 py-1.5 rounded-lg border border-purple-200 shadow-sm transition-all hover:shadow-md active:scale-[0.98]"
                     >
                       <span>Our 3 Company Offices</span>
@@ -257,7 +260,7 @@ export const LocationServicePage: React.FC = () => {
                 <h3 className="text-xl font-bold text-slate-900">
                   Growth Service Team
                 </h3>
-                <Link to="/team" className="text-xs sm:text-sm font-bold text-purple-600 hover:underline inline-flex items-center gap-1 group">
+                <Link href="/team" className="text-xs sm:text-sm font-bold text-purple-600 hover:underline inline-flex items-center gap-1 group">
                   <span>Meet Full Team</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -281,7 +284,7 @@ export const LocationServicePage: React.FC = () => {
                   <h3 className="text-2xl font-bold text-slate-900">
                     Other Digital Services in {city.name}
                   </h3>
-                  <Link to={`/locations/${city.slug}`} className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1 group">
+                  <Link href={`/locations/${city.slug}`} className="text-sm font-bold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1 group">
                     <span>View {city.name} Overview</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
@@ -291,7 +294,7 @@ export const LocationServicePage: React.FC = () => {
                   {otherServicesInCity.map(otherService => (
                     <Link
                       key={otherService.slug}
-                      to={`/${city.slug}/${otherService.slug}`}
+                      href={`/${city.slug}/${otherService.slug}`}
                       className="bg-white p-5 rounded-xl border border-slate-200/80 hover:border-purple-300 hover:shadow-md transition-all flex items-center justify-between group"
                     >
                       <span className="font-semibold text-slate-800 group-hover:text-purple-600 transition-colors text-sm">

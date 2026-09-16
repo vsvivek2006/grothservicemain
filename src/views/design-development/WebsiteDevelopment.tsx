@@ -1,7 +1,6 @@
-﻿"use client";
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   Code,
   Laptop,
@@ -240,14 +239,14 @@ const WebsiteDevelopment: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="white"
                 size="lg"
               >
                 Get Free Website Audit
               </AnimatedButton>
               <AnimatedButton
-                to="/book-call"
+                href="/book-call"
                 variant="primary"
                 size="lg"
               >
@@ -410,7 +409,7 @@ const WebsiteDevelopment: React.FC = () => {
                   <p className="text-slate-600 text-sm leading-relaxed mb-6">{project.desc}</p>
                 </div>
                 <Link
-                  to="/portfolio"
+                  href="/portfolio"
                   className="inline-flex items-center gap-1.5 text-purple-600 hover:text-purple-700 font-semibold text-sm transition-colors"
                 >
                   <span>View Case Study</span>
@@ -421,7 +420,7 @@ const WebsiteDevelopment: React.FC = () => {
           </div>
 
           <div className="text-center mt-10">
-            <Button to="/portfolio" variant="outline" size="md">
+            <Button href="/portfolio" variant="outline" size="md">
               View All Projects
             </Button>
           </div>
@@ -466,7 +465,7 @@ const WebsiteDevelopment: React.FC = () => {
                 </div>
 
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -497,7 +496,7 @@ const WebsiteDevelopment: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10">
-              <Button to="/book-call" variant="secondary" size="lg">
+              <Button href="/book-call" variant="secondary" size="lg">
                 Book Free Consultation
               </Button>
               <Button

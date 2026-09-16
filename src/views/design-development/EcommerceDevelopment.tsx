@@ -1,9 +1,8 @@
-﻿"use client";
 
 // src/pages/design-development/EcommerceDevelopment.tsx
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FaShoppingCart, FaMobileAlt, FaCreditCard, FaTruck, FaSearch, FaShieldAlt } from 'react-icons/fa';
 import { 
   Check,
@@ -73,7 +72,7 @@ const EcommerceDevelopment: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/free-audit"
+                href="/free-audit"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -81,7 +80,7 @@ const EcommerceDevelopment: React.FC = () => {
                 Get Free Store Audit
               </AnimatedButton>
               <Button
-                to="/book-call"
+                href="/book-call"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto"
@@ -430,7 +429,7 @@ const EcommerceDevelopment: React.FC = () => {
                   </ul>
                 </div>
                 <Button
-                  to="/book-call"
+                  href="/book-call"
                   variant={plan.popular ? 'primary' : 'outline'}
                   size="md"
                   className="w-full"
@@ -461,7 +460,7 @@ const EcommerceDevelopment: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <AnimatedButton
-                to="/book-call"
+                href="/book-call"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"

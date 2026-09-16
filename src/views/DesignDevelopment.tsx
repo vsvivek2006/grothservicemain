@@ -1,4 +1,3 @@
-﻿"use client";
 
 import React from 'react';
 import { 
@@ -216,7 +215,7 @@ const DesignDevelopment: React.FC = () => {
                 <span>Discuss Your Project</span>
               </Button>
               <Button
-                to="/portfolio"
+                href="/portfolio"
                 variant="outline-white"
                 size="lg"
                 className="w-full sm:w-auto"
