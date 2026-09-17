@@ -22,23 +22,9 @@ import { getInvoiceStats, getInvoices, type InvoiceWithRelations } from "@/modul
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { StatCardSkeleton, TableRowSkeleton } from "@/components/admin/shared/AdminDashboardSkeleton";
 import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
+import { formatCurrency, formatDate } from "@/lib/formatters";
 
 export const revalidate = 0; // Fresh real-time data on load
-
-function formatCurrency(val: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(val);
-}
-
-function formatDate(dateStr?: string | null) {
-  if (!dateStr) return "—";
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return dateStr;
-  return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-}
 
 // -----------------------------------------------------------------------------
 // Component 1: Operational Metrics Cards (Streaming)
@@ -253,7 +239,7 @@ async function OperationalMetrics({ role }: { role: AdminRole }) {
 // Component 2: Recent Invoices Section (Streaming)
 // -----------------------------------------------------------------------------
 async function RecentInvoicesSection() {
-  const result = await getInvoices({ page: 1, limit: 5 });
+  const result = await getInvoices({ page: 1, limit: 5, includeCount: false });
   const invoices: InvoiceWithRelations[] = result?.invoices || [];
 
   return (

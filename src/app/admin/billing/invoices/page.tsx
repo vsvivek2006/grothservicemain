@@ -7,6 +7,7 @@ import { InvoiceTable } from "@/components/admin/billing/InvoiceTable";
 import { getInvoices, getInvoiceStats } from "@/modules/billing/queries/invoiceQueries";
 import { Plus, FileText, AlertCircle, CheckCircle, Clock, Search } from "lucide-react";
 import { assertAdminUser, assertPermission } from "@/lib/authorization";
+import { formatCurrency } from "@/lib/formatters";
 
 export const revalidate = 0;
 
@@ -32,14 +33,6 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
     getInvoiceStats(),
   ]);
   assertPermission(adminUser, "billing:read");
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(val);
-  };
 
   return (
     <div className="space-y-8">

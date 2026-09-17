@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { Invoice, InvoiceItem, Client, BillingProfile, PaymentLinkRecord } from "../types/database";
 import { computeDashboardStats, type BillingDashboardStats } from "../services/dashboardStats";
@@ -16,6 +17,7 @@ export interface GetInvoicesParams {
   paymentStatus?: string;
   clientId?: string;
   search?: string;
+  includeCount?: boolean;
 }
 
 export interface InvoiceListResponse {
@@ -36,29 +38,35 @@ export async function getInvoices(params: GetInvoicesParams = {}): Promise<Invoi
   const page = Math.max(1, params.page || 1);
   const limit = Math.min(100, Math.max(1, params.limit || 25));
   const offset = (page - 1) * limit;
+  const includeCount = params.includeCount !== false;
 
-  let query = adminClient
-    .from("invoices")
-    .select(
-      `
-      id,
-      invoice_number,
-      invoice_type,
-      document_status,
-      payment_status,
-      issue_date,
-      due_date,
-      grand_total,
-      amount_paid,
-      amount_due,
-      currency,
-      created_at,
-      client:clients(id, client_code, company_name, contact_name, email, phone)
-    `,
-      { count: "exact" }
-    )
-    .order("created_at", { ascending: false })
-    .range(offset, offset + limit - 1);
+  const selectFields = `
+    id,
+    invoice_number,
+    invoice_type,
+    document_status,
+    payment_status,
+    issue_date,
+    due_date,
+    grand_total,
+    amount_paid,
+    amount_due,
+    currency,
+    created_at,
+    client:clients(id, client_code, company_name, contact_name, email, phone)
+  `;
+
+  let query = includeCount
+    ? adminClient
+        .from("invoices")
+        .select(selectFields, { count: "exact" })
+        .order("created_at", { ascending: false })
+        .range(offset, offset + limit - 1)
+    : adminClient
+        .from("invoices")
+        .select(selectFields)
+        .order("created_at", { ascending: false })
+        .range(offset, offset + limit - 1);
 
   if (params.status && params.status !== "all") {
     query = query.eq("document_status", params.status);
@@ -144,9 +152,9 @@ export async function getInvoiceById(id: string): Promise<InvoiceWithRelations |
 }
 
 /**
- * Fetch operational summary statistics for invoices.
+ * Fetch operational summary statistics for invoices (memoized per request).
  */
-export async function getInvoiceStats(): Promise<InvoiceStats> {
+export const getInvoiceStats = cache(async function getInvoiceStats(): Promise<InvoiceStats> {
   const adminClient = createAdminClient();
 
   const { data, error } = await adminClient
@@ -158,4 +166,4 @@ export async function getInvoiceStats(): Promise<InvoiceStats> {
   }
 
   return computeDashboardStats(data as any);
-}
+});

@@ -1,8 +1,9 @@
 import "server-only";
+import { cache } from "react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { BillingItem } from "../types/database";
 
-export async function getBillingItems(options?: {
+export const getBillingItems = cache(async function getBillingItems(options?: {
   search?: string;
   category?: string;
   activeOnly?: boolean;
@@ -40,7 +41,7 @@ export async function getBillingItems(options?: {
     console.warn("[getBillingItems] Handled fetch error:", err);
     return [];
   }
-}
+});
 
 export async function getBillingItemById(id: string): Promise<BillingItem | null> {
   try {

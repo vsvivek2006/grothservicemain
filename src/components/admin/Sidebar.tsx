@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -23,6 +23,7 @@ import {
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { AdminRole } from "@/lib/authorization";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 
 export interface NavItem {
   label: string;
@@ -67,8 +68,6 @@ export const navGroups: NavGroup[] = [
   },
 ];
 
-import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
-
 interface SidebarProps {
   userEmail?: string | null;
   userRole?: AdminRole | null;
@@ -83,28 +82,30 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
   const paymentsActive = isPaymentsEnabled();
 
   // Role-based navigation group filtering
-  const visibleNavGroups = navGroups
-    .filter((group) => {
-      if (group.title === "Billing") {
-        return userRole === "superadmin" || userRole === "admin" || userRole === "billing_manager";
-      }
-      if (group.title === "Content") {
-        return userRole === "superadmin" || userRole === "admin" || userRole === "editor";
-      }
-      if (group.title === "System") {
-        return userRole === "superadmin" || userRole === "admin";
-      }
-      return true;
-    })
-    .map((group) => ({
-      ...group,
-      items: group.items.filter((item) => {
-        if (item.href === "/admin/billing/payments" && !paymentsActive) {
-          return false;
+  const visibleNavGroups = useMemo(() => {
+    return navGroups
+      .filter((group) => {
+        if (group.title === "Billing") {
+          return userRole === "superadmin" || userRole === "admin" || userRole === "billing_manager";
+        }
+        if (group.title === "Content") {
+          return userRole === "superadmin" || userRole === "admin" || userRole === "editor";
+        }
+        if (group.title === "System") {
+          return userRole === "superadmin" || userRole === "admin";
         }
         return true;
-      }),
-    }));
+      })
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => {
+          if (item.href === "/admin/billing/payments" && !paymentsActive) {
+            return false;
+          }
+          return true;
+        }),
+      }));
+  }, [userRole, paymentsActive]);
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -217,6 +218,7 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
                   <Link
                     key={item.href}
                     href={item.href}
+                    prefetch={true}
                     className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                       isActive
                         ? "bg-gradient-to-r from-purple-900/80 via-purple-800/60 to-purple-900/40 border border-purple-500/40 text-white font-semibold shadow-xs"

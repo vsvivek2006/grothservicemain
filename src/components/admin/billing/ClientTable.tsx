@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -53,19 +53,22 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
     setCurrentPage(1);
   }, [searchTerm, statusFilter]);
 
-  const filteredClients = clients.filter((client) => {
-    const matchesSearch =
-      searchTerm === "" ||
-      client.company_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      client.client_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      client.contact_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      client.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredClients = useMemo(() => {
+    const searchLower = searchTerm.toLowerCase().trim();
+    return clients.filter((client) => {
+      const matchesSearch =
+        !searchLower ||
+        client.company_name.toLowerCase().includes(searchLower) ||
+        client.client_code.toLowerCase().includes(searchLower) ||
+        client.contact_name.toLowerCase().includes(searchLower) ||
+        client.email.toLowerCase().includes(searchLower);
 
-    const matchesStatus =
-      statusFilter === "all" || client.status === statusFilter;
+      const matchesStatus =
+        statusFilter === "all" || client.status === statusFilter;
 
-    return matchesSearch && matchesStatus;
-  });
+      return matchesSearch && matchesStatus;
+    });
+  }, [clients, searchTerm, statusFilter]);
 
   const totalFiltered = filteredClients.length;
   const totalPages = Math.max(1, Math.ceil(totalFiltered / pageSize));

@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { createAdminClient } from "@/lib/supabase/server";
 import type { PaymentRecord, PaymentTransactionRecord } from "../types/database";
 
@@ -48,7 +49,7 @@ export interface TransactionWithInvoice extends PaymentTransactionRecord {
 /**
  * Fetch paginated payments with related invoice and client records.
  */
-export async function getPayments(
+export const getPayments = cache(async function getPayments(
   params: GetPaymentsParams = {}
 ): Promise<PaymentListResponse> {
   const adminClient = createAdminClient();
@@ -130,12 +131,12 @@ export async function getPayments(
       pendingCount,
     },
   };
-}
+});
 
 /**
  * Fetch immutable ledger transactions for audit reconciliation.
  */
-export async function getPaymentTransactions(
+export const getPaymentTransactions = cache(async function getPaymentTransactions(
   limit = 25
 ): Promise<TransactionWithInvoice[]> {
   try {
@@ -167,4 +168,4 @@ export async function getPaymentTransactions(
     console.warn("[getPaymentTransactions] Handled error:", err);
     return [];
   }
-}
+});

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import {
@@ -14,9 +15,14 @@ import {
   sendPaymentReminderEmailAction,
 } from "@/modules/billing/actions/notificationActions";
 import { InvoicePaymentLinksSection } from "./InvoicePaymentLinksSection";
-import { RecordPaymentModal } from "./RecordPaymentModal";
 import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 import { toast } from "sonner";
+import { formatCurrencyExact as formatCurrency, formatDate } from "@/lib/formatters";
+
+const RecordPaymentModal = dynamic(
+  () => import("./RecordPaymentModal").then((mod) => mod.RecordPaymentModal),
+  { ssr: false }
+);
 import {
   ArrowLeft,
   Edit2,
@@ -59,21 +65,6 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const [reminderError, setReminderError] = useState<string | null>(null);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
-  };
-
-  const formatDate = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-  };
 
   const isDraft = invoice.document_status === "draft";
   const isCancelled = invoice.document_status === "cancelled" || invoice.document_status === "void";

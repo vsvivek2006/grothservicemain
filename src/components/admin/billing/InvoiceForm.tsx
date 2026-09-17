@@ -16,6 +16,7 @@ import Link from "next/link";
 import { ClientModal } from "./ClientModal";
 import type { ClientListItem } from "@/modules/billing/queries/clientQueries";
 import { INDIAN_STATES } from "@/modules/billing/constants/indianStates";
+import { formatCurrencyExact as formatCurrency } from "@/lib/formatters";
 
 interface LineItemFormState {
   itemId: string | null;
@@ -264,14 +265,6 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
       toast.error(err instanceof Error ? err.message : "Submission error");
       setIsSubmitting(false);
     }
-  };
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
   };
 
   return (

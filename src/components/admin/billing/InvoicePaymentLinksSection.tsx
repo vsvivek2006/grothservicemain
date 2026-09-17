@@ -23,6 +23,7 @@ import {
   createPaymentLinkAction,
   cancelPaymentLinkAction,
 } from "@/modules/billing/actions/paymentLinkActions";
+import { formatCurrencyExact as formatCurrency, formatDate } from "@/lib/formatters";
 import { sendPaymentLinkEmailAction } from "@/modules/billing/actions/notificationActions";
 import type { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import type { PaymentLinkRecord } from "@/modules/billing/types/database";
@@ -146,25 +147,6 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
       supabase.removeChannel(channel);
     };
   }, [invoice.id, router]);
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
-  };
-
-  const formatDate = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
 
   const handleCopy = async (link: PaymentLinkRecord) => {
     try {

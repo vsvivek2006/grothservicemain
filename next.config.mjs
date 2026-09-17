@@ -146,7 +146,7 @@ const nextConfig = {
       'sonner',
     ],
     staleTimes: {
-      dynamic: 0,
+      dynamic: 30,
       static: 180,
     },
   },

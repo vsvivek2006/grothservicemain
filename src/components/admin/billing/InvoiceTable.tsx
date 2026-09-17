@@ -5,6 +5,7 @@ import Link from "next/link";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { Eye, Edit2, CheckCircle2, XCircle, FileText } from "lucide-react";
+import { formatCurrencyExact as formatCurrency, formatDate } from "@/lib/formatters";
 
 interface InvoiceTableProps {
   invoices: InvoiceWithRelations[];
@@ -17,21 +18,6 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
   onIssue,
   onCancel,
 }) => {
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
-  };
-
-  const formatDate = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-  };
-
   return (
     <div className="w-full overflow-x-auto rounded-2xl border border-gray-800 bg-gray-900/70 shadow-2xl backdrop-blur-md">
       <table className="w-full text-left text-sm text-gray-300">

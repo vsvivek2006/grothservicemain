@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import { Printer, ArrowLeft } from "lucide-react";
+import { formatCurrencyExact as formatCurrency, formatDate } from "@/lib/formatters";
 
 interface PrintInvoiceViewProps {
   invoice: InvoiceWithRelations;
@@ -123,21 +124,6 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
       document.title = documentTitle;
     }
     window.print();
-  };
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
-  };
-
-  const formatDate = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
   };
 
   return (

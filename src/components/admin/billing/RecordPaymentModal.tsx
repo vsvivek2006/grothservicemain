@@ -5,6 +5,7 @@ import { X, Loader2, CreditCard, CheckCircle2, Hash } from "lucide-react";
 import { toast } from "sonner";
 import { recordManualPaymentAction } from "@/modules/billing/actions/invoiceActions";
 import type { Invoice } from "@/modules/billing/types/database";
+import { formatCurrency } from "@/lib/formatters";
 
 interface RecordPaymentModalProps {
   isOpen: boolean;
@@ -74,13 +75,6 @@ export function RecordPaymentModal({
       setIsPending(false);
     }
   };
-
-  const formatCurrency = (val: number) =>
-    new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(val);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200">

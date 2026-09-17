@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -21,6 +21,7 @@ import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import type { AdminRole } from "@/lib/authorization";
 import type { TeamMember } from "@/modules/admin/queries/teamQueries";
 import { deleteAdminAction } from "@/modules/admin/actions/teamActions";
+import { formatDate } from "@/lib/formatters";
 
 const AdminModal = dynamic(
   () => import("./AdminModal").then((mod) => mod.AdminModal),
@@ -77,20 +78,31 @@ export const AdminTable: React.FC<AdminTableProps> = ({
     setMembers(initialMembers);
   }, [initialMembers]);
 
-  const filteredMembers = members.filter((m) => {
-    const matchesSearch =
-      searchTerm === "" ||
-      m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      m.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredMembers = useMemo(() => {
+    const term = searchTerm.toLowerCase().trim();
+    return members.filter((m) => {
+      const matchesSearch =
+        !term ||
+        m.name.toLowerCase().includes(term) ||
+        m.email.toLowerCase().includes(term);
 
-    const matchesRole = roleFilter === "all" || m.role === roleFilter;
+      const matchesRole = roleFilter === "all" || m.role === roleFilter;
 
-    return matchesSearch && matchesRole;
-  });
+      return matchesSearch && matchesRole;
+    });
+  }, [members, searchTerm, roleFilter]);
 
-  const superAdminCount = members.filter((m) => m.role === "superadmin").length;
-  const adminCount = members.filter((m) => m.role === "admin").length;
-  const staffCount = members.filter((m) => m.role === "billing_manager" || m.role === "editor").length;
+  const { superAdminCount, adminCount, staffCount } = useMemo(() => {
+    let superAdmin = 0;
+    let admin = 0;
+    let staff = 0;
+    for (const m of members) {
+      if (m.role === "superadmin") superAdmin++;
+      else if (m.role === "admin") admin++;
+      else if (m.role === "billing_manager" || m.role === "editor") staff++;
+    }
+    return { superAdminCount: superAdmin, adminCount: admin, staffCount: staff };
+  }, [members]);
 
   const handleOpenCreate = () => {
     setEditingMember(null);
@@ -295,11 +307,7 @@ export const AdminTable: React.FC<AdminTableProps> = ({
 
                       {/* Created Date */}
                       <td className="px-4 py-4 text-gray-400 hidden md:table-cell">
-                        {new Date(member.created_at).toLocaleDateString("en-IN", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
+                        {formatDate(member.created_at)}
                       </td>
 
                       {/* Last Sign In */}
@@ -307,13 +315,7 @@ export const AdminTable: React.FC<AdminTableProps> = ({
                         {member.last_sign_in_at ? (
                           <div className="flex items-center gap-1.5">
                             <Clock className="w-3 h-3 text-gray-500" />
-                            <span>
-                              {new Date(member.last_sign_in_at).toLocaleDateString("en-IN", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </span>
+                            <span>{formatDate(member.last_sign_in_at)}</span>
                           </div>
                         ) : (
                           <span className="text-gray-500 italic">Never</span>

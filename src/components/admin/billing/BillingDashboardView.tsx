@@ -30,6 +30,12 @@ import type {
   RecentPaymentWithInvoice,
   RecentPaymentLinkWithInvoice,
 } from "@/modules/billing/queries/dashboardQueries";
+import {
+  formatCurrency,
+  formatCurrencyExact,
+  formatDate,
+  formatDateTime,
+} from "@/lib/formatters";
 
 interface BillingDashboardViewProps {
   stats: InvoiceStats;
@@ -45,45 +51,6 @@ export const BillingDashboardView: React.FC<BillingDashboardViewProps> = ({
   recentInvoices,
 }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(val);
-  };
-
-  const formatCurrencyExact = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
-  };
-
-  const formatDate = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
-
-  const formatDateTime = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const handleCopy = async (linkId: string, url: string) => {
     try {

@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { Client, BillingProfile, ClientContact } from "../types/database";
 
@@ -7,7 +8,7 @@ export interface ClientListItem extends Client {
   contacts_count?: number;
 }
 
-export async function getClients(options?: {
+export const getClients = cache(async function getClients(options?: {
   search?: string;
   status?: string;
 }): Promise<ClientListItem[]> {
@@ -48,7 +49,7 @@ export async function getClients(options?: {
     console.warn("[getClients] Handled fetch error (e.g. table not yet migrated):", err);
     return [];
   }
-}
+});
 
 export async function getClientById(id: string): Promise<{
   client: Client;

@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getInvoiceStats, type InvoiceStats, type InvoiceWithRelations, getInvoices } from "./invoiceQueries";
 import type { PaymentRecord, PaymentLinkRecord } from "../types/database";
@@ -29,7 +30,7 @@ export interface BillingDashboardData {
 /**
  * Fetch most recent payments with related invoice metadata.
  */
-export async function getRecentPayments(limit = 5): Promise<RecentPaymentWithInvoice[]> {
+export const getRecentPayments = cache(async function getRecentPayments(limit = 5): Promise<RecentPaymentWithInvoice[]> {
   try {
     const supabase = createAdminClient();
     const { data, error } = await supabase
@@ -58,12 +59,12 @@ export async function getRecentPayments(limit = 5): Promise<RecentPaymentWithInv
     console.warn("[getRecentPayments] Handled fetch error:", err);
     return [];
   }
-}
+});
 
 /**
  * Fetch most recent payment links with related invoice metadata.
  */
-export async function getRecentPaymentLinks(limit = 5): Promise<RecentPaymentLinkWithInvoice[]> {
+export const getRecentPaymentLinks = cache(async function getRecentPaymentLinks(limit = 5): Promise<RecentPaymentLinkWithInvoice[]> {
   try {
     const supabase = createAdminClient();
     const { data, error } = await supabase
@@ -91,17 +92,17 @@ export async function getRecentPaymentLinks(limit = 5): Promise<RecentPaymentLin
     console.warn("[getRecentPaymentLinks] Handled fetch error:", err);
     return [];
   }
-}
+});
 
 /**
  * Concurrently fetch all aggregated metrics and recent activity for the Billing Dashboard.
  */
-export async function getBillingDashboardData(): Promise<BillingDashboardData> {
+export const getBillingDashboardData = cache(async function getBillingDashboardData(): Promise<BillingDashboardData> {
   const [stats, recentPayments, recentPaymentLinks, invoicesResult] = await Promise.all([
     getInvoiceStats(),
     getRecentPayments(5),
     getRecentPaymentLinks(5),
-    getInvoices({ page: 1, limit: 5 }),
+    getInvoices({ page: 1, limit: 5, includeCount: false }),
   ]);
 
   return {
@@ -110,4 +111,4 @@ export async function getBillingDashboardData(): Promise<BillingDashboardData> {
     recentPaymentLinks,
     recentInvoices: invoicesResult.invoices,
   };
-}
+});

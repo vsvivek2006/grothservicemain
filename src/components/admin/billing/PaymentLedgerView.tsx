@@ -23,6 +23,11 @@ import type {
   PaymentWithInvoiceAndClient,
   TransactionWithInvoice,
 } from "@/modules/billing/queries/paymentQueries";
+import {
+  formatCurrency,
+  formatCurrencyExact,
+  formatDateTime,
+} from "@/lib/formatters";
 
 interface PaymentLedgerViewProps {
   payments: PaymentWithInvoiceAndClient[];
@@ -53,35 +58,6 @@ export const PaymentLedgerView: React.FC<PaymentLedgerViewProps> = ({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"payments" | "ledger">("payments");
   const [searchTerm, setSearchTerm] = useState(currentSearch);
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(val);
-  };
-
-  const formatCurrencyExact = (val: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 2,
-    }).format(val);
-  };
-
-  const formatDateTime = (dateStr?: string | null) => {
-    if (!dateStr) return "—";
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    return d.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const statusFilters = [
     { label: "All Payments", value: "all" },

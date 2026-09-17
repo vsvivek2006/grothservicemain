@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Search, PlusCircle, Package, Edit3, CheckCircle2, XCircle, Tag } from "lucide-react";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
 import { BillingItem } from "@/modules/billing/types/database";
 import { toggleBillingItemActiveAction } from "@/modules/billing/actions/itemActions";
+import { formatCurrencyExact } from "@/lib/formatters";
 
 const ItemModal = dynamic(
   () => import("./ItemModal").then((mod) => mod.ItemModal),
@@ -38,22 +39,27 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
     setCurrentPage(1);
   }, [searchTerm, categoryFilter]);
 
-  const categories = Array.from(
-    new Set(items.map((i) => i.service_category).filter(Boolean))
-  ) as string[];
+  const categories = useMemo(() => {
+    return Array.from(
+      new Set(items.map((i) => i.service_category).filter(Boolean))
+    ) as string[];
+  }, [items]);
 
-  const filteredItems = items.filter((item) => {
-    const matchesSearch =
-      searchTerm === "" ||
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (item.hsn_sac_code && item.hsn_sac_code.includes(searchTerm));
+  const filteredItems = useMemo(() => {
+    const searchLower = searchTerm.toLowerCase().trim();
+    return items.filter((item) => {
+      const matchesSearch =
+        !searchLower ||
+        item.name.toLowerCase().includes(searchLower) ||
+        item.sku.toLowerCase().includes(searchLower) ||
+        (item.hsn_sac_code && item.hsn_sac_code.includes(searchLower));
 
-    const matchesCategory =
-      categoryFilter === "all" || item.service_category === categoryFilter;
+      const matchesCategory =
+        categoryFilter === "all" || item.service_category === categoryFilter;
 
-    return matchesSearch && matchesCategory;
-  });
+      return matchesSearch && matchesCategory;
+    });
+  }, [items, searchTerm, categoryFilter]);
 
   const totalFiltered = filteredItems.length;
   const totalPages = Math.max(1, Math.ceil(totalFiltered / pageSize));
@@ -200,7 +206,7 @@ export const ItemTable: React.FC<ItemTableProps> = ({ initialItems }) => {
 
                     <td className="py-3 px-4 whitespace-nowrap">
                       <span className="font-semibold text-white">
-                        ₹{Number(item.default_unit_price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                        {formatCurrencyExact(Number(item.default_unit_price))}
                       </span>
                     </td>
 
