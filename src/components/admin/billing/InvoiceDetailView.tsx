@@ -77,7 +77,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           // non-json response
         }
         toast.error(`${errMessage} Opening Print View...`);
-        window.open(`/admin/billing/invoices/${invoice.id}/print`, "_blank");
+        window.location.href = `/admin/billing/invoices/${invoice.id}/print?autoprint=1`;
         return;
       }
 
@@ -94,7 +94,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Download failed";
       toast.error(`${msg}. Opening Print View to save as PDF...`);
-      window.open(`/admin/billing/invoices/${invoice.id}/print`, "_blank");
+      window.location.href = `/admin/billing/invoices/${invoice.id}/print?autoprint=1`;
     } finally {
       setIsDownloadingPdf(false);
     }
@@ -280,7 +280,6 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
           <Link
             href={`/admin/billing/invoices/${invoice.id}/print`}
-            target="_blank"
             className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
           >
             <Printer className="h-4 w-4" />

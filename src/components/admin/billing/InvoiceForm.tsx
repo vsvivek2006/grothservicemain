@@ -255,8 +255,11 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
       }
 
       toast.success(isEditing ? "Draft invoice updated" : "Draft invoice created");
-      router.push(`/admin/billing/invoices/${res.data.id}`);
-      router.refresh();
+      // Hard navigation ensures clean server load, eliminates Next.js router cache stall, and updates view instantly
+      window.location.href = `/admin/billing/invoices/${res.data.id}`;
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 5000);
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Submission error");
       setIsSubmitting(false);

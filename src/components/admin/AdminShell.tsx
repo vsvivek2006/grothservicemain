@@ -47,8 +47,13 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   }, [pathname]);
 
   // If viewing a dedicated print view, completely omit all admin chrome (sidebar, topbar, drawers)
+  // and provide a dedicated, freely scrollable canvas
   if (pathname?.includes("/print")) {
-    return <>{children}</>;
+    return (
+      <div className="min-h-screen w-full overflow-y-auto bg-gray-100 print:bg-white text-gray-900 print:text-black">
+        {children}
+      </div>
+    );
   }
 
   return (

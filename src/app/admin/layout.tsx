@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { assertAdminUser, type AdminRole } from "@/lib/authorization";
 import { AdminShell } from "@/components/admin/AdminShell";
@@ -29,21 +28,8 @@ export default async function AdminLayout({
     userRole = null;
   }
 
-  const headersList = await headers();
-  const headerPathname = headersList.get("x-pathname") || "";
-
-  // Dedicated Print Route: strip entire AdminShell and dark canvas on server render
-  if (headerPathname.includes("/print")) {
-    return (
-      <div className="min-h-screen bg-white text-black p-0 m-0">
-        <Toaster richColors position="top-right" theme="light" closeButton />
-        {children}
-      </div>
-    );
-  }
-
   return (
-    <div className="h-screen overflow-hidden bg-gray-950 text-gray-100 selection:bg-purple-600 selection:text-white print:h-auto print:min-h-0 print:bg-white print:text-black">
+    <div className="min-h-screen bg-gray-950 text-gray-100 selection:bg-purple-600 selection:text-white print:h-auto print:min-h-0 print:bg-white print:text-black">
       <Toaster
         richColors
         position="top-right"

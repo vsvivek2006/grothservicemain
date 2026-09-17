@@ -157,7 +157,19 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
   const seller = (invoice.seller_snapshot as any) || {};
   const buyer = (invoice.buyer_snapshot as any) || {};
 
-
+  const handleBack = () => {
+    if (typeof window !== "undefined") {
+      if (window.opener && window.history.length <= 1) {
+        window.close();
+        return;
+      }
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+      window.location.href = `/admin/billing/invoices/${invoice.id}`;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 print:bg-white print:p-0 print:m-0">
@@ -227,13 +239,14 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
       {/* Non-Printable Top Action Bar */}
       <div className="no-print print:!hidden mx-auto mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between rounded-xl bg-gray-900 p-3 sm:px-5 sm:py-3.5 text-white shadow-lg border border-gray-800 max-w-[210mm]">
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <Link
-            href={`/admin/billing/invoices/${invoice.id}`}
-            className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white bg-gray-800 px-2.5 py-1.5 rounded-lg transition-colors"
+          <button
+            type="button"
+            onClick={handleBack}
+            className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>Back</span>
-          </Link>
+          </button>
           <span className="text-gray-600 hidden sm:inline">|</span>
           <span className="font-mono text-xs sm:text-sm font-semibold text-yellow-400">
             {invoice.invoice_number}
