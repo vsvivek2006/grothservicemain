@@ -122,9 +122,21 @@ const nextConfig = {
     ];
   },
   generateEtags: true,
-  serverExternalPackages: ['groq-sdk', '@react-pdf/renderer'],
+  serverExternalPackages: [
+    'groq-sdk',
+    '@react-pdf/renderer',
+    'pdfkit',
+    '@react-pdf/font',
+    '@react-pdf/layout',
+    '@react-pdf/render',
+    '@react-pdf/fns',
+  ],
   outputFileTracingIncludes: {
-    '/api/billing/invoices/[id]/pdf': ['./src/modules/billing/services/**/*'],
+    '/api/billing/invoices/[id]/pdf': [
+      './node_modules/pdfkit/**/*',
+      './node_modules/@react-pdf/**/*',
+      './src/modules/billing/services/**/*',
+    ],
   },
   experimental: {
     optimizePackageImports: [

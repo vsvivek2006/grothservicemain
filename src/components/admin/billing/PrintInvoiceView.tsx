@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
-import { Printer, Download, ArrowLeft } from "lucide-react";
+import { Printer, Download, ArrowLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface PrintInvoiceViewProps {
@@ -89,6 +89,45 @@ function getSafeInvoiceFilename(invoiceNumber?: string | null): string {
 }
 
 export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) => {
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+
+  const handleDownloadPdf = async () => {
+    if (isDownloadingPdf) return;
+    setIsDownloadingPdf(true);
+    const filename = getSafeInvoiceFilename(invoice.invoice_number);
+    try {
+      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
+      if (!res.ok) {
+        let errMessage = "Server PDF generation unavailable.";
+        try {
+          const errData = await res.json();
+          if (errData?.error) errMessage = errData.error;
+        } catch {
+          // non-json response
+        }
+        toast.error(`${errMessage} Opening browser print dialog to save as PDF...`);
+        window.print();
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      toast.success("Invoice PDF downloaded successfully");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Download failed";
+      toast.error(`${msg}. Opening browser print dialog...`);
+      window.print();
+    } finally {
+      setIsDownloadingPdf(false);
+    }
+  };
 
   // Trigger print dialog on mount ONLY if explicit query param ?autoprint=1 is provided
   useEffect(() => {
@@ -210,16 +249,24 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         </div>
 
         <div className="flex items-center gap-2 sm:gap-2.5">
-          <a
-            href={`/api/billing/invoices/${invoice.id}/pdf`}
-            download={getSafeInvoiceFilename(invoice.invoice_number)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-purple-700 px-3.5 py-2 text-xs font-medium text-white hover:bg-purple-600 cursor-pointer shadow-xs transition-colors"
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            disabled={isDownloadingPdf}
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-purple-700 px-3.5 py-2 text-xs font-medium text-white hover:bg-purple-600 cursor-pointer shadow-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Download className="h-3.5 w-3.5" />
-            <span>Download PDF</span>
-          </a>
+            {isDownloadingPdf ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <span>Generating PDF...</span>
+              </>
+            ) : (
+              <>
+                <Download className="h-3.5 w-3.5" />
+                <span>Download PDF</span>
+              </>
+            )}
+          </button>
           <button
             type="button"
             onClick={() => window.print()}

@@ -60,6 +60,45 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const [reminderError, setReminderError] = useState<string | null>(null);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+
+  const handleDownloadPdf = async () => {
+    if (isDownloadingPdf) return;
+    setIsDownloadingPdf(true);
+    const filename = `Invoice_${(invoice.invoice_number || "Draft").replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
+    try {
+      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
+      if (!res.ok) {
+        let errMessage = "Server PDF generation unavailable.";
+        try {
+          const errData = await res.json();
+          if (errData?.error) errMessage = errData.error;
+        } catch {
+          // non-json response
+        }
+        toast.error(`${errMessage} Opening Print View...`);
+        window.open(`/admin/billing/invoices/${invoice.id}/print`, "_blank");
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      toast.success("Invoice PDF downloaded successfully");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Download failed";
+      toast.error(`${msg}. Opening Print View to save as PDF...`);
+      window.open(`/admin/billing/invoices/${invoice.id}/print`, "_blank");
+    } finally {
+      setIsDownloadingPdf(false);
+    }
+  };
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -220,16 +259,24 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
-          <a
-            href={`/api/billing/invoices/${invoice.id}/pdf`}
-            download={`Invoice_${(invoice.invoice_number || "Draft").replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 cursor-pointer transition-colors"
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            disabled={isDownloadingPdf}
+            className="flex items-center justify-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Download className="h-4 w-4" />
-            <span>Download PDF</span>
-          </a>
+            {isDownloadingPdf ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin text-purple-400" />
+                <span>Generating PDF...</span>
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                <span>Download PDF</span>
+              </>
+            )}
+          </button>
 
           <Link
             href={`/admin/billing/invoices/${invoice.id}/print`}

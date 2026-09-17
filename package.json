@@ -49,6 +49,7 @@
     "isomorphic-dompurify": "^3.19.0",
     "lucide-react": "^0.344.0",
     "next": "^15.5.25",
+    "pdfkit": "^0.20.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.88.0",

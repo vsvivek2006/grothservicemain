@@ -91,6 +91,7 @@ async function renderPdfRobustly(payload: {
   seller: ReturnType<typeof getSellerSnapshot>;
   buyer: BuyerSnapshot;
 }): Promise<Buffer> {
+  let directError: unknown = null;
   // Tier 1: Direct in-process renderToBuffer
   try {
     const element = React.createElement(InvoicePdfDocument, payload);
@@ -99,12 +100,16 @@ async function renderPdfRobustly(payload: {
       return Buffer.from(buffer);
     }
   } catch (directErr) {
+    directError = directErr;
     console.warn("[invoicePdfService] Direct in-process renderToBuffer failed:", directErr);
   }
 
   // Tier 2: Isolated child worker process
+  let workerError: unknown = null;
   try {
     const candidatePaths = [
+      path.resolve(process.cwd(), "pdfWorker.mjs"),
+      path.resolve(process.cwd(), "public/pdfWorker.mjs"),
       path.resolve(process.cwd(), "src/modules/billing/services/pdfWorker.mjs"),
       path.resolve(process.cwd(), ".next/server/pdfWorker.mjs"),
     ];
@@ -114,10 +119,17 @@ async function renderPdfRobustly(payload: {
       return buffer;
     }
   } catch (workerErr) {
+    workerError = workerErr;
     console.error("[invoicePdfService] Worker fallback also failed:", workerErr);
   }
 
-  throw new Error("Unable to render invoice PDF on server. Please use Print View to save as PDF.");
+  const directMsg = directError instanceof Error ? directError.message : String(directError || "");
+  const workerMsg = workerError instanceof Error ? workerError.message : String(workerError || "");
+  const errorDetails = [directMsg, workerMsg].filter(Boolean).join(" | ");
+
+  throw new Error(
+    `Unable to render invoice PDF on server${errorDetails ? `: ${errorDetails}` : ""}. Please use Print View to save as PDF.`
+  );
 }
 
 /**
