@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
-import { Printer, Download, ArrowLeft, Loader2 } from "lucide-react";
-import { toast } from "sonner";
+import { Printer, ArrowLeft } from "lucide-react";
 
 interface PrintInvoiceViewProps {
   invoice: InvoiceWithRelations;
@@ -81,54 +80,7 @@ function numberToIndianWords(num: number): string {
   return result + " Only";
 }
 
-function getSafeInvoiceFilename(invoiceNumber?: string | null): string {
-  const safe = (invoiceNumber || "Invoice")
-    .replace(/[^a-zA-Z0-9\-_]/g, "_")
-    .replace(/_+/g, "_");
-  return `Invoice_${safe}.pdf`;
-}
-
 export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) => {
-  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
-
-  const handleDownloadPdf = async () => {
-    if (isDownloadingPdf) return;
-    setIsDownloadingPdf(true);
-    const filename = getSafeInvoiceFilename(invoice.invoice_number);
-    try {
-      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
-      if (!res.ok) {
-        let errMessage = "Server PDF generation unavailable.";
-        try {
-          const errData = await res.json();
-          if (errData?.error) errMessage = errData.error;
-        } catch {
-          // non-json response
-        }
-        toast.error(`${errMessage} Opening browser print dialog to save as PDF...`);
-        window.print();
-        return;
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-      toast.success("Invoice PDF downloaded successfully");
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Download failed";
-      toast.error(`${msg}. Opening browser print dialog...`);
-      window.print();
-    } finally {
-      setIsDownloadingPdf(false);
-    }
-  };
-
   // Trigger print dialog on mount ONLY if explicit query param ?autoprint=1 is provided
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.search.includes("autoprint=1")) {
@@ -157,22 +109,8 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
   const seller = (invoice.seller_snapshot as any) || {};
   const buyer = (invoice.buyer_snapshot as any) || {};
 
-  const handleBack = () => {
-    if (typeof window !== "undefined") {
-      if (window.opener && window.history.length <= 1) {
-        window.close();
-        return;
-      }
-      if (window.history.length > 1) {
-        window.history.back();
-        return;
-      }
-      window.location.href = `/admin/billing/invoices/${invoice.id}`;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100 py-6 print:bg-white print:p-0 print:m-0">
+    <div className="min-h-screen w-full bg-gray-100 py-6 print:bg-white print:p-0 print:m-0 text-gray-900">
       {/* Embedded CSS for Exact A4 Portrait Page Layout & Zero Overflow */}
       <style
         dangerouslySetInnerHTML={{
@@ -239,14 +177,13 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
       {/* Non-Printable Top Action Bar */}
       <div className="no-print print:!hidden mx-auto mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between rounded-xl bg-gray-900 p-3 sm:px-5 sm:py-3.5 text-white shadow-lg border border-gray-800 max-w-[210mm]">
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <button
-            type="button"
-            onClick={handleBack}
+          <Link
+            href={`/admin/billing/invoices/${invoice.id}`}
             className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>Back</span>
-          </button>
+          </Link>
           <span className="text-gray-600 hidden sm:inline">|</span>
           <span className="font-mono text-xs sm:text-sm font-semibold text-yellow-400">
             {invoice.invoice_number}
@@ -264,29 +201,11 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         <div className="flex items-center gap-2 sm:gap-2.5">
           <button
             type="button"
-            onClick={handleDownloadPdf}
-            disabled={isDownloadingPdf}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-purple-700 px-3.5 py-2 text-xs font-medium text-white hover:bg-purple-600 cursor-pointer shadow-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isDownloadingPdf ? (
-              <>
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                <span>Generating PDF...</span>
-              </>
-            ) : (
-              <>
-                <Download className="h-3.5 w-3.5" />
-                <span>Download PDF</span>
-              </>
-            )}
-          </button>
-          <button
-            type="button"
             onClick={() => window.print()}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-md transition-colors"
+            className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 px-4 py-2 text-xs font-semibold text-white cursor-pointer shadow-md transition-all"
           >
             <Printer className="h-3.5 w-3.5" />
-            <span>Print Invoice</span>
+            <span>Print / Save as PDF</span>
           </button>
         </div>
       </div>

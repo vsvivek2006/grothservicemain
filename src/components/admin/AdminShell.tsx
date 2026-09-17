@@ -19,9 +19,12 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
 
-  // Reset top navigation progress bar when route transition finishes
+  // Reset top navigation progress bar & reset window scroll when route transition finishes
   useEffect(() => {
     setIsNavigating(false);
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
   }, [pathname]);
 
   // Provide instant 0ms visual feedback on any admin navigation link click
@@ -48,13 +51,9 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
   }, [pathname]);
 
   // If viewing a dedicated print view, completely omit all admin chrome (sidebar, topbar, drawers)
-  // and provide a dedicated, freely scrollable canvas
+  // and render the children directly with clean, unhindered window scrolling
   if (pathname?.includes("/print")) {
-    return (
-      <div className="min-h-screen w-full overflow-y-auto bg-gray-100 print:bg-white text-gray-900 print:text-black">
-        {children}
-      </div>
-    );
+    return <>{children}</>;
   }
 
   return (

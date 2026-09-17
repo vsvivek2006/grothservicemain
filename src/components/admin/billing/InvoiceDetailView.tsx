@@ -29,7 +29,6 @@ import {
   Building2,
   AlertTriangle,
   Loader2,
-  Download,
   Mail,
   Bell,
   Send,
@@ -60,45 +59,6 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const [reminderError, setReminderError] = useState<string | null>(null);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
-  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
-
-  const handleDownloadPdf = async () => {
-    if (isDownloadingPdf) return;
-    setIsDownloadingPdf(true);
-    const filename = `Invoice_${(invoice.invoice_number || "Draft").replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`;
-    try {
-      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
-      if (!res.ok) {
-        let errMessage = "Server PDF generation unavailable.";
-        try {
-          const errData = await res.json();
-          if (errData?.error) errMessage = errData.error;
-        } catch {
-          // non-json response
-        }
-        toast.error(`${errMessage} Opening Print View...`);
-        window.location.href = `/admin/billing/invoices/${invoice.id}/print?autoprint=1`;
-        return;
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-      toast.success("Invoice PDF downloaded successfully");
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Download failed";
-      toast.error(`${msg}. Opening Print View to save as PDF...`);
-      window.location.href = `/admin/billing/invoices/${invoice.id}/print?autoprint=1`;
-    } finally {
-      setIsDownloadingPdf(false);
-    }
-  };
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -234,21 +194,24 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   return (
     <div className="space-y-8 print:space-y-0 print:m-0 print:p-0">
       {/* Action Header — Hidden during print */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between print:hidden">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between print:hidden">
+        <div className="flex items-center gap-3 min-w-0">
           <Link
             href="/admin/billing/invoices"
-            className="rounded-lg border border-gray-800 bg-gray-900/60 p-2 text-gray-400 hover:bg-gray-800 hover:text-white"
+            className="rounded-lg border border-gray-800 bg-gray-900/60 p-2 text-gray-400 hover:bg-gray-800 hover:text-white shrink-0 transition-colors"
+            title="Back to Invoices"
           >
             <ArrowLeft className="h-5 w-5" />
           </Link>
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="font-mono text-2xl font-bold tracking-tight text-white">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <h1 className="font-mono text-xl sm:text-2xl font-bold tracking-tight text-white whitespace-nowrap">
                 {invoice.invoice_number}
               </h1>
-              <StatusBadge status={invoice.document_status} />
-              <StatusBadge status={invoice.payment_status} />
+              <div className="flex items-center gap-1.5 shrink-0">
+                <StatusBadge status={invoice.document_status} />
+                <StatusBadge status={invoice.payment_status} />
+              </div>
             </div>
             <p className="mt-1 text-xs text-gray-400">
               Created on {formatDate(invoice.created_at)}
@@ -258,35 +221,35 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
-          <button
-            type="button"
-            onClick={handleDownloadPdf}
-            disabled={isDownloadingPdf}
-            className="flex items-center justify-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isDownloadingPdf ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin text-purple-400" />
-                <span>Generating PDF...</span>
-              </>
-            ) : (
-              <>
-                <Download className="h-4 w-4" />
-                <span>Download PDF</span>
-              </>
-            )}
-          </button>
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+          {/* Cancel button (for draft or uncollected invoice) */}
+          {canCancel && (
+            <button
+              type="button"
+              onClick={() => setShowCancelModal(true)}
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-red-500/30 bg-red-950/20 px-3 py-2 text-xs font-medium text-red-400 hover:bg-red-900/40 cursor-pointer transition-colors"
+            >
+              <XCircle className="h-4 w-4" />
+              <span>{isDraft ? "Cancel Draft" : "Cancel Invoice"}</span>
+            </button>
+          )}
 
+          {/* Print / Save PDF: Available on all statuses */}
           <Link
             href={`/admin/billing/invoices/${invoice.id}/print`}
-            className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
+            className={`flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-medium cursor-pointer transition-all ${
+              isDraft
+                ? "border border-gray-700 bg-gray-800/60 text-gray-200 hover:bg-gray-700 hover:text-white"
+                : "border border-purple-500/40 bg-purple-950/30 text-purple-200 hover:bg-purple-900/50"
+            }`}
+            title="Open printable view to print or save as PDF"
           >
             <Printer className="h-4 w-4" />
-            <span>Print View</span>
+            <span>Print / Save PDF</span>
           </Link>
 
-          {!isCancelled && (
+          {/* Email Invoice: Only for issued non-cancelled invoices */}
+          {!isDraft && !isCancelled && (
             <button
               type="button"
               onClick={() => {
@@ -294,7 +257,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 setShowEmailModal(true);
               }}
               disabled={isSendingEmail}
-              className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer transition-colors"
               title="Email invoice PDF to client"
             >
               <Mail className="h-4 w-4" />
@@ -302,6 +265,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             </button>
           )}
 
+          {/* Send Reminder: Only for issued, unpaid invoices */}
           {!isDraft && !isCancelled && !isPaid && (
             <button
               type="button"
@@ -310,7 +274,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 setShowReminderModal(true);
               }}
               disabled={isSendingReminder}
-              className="flex items-center justify-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300 hover:bg-amber-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-amber-500/40 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300 hover:bg-amber-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer transition-colors"
               title="Send payment reminder to client"
             >
               <Bell className="h-4 w-4" />
@@ -318,49 +282,38 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             </button>
           )}
 
-          {!isDraft && !isCancelled && (
+          {/* Edit Draft: Only on draft invoices */}
+          {isDraft && (
+            <Link
+              href={`/admin/billing/invoices/${invoice.id}/edit`}
+              className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50 transition-colors"
+            >
+              <Edit2 className="h-4 w-4" />
+              <span>Edit Draft</span>
+            </Link>
+          )}
+
+          {/* Primary Action Button */}
+          {isDraft ? (
+            <button
+              type="button"
+              onClick={() => setShowIssueModal(true)}
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-emerald-950/40 cursor-pointer transition-all"
+            >
+              <CheckCircle2 className="h-4 w-4" />
+              <span>Issue Invoice</span>
+            </button>
+          ) : !isCancelled ? (
             <button
               type="button"
               onClick={() => setShowPaymentModal(true)}
-              className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-3.5 py-2 text-xs font-semibold shadow-md shadow-purple-950/40 cursor-pointer"
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-4 py-2 text-xs font-semibold shadow-md shadow-purple-950/40 cursor-pointer transition-all"
               title="Record offline payment or update status"
             >
               <CreditCard className="h-4 w-4" />
               <span>{isPaid ? "Update Payment" : "Record Payment"}</span>
             </button>
-          )}
-
-          {isDraft && (
-            <>
-              <Link
-                href={`/admin/billing/invoices/${invoice.id}/edit`}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/40 bg-blue-950/30 px-3.5 py-2 text-xs font-medium text-blue-300 hover:bg-blue-900/50"
-              >
-                <Edit2 className="h-4 w-4" />
-                <span>Edit Draft</span>
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setShowIssueModal(true)}
-                className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/40 hover:from-emerald-700 hover:to-teal-800 cursor-pointer"
-              >
-                <CheckCircle2 className="h-4 w-4" />
-                <span>Issue Invoice</span>
-              </button>
-            </>
-          )}
-
-          {canCancel && (
-            <button
-              type="button"
-              onClick={() => setShowCancelModal(true)}
-              className="flex items-center justify-center gap-1.5 rounded-lg border border-red-500/30 bg-red-950/20 px-3.5 py-2 text-xs font-medium text-red-400 hover:bg-red-900/40 cursor-pointer col-span-2 sm:col-span-1"
-            >
-              <XCircle className="h-4 w-4" />
-              <span>Cancel Invoice</span>
-            </button>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -452,16 +405,9 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 print:grid-cols-2 print:gap-4 print:mb-6">
           {/* Seller Snapshot */}
           <div className="rounded-lg border border-gray-800/80 bg-gray-900/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400 print:text-purple-800">
-                Billed From (Seller)
-              </span>
-              <img
-                src="/logo.png"
-                alt="Growth Service"
-                className="h-5 w-5 object-contain"
-              />
-            </div>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400 print:text-purple-800">
+              Billed From (Seller)
+            </span>
             <h3 className="mt-2 text-base font-bold text-white print:text-black">
               {seller.legalName || "Growth Service Digital Solution"}
             </h3>
