@@ -13,11 +13,14 @@ interface PageProps {
 }
 
 export default async function EditInvoicePage({ params }: PageProps) {
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "billing:write");
-
   const { id } = await params;
-  const invoice = await getInvoiceById(id);
+  const [adminUser, invoice, clients, items] = await Promise.all([
+    assertAdminUser(),
+    getInvoiceById(id),
+    getClients({ status: "active" }),
+    getBillingItems({ activeOnly: true }),
+  ]);
+  assertPermission(adminUser, "billing:write");
 
   if (!invoice) {
     notFound();
@@ -27,11 +30,6 @@ export default async function EditInvoicePage({ params }: PageProps) {
   if (invoice.document_status !== "draft") {
     redirect(`/admin/billing/invoices/${id}`);
   }
-
-  const [clients, items] = await Promise.all([
-    getClients({ status: "active" }),
-    getBillingItems({ activeOnly: true }),
-  ]);
 
   const clientList =
     invoice.client && !clients.some((c) => c.id === invoice.client_id)

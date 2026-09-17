@@ -29,18 +29,17 @@ export default async function PaymentsPage({ searchParams }: PageProps) {
     redirect("/admin/billing");
   }
 
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "billing:read");
-
   const params = await searchParams;
   const page = Number(params.page) || 1;
   const status = params.status || "all";
   const search = params.search || "";
 
-  const [paymentData, transactions] = await Promise.all([
+  const [adminUser, paymentData, transactions] = await Promise.all([
+    assertAdminUser(),
     getPayments({ page, limit: 20, status, search }),
     getPaymentTransactions(30),
   ]);
+  assertPermission(adminUser, "billing:read");
 
   return (
     <PaymentLedgerView

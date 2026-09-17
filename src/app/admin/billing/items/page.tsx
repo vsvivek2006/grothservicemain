@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AdminPageHeader } from "@/components/admin/shared";
-import { ItemTable } from "@/components/admin/billing";
+import { ItemTable } from "@/components/admin/billing/ItemTable";
 import { getBillingItems } from "@/modules/billing/queries/itemQueries";
 import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
@@ -11,10 +11,11 @@ export const metadata: Metadata = {
 export const revalidate = 0; // Fresh catalog data on load
 
 export default async function AdminBillingItemsPage() {
-  const adminUser = await assertAdminUser();
+  const [adminUser, items] = await Promise.all([
+    assertAdminUser(),
+    getBillingItems(),
+  ]);
   assertPermission(adminUser, "billing:read");
-
-  const items = await getBillingItems();
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">

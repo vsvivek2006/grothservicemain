@@ -11,11 +11,12 @@ interface PageProps {
 }
 
 export default async function InvoiceDetailPage({ params }: PageProps) {
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "billing:read");
-
   const { id } = await params;
-  const invoice = await getInvoiceById(id);
+  const [adminUser, invoice] = await Promise.all([
+    assertAdminUser(),
+    getInvoiceById(id),
+  ]);
+  assertPermission(adminUser, "billing:read");
 
   if (!invoice) {
     notFound();

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Toaster } from "sonner";
-import { createSessionClient } from "@/lib/supabase/server";
-import type { AdminRole } from "@/lib/authorization";
+import { assertAdminUser, type AdminRole } from "@/lib/authorization";
 import { AdminShell } from "@/components/admin/AdminShell";
 
 export const metadata: Metadata = {
@@ -21,29 +20,16 @@ export default async function AdminLayout({
   let userEmail: string | null = null;
   let userRole: AdminRole | null = null;
 
-  // 1. Fast path: check if middleware already verified and forwarded the user identity (0ms network delay)
-  const headersList = await headers();
-  const headerEmail = headersList.get("x-user-email");
-  const headerRole = headersList.get("x-user-role") as AdminRole | null;
-
-  if (headerEmail) {
-    userEmail = headerEmail;
-    userRole = headerRole;
-  } else {
-    // 2. Fallback only if headers missing or direct access
-    try {
-      const supabase = await createSessionClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      userEmail = user?.email || null;
-      userRole = (user?.app_metadata?.role as AdminRole) || null;
-    } catch {
-      userEmail = null;
-      userRole = null;
-    }
+  try {
+    const adminUser = await assertAdminUser();
+    userEmail = adminUser.email;
+    userRole = adminUser.role;
+  } catch {
+    userEmail = null;
+    userRole = null;
   }
 
+  const headersList = await headers();
   const headerPathname = headersList.get("x-pathname") || "";
 
   // Dedicated Print Route: strip entire AdminShell and dark canvas on server render
@@ -57,7 +43,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 selection:bg-purple-600 selection:text-white print:bg-white print:text-black print:min-h-0">
+    <div className="h-screen overflow-hidden bg-gray-950 text-gray-100 selection:bg-purple-600 selection:text-white print:h-auto print:min-h-0 print:bg-white print:text-black">
       <Toaster
         richColors
         position="top-right"

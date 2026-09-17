@@ -1,4 +1,7 @@
+import * as React from "react";
 import { type SupabaseClient, type User } from "@supabase/supabase-js";
+
+const serverCache = typeof React.cache === "function" ? React.cache : <T extends (...args: any[]) => any>(fn: T): T => fn;
 
 export type AdminRole = "superadmin" | "admin" | "billing_manager" | "editor";
 
@@ -11,7 +14,9 @@ export type AdminPermission =
   | "content:read"
   | "content:write"
   | "content:delete"
-  | "system:manage";
+  | "system:manage"
+  | "team:read"
+  | "team:manage";
 
 const ROLE_PERMISSIONS: Record<AdminRole, AdminPermission[]> = {
   superadmin: [
@@ -24,6 +29,8 @@ const ROLE_PERMISSIONS: Record<AdminRole, AdminPermission[]> = {
     "content:write",
     "content:delete",
     "system:manage",
+    "team:read",
+    "team:manage",
   ],
   admin: [
     "billing:read",
@@ -34,6 +41,8 @@ const ROLE_PERMISSIONS: Record<AdminRole, AdminPermission[]> = {
     "content:read",
     "content:write",
     "content:delete",
+    "team:read",
+    "team:manage",
   ],
   billing_manager: [
     "billing:read",
@@ -109,9 +118,38 @@ export function verifyAdminRole(user: User | null | undefined): AdminUserContext
  * Asserts that the current request is from an authenticated admin user.
  * Resolves roles and permissions exclusively from server-controlled app_metadata.
  */
-export async function assertAdminUser(
+export const assertAdminUser = serverCache(async function assertAdminUser(
   client?: SupabaseClient
 ): Promise<AdminUserContext> {
+  // Fast path: if called within Next.js Server Component request context where middleware already verified the token
+  if (!client) {
+    try {
+      const { headers } = await import("next/headers");
+      const headersList = await headers();
+      const headerUserId = headersList.get("x-user-id");
+      const headerUserEmail = headersList.get("x-user-email");
+      const headerUserRole = headersList.get("x-user-role") as AdminRole | null;
+
+      const validRoles: AdminRole[] = ["superadmin", "admin", "billing_manager", "editor"];
+      if (headerUserId && headerUserRole && validRoles.includes(headerUserRole)) {
+        const permissions = new Set<AdminPermission>(ROLE_PERMISSIONS[headerUserRole] || []);
+        return {
+          id: headerUserId,
+          email: headerUserEmail || "",
+          role: headerUserRole,
+          permissions,
+          rawUser: {
+            id: headerUserId,
+            email: headerUserEmail || "",
+            app_metadata: { role: headerUserRole },
+          } as unknown as User,
+        };
+      }
+    } catch {
+      // In tests, CLI scripts, or environments without request headers, fall through to direct supabase check
+    }
+  }
+
   let supabase = client;
   if (!supabase) {
     const { createSessionClient } = await import("@/lib/supabase/server");
@@ -150,7 +188,7 @@ export async function assertAdminUser(
   }
 
   return verifyAdminRole(targetUser);
-}
+});
 
 /**
  * Verifies that the admin user has the required permission.

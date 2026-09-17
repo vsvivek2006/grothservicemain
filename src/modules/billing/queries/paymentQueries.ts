@@ -84,7 +84,13 @@ export async function getPayments(
     query = query.or(`provider_payment_id.ilike.${term},payer_email.ilike.${term},payer_name.ilike.${term}`);
   }
 
-  const { data, error, count } = await query;
+  const [queryResult, summaryResult] = await Promise.all([
+    query,
+    adminClient.from("payments").select("status, amount"),
+  ]);
+
+  const { data, error, count } = queryResult;
+  const allSummary = summaryResult.data;
 
   if (error) {
     console.error("[getPayments] Supabase query error:", error.message);
@@ -92,11 +98,6 @@ export async function getPayments(
 
   const totalCount = count || 0;
   const totalPages = Math.max(1, Math.ceil(totalCount / limit));
-
-  // Compute summary metrics for payments
-  const { data: allSummary } = await adminClient
-    .from("payments")
-    .select("status, amount");
 
   let totalCaptured = 0;
   let capturedCount = 0;
@@ -142,7 +143,15 @@ export async function getPaymentTransactions(
     const { data, error } = await adminClient
       .from("payment_transactions")
       .select(`
-        *,
+        id,
+        payment_id,
+        invoice_id,
+        transaction_type,
+        source,
+        amount,
+        balance_before,
+        balance_after,
+        created_at,
         invoice:invoices(id, invoice_number)
       `)
       .order("created_at", { ascending: false })
@@ -153,7 +162,7 @@ export async function getPaymentTransactions(
       return [];
     }
 
-    return (data || []) as TransactionWithInvoice[];
+    return (data || []) as unknown as TransactionWithInvoice[];
   } catch (err) {
     console.warn("[getPaymentTransactions] Handled error:", err);
     return [];

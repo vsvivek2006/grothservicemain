@@ -20,19 +20,18 @@ interface PageProps {
 }
 
 export default async function InvoicesPage({ searchParams }: PageProps) {
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "billing:read");
-
   const params = await searchParams;
   const page = Number(params.page) || 1;
   const status = params.status || "all";
   const paymentStatus = params.paymentStatus || "all";
   const search = params.search || "";
 
-  const [{ invoices, totalCount, totalPages }, stats] = await Promise.all([
+  const [adminUser, { invoices, totalCount, totalPages }, stats] = await Promise.all([
+    assertAdminUser(),
     getInvoices({ page, limit: 20, status, paymentStatus, search }),
     getInvoiceStats(),
   ]);
+  assertPermission(adminUser, "billing:read");
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("en-IN", {

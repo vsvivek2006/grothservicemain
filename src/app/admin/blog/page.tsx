@@ -8,25 +8,29 @@ import type { PostSummary } from "@/lib/validations/post";
 export const revalidate = 0; // Always fresh list
 
 export default async function AdminBlogListPage() {
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "content:read");
+  const fetchPosts = async (): Promise<PostSummary[]> => {
+    try {
+      const supabase = createAdminClient();
+      const { data: posts, error } = await supabase
+        .from("posts")
+        .select("id, title, slug, meta_description, cover_image_url, author, tags, status, source, published_at, created_at, updated_at")
+        .order("created_at", { ascending: false });
 
-  let postList: PostSummary[] = [];
-
-  try {
-    const supabase = createAdminClient();
-    const { data: posts, error } = await supabase
-      .from("posts")
-      .select("id, title, slug, meta_description, cover_image_url, author, tags, status, source, published_at, created_at, updated_at")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Error fetching posts:", error.message);
+      if (error) {
+        console.error("Error fetching posts:", error.message);
+      }
+      return (posts || []) as PostSummary[];
+    } catch (err) {
+      console.error("Admin blog list fetch error:", err);
+      return [];
     }
-    postList = (posts || []) as PostSummary[];
-  } catch (err) {
-    console.error("Admin blog list fetch error:", err);
-  }
+  };
+
+  const [adminUser, postList] = await Promise.all([
+    assertAdminUser(),
+    fetchPosts(),
+  ]);
+  assertPermission(adminUser, "content:read");
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">

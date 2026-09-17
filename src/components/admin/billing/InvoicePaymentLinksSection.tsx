@@ -27,6 +27,7 @@ import { sendPaymentLinkEmailAction } from "@/modules/billing/actions/notificati
 import type { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
 import type { PaymentLinkRecord } from "@/modules/billing/types/database";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 
 interface InvoicePaymentLinksSectionProps {
   invoice: InvoiceWithRelations;
@@ -107,6 +108,7 @@ export const InvoicePaymentLinksSection: React.FC<InvoicePaymentLinksSectionProp
 
   // Supabase Realtime: auto-refresh when webhook updates payment_links or invoices
   useEffect(() => {
+    if (!isPaymentsEnabled()) return;
     const supabase = createClient();
     const channel = supabase
       .channel(`invoice-payment-sync-${invoice.id}`)

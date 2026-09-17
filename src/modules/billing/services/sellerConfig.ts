@@ -33,8 +33,8 @@ export interface SellerSnapshot {
 
 export function getSellerSnapshot(): SellerSnapshot {
   return {
-    legalName: process.env.BILLING_SELLER_LEGAL_NAME || "Growth Service Technologies LLP",
-    tradeName: process.env.BILLING_SELLER_TRADE_NAME || "Growth Service",
+    legalName: process.env.BILLING_SELLER_LEGAL_NAME || "Growth Service Digital Solution",
+    tradeName: process.env.BILLING_SELLER_TRADE_NAME || "Growth Service Digital Solution",
     gstin: process.env.BILLING_SELLER_GSTIN || "08SDFPS4894L1Z7",
     pan: process.env.BILLING_SELLER_PAN || "SDFPS4894L",
     email: process.env.BILLING_SELLER_EMAIL || "billing@growthservice.in",
@@ -47,7 +47,7 @@ export function getSellerSnapshot(): SellerSnapshot {
     postalCode: "302017",
     country: "India",
     bankDetails: {
-      accountName: process.env.BILLING_BANK_ACCOUNT_NAME || "Growth Service Technologies LLP",
+      accountName: process.env.BILLING_BANK_ACCOUNT_NAME || "Growth Service Digital Solution",
       accountNumber: process.env.BILLING_BANK_ACCOUNT || "2448905367",
       ifscCode: process.env.BILLING_BANK_IFSC || "KKBK0003538",
       bankName: process.env.BILLING_BANK_NAME || "Kotak Mahindra Bank",

@@ -16,10 +16,11 @@ export const metadata: Metadata = {
 };
 
 export default async function BillingDashboardPage() {
-  const adminUser = await assertAdminUser();
+  const [adminUser, data] = await Promise.all([
+    assertAdminUser(),
+    getBillingDashboardData(),
+  ]);
   assertPermission(adminUser, "billing:read");
-
-  const data = await getBillingDashboardData();
 
   return (
     <BillingDashboardView

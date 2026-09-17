@@ -11,6 +11,14 @@ export function sanitizeAdminRedirect(path: string | null | undefined): string {
   return "/admin";
 }
 
+// 30-second cache for verified admin auth sessions to eliminate duplicate remote Supabase HTTPS roundtrips on route navigation
+interface CachedAdminSession {
+  user: any;
+  cachedAt: number;
+}
+const verifiedAdminSessions = new Map<string, CachedAdminSession>();
+const SESSION_CACHE_TTL_MS = 30 * 1000;
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -72,11 +80,35 @@ export async function middleware(request: NextRequest) {
       },
     });
 
-    // Refresh auth session
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
+    // Check fast in-memory session cache before firing remote HTTPS call
+    const authCookies = request.cookies.getAll().filter((c) => c.name.includes("-auth-token"));
+    const cacheKey = authCookies.map((c) => `${c.name}:${c.value}`).join("|");
+
+    let user: any = null;
+    let userError: any = null;
+
+    const cached = cacheKey ? verifiedAdminSessions.get(cacheKey) : null;
+    if (cached && Date.now() - cached.cachedAt < SESSION_CACHE_TTL_MS) {
+      user = cached.user;
+    } else {
+      const {
+        data: { user: fetchedUser },
+        error: fetchError,
+      } = await supabase.auth.getUser();
+
+      user = fetchedUser;
+      userError = fetchError;
+
+      if (cacheKey && user && !userError) {
+        verifiedAdminSessions.set(cacheKey, { user, cachedAt: Date.now() });
+        if (verifiedAdminSessions.size > 200) {
+          const firstKey = verifiedAdminSessions.keys().next().value;
+          if (firstKey) verifiedAdminSessions.delete(firstKey);
+        }
+      } else if (cacheKey && (!user || userError)) {
+        verifiedAdminSessions.delete(cacheKey);
+      }
+    }
 
     // If unauthenticated or error, redirect to /admin/login
     if ((!user || userError) && !isLoginPage) {
@@ -133,6 +165,18 @@ export async function middleware(request: NextRequest) {
         adminUrl.pathname = "/admin";
         adminUrl.search = "";
         adminUrl.searchParams.set("unauthorized", "content");
+        return NextResponse.redirect(adminUrl);
+      }
+
+      // 3. Team & Admins section: restricted to superadmin, admin
+      if (
+        normalizedPath.startsWith("/admin/team") &&
+        (adminRole === "billing_manager" || adminRole === "editor")
+      ) {
+        const adminUrl = request.nextUrl.clone();
+        adminUrl.pathname = "/admin";
+        adminUrl.search = "";
+        adminUrl.searchParams.set("unauthorized", "team");
         return NextResponse.redirect(adminUrl);
       }
 

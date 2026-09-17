@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import { headers } from "next/headers";
-import type { AdminRole } from "@/lib/authorization";
+import { assertAdminUser, type AdminRole } from "@/lib/authorization";
 import {
   FileText,
   Users,
@@ -16,6 +15,7 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
+  ShieldCheck,
 } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getInvoiceStats, getInvoices, type InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
@@ -43,16 +43,14 @@ function formatDate(dateStr?: string | null) {
 // -----------------------------------------------------------------------------
 // Component 1: Operational Metrics Cards (Streaming)
 // -----------------------------------------------------------------------------
-async function OperationalMetrics({ isEditor = false }: { isEditor?: boolean }) {
+async function OperationalMetrics({ role }: { role: AdminRole }) {
   const supabase = createAdminClient();
 
-  if (isEditor) {
-    const [{ count: publishedPosts }, { count: draftPosts }, { count: totalPosts }] =
-      await Promise.all([
-        supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "published"),
-        supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "draft"),
-        supabase.from("posts").select("*", { count: "exact", head: true }),
-      ]);
+  if (role === "editor") {
+    const { data: postRows } = await supabase.from("posts").select("status");
+    const publishedPosts = postRows?.filter((p) => p.status === "published").length || 0;
+    const draftPosts = postRows?.filter((p) => p.status === "draft").length || 0;
+    const totalPosts = postRows?.length || 0;
 
     return (
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -60,7 +58,7 @@ async function OperationalMetrics({ isEditor = false }: { isEditor?: boolean }) 
         <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
           <div>
             <span className="text-xs font-medium text-gray-400">Live Articles</span>
-            <p className="text-2xl font-bold text-emerald-400 mt-1">{publishedPosts ?? 0}</p>
+            <p className="text-2xl font-bold text-emerald-400 mt-1">{publishedPosts}</p>
             <span className="text-[11px] text-gray-500 mt-0.5 block">Published and indexing</span>
           </div>
           <div className="w-10 h-10 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 shrink-0">
@@ -72,7 +70,7 @@ async function OperationalMetrics({ isEditor = false }: { isEditor?: boolean }) 
         <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
           <div>
             <span className="text-xs font-medium text-gray-400">Draft Articles</span>
-            <p className="text-2xl font-bold text-amber-400 mt-1">{draftPosts ?? 0}</p>
+            <p className="text-2xl font-bold text-amber-400 mt-1">{draftPosts}</p>
             <span className="text-[11px] text-gray-500 mt-0.5 block">In progress or review</span>
           </div>
           <div className="w-10 h-10 rounded-lg bg-amber-950/50 border border-amber-900/40 flex items-center justify-center text-amber-400 shrink-0">
@@ -84,7 +82,7 @@ async function OperationalMetrics({ isEditor = false }: { isEditor?: boolean }) 
         <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
           <div>
             <span className="text-xs font-medium text-gray-400">Total Articles</span>
-            <p className="text-2xl font-bold text-purple-400 mt-1">{totalPosts ?? 0}</p>
+            <p className="text-2xl font-bold text-purple-400 mt-1">{totalPosts}</p>
             <span className="text-[11px] text-gray-500 mt-0.5 block">Full content library</span>
           </div>
           <div className="w-10 h-10 rounded-lg bg-purple-950/50 border border-purple-900/40 flex items-center justify-center text-purple-400 shrink-0">
@@ -95,13 +93,92 @@ async function OperationalMetrics({ isEditor = false }: { isEditor?: boolean }) 
     );
   }
 
-  const [invoiceStats, { count: clientCount }, { count: publishedPosts }, { count: draftPosts }] =
+  if (role === "billing_manager") {
+    const [invoiceStats, { count: clientCount }, { count: itemCount }] =
+      await Promise.all([
+        getInvoiceStats(),
+        supabase.from("clients").select("id", { count: "exact", head: true }).neq("status", "archived"),
+        supabase.from("billing_items").select("id", { count: "exact", head: true }).eq("is_active", true),
+      ]);
+
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Revenue Collected */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Total Collected</span>
+            <p className="text-2xl font-bold text-emerald-400 mt-1">
+              {formatCurrency(invoiceStats.totalCollected)}
+            </p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">
+              {invoiceStats.paidCount} fully paid invoices
+            </span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 shrink-0">
+            <TrendingUp className="w-5 h-5" />
+          </div>
+        </div>
+
+        {/* Receivables Due */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Total Receivables</span>
+            <p className="text-2xl font-bold text-amber-400 mt-1">
+              {formatCurrency(invoiceStats.totalReceivables)}
+            </p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">
+              {invoiceStats.unpaidCount + invoiceStats.partiallyPaidCount} pending or partial
+            </span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-amber-950/50 border border-amber-900/40 flex items-center justify-center text-amber-400 shrink-0">
+            <AlertCircle className="w-5 h-5" />
+          </div>
+        </div>
+
+        {/* Active Clients */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Total Clients</span>
+            <p className="text-2xl font-bold text-purple-400 mt-1">
+              {clientCount ?? 0}
+            </p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">
+              Registered client accounts
+            </span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-purple-950/50 border border-purple-900/40 flex items-center justify-center text-purple-400 shrink-0">
+            <Users className="w-5 h-5" />
+          </div>
+        </div>
+
+        {/* Active Catalog Services */}
+        <div className="p-5 rounded-xl border border-gray-800 bg-gray-900/80 shadow-lg flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium text-gray-400">Active Services</span>
+            <p className="text-2xl font-bold text-blue-400 mt-1">
+              {itemCount ?? 0}
+            </p>
+            <span className="text-[11px] text-gray-500 mt-0.5 block">
+              Catalog items active
+            </span>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-blue-950/50 border border-blue-900/40 flex items-center justify-center text-blue-400 shrink-0">
+            <Package className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const [invoiceStats, { count: clientCount }, { data: postRows }] =
     await Promise.all([
       getInvoiceStats(),
-      supabase.from("clients").select("*", { count: "exact", head: true }).neq("status", "archived"),
-      supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "published"),
-      supabase.from("posts").select("*", { count: "exact", head: true }).eq("status", "draft"),
+      supabase.from("clients").select("id", { count: "exact", head: true }).neq("status", "archived"),
+      supabase.from("posts").select("status"),
     ]);
+
+  const publishedPosts = postRows?.filter((p) => p.status === "published").length || 0;
+  const draftPosts = postRows?.filter((p) => p.status === "draft").length || 0;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -385,9 +462,10 @@ function ActivityTableSkeleton({ title }: { title: string }) {
 // Main Page: Instant Shell + Concurrent Streaming
 // -----------------------------------------------------------------------------
 export default async function AdminDashboardPage() {
-  const headersList = await headers();
-  const userRole = (headersList.get("x-user-role") as AdminRole) || "admin";
+  const adminUser = await assertAdminUser();
+  const userRole = adminUser.role;
   const isEditor = userRole === "editor";
+  const isBillingManager = userRole === "billing_manager";
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -400,19 +478,23 @@ export default async function AdminDashboardPage() {
           <p className="text-xs text-gray-400 mt-0.5">
             {isEditor
               ? "Content operations, article drafts, publishing pipeline, and AI generator."
+              : isBillingManager
+              ? "Billing operations, invoices, client accounts, and revenue receivables."
               : "Operational overview across revenue, billing, clients, and content."}
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Link
-            href="/blog"
-            target="_blank"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-900 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            <span>Live Blog</span>
-          </Link>
+          {!isBillingManager && (
+            <Link
+              href="/blog"
+              target="_blank"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-900 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Live Blog</span>
+            </Link>
+          )}
           {isEditor ? (
             <Link
               href="/admin/blog/new"
@@ -435,7 +517,7 @@ export default async function AdminDashboardPage() {
 
       {/* Operational Metric Cards (Streamed via Suspense) */}
       <Suspense fallback={<MetricsGridSkeleton />}>
-        <OperationalMetrics isEditor={isEditor} />
+        <OperationalMetrics role={userRole} />
       </Suspense>
 
       {/* Quick Actions Launchpad (Instant Render) */}
@@ -490,6 +572,90 @@ export default async function AdminDashboardPage() {
             <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
           </Link>
         </div>
+      ) : isBillingManager ? (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Link
+            href="/admin/billing/invoices/new"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-purple-950/60 border border-purple-900/40 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                <Receipt className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Create Invoice</h3>
+                <p className="text-[10px] text-gray-400">Issue tax invoice</p>
+              </div>
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-purple-400 transition-colors" />
+          </Link>
+
+          <Link
+            href="/admin/clients"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-blue-950/60 border border-blue-900/40 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                <Users className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Client Directory</h3>
+                <p className="text-[10px] text-gray-400">Manage accounts</p>
+              </div>
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
+          </Link>
+
+          <Link
+            href="/admin/billing/items"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                <Package className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Catalog Items</h3>
+                <p className="text-[10px] text-gray-400">Manage services</p>
+              </div>
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400 transition-colors" />
+          </Link>
+
+          {isPaymentsEnabled() ? (
+            <Link
+              href="/admin/billing/payments"
+              className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-amber-950/60 border border-amber-900/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+                  <CreditCard className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold text-white">Payment Ledger</h3>
+                  <p className="text-[10px] text-gray-400">Audit transactions</p>
+                </div>
+              </div>
+              <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-amber-400 transition-colors" />
+            </Link>
+          ) : (
+            <Link
+              href="/admin/billing/invoices"
+              className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-indigo-950/60 border border-indigo-900/40 flex items-center justify-center text-indigo-400 group-hover:scale-105 transition-transform">
+                  <Receipt className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold text-white">All Invoices</h3>
+                  <p className="text-[10px] text-gray-400">View ledger</p>
+                </div>
+              </div>
+              <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-indigo-400 transition-colors" />
+            </Link>
+          )}
+        </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <Link
@@ -540,39 +706,21 @@ export default async function AdminDashboardPage() {
             <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-amber-400 transition-colors" />
           </Link>
 
-          {isPaymentsEnabled() ? (
-            <Link
-              href="/admin/billing/payments"
-              className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
-                  <CreditCard className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-xs font-semibold text-white">Payment Ledger</h3>
-                  <p className="text-[10px] text-gray-400">Audit transactions</p>
-                </div>
+          <Link
+            href="/admin/team"
+            className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-indigo-950/60 border border-indigo-900/40 flex items-center justify-center text-indigo-400 group-hover:scale-105 transition-transform">
+                <ShieldCheck className="w-4 h-4" />
               </div>
-              <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400 transition-colors" />
-            </Link>
-          ) : (
-            <Link
-              href="/admin/billing/items"
-              className="p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/60 hover:border-purple-500/40 transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-900/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
-                  <Package className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-xs font-semibold text-white">Catalog Items</h3>
-                  <p className="text-[10px] text-gray-400">Manage services</p>
-                </div>
+              <div>
+                <h3 className="text-xs font-semibold text-white">Team & Admins</h3>
+                <p className="text-[10px] text-gray-400">Manage staff roles</p>
               </div>
-              <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400 transition-colors" />
-            </Link>
-          )}
+            </div>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-indigo-400 transition-colors" />
+          </Link>
         </div>
       )}
 
@@ -581,6 +729,12 @@ export default async function AdminDashboardPage() {
         <div className="grid grid-cols-1 gap-6">
           <Suspense fallback={<ActivityTableSkeleton title="Recent Articles" />}>
             <RecentArticlesSection />
+          </Suspense>
+        </div>
+      ) : isBillingManager ? (
+        <div className="grid grid-cols-1 gap-6">
+          <Suspense fallback={<ActivityTableSkeleton title="Recent Invoices" />}>
+            <RecentInvoicesSection />
           </Suspense>
         </div>
       ) : (

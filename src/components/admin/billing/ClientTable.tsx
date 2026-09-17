@@ -17,11 +17,16 @@ import {
   FilePlus,
 } from "lucide-react";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { ClientListItem } from "@/modules/billing/queries/clientQueries";
 import { archiveClientAction } from "@/modules/billing/actions/clientActions";
-import { ClientModal } from "./ClientModal";
+
+const ClientModal = dynamic(
+  () => import("./ClientModal").then((mod) => mod.ClientModal),
+  { ssr: false }
+);
 
 interface ClientTableProps {
   initialClients: ClientListItem[];

@@ -35,7 +35,14 @@ export async function getRecentPayments(limit = 5): Promise<RecentPaymentWithInv
     const { data, error } = await supabase
       .from("payments")
       .select(`
-        *,
+        id,
+        invoice_id,
+        amount,
+        status,
+        payment_method,
+        provider,
+        provider_payment_id,
+        created_at,
         invoice:invoices(id, invoice_number, grand_total, payment_status)
       `)
       .order("created_at", { ascending: false })
@@ -46,7 +53,7 @@ export async function getRecentPayments(limit = 5): Promise<RecentPaymentWithInv
       return [];
     }
 
-    return (data || []) as RecentPaymentWithInvoice[];
+    return (data || []) as unknown as RecentPaymentWithInvoice[];
   } catch (err) {
     console.warn("[getRecentPayments] Handled fetch error:", err);
     return [];
@@ -62,7 +69,13 @@ export async function getRecentPaymentLinks(limit = 5): Promise<RecentPaymentLin
     const { data, error } = await supabase
       .from("payment_links")
       .select(`
-        *,
+        id,
+        invoice_id,
+        amount,
+        status,
+        short_url,
+        created_at,
+        expires_at,
         invoice:invoices(id, invoice_number)
       `)
       .order("created_at", { ascending: false })
@@ -73,7 +86,7 @@ export async function getRecentPaymentLinks(limit = 5): Promise<RecentPaymentLin
       return [];
     }
 
-    return (data || []) as RecentPaymentLinkWithInvoice[];
+    return (data || []) as unknown as RecentPaymentLinkWithInvoice[];
   } catch (err) {
     console.warn("[getRecentPaymentLinks] Handled fetch error:", err);
     return [];

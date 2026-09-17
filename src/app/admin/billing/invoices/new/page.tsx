@@ -11,14 +11,13 @@ interface PageProps {
 }
 
 export default async function NewInvoicePage({ searchParams }: PageProps) {
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "billing:write");
-
   const params = searchParams ? await searchParams : undefined;
-  const [clients, items] = await Promise.all([
+  const [adminUser, clients, items] = await Promise.all([
+    assertAdminUser(),
     getClients({ status: "active" }),
     getBillingItems({ activeOnly: true }),
   ]);
+  assertPermission(adminUser, "billing:write");
 
   return (
     <div className="mx-auto max-w-6xl">

@@ -4,10 +4,15 @@ import React, { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Search, PlusCircle, Package, Edit3, CheckCircle2, XCircle, Tag } from "lucide-react";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
 import { BillingItem } from "@/modules/billing/types/database";
 import { toggleBillingItemActiveAction } from "@/modules/billing/actions/itemActions";
-import { ItemModal } from "./ItemModal";
+
+const ItemModal = dynamic(
+  () => import("./ItemModal").then((mod) => mod.ItemModal),
+  { ssr: false }
+);
 
 interface ItemTableProps {
   initialItems: BillingItem[];

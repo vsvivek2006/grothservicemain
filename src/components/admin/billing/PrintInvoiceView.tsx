@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { InvoiceWithRelations } from "@/modules/billing/queries/invoiceQueries";
-import { downloadInvoicePdfAction } from "@/modules/billing/actions/invoiceActions";
 import { Printer, Download, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 
@@ -82,21 +81,6 @@ function numberToIndianWords(num: number): string {
   return result + " Only";
 }
 
-function triggerBlobDownload(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    try {
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch {}
-  }, 15000);
-}
-
 function getSafeInvoiceFilename(invoiceNumber?: string | null): string {
   const safe = (invoiceNumber || "Invoice")
     .replace(/[^a-zA-Z0-9\-_]/g, "_")
@@ -105,7 +89,6 @@ function getSafeInvoiceFilename(invoiceNumber?: string | null): string {
 }
 
 export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) => {
-  const [isDownloading, setIsDownloading] = useState(false);
 
   // Trigger print dialog on mount ONLY if explicit query param ?autoprint=1 is provided
   useEffect(() => {
@@ -135,50 +118,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
   const seller = (invoice.seller_snapshot as any) || {};
   const buyer = (invoice.buyer_snapshot as any) || {};
 
-  const handleDownload = async () => {
-    if (isDownloading) return;
-    setIsDownloading(true);
-    const toastId = toast.loading("Preparing invoice PDF...");
 
-    try {
-      // 1. Try Next.js Server Action first (returns base64 buffer)
-      const actionRes = await downloadInvoicePdfAction(invoice.id);
-      if (actionRes.success && actionRes.data?.base64) {
-        const byteCharacters = atob(actionRes.data.base64);
-        const byteNumbers = new Uint8Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const blob = new Blob([byteNumbers], { type: "application/pdf" });
-        triggerBlobDownload(
-          blob,
-          actionRes.data.filename || getSafeInvoiceFilename(invoice.invoice_number)
-        );
-        toast.success("Invoice PDF downloaded successfully!", { id: toastId });
-        return;
-      }
-
-      // 2. Direct HTTP stream fallback with blob download (no raw JSON tabs)
-      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
-      if (!res.ok) {
-        let msg = "Failed to generate PDF";
-        try {
-          const errData = await res.json();
-          if (errData?.error) msg = errData.error;
-        } catch {}
-        throw new Error(msg);
-      }
-
-      const blob = await res.blob();
-      triggerBlobDownload(blob, getSafeInvoiceFilename(invoice.invoice_number));
-      toast.success("Invoice PDF downloaded successfully!", { id: toastId });
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Failed to download PDF";
-      toast.error(msg, { id: toastId });
-    } finally {
-      setIsDownloading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 print:bg-white print:p-0 print:m-0">
@@ -270,15 +210,16 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         </div>
 
         <div className="flex items-center gap-2 sm:gap-2.5">
-          <button
-            type="button"
-            onClick={handleDownload}
-            disabled={isDownloading}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-purple-700 px-3.5 py-2 text-xs font-medium text-white hover:bg-purple-600 disabled:opacity-50 cursor-pointer shadow-xs transition-colors"
+          <a
+            href={`/api/billing/invoices/${invoice.id}/pdf`}
+            download={getSafeInvoiceFilename(invoice.invoice_number)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-purple-700 px-3.5 py-2 text-xs font-medium text-white hover:bg-purple-600 cursor-pointer shadow-xs transition-colors"
           >
             <Download className="h-3.5 w-3.5" />
-            <span>{isDownloading ? "Generating…" : "Download PDF"}</span>
-          </button>
+            <span>Download PDF</span>
+          </a>
           <button
             type="button"
             onClick={() => window.print()}
@@ -305,7 +246,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
                 </h1>
               </div>
               <p className="text-xs font-bold text-gray-900">
-                {seller.legalName || "Growth Service Technologies LLP"}
+                {seller.legalName || "Growth Service Digital Solution"}
               </p>
               <p className="text-[11px] text-gray-600">
                 {seller.addressLine1 || "Plot No. 42, Malviya Nagar"}, {seller.city || "Jaipur"},{" "}
@@ -329,7 +270,11 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
 
             <div className="text-right space-y-0.5">
               <span className="inline-block rounded border border-purple-800 bg-purple-100 px-2.5 py-0.5 text-xs font-black uppercase tracking-widest text-purple-900">
-                TAX INVOICE
+                {invoice.invoice_type === "proforma"
+                  ? "PROFORMA INVOICE"
+                  : invoice.invoice_type === "receipt"
+                  ? "PAYMENT RECEIPT"
+                  : "TAX INVOICE"}
               </span>
               <p className="font-mono text-sm font-bold text-gray-900 mt-0.5">
                 {invoice.invoice_number}
@@ -342,7 +287,11 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
               </p>
               <div className="pt-0.5 flex items-center justify-end gap-2">
                 <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-700">
-                  ORIGINAL FOR RECIPIENT
+                  {invoice.invoice_type === "proforma"
+                    ? "ESTIMATE / QUOTATION"
+                    : invoice.invoice_type === "receipt"
+                    ? "RECEIPT VOUCHER"
+                    : "ORIGINAL FOR RECIPIENT"}
                 </span>
                 {invoice.payment_status === "paid" && (
                   <span className="inline-block rounded border border-emerald-600 bg-emerald-100 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-800">
@@ -362,7 +311,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
               Supplier / Billed From:
             </span>
             <p className="mt-0.5 font-bold text-xs text-gray-900">
-              {seller.legalName || "Growth Service Technologies LLP"}
+              {seller.legalName || "Growth Service Digital Solution"}
             </p>
             <p className="text-gray-600 text-[11px]">{seller.addressLine1 || "Plot No. 42, Malviya Nagar"}</p>
             <p className="text-gray-600 text-[11px]">
@@ -626,7 +575,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
 
           <div className="text-right text-xs">
             <p className="font-bold text-gray-900">
-              For {seller.legalName || "Growth Service Technologies LLP"}
+              For {seller.legalName || "Growth Service Digital Solution"}
             </p>
             <div className="h-10 print:h-8"></div>
             <p className="border-t border-gray-400 pt-0.5 font-bold text-gray-800">

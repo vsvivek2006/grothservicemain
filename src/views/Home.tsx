@@ -1,20 +1,18 @@
 import React from "react";
-import {
-  HomeHero,
-  HomePresenceRibbon,
-  HomeTrustSection,
-  HomeServicesOverview,
-  HomeProcessSection,
-  HomeCaseStudiesSection,
-  HomeTeamSection,
-  HomeIndustriesSection,
-  HomeLocationsSection,
-  HomeTechnologySection,
-  HomeClientsSection,
-  HomeWhyChooseUs,
-  HomeTestimonialsSection,
-  HomeCTA
-} from "../components/home";
+import { HomeHero } from "../components/home/HomeHero";
+import { HomePresenceRibbon } from "../components/home/HomePresenceRibbon";
+import { HomeTrustSection } from "../components/home/HomeTrustSection";
+import { HomeServicesOverview } from "../components/home/HomeServicesOverview";
+import { HomeProcessSection } from "../components/home/HomeProcessSection";
+import { HomeCaseStudiesSection } from "../components/home/HomeCaseStudiesSection";
+import { HomeTeamSection } from "../components/home/HomeTeamSection";
+import { HomeIndustriesSection } from "../components/home/HomeIndustriesSection";
+import { HomeLocationsSection } from "../components/home/HomeLocationsSection";
+import { HomeTechnologySection } from "../components/home/HomeTechnologySection";
+import { HomeClientsSection } from "../components/home/HomeClientsSection";
+import { HomeWhyChooseUs } from "../components/home/HomeWhyChooseUs";
+import { HomeTestimonialsSection } from "../components/home/HomeTestimonialsSection";
+import { HomeCTA } from "../components/home/HomeCTA";
 
 const Home: React.FC = () => {
   return (

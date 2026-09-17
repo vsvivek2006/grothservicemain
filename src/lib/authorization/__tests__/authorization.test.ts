@@ -129,4 +129,44 @@ test("Authorization Security Suite", async (t) => {
       }
     );
   });
+
+  await t.test("7. Team management permissions restricted to superadmin and admin", () => {
+    const superAdmin = verifyAdminRole({
+      id: "super-1",
+      email: "super@growthservice.in",
+      app_metadata: { role: "superadmin" },
+    } as unknown as User);
+
+    const admin = verifyAdminRole({
+      id: "admin-1",
+      email: "admin@growthservice.in",
+      app_metadata: { role: "admin" },
+    } as unknown as User);
+
+    const billingManager = verifyAdminRole({
+      id: "billing-1",
+      email: "billing@growthservice.in",
+      app_metadata: { role: "billing_manager" },
+    } as unknown as User);
+
+    const editor = verifyAdminRole({
+      id: "editor-1",
+      email: "editor@growthservice.in",
+      app_metadata: { role: "editor" },
+    } as unknown as User);
+
+    // Superadmin has team:read and team:manage
+    assert.ok(superAdmin.permissions.has("team:read"));
+    assert.ok(superAdmin.permissions.has("team:manage"));
+
+    // Admin has team:read and team:manage
+    assert.ok(admin.permissions.has("team:read"));
+    assert.ok(admin.permissions.has("team:manage"));
+
+    // Billing manager and editor are strictly denied
+    assert.ok(!billingManager.permissions.has("team:read"));
+    assert.ok(!billingManager.permissions.has("team:manage"));
+    assert.ok(!editor.permissions.has("team:read"));
+    assert.ok(!editor.permissions.has("team:manage"));
+  });
 });

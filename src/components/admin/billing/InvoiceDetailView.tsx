@@ -8,13 +8,13 @@ import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import {
   cancelInvoiceAction,
   issueInvoiceAction,
-  downloadInvoicePdfAction,
 } from "@/modules/billing/actions/invoiceActions";
 import {
   sendInvoiceEmailAction,
   sendPaymentReminderEmailAction,
 } from "@/modules/billing/actions/notificationActions";
 import { InvoicePaymentLinksSection } from "./InvoicePaymentLinksSection";
+import { RecordPaymentModal } from "./RecordPaymentModal";
 import { isPaymentsEnabled } from "@/modules/billing/constants/featureFlags";
 import { toast } from "sonner";
 import {
@@ -34,6 +34,7 @@ import {
   Bell,
   Send,
   Info,
+  CreditCard,
 } from "lucide-react";
 
 interface InvoiceDetailViewProps {
@@ -44,7 +45,6 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const router = useRouter();
   const [isIssuing, setIsIssuing] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
   const [showIssueModal, setShowIssueModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
@@ -52,6 +52,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   // Notification Modals & Form State
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const initialRecipient =
     invoice.billing_profile?.billing_email || invoice.client?.email || "";
   const [emailRecipient, setEmailRecipient] = useState(initialRecipient);
@@ -83,82 +84,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
   const seller = (invoice.seller_snapshot as any) || {};
   const buyer = (invoice.buyer_snapshot as any) || {};
 
-  /**
-   * Authoritative PDF Download Handler
-   * Attempts authenticated Server Action RPC first with deferred blob revocation;
-   * falls back seamlessly to direct API stream blob download without exposing raw JSON tabs.
-   */
-  const handleDownloadPdf = async () => {
-    if (isDownloading) return;
-    setIsDownloading(true);
-    const toastId = toast.loading("Generating invoice PDF...");
 
-    const safeFilename = `Invoice_${(invoice.invoice_number || "Draft")
-      .replace(/[^a-zA-Z0-9\-_]/g, "_")
-      .replace(/_+/g, "_")}.pdf`;
-
-    try {
-      // 1. Primary path: Server Action (inherits Next.js RPC session)
-      const actionRes = await downloadInvoicePdfAction(invoice.id);
-      if (actionRes.success && actionRes.data?.base64) {
-        const byteCharacters = atob(actionRes.data.base64);
-        const byteNumbers = new Uint8Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const blob = new Blob([byteNumbers], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = actionRes.data.filename || safeFilename;
-        document.body.appendChild(a);
-        a.click();
-
-        setTimeout(() => {
-          try {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          } catch {}
-        }, 15000);
-
-        toast.success("Invoice PDF downloaded successfully!", { id: toastId });
-        return;
-      }
-
-      // 2. Direct fallback to stream endpoint via fetch blob (prevents raw JSON new-tab display)
-      const res = await fetch(`/api/billing/invoices/${invoice.id}/pdf`);
-      if (res.ok) {
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = safeFilename;
-        document.body.appendChild(a);
-        a.click();
-
-        setTimeout(() => {
-          try {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          } catch {}
-        }, 15000);
-
-        toast.success("Invoice PDF downloaded successfully!", { id: toastId });
-        return;
-      }
-
-      // 3. Resilient fallback: open print view with autoprint if both server action and direct API fail
-      toast.dismiss(toastId);
-      toast("Direct download unavailable. Opening print view for instant PDF saving...", { icon: "ℹ️" });
-      window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank");
-    } catch {
-      toast.dismiss(toastId);
-      toast("Opening print view for PDF saving...", { icon: "ℹ️" });
-      window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank");
-    } finally {
-      setIsDownloading(false);
-    }
-  };
 
   const handleIssue = async () => {
     setIsIssuing(true);
@@ -294,28 +220,25 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
-          <button
-            type="button"
-            onClick={handleDownloadPdf}
-            disabled={isDownloading}
-            className="flex items-center justify-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+          <a
+            href={`/api/billing/invoices/${invoice.id}/pdf`}
+            download={`Invoice_${(invoice.invoice_number || "Draft").replace(/[^a-zA-Z0-9\-_]/g, "_")}.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 rounded-lg border border-purple-500/40 bg-purple-950/30 px-3.5 py-2 text-xs font-medium text-purple-300 hover:bg-purple-900/50 cursor-pointer transition-colors"
           >
-            {isDownloading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Download className="h-4 w-4" />
-            )}
-            <span>{isDownloading ? "Generating…" : "Download PDF"}</span>
-          </button>
+            <Download className="h-4 w-4" />
+            <span>Download PDF</span>
+          </a>
 
-          <button
-            type="button"
-            onClick={() => window.open(`/admin/billing/invoices/${invoice.id}/print?autoprint=1`, "_blank")}
+          <Link
+            href={`/admin/billing/invoices/${invoice.id}/print`}
+            target="_blank"
             className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3.5 py-2 text-xs font-medium text-gray-300 hover:bg-gray-700 cursor-pointer"
           >
             <Printer className="h-4 w-4" />
             <span>Print View</span>
-          </button>
+          </Link>
 
           {!isCancelled && (
             <button
@@ -346,6 +269,18 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
             >
               <Bell className="h-4 w-4" />
               <span>Send Reminder</span>
+            </button>
+          )}
+
+          {!isDraft && !isCancelled && (
+            <button
+              type="button"
+              onClick={() => setShowPaymentModal(true)}
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white px-3.5 py-2 text-xs font-semibold shadow-md shadow-purple-950/40 cursor-pointer"
+              title="Record offline payment or update status"
+            >
+              <CreditCard className="h-4 w-4" />
+              <span>{isPaid ? "Update Payment" : "Record Payment"}</span>
             </button>
           )}
 
@@ -393,7 +328,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
                 GROWTH SERVICE
               </h1>
               <p className="text-xs font-bold text-gray-900">
-                {seller.legalName || "Growth Service Technologies LLP"}
+                {seller.legalName || "Growth Service Digital Solution"}
               </p>
               <p className="text-[11px] text-gray-700">
                 {seller.addressLine1 || "Plot No. 42, Malviya Nagar"}, {seller.city || "Jaipur"},{" "}
@@ -468,7 +403,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
               Billed From (Seller)
             </span>
             <h3 className="mt-2 text-base font-bold text-white print:text-black">
-              {seller.legalName || "Growth Service Technologies LLP"}
+              {seller.legalName || "Growth Service Digital Solution"}
             </h3>
             <p className="text-xs text-gray-400 print:text-gray-700">
               {seller.addressLine1 || "Plot No. 42, Malviya Nagar"}
@@ -737,7 +672,7 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           </div>
           <div className="text-right text-xs">
             <p className="font-bold text-gray-900">
-              For {seller.legalName || "Growth Service Technologies LLP"}
+              For {seller.legalName || "Growth Service Digital Solution"}
             </p>
             <div className="h-16"></div>
             <p className="border-t border-gray-500 pt-1 font-semibold text-gray-800">
@@ -1001,6 +936,19 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
           </div>
         </div>
       )}
+
+      {/* Record Payment / Status Modal */}
+      <RecordPaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={() => {
+          React.startTransition(() => {
+            router.refresh();
+          });
+        }}
+        invoice={invoice}
+      />
     </div>
   );
 };
+

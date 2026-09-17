@@ -1,9 +1,13 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { createClient as createSupabaseClient, type SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
-export async function createSessionClient() {
+import * as React from "react";
+
+const serverCache = typeof React.cache === "function" ? React.cache : <T extends (...args: any[]) => any>(fn: T): T => fn;
+
+export const createSessionClient = serverCache(async function createSessionClient() {
   const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -25,9 +29,13 @@ export async function createSessionClient() {
       },
     },
   });
-}
+});
 
-export function createAdminClient() {
+let cachedAdminClient: SupabaseClient<any, any, any> | null = null;
+
+export function createAdminClient(): SupabaseClient<any, any, any> {
+  if (cachedAdminClient) return cachedAdminClient;
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -37,10 +45,12 @@ export function createAdminClient() {
     );
   }
 
-  return createSupabaseClient(supabaseUrl, serviceRoleKey, {
+  cachedAdminClient = createSupabaseClient(supabaseUrl, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
     },
   });
+
+  return cachedAdminClient;
 }

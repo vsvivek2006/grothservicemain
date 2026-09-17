@@ -164,14 +164,18 @@ function InvoicePdfDocument({ invoice, items, seller, buyer }) {
   const grandTotal = Number(invoice.grand_total) || 0;
   const amountDue = Number(invoice.amount_due) || 0;
   const amountPaid = Number(invoice.amount_paid) || 0;
-  const statusLabel = {
-    draft: "DRAFT INVOICE",
-    issued: "TAX INVOICE",
-    sent: "TAX INVOICE",
-    cancelled: "CANCELLED",
-    void: "VOID"
-  };
-  const docLabel = statusLabel[invoice.document_status] || "INVOICE";
+  const docLabel =
+    invoice.invoice_type === "proforma"
+      ? "PROFORMA INVOICE"
+      : invoice.invoice_type === "receipt"
+      ? "PAYMENT RECEIPT"
+      : invoice.document_status === "draft"
+      ? "DRAFT INVOICE"
+      : invoice.document_status === "cancelled"
+      ? "CANCELLED"
+      : invoice.document_status === "void"
+      ? "VOID"
+      : "TAX INVOICE";
   return /* @__PURE__ */ React.createElement(
     Document,
     {

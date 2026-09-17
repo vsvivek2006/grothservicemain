@@ -13,26 +13,32 @@ interface EditBlogPostPageProps {
 }
 
 export default async function EditBlogPostPage({ params }: EditBlogPostPageProps) {
-  const adminUser = await assertAdminUser();
-  assertPermission(adminUser, "content:write");
-
   const { id } = await params;
-  let post: PostRecord | null = null;
 
-  try {
-    const supabase = createAdminClient();
-    const { data, error } = await supabase
-      .from("posts")
-      .select("id, title, slug, content, meta_description, cover_image_url, author, tags, status, source, published_at, created_at, updated_at")
-      .eq("id", id)
-      .single();
+  const fetchPost = async (): Promise<PostRecord | null> => {
+    try {
+      const supabase = createAdminClient();
+      const { data, error } = await supabase
+        .from("posts")
+        .select("id, title, slug, content, meta_description, cover_image_url, author, tags, status, source, published_at, created_at, updated_at")
+        .eq("id", id)
+        .single();
 
-    if (!error && data) {
-      post = data as PostRecord;
+      if (!error && data) {
+        return data as PostRecord;
+      }
+      return null;
+    } catch (err) {
+      console.error("Error fetching post for editing:", err);
+      return null;
     }
-  } catch (err) {
-    console.error("Error fetching post for editing:", err);
-  }
+  };
+
+  const [adminUser, post] = await Promise.all([
+    assertAdminUser(),
+    fetchPost(),
+  ]);
+  assertPermission(adminUser, "content:write");
 
   if (!post) {
     notFound();

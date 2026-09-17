@@ -16,6 +16,7 @@ import {
   calculateInvoiceTotals,
   calculateDueDate,
   LineItemCalculationInput,
+  round2,
 } from "../services/taxCalculation";
 import { getSellerSnapshot } from "../services/sellerConfig";
 import {
@@ -635,4 +636,171 @@ export async function downloadInvoicePdfAction(
     const msg = err instanceof Error ? err.message : "Error generating invoice PDF";
     return actionError(msg);
   }
+}
+
+export interface RecordManualPaymentParams {
+  invoiceId: string;
+  paymentStatus: "paid" | "partially_paid" | "unpaid";
+  amount?: number;
+  paymentMethod?: "bank_transfer" | "upi" | "cash" | "cheque" | "other";
+  referenceNumber?: string;
+  paymentDate?: string;
+  notes?: string;
+}
+
+/**
+ * 6. Record Manual Payment & Status Update.
+ * Allows billing staff to record offline payments (NEFT/RTGS/UPI/Cash) and update invoice payment status.
+ */
+export async function recordManualPaymentAction(
+  params: RecordManualPaymentParams
+): Promise<ActionResult<Invoice>> {
+  try {
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:payments");
+
+    if (!params.invoiceId) {
+      return actionError("Invoice ID is required");
+    }
+
+    const adminClient = createAdminClient();
+
+    const { data: invoice, error: fetchErr } = await adminClient
+      .from("invoices")
+      .select("id, invoice_number, document_status, payment_status, grand_total, amount_paid, amount_due, notes")
+      .eq("id", params.invoiceId)
+      .single();
+
+    if (fetchErr || !invoice) {
+      return actionError("Invoice not found");
+    }
+
+    if (invoice.document_status === "draft") {
+      return actionError("Cannot record payments on a draft invoice. Please issue the invoice first.");
+    }
+
+    if (invoice.document_status === "cancelled" || invoice.document_status === "void") {
+      return actionError("Cannot record payments on a cancelled invoice.");
+    }
+
+    let targetStatus: "paid" | "partially_paid" | "unpaid" = params.paymentStatus;
+    let newAmountPaid = 0;
+    let newAmountDue = Number(invoice.grand_total);
+
+    if (targetStatus === "paid") {
+      newAmountPaid = Number(invoice.grand_total);
+      newAmountDue = 0;
+    } else if (targetStatus === "partially_paid") {
+      const enteredAmount = Number(params.amount) || 0;
+      if (enteredAmount <= 0) {
+        return actionError("Partial payment amount must be greater than zero");
+      }
+      if (enteredAmount >= Number(invoice.grand_total)) {
+        newAmountPaid = Number(invoice.grand_total);
+        newAmountDue = 0;
+        targetStatus = "paid";
+      } else {
+        newAmountPaid = round2(enteredAmount);
+        newAmountDue = round2(Number(invoice.grand_total) - newAmountPaid);
+      }
+    } else if (targetStatus === "unpaid") {
+      newAmountPaid = 0;
+      newAmountDue = Number(invoice.grand_total);
+    }
+
+    const paymentDate = params.paymentDate || new Date().toISOString();
+    const paymentMethod = params.paymentMethod || "bank_transfer";
+    const refNo = params.referenceNumber?.trim() || "";
+
+    // Insert record in payments table if marking paid or partially paid
+    if (newAmountPaid > 0) {
+      const paidDelta = round2(newAmountPaid - Number(invoice.amount_paid || 0));
+      const paymentRecordAmount = paidDelta > 0 ? paidDelta : newAmountPaid;
+
+      await adminClient.from("payments").insert({
+        invoice_id: invoice.id,
+        provider: "manual",
+        provider_payment_id: refNo ? `manual_${refNo}` : `manual_${Date.now()}`,
+        amount: paymentRecordAmount,
+        currency: "INR",
+        status: "captured",
+        payment_method: paymentMethod,
+        captured_at: paymentDate,
+        metadata: {
+          recorded_by_email: adminUser.email,
+          recorded_by_id: adminUser.id,
+          reference_number: refNo,
+          notes: params.notes || "",
+          manual: true,
+        },
+      });
+    }
+
+    const nowStr = new Date().toISOString().split("T")[0];
+    const methodLabels: Record<string, string> = {
+      bank_transfer: "Bank Transfer (NEFT/RTGS)",
+      upi: "UPI",
+      cash: "Cash",
+      cheque: "Cheque",
+      other: "Other",
+    };
+    const methodStr = methodLabels[paymentMethod] || paymentMethod;
+    const noteEntry = `[Manual Payment: Status set to ${targetStatus.toUpperCase()} (${formatCurrencySimple(newAmountPaid)} paid) via ${methodStr}${refNo ? ` Ref: ${refNo}` : ""}${params.notes ? ` - ${params.notes}` : ""} by ${adminUser.email} on ${nowStr}]`;
+    const updatedNotes = invoice.notes ? `${invoice.notes}\n\n${noteEntry}` : noteEntry;
+
+    const { data: updatedInvoice, error: updateErr } = await adminClient
+      .from("invoices")
+      .update({
+        payment_status: targetStatus,
+        amount_paid: newAmountPaid,
+        amount_due: newAmountDue,
+        notes: updatedNotes,
+        updated_by: adminUser.id,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", invoice.id)
+      .select()
+      .single();
+
+    if (updateErr || !updatedInvoice) {
+      return actionError(`Failed to update payment status: ${updateErr?.message}`);
+    }
+
+    await logAuditEvent({
+      actorUserId: adminUser.id,
+      action: "PAYMENT_RECORDED",
+      entityType: "invoice",
+      entityId: invoice.id,
+      oldValues: {
+        payment_status: invoice.payment_status,
+        amount_paid: invoice.amount_paid,
+        amount_due: invoice.amount_due,
+      },
+      newValues: {
+        payment_status: targetStatus,
+        amount_paid: newAmountPaid,
+        amount_due: newAmountDue,
+        payment_method: paymentMethod,
+        reference_number: refNo,
+      },
+    });
+
+    revalidatePath("/admin/billing/invoices");
+    revalidatePath(`/admin/billing/invoices/${params.invoiceId}`);
+    revalidatePath("/admin/billing");
+    revalidatePath("/admin");
+
+    return actionSuccess(updatedInvoice as Invoice);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : "Error recording manual payment";
+    return actionError(msg);
+  }
+}
+
+function formatCurrencySimple(val: number): string {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(val);
 }

@@ -41,7 +41,18 @@ export async function getInvoices(params: GetInvoicesParams = {}): Promise<Invoi
     .from("invoices")
     .select(
       `
-      *,
+      id,
+      invoice_number,
+      invoice_type,
+      document_status,
+      payment_status,
+      issue_date,
+      due_date,
+      grand_total,
+      amount_paid,
+      amount_due,
+      currency,
+      created_at,
       client:clients(id, client_code, company_name, contact_name, email, phone)
     `,
       { count: "exact" }
