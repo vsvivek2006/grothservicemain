@@ -42,6 +42,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
   const [gstin, setGstin] = useState("");
   const [pan, setPan] = useState("");
   const [aadhaar, setAadhaar] = useState("");
+  const [status, setStatus] = useState<"active" | "inactive" | "archived">("active");
 
   useEffect(() => {
     if (client) {
@@ -49,6 +50,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       setEmail(client.email || "");
       setPhone(client.phone || "");
       setWebsite(client.website || "");
+      setStatus((client.status as "active" | "inactive" | "archived") || "active");
 
       const bp = client.billing_profile;
       if (bp) {
@@ -74,6 +76,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       setEmail("");
       setPhone("");
       setWebsite("");
+      setStatus("active");
       setAddressLine1("");
       setCity("");
       setPostalCode("");
@@ -165,7 +168,7 @@ export const ClientModal: React.FC<ClientModalProps> = ({
       phone: cleanPhone,
       website: cleanWebsite || undefined,
       notes: notesContent,
-      status: (client?.status || "active") as "active" | "inactive" | "archived",
+      status: isEditing ? status : "active",
       billing_profile: {
         legal_name: cleanCompany,
         address_line_1: addressLine1.trim() || "N/A",
@@ -267,21 +270,40 @@ export const ClientModal: React.FC<ClientModalProps> = ({
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
           <div className="p-6 space-y-4 flex-1 overflow-y-auto min-h-0">
-            {/* 1. Client / Company Name */}
-          <div>
-            <label className="block text-xs font-semibold text-gray-300 mb-1">
-              Client / Company Name <span className="text-rose-400">*</span>
-            </label>
-            <input
-              type="text"
-              required
-              autoFocus
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              placeholder="e.g. Acme Technologies"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
-            />
-          </div>
+            {/* 1. Client / Company Name & Status */}
+            <div className={isEditing ? "grid grid-cols-1 sm:grid-cols-3 gap-3" : ""}>
+              <div className={isEditing ? "sm:col-span-2" : ""}>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  Client / Company Name <span className="text-rose-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  autoFocus
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  placeholder="e.g. Acme Technologies"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
+                />
+              </div>
+
+              {isEditing && (
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 mb-1">
+                    Status
+                  </label>
+                  <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value as "active" | "inactive" | "archived")}
+                    className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white text-xs focus:border-purple-500 focus:outline-hidden"
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="archived">Archived</option>
+                  </select>
+                </div>
+              )}
+            </div>
 
           {/* 2. Email & Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

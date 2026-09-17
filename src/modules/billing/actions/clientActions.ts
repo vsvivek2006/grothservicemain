@@ -304,3 +304,36 @@ export async function archiveClientAction(
     return actionError(msg);
   }
 }
+
+export async function unarchiveClientAction(
+  id: string
+): Promise<ActionResult<{ id: string; status: string }>> {
+  try {
+    const adminUser = await assertAdminUser();
+    assertPermission(adminUser, "billing:write");
+
+    const adminClient = createAdminClient();
+
+    const { error } = await adminClient
+      .from("clients")
+      .update({ status: "active", updated_by: adminUser.id })
+      .eq("id", id);
+
+    if (error) {
+      return actionError(error.message);
+    }
+
+    await logAuditEvent({
+      actorUserId: adminUser.id,
+      action: "CLIENT_UNARCHIVED",
+      entityType: "client",
+      entityId: id,
+    });
+
+    revalidatePath("/admin/clients");
+    return actionSuccess({ id, status: "active" });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : "Error restoring client";
+    return actionError(msg);
+  }
+}

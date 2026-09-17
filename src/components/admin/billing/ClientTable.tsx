@@ -15,13 +15,17 @@ import {
   MapPin,
   ExternalLink,
   FilePlus,
+  RotateCcw,
 } from "lucide-react";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { StatusBadge, EmptyState } from "@/components/admin/shared";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { ClientListItem } from "@/modules/billing/queries/clientQueries";
-import { archiveClientAction } from "@/modules/billing/actions/clientActions";
+import {
+  archiveClientAction,
+  unarchiveClientAction,
+} from "@/modules/billing/actions/clientActions";
 
 const ClientModal = dynamic(
   () => import("./ClientModal").then((mod) => mod.ClientModal),
@@ -104,6 +108,25 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
         }
       } catch (err: unknown) {
         toast.error(err instanceof Error ? err.message : "Archive failed");
+      }
+    });
+  };
+
+  const handleUnarchive = (id: string, name: string) => {
+    startTransition(async () => {
+      try {
+        const res = await unarchiveClientAction(id);
+        if (res.success) {
+          toast.success(`Client "${name}" restored to active`);
+          setClients((prev) =>
+            prev.map((c) => (c.id === id ? { ...c, status: "active" } : c))
+          );
+          router.refresh();
+        } else {
+          toast.error(res.error || "Failed to restore client");
+        }
+      } catch (err: unknown) {
+        toast.error(err instanceof Error ? err.message : "Restore failed");
       }
     });
   };
@@ -279,7 +302,18 @@ export const ClientTable: React.FC<ClientTableProps> = ({ initialClients }) => {
                             <Edit3 className="w-3 h-3" />
                             Edit
                           </button>
-                          {client.status !== "archived" && (
+                          {client.status === "archived" ? (
+                            <button
+                              type="button"
+                              onClick={() => handleUnarchive(client.id, client.company_name)}
+                              disabled={isPending}
+                              title="Restore Client to Active"
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium text-emerald-300 hover:text-white bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-800/60 transition-colors cursor-pointer disabled:opacity-50"
+                            >
+                              <RotateCcw className="w-3 h-3" />
+                              <span>Restore</span>
+                            </button>
+                          ) : (
                             <button
                               type="button"
                               onClick={() => setArchiveTarget({ id: client.id, name: client.company_name })}
