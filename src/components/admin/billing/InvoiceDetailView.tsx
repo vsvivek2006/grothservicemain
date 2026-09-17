@@ -370,9 +370,16 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         <div className="hidden print:block border-b-2 border-purple-800 pb-4 mb-6">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
-              <h1 className="font-extrabold text-2xl tracking-tight text-purple-800">
-                GROWTH SERVICE
-              </h1>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/logo.png"
+                  alt="Growth Service"
+                  className="h-8 w-8 object-contain shrink-0"
+                />
+                <h1 className="font-extrabold text-2xl tracking-tight text-purple-800">
+                  GROWTH SERVICE
+                </h1>
+              </div>
               <p className="text-xs font-bold text-gray-900">
                 {seller.legalName || "Growth Service Digital Solution"}
               </p>
@@ -445,9 +452,16 @@ export const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = ({ invoice })
         <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 print:grid-cols-2 print:gap-4 print:mb-6">
           {/* Seller Snapshot */}
           <div className="rounded-lg border border-gray-800/80 bg-gray-900/40 p-5 print:border-gray-300 print:bg-gray-50/50 print:p-4 print:text-black">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400 print:text-purple-800">
-              Billed From (Seller)
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400 print:text-purple-800">
+                Billed From (Seller)
+              </span>
+              <img
+                src="/logo.png"
+                alt="Growth Service"
+                className="h-5 w-5 object-contain"
+              />
+            </div>
             <h3 className="mt-2 text-base font-bold text-white print:text-black">
               {seller.legalName || "Growth Service Digital Solution"}
             </h3>

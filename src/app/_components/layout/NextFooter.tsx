@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   Building2, Users, Trophy, Briefcase, FileText, Lock, DollarSign, Eye, ShieldCheck,
@@ -324,8 +325,14 @@ export const NextFooter: React.FC = () => {
             {/* Copyright */}
             <div className="text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start space-x-3 mb-2">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
-                  <span className="text-white font-bold text-sm">GS</span>
+                <div className="h-10 w-10 rounded-full bg-white/95 p-1 flex items-center justify-center shadow-lg shadow-purple-500/30 border border-purple-300 shrink-0">
+                  <Image
+                    src="/logo.png"
+                    alt={`${businessName} Logo`}
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 object-contain"
+                  />
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">

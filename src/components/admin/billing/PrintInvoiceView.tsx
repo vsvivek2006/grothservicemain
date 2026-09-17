@@ -297,10 +297,12 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         <div className="avoid-break border-b-2 border-purple-800 pb-3 print:pb-2">
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded bg-purple-800 text-xs font-black text-white">
-                  GS
-                </div>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/logo.png"
+                  alt="Growth Service"
+                  className="h-8 w-8 object-contain shrink-0"
+                />
                 <h1 className="text-xl font-black tracking-tight text-purple-800">
                   GROWTH SERVICE
                 </h1>

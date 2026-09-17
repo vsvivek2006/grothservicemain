@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -91,8 +92,15 @@ function LoginForm() {
       <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="text-center mb-8 relative">
-        <div className="inline-flex p-3 rounded-xl bg-purple-900/40 border border-purple-800/40 text-yellow-400 mb-4">
-          <Lock className="w-6 h-6" />
+        <div className="inline-flex p-3 rounded-2xl bg-white/10 border border-purple-500/30 shadow-xl shadow-purple-950/60 mb-4 backdrop-blur-sm">
+          <Image
+            src="/logo.png"
+            alt="Growth Service Logo"
+            width={48}
+            height={48}
+            className="w-12 h-12 object-contain drop-shadow-md"
+            priority
+          />
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
           Admin <span className="text-yellow-400">Portal</span>

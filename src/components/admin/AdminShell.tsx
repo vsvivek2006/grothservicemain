@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, PlusCircle, ExternalLink } from "lucide-react";
 import type { AdminRole } from "@/lib/authorization";
@@ -87,8 +88,17 @@ export function AdminShell({ userEmail, userRole, children }: AdminShellProps) {
             >
               <Menu className="w-5 h-5" />
             </button>
-            <Link href="/admin" className="text-sm font-bold text-white tracking-wide">
-              Growth <span className="text-yellow-400">Service</span>
+            <Link href="/admin" className="flex items-center gap-2 text-sm font-bold text-white tracking-wide">
+              <div className="w-6 h-6 rounded-md bg-white/95 p-0.5 flex items-center justify-center shrink-0 border border-purple-500/30">
+                <Image
+                  src="/logo.png"
+                  alt="Growth Service"
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span>Growth <span className="text-yellow-400">Service</span></span>
             </Link>
           </div>
 

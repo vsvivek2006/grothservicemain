@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -149,8 +150,14 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
       {/* Brand Header */}
       <div className="px-4 py-3.5 border-b border-gray-800/80 flex items-center justify-between shrink-0">
         <Link href="/admin" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-xs shadow-md shadow-purple-950/50 group-hover:scale-105 transition-transform shrink-0">
-            GS
+          <div className="w-8 h-8 rounded-lg bg-white/95 p-1 flex items-center justify-center shadow-md shadow-purple-950/50 group-hover:scale-105 transition-transform shrink-0 border border-purple-500/30">
+            <Image
+              src="/logo.png"
+              alt="Growth Service Logo"
+              width={28}
+              height={28}
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <div className="text-sm font-bold tracking-tight text-white leading-none">
