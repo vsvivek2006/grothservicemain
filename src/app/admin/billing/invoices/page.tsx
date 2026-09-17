@@ -5,7 +5,7 @@ import { StatCard } from "@/components/admin/shared/StatCard";
 import { EmptyState } from "@/components/admin/shared/EmptyState";
 import { InvoiceTable } from "@/components/admin/billing/InvoiceTable";
 import { getInvoices, getInvoiceStats } from "@/modules/billing/queries/invoiceQueries";
-import { Plus, FileText, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { Plus, FileText, AlertCircle, CheckCircle, Clock, Search } from "lucide-react";
 import { assertAdminUser, assertPermission } from "@/lib/authorization";
 
 export const revalidate = 0;
@@ -50,9 +50,9 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
         actions={
           <Link
             href="/admin/billing/invoices/new"
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-900/30 transition-all hover:from-blue-600 hover:to-indigo-800"
+            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-purple-900/40 transition-all hover:from-blue-600 hover:to-indigo-800"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-4 w-4 text-yellow-300" />
             <span>New Invoice</span>
           </Link>
         }
@@ -95,68 +95,71 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
         <div className="flex flex-wrap items-center gap-2">
           <Link
             href="/admin/billing/invoices"
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-all ${
               status === "all" && paymentStatus === "all"
-                ? "bg-purple-600 text-white"
-                : "border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-white"
+                ? "bg-purple-600 text-white shadow-sm font-semibold"
+                : "border border-gray-800 bg-gray-900/80 text-gray-300 hover:text-white hover:bg-gray-800"
             }`}
           >
-            All ({stats.totalInvoices})
+            All <span className="ml-1 opacity-80 font-mono">({stats.totalInvoices})</span>
           </Link>
           <Link
             href="/admin/billing/invoices?status=draft"
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-all ${
               status === "draft"
-                ? "bg-purple-600 text-white"
-                : "border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-white"
+                ? "bg-purple-600 text-white shadow-sm font-semibold"
+                : "border border-gray-800 bg-gray-900/80 text-gray-300 hover:text-white hover:bg-gray-800"
             }`}
           >
-            Drafts ({stats.draftCount})
+            Drafts <span className="ml-1 opacity-80 font-mono">({stats.draftCount})</span>
           </Link>
           <Link
             href="/admin/billing/invoices?status=issued"
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-all ${
               status === "issued"
-                ? "bg-purple-600 text-white"
-                : "border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-white"
+                ? "bg-purple-600 text-white shadow-sm font-semibold"
+                : "border border-gray-800 bg-gray-900/80 text-gray-300 hover:text-white hover:bg-gray-800"
             }`}
           >
-            Issued ({stats.issuedCount})
+            Issued <span className="ml-1 opacity-80 font-mono">({stats.issuedCount})</span>
           </Link>
           <Link
             href="/admin/billing/invoices?paymentStatus=unpaid"
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-all ${
               paymentStatus === "unpaid"
-                ? "bg-purple-600 text-white"
-                : "border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-white"
+                ? "bg-purple-600 text-white shadow-sm font-semibold"
+                : "border border-gray-800 bg-gray-900/80 text-gray-300 hover:text-white hover:bg-gray-800"
             }`}
           >
-            Unpaid ({stats.unpaidCount})
+            Unpaid <span className="ml-1 opacity-80 font-mono">({stats.unpaidCount})</span>
           </Link>
           <Link
             href="/admin/billing/invoices?paymentStatus=paid"
-            className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-all ${
               paymentStatus === "paid"
-                ? "bg-purple-600 text-white"
-                : "border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-white"
+                ? "bg-purple-600 text-white shadow-sm font-semibold"
+                : "border border-gray-800 bg-gray-900/80 text-gray-300 hover:text-white hover:bg-gray-800"
             }`}
           >
-            Paid ({stats.paidCount})
+            Paid <span className="ml-1 opacity-80 font-mono">({stats.paidCount})</span>
           </Link>
         </div>
 
         {/* Search */}
-        <form method="GET" className="relative w-full sm:w-64">
+        <form method="GET" className="relative w-full sm:w-72">
           {status !== "all" && <input type="hidden" name="status" value={status} />}
           {paymentStatus !== "all" && (
             <input type="hidden" name="paymentStatus" value={paymentStatus} />
           )}
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+            <Search className="w-3.5 h-3.5" />
+          </div>
           <input
             type="text"
             name="search"
             defaultValue={search}
             placeholder="Search invoice number..."
-            className="w-full rounded-lg border border-gray-800 bg-gray-900/60 px-3.5 py-1.5 text-xs text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-800 bg-gray-900/80 pl-9 pr-3.5 py-2 text-xs text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all"
           />
         </form>
       </div>
@@ -170,9 +173,9 @@ export default async function InvoicesPage({ searchParams }: PageProps) {
           action={
             <Link
               href="/admin/billing/invoices/new"
-              className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+              className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-purple-900/40 transition-all hover:from-blue-600 hover:to-indigo-800"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-4 w-4 text-yellow-300" />
               <span>Create Invoice</span>
             </Link>
           }

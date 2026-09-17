@@ -611,7 +611,7 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({
                   </div>
 
                   {/* Line Total */}
-                  <div className="flex items-end justify-between md:col-span-3">
+                  <div className="flex items-end justify-between md:col-span-4">
                     <div>
                       <span className="text-[10px] text-gray-500">Taxable: {formatCurrency(taxable)}</span>
                       <div className="font-mono text-sm font-semibold text-white">

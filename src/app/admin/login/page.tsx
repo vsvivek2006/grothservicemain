@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +28,16 @@ function LoginForm() {
       ? rawRedirect
       : "/admin";
   const [isLoading, setIsLoading] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  // Pre-warm the target admin route in the background
+  useEffect(() => {
+    try {
+      router.prefetch(redirectTo);
+    } catch {
+      // Prefetch fail is non-fatal
+    }
+  }, [router, redirectTo]);
 
   const {
     register,
@@ -54,21 +64,23 @@ function LoginForm() {
         toast.error("Authentication failed", {
           description: error.message,
         });
+        setIsLoading(false);
         return;
       }
 
+      setIsRedirecting(true);
       toast.success("Welcome back!", {
-        description: "Logged in successfully",
+        description: "Redirecting to portal...",
       });
 
-      router.push(redirectTo);
-      router.refresh();
+      // Immediate top-level navigation ensures fresh auth cookies are forwarded without double-RSC lag
+      window.location.replace(redirectTo);
     } catch {
       toast.error("Unexpected error", {
         description: "Something went wrong. Please try again.",
       });
-    } finally {
       setIsLoading(false);
+      setIsRedirecting(false);
     }
   };
 
@@ -144,17 +156,22 @@ function LoginForm() {
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || isRedirecting}
           className="w-full mt-2 py-3 px-4 rounded-lg font-semibold bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 text-white shadow-lg shadow-purple-900/50 transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
         >
-          {isLoading ? (
+          {isRedirecting ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Signing in...
+              <span>Redirecting to portal...</span>
+            </>
+          ) : isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Signing in...</span>
             </>
           ) : (
             <>
-              Sign In to Dashboard
+              <span>Sign In to Dashboard</span>
               <ArrowRight className="w-4 h-4" />
             </>
           )}

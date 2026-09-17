@@ -33,9 +33,9 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
   };
 
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-gray-800 bg-gray-900/60 shadow-xl backdrop-blur-md">
+    <div className="w-full overflow-x-auto rounded-2xl border border-gray-800 bg-gray-900/70 shadow-2xl backdrop-blur-md">
       <table className="w-full text-left text-sm text-gray-300">
-        <thead className="border-b border-gray-800 bg-gray-900/90 text-xs uppercase tracking-wider text-gray-400">
+        <thead className="border-b border-gray-800 bg-gray-900/95 text-[11px] font-bold uppercase tracking-wider text-gray-400">
           <tr>
             <th scope="col" className="px-5 py-3.5">Invoice #</th>
             <th scope="col" className="px-5 py-3.5">Client</th>
@@ -57,26 +57,26 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
                 key={inv.id}
                 className="transition-colors hover:bg-gray-800/40"
               >
-                <td className="whitespace-nowrap px-5 py-4 font-mono font-medium text-white">
+                <td className="whitespace-nowrap px-5 py-4">
                   <Link
                     href={`/admin/billing/invoices/${inv.id}`}
-                    className="flex items-center gap-1.5 text-purple-400 hover:text-purple-300 hover:underline"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/40 border border-purple-800/30 text-purple-300 font-mono text-xs font-semibold hover:bg-purple-900/50 hover:text-white transition-all shadow-xs"
                   >
-                    <FileText className="h-4 w-4 text-purple-400/80" />
+                    <FileText className="h-3.5 w-3.5 text-purple-400" />
                     <span>{inv.invoice_number}</span>
                   </Link>
                 </td>
-                <td className="px-5 py-4">
-                  <div className="font-medium text-white">
+                <td className="px-5 py-4 max-w-[220px]">
+                  <div className="font-semibold text-white truncate" title={inv.client?.company_name || ""}>
                     {inv.client?.company_name || "Unknown Client"}
                   </div>
-                  <div className="text-xs text-gray-400">
-                    {inv.client?.contact_name || inv.client?.email || ""}
+                  <div className="text-xs text-gray-400 truncate mt-0.5">
+                    {inv.client?.contact_name || inv.client?.email || "—"}
                   </div>
                 </td>
                 <td className="whitespace-nowrap px-5 py-4 text-xs">
-                  <div className="text-gray-200">{formatDate(inv.issue_date)}</div>
-                  <div className="text-gray-500">Due: {formatDate(inv.due_date)}</div>
+                  <div className="text-gray-200 font-medium">{formatDate(inv.issue_date)}</div>
+                  <div className="text-gray-400 text-[11px] mt-0.5">Due: {formatDate(inv.due_date)}</div>
                 </td>
                 <td className="whitespace-nowrap px-5 py-4">
                   <StatusBadge status={inv.document_status} />
@@ -84,13 +84,13 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
                 <td className="whitespace-nowrap px-5 py-4">
                   <StatusBadge status={inv.payment_status} />
                 </td>
-                <td className="whitespace-nowrap px-5 py-4 text-right font-mono font-semibold text-white">
+                <td className="whitespace-nowrap px-5 py-4 text-right font-mono font-bold text-white">
                   {formatCurrency(Number(inv.grand_total))}
                 </td>
                 <td className="whitespace-nowrap px-5 py-4 text-right font-mono">
                   <span
                     className={
-                      Number(inv.amount_due) > 0 ? "font-semibold text-yellow-400" : "text-gray-400"
+                      Number(inv.amount_due) > 0 ? "font-bold text-yellow-400" : "text-emerald-400 font-medium"
                     }
                   >
                     {formatCurrency(Number(inv.amount_due))}
@@ -100,28 +100,31 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
                   <div className="flex items-center justify-end gap-1.5">
                     <Link
                       href={`/admin/billing/invoices/${inv.id}`}
-                      className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-800 hover:text-white"
-                      title="View Invoice"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-gray-800/80 text-gray-300 hover:text-white hover:bg-gray-700 text-xs font-medium transition-all shadow-xs"
+                      title="View Invoice Details"
                     >
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-3.5 w-3.5 text-gray-400" />
+                      <span>View</span>
                     </Link>
 
                     {isDraft && (
                       <>
                         <Link
                           href={`/admin/billing/invoices/${inv.id}/edit`}
-                          className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-800 hover:text-white"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-950/40 border border-blue-800/40 text-blue-300 hover:bg-blue-900/50 text-xs font-medium transition-all"
                           title="Edit Draft"
                         >
-                          <Edit2 className="h-4 w-4 text-blue-400" />
+                          <Edit2 className="h-3.5 w-3.5" />
+                          <span>Edit</span>
                         </Link>
                         {onIssue && (
                           <button
                             onClick={() => onIssue(inv)}
-                            className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-emerald-950/40 hover:text-emerald-400"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950/50 border border-emerald-800/40 text-emerald-300 hover:bg-emerald-900/60 text-xs font-medium transition-all cursor-pointer"
                             title="Issue Invoice"
                           >
-                            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                            <span>Issue</span>
                           </button>
                         )}
                       </>
@@ -130,10 +133,10 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
                     {!isCancelled && onCancel && (
                       <button
                         onClick={() => onCancel(inv)}
-                        className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-950/40 hover:text-red-400"
+                        className="p-1 rounded-lg text-gray-500 hover:bg-rose-950/40 hover:text-rose-400 transition-colors cursor-pointer"
                         title="Cancel Invoice"
                       >
-                        <XCircle className="h-4 w-4 text-red-400" />
+                        <XCircle className="h-4 w-4" />
                       </button>
                     )}
                   </div>
