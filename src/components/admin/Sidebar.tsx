@@ -137,8 +137,7 @@ export function Sidebar({ userEmail, userRole, isMobileOpen = false, onClose }: 
 
       toast.success("Logged out successfully");
       if (onClose) onClose();
-      router.push("/admin/login");
-      router.refresh();
+      window.location.replace("/admin/login");
     } catch {
       toast.error("Error signing out");
       setIsLoggingOut(false);

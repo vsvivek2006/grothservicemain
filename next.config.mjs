@@ -94,6 +94,19 @@ const nextConfig = {
         ],
       },
       {
+        source: '/admin',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      {
         source: '/admin/:path*',
         headers: [
           {
@@ -121,7 +134,7 @@ const nextConfig = {
       'sonner',
     ],
     staleTimes: {
-      dynamic: 30,
+      dynamic: 0,
       static: 180,
     },
   },
