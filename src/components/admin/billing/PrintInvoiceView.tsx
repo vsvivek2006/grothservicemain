@@ -81,15 +81,49 @@ function numberToIndianWords(num: number): string {
 }
 
 export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) => {
+  const seller = (invoice.seller_snapshot as any) || {};
+  const buyer = (invoice.buyer_snapshot as any) || {};
+
+  const clientName =
+    buyer.legalName ||
+    buyer.companyName ||
+    buyer.contactName ||
+    invoice.client?.company_name ||
+    invoice.client?.contact_name ||
+    "Client";
+  const safeInvoiceNum = (invoice.invoice_number || "Invoice").replace(/[\/\\]/g, "-");
+  const documentTitle = `${clientName} - ${safeInvoiceNum}`;
+
+  // Set document.title so browser's "Save as PDF" dialog suggests "ClientName - InvoiceNumber.pdf"
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const prevTitle = document.title;
+      document.title = documentTitle;
+      return () => {
+        document.title = prevTitle;
+      };
+    }
+  }, [documentTitle]);
+
   // Trigger print dialog on mount ONLY if explicit query param ?autoprint=1 is provided
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.search.includes("autoprint=1")) {
+      if (typeof document !== "undefined") {
+        document.title = documentTitle;
+      }
       const timer = setTimeout(() => {
         window.print();
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [documentTitle]);
+
+  const handlePrint = () => {
+    if (typeof document !== "undefined") {
+      document.title = documentTitle;
+    }
+    window.print();
+  };
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -105,9 +139,6 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
     if (isNaN(d.getTime())) return dateStr;
     return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
   };
-
-  const seller = (invoice.seller_snapshot as any) || {};
-  const buyer = (invoice.buyer_snapshot as any) || {};
 
   return (
     <div className="min-h-screen w-full bg-gray-100 py-6 print:bg-white print:p-0 print:m-0 text-gray-900">
@@ -201,7 +232,7 @@ export const PrintInvoiceView: React.FC<PrintInvoiceViewProps> = ({ invoice }) =
         <div className="flex items-center gap-2 sm:gap-2.5">
           <button
             type="button"
-            onClick={() => window.print()}
+            onClick={handlePrint}
             className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-800 px-4 py-2 text-xs font-semibold text-white cursor-pointer shadow-md transition-all"
           >
             <Printer className="h-3.5 w-3.5" />
