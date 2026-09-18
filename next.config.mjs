@@ -166,6 +166,12 @@ const nextConfig = {
       { source: '/scam-alert', destination: '/verify', permanent: true },
       { source: '/report-scam', destination: '/verify', permanent: true },
       { source: '/locations/:city/:serviceSlug', destination: '/:city/:serviceSlug', permanent: true },
+      { source: '/privacy-policy', destination: '/privacy', permanent: true },
+      { source: '/terms-and-conditions', destination: '/terms', permanent: true },
+      { source: '/terms-of-service', destination: '/terms', permanent: true },
+      { source: '/refund-policy', destination: '/refund', permanent: true },
+      { source: '/refund-cancellation-policy', destination: '/refund', permanent: true },
+      { source: '/cancellation-policy', destination: '/refund', permanent: true },
     ];
   },
 };

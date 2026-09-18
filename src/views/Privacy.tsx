@@ -1,680 +1,325 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { Container, Section } from "../components/ui";
-import { CheckCircle, XCircle } from "lucide-react";
-import { getBusinessEmail, getCanonicalOrigin } from "../selectors";
-import { getPrimaryWhatsAppUrl, getMailtoHref } from "../services";
-import { businessConfig } from "../config/business";
+import React from "react";
+import Link from "next/link";
+import {
+  ShieldCheck,
+  Lock,
+  FileText,
+  Mail,
+  Phone,
+  MapPin,
+  UserCheck,
+  CreditCard,
+  Globe,
+  Cookie,
+  AlertCircle,
+} from "lucide-react";
+import { Container, Breadcrumb, DecorativeGrid } from "@/components/ui";
 
 const Privacy: React.FC = () => {
-  const primaryEmail = getBusinessEmail();
-  const primaryWhatsApp = getPrimaryWhatsAppUrl();
-  const canonicalOrigin = getCanonicalOrigin();
-  const pathname = usePathname();
-  const getInitialTab = () => {
-    if (pathname.includes("refund")) return "refund";
-    if (pathname.includes("cancellation")) return "cancellation";
-    return "privacy";
-  };
-
-  const lastUpdated = "Jan 01, 2026";
-
-  const [activeTab, setActiveTab] = useState(getInitialTab);
-
-  useEffect(() => {
-    if (pathname.includes("refund")) {
-      setActiveTab("refund");
-    } else if (pathname.includes("cancellation")) {
-      setActiveTab("cancellation");
-    }
-  }, [pathname]);
-
-  const pageTitle = activeTab === "refund"
-    ? "Refund Policy | Growth Service"
-    : activeTab === "cancellation"
-      ? "Cancellation Policy | Growth Service"
-      : "Privacy Policy | Growth Service";
-
-  const canonicalUrl = activeTab === "refund"
-    ? `${canonicalOrigin}/refund`
-    : `${canonicalOrigin}/privacy`;
-
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Header */}
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">
+        <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Hero */}
-      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16">
-        <Container className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">
-            {activeTab === "refund" ? "Refund Policy" : activeTab === "cancellation" ? "Cancellation Policy" : "Privacy Policy"}
-          </h1>
-          <p className="text-blue-100 text-lg md:text-xl">
-            How Growth Service protects your information and service satisfaction.
-          </p>
-          <p className="text-sm text-blue-200 mt-2">Last updated: {lastUpdated}</p>
-          
-          {/* Tab Navigation */}
-          <div className="flex flex-wrap justify-center mt-8 gap-4">
-            <button
-              onClick={() => setActiveTab("privacy")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeTab === "privacy" 
-                ? "bg-white text-blue-600 shadow-lg" 
-                : "bg-white/10 text-white hover:bg-white/20"
-              }`}
-            >
-              Privacy Policy
-            </button>
-            <button
-              onClick={() => setActiveTab("refund")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeTab === "refund" 
-                ? "bg-white text-blue-600 shadow-lg" 
-                : "bg-white/10 text-white hover:bg-white/20"
-              }`}
-            >
-              Refund Policy
-            </button>
-            <button
-              onClick={() => setActiveTab("cancellation")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeTab === "cancellation" 
-                ? "bg-white text-blue-600 shadow-lg" 
-                : "bg-white/10 text-white hover:bg-white/20"
-              }`}
-            >
-              Cancellation Policy
-            </button>
+        <Container className="relative z-10">
+          <Breadcrumb
+            items={[{ label: "Privacy Policy" }]}
+            className="text-purple-300 mb-6"
+          />
+
+          <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              <Lock className="w-4 h-4 text-yellow-400" />
+              <span>Official Privacy Policy</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+              Privacy Policy — <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Growth Service Digital Solutions</span>
+            </h1>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-purple-200 mt-2">
+              <span className="flex items-center gap-1.5">
+                <Globe className="w-4 h-4 text-yellow-400" />
+                <strong>Website:</strong>{" "}
+                <a
+                  href="https://growthservice.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white"
+                >
+                  https://growthservice.in
+                </a>
+              </span>
+              <span className="hidden sm:inline text-purple-400">•</span>
+              <span>
+                <strong>Last Updated:</strong> September 18, 2026
+              </span>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Privacy Policy Content */}
-      {activeTab === "privacy" && (
-        <Section variant="default" padding="default">
-          <Container variant="narrow" className="text-gray-700 space-y-10">
-            {/* Intro */}
-            <div>
+      {/* Main Legal Content */}
+      <section className="py-16">
+        <Container>
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Preamble */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm leading-relaxed text-gray-700 space-y-4">
               <p>
-                This Privacy Policy explains how <strong>Growth Service</strong> ("we", "us", "our") collects,
-                uses, discloses, and safeguards personal information when you visit our website, engage
-                with our digital marketing campaigns, or use our services. By using our website/services,
-                you agree to this Policy. If you do not agree, please discontinue use.
+                Growth Service Digital Solutions (&quot;Growth Service,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting the privacy of visitors to our website and clients who use our services — including performance SEO, web and app development, performance marketing (PPC), social media marketing, e-commerce solutions, and white-label fulfillment (collectively, the &quot;Services&quot;). This Privacy Policy explains what information we collect, how we use it, and the choices you have.
               </p>
-              <div className="mt-4 bg-pink-50 border border-pink-100 rounded-xl p-4 text-sm text-pink-900">
-                <strong>Regulatory note:</strong> We strive to comply with applicable laws, including
-                India's Digital Personal Data Protection (DPDP) Act and, where relevant, GDPR. References
-                below to "lawful basis" and "data principal rights" reflect these standards.
-              </div>
-            </div>
-
-            {/* What we collect */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">1) Information We Collect</h2>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Identity & Contact:</strong> name, email, phone, company, role.</li>
-                <li><strong>Business & Content:</strong> project brief, brand assets you share.</li>
-                <li><strong>Technical:</strong> IP address, device/browser info, pages viewed, referrer URLs, session data.</li>
-                <li><strong>Usage & Analytics:</strong> interactions with pages, forms, CTAs; events/pixels (GA4, Meta, etc.).</li>
-                <li><strong>Marketing:</strong> preferences, consent, campaign engagement (opens, clicks, conversions).</li>
-                <li><strong>Payment/Commercial:</strong> invoices, transaction metadata (processed via third-party gateways; we do not store card data).</li>
-              </ul>
-              <p className="text-sm text-gray-600 mt-2">
-                Sensitive personal data is not intentionally collected. Please avoid sharing it.
+              <p className="font-medium text-gray-900">
+                By using our website or Services, you agree to the collection and use of information as described in this policy.
               </p>
             </div>
 
-            {/* Sources */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">2) Sources of Data</h2>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Direct:</strong> forms, emails, WhatsApp, calls, meetings.</li>
-                <li><strong>Automated:</strong> cookies, tags, analytics, pixels.</li>
-                <li><strong>Third-Party:</strong> ad platforms, CRM or lead gen tools you connect/provide.</li>
-              </ul>
-            </div>
+            {/* 1. Information We Collect */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>1. Information We Collect</span>
+              </h2>
 
-            {/* Cookies */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">3) Cookies & Similar Technologies</h2>
-              <p className="mb-2">
-                We use cookies, pixels, and tags to enable site functionality, remember preferences,
-                analyze performance, and measure/optimize campaigns.
-              </p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Essential:</strong> required for core functionality.</li>
-                <li><strong>Analytics:</strong> GA4/GTM events, traffic sources, on-site behavior.</li>
-                <li><strong>Marketing:</strong> remarketing/conversion pixels (e.g., Google Ads, Meta).</li>
-              </ul>
-              <p className="text-sm text-gray-600 mt-2">
-                You can manage cookies via your browser settings. Some features may not work without certain cookies.
-              </p>
-            </div>
-
-            {/* How we use */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">4) How We Use Your Information</h2>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Provide, operate, and improve our website and services.</li>
-                <li>Respond to inquiries, proposals, and support requests.</li>
-                <li>Plan, execute, and optimize campaigns; measure performance/ROI.</li>
-                <li>Personalize experiences and recommend relevant services.</li>
-                <li>Security, fraud prevention, troubleshooting, and diagnostics.</li>
-                <li>Legal compliance and enforcement of our Terms/Agreement.</li>
-              </ul>
-            </div>
-
-            {/* Lawful basis */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">5) Legal Bases / Consent</h2>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Consent:</strong> marketing communications, non-essential cookies.</li>
-                <li><strong>Contract:</strong> to deliver services requested/paid for.</li>
-                <li><strong>Legitimate Interest:</strong> analytics, security, product improvement.</li>
-                <li><strong>Legal Obligation:</strong> taxation, accounting, compliance.</li>
-              </ul>
-              <p className="text-sm text-gray-600 mt-2">
-                You may withdraw consent at any time (see "Your Rights" below).
-              </p>
-            </div>
-
-            {/* Sharing */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">6) How We Share Information</h2>
-              <p className="mb-2">
-                We do not sell personal data. We may share limited information with:
-              </p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Processors/Vendors:</strong> hosting, CDN, analytics (GA4/GTM), ad platforms (Google, Meta), CRM/email tools, payment gateways, project tools.</li>
-                <li><strong>Partners/Sub-contractors:</strong> only as needed for agreed work, under confidentiality and DP terms.</li>
-                <li><strong>Legal/Compliance:</strong> when required by law or to protect rights/safety.</li>
-              </ul>
-            </div>
-
-            {/* International transfer */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">7) International Transfers</h2>
-              <p>
-                Vendors may process data in other countries. We take reasonable steps to ensure appropriate
-                safeguards (e.g., contractual protections) consistent with applicable law.
-              </p>
-            </div>
-
-            {/* Retention */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">8) Data Retention</h2>
-              <p>
-                We retain data only for as long as necessary for the purposes above or as required by law.
-                Typical retention: marketing contacts up to 24 months of last interaction; project records
-                aligned with statutory/accounting obligations.
-              </p>
-            </div>
-
-            {/* Security */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">9) Security</h2>
-              <p>
-                We use reasonable technical and organizational measures to protect data (access controls,
-                encryption in transit, least-privilege practices). No system is 100% secure; please share
-                credentials via secure methods (password managers).
-              </p>
-            </div>
-
-            {/* Children */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">10) Children's Privacy</h2>
-              <p>
-                Our services are intended for business users. We do not knowingly collect data from
-                children under applicable age thresholds.
-              </p>
-            </div>
-
-            {/* Your rights */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">11) Your Rights</h2>
-              <p className="mb-2">
-                Subject to law, you may have the right to: access, correct, update, delete, restrict or
-                object to processing, withdraw consent, and request data portability.
-              </p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Access/Correction:</strong> get a copy of your data or ask us to fix inaccuracies.</li>
-                <li><strong>Deletion ("Right to be Forgotten"):</strong> request erasure where legally permitted.</li>
-                <li><strong>Consent Management:</strong> opt-out of marketing or withdraw cookie consent.</li>
-                <li><strong>Objection/Restriction:</strong> where we rely on legitimate interests.</li>
-                <li><strong>Portability:</strong> receive data in a commonly used format where feasible.</li>
-              </ul>
-              <p className="text-sm text-gray-600 mt-2">
-                We may verify your identity before actioning requests and may retain limited data as required by law.
-              </p>
-            </div>
-
-            {/* How to exercise */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">12) How to Contact / Exercise Rights</h2>
-              <p>
-                Email <a className="text-pink-700 underline" href={`mailto:${businessConfig.emails.primary}`}>{businessConfig.emails.primary}</a> or call{" "}
-                <a className="text-pink-700 underline" href={`tel:${businessConfig.phones.indiaPrimary.replace(/[^0-9+]/g, '')}`}>{businessConfig.phones.indiaPrimary}</a>. We aim to respond within 7 business days.
-              </p>
-              <p className="text-sm text-gray-600 mt-2">
-                Address: Growth Service, Offices in Jaipur, Vrindavan, and Nepal.
-              </p>
-            </div>
-
-            {/* Marketing choices */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">13) Marketing Preferences</h2>
-              <p>
-                You can unsubscribe from emails using the footer link or by contacting us. For ads
-                preferences, adjust settings in Google/Meta or your device's ad settings.
-              </p>
-            </div>
-
-            {/* Third-party links */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">14) Third-Party Websites</h2>
-              <p>
-                Our site may link to external sites we do not control. Their privacy practices apply to
-                their content and services.
-              </p>
-            </div>
-
-            {/* Changes */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">15) Changes to This Policy</h2>
-              <p>
-                We may update this Policy from time to time. Material changes will be posted here with an
-                updated "Last updated" date. Continued use signifies acceptance.
-              </p>
-            </div>
-
-            {/* Summary card */}
-            <div className="border rounded-xl p-5 bg-pink-50 border-pink-200">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Quick Summary</h3>
-              <ul className="list-disc pl-6 space-y-1 text-sm">
-                <li>We collect contact, usage/analytics, and project data to deliver & improve services.</li>
-                <li>We use cookies/pixels (GA4, Google/Meta) with consent and provide opt-outs.</li>
-                <li>We don't sell personal data; we share with vetted processors/vendors as needed.</li>
-                <li>You have rights to access, correct, delete, object/restrict, and withdraw consent.</li>
-              </ul>
-            </div>
-
-            <p className="text-xs text-gray-500">
-              Disclaimer: This template is for general guidance and not legal advice. Please review with legal counsel.
-            </p>
-          </Container>
-        </Section>
-      )}
-
-      {/* Refund Policy Content */}
-      {activeTab === "refund" && (
-        <Section variant="default" padding="default">
-          <Container variant="narrow" className="text-gray-700 space-y-10">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Refund Policy</h2>
-              <p className="text-lg text-gray-600">Our transparent refund policy for digital marketing services</p>
-            </div>
-
-            {/* General Refund Policy */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-blue-900 mb-3">General Refund Policy</h3>
-              <p className="text-blue-800">
-                At Growth Service, we strive to deliver exceptional results. However, 
-                we understand that circumstances may require refund considerations under specific conditions.
-              </p>
-            </div>
-
-            {/* Eligible for Refund */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">When Refunds Are Considered</h3>
-              <div className="space-y-4">
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
-                    <span>Service Not Initiated</span>
-                  </h4>
-                  <p className="text-green-700">
-                    Full refund if payment is made but services haven't started and no resources have been allocated.
-                  </p>
-                </div>
-                
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
-                    <span>Technical Failure</span>
-                  </h4>
-                  <p className="text-green-700">
-                    Partial or full refund if we're unable to deliver due to technical limitations on our end.
-                  </p>
-                </div>
-                
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
-                    <span>Service Cancellation Before Delivery</span>
-                  </h4>
-                  <p className="text-green-700">
-                    Pro-rated refund based on work completed if cancellation occurs before project completion.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Not Eligible for Refund */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">When Refunds Are Not Provided</h3>
-              <div className="space-y-4">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
-                    <span>Services Already Rendered</span>
-                  </h4>
-                  <p className="text-red-700">
-                    No refund for work already completed, including strategy sessions, content creation, 
-                    or campaign setup.
-                  </p>
-                </div>
-                
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
-                    <span>Change of Mind</span>
-                  </h4>
-                  <p className="text-red-700">
-                    Refunds aren't provided simply because you changed your mind after services have commenced.
-                  </p>
-                </div>
-                
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
-                    <span>Third-Party Costs</span>
-                  </h4>
-                  <p className="text-red-700">
-                    Costs incurred for third-party services (ads spend, software subscriptions, stock assets) 
-                    are non-refundable.
-                  </p>
-                </div>
-                
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-red-600 shrink-0" />
-                    <span>Results-Based Expectations</span>
-                  </h4>
-                  <p className="text-red-700">
-                    Digital marketing results vary. Refunds aren't guaranteed based on specific ROI or 
-                    performance metrics.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Refund Process */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Refund Process</h3>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
-                  <div>
-                    <p className="font-semibold">Submit Refund Request</p>
-                    <p className="text-gray-600">Email {businessConfig.emails.primary} with your request and project reference</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">2</div>
-                  <div>
-                    <p className="font-semibold">Review Period</p>
-                    <p className="text-gray-600">We'll review your request within 3-5 business days</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">3</div>
-                  <div>
-                    <p className="font-semibold">Decision & Processing</p>
-                    <p className="text-gray-600">If approved, refund processed within 7-10 business days</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Service-Specific Policies */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Service-Specific Refund Policies</h3>
-              <div className="space-y-4">
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">Monthly Services (Social Media, SEO, Ads)</h4>
-                  <p className="text-gray-700">
-                    Pro-rated refund for unused portion of the month if cancelled before the 15th. 
-                    No refund for partial months after the 15th.
-                  </p>
-                </div>
-                
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">One-Time Services (Website, Setup)</h4>
-                  <p className="text-gray-700">
-                    50% refund if cancelled before work begins. 25% refund if cancelled during development. 
-                    No refund after project completion.
-                  </p>
-                </div>
-                
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">Package Deals</h4>
-                  <p className="text-gray-700">
-                    Refund calculated based on individual service rates minus work completed. 
-                    Package discounts are forfeited in refund calculations.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Information */}
-            <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Need Help with Refund?</h3>
-              <p className="text-gray-700 mb-4">
-                Contact us for any refund-related queries or disputes
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href={`mailto:${businessConfig.emails.primary}`} 
-                  className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
-                >
-                  Email Us
-                </a>
-                <a 
-                  href={businessConfig.whatsapp.defaultUrl} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-          </Container>
-        </Section>
-      )}
-
-      {/* Cancellation Policy Content */}
-      {activeTab === "cancellation" && (
-        <Section variant="default" padding="default">
-          <Container variant="narrow" className="text-gray-700 space-y-10">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Cancellation Policy</h2>
-              <p className="text-lg text-gray-600">Our transparent service cancellation and modification policies</p>
-            </div>
-
-            {/* General Cancellation Policy */}
-            <div className="bg-purple-50 border border-purple-200 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-purple-900 mb-3">General Cancellation Policy</h3>
-              <p className="text-purple-800">
-                We understand that business needs change. Our cancellation policy is designed to be fair 
-                to both parties while ensuring proper resource allocation and project planning.
-              </p>
-            </div>
-
-            {/* Service Cancellation */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Service Cancellation</h3>
-              <div className="space-y-4">
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">Monthly Retainer Services</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>30-day written notice required for cancellation</li>
-                    <li>Services continue until the end of the current billing cycle</li>
-                    <li>No pro-rated refunds for partial months</li>
-                    <li>Minimum 3-month commitment applies to all monthly services</li>
+              <div className="space-y-4 text-gray-700 leading-relaxed">
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2">a) Information you provide to us</h3>
+                  <ul className="list-disc pl-6 space-y-1.5 text-sm sm:text-base">
+                    <li>Name, email address, phone number, and company details submitted through contact forms, quote requests, or during client onboarding</li>
+                    <li>Billing and invoicing details</li>
+                    <li>Any content, credentials, or access you share with us to deliver Services (e.g., website/CMS access, ad account access)</li>
                   </ul>
                 </div>
-                
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">Project-Based Services</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Cancellation allowed during first 25% of project timeline</li>
-                    <li>Client responsible for costs incurred up to cancellation point</li>
-                    <li>All project materials and work completed remain our property</li>
-                    <li>50% cancellation fee if cancelled after project kickoff</li>
+
+                <div className="pt-2">
+                  <h3 className="font-semibold text-gray-900 mb-2">b) Information collected automatically</h3>
+                  <ul className="list-disc pl-6 space-y-1.5 text-sm sm:text-base">
+                    <li>IP address, browser type, device information, pages visited, and time spent on our site, collected via cookies and analytics tools (e.g., Google Analytics)</li>
                   </ul>
                 </div>
-                
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">One-Time Setup Services</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Cancellation possible before service initiation</li>
-                    <li>25% administrative fee for cancellations after payment</li>
-                    <li>No cancellation after service delivery has begun</li>
-                    <li>Setup fees are generally non-refundable once work commences</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            {/* Modification Policy */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Service Modification</h3>
-              <div className="space-y-4">
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-green-800 mb-2">Service Upgrades</h4>
-                  <p className="text-green-700">
-                    You can upgrade your service package at any time. The new rate applies from the 
-                    next billing cycle or immediately for one-time services.
-                  </p>
-                </div>
-                
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-yellow-800 mb-2">Service Downgrades</h4>
-                  <p className="text-yellow-700">
-                    Service downgrades require 30-day notice and may be subject to re-evaluation 
-                    of current project scope and deliverables.
-                  </p>
-                </div>
-                
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-800 mb-2">Scope Changes</h4>
-                  <p className="text-blue-700">
-                    Significant changes to project scope may require contract amendment and 
-                    potential price adjustment. Minor adjustments are accommodated when possible.
+                <div className="pt-2">
+                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <CreditCard className="w-4 h-4 text-purple-600 shrink-0" />
+                    <span>c) Payment information</span>
+                  </h3>
+                  <p className="text-sm sm:text-base">
+                    We do not store your card, UPI, or net-banking details on our servers. All payments made through our website are processed by our payment gateway partner, PhonePe, which handles and secures your payment data in accordance with its own privacy policy and applicable RBI guidelines.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Cancellation Process */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Cancellation Process</h3>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
-                  <div>
-                    <p className="font-semibold">Written Notice</p>
-                    <p className="text-gray-600">Send cancellation request via email to {businessConfig.emails.primary}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">2</div>
-                  <div>
-                    <p className="font-semibold">Acknowledgement</p>
-                    <p className="text-gray-600">We'll acknowledge receipt within 24 business hours</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">3</div>
-                  <div>
-                    <p className="font-semibold">Final Settlement</p>
-                    <p className="text-gray-600">Any final invoices or refunds processed within 10 business days</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">4</div>
-                  <div>
-                    <p className="font-semibold">Service Termination</p>
-                    <p className="text-gray-600">Services officially terminate at the end of current billing cycle</p>
-                  </div>
-                </div>
-              </div>
+            {/* 2. How We Use Your Information */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>2. How We Use Your Information</span>
+              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>Provide, operate, and improve our Services</li>
+                <li>Respond to inquiries and provide client support</li>
+                <li>Process payments and send invoices/receipts</li>
+                <li>Send updates about your project, service, or account</li>
+                <li>Send marketing communications (only where you&apos;ve opted in; you can opt out anytime)</li>
+                <li>Comply with legal obligations and enforce our Terms &amp; Conditions</li>
+              </ul>
             </div>
 
-            {/* Important Notes */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Important Notes</h3>
-              <div className="space-y-3">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-red-800 mb-2">Immediate Termination</h4>
-                  <p className="text-red-700">
-                    We reserve the right to immediately terminate services for:
-                    Non-payment, abusive behavior, illegal activities, or violation of terms of service.
-                  </p>
-                </div>
-                
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-yellow-800 mb-2">Data Retention</h4>
-                  <p className="text-yellow-700">
-                    Upon cancellation, we retain project data for 90 days. Client is responsible for 
-                    backing up any needed materials before cancellation date.
-                  </p>
-                </div>
-                
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-800 mb-2">Reactivation</h4>
-                  <p className="text-blue-700">
-                    Reactivation of cancelled services may require new onboarding and current pricing. 
-                    Previous promotional rates may not apply.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact for Cancellation */}
-            <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Need to Cancel or Modify Services?</h3>
-              <p className="text-gray-700 mb-4">
-                Contact us for cancellation requests or service modifications
+            {/* 3. How We Share Your Information */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>3. How We Share Your Information</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                We do not sell your personal information. We may share it with:
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href={getMailtoHref(primaryEmail)} 
-                  className="bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors"
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>
+                  <strong>Payment processors</strong> (PhonePe) to complete transactions
+                </li>
+                <li>
+                  <strong>Third-party tools/platforms</strong> used to deliver Services (e.g., Google Ads, Meta Ads, hosting providers, analytics tools), strictly as needed
+                </li>
+                <li>
+                  <strong>Government or regulatory authorities</strong>, where required by law
+                </li>
+              </ul>
+            </div>
+
+            {/* 4. Cookies */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Cookie className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>4. Cookies</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Our website uses cookies and similar technologies to improve browsing experience and analyze traffic. You can control cookies via your browser settings; disabling them may affect some site functions.
+              </p>
+            </div>
+
+            {/* 5. Data Security */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Lock className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>5. Data Security</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                We use reasonable technical and organizational safeguards to protect your information against unauthorized access, alteration, or disclosure. No method of transmission over the internet is 100% secure.
+              </p>
+            </div>
+
+            {/* 6. Data Retention */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>6. Data Retention</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                We retain personal information only as long as necessary for the purposes described here or as required by law.
+              </p>
+            </div>
+
+            {/* 7. Your Rights */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <UserCheck className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>7. Your Rights</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                You may request access to, correction of, or deletion of your personal information by contacting us at{" "}
+                <a
+                  href="mailto:info@growthservice.in"
+                  className="text-purple-700 font-semibold underline hover:text-purple-900"
                 >
-                  Email Cancellation Request
+                  info@growthservice.in
                 </a>
-                <a 
-                  href={primaryWhatsApp} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
-                >
-                  Discuss on WhatsApp
-                </a>
+                . We will respond within a reasonable timeframe as required under applicable Indian law.
+              </p>
+            </div>
+
+            {/* 8. Third-Party Links */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>8. Third-Party Links</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Our website may link to third-party sites. We are not responsible for their privacy practices.
+              </p>
+            </div>
+
+            {/* 9. Children's Privacy */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>9. Children&apos;s Privacy</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Our Services are not directed at individuals under 18. We do not knowingly collect information from minors.
+              </p>
+            </div>
+
+            {/* 10. Grievance Officer */}
+            <div className="bg-purple-50/60 rounded-2xl p-6 sm:p-8 border border-purple-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <UserCheck className="w-5 h-5 text-purple-700 shrink-0" />
+                <span>10. Grievance Officer</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                In accordance with the Information Technology Act, 2000 and rules made thereunder:
+              </p>
+              <div className="space-y-1.5 text-sm sm:text-base text-gray-800 font-medium pt-1">
+                <p>
+                  <strong>Name:</strong> Aashish Kumar Singh
+                </p>
+                <p>
+                  <strong>Email:</strong>{" "}
+                  <a
+                    href="mailto:info@growthservice.in"
+                    className="text-purple-700 underline hover:text-purple-900"
+                  >
+                    info@growthservice.in
+                  </a>
+                </p>
+                <p>
+                  <strong>Address:</strong> JTM Mall, Jagatpura, Jaipur, 302017
+                </p>
               </div>
             </div>
-          </Container>
-        </Section>
-      )}
+
+            {/* 11. Changes to This Policy */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>11. Changes to This Policy</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                We may update this Privacy Policy periodically. Changes will be posted here with a revised &quot;Last Updated&quot; date.
+              </p>
+            </div>
+
+            {/* 12. Contact Us */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Mail className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>12. Contact Us</span>
+              </h2>
+              <div className="space-y-2 text-gray-800 text-sm sm:text-base">
+                <p className="font-semibold text-gray-900">Growth Service Digital Solutions</p>
+                <p className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-purple-600 mt-1 shrink-0" />
+                  <span>JTM Mall, Jagatpura, Jaipur, 302017</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Email:{" "}
+                    <a
+                      href="mailto:info@growthservice.in"
+                      className="text-purple-700 font-semibold underline hover:text-purple-900"
+                    >
+                      info@growthservice.in
+                    </a>
+                  </span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Phone:{" "}
+                    <a
+                      href="tel:+916207300553"
+                      className="text-purple-700 font-semibold underline hover:text-purple-900"
+                    >
+                      +91 6207300553
+                    </a>
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            {/* Navigation links to other policies */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-200 text-sm">
+              <Link
+                href="/terms"
+                className="text-purple-700 font-semibold hover:text-purple-900 underline"
+              >
+                ← View Terms &amp; Conditions
+              </Link>
+              <Link
+                href="/refund"
+                className="text-purple-700 font-semibold hover:text-purple-900 underline"
+              >
+                View Refund &amp; Cancellation Policy →
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
     </div>
   );
 };

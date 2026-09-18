@@ -467,7 +467,7 @@ export const APP_ROUTES: Record<string, AppRoute> = {
   refund: {
     path: "/refund",
     canonical: "/refund",
-    label: "Refund Policy",
+    label: "Refund & Cancellation Policy",
     category: "legal",
     includeInSitemap: true,
     priority: 0.4,

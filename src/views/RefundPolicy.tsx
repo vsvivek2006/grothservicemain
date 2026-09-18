@@ -1,138 +1,249 @@
-import React from 'react';
-import Link from 'next/link';
-import { 
-  DollarSign, ShieldCheck, FileText, Mail, ArrowRight 
-} from 'lucide-react';
-import { Container } from '../components/ui';
-import Breadcrumb from '../components/ui/Breadcrumb';
-import DecorativeGrid from '../components/ui/DecorativeGrid';
-import { getBusinessEmail } from '../selectors';
-import { getMailtoHref } from '../services';
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import {
+  RotateCcw,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  CreditCard,
+  AlertTriangle,
+  Mail,
+  Phone,
+  Globe,
+  FileText,
+} from "lucide-react";
+import { Container, Breadcrumb, DecorativeGrid } from "@/components/ui";
 
 export const RefundPolicy: React.FC = () => {
-  const primaryEmail = getBusinessEmail();
-  const lastUpdated = "September 2026";
-
-  const policies = [
-    {
-      id: 1,
-      title: "1. Overview & General Policy",
-      content: `At Growth Service ("we," "us," or "our"), we strive to provide high-quality digital marketing, search engine optimization (SEO), and web development services. Due to the bespoke, consultative, and labor-intensive nature of digital marketing and software engineering, refunds are handled in accordance with the specific service category and project milestone stage.`
-    },
-    {
-      id: 2,
-      title: "2. Web Development & Engineering Projects",
-      content: `For fixed-scope web development, UI/UX design, and software engineering projects:
-• Discovery & Milestone Deposits: Initial project kickoff deposits cover technical scoping, UI/UX architecture, and sprint planning and are generally non-refundable once project work has commenced.
-• Milestone Approvals: Project fees are billed in milestones. Once a milestone (e.g., wireframe approval, frontend design freeze, beta deployment) is approved by the client in writing, fees for that milestone are non-refundable.
-• Pre-Commencement Cancellation: If a project is cancelled prior to any technical work, design drafts, or server provisioning taking place, a full refund less any payment processor transaction fees will be issued.`
-    },
-    {
-      id: 3,
-      title: "3. Monthly Retainer Services (SEO, PPC & Social Media)",
-      content: `For recurring monthly retainer packages:
-• Cancellation Notice: Monthly marketing retainers require a 30-day written notice prior to the start of the next billing cycle.
-• Active Billing Cycle: Fees paid for the current billing cycle during which campaigns, audits, link-building, or content creation are actively executing are non-refundable.
-• Pre-Paid Multi-Month Packages: For quarterly or annual pre-paid service packages cancelled early with valid 30-day notice, unutilized full calendar months will be refunded on a pro-rata basis.`
-    },
-    {
-      id: 4,
-      title: "4. Third-Party & Pass-Through Expenses (Non-Refundable)",
-      content: `The following third-party expenses paid through or managed by Growth Service are strictly non-refundable:
-• Advertising media spend paid directly or indirectly to ad networks (Google Ads, Meta Ads, LinkedIn Ads).
-• Domain name registrations, DNS renewals, and SSL certificates.
-• Third-party software licenses, commercial plugins, API subscriptions, or hosting servers purchased on the client's behalf.`
-    },
-    {
-      id: 5,
-      title: "5. Refund Request Process & Timeline",
-      content: `To request a refund or review of account billing:
-1. Submit a formal request in writing to info@growthservice.in with your invoice number, project title, and detailed reason for the request.
-2. Our finance and project management teams will review the delivered milestones, timesheets, and signed agreements within 5 business days.
-3. If approved, refunds are processed back to the original method of payment (official bank transfer) within 7 to 10 business days.`
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-50">
-
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Header */}
       <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">
         <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-subtle" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
 
         <Container className="relative z-10">
           <Breadcrumb
-            items={[{ label: 'Refund Policy' }]}
+            items={[{ label: "Refund & Cancellation Policy" }]}
             className="text-purple-300 mb-6"
           />
 
           <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-              <DollarSign className="w-4 h-4 text-yellow-400" />
-              <span>Transparent Commercial Terms</span>
+              <RotateCcw className="w-4 h-4 text-yellow-400" />
+              <span>Commercial Terms &amp; Conditions</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              Refund & Cancellation <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Policy</span>
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+              Refund &amp; Cancellation Policy — <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Growth Service Digital Solutions</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
-              Clear, fair, and transparent cancellation terms governing our digital marketing retainers, web engineering milestones, and commercial agreements.
-            </p>
-            <div className="mt-4 text-xs text-purple-300">
-              Last Updated: {lastUpdated}
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-purple-200 mt-2">
+              <span className="flex items-center gap-1.5">
+                <Globe className="w-4 h-4 text-yellow-400" />
+                <strong>Website:</strong>{" "}
+                <a
+                  href="https://growthservice.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white"
+                >
+                  https://growthservice.in
+                </a>
+              </span>
+              <span className="hidden sm:inline text-purple-400">•</span>
+              <span>
+                <strong>Last Updated:</strong> September 18, 2026
+              </span>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Main Content Body */}
+      {/* Main Legal Content */}
       <section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto space-y-8">
-            {policies.map((p) => (
-              <div 
-                key={p.id}
-                className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm"
-              >
-                <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-purple-600 shrink-0" />
-                  <span>{p.title}</span>
-                </h2>
-                <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-line space-y-2">
-                  {p.content}
-                </div>
-              </div>
-            ))}
+            {/* Preamble */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm leading-relaxed text-gray-700 space-y-4">
+              <p>
+                This policy explains how Growth Service Digital Solutions (&quot;Growth Service,&quot; &quot;we,&quot; &quot;us&quot;) handles cancellations and refunds for our services — performance SEO, web/app development, performance marketing (PPC), social media marketing, e-commerce solutions, and white-label fulfillment (collectively, &quot;Services&quot;).
+              </p>
+              <p>
+                As our Services are customized and largely service/labor-based (not physical products), refunds are handled differently from typical e-commerce purchases, as detailed below.
+              </p>
+            </div>
 
-            {/* Contact & Support Channels */}
-            <div className="bg-gradient-to-r from-purple-900 via-purple-950 to-indigo-950 text-white rounded-2xl p-8 border border-purple-800 relative overflow-hidden">
-              <div className="relative z-10 space-y-4">
-                <div className="inline-flex items-center gap-2 bg-yellow-400/20 text-yellow-300 text-xs font-bold px-3 py-1 rounded-full">
-                  Billing & Account Assistance
-                </div>
-                <h3 className="text-2xl font-bold">Have Questions About Your Billing or Agreement?</h3>
-                <p className="text-sm text-purple-200 leading-relaxed max-w-2xl">
-                  Our accounts desk is available to assist with milestone reviews, invoice clarification, or billing requests across all offices in Jaipur, Vrindavan, and Nepal.
-                </p>
-                <div className="flex flex-wrap gap-4 pt-2">
+            {/* 1. Payment Confirmation */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>1. Payment Confirmation</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Once a payment is successfully made through our website (processed via PhonePe), you&apos;ll receive a confirmation email/invoice. Please retain this for reference.
+              </p>
+            </div>
+
+            {/* 2. Cancellation Policy */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <RotateCcw className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>2. Cancellation Policy</span>
+              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>
+                  <strong>Before work begins:</strong> If you cancel before we&apos;ve started any work, you&apos;re eligible for a full refund, minus any payment gateway/transaction charges already incurred.
+                </li>
+                <li>
+                  <strong>After work has begun:</strong> If work has already commenced, you may cancel the remaining scope. Charges for work completed, hours spent, or resources already deployed (e.g., ad spend, third-party tool/license fees, domain/hosting costs) up to the cancellation date will be deducted, and only the remaining unused balance (if any) will be refunded.
+                </li>
+                <li>
+                  Cancellation requests must be sent in writing to{" "}
                   <a
-                    href={getMailtoHref(primaryEmail, 'Refund or Billing Inquiry')}
-                    className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-gray-950 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors"
+                    href="mailto:info@growthservice.in"
+                    className="text-purple-700 font-semibold underline hover:text-purple-900"
                   >
-                    <Mail className="w-4 h-4" />
-                    <span>Email Accounts ({primaryEmail})</span>
+                    info@growthservice.in
                   </a>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors"
-                  >
-                    <span>Contact Support</span>
-                    <ArrowRight className="w-4 h-4" />
+                  .
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. Refund Eligibility */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                <span>3. Refund Eligibility</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                You may be eligible for a refund if:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>A duplicate payment was made in error for the same service</li>
+                <li>Payment was charged but the Service was never initiated or delivered</li>
+                <li>A technical error resulted in an incorrect/failed transaction where the amount was debited but not reflected on our end</li>
+                <li>The service was cancelled before commencement, as per Section 2</li>
+              </ul>
+            </div>
+
+            {/* 4. Non-Refundable Situations */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                <span>4. Non-Refundable Situations</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Refunds are generally <strong>not</strong> provided for:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>Services already delivered/completed as per the agreed scope</li>
+                <li>Advertising spend already paid to third-party platforms (Google Ads, Meta Ads, etc.)</li>
+                <li>Domain names, hosting, software licenses, or other third-party costs already purchased on your behalf</li>
+                <li>Change of mind after work has substantially progressed</li>
+                <li>
+                  Dissatisfaction with results where the agreed scope was delivered as specified (see &quot;No Guarantee of Results&quot; in our{" "}
+                  <Link href="/terms" className="text-purple-700 underline hover:text-purple-900 font-semibold">
+                    Terms &amp; Conditions
                   </Link>
-                </div>
+                  )
+                </li>
+              </ul>
+            </div>
+
+            {/* 5. How to Request a Refund */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>5. How to Request a Refund</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Email us at{" "}
+                <a
+                  href="mailto:info@growthservice.in"
+                  className="text-purple-700 font-semibold underline hover:text-purple-900"
+                >
+                  info@growthservice.in
+                </a>{" "}
+                with your transaction ID/invoice number and reason for the request. We aim to acknowledge all requests within [2] business days.
+              </p>
+            </div>
+
+            {/* 6. Refund Timeline & Mode */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>6. Refund Timeline &amp; Mode</span>
+              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>Approved refunds are processed within [5–7] business days of approval.</li>
+                <li>Refunds are issued to the original payment method used at checkout, via PhonePe, and may take an additional [3–5] business days to reflect in your account depending on your bank/UPI provider.</li>
+              </ul>
+            </div>
+
+            {/* 7. Failed or Pending Transactions */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
+                <span>7. Failed or Pending Transactions</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                If an amount is debited but the transaction shows as failed or pending on our website, please wait 24–48 hours — such amounts are usually auto-reversed by the bank/PhonePe. If unresolved after that, contact us with your transaction reference number.
+              </p>
+            </div>
+
+            {/* 8. Contact Us */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Mail className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>8. Contact Us</span>
+              </h2>
+              <div className="space-y-2 text-gray-800 text-sm sm:text-base">
+                <p className="font-semibold text-gray-900">Growth Service Digital Solutions</p>
+                <p className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Email:{" "}
+                    <a
+                      href="mailto:info@growthservice.in"
+                      className="text-purple-700 font-semibold underline hover:text-purple-900"
+                    >
+                      info@growthservice.in
+                    </a>
+                  </span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Phone:{" "}
+                    <a
+                      href="tel:+916207300553"
+                      className="text-purple-700 font-semibold underline hover:text-purple-900"
+                    >
+                      +91 6207300553
+                    </a>
+                  </span>
+                </p>
               </div>
+            </div>
+
+            {/* Navigation links to other policies */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-200 text-sm">
+              <Link
+                href="/privacy"
+                className="text-purple-700 font-semibold hover:text-purple-900 underline"
+              >
+                ← View Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-purple-700 font-semibold hover:text-purple-900 underline"
+              >
+                View Terms &amp; Conditions →
+              </Link>
             </div>
           </div>
         </Container>

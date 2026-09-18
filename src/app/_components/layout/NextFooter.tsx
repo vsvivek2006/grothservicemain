@@ -40,7 +40,7 @@ export const NextFooter: React.FC = () => {
     { name: "Our Impact", path: "/impact", icon: Trophy },
     { name: "Terms & Conditions", path: "/terms", icon: FileText },
     { name: "Privacy Policy", path: "/privacy", icon: Lock },
-    { name: "Refund Policy", path: "/refund", icon: DollarSign },
+    { name: "Refund & Cancellation Policy", path: "/refund", icon: DollarSign },
     { name: "Accessibility Statement", path: "/accessibility", icon: Eye },
     { name: "Trust & Verification", path: "/verify", icon: ShieldCheck }
   ];

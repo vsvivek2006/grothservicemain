@@ -1,350 +1,286 @@
+"use client";
+
 import React from "react";
-import { Shield, Check, AlertTriangle, Mail, Phone, FileText } from "lucide-react";
-import { Container, Section, Button, WhatsAppIcon } from "../components/ui";
-import { getBusinessEmail, getPrimaryPhone } from "../selectors";
-import { getPrimaryWhatsAppUrl, getTelHref, getMailtoHref } from "../services";
+import Link from "next/link";
+import {
+  FileText,
+  ShieldCheck,
+  CreditCard,
+  UserCheck,
+  CheckCircle2,
+  AlertTriangle,
+  Scale,
+  Clock,
+  Briefcase,
+  Layers,
+  MapPin,
+  Mail,
+  Phone,
+  Globe,
+} from "lucide-react";
+import { Container, Breadcrumb, DecorativeGrid } from "@/components/ui";
 
 const Terms: React.FC = () => {
-  const primaryEmail = getBusinessEmail();
-  const primaryPhone = getPrimaryPhone();
-  const primaryWhatsApp = getPrimaryWhatsAppUrl();
-
-  const termsSections = [
-    {
-      id: 1,
-      title: "Acceptance & Scope of Services",
-      content: `By engaging with Growth Service, you agree to be bound by these Terms of Service. We provide comprehensive digital solutions including Website Development, SEO Services, Social Media Management, Business Setup, and Google Business Profile Optimization. Exact project scope is defined in the individual proposal or Statement of Work (SOW).`
-    },
-    {
-      id: 2,
-      title: "Project Timeline & Delivery",
-      content: `Website Development: Basic websites (5 pages) delivered in 7-10 days. Complex projects take 15-25 days. SEO Services require minimum 3-6 months for optimal results. Social Media Management shows results within 30-60 days. Client must provide required content and approvals promptly to avoid delays.`
-    },
-    {
-      id: 3,
-      title: "Payment Terms & Pricing",
-      content: `All quotes are provided in Indian Rupees (₹) or agreed local currency based on project scope. Website Development: 50% advance, 50% on delivery. Monthly Retainers: Pre-paid, auto-renew unless cancelled with 30-day written notice. Advertising spend billed directly by advertising platforms. Late payments may incur 2% monthly interest.`
-    },
-    {
-      id: 4,
-      title: "Intellectual Property Rights",
-      content: `Upon full payment, ownership of final deliverables transfers to client. We retain rights to methodologies, frameworks, and pre-existing code. Client warrants all provided content is original or properly licensed. We may showcase completed work in our portfolio unless otherwise agreed.`
-    },
-    {
-      id: 5,
-      title: "Client Responsibilities",
-      content: `Provide timely content, assets, and feedback. Grant necessary platform access. Maintain social media account security. Comply with third-party platform policies. Review and approve deliverables within 3 business days. Provide accurate business information for setup services.`
-    },
-    {
-      id: 6,
-      title: "Revisions & Change Requests",
-      content: `Website Development includes 2 rounds of design revisions. Additional revisions billed at agreed hourly scope rates. Social Media content changes within 24 hours of posting. Major scope changes require new scope estimates. Monthly services include reasonable adjustments within agreed retainer limits.`
-    },
-    {
-      id: 7,
-      title: "Confidentiality & Data Protection",
-      content: `We treat all client information as confidential. Implement industry-standard security measures. Follow India's DPDP Act compliance. Recommend secure credential sharing. Store social media access securely. Delete client data upon request after project completion.`
-    },
-    {
-      id: 8,
-      title: "Performance & Results",
-      content: `While we use best practices, specific results cannot be guaranteed. SEO rankings depend on search engine algorithms. Social media growth affected by platform changes. Website performance influenced by hosting and content quality. We provide regular performance reports and optimization.`
-    },
-    {
-      id: 9,
-      title: "Third-Party Services",
-      content: `We may integrate third-party tools (Google Analytics, Meta Ads, Payment Gateways). Client responsible for third-party account compliance. Not liable for third-party platform outages or policy changes. Third-party costs (hosting, domains, ads) billed separately unless included in package.`
-    },
-    {
-      id: 10,
-      title: "Termination & Cancellation",
-      content: `Monthly services: 30-day written notice required. Website projects: Cancellation fee applies based on work completed. Immediate termination for policy violations or non-payment. Upon termination, client must settle outstanding payments. Data handover available for 30 days post-termination.`
-    },
-    {
-      id: 11,
-      title: "Limitation of Liability",
-      content: `Maximum liability limited to fees paid in last 3 months. Not liable for indirect, consequential, or incidental damages. Not responsible for third-party actions or platform changes. Client assumes risk of market changes and business decisions.`
-    },
-    {
-      id: 12,
-      title: "Governing Law & Disputes",
-      content: `Governed by laws of India. Disputes resolved through negotiation first. Failing negotiation, subject to jurisdiction of courts in Delhi. Both parties bear own legal costs unless court decides otherwise.`
-    }
-  ];
-
-  const serviceSpecificTerms = [
-    {
-      service: "Website Development",
-      terms: [
-        "Modern responsive web architecture aligned to agreed brief",
-        "Managed hosting and SSL options available",
-        "Dedicated post-launch technical support",
-        "Additional pages or complex features scoped individually",
-        "E-commerce, API, and database integrations quoted per architecture",
-        "Source code delivered upon final milestone sign-off"
-      ]
-    },
-    {
-      service: "SEO Services",
-      terms: [
-        "Minimum 3-month commitment",
-        "Monthly ranking reports",
-        "5-10 keyword optimization",
-        "4 blog posts/month included",
-        "Technical SEO audit included",
-        "No guaranteed #1 rankings"
-      ]
-    },
-    {
-      service: "Social Media Management",
-      terms: [
-        "15 creative posts/month",
-        "2 professional videos/reels",
-        "4 platforms management",
-        "Content calendar provided",
-        "Monthly performance report",
-        "Minimum 3-month commitment"
-      ]
-    },
-    {
-      service: "Business Setup",
-      terms: [
-        "Complete digital presence setup",
-        "45-60 day delivery timeline",
-        "3 months free support",
-        "Includes website + social media",
-        "Market strategy guidance",
-        "Industry expert assigned"
-      ]
-    }
-  ];
-
-  const downloadTerms = () => {
-    const element = document.createElement("a");
-    const file = new Blob([document.getElementById("terms-content")?.innerText || ""], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = "Growth-Service-Terms-of-Service.txt";
-    document.body.appendChild(element);
-    element.click();
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Header */}
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white pt-12 pb-20 overflow-hidden">
+        <DecorativeGrid pattern="dots" opacity={0.12} className="text-purple-400" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
-        </div>
-        
-        <Container className="relative text-center">
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
-            <Shield className="h-5 w-5 mr-2" />
-            <span className="text-lg font-semibold">LEGAL TERMS</span>
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Terms of <span className="text-cyan-300">Service</span>
-          </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-blue-100 leading-relaxed">
-            Professional agreements for our website development, SEO, and digital marketing services. 
-            Clear, transparent, and designed for mutual success.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="#terms-content"
-              className="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-6 py-3 rounded-xl shadow-md transition-all text-sm"
-            >
-              <FileText className="h-5 w-5" />
-              <span>Review Legal Terms</span>
-            </a>
-            <div className="text-blue-200">
-              Last updated: January 1, 2026
+        <Container className="relative z-10">
+          <Breadcrumb
+            items={[{ label: "Terms & Conditions" }]}
+            className="text-purple-300 mb-6"
+          />
+
+          <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              <FileText className="w-4 h-4 text-yellow-400" />
+              <span>Legal Terms of Service</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+              Terms &amp; Conditions — <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400">Growth Service Digital Solutions</span>
+            </h1>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-purple-200 mt-2">
+              <span className="flex items-center gap-1.5">
+                <Globe className="w-4 h-4 text-yellow-400" />
+                <strong>Website:</strong>{" "}
+                <a
+                  href="https://growthservice.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white"
+                >
+                  https://growthservice.in
+                </a>
+              </span>
+              <span className="hidden sm:inline text-purple-400">•</span>
+              <span>
+                <strong>Last Updated:</strong> September 18, 2026
+              </span>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Main Content */}
-      <Section variant="default" padding="default">
+      {/* Main Legal Content */}
+      <section className="py-16">
         <Container>
-        {/* Important Notice */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mb-12">
-          <div className="flex items-start gap-4">
-            <AlertTriangle className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Important Notice</h3>
-              <p className="text-gray-700">
-                These Terms of Service govern your use of Growth Service's professional digital solutions. 
-                By engaging with our services, you agree to these terms. For custom agreements, please contact us.
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Preamble */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm leading-relaxed text-gray-700 space-y-4">
+              <p>
+                These Terms &amp; Conditions (&quot;Terms&quot;) govern your access to and use of{" "}
+                <a
+                  href="https://growthservice.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-purple-700 font-semibold underline hover:text-purple-900"
+                >
+                  https://growthservice.in
+                </a>{" "}
+                and the services offered by Growth Service Digital Solutions (&quot;Growth Service,&quot; &quot;we,&quot; &quot;us,&quot; &quot;our&quot;), including performance SEO, web/app development, performance marketing (PPC), social media marketing, e-commerce solutions, and white-label fulfillment (collectively, &quot;Services&quot;). By accessing our website or engaging our Services, you agree to be bound by these Terms.
               </p>
             </div>
-          </div>
-        </div>
 
-        {/* Terms Sections */}
-        <div id="terms-content" className="space-y-6 mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Complete Terms of Service</h2>
-          
-          {termsSections.map((section) => (
-            <details
-              key={section.id}
-              open={section.id <= 3}
-              className="group bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden"
-            >
-              <summary className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer list-none select-none">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0">
-                    {section.id}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900">{section.title}</h3>
-                </div>
-                <div className="text-gray-500 text-xl font-semibold group-open:hidden">+</div>
-                <div className="text-gray-500 text-xl font-semibold hidden group-open:block">−</div>
-              </summary>
-              <div className="px-6 pb-6 pt-2 border-t border-gray-200">
-                <p className="text-gray-700 leading-relaxed">{section.content}</p>
-              </div>
-            </details>
-          ))}
-        </div>
+            {/* 1. Eligibility */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <UserCheck className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>1. Eligibility</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Our Services are intended for businesses and individuals who are at least 18 years old and capable of entering a legally binding agreement.
+              </p>
+            </div>
 
-        {/* Service-Specific Terms */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Service-Specific Terms</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {serviceSpecificTerms.map((service, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white">
-                    <FileText className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">{service.service}</h3>
-                </div>
-                
-                <ul className="space-y-2">
-                  {service.terms.map((term, termIndex) => (
-                    <li key={termIndex} className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-1" />
-                      <span className="text-gray-700 text-sm">{term}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+            {/* 2. Services */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>2. Services</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Growth Service provides digital marketing and technology services as described on our website. Exact scope, deliverables, and timelines for any engagement will be confirmed separately in writing (email or signed proposal).
+              </p>
+            </div>
 
-        {/* Quick Summary */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-8 text-white mb-16">
-          <h2 className="text-2xl font-bold mb-6">Quick Summary</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Check className="w-4 h-4 text-white" />
-                </div>
-                <span>Clear pricing with no hidden fees</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Check className="w-4 h-4 text-white" />
-                </div>
-                <span>Professional deliverables with ownership transfer</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Check className="w-4 h-4 text-white" />
-                </div>
-                <span>Timely delivery with progress updates</span>
+            {/* 3. Payments */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>3. Payments</span>
+              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>Fees are as quoted in the applicable proposal, invoice, or plan shown on our website.</li>
+                <li>Payments made on our website are processed securely through our payment partner, PhonePe.</li>
+                <li>All fees are exclusive of applicable taxes (e.g., GST) unless stated otherwise.</li>
+                <li>For ongoing/retainer services, invoices are billed [monthly / as agreed] and due within the period stated on the invoice.</li>
+                <li>Non-payment may result in suspension or termination of Services.</li>
+              </ul>
+            </div>
+
+            {/* 4. Client Responsibilities */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>4. Client Responsibilities</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Clients agree to provide timely access, information, content, and approvals needed for us to deliver the Services. Delays caused by the client may affect delivery timelines.
+              </p>
+            </div>
+
+            {/* 5. Intellectual Property */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Layers className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>5. Intellectual Property</span>
+              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 text-sm sm:text-base leading-relaxed">
+                <li>Unless otherwise agreed in writing, final deliverables (e.g., website code, creative assets) become the client&apos;s property upon full payment.</li>
+                <li>Growth Service may showcase completed work in its portfolio, case studies, and marketing materials unless the client requests confidentiality in writing.</li>
+                <li>Any pre-existing tools, frameworks, or proprietary processes used by Growth Service remain our property.</li>
+              </ul>
+            </div>
+
+            {/* 6. Third-Party Platforms and Ad Spend */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>6. Third-Party Platforms and Ad Spend</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Where Services involve third-party platforms (Google Ads, Meta Ads, hosting providers, domain registrars, etc.), any ad spend or third-party subscription/license fees are separate from our service fees and are non-refundable once spent or paid to the respective platform.
+              </p>
+            </div>
+
+            {/* 7. Limitation of Liability */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>7. Limitation of Liability</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                To the maximum extent permitted by law, Growth Service is not liable for indirect, incidental, or consequential damages, including loss of revenue, data, or business opportunities, arising from use of our website or Services. Our total liability for any claim will not exceed the amount paid by the client for the specific Service giving rise to the claim.
+              </p>
+            </div>
+
+            {/* 8. No Guarantee of Results */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
+                <span>8. No Guarantee of Results</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                While we apply industry best practices, digital marketing and SEO results (rankings, traffic, conversions) depend on external factors — search engine algorithms, market competition, ad platform policies — beyond our control. We do not guarantee specific results, rankings, or ROI.
+              </p>
+            </div>
+
+            {/* 9. Termination */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>9. Termination</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Either party may terminate an ongoing engagement per the notice period specified in the relevant proposal/contract, or with [X days&apos;] written notice where none is agreed. Fees for work completed up to the termination date remain payable.
+              </p>
+            </div>
+
+            {/* 10. Indemnification */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Scale className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>10. Indemnification</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                You agree to indemnify and hold Growth Service harmless from claims, damages, or expenses arising from your breach of these Terms or misuse of our Services.
+              </p>
+            </div>
+
+            {/* 11. Governing Law & Jurisdiction */}
+            <div className="bg-purple-50/60 rounded-2xl p-6 sm:p-8 border border-purple-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Scale className="w-5 h-5 text-purple-700 shrink-0" />
+                <span>11. Governing Law &amp; Jurisdiction</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                These Terms are governed by the laws of India. Disputes are subject to the exclusive jurisdiction of the courts at Jaipur, Rajasthan.
+              </p>
+            </div>
+
+            {/* 12. Changes to These Terms */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-3">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>12. Changes to These Terms</span>
+              </h2>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                We may revise these Terms periodically. Continued use of our website or Services after changes constitutes acceptance of the revised Terms.
+              </p>
+            </div>
+
+            {/* 13. Contact Us */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Mail className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>13. Contact Us</span>
+              </h2>
+              <div className="space-y-2 text-gray-800 text-sm sm:text-base">
+                <p className="font-semibold text-gray-900">Growth Service Digital Solutions</p>
+                <p className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-purple-600 mt-1 shrink-0" />
+                  <span>JTM Mall, Jagatpura, Jaipur, 302017</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Email:{" "}
+                    <a
+                      href="mailto:info@growthservice.in"
+                      className="text-purple-700 font-semibold underline hover:text-purple-900"
+                    >
+                      info@growthservice.in
+                    </a>
+                  </span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Phone:{" "}
+                    <a
+                      href="tel:+916207300553"
+                      className="text-purple-700 font-semibold underline hover:text-purple-900"
+                    >
+                      +91 6207300553
+                    </a>
+                  </span>
+                </p>
               </div>
             </div>
-            
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Check className="w-4 h-4 text-white" />
-                </div>
-                <span>Data protection and confidentiality</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Check className="w-4 h-4 text-white" />
-                </div>
-                <span>Ongoing support and maintenance</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Check className="w-4 h-4 text-white" />
-                </div>
-                <span>Transparent communication channels</span>
-              </div>
+
+            {/* Navigation links to other policies */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-200 text-sm">
+              <Link
+                href="/privacy"
+                className="text-purple-700 font-semibold hover:text-purple-900 underline"
+              >
+                ← View Privacy Policy
+              </Link>
+              <Link
+                href="/refund"
+                className="text-purple-700 font-semibold hover:text-purple-900 underline"
+              >
+                View Refund &amp; Cancellation Policy →
+              </Link>
             </div>
           </div>
-        </div>
-
-        {/* Contact Information */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Need Clarification?</h2>
-          <p className="text-gray-700 mb-6">
-            For questions about these terms or to discuss custom agreements, contact our team:
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a
-              href={getMailtoHref(primaryEmail)}
-              className="bg-blue-50 hover:bg-blue-100 text-blue-600 p-6 rounded-xl text-center transition-colors"
-            >
-              <div className="flex flex-col items-center gap-3">
-                <Mail className="h-8 w-8" />
-                <div>
-                  <div className="font-bold">Email Us</div>
-                  <div className="text-sm text-blue-700">{primaryEmail}</div>
-                </div>
-              </div>
-            </a>
-            
-            <a
-              href={primaryWhatsApp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-50 hover:bg-green-100 text-green-600 p-6 rounded-xl text-center transition-colors"
-            >
-              <div className="flex flex-col items-center gap-3">
-                <WhatsAppIcon className="h-8 w-8" />
-                <div>
-                  <div className="font-bold">WhatsApp</div>
-                  <div className="text-sm text-green-700">{primaryPhone}</div>
-                </div>
-              </div>
-            </a>
-            
-            <a
-              href={getTelHref(primaryPhone)}
-              className="bg-purple-50 hover:bg-purple-100 text-purple-600 p-6 rounded-xl text-center transition-colors"
-            >
-              <div className="flex flex-col items-center gap-3">
-                <Phone className="h-8 w-8" />
-                <div>
-                  <div className="font-bold">Call Us</div>
-                  <div className="text-sm text-purple-700">{primaryPhone}</div>
-                </div>
-              </div>
-            </a>
-          </div>
-          
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <p className="text-sm text-gray-600 text-center">
-              <strong>Note:</strong> These terms are subject to change. Major updates will be communicated to active clients. 
-              For legal advice, please consult with a qualified legal professional.
-            </p>
-          </div>
-        </div>
         </Container>
-      </Section>
+      </section>
     </div>
   );
 };

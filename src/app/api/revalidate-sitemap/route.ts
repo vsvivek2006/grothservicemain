@@ -35,11 +35,14 @@ export async function POST(request: Request) {
     }
 
     revalidatePath("/sitemap.xml");
+    revalidatePath("/robots.txt");
+    revalidatePath("/llms.txt");
+    revalidatePath("/llms-full.txt");
     revalidatePath("/blog");
 
     return NextResponse.json({
       revalidated: true,
-      paths: ["/sitemap.xml", "/blog"],
+      paths: ["/sitemap.xml", "/robots.txt", "/llms.txt", "/llms-full.txt", "/blog"],
       timestamp: new Date().toISOString(),
     });
   } catch (err: unknown) {

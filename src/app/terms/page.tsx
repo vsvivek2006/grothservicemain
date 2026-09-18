@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import TermsView from '@/views/Terms';
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Growth Service - Professional Digital Solutions",
-  description: "Review the Growth Service Terms and Conditions covering service agreements, deliverables, retainers, and legal policies.",
+  title: "Terms & Conditions | Growth Service Digital Solutions",
+  description: "Review the Terms & Conditions for Growth Service Digital Solutions governing our website, digital marketing, web/app development, and services.",
   alternates: {
     canonical: '/terms',
   },
